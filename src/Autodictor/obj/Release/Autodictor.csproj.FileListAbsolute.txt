@@ -1,0 +1,514 @@
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.AddressControl.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.ButtonExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.DataGridViewExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.DataViewExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.ListExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.PanelExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.SplitterExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.staticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.TexBoxExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.UserControlExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\MainExample.ValidationExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141112_2100\MainExample\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.AddressControl.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.ButtonExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.DataGridViewExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.DataViewExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.ListExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.PanelExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.SplitterExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.staticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.TexBoxExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.UserControlExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.ValidationExample.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.dynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\MainExample.elementSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\Автодиктор\20141113_1800\MainExample\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\MainExample.elementSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150302_1700\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\Автодиктор.exe
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\Автодиктор.pdb
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\bin\Release\Автодиктор.exe
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\bin\Release\Автодиктор.pdb
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\MainExample.elementSoundForm.resources
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_0010\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_2000\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_2000\Autodictor\obj\Release\Автодиктор.exe
+E:\Щербелев\_МоиПроекты\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150309_2000\Autodictor\obj\Release\Автодиктор.pdb
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\bin\Release\Автодиктор.exe.config
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\Автодиктор.exe
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\Автодиктор.pdb
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\bin\Release\Автодиктор.exe
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\bin\Release\Автодиктор.pdb
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.AboutForm.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.MainForm.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.TrainTable.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\MainExample.elementSoundForm.resources
+f:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\bin\Release\Автодиктор.exe.config
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\Автодиктор.exe
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150313_0100\Autodictor\obj\Release\Автодиктор.pdb
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\bin\Release\Автодиктор.exe.config
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\Автодиктор.exe
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\Автодиктор.pdb
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\bin\Release\Автодиктор.exe
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\bin\Release\Автодиктор.pdb
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.AboutForm.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.MainForm.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.TrainTable.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\MainExample.elementSoundForm.resources
+d:\Щербелев\Andrey\my\Автоматизация ОВ\17. Программное обеспечение\_AutoDictor\20150401_1515\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.elementSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150421_0040\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.elementSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150503_1440\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\bin\Release\Автодиктор.exe.config
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\Автодиктор.exe
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\Автодиктор.pdb
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\bin\Release\Автодиктор.exe
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\bin\Release\Автодиктор.pdb
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.AboutForm.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.MainForm.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.TrainTable.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.Оповещение.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.Предупреждение.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\MainExample.Расписание.resources
+k:\_ANDREY\_MYPROJECT\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_0900\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150525_2320\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150828_1840\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Project\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150830_1920\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Щербелев\Project\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150830_1920\Autodictor\obj\Release\Автодиктор.exe
+e:\Щербелев\Project\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150830_1920\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150908_1130\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150909_1400\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1050\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация ОВ\17. Программное обеспечение\_AutoDictor\20150910_1200\Autodictor\obj\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\bin\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\bin\Release\Автодиктор.pdb
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\Автодиктор.exe
+e:\Projects\Диспетчеризация Омск\17. Программное обеспечение\_AutoDictor\20150910_1200_correct\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\bin\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\bin\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20160801_1100\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\bin\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\bin\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20160803_0100\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\Автодиктор.exe
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\Автодиктор.pdb
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\bin\Release\Автодиктор.exe
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\bin\Release\Автодиктор.pdb
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Щербелев\Project\Автодиктор\Программа\20160914_1840\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\bin\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\bin\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20160919_1510\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\bin\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\bin\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20160921_1530\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\bin\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20161011_2200\Autodictor\bin\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\bin\Release\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\bin\Release\Автодиктор.exe
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\bin\Release\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20161014_1100\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\Автодиктор.exe
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\Автодиктор.pdb
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\bin\Release\Автодиктор.exe
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\bin\Release\Автодиктор.pdb
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.ОкноРасписания2.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161025_1330\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\bin\Release\Автодиктор.exe.config
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\Автодиктор.exe
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\Автодиктор.pdb
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\bin\Release\Автодиктор.exe
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\bin\Release\Автодиктор.pdb
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.AboutForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.MainForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.TrainTable.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.ОкноРасписания2.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.Оповещение.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.Предупреждение.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\MainExample.Расписание.resources
+e:\Щербелев\Project\Автодиктор\Программа\20161026_1000\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Автодиктор.exe.config
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\Автодиктор.exe
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\Автодиктор.pdb
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Автодиктор.exe
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Автодиктор.pdb
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Microsoft.DirectX.AudioVideoPlayback.dll
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Microsoft.DirectX.dll
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Microsoft.DirectX.Direct3D.dll
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Microsoft.DirectX.xml
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Microsoft.DirectX.AudioVideoPlayback.xml
+D:\Dropbox Save\AutoDictor\Autodictor\bin\Release\Microsoft.DirectX.Direct3D.xml
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.AboutForm.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.SoundConfiguration.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.MainForm.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.TrainTable.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.MainWindowForm.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.Properties.Resources.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.StaticSoundForm.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.DynamicSoundForm.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.КарточкаДвиженияПоезда.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.ОкноРасписания2.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.Оповещение.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.Предупреждение.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\MainExample.Расписание.resources
+D:\Dropbox Save\AutoDictor\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache

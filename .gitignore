@@ -1,0 +1,9 @@
+src/.vs/
+src/Domain/obj/
+src/Domain/bin/
+src/packages/
+src/UnitTests/obj/
+src/UnitTests/bin/
+src/Server/obj/
+src/Server/bin/
+src\Autodictor\bin\Debug\Wav

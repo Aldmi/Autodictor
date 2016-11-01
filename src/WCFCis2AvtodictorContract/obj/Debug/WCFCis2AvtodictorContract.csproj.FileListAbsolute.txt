@@ -1,0 +1,27 @@
+D:\Git\CIS\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Git\CIS\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Git\CIS\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Git\CIS\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+E:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+E:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox\C#\Project C#\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+D:\Git\CIS\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+D:\Dropbox Save\CIS\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox Save\CIS\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox Save\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+D:\Dropbox Save\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox Save\CIS\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox Save\AutoDictor\Src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox Save\AutoDictor\Src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox Save\AutoDictor\Src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox Save\AutoDictor\Src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox\C#\Project C#\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox\C#\Project C#\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Dropbox\C#\Project C#\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Dropbox\C#\Project C#\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb

@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C93BB634-DE26-421B-9388-DBC08A777798}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MainExample</RootNamespace>
+    <AssemblyName>Автодиктор</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MainExample.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.AudioVideoPlayback, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.AudioVideoPlayback.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientWCF\CisClient.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="SoundConfiguration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SoundConfiguration.Designer.cs">
+      <DependentUpon>SoundConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainTable.Designer.cs">
+      <DependentUpon>TrainTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowForm.Designer.cs">
+      <DependentUpon>MainWindowForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DynamicSoundForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DynamicSoundForm.Designer.cs">
+      <DependentUpon>DynamicSoundForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="КарточкаДвиженияПоезда.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="КарточкаДвиженияПоезда.Designer.cs">
+      <DependentUpon>КарточкаДвиженияПоезда.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ОкноПрибытияОтправления.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ОкноПрибытияОтправления.Designer.cs">
+      <DependentUpon>ОкноПрибытияОтправления.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ОкноРасписания.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ОкноРасписания.Designer.cs">
+      <DependentUpon>ОкноРасписания.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ОкноРасписания2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ОкноРасписания2.designer.cs">
+      <DependentUpon>ОкноРасписания2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Оповещение.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Оповещение.Designer.cs">
+      <DependentUpon>Оповещение.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ПланРасписанияПоезда.cs" />
+    <Compile Include="Предупреждение.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Предупреждение.Designer.cs">
+      <DependentUpon>Предупреждение.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Расписание.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Расписание.Designer.cs">
+      <DependentUpon>Расписание.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SoundConfiguration.resx">
+      <DependentUpon>SoundConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainTable.resx">
+      <DependentUpon>TrainTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindowForm.resx">
+      <DependentUpon>MainWindowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticSoundForm.resx">
+      <DependentUpon>StaticSoundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="DynamicSoundForm.resx">
+      <DependentUpon>DynamicSoundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="КарточкаДвиженияПоезда.resx">
+      <DependentUpon>КарточкаДвиженияПоезда.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ОкноПрибытияОтправления.resx">
+      <DependentUpon>ОкноПрибытияОтправления.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ОкноРасписания.resx">
+      <DependentUpon>ОкноРасписания.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ОкноРасписания2.resx">
+      <DependentUpon>ОкноРасписания2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Оповещение.resx">
+      <DependentUpon>Оповещение.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Предупреждение.resx">
+      <DependentUpon>Предупреждение.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Расписание.resx">
+      <DependentUpon>Расписание.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="StaticSoundForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaticSoundForm.Designer.cs">
+      <DependentUpon>StaticSoundForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\DVD.PNG" />
+    <Content Include="Images\Icon.ico" />
+    <Content Include="Images\SmallIcon.gif" />
+    <Content Include="Images\SmallIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VisualBasic.PowerPacks.10.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Basic PowerPacks 10.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Установщик Windows 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WCFCis2AvtodictorContract\WCFCis2AvtodictorContract.csproj">
+      <Project>{57ca03dc-052f-445f-a708-edcd02d22e3f}</Project>
+      <Name>WCFCis2AvtodictorContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
