@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
-using System.ServiceModel.Configuration;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using MainExample.Annotations;
 using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
+using System.Reactive.Subjects;
 
 
 namespace MainExample.ClientWCF
@@ -18,19 +15,43 @@ namespace MainExample.ClientWCF
     /// <summary>
     /// Клиент для общения с CIS.
     /// </summary>
-    public class CisClient : IDisposable, INotifyCollectionChanged
+    public class CisClient : IDisposable
     {
-        private readonly Timer _timer;
-        private const double PeriodTimer = 2000;
+        #region Fields
+
+        private const double PeriodTimer = 5000;
+        private const uint MinutLevel = (uint) (5000 / PeriodTimer); //60000
+        private const uint TenMinutLevel = (uint)((60000 * 10) / PeriodTimer);
+        private const uint HouerLevel = (uint)((60000 * 60) / PeriodTimer);
+        private const uint TvelwHouerLevel = (uint)((60000 * 60 * 12) / PeriodTimer);
+        private const uint DayLevel = (uint)((60000 * 60 * 24) / PeriodTimer);
+
+        private readonly Timer _timer;        
         private uint _tickCounter;
+
         private List<OperativeScheduleData> _operativeScheduleDatas;
+        private bool _isConnect;
+
+        #endregion
+
+
+
 
         #region prop
 
         private ChannelFactory<IServerContract> ChannelFactory { get; }
         private IServerContract Proxy { get; set; }
-        public bool IsConnect { get; private set; }
-        public bool IsStart { get; private set; }
+
+        public bool IsConnect
+        {
+            get { return _isConnect; }
+            private set
+            {
+                if (value == _isConnect) return;
+                _isConnect = value;
+                IsConnectChange.OnNext(IsConnect);
+            }
+        }
 
         public List<OperativeScheduleData> OperativeScheduleDatas
         {
@@ -40,13 +61,13 @@ namespace MainExample.ClientWCF
             }
             private set
             {
-
+                if (value == _operativeScheduleDatas) return;
                 _operativeScheduleDatas = value;
+                OperativeScheduleDatasChange.OnNext(OperativeScheduleDatas);
             }
         }
 
-        public List<RegulatoryScheduleData> RegulatoryScheduleDatas { get; private set; }
-
+        public bool IsStart { get; private set; }
 
         //TODO: добавить лог. Который хранит список строк а запись на диск осушенсвялет по команде.
 
@@ -77,19 +98,26 @@ namespace MainExample.ClientWCF
 
 
 
+        #region Rx
 
-        //TODO: что будет при закрытии сервера с объектом Proxy.
+        public ISubject<bool> IsConnectChange { get; } = new Subject<bool>();
+        public ISubject<List<OperativeScheduleData>> OperativeScheduleDatasChange { get; } = new Subject<List<OperativeScheduleData>>();
+
+        #endregion
+
+
+
+
         private async void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             //Отсчет тиков
             if (++_tickCounter >= uint.MaxValue)
                 _tickCounter = 0;
 
-
             try
             {
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 мин
-                if ((_tickCounter > 0) && ((_tickCounter % 1) == 0))
+                if ((_tickCounter > 0) && ((_tickCounter % MinutLevel) == 0))
                 {
                     OperativeScheduleDatas= new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 3"));
                     IsConnect = true;
@@ -97,25 +125,25 @@ namespace MainExample.ClientWCF
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 10 мин
-                if ((_tickCounter > 0) && ((_tickCounter % 60) == 0))
+                if ((_tickCounter > 0) && ((_tickCounter % TenMinutLevel) == 0))
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 час
-                if ((_tickCounter > 0) && ((_tickCounter % 360) == 0))
+                if ((_tickCounter > 0) && ((_tickCounter % HouerLevel) == 0))
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 12 часов
-                if ((_tickCounter % 4320) == 0)
+                if ((_tickCounter % TvelwHouerLevel) == 0)
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 сутки
-                if ((_tickCounter % 8640) == 0)
+                if ((_tickCounter % DayLevel) == 0)
                 {
 
                 }
@@ -145,18 +173,8 @@ namespace MainExample.ClientWCF
         {
             _timer.Enabled = false;
             IsStart = false;
+            IsConnect = false;
         }
-
-
-
-
-
-
-        #region Event
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        #endregion
 
 
 

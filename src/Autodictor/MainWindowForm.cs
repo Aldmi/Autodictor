@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using MainExample.ClientWCF;
+using MainExample.Extencions;
 using WCFCis2AvtodictorContract.Contract;
 
 
@@ -59,11 +60,12 @@ namespace MainExample
         private int ОбщееВремяВоспроизведения = 0;
         private float ВремяВоспроизведенияПроигранныхФайлов = 0f;
 
-        public CisClient CisClient { get; set; }
+        public CisClient CisClient { get; private set; }
+        public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
 
         // Конструктор
-        public MainWindowForm()
+        public MainWindowForm(CisClient cisClient)
         {
             if (myMainForm != null)
                 return;
@@ -77,7 +79,46 @@ namespace MainExample
             pnСостояние.BackColor = Color.Orange;
             lblСостояние.Text = "ВЫКЛЮЧЕНА";
 
-            CisClient = new CisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
+            lblСостояниеCIS.Text = "ЦИС НЕ на связи";
+            pnСостояниеCIS.BackColor = Color.Orange;
+
+            CisClient = cisClient;
+            DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
+             {
+                if (isConnect)
+                {
+                    pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
+                    lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+                }
+                else
+                {
+                    pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
+                    lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+                }
+             });
+
+            //TODO: подписывать через React. И при закрыти окна отписывать.
+            //CisClient.PropertyChanged += (o, e) =>                         
+            //{
+            //    if (e.PropertyName == "IsConnect") //обработчик событи изменени¤ свойства Name
+            //    {
+            //        //MessageBox.Show(e.PropertyName + "changed");
+            //        cisClient = o as CisClient;
+            //        if (cisClient != null)
+            //        {
+            //            if (CisClient.IsConnect)
+            //            {
+            //                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
+            //                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+            //            }
+            //            else
+            //            {
+            //                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
+            //                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+            //            }
+            //        }
+            //    }
+            //};
         }
 
         // Обработка таймера 100 мс для воспроизведения звуковых сообщений
@@ -95,7 +136,7 @@ namespace MainExample
         }
 
         // Обработка нажатия кнопки блокировки/разрешения работы
-        private async void btnБлокировка_Click(object sender, EventArgs e)
+        private void btnБлокировка_Click(object sender, EventArgs e)
         {
             //TODO: Запускать/останавливать WCF клиента 
             РазрешениеРаботы = !РазрешениеРаботы;
@@ -950,5 +991,11 @@ namespace MainExample
             окноРасписания.Show(this);
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            DispouseCisClientIsConnectRx.Dispose();
+            CisClient.Stop();
+            base.OnClosed(e);
+        }
     }
 }

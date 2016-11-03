@@ -54,11 +54,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.pnСостояниеCIS = new System.Windows.Forms.Panel();
+            this.lblСостояниеCIS = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.pnСостояние.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкости)).BeginInit();
+            this.pnСостояниеCIS.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTime
@@ -173,10 +176,10 @@
             // lblСостояние
             // 
             this.lblСостояние.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.lblСостояние.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblСостояние.Location = new System.Drawing.Point(0, 8);
+            this.lblСостояние.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblСостояние.Location = new System.Drawing.Point(3, 1);
             this.lblСостояние.Name = "lblСостояние";
-            this.lblСостояние.Size = new System.Drawing.Size(203, 28);
+            this.lblСостояние.Size = new System.Drawing.Size(203, 25);
             this.lblСостояние.TabIndex = 11;
             this.lblСостояние.Text = "РАБОТА";
             this.lblСостояние.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -184,9 +187,9 @@
             // pnСостояние
             // 
             this.pnСостояние.Controls.Add(this.lblСостояние);
-            this.pnСостояние.Location = new System.Drawing.Point(219, 91);
+            this.pnСостояние.Location = new System.Drawing.Point(219, 78);
             this.pnСостояние.Name = "pnСостояние";
-            this.pnСостояние.Size = new System.Drawing.Size(209, 44);
+            this.pnСостояние.Size = new System.Drawing.Size(209, 28);
             this.pnСостояние.TabIndex = 12;
             // 
             // groupBox2
@@ -324,11 +327,32 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // pnСостояниеCIS
+            // 
+            this.pnСостояниеCIS.BackColor = System.Drawing.Color.Orange;
+            this.pnСостояниеCIS.Controls.Add(this.lblСостояниеCIS);
+            this.pnСостояниеCIS.Location = new System.Drawing.Point(219, 112);
+            this.pnСостояниеCIS.Name = "pnСостояниеCIS";
+            this.pnСостояниеCIS.Size = new System.Drawing.Size(209, 23);
+            this.pnСостояниеCIS.TabIndex = 13;
+            // 
+            // lblСостояниеCIS
+            // 
+            this.lblСостояниеCIS.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lblСостояниеCIS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblСостояниеCIS.Location = new System.Drawing.Point(3, -1);
+            this.lblСостояниеCIS.Name = "lblСостояниеCIS";
+            this.lblСостояниеCIS.Size = new System.Drawing.Size(203, 24);
+            this.lblСостояниеCIS.TabIndex = 12;
+            this.lblСостояниеCIS.Text = "ЦИС НЕ на связи";
+            this.lblСостояниеCIS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1179, 639);
+            this.Controls.Add(this.pnСостояниеCIS);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -350,6 +374,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкости)).EndInit();
+            this.pnСостояниеCIS.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -381,5 +406,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel pnСостояниеCIS;
+        private System.Windows.Forms.Label lblСостояниеCIS;
     }
 }

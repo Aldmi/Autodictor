@@ -46,6 +46,8 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.просмотрСправкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.данныеЦИСToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OperativeShedules = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +57,8 @@
             this.fileMenu,
             this.controlSamplesToolStripMenuItem,
             this.dataSamplesToolStripMenuItem,
-            this.справкаToolStripMenuItem});
+            this.справкаToolStripMenuItem,
+            this.данныеЦИСToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -202,6 +205,21 @@
             this.оПрограммеToolStripMenuItem.Text = "&О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
+            // данныеЦИСToolStripMenuItem
+            // 
+            this.данныеЦИСToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OperativeShedules});
+            this.данныеЦИСToolStripMenuItem.Name = "данныеЦИСToolStripMenuItem";
+            this.данныеЦИСToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.данныеЦИСToolStripMenuItem.Text = "Данные ЦИС";
+            // 
+            // OperativeShedules
+            // 
+            this.OperativeShedules.Name = "OperativeShedules";
+            this.OperativeShedules.Size = new System.Drawing.Size(215, 22);
+            this.OperativeShedules.Text = "Оперативное расписание";
+            this.OperativeShedules.Click += new System.EventHandler(this.OperativeShedules_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -243,6 +261,8 @@
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem просмотрСправкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem данныеЦИСToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OperativeShedules;
     }
 }
 

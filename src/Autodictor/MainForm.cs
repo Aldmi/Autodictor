@@ -8,11 +8,17 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.ServiceModel;
+using MainExample.ClientWCF;
 
 namespace MainExample
 {
     public partial class MainForm : Form
     {
+        public CisClient CisClient { get; set; }
+
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -23,6 +29,8 @@ namespace MainExample
             TrainTable.ЗагрузитьСписок();
 
             //Player.PlayFile("");  //TODO: включить
+
+            CisClient = new CisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
         }
 
         private void fileExit_Click(object sender, EventArgs e)
@@ -40,7 +48,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm();
+                MainWindowForm mainform = new MainWindowForm(CisClient);
                 mainform.MdiParent = this;
                 mainform.Show();
             }
@@ -48,7 +56,7 @@ namespace MainExample
 
         private void listExample_Click(object sender, EventArgs e)
         {
-            TrainTable listForm = new TrainTable();
+            TrainTable listForm = new TrainTable(CisClient);
             listForm.MdiParent = this;
             listForm.Show();
         }
@@ -101,6 +109,20 @@ namespace MainExample
             }
         }
 
+        private void OperativeShedules_Click(object sender, EventArgs e)
+        {
+            if (OperativeSheduleForm.MyOperativeSheduleForm != null)                                     //Открытие окна повторно, при открытом первом экземпляре.
+            {
+                OperativeSheduleForm.MyOperativeSheduleForm.Show();
+                OperativeSheduleForm.MyOperativeSheduleForm.WindowState = FormWindowState.Normal;
+            }
+            else                                                                                         //Открытие окна
+            {
+                OperativeSheduleForm operativeSheduleForm = new OperativeSheduleForm(CisClient);
+                operativeSheduleForm.MdiParent = this;
+                operativeSheduleForm.Show();
+            }
+        }
     }
 
  

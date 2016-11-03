@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using MainExample.Properties;
 using System.IO;
-
+using MainExample.ClientWCF;
 
 
 namespace MainExample
@@ -34,12 +34,15 @@ namespace MainExample
     
     public partial class TrainTable : Form
     {
+        public CisClient CisClient { get; set; }
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
         private static int ID = 0;
 //        private bool ОбновлениеСписка = false;
 
-        public TrainTable()
+        public TrainTable(CisClient cisClient)
         {
+            CisClient = cisClient;
+
             InitializeComponent();
             ЗагрузитьСписок();
             ОбновитьДанныеВСписке();

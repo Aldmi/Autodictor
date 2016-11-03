@@ -641,3 +641,46 @@ D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\obj\Debug\MainExample.Опо�
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\obj\Debug\MainExample.Расписание.resources
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+D:\Dropbox Save\AutoDictor\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe.config
+D:\temp\Autodictor\src\Autodictor\obj\Debug\Автодиктор.exe
+D:\temp\Autodictor\src\Autodictor\obj\Debug\Автодиктор.pdb
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Автодиктор.pdb
+D:\temp\Autodictor\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+D:\temp\Autodictor\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+D:\temp\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+D:\temp\Autodictor\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+D:\temp\Autodictor\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+C:\Temp\Autodictor\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe.config
+C:\Temp\Autodictor\Autodictor\src\Autodictor\obj\Debug\Автодиктор.exe
+C:\Temp\Autodictor\Autodictor\src\Autodictor\obj\Debug\Автодиктор.pdb
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+D:\Dropbox Save\AutoDictor\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
