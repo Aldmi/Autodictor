@@ -1,0 +1,28 @@
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\bin\Debug\Library.dll
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\bin\Debug\Library.pdb
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\obj\Debug\Library.dll
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\obj\Debug\Library.pdb
+E:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\bin\Debug\Library.dll
+E:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\bin\Debug\Library.pdb
+E:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\obj\Debug\Library.dll
+E:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\obj\Debug\Library.pdb
+E:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue_new\Library\bin\Debug\Library.dll
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue_new\Library\bin\Debug\Library.pdb
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue_new\Library\obj\Debug\Library.dll
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue_new\Library\obj\Debug\Library.pdb
+D:\Dropbox\C#\Project C#\Scada Belovo\RailwayStationQueue\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
+D:\Git\RailwayStationQueue\src\Library\bin\Debug\Library.dll
+D:\Git\RailwayStationQueue\src\Library\bin\Debug\Library.pdb
+D:\Git\RailwayStationQueue\src\Library\obj\Debug\Library.dll
+D:\Git\RailwayStationQueue\src\Library\obj\Debug\Library.pdb
+D:\Git\RailwayStationQueue\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
+D:\Project C#\Autodictor\src\Library\bin\Debug\Library.dll
+D:\Project C#\Autodictor\src\Library\bin\Debug\Library.pdb
+D:\Project C#\Autodictor\src\Library\obj\Debug\Library.dll
+D:\Project C#\Autodictor\src\Library\obj\Debug\Library.pdb
+d:\Project C#\Autodictor\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
+D:\Dropbox\C#\Project C#\Autodictor\src\Library\bin\Debug\Library.dll
+D:\Dropbox\C#\Project C#\Autodictor\src\Library\bin\Debug\Library.pdb
+D:\Dropbox\C#\Project C#\Autodictor\src\Library\obj\Debug\Library.dll
+D:\Dropbox\C#\Project C#\Autodictor\src\Library\obj\Debug\Library.pdb

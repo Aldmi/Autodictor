@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.ServiceModel;
+using CommunicationDevices.Model;
 using MainExample.ClientWCF;
 
 namespace MainExample
@@ -16,6 +17,7 @@ namespace MainExample
     public partial class MainForm : Form
     {
         public CisClient CisClient { get; set; }
+        public ExchangeModel ExchangeModel { get; set; }
 
 
 
@@ -31,7 +33,17 @@ namespace MainExample
             //Player.PlayFile("");  //TODO: включить
 
             CisClient = new CisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
+            ExchangeModel = new ExchangeModel();
         }
+
+
+
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            ExchangeModel.LoadSetting();
+        }
+
 
         private void fileExit_Click(object sender, EventArgs e)
         {
@@ -86,10 +98,6 @@ namespace MainExample
             form.Show();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -122,6 +130,19 @@ namespace MainExample
                 operativeSheduleForm.MdiParent = this;
                 operativeSheduleForm.Show();
             }
+
+
+            //if (MainWindowForm.myMainForm != null)
+            //{
+            //    MainWindowForm.myMainForm.Show();
+            //    MainWindowForm.myMainForm.WindowState = FormWindowState.Normal;
+            //}
+            //else
+            //{
+            //    MainWindowForm mainform = new MainWindowForm(CisClient);
+            //    mainform.MdiParent = this;
+            //    mainform.Show();
+            //}
         }
     }
 

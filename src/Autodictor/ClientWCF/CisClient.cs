@@ -20,13 +20,13 @@ namespace MainExample.ClientWCF
         #region Fields
 
         private const double PeriodTimer = 5000;
-        private const uint MinutLevel = (uint) (5000 / PeriodTimer); //60000
+        private const uint MinutLevel = (uint)(5000 / PeriodTimer); //60000
         private const uint TenMinutLevel = (uint)((60000 * 10) / PeriodTimer);
         private const uint HouerLevel = (uint)((60000 * 60) / PeriodTimer);
         private const uint TvelwHouerLevel = (uint)((60000 * 60 * 12) / PeriodTimer);
         private const uint DayLevel = (uint)((60000 * 60 * 24) / PeriodTimer);
 
-        private readonly Timer _timer;        
+        private readonly Timer _timer;
         private uint _tickCounter;
 
         private List<OperativeScheduleData> _operativeScheduleDatas;
@@ -114,14 +114,27 @@ namespace MainExample.ClientWCF
             if (++_tickCounter >= uint.MaxValue)
                 _tickCounter = 0;
 
+            //TODO: Можно ли использовать для оперативного определения состояния канала клиента ChannelFactory.State
             try
             {
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 мин
                 if ((_tickCounter > 0) && ((_tickCounter % MinutLevel) == 0))
                 {
-                    OperativeScheduleDatas= new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 3"));
+                    OperativeScheduleDatas = new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 3"));
                     IsConnect = true;
                     //Log.Add("Оперативное расписание полученно", Info);
+
+                    //Pull модель опроса списка устройств. Перебираем список всех устройств (скрытых под интерфесом, ограничивающий доступ только к нужным данным)
+                    // На каждое диагностируемое сво-во устройства формирум DiagnosticData и помещем в список.
+                    var listDiagnostic = new List<DiagnosticData>
+                    {
+                        new DiagnosticData {DeviceNumber = 1, Fault = "Нормальная работа", Status = (int) (100 +_tickCounter)},
+                        new DiagnosticData {DeviceNumber = 1, Fault = "Ошибка индикации", Status = 188},
+                        new DiagnosticData {DeviceNumber = 3, Fault = "Нормальная работа", Status = 100},
+                        new DiagnosticData {DeviceNumber = 4, Fault = "Нормальная работа", Status = 100},
+                        new DiagnosticData {DeviceNumber = 5, Fault = "Ошибка связи по порту", Status = 111},
+                    };
+                    Proxy.SetDiagnostics("Вокзал 3", listDiagnostic);
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 10 мин
@@ -157,8 +170,8 @@ namespace MainExample.ClientWCF
             {
                 //Log.Add("ex.ToString()", Error);
             }
-
         }
+
 
 
 

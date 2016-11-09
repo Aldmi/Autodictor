@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using MainExample.ClientWCF;
-using MainExample.Extencions;
+using MainExample.Extension;
 using WCFCis2AvtodictorContract.Contract;
 
 

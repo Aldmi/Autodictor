@@ -124,7 +124,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ClientWCF\CisClient.cs" />
-    <Compile Include="Extencions\ControlExtentions.cs" />
+    <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="OperativeSheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -315,6 +315,14 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationDevices\CommunicationDevices.csproj">
+      <Project>{6a763286-f0a3-4218-85d1-dd8eb40dcff3}</Project>
+      <Name>CommunicationDevices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Library.csproj">
+      <Project>{87b6f9ef-6a0d-4daf-9df0-718036b1c8e4}</Project>
+      <Name>Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WCFCis2AvtodictorContract\WCFCis2AvtodictorContract.csproj">
       <Project>{57ca03dc-052f-445f-a708-edcd02d22e3f}</Project>
       <Name>WCFCis2AvtodictorContract</Name>

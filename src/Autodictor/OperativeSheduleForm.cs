@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MainExample.ClientWCF;
-using MainExample.Extencions;
+using MainExample.Extension;
+using WCFCis2AvtodictorContract.Contract;
+using WCFCis2AvtodictorContract.DataContract;
 
 
 namespace MainExample
@@ -33,33 +36,47 @@ namespace MainExample
             InitializeComponent();
 
             CisClient = cisClient;
+            if(CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any())
+                FillListView(CisClient.OperativeScheduleDatas);
+
             DispouseChangeOperativeSheduleRx = CisClient.OperativeScheduleDatasChange.Subscribe(op =>
             {
-                //очистить ListView
-                //заполнить значениями
-                FillListView();
+                ClearListView();
+                FillListView(op);
             });
         }
 
 
-
-        private void FillListView()
+        private void ClearListView()
         {
-            string[] arr = new string[4];
-            ListViewItem itm;
-
-            //Add first item
-            arr[0] = "product_1";
-            arr[1] = "100";
-            arr[2] = "10";
-            itm = new ListViewItem(arr);
-            this.InvokeIfNeeded(() => listOperSh.Items.Add(itm));
+            this.InvokeIfNeeded(() => listOperSh.Items.Clear());
         }
+
+
+        private void FillListView(IEnumerable<OperativeScheduleData> op)
+        {
+            var row = op.Select(str => new[]
+            {
+                str.NumberOfTrain.ToString(),
+                str.RouteName.ToString(),
+                str.ArrivalTime.ToString(CultureInfo.InvariantCulture),
+                str.DepartureTime.ToString(CultureInfo.InvariantCulture),
+                str.DispatchStation.Name,
+                str.StationOfDestination.Name
+            }).Select(s=> new ListViewItem(s)).ToArray();
+
+            this.InvokeIfNeeded(() => listOperSh.Items.AddRange(row));
+        }
+
+
 
 
 
         protected override void OnClosed(EventArgs e)
         {
+            if (MyOperativeSheduleForm == this)
+                MyOperativeSheduleForm = null;
+
             DispouseChangeOperativeSheduleRx.Dispose();
             base.OnClosed(e);
         }
