@@ -48,8 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Devices\SerialPortDevices\DeviceSp.cs" />
-    <Compile Include="Devices\SerialPortDevices\DeviceSpMg6587.cs" />
+    <Compile Include="Behavior\SerialPortBehavior\ISerialPortExhangeBehavior.cs" />
+    <Compile Include="Behavior\SerialPortBehavior\SpMg6587ExhangeBehavior.cs" />
+    <Compile Include="Devices\DeviceSp.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
     <Compile Include="Infrastructure\PanelMg6587WriteDataProvider.cs" />
     <Compile Include="Infrastructure\UniversalInputType.cs" />
@@ -68,7 +69,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Devices\TcpIpDevices\" />
+    <Folder Include="Behavior\TcpIpBehavior\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

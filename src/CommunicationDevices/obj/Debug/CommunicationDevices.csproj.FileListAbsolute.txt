@@ -20,3 +20,16 @@ D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Co
 D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.xml
 D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.xml
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.dll
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.dll
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Library.dll
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Communication.pdb
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Library.pdb
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.xml
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.xml
+D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
+D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb

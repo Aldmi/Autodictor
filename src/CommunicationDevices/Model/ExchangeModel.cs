@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using Castle.Windsor;
 using Communication.SerialPort;
 using Communication.Settings;
+using CommunicationDevices.Behavior;
+using CommunicationDevices.Behavior.SerialPortBehavior;
 using CommunicationDevices.Devices;
-using CommunicationDevices.Devices.SerialPortDevices;
 using CommunicationDevices.DI;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
@@ -101,28 +102,21 @@ namespace CommunicationDevices.Model
             }
 
 
-
             //СОЗДАНИЕ УСТРОЙСТВ С ПОСЛЕДОВАТЕЛЬНЫМ ПОРТОМ------------------------------------------------------------------------------------------------
-            //foreach (var dev in xmlDeviceSpSettings.Select(xmlDev => new Devices(xmlDev)))
-            //{
-            //    Devices.Add(dev);
-            //}
-
-
-
-            //перебираем xml настройки Device, для каждого уcтройства
-
-
             foreach (var xmlDeviceSp in xmlDeviceSpSettings)
             {
+                ISerialPortExhangeBehavior behavior;
                 switch (xmlDeviceSp.Name)
                 {
                     case "MG6587":
-                        Devices.Add(new DeviceSpMg6587(xmlDeviceSp, MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber)));
+                        behavior= new SpMg6587ExhangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, 5);
+                        Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
                         break;
 
                     case "MG7777":
-                        Devices.Add(new DeviceSpMg6587(xmlDeviceSp, MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber)));
+                        //создавать другое поведение
+                        behavior = new SpMg6587ExhangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, 5);
+                        Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
                         break;
 
                     default:
@@ -130,18 +124,17 @@ namespace CommunicationDevices.Model
                 }
             }
 
-            //Использование------------------------------------------------------------
 
             //Все порты которые используют устройства откроем и запустим.
             foreach (var devSp in Devices)
             {
-                if (devSp.Port != null)
+                if (devSp.SpExhBehavior.Port != null)
                 {
                     var taskSerialPort = Task.Factory.StartNew(async () =>
                     {
-                        if (await devSp.Port.CycleReConnect())
+                        if (await devSp.SpExhBehavior.Port.CycleReConnect())
                         {
-                            var taskCashierEx = devSp.Port.RunExchange();
+                            var taskCashierEx = devSp.SpExhBehavior.Port.RunExchange();
                             BackGroundTasks.Add(taskCashierEx);
                         }
                     });
@@ -149,30 +142,12 @@ namespace CommunicationDevices.Model
                 }
             }
 
-            var dev = Devices.FirstOrDefault(n=> n.Name == "MG6587");
+            //Использование------------------------------------------------------------
+            //передача данных девайсу и через него поведению
+            var dev = Devices.FirstOrDefault(n => n.Name == "MG6587");
             dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 1 прибывает на 2 путь в 19:56" });
 
-            //Devices.Add(new DeviceSpMg6587<byte,bool>(xmlDeviceSpSettings.First()));
-            //var dev = Devices.First(d => d.Id == 1);
-            //var port = MasterSerialPorts.First();
-            //dev?.ExchangeService(port, CancellationToken.None, new Mg6587Input {Var11 = 10, Var12 = 58});
 
-
-            //СОЗДАНИЕ ПОСЛЕД. ПОРТА ДЛЯ ОПРОСА КАССИРОВ-----------------------------------------------------------------------
-            //MasterSerialPort = new MasterSerialPort(xmlSerial);
-            //CashierExchangeService = new CashierExchangeService(DeviceCashiers, xmlSerial.TimeRespoune);
-            //MasterSerialPort.AddFunc(CashierExchangeService.ExchangeService);
-            //MasterSerialPort.PropertyChanged += (o, e) =>
-            //{
-            //    var port = o as MasterSerialPort;
-            //    if (port != null)
-            //    {
-            //        if (e.PropertyName == "StatusString")
-            //        {
-            //            ErrorString = port.StatusString;
-            //        }
-            //    }
-            //};
         }
     }
 }

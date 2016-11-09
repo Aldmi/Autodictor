@@ -23,7 +23,7 @@ namespace CommunicationDevices.Infrastructure
 
 
 
-    class PanelMg6587WriteDataProvider : IExchangeDataProvider<UniversalInputType, Mg6587Output>
+    public class PanelMg6587WriteDataProvider : IExchangeDataProvider<UniversalInputType, Mg6587Output>
     {
         #region field
 

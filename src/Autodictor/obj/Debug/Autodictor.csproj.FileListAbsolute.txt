@@ -793,3 +793,13 @@ D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Core.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.xml
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\CommunicationDevices.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Library.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Library.pdb
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.pdb
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml

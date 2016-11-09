@@ -2,12 +2,10 @@
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
-using CommunicationDevices.Settings;
 
-
-namespace CommunicationDevices.Devices.SerialPortDevices
+namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
-    public abstract class DeviceSp
+    public class SpMg6587ExhangeBehavior : ISerialPortExhangeBehavior
     {
         #region Fields
 
@@ -21,16 +19,17 @@ namespace CommunicationDevices.Devices.SerialPortDevices
 
 
 
+
+
         #region Prop
 
-        public int Id { get; private set; }
-        public string Address { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public bool IsConnect { get; private set; }
+        public UniversalInputType InData { get; set; }
+        public MasterSerialPort Port { get; set; }
+
+        public bool IsConnect { get; set; }
 
         private bool _dataExchangeSuccess;
-        protected bool DataExchangeSuccess
+        public bool DataExchangeSuccess
         {
             get { return _dataExchangeSuccess; }
             set
@@ -52,9 +51,6 @@ namespace CommunicationDevices.Devices.SerialPortDevices
             }
         }
 
-
-        public MasterSerialPort Port { get; set; }
-        protected UniversalInputType InData { get; set; }
         #endregion
 
 
@@ -62,20 +58,11 @@ namespace CommunicationDevices.Devices.SerialPortDevices
 
         #region ctor
 
-        protected DeviceSp(int id, string address, string name, string description, byte maxCountFaildRespowne,
-            ushort timeRespone)
-        {
-            Id = id;
-            Address = address;
-            Name = name;
-            Description = description;
-            _maxCountFaildRespowne = maxCountFaildRespowne;
-            TimeRespone = timeRespone;
-        }
-
-        protected DeviceSp(XmlDeviceSerialPortSettings xmlSet, MasterSerialPort port) : this(xmlSet.Id, xmlSet.Address.ToString(), xmlSet.Name, xmlSet.Description, 5, xmlSet.TimeRespone)
+        public SpMg6587ExhangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
         {
             Port = port;
+            TimeRespone = timeRespone;
+            _maxCountFaildRespowne = maxCountFaildRespowne;
         }
 
         #endregion
@@ -91,7 +78,21 @@ namespace CommunicationDevices.Devices.SerialPortDevices
             Port.AddOneTimeSendData(ExchangeService);
         }
 
-        protected abstract Task ExchangeService(MasterSerialPort port, CancellationToken ct);
+        private async Task ExchangeService(MasterSerialPort port, CancellationToken ct)
+        {
+            var writeProvider = new PanelMg6587WriteDataProvider() {InputData = InData};
+            DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+
+            if (!IsConnect)
+            {
+                //Сработка события DisconectHandling()
+            }
+
+            if (writeProvider.IsOutDataValid)
+            {
+                //с outData девайс разберется сам writeProvider.OutputData
+            }
+        }
 
         #endregion
     }
