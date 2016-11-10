@@ -114,7 +114,7 @@ namespace MainExample.ClientWCF
             if (++_tickCounter >= uint.MaxValue)
                 _tickCounter = 0;
 
-            //TODO: Можно ли использовать для оперативного определения состояния канала клиента ChannelFactory.State
+
             try
             {
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 мин

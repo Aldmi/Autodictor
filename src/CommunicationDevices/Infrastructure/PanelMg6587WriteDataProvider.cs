@@ -7,7 +7,6 @@ using Communication.Interfaces;
 
 namespace CommunicationDevices.Infrastructure
 {
-
     public class Mg6587Input
     {
         public byte Var11 { get; set; }

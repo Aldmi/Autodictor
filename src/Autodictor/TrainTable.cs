@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using MainExample.Properties;
 using System.IO;
 using MainExample.ClientWCF;
+using MainExample.Extension;
 
 
 namespace MainExample
@@ -34,18 +35,46 @@ namespace MainExample
     
     public partial class TrainTable : Form
     {
-        public CisClient CisClient { get; set; }
+        public CisClient CisClient { get; private set; }
+        public IDisposable DispouseCisClientIsConnectRx { get; set; }
+
+
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
         private static int ID = 0;
 //        private bool ОбновлениеСписка = false;
 
         public TrainTable(CisClient cisClient)
         {
-            CisClient = cisClient;
-
             InitializeComponent();
             ЗагрузитьСписок();
             ОбновитьДанныеВСписке();
+
+
+            CisClient = cisClient;
+            if (CisClient.IsConnect)
+            {
+                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
+                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+            }
+            else
+            {
+                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
+                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+            }
+
+            DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
+            {
+                if (isConnect)
+                {
+                    pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
+                    lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+                }
+                else
+                {
+                    pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
+                    lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+                }
+            });
         }
 
         private void ОбновитьДанныеВСписке()
@@ -546,6 +575,13 @@ namespace MainExample
         private void gBОтображениеРасписания_CursorChanged(object sender, EventArgs e)
         {
 
+        }
+
+
+        protected override void OnClosed(EventArgs e)
+        {
+            DispouseCisClientIsConnectRx.Dispose();
+            base.OnClosed(e);
         }
     }
 }

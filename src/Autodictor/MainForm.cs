@@ -32,7 +32,6 @@ namespace MainExample
 
             //Player.PlayFile("");  //TODO: включить
 
-            CisClient = new CisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
             ExchangeModel = new ExchangeModel();
         }
 
@@ -41,6 +40,8 @@ namespace MainExample
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            CisClient = new CisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
+            CisClient.Start();
             ExchangeModel.LoadSetting();
         }
 
@@ -66,6 +67,7 @@ namespace MainExample
             }
         }
 
+        //Расписание движения поездов
         private void listExample_Click(object sender, EventArgs e)
         {
             TrainTable listForm = new TrainTable(CisClient);
@@ -130,19 +132,6 @@ namespace MainExample
                 operativeSheduleForm.MdiParent = this;
                 operativeSheduleForm.Show();
             }
-
-
-            //if (MainWindowForm.myMainForm != null)
-            //{
-            //    MainWindowForm.myMainForm.Show();
-            //    MainWindowForm.myMainForm.WindowState = FormWindowState.Normal;
-            //}
-            //else
-            //{
-            //    MainWindowForm mainform = new MainWindowForm(CisClient);
-            //    mainform.MdiParent = this;
-            //    mainform.Show();
-            //}
         }
     }
 

@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
@@ -19,11 +21,9 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
 
 
-
-
         #region Prop
 
-        public UniversalInputType InData { get; set; }
+        public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
         public MasterSerialPort Port { get; set; }
 
         public bool IsConnect { get; set; }
@@ -74,13 +74,17 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         public void AddOneTimeSendData(UniversalInputType inData)
         {
-            InData = inData;
-            Port.AddOneTimeSendData(ExchangeService);
+            if (inData != null)
+            {
+                InDataQueue.Enqueue(inData);
+                Port.AddOneTimeSendData(ExchangeService);
+            }
         }
 
         private async Task ExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var writeProvider = new PanelMg6587WriteDataProvider() {InputData = InData};
+            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
+            var writeProvider = new PanelMg6587WriteDataProvider() {InputData = inData };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
 
             if (!IsConnect)
@@ -88,10 +92,10 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 //Сработка события DisconectHandling()
             }
 
-            if (writeProvider.IsOutDataValid)
-            {
-                //с outData девайс разберется сам writeProvider.OutputData
-            }
+            //if (writeProvider.IsOutDataValid)
+            //{
+            //    //с outData девайс разберется сам writeProvider.OutputData
+            //}
         }
 
         #endregion

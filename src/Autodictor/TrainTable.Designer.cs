@@ -49,6 +49,7 @@
             this.cB_Отправление = new System.Windows.Forms.CheckBox();
             this.dTP_Прибытие = new System.Windows.Forms.DateTimePicker();
             this.dTP_Отправление = new System.Windows.Forms.DateTimePicker();
+            this.tBПримечание = new System.Windows.Forms.TextBox();
             this.btn_ДобавитьЗапись = new System.Windows.Forms.Button();
             this.btn_ИзменитьЗапись = new System.Windows.Forms.Button();
             this.btn_УдалитьЗапись = new System.Windows.Forms.Button();
@@ -66,10 +67,12 @@
             this.rBОтображениеПригород = new System.Windows.Forms.RadioButton();
             this.rBОтображениеДальнегоСледования = new System.Windows.Forms.RadioButton();
             this.rBОтображениеОтсутствует = new System.Windows.Forms.RadioButton();
-            this.tBПримечание = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.lblСостояниеCIS = new System.Windows.Forms.Label();
+            this.pnСостояниеCIS = new System.Windows.Forms.Panel();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.gBОтображениеРасписания.SuspendLayout();
+            this.pnСостояниеCIS.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -263,6 +266,15 @@
             this.dTP_Отправление.Size = new System.Drawing.Size(100, 20);
             this.dTP_Отправление.TabIndex = 19;
             this.toolTip1.SetToolTip(this.dTP_Отправление, "Поле установки времени прибытия поезда");
+            // 
+            // tBПримечание
+            // 
+            this.tBПримечание.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tBПримечание.Location = new System.Drawing.Point(573, 559);
+            this.tBПримечание.Name = "tBПримечание";
+            this.tBПримечание.Size = new System.Drawing.Size(293, 20);
+            this.tBПримечание.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.tBПримечание, "Поле ввода номера поезда");
             // 
             // btn_ДобавитьЗапись
             // 
@@ -479,15 +491,6 @@
             this.rBОтображениеОтсутствует.Text = "отсутствует";
             this.rBОтображениеОтсутствует.UseVisualStyleBackColor = true;
             // 
-            // tBПримечание
-            // 
-            this.tBПримечание.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tBПримечание.Location = new System.Drawing.Point(573, 559);
-            this.tBПримечание.Name = "tBПримечание";
-            this.tBПримечание.Size = new System.Drawing.Size(293, 20);
-            this.tBПримечание.TabIndex = 27;
-            this.toolTip1.SetToolTip(this.tBПримечание, "Поле ввода номера поезда");
-            // 
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -499,11 +502,32 @@
             this.label5.TabIndex = 26;
             this.label5.Text = "Примечание";
             // 
+            // lblСостояниеCIS
+            // 
+            this.lblСостояниеCIS.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.lblСостояниеCIS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblСостояниеCIS.Location = new System.Drawing.Point(2, 0);
+            this.lblСостояниеCIS.Name = "lblСостояниеCIS";
+            this.lblСостояниеCIS.Size = new System.Drawing.Size(231, 45);
+            this.lblСостояниеCIS.TabIndex = 28;
+            this.lblСостояниеCIS.Text = "ЦИС НЕ на связи";
+            this.lblСостояниеCIS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnСостояниеCIS
+            // 
+            this.pnСостояниеCIS.BackColor = System.Drawing.Color.Orange;
+            this.pnСостояниеCIS.Controls.Add(this.lblСостояниеCIS);
+            this.pnСостояниеCIS.Location = new System.Drawing.Point(872, 542);
+            this.pnСостояниеCIS.Name = "pnСостояниеCIS";
+            this.pnСостояниеCIS.Size = new System.Drawing.Size(234, 45);
+            this.pnСостояниеCIS.TabIndex = 29;
+            // 
             // TrainTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 593);
+            this.Controls.Add(this.pnСостояниеCIS);
             this.Controls.Add(this.tBПримечание);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.gBОтображениеРасписания);
@@ -539,6 +563,7 @@
             this.gB_НумерацияПоезда.PerformLayout();
             this.gBОтображениеРасписания.ResumeLayout(false);
             this.gBОтображениеРасписания.PerformLayout();
+            this.pnСостояниеCIS.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -585,6 +610,7 @@
         private System.Windows.Forms.RadioButton rBОтображениеОтсутствует;
         private System.Windows.Forms.TextBox tBПримечание;
         private System.Windows.Forms.Label label5;
-
+        private System.Windows.Forms.Label lblСостояниеCIS;
+        private System.Windows.Forms.Panel pnСостояниеCIS;
     }
 }

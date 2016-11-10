@@ -79,10 +79,19 @@ namespace MainExample
             pnСостояние.BackColor = Color.Orange;
             lblСостояние.Text = "ВЫКЛЮЧЕНА";
 
-            lblСостояниеCIS.Text = "ЦИС НЕ на связи";
-            pnСостояниеCIS.BackColor = Color.Orange;
-
             CisClient = cisClient;
+
+            if (CisClient.IsConnect)
+            {
+                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
+                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+            }
+            else
+            {
+                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
+                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+            }
+
             DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
              {
                 if (isConnect)
@@ -96,29 +105,6 @@ namespace MainExample
                     lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
                 }
              });
-
-            //TODO: подписывать через React. И при закрыти окна отписывать.
-            //CisClient.PropertyChanged += (o, e) =>                         
-            //{
-            //    if (e.PropertyName == "IsConnect") //обработчик событи изменени¤ свойства Name
-            //    {
-            //        //MessageBox.Show(e.PropertyName + "changed");
-            //        cisClient = o as CisClient;
-            //        if (cisClient != null)
-            //        {
-            //            if (CisClient.IsConnect)
-            //            {
-            //                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
-            //                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
-            //            }
-            //            else
-            //            {
-            //                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
-            //                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
-            //            }
-            //        }
-            //    }
-            //};
         }
 
         // Обработка таймера 100 мс для воспроизведения звуковых сообщений
@@ -143,16 +129,12 @@ namespace MainExample
 
             if (РазрешениеРаботы == true)
             {
-                CisClient.Start();
-
                 btnБлокировка.Text = "ОТКЛЮЧИТЬ";
                 pnСостояние.BackColor = Color.LightGreen;
                 lblСостояние.Text = "РАБОТА";
             }
             else
             {
-                CisClient.Stop();
-
                 btnБлокировка.Text = "ВКЛЮЧИТЬ";
                 pnСостояние.BackColor = Color.Orange;
                 lblСостояние.Text = "ВЫКЛЮЧЕНА";
@@ -994,7 +976,6 @@ namespace MainExample
         protected override void OnClosed(EventArgs e)
         {
             DispouseCisClientIsConnectRx.Dispose();
-            CisClient.Stop();
             base.OnClosed(e);
         }
     }

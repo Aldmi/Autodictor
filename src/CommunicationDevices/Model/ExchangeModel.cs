@@ -146,8 +146,8 @@ namespace CommunicationDevices.Model
             //передача данных девайсу и через него поведению
             var dev = Devices.FirstOrDefault(n => n.Name == "MG6587");
             dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 1 прибывает на 2 путь в 19:56" });
-
-
+            //Thread.Sleep(2000);
+            dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 152 прибывает на 21 путь в 10:00" });
         }
     }
 }

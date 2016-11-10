@@ -178,20 +178,27 @@ namespace Communication.SerialPort
         {
             while (!Cts.IsCancellationRequested)
             {
-                //вызов циклических функций опроса
-                foreach (var func in Funcs)
+                try
                 {
-                    await func(this, Cts.Token);
-                }
-
-                //вызов одиночной функции запроса
-                if (OneTimeSendDataQueue != null)
-                {
-                    while (OneTimeSendDataQueue.Any())
+                    //вызов циклических функций опроса
+                    foreach (var func in Funcs)
                     {
-                        var oneSend = OneTimeSendDataQueue.Dequeue();
-                        await oneSend(this, Cts.Token);
+                        await func(this, Cts.Token);
                     }
+
+                    //вызов одиночной функции запроса
+                    if (OneTimeSendDataQueue != null)
+                    {
+                        while (OneTimeSendDataQueue.Any())
+                        {
+                            var oneSend = OneTimeSendDataQueue.Dequeue();
+                            await oneSend(this, Cts.Token);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    StatusString = $"Ошибка работы с портом: {_port.PortName}. ОШИБКА: {ex}";
                 }
             }
         }
