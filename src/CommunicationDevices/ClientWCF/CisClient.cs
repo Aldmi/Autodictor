@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Timers;
-using MainExample.Annotations;
 using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
-using System.Reactive.Subjects;
 
 
-namespace MainExample.ClientWCF
+namespace CommunicationDevices.ClientWCF
 {
     /// <summary>
     /// Клиент для общения с CIS.

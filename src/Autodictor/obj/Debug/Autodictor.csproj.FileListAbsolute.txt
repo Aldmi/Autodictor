@@ -803,3 +803,5 @@ D:\Git\Autodictor\src\Autodictor\bin\Debug\Library.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.BoardForm.resources

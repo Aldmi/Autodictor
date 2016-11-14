@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Castle.Windsor;
@@ -9,6 +10,7 @@ using Communication.SerialPort;
 using Communication.Settings;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.SerialPortBehavior;
+using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
 using CommunicationDevices.Infrastructure;
@@ -19,7 +21,7 @@ using Library.Xml;
 
 namespace CommunicationDevices.Model
 {
-    public class ExchangeModel
+    public class ExchangeModel : IDisposable 
     {
         #region field
 
@@ -32,6 +34,8 @@ namespace CommunicationDevices.Model
 
 
         #region Prop
+
+        public CisClient CisClient { get; private set; }
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
         public List<DeviceSp> Devices { get; set; } = new List<DeviceSp>();
@@ -56,11 +60,37 @@ namespace CommunicationDevices.Model
 
 
 
+
+        #region ctor
+
         public ExchangeModel()
         {
             _container.Install(new WindsorConfig());
         }
 
+        #endregion
+
+
+
+
+
+
+        public void CreateCisClient(EndpointAddress endpointAddress)
+        {
+            CisClient= new CisClient(endpointAddress);
+        }
+
+
+        public void StartCisClient()
+        {
+            CisClient.Start();
+        }
+
+
+        public void StopCisClient()
+        {
+            CisClient.Stop();
+        }
 
 
         public async void LoadSetting()
@@ -126,28 +156,28 @@ namespace CommunicationDevices.Model
 
 
             //Все порты которые используют устройства откроем и запустим.
-            foreach (var devSp in Devices)
+            foreach (var devSp in Devices.GroupBy(d=> d.SpExhBehavior.NumberSp).Select(g=> g.First()))
             {
-                if (devSp.SpExhBehavior.Port != null)
-                {
-                    var taskSerialPort = Task.Factory.StartNew(async () =>
-                    {
-                        if (await devSp.SpExhBehavior.Port.CycleReConnect())
-                        {
-                            var taskCashierEx = devSp.SpExhBehavior.Port.RunExchange();
-                            BackGroundTasks.Add(taskCashierEx);
-                        }
-                    });
-                    BackGroundTasks.Add(taskSerialPort);
-                }
+                devSp.SpExhBehavior.PortCycleReConnect(BackGroundTasks);
             }
+
 
             //Использование------------------------------------------------------------
             //передача данных девайсу и через него поведению
-            var dev = Devices.FirstOrDefault(n => n.Name == "MG6587");
-            dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 1 прибывает на 2 путь в 19:56" });
-            //Thread.Sleep(2000);
-            dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 152 прибывает на 21 путь в 10:00" });
+            //var dev = Devices.FirstOrDefault(n => n.Name == "MG6587");
+            //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 1 прибывает на 2 путь в 19:56" });
+            //Thread.Sleep(1000);
+            //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 152 прибывает на 21 путь в 10:00" });
+            //Thread.Sleep(1000);
+            //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поеfgfdgfdg" });
+
+           // await Task.Delay(2000);
+        }
+
+        public void Dispose()
+        {
+            CisClient?.Dispose();
+            MasterSerialPorts?.ForEach(s=> s.Dispose());
         }
     }
 }

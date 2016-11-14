@@ -46,6 +46,8 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.просмотрСправкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.таблоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Boards = new System.Windows.Forms.ToolStripMenuItem();
             this.данныеЦИСToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OperativeShedules = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
@@ -53,16 +55,18 @@
             // 
             // mainMenu
             // 
+            this.mainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.controlSamplesToolStripMenuItem,
             this.dataSamplesToolStripMenuItem,
             this.справкаToolStripMenuItem,
+            this.таблоToolStripMenuItem,
             this.данныеЦИСToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.mainMenu.Size = new System.Drawing.Size(1008, 24);
+            this.mainMenu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.mainMenu.Size = new System.Drawing.Size(1344, 28);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -74,7 +78,7 @@
             this.toolStripMenuItem1,
             this.fileExit});
             this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(48, 20);
+            this.fileMenu.Size = new System.Drawing.Size(57, 24);
             this.fileMenu.Text = "&Файл";
             // 
             // открытьToolStripMenuItem
@@ -82,7 +86,7 @@
             this.открытьToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("открытьToolStripMenuItem.Image")));
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
             this.открытьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.открытьToolStripMenuItem.Text = "&Открыть...";
             this.открытьToolStripMenuItem.ToolTipText = "Открытие конфигурации, из текстового файла";
             // 
@@ -91,20 +95,20 @@
             this.сохранитьToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("сохранитьToolStripMenuItem.Image")));
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
             this.сохранитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.сохранитьToolStripMenuItem.Text = "&Сохранить...";
             this.сохранитьToolStripMenuItem.ToolTipText = "Сохранение конфигурации в текстовом файле";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(214, 6);
             // 
             // fileExit
             // 
             this.fileExit.Name = "fileExit";
             this.fileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.X)));
-            this.fileExit.Size = new System.Drawing.Size(181, 22);
+            this.fileExit.Size = new System.Drawing.Size(217, 26);
             this.fileExit.Text = "В&ыход";
             this.fileExit.ToolTipText = "Завершение программы";
             this.fileExit.Click += new System.EventHandler(this.fileExit_Click);
@@ -117,14 +121,14 @@
             this.regularMessages,
             this.alarmMessages});
             this.controlSamplesToolStripMenuItem.Name = "controlSamplesToolStripMenuItem";
-            this.controlSamplesToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
+            this.controlSamplesToolStripMenuItem.Size = new System.Drawing.Size(103, 24);
             this.controlSamplesToolStripMenuItem.Text = "&Расписание";
             // 
             // mainWindow
             // 
             this.mainWindow.Name = "mainWindow";
             this.mainWindow.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mainWindow.Size = new System.Drawing.Size(289, 22);
+            this.mainWindow.Size = new System.Drawing.Size(359, 26);
             this.mainWindow.Text = "&Основное окно";
             this.mainWindow.ToolTipText = "Окно, содержащее текущий список программы";
             this.mainWindow.Click += new System.EventHandler(this.buttonExample_Click);
@@ -133,7 +137,7 @@
             // 
             this.trainMessages.Name = "trainMessages";
             this.trainMessages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F2)));
-            this.trainMessages.Size = new System.Drawing.Size(289, 22);
+            this.trainMessages.Size = new System.Drawing.Size(359, 26);
             this.trainMessages.Text = "&Расписание движения поездов";
             this.trainMessages.Click += new System.EventHandler(this.listExample_Click);
             // 
@@ -141,7 +145,7 @@
             // 
             this.regularMessages.Name = "regularMessages";
             this.regularMessages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
-            this.regularMessages.Size = new System.Drawing.Size(289, 22);
+            this.regularMessages.Size = new System.Drawing.Size(359, 26);
             this.regularMessages.Text = "Р&егулярные сообщения";
             this.regularMessages.Click += new System.EventHandler(this.validationExample_Click);
             // 
@@ -149,7 +153,7 @@
             // 
             this.alarmMessages.Name = "alarmMessages";
             this.alarmMessages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.alarmMessages.Size = new System.Drawing.Size(289, 22);
+            this.alarmMessages.Size = new System.Drawing.Size(359, 26);
             this.alarmMessages.Text = "&Внештатные сообщения";
             this.alarmMessages.Click += new System.EventHandler(this.textBoxExample_Click);
             // 
@@ -159,14 +163,14 @@
             this.staticSound,
             this.dynamicSound});
             this.dataSamplesToolStripMenuItem.Name = "dataSamplesToolStripMenuItem";
-            this.dataSamplesToolStripMenuItem.Size = new System.Drawing.Size(139, 20);
+            this.dataSamplesToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.dataSamplesToolStripMenuItem.Text = "&Звуковые сообщения";
             // 
             // staticSound
             // 
             this.staticSound.Name = "staticSound";
             this.staticSound.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
-            this.staticSound.Size = new System.Drawing.Size(265, 22);
+            this.staticSound.Size = new System.Drawing.Size(324, 26);
             this.staticSound.Text = "&Статические сообщения";
             this.staticSound.ToolTipText = "Список статических сообщений системы";
             this.staticSound.Click += new System.EventHandler(this.dataSetExample_Click);
@@ -175,7 +179,7 @@
             // 
             this.dynamicSound.Name = "dynamicSound";
             this.dynamicSound.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F2)));
-            this.dynamicSound.Size = new System.Drawing.Size(265, 22);
+            this.dynamicSound.Size = new System.Drawing.Size(324, 26);
             this.dynamicSound.Text = "&Динамические сообщения";
             this.dynamicSound.Click += new System.EventHandler(this.arrayDataSourceExample_Click);
             // 
@@ -185,7 +189,7 @@
             this.просмотрСправкиToolStripMenuItem,
             this.оПрограммеToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.справкаToolStripMenuItem.Text = "&Справка";
             // 
             // просмотрСправкиToolStripMenuItem
@@ -193,7 +197,7 @@
             this.просмотрСправкиToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("просмотрСправкиToolStripMenuItem.Image")));
             this.просмотрСправкиToolStripMenuItem.Name = "просмотрСправкиToolStripMenuItem";
             this.просмотрСправкиToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.просмотрСправкиToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.просмотрСправкиToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
             this.просмотрСправкиToolStripMenuItem.Text = "&Просмотр справки";
             this.просмотрСправкиToolStripMenuItem.Click += new System.EventHandler(this.просмотрСправкиToolStripMenuItem_Click);
             // 
@@ -201,36 +205,51 @@
             // 
             this.оПрограммеToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("оПрограммеToolStripMenuItem.Image")));
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
             this.оПрограммеToolStripMenuItem.Text = "&О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
+            // 
+            // таблоToolStripMenuItem
+            // 
+            this.таблоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Boards});
+            this.таблоToolStripMenuItem.Name = "таблоToolStripMenuItem";
+            this.таблоToolStripMenuItem.Size = new System.Drawing.Size(99, 24);
+            this.таблоToolStripMenuItem.Text = "Устройства";
+            // 
+            // Boards
+            // 
+            this.Boards.Name = "Boards";
+            this.Boards.Size = new System.Drawing.Size(181, 26);
+            this.Boards.Text = "Табло";
+            this.Boards.Click += new System.EventHandler(this.Boards_Click);
             // 
             // данныеЦИСToolStripMenuItem
             // 
             this.данныеЦИСToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OperativeShedules});
             this.данныеЦИСToolStripMenuItem.Name = "данныеЦИСToolStripMenuItem";
-            this.данныеЦИСToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.данныеЦИСToolStripMenuItem.Size = new System.Drawing.Size(111, 24);
             this.данныеЦИСToolStripMenuItem.Text = "Данные ЦИС";
             // 
             // OperativeShedules
             // 
             this.OperativeShedules.Name = "OperativeShedules";
-            this.OperativeShedules.Size = new System.Drawing.Size(215, 22);
+            this.OperativeShedules.Size = new System.Drawing.Size(265, 26);
             this.OperativeShedules.Text = "Оперативное расписание";
             this.OperativeShedules.Click += new System.EventHandler(this.OperativeShedules_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 730);
+            this.ClientSize = new System.Drawing.Size(1344, 898);
             this.Controls.Add(this.mainMenu);
             this.DoubleBuffered = true;
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.mainMenu;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
             this.Text = "Автодиктор - программа автоматического информирования пассажиров";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -263,6 +282,8 @@
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem данныеЦИСToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OperativeShedules;
+        private System.Windows.Forms.ToolStripMenuItem таблоToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Boards;
     }
 }
 

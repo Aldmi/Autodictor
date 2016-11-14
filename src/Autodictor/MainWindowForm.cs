@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
-using System.ServiceModel;
-using MainExample.ClientWCF;
+using CommunicationDevices.ClientWCF;
 using MainExample.Extension;
-using WCFCis2AvtodictorContract.Contract;
 
 
 namespace MainExample

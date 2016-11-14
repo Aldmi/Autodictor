@@ -41,7 +41,7 @@ namespace Communication.TcpIp
             _clients.CollectionChanged += (sender, args) =>
             {
                 var collect = sender as ObservableCollection<Client>;
-                IsConnect = (collect != null && collect.Any());                                 //при наличии хотя бы одного клиента IsConnect = true;
+                IsConnect = (collect != null && collect.Any());                                 //при наличии хотя бы одного клиента IsOpen = true;
             };
         }
 

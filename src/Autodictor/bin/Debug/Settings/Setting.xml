@@ -7,22 +7,15 @@
 
   <SerialPorts>
 	<Serial>
-      <Port>3</Port>
+      <Port>1</Port>
 	  <BaudRate>57600</BaudRate>
-	  <DataBits>8</DataBits>
-	  <StopBits>1</StopBits>
-    </Serial>
-	
-	<Serial>
-      <Port>2</Port>
-	  <BaudRate>9600</BaudRate>
 	  <DataBits>8</DataBits>
 	  <StopBits>1</StopBits>
     </Serial>
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="MG6587" Port="3" Address="1" TimeRespone="700" Description="Панель светодиодная, вывод регулярного расписания"/>
-	 <DeviceSp Id="2" Name="MG7777" Port="3" Address="2" TimeRespone="800" Description="Панель светодиодная, вывод оперативного расписания"/>
+	 <DeviceSp Id="1" Name="MG6587" Port="1" Address="1" TimeRespone="700" Description="Панель светодиодная, вывод регулярного расписания"/>
+	 <DeviceSp Id="2" Name="MG7777" Port="1" Address="2" TimeRespone="800" Description="Панель светодиодная, вывод оперативного расписания"/>
   </DevicesWithSP>
 </Root>

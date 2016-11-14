@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MainExample.ClientWCF;
+using CommunicationDevices.ClientWCF;
 using MainExample.Extension;
-using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
 
 

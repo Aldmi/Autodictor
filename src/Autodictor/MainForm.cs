@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Configuration;
 using System.ServiceModel;
 using CommunicationDevices.Model;
-using MainExample.ClientWCF;
+
 
 namespace MainExample
 {
     public partial class MainForm : Form
     {
-        public CisClient CisClient { get; set; }
         public ExchangeModel ExchangeModel { get; set; }
 
 
@@ -28,7 +21,7 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-            TrainTable.ЗагрузитьСписок();
+           // TrainTable.ЗагрузитьСписок();                 //TODO: загружается на выбор в окне расписания
 
             //Player.PlayFile("");  //TODO: включить
 
@@ -40,9 +33,9 @@ namespace MainExample
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            CisClient = new CisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
-            CisClient.Start();
-            ExchangeModel.LoadSetting();
+           ExchangeModel.CreateCisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
+           ExchangeModel.StartCisClient();
+           ExchangeModel.LoadSetting();
         }
 
 
@@ -61,7 +54,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(CisClient);
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient);
                 mainform.MdiParent = this;
                 mainform.Show();
             }
@@ -70,7 +63,7 @@ namespace MainExample
         //Расписание движения поездов
         private void listExample_Click(object sender, EventArgs e)
         {
-            TrainTable listForm = new TrainTable(CisClient);
+            TrainTable listForm = new TrainTable(ExchangeModel.CisClient);
             listForm.MdiParent = this;
             listForm.Show();
         }
@@ -128,13 +121,34 @@ namespace MainExample
             }
             else                                                                                         //Открытие окна
             {
-                OperativeSheduleForm operativeSheduleForm = new OperativeSheduleForm(CisClient);
+                OperativeSheduleForm operativeSheduleForm = new OperativeSheduleForm(ExchangeModel.CisClient);
                 operativeSheduleForm.MdiParent = this;
                 operativeSheduleForm.Show();
             }
         }
+
+
+        private void Boards_Click(object sender, EventArgs e)
+        {
+            if (BoardForm.MyBoardForm != null)                                     //Открытие окна повторно, при открытом первом экземпляре.
+            {
+                BoardForm.MyBoardForm.Show();
+                BoardForm.MyBoardForm.WindowState = FormWindowState.Normal;
+            }
+            else                                                                                         //Открытие окна
+            {
+                BoardForm boardForm = new BoardForm(ExchangeModel.Devices);
+                boardForm.MdiParent = this;
+                boardForm.Show();
+            }
+        }
+
+
+
+        protected override void OnClosed(EventArgs e)
+        {
+            ExchangeModel.Dispose();
+            base.OnClosed(e);
+        }
     }
-
- 
-
 }

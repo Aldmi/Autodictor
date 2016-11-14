@@ -1,15 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using Microsoft.Win32;
-using System.Management;
-
-
 
 
 namespace MainExample

@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
+using System.Reactive.Subjects;
+
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
@@ -23,10 +25,28 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region Prop
 
-        public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
-        public MasterSerialPort Port { get; set; }
+        private MasterSerialPort Port { get; }
 
-        public bool IsConnect { get; set; }
+        public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
+        public UniversalInputType LastSendData { get; set; }
+
+        public byte NumberSp => Port.PortNumber;
+        public bool IsOpenSp => Port.IsOpen;
+
+        private bool _isConnect;
+        public bool IsConnect
+        {
+            get { return _isConnect; }
+            set
+            {
+                if(_isConnect == value)
+                    return;
+
+                _isConnect = value;
+                IsConnectChange.OnNext(this);
+            }
+        }
+
 
         private bool _dataExchangeSuccess;
         public bool DataExchangeSuccess
@@ -48,6 +68,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                         IsConnect = false;
                     }
                 }
+
+                IsDataExchangeSuccessChange.OnNext(this);
             }
         }
 
@@ -70,7 +92,33 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
 
 
+        #region Rx
+
+        public ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; } = new Subject<ISerialPortExhangeBehavior>();
+        public ISubject<ISerialPortExhangeBehavior> IsConnectChange { get; } = new Subject<ISerialPortExhangeBehavior>();
+        #endregion
+
+
+
+
         #region Methode
+
+        public void PortCycleReConnect(ICollection<Task> backGroundTasks = null)
+        {
+            if (Port != null)
+            {
+                var taskSerialPort = Task.Factory.StartNew(async () =>
+                {
+                    if (await Port.CycleReConnect())
+                    {
+                        var taskPortEx = Port.RunExchange();
+                        backGroundTasks?.Add(taskPortEx);
+                    }
+                });
+                backGroundTasks?.Add(taskSerialPort);
+            }
+        }
+
 
         public void AddOneTimeSendData(UniversalInputType inData)
         {
@@ -81,16 +129,14 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             }
         }
 
+
         private async Task ExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            var writeProvider = new PanelMg6587WriteDataProvider() {InputData = inData };
-            DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+            LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
+            var writeProvider = new PanelMg6587WriteDataProvider() {InputData = LastSendData };
+            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+            DataExchangeSuccess = true;//!DataExchangeSuccess;//DEBUG
 
-            if (!IsConnect)
-            {
-                //Сработка события DisconectHandling()
-            }
 
             //if (writeProvider.IsOutDataValid)
             //{

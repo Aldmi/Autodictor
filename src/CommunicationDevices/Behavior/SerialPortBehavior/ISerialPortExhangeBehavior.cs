@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
 
@@ -7,12 +9,19 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
     public interface ISerialPortExhangeBehavior
     {
         Queue<UniversalInputType> InDataQueue { get; set; }
-        MasterSerialPort Port { get; set; }
-         bool IsConnect { get;  set; }
-         bool DataExchangeSuccess { get; set; }
+        UniversalInputType LastSendData { get; set; }
 
-         void AddOneTimeSendData(UniversalInputType inData);
+        byte NumberSp { get; }
+        bool IsOpenSp { get; }
+        bool IsConnect { get;  set; }
+        bool DataExchangeSuccess { get; set; }
 
+        void PortCycleReConnect(ICollection<Task> backGroundTasks = null);
+        void AddOneTimeSendData(UniversalInputType inData);
+
+
+        ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; }
+        ISubject<ISerialPortExhangeBehavior> IsConnectChange { get; }
 
         //TODO: Добавить Rx событие  IsConnectChange.
     }

@@ -70,9 +70,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lblСостояниеCIS = new System.Windows.Forms.Label();
             this.pnСостояниеCIS = new System.Windows.Forms.Panel();
+            this.groupBoxSourseShedule = new System.Windows.Forms.GroupBox();
+            this.rbSourseSheduleCis = new System.Windows.Forms.RadioButton();
+            this.rbSourseSheduleLocal = new System.Windows.Forms.RadioButton();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.gBОтображениеРасписания.SuspendLayout();
             this.pnСостояниеCIS.SuspendLayout();
+            this.groupBoxSourseShedule.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -92,10 +97,11 @@
             this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(2, 1);
+            this.listView1.Location = new System.Drawing.Point(3, 1);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1104, 430);
+            this.listView1.Size = new System.Drawing.Size(1471, 461);
             this.listView1.TabIndex = 0;
             this.toolTip1.SetToolTip(this.listView1, "Расписание движения поездов");
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -145,9 +151,10 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(518, 472);
+            this.button1.Location = new System.Drawing.Point(691, 581);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(347, 30);
+            this.button1.Size = new System.Drawing.Size(463, 37);
             this.button1.TabIndex = 1;
             this.button1.Text = "Редактировать расписание";
             this.button1.UseVisualStyleBackColor = true;
@@ -158,27 +165,30 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 436);
+            this.label1.Location = new System.Drawing.Point(16, 537);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 21);
+            this.label1.Size = new System.Drawing.Size(74, 28);
             this.label1.TabIndex = 2;
             this.label1.Text = "Номер";
             // 
             // tB_Номер
             // 
             this.tB_Номер.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tB_Номер.Location = new System.Drawing.Point(71, 439);
+            this.tB_Номер.Location = new System.Drawing.Point(95, 540);
+            this.tB_Номер.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tB_Номер.Name = "tB_Номер";
-            this.tB_Номер.Size = new System.Drawing.Size(100, 20);
+            this.tB_Номер.Size = new System.Drawing.Size(132, 22);
             this.tB_Номер.TabIndex = 3;
             this.toolTip1.SetToolTip(this.tB_Номер, "Поле ввода номера поезда");
             // 
             // tB_Название
             // 
             this.tB_Название.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tB_Название.Location = new System.Drawing.Point(257, 439);
+            this.tB_Название.Location = new System.Drawing.Point(343, 540);
+            this.tB_Название.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tB_Название.Name = "tB_Название";
-            this.tB_Название.Size = new System.Drawing.Size(317, 20);
+            this.tB_Название.Size = new System.Drawing.Size(421, 22);
             this.tB_Название.TabIndex = 5;
             this.toolTip1.SetToolTip(this.tB_Название, "Поле ввода названия поезда");
             // 
@@ -187,9 +197,10 @@
             this.Название.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Название.AutoSize = true;
             this.Название.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Название.Location = new System.Drawing.Point(177, 438);
+            this.Название.Location = new System.Drawing.Point(236, 539);
+            this.Название.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Название.Name = "Название";
-            this.Название.Size = new System.Drawing.Size(78, 21);
+            this.Название.Size = new System.Drawing.Size(100, 28);
             this.Название.TabIndex = 4;
             this.Название.Text = "Название";
             // 
@@ -198,9 +209,10 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(12, 460);
+            this.label2.Location = new System.Drawing.Point(16, 566);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 21);
+            this.label2.Size = new System.Drawing.Size(106, 28);
             this.label2.TabIndex = 6;
             this.label2.Text = "Прибытие";
             // 
@@ -209,9 +221,10 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(251, 459);
+            this.label4.Location = new System.Drawing.Point(335, 565);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(105, 21);
+            this.label4.Size = new System.Drawing.Size(135, 28);
             this.label4.TabIndex = 10;
             this.label4.Text = "Отправление";
             // 
@@ -221,9 +234,10 @@
             this.cB_Прибытие.AutoSize = true;
             this.cB_Прибытие.Checked = true;
             this.cB_Прибытие.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_Прибытие.Location = new System.Drawing.Point(207, 465);
+            this.cB_Прибытие.Location = new System.Drawing.Point(276, 572);
+            this.cB_Прибытие.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cB_Прибытие.Name = "cB_Прибытие";
-            this.cB_Прибытие.Size = new System.Drawing.Size(29, 17);
+            this.cB_Прибытие.Size = new System.Drawing.Size(34, 21);
             this.cB_Прибытие.TabIndex = 12;
             this.cB_Прибытие.Text = " ";
             this.toolTip1.SetToolTip(this.cB_Прибытие, "Разрешает использование времени прибытия поезда");
@@ -235,9 +249,10 @@
             this.cB_Отправление.AutoSize = true;
             this.cB_Отправление.Checked = true;
             this.cB_Отправление.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cB_Отправление.Location = new System.Drawing.Point(470, 466);
+            this.cB_Отправление.Location = new System.Drawing.Point(627, 574);
+            this.cB_Отправление.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cB_Отправление.Name = "cB_Отправление";
-            this.cB_Отправление.Size = new System.Drawing.Size(29, 17);
+            this.cB_Отправление.Size = new System.Drawing.Size(34, 21);
             this.cB_Отправление.TabIndex = 14;
             this.cB_Отправление.Text = " ";
             this.toolTip1.SetToolTip(this.cB_Отправление, "Разрешает использования времени отправления поезда");
@@ -248,10 +263,11 @@
             this.dTP_Прибытие.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dTP_Прибытие.CustomFormat = "HH:mm:ss";
             this.dTP_Прибытие.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Прибытие.Location = new System.Drawing.Point(100, 462);
+            this.dTP_Прибытие.Location = new System.Drawing.Point(133, 569);
+            this.dTP_Прибытие.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dTP_Прибытие.Name = "dTP_Прибытие";
             this.dTP_Прибытие.ShowUpDown = true;
-            this.dTP_Прибытие.Size = new System.Drawing.Size(100, 20);
+            this.dTP_Прибытие.Size = new System.Drawing.Size(132, 22);
             this.dTP_Прибытие.TabIndex = 18;
             this.toolTip1.SetToolTip(this.dTP_Прибытие, "Поле установки времени прибытия поезда");
             // 
@@ -260,19 +276,21 @@
             this.dTP_Отправление.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dTP_Отправление.CustomFormat = "HH:mm:ss";
             this.dTP_Отправление.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Отправление.Location = new System.Drawing.Point(364, 462);
+            this.dTP_Отправление.Location = new System.Drawing.Point(485, 569);
+            this.dTP_Отправление.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dTP_Отправление.Name = "dTP_Отправление";
             this.dTP_Отправление.ShowUpDown = true;
-            this.dTP_Отправление.Size = new System.Drawing.Size(100, 20);
+            this.dTP_Отправление.Size = new System.Drawing.Size(132, 22);
             this.dTP_Отправление.TabIndex = 19;
             this.toolTip1.SetToolTip(this.dTP_Отправление, "Поле установки времени прибытия поезда");
             // 
             // tBПримечание
             // 
             this.tBПримечание.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tBПримечание.Location = new System.Drawing.Point(573, 559);
+            this.tBПримечание.Location = new System.Drawing.Point(764, 688);
+            this.tBПримечание.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tBПримечание.Name = "tBПримечание";
-            this.tBПримечание.Size = new System.Drawing.Size(293, 20);
+            this.tBПримечание.Size = new System.Drawing.Size(389, 22);
             this.tBПримечание.TabIndex = 27;
             this.toolTip1.SetToolTip(this.tBПримечание, "Поле ввода номера поезда");
             // 
@@ -280,9 +298,10 @@
             // 
             this.btn_ДобавитьЗапись.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_ДобавитьЗапись.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_ДобавитьЗапись.Location = new System.Drawing.Point(872, 440);
+            this.btn_ДобавитьЗапись.Location = new System.Drawing.Point(1163, 542);
+            this.btn_ДобавитьЗапись.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_ДобавитьЗапись.Name = "btn_ДобавитьЗапись";
-            this.btn_ДобавитьЗапись.Size = new System.Drawing.Size(151, 29);
+            this.btn_ДобавитьЗапись.Size = new System.Drawing.Size(201, 36);
             this.btn_ДобавитьЗапись.TabIndex = 15;
             this.btn_ДобавитьЗапись.Text = "Добавить запись";
             this.btn_ДобавитьЗапись.UseVisualStyleBackColor = true;
@@ -292,9 +311,10 @@
             // 
             this.btn_ИзменитьЗапись.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_ИзменитьЗапись.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_ИзменитьЗапись.Location = new System.Drawing.Point(872, 472);
+            this.btn_ИзменитьЗапись.Location = new System.Drawing.Point(1163, 581);
+            this.btn_ИзменитьЗапись.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_ИзменитьЗапись.Name = "btn_ИзменитьЗапись";
-            this.btn_ИзменитьЗапись.Size = new System.Drawing.Size(151, 29);
+            this.btn_ИзменитьЗапись.Size = new System.Drawing.Size(201, 36);
             this.btn_ИзменитьЗапись.TabIndex = 16;
             this.btn_ИзменитьЗапись.Text = "Изменить запись";
             this.btn_ИзменитьЗапись.UseVisualStyleBackColor = true;
@@ -304,9 +324,10 @@
             // 
             this.btn_УдалитьЗапись.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_УдалитьЗапись.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_УдалитьЗапись.Location = new System.Drawing.Point(872, 507);
+            this.btn_УдалитьЗапись.Location = new System.Drawing.Point(1163, 624);
+            this.btn_УдалитьЗапись.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_УдалитьЗапись.Name = "btn_УдалитьЗапись";
-            this.btn_УдалитьЗапись.Size = new System.Drawing.Size(151, 29);
+            this.btn_УдалитьЗапись.Size = new System.Drawing.Size(201, 36);
             this.btn_УдалитьЗапись.TabIndex = 17;
             this.btn_УдалитьЗапись.Text = "Удалить запись";
             this.btn_УдалитьЗапись.UseVisualStyleBackColor = true;
@@ -316,9 +337,10 @@
             // 
             this.btn_Вверх.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_Вверх.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Вверх.Location = new System.Drawing.Point(1029, 440);
+            this.btn_Вверх.Location = new System.Drawing.Point(1372, 542);
+            this.btn_Вверх.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_Вверх.Name = "btn_Вверх";
-            this.btn_Вверх.Size = new System.Drawing.Size(77, 29);
+            this.btn_Вверх.Size = new System.Drawing.Size(103, 36);
             this.btn_Вверх.TabIndex = 15;
             this.btn_Вверх.Text = "ВВЕРХ";
             this.btn_Вверх.UseVisualStyleBackColor = true;
@@ -328,9 +350,10 @@
             // 
             this.btn_Вниз.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_Вниз.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Вниз.Location = new System.Drawing.Point(1029, 472);
+            this.btn_Вниз.Location = new System.Drawing.Point(1372, 581);
+            this.btn_Вниз.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_Вниз.Name = "btn_Вниз";
-            this.btn_Вниз.Size = new System.Drawing.Size(77, 29);
+            this.btn_Вниз.Size = new System.Drawing.Size(103, 36);
             this.btn_Вниз.TabIndex = 20;
             this.btn_Вниз.Text = "ВНИЗ";
             this.btn_Вниз.UseVisualStyleBackColor = true;
@@ -340,9 +363,10 @@
             // 
             this.btn_Сохранить.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_Сохранить.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Сохранить.Location = new System.Drawing.Point(1029, 507);
+            this.btn_Сохранить.Location = new System.Drawing.Point(1372, 624);
+            this.btn_Сохранить.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_Сохранить.Name = "btn_Сохранить";
-            this.btn_Сохранить.Size = new System.Drawing.Size(77, 29);
+            this.btn_Сохранить.Size = new System.Drawing.Size(103, 36);
             this.btn_Сохранить.TabIndex = 21;
             this.btn_Сохранить.Text = "СОХР.";
             this.btn_Сохранить.UseVisualStyleBackColor = true;
@@ -352,9 +376,10 @@
             // 
             this.btn_ШаблонОповещения.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_ШаблонОповещения.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_ШаблонОповещения.Location = new System.Drawing.Point(518, 506);
+            this.btn_ШаблонОповещения.Location = new System.Drawing.Point(691, 623);
+            this.btn_ШаблонОповещения.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_ШаблонОповещения.Name = "btn_ШаблонОповещения";
-            this.btn_ШаблонОповещения.Size = new System.Drawing.Size(347, 30);
+            this.btn_ШаблонОповещения.Size = new System.Drawing.Size(463, 37);
             this.btn_ШаблонОповещения.TabIndex = 22;
             this.btn_ШаблонОповещения.Text = "Редактировать шаблон оповещения";
             this.btn_ШаблонОповещения.UseVisualStyleBackColor = true;
@@ -367,9 +392,11 @@
             this.gB_НумерацияПоезда.Controls.Add(this.rB_Нумерация_СГоловы);
             this.gB_НумерацияПоезда.Controls.Add(this.rB_Нумерация_Отсутствует);
             this.gB_НумерацияПоезда.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gB_НумерацияПоезда.Location = new System.Drawing.Point(12, 480);
+            this.gB_НумерацияПоезда.Location = new System.Drawing.Point(16, 591);
+            this.gB_НумерацияПоезда.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gB_НумерацияПоезда.Name = "gB_НумерацияПоезда";
-            this.gB_НумерацияПоезда.Size = new System.Drawing.Size(437, 54);
+            this.gB_НумерацияПоезда.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gB_НумерацияПоезда.Size = new System.Drawing.Size(583, 66);
             this.gB_НумерацияПоезда.TabIndex = 23;
             this.gB_НумерацияПоезда.TabStop = false;
             this.gB_НумерацияПоезда.Text = "Нумерация поезда";
@@ -377,9 +404,10 @@
             // rB_Нумерация_СХвоста
             // 
             this.rB_Нумерация_СХвоста.AutoSize = true;
-            this.rB_Нумерация_СХвоста.Location = new System.Drawing.Point(286, 23);
+            this.rB_Нумерация_СХвоста.Location = new System.Drawing.Point(381, 28);
+            this.rB_Нумерация_СХвоста.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rB_Нумерация_СХвоста.Name = "rB_Нумерация_СХвоста";
-            this.rB_Нумерация_СХвоста.Size = new System.Drawing.Size(143, 25);
+            this.rB_Нумерация_СХвоста.Size = new System.Drawing.Size(180, 32);
             this.rB_Нумерация_СХвоста.TabIndex = 3;
             this.rB_Нумерация_СХвоста.TabStop = true;
             this.rB_Нумерация_СХвоста.Text = "с хвоста состава";
@@ -388,9 +416,10 @@
             // rB_Нумерация_СГоловы
             // 
             this.rB_Нумерация_СГоловы.AutoSize = true;
-            this.rB_Нумерация_СГоловы.Location = new System.Drawing.Point(132, 23);
+            this.rB_Нумерация_СГоловы.Location = new System.Drawing.Point(176, 28);
+            this.rB_Нумерация_СГоловы.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rB_Нумерация_СГоловы.Name = "rB_Нумерация_СГоловы";
-            this.rB_Нумерация_СГоловы.Size = new System.Drawing.Size(148, 25);
+            this.rB_Нумерация_СГоловы.Size = new System.Drawing.Size(189, 32);
             this.rB_Нумерация_СГоловы.TabIndex = 2;
             this.rB_Нумерация_СГоловы.TabStop = true;
             this.rB_Нумерация_СГоловы.Text = "с головы состава";
@@ -400,9 +429,10 @@
             // 
             this.rB_Нумерация_Отсутствует.AutoSize = true;
             this.rB_Нумерация_Отсутствует.Checked = true;
-            this.rB_Нумерация_Отсутствует.Location = new System.Drawing.Point(15, 23);
+            this.rB_Нумерация_Отсутствует.Location = new System.Drawing.Point(20, 28);
+            this.rB_Нумерация_Отсутствует.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rB_Нумерация_Отсутствует.Name = "rB_Нумерация_Отсутствует";
-            this.rB_Нумерация_Отсутствует.Size = new System.Drawing.Size(111, 25);
+            this.rB_Нумерация_Отсутствует.Size = new System.Drawing.Size(136, 32);
             this.rB_Нумерация_Отсутствует.TabIndex = 1;
             this.rB_Нумерация_Отсутствует.TabStop = true;
             this.rB_Нумерация_Отсутствует.Text = "отсутствует";
@@ -413,9 +443,10 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(580, 439);
+            this.label3.Location = new System.Drawing.Point(773, 540);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 21);
+            this.label3.Size = new System.Drawing.Size(121, 28);
             this.label3.TabIndex = 24;
             this.label3.Text = "Номер пути";
             // 
@@ -436,9 +467,10 @@
             "Восьмой путь",
             "Девятый путь",
             "Десятый путь"});
-            this.cB_НомерПути.Location = new System.Drawing.Point(674, 438);
+            this.cB_НомерПути.Location = new System.Drawing.Point(899, 539);
+            this.cB_НомерПути.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cB_НомерПути.Name = "cB_НомерПути";
-            this.cB_НомерПути.Size = new System.Drawing.Size(192, 29);
+            this.cB_НомерПути.Size = new System.Drawing.Size(255, 36);
             this.cB_НомерПути.TabIndex = 25;
             this.cB_НомерПути.Text = "Неизвестно";
             // 
@@ -449,9 +481,11 @@
             this.gBОтображениеРасписания.Controls.Add(this.rBОтображениеДальнегоСледования);
             this.gBОтображениеРасписания.Controls.Add(this.rBОтображениеОтсутствует);
             this.gBОтображениеРасписания.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.gBОтображениеРасписания.Location = new System.Drawing.Point(12, 533);
+            this.gBОтображениеРасписания.Location = new System.Drawing.Point(16, 656);
+            this.gBОтображениеРасписания.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gBОтображениеРасписания.Name = "gBОтображениеРасписания";
-            this.gBОтображениеРасписания.Size = new System.Drawing.Size(437, 54);
+            this.gBОтображениеРасписания.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gBОтображениеРасписания.Size = new System.Drawing.Size(583, 66);
             this.gBОтображениеРасписания.TabIndex = 24;
             this.gBОтображениеРасписания.TabStop = false;
             this.gBОтображениеРасписания.Text = "Отображение в окне расписания";
@@ -460,9 +494,10 @@
             // rBОтображениеПригород
             // 
             this.rBОтображениеПригород.AutoSize = true;
-            this.rBОтображениеПригород.Location = new System.Drawing.Point(286, 23);
+            this.rBОтображениеПригород.Location = new System.Drawing.Point(381, 28);
+            this.rBОтображениеПригород.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rBОтображениеПригород.Name = "rBОтображениеПригород";
-            this.rBОтображениеПригород.Size = new System.Drawing.Size(97, 25);
+            this.rBОтображениеПригород.Size = new System.Drawing.Size(124, 32);
             this.rBОтображениеПригород.TabIndex = 3;
             this.rBОтображениеПригород.TabStop = true;
             this.rBОтображениеПригород.Text = "пригород";
@@ -471,9 +506,10 @@
             // rBОтображениеДальнегоСледования
             // 
             this.rBОтображениеДальнегоСледования.AutoSize = true;
-            this.rBОтображениеДальнегоСледования.Location = new System.Drawing.Point(132, 23);
+            this.rBОтображениеДальнегоСледования.Location = new System.Drawing.Point(176, 28);
+            this.rBОтображениеДальнегоСледования.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rBОтображениеДальнегоСледования.Name = "rBОтображениеДальнегоСледования";
-            this.rBОтображениеДальнегоСледования.Size = new System.Drawing.Size(125, 25);
+            this.rBОтображениеДальнегоСледования.Size = new System.Drawing.Size(157, 32);
             this.rBОтображениеДальнегоСледования.TabIndex = 2;
             this.rBОтображениеДальнегоСледования.TabStop = true;
             this.rBОтображениеДальнегоСледования.Text = "дальнее след.";
@@ -483,9 +519,10 @@
             // 
             this.rBОтображениеОтсутствует.AutoSize = true;
             this.rBОтображениеОтсутствует.Checked = true;
-            this.rBОтображениеОтсутствует.Location = new System.Drawing.Point(15, 23);
+            this.rBОтображениеОтсутствует.Location = new System.Drawing.Point(20, 28);
+            this.rBОтображениеОтсутствует.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rBОтображениеОтсутствует.Name = "rBОтображениеОтсутствует";
-            this.rBОтображениеОтсутствует.Size = new System.Drawing.Size(111, 25);
+            this.rBОтображениеОтсутствует.Size = new System.Drawing.Size(136, 32);
             this.rBОтображениеОтсутствует.TabIndex = 1;
             this.rBОтображениеОтсутствует.TabStop = true;
             this.rBОтображениеОтсутствует.Text = "отсутствует";
@@ -496,37 +533,97 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(468, 556);
+            this.label5.Location = new System.Drawing.Point(624, 684);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 21);
+            this.label5.Size = new System.Drawing.Size(129, 28);
             this.label5.TabIndex = 26;
             this.label5.Text = "Примечание";
             // 
             // lblСостояниеCIS
             // 
+            this.lblСостояниеCIS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblСостояниеCIS.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.lblСостояниеCIS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblСостояниеCIS.Location = new System.Drawing.Point(2, 0);
+            this.lblСостояниеCIS.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblСостояниеCIS.Name = "lblСостояниеCIS";
-            this.lblСостояниеCIS.Size = new System.Drawing.Size(231, 45);
+            this.lblСостояниеCIS.Size = new System.Drawing.Size(308, 55);
             this.lblСостояниеCIS.TabIndex = 28;
             this.lblСостояниеCIS.Text = "ЦИС НЕ на связи";
             this.lblСостояниеCIS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnСостояниеCIS
             // 
+            this.pnСостояниеCIS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnСостояниеCIS.BackColor = System.Drawing.Color.Orange;
             this.pnСостояниеCIS.Controls.Add(this.lblСостояниеCIS);
-            this.pnСостояниеCIS.Location = new System.Drawing.Point(872, 542);
+            this.pnСостояниеCIS.Location = new System.Drawing.Point(1163, 667);
+            this.pnСостояниеCIS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnСостояниеCIS.Name = "pnСостояниеCIS";
-            this.pnСостояниеCIS.Size = new System.Drawing.Size(234, 45);
+            this.pnСостояниеCIS.Size = new System.Drawing.Size(312, 55);
             this.pnСостояниеCIS.TabIndex = 29;
+            // 
+            // groupBoxSourseShedule
+            // 
+            this.groupBoxSourseShedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxSourseShedule.Controls.Add(this.btnLoad);
+            this.groupBoxSourseShedule.Controls.Add(this.rbSourseSheduleCis);
+            this.groupBoxSourseShedule.Controls.Add(this.rbSourseSheduleLocal);
+            this.groupBoxSourseShedule.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBoxSourseShedule.Location = new System.Drawing.Point(21, 467);
+            this.groupBoxSourseShedule.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxSourseShedule.Name = "groupBoxSourseShedule";
+            this.groupBoxSourseShedule.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxSourseShedule.Size = new System.Drawing.Size(743, 66);
+            this.groupBoxSourseShedule.TabIndex = 25;
+            this.groupBoxSourseShedule.TabStop = false;
+            this.groupBoxSourseShedule.Text = "Источник загрузки расписания";
+            // 
+            // rbSourseSheduleCis
+            // 
+            this.rbSourseSheduleCis.AutoSize = true;
+            this.rbSourseSheduleCis.Location = new System.Drawing.Point(176, 28);
+            this.rbSourseSheduleCis.Margin = new System.Windows.Forms.Padding(4);
+            this.rbSourseSheduleCis.Name = "rbSourseSheduleCis";
+            this.rbSourseSheduleCis.Size = new System.Drawing.Size(75, 32);
+            this.rbSourseSheduleCis.TabIndex = 2;
+            this.rbSourseSheduleCis.TabStop = true;
+            this.rbSourseSheduleCis.Text = "ЦИС";
+            this.rbSourseSheduleCis.UseVisualStyleBackColor = true;
+            // 
+            // rbSourseSheduleLocal
+            // 
+            this.rbSourseSheduleLocal.AutoSize = true;
+            this.rbSourseSheduleLocal.Checked = true;
+            this.rbSourseSheduleLocal.Location = new System.Drawing.Point(20, 28);
+            this.rbSourseSheduleLocal.Margin = new System.Windows.Forms.Padding(4);
+            this.rbSourseSheduleLocal.Name = "rbSourseSheduleLocal";
+            this.rbSourseSheduleLocal.Size = new System.Drawing.Size(135, 32);
+            this.rbSourseSheduleLocal.TabIndex = 1;
+            this.rbSourseSheduleLocal.TabStop = true;
+            this.rbSourseSheduleLocal.Text = "локальный";
+            this.rbSourseSheduleLocal.UseVisualStyleBackColor = true;
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnLoad.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnLoad.Location = new System.Drawing.Point(319, 22);
+            this.btnLoad.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(392, 36);
+            this.btnLoad.TabIndex = 30;
+            this.btnLoad.Text = "Загрузить расписание";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // TrainTable
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1109, 593);
+            this.ClientSize = new System.Drawing.Size(1479, 730);
+            this.Controls.Add(this.groupBoxSourseShedule);
             this.Controls.Add(this.pnСостояниеCIS);
             this.Controls.Add(this.tBПримечание);
             this.Controls.Add(this.label5);
@@ -556,7 +653,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "TrainTable";
             this.Text = "Расписание движения поездов";
             this.gB_НумерацияПоезда.ResumeLayout(false);
@@ -564,6 +661,8 @@
             this.gBОтображениеРасписания.ResumeLayout(false);
             this.gBОтображениеРасписания.PerformLayout();
             this.pnСостояниеCIS.ResumeLayout(false);
+            this.groupBoxSourseShedule.ResumeLayout(false);
+            this.groupBoxSourseShedule.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -612,5 +711,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblСостояниеCIS;
         private System.Windows.Forms.Panel pnСостояниеCIS;
+        private System.Windows.Forms.GroupBox groupBoxSourseShedule;
+        private System.Windows.Forms.RadioButton rbSourseSheduleCis;
+        private System.Windows.Forms.RadioButton rbSourseSheduleLocal;
+        private System.Windows.Forms.Button btnLoad;
     }
 }

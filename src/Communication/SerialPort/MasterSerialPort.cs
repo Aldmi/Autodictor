@@ -22,7 +22,7 @@ namespace Communication.SerialPort
         private const int TimeCycleReConnect = 3000;
 
         private string _statusString;
-        private bool _isConnect;
+        private bool _isOpen;
         private bool _isRunDataExchange;
 
         private readonly System.IO.Ports.SerialPort _port; //COM порт
@@ -78,13 +78,13 @@ namespace Communication.SerialPort
             }
         }
 
-        public bool IsConnect
+        public bool IsOpen
         {
-            get { return _isConnect; }
+            get { return _isOpen; }
             set
             {
-                if (value == _isConnect) return;
-                _isConnect = value;
+                if (value == _isOpen) return;
+                _isOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -127,7 +127,7 @@ namespace Communication.SerialPort
         {
             Dispose();
 
-            IsConnect = false;
+            IsOpen = false;
 
             try
             {
@@ -135,12 +135,13 @@ namespace Communication.SerialPort
             }
             catch (Exception ex)
             {
-                IsConnect = false;
+                IsOpen = false;
                 StatusString = $"Ошибка открытия порта: {_port.PortName}. ОШИБКА: {ex}";
                 return false;
             }
 
-            IsConnect = true;
+            IsOpen = true;
+            StatusString = $"Порт открыт: {_port.PortName}.";
             return true;
         }
 
@@ -189,8 +190,8 @@ namespace Communication.SerialPort
                     //вызов одиночной функции запроса
                     if (OneTimeSendDataQueue != null)
                     {
-                        while (OneTimeSendDataQueue.Any())
-                        {
+                        while (OneTimeSendDataQueue.Count > 0)
+                        {                          
                             var oneSend = OneTimeSendDataQueue.Dequeue();
                             await oneSend(this, Cts.Token);
                         }
@@ -202,6 +203,7 @@ namespace Communication.SerialPort
                 }
             }
         }
+        
 
 
         /// <summary>
@@ -210,7 +212,7 @@ namespace Communication.SerialPort
         /// </summary>
         public async Task<bool> DataExchangeAsync(int timeRespoune, IExchangeDataProviderBase dataProvider, CancellationToken ct)
         {
-            if (!IsConnect)
+            if (!IsOpen)
                 return false;
 
             if (dataProvider == null)

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
+using System.Globalization;
 using System.Windows.Forms;
-using MainExample.Properties;
 using System.IO;
-using MainExample.ClientWCF;
+using System.Linq;
+using CommunicationDevices.ClientWCF;
 using MainExample.Extension;
 
 
@@ -31,8 +29,8 @@ namespace MainExample
     };
 
 
-    
-    
+
+
     public partial class TrainTable : Form
     {
         public CisClient CisClient { get; private set; }
@@ -41,12 +39,11 @@ namespace MainExample
 
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
         private static int ID = 0;
-//        private bool ОбновлениеСписка = false;
+        //        private bool ОбновлениеСписка = false;
 
         public TrainTable(CisClient cisClient)
         {
             InitializeComponent();
-            ЗагрузитьСписок();
             ОбновитьДанныеВСписке();
 
 
@@ -80,17 +77,17 @@ namespace MainExample
         private void ОбновитьДанныеВСписке()
         {
             listView1.Items.Clear();
-//            ОбновлениеСписка = true;
+            //            ОбновлениеСписка = true;
 
             foreach (var Данные in TrainTableRecords)
             {
-                ListViewItem lvi = new ListViewItem(new string[] { Данные.ID.ToString(), Данные.Num, Данные.Name, Данные.ArrivalTime, Данные.StopTime, Данные.DepartureTime, Данные.Days.Replace(":", "; ")});
+                ListViewItem lvi = new ListViewItem(new string[] { Данные.ID.ToString(), Данные.Num, Данные.Name, Данные.ArrivalTime, Данные.StopTime, Данные.DepartureTime, Данные.Days.Replace(":", "; ") });
                 lvi.Tag = Данные.ID;
                 lvi.Checked = Данные.Active;
                 this.listView1.Items.Add(lvi);
             }
 
-//            ОбновлениеСписка = false;
+            //            ОбновлениеСписка = false;
         }
 
         public static void ЗагрузитьСписок()
@@ -498,7 +495,7 @@ namespace MainExample
 
                 for (int i = 0; i < TrainTableRecords.Count; i++)
                 {
-                    DumpFile.WriteLine((i+1).ToString() + ";" +
+                    DumpFile.WriteLine((i + 1).ToString() + ";" +
                         TrainTableRecords[i].Num + ";" +
                         TrainTableRecords[i].Name + ";" +
                         TrainTableRecords[i].ArrivalTime + ";" +
@@ -559,17 +556,17 @@ namespace MainExample
 
         private void listView1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-/*            if (ОбновлениеСписка)
-                return;
+            /*            if (ОбновлениеСписка)
+                            return;
 
-            if ((sender as ListView).PointToClient(Cursor.Position).X > 22)
-                e.NewValue = e.CurrentValue;
- */
+                        if ((sender as ListView).PointToClient(Cursor.Position).X > 22)
+                            e.NewValue = e.CurrentValue;
+             */
         }
 
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-//            ОбновитьДанныеВСписке();
+            //            ОбновитьДанныеВСписке();
         }
 
         private void gBОтображениеРасписания_CursorChanged(object sender, EventArgs e)
@@ -582,6 +579,78 @@ namespace MainExample
         {
             DispouseCisClientIsConnectRx.Dispose();
             base.OnClosed(e);
+        }
+
+
+        //Загрузка расписание из выбранного источника
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            if (rbSourseSheduleLocal.Checked)
+            {
+                ЗагрузитьСписок();
+            }
+            else
+            {
+                LoadListFromCis();
+            }
+
+            ОбновитьДанныеВСписке();
+        }
+
+
+        private void LoadListFromCis()
+        {
+            if (CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any())
+            {
+                bool tryLoad;
+                if (CisClient.IsConnect)
+                {
+                    tryLoad = true;
+                }
+                else
+                {
+                    tryLoad = MessageBox.Show("Продолжить загрузку данных с ЦИС ", "ЦИС не на связи", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                }
+
+                if (tryLoad)
+                {
+                    TrainTableRecords.Clear();
+
+                    foreach (var op in CisClient.OperativeScheduleDatas)
+                    {
+                        TrainTableRecord Данные;
+
+                        Данные.ID = op.Id;
+                        Данные.Num = op.NumberOfTrain.ToString();
+                        Данные.Name = op.RouteName;
+                        Данные.ArrivalTime = op.ArrivalTime.ToString(CultureInfo.InvariantCulture);
+                        Данные.StopTime = "NONE";
+                        Данные.DepartureTime = op.DepartureTime.ToString(CultureInfo.InvariantCulture);
+                        Данные.Days = "NONE";
+                        Данные.Active = true; //Settings[7] == "1" ? true : false;
+                        Данные.SoundTemplates = ""; //Settings[8];
+                        Данные.TrainPathDirection = 1;
+                        Данные.TrainPathNumber = 0;
+                        Данные.ShowInPanels = 0;
+                        Данные.Примечание = "примечание ТЕСЕ";
+
+                        if (Данные.TrainPathDirection > 2)
+                            Данные.TrainPathDirection = 0;
+
+                        if (Данные.TrainPathNumber > 10)
+                            Данные.TrainPathNumber = 0;
+
+                        TrainTableRecords.Add(Данные);
+
+                        if (Данные.ID > ID)
+                            ID = Данные.ID;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("ДАННЫЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННЫ");
+            }
         }
     }
 }
