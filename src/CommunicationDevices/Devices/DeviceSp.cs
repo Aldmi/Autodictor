@@ -48,6 +48,12 @@ namespace CommunicationDevices.Devices
             SpExhBehavior.AddOneTimeSendData(inData);
         }
 
+
+        public void AddCycleFunc()
+        {
+            SpExhBehavior.AddCycleFunc();
+        }
+
         #endregion
     }
 }

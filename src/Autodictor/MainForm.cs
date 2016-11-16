@@ -12,7 +12,7 @@ namespace MainExample
     {
         public ExchangeModel ExchangeModel { get; set; }
 
-
+        
 
         public MainForm()
         {
@@ -21,9 +21,9 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-           // TrainTable.ЗагрузитьСписок();                 //TODO: загружается на выбор в окне расписания
+           // TrainTable.ЗагрузитьСписок();                 //TODO: грузится из файла
 
-            //Player.PlayFile("");  //TODO: включить
+           // Player.PlayFile("");  //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
         }

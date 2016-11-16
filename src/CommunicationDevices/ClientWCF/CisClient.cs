@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Timers;
+using CommunicationDevices.Devices;
 using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
 
@@ -49,6 +51,7 @@ namespace CommunicationDevices.ClientWCF
                 IsConnectChange.OnNext(IsConnect);
             }
         }
+        public bool IsStart { get; private set; }
 
         public List<OperativeScheduleData> OperativeScheduleDatas
         {
@@ -64,7 +67,7 @@ namespace CommunicationDevices.ClientWCF
             }
         }
 
-        public bool IsStart { get; private set; }
+        public IEnumerable<DeviceSp> Devices { get; set; }
 
         //TODO: добавить лог. Который хранит список строк а запись на диск осушенсвялет по команде.
 
@@ -75,7 +78,7 @@ namespace CommunicationDevices.ClientWCF
 
         #region Ctor
 
-        public CisClient(EndpointAddress endpointAddress)
+        public CisClient(EndpointAddress endpointAddress, IEnumerable<DeviceSp> devices)
         {
             BasicHttpBinding binding = new BasicHttpBinding
             {
@@ -88,6 +91,8 @@ namespace CommunicationDevices.ClientWCF
             Proxy = ChannelFactory.CreateChannel();
             _timer = new Timer(PeriodTimer);
             _timer.Elapsed += OnTimedEvent;
+
+            Devices = devices;
         }
 
         #endregion
@@ -107,41 +112,36 @@ namespace CommunicationDevices.ClientWCF
 
         private async void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            //Отсчет тиков
-            if (++_tickCounter >= uint.MaxValue)
-                _tickCounter = 0;
-
-
             try
             {
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 мин
-                if ((_tickCounter > 0) && ((_tickCounter % MinutLevel) == 0))
+                if (((_tickCounter % MinutLevel) == 0))
                 {
-                    OperativeScheduleDatas = new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 3"));
+                    OperativeScheduleDatas = new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 1"));
                     IsConnect = true;
                     //Log.Add("Оперативное расписание полученно", Info);
 
+
                     //Pull модель опроса списка устройств. Перебираем список всех устройств (скрытых под интерфесом, ограничивающий доступ только к нужным данным)
                     // На каждое диагностируемое сво-во устройства формирум DiagnosticData и помещем в список.
-                    var listDiagnostic = new List<DiagnosticData>
+                    var listDiagnostic = Devices?.Select(d => new DiagnosticData
                     {
-                        new DiagnosticData {DeviceNumber = 1, Fault = "Нормальная работа", Status = (int) (100 +_tickCounter)},
-                        new DiagnosticData {DeviceNumber = 1, Fault = "Ошибка индикации", Status = 188},
-                        new DiagnosticData {DeviceNumber = 3, Fault = "Нормальная работа", Status = 100},
-                        new DiagnosticData {DeviceNumber = 4, Fault = "Нормальная работа", Status = 100},
-                        new DiagnosticData {DeviceNumber = 5, Fault = "Ошибка связи по порту", Status = 111},
-                    };
-                    Proxy.SetDiagnostics("Вокзал 3", listDiagnostic);
+                        DeviceNumber = d.Id,
+                        DeviceName = d.Name,
+                        Fault = d.SpExhBehavior.IsConnect ? "Нормальная работа" : "НЕ на связи",
+                        Status = d.SpExhBehavior.IsConnect ? 100 : -100,
+                    }).ToList();
+                    Proxy.SetDiagnostics("Вокзал 1", listDiagnostic);
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 10 мин
-                if ((_tickCounter > 0) && ((_tickCounter % TenMinutLevel) == 0))
+                if (((_tickCounter % TenMinutLevel) == 0))
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 час
-                if ((_tickCounter > 0) && ((_tickCounter % HouerLevel) == 0))
+                if (((_tickCounter % HouerLevel) == 0))
                 {
 
                 }
@@ -157,6 +157,10 @@ namespace CommunicationDevices.ClientWCF
                 {
 
                 }
+
+                //Отсчет тиков
+                if (++_tickCounter >= uint.MaxValue)
+                    _tickCounter = 0;
             }
             catch (EndpointNotFoundException ex)             //Конечная точка не найденна.
             {

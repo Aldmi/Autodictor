@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
@@ -24,15 +25,15 @@ namespace MainExample
                 return;
             try
             {
-                //var dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Sounds\");
-                //FilesFolder = new List<string>();
-                //foreach (FileInfo file in dir.GetFiles("*.wav"))
-                //    FilesFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
+                var dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Sounds\");
+                FilesFolder = new List<string>();
+                foreach (FileInfo file in dir.GetFiles("*.wav"))
+                    FilesFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
 
-                //dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Number of trains\");
-                //TrainNumbersFolder = new List<string>();
-                //foreach (FileInfo file in dir.GetFiles("*.wav"))
-                //    TrainNumbersFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
+                dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Number of trains\");
+                TrainNumbersFolder = new List<string>();
+                foreach (FileInfo file in dir.GetFiles("*.wav"))
+                    TrainNumbersFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
 
 
                 Application.EnableVisualStyles();

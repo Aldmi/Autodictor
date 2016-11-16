@@ -13,15 +13,15 @@ namespace MainExample
 {
     public struct TrainTableRecord
     {
-        public int ID;
-        public string Num;
-        public string Name;
-        public string ArrivalTime;
-        public string StopTime;
-        public string DepartureTime;
-        public string Days;
-        public bool Active;
-        public string SoundTemplates;
+        public int ID;                    //Id
+        public string Num;                //Номер поезда
+        public string Name;               //Название
+        public string ArrivalTime;        //прибытие
+        public string StopTime;           //стоянка
+        public string DepartureTime;      //отправление
+        public string Days;               //дни следования
+        public bool Active;               //активность, отмека галочкой
+        public string SoundTemplates;     //
         public byte TrainPathDirection;
         public byte TrainPathNumber;
         public byte ShowInPanels;
@@ -182,7 +182,8 @@ namespace MainExample
             }
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+
+        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
 
@@ -285,6 +286,7 @@ namespace MainExample
                 }
             }
         }
+
 
         private void btn_ДобавитьЗапись_Click(object sender, EventArgs e)
         {
@@ -652,5 +654,7 @@ namespace MainExample
                 MessageBox.Show("ДАННЫЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННЫ");
             }
         }
+
+
     }
 }

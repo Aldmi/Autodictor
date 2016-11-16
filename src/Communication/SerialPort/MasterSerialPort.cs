@@ -159,7 +159,7 @@ namespace Communication.SerialPort
         /// <summary>
         /// Добавление функций для циклического опроса
         /// </summary>
-        public void AddFunc(Func<MasterSerialPort, CancellationToken, Task> action)
+        public void AddCycleFunc(Func<MasterSerialPort, CancellationToken, Task> action)
         {
             if (action != null)
                 Funcs.Add(action);
@@ -177,21 +177,25 @@ namespace Communication.SerialPort
 
         public async Task RunExchange()
         {
+            var indexCycleFunc = 0;
             while (!Cts.IsCancellationRequested)
             {
                 try
                 {
-                    //вызов циклических функций опроса
-                    foreach (var func in Funcs)
+                    //вызов циклических функций опроса   
+                    if (Funcs != null && Funcs.Any())
                     {
-                        await func(this, Cts.Token);
+                        if (indexCycleFunc > Funcs.Count)
+                            indexCycleFunc = 0;
+                        await Funcs[indexCycleFunc](this, Cts.Token);
                     }
+
 
                     //вызов одиночной функции запроса
                     if (OneTimeSendDataQueue != null)
                     {
                         while (OneTimeSendDataQueue.Count > 0)
-                        {                          
+                        {
                             var oneSend = OneTimeSendDataQueue.Dequeue();
                             await oneSend(this, Cts.Token);
                         }

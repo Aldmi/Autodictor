@@ -77,7 +77,7 @@ namespace CommunicationDevices.Model
 
         public void CreateCisClient(EndpointAddress endpointAddress)
         {
-            CisClient= new CisClient(endpointAddress);
+            CisClient= new CisClient(endpointAddress, Devices);
         }
 
 
@@ -162,6 +162,13 @@ namespace CommunicationDevices.Model
             }
 
 
+            //DEBUG запуск циклических функций уст-ва --------------------------------------
+            //var dev = Devices.First();
+            //dev.SpExhBehavior.Data4CycleFunc[0] = new UniversalInputType { Message = "dafdsfsdf" };
+            //Devices.First().AddCycleFunc();
+            //DEBUG--------------------------------------
+
+
             //Использование------------------------------------------------------------
             //передача данных девайсу и через него поведению
             //var dev = Devices.FirstOrDefault(n => n.Name == "MG6587");
@@ -171,7 +178,7 @@ namespace CommunicationDevices.Model
             //Thread.Sleep(1000);
             //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поеfgfdgfdg" });
 
-           // await Task.Delay(2000);
+            // await Task.Delay(2000);
         }
 
         public void Dispose()

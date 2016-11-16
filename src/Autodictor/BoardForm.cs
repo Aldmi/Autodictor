@@ -32,7 +32,7 @@ namespace MainExample
 
         public List<IDisposable> DispouseIsDataExchangeSuccessChangeRx { get; set; }= new List<IDisposable>();
         public List<IDisposable> DispouseIsConnectChangeRx { get; set; } = new List<IDisposable>();
-
+        public List<IDisposable> DispouseLastSendDataChangeRx { get; set; } = new List<IDisposable>();
 
 
 
@@ -58,7 +58,7 @@ namespace MainExample
                     var dev= _devises.FirstOrDefault(d => d.SpExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
                     dataGridViewBoards[6, row].Value = exc.DataExchangeSuccess ? Resources.ping_YES__ : Resources.ping_Error__;
-                    await Task.Delay(500);
+                    await Task.Delay(300);
                     dataGridViewBoards[6, row].Value = Resources.ping_NO;
                 });
                 DispouseIsDataExchangeSuccessChangeRx.Add(disp);
@@ -70,6 +70,14 @@ namespace MainExample
                     dataGridViewBoards[5, row].Value = exc.IsConnect ? Resources.OkImg : Resources.CancelImg;
                 });
                 DispouseIsConnectChangeRx.Add(disp);
+
+                disp = devise.SpExhBehavior.LastSendDataChange.Subscribe(exc =>
+                {
+                    var dev = _devises.FirstOrDefault(d => d.SpExhBehavior.Equals(exc));
+                    var row = _devises.ToList().IndexOf(dev);
+                    dataGridViewBoards[7, row].Value = exc.LastSendData.Message;
+                });
+                DispouseLastSendDataChangeRx.Add(disp);
             }
         }
 
@@ -112,7 +120,10 @@ namespace MainExample
 
             DispouseIsDataExchangeSuccessChangeRx.ForEach(disp => disp.Dispose());
             DispouseIsConnectChangeRx.ForEach(disp => disp.Dispose());
+            DispouseLastSendDataChangeRx.ForEach(disp => disp.Dispose());
+
             dataGridViewBoards.CellClick -= dataGridView1_CellClick;
+
             base.OnClosed(e);
         }
     }

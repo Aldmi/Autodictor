@@ -111,13 +111,12 @@ namespace MainExample
             else
                 this.lblDayOfWeek.ForeColor = Color.Green;
 
-            //ОбработкаЗвуковогоПотка(); //TODO: включить
+            ОбработкаЗвуковогоПотка();
         }
 
         // Обработка нажатия кнопки блокировки/разрешения работы
         private void btnБлокировка_Click(object sender, EventArgs e)
         {
-            //TODO: Запускать/останавливать WCF клиента 
             РазрешениеРаботы = !РазрешениеРаботы;
 
             if (РазрешениеРаботы == true)

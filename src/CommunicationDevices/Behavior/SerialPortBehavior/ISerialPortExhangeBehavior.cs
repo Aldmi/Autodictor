@@ -11,6 +11,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         Queue<UniversalInputType> InDataQueue { get; set; }
         UniversalInputType LastSendData { get; set; }
 
+        UniversalInputType[] Data4CycleFunc { get; set; }
+
         byte NumberSp { get; }
         bool IsOpenSp { get; }
         bool IsConnect { get;  set; }
@@ -18,11 +20,11 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         void PortCycleReConnect(ICollection<Task> backGroundTasks = null);
         void AddOneTimeSendData(UniversalInputType inData);
+        void AddCycleFunc();
 
 
         ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; }
         ISubject<ISerialPortExhangeBehavior> IsConnectChange { get; }
-
-        //TODO: Добавить Rx событие  IsConnectChange.
+        ISubject<ISerialPortExhangeBehavior> LastSendDataChange { get; }
     }
 }

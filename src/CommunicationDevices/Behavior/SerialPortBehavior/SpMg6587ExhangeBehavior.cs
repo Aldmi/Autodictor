@@ -9,6 +9,7 @@ using System.Reactive.Subjects;
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
+
     public class SpMg6587ExhangeBehavior : ISerialPortExhangeBehavior
     {
         #region Fields
@@ -28,7 +29,11 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         private MasterSerialPort Port { get; }
 
         public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
-        public UniversalInputType LastSendData { get; set; }
+
+
+
+
+        public UniversalInputType[] Data4CycleFunc { get; set; } = new UniversalInputType[1];        // для каждой циклической функции свои данные. 
 
         public byte NumberSp => Port.PortNumber;
         public bool IsOpenSp => Port.IsOpen;
@@ -73,6 +78,18 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             }
         }
 
+
+        private UniversalInputType _lastSendData;
+        public UniversalInputType LastSendData
+        {
+            get { return _lastSendData; }
+            set
+            {
+                _lastSendData = value;
+                LastSendDataChange.OnNext(this);
+            }
+        }
+
         #endregion
 
 
@@ -96,6 +113,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         public ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; } = new Subject<ISerialPortExhangeBehavior>();
         public ISubject<ISerialPortExhangeBehavior> IsConnectChange { get; } = new Subject<ISerialPortExhangeBehavior>();
+        public ISubject<ISerialPortExhangeBehavior> LastSendDataChange { get; } = new Subject<ISerialPortExhangeBehavior>();
         #endregion
 
 
@@ -129,6 +147,16 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             }
         }
 
+        /// <summary>
+        /// Добавление циклических функций.
+        /// Поведение устройства определяет нужное количесвто циклических функций.
+        /// </summary>
+        public void AddCycleFunc()
+        {
+           Port.AddCycleFunc(CycleExchangeService);
+           //Port.AddCycleFunc(CycleExchangeService_222);
+        }
+
 
         private async Task ExchangeService(MasterSerialPort port, CancellationToken ct)
         {
@@ -137,11 +165,23 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
             DataExchangeSuccess = true;//!DataExchangeSuccess;//DEBUG
 
-
+            await Task.Delay(2000);
             //if (writeProvider.IsOutDataValid)
             //{
             //    //с outData девайс разберется сам writeProvider.OutputData
             //}
+        }
+
+
+        private async Task CycleExchangeService(MasterSerialPort port, CancellationToken ct)
+        {
+            LastSendData = Data4CycleFunc[0];   //Каждая функция сама знает откуда брать входные данные
+            var writeProvider = new PanelMg6587WriteDataProvider() { InputData = LastSendData };
+            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+            DataExchangeSuccess = true;//!DataExchangeSuccess;//DEBUG
+
+
+            await Task.Delay(4000);
         }
 
         #endregion
