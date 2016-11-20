@@ -9,6 +9,8 @@ using Castle.Windsor;
 using Communication.SerialPort;
 using Communication.Settings;
 using CommunicationDevices.Behavior;
+using CommunicationDevices.Behavior.BindingBehavior;
+using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.SerialPortBehavior;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Devices;
@@ -39,6 +41,7 @@ namespace CommunicationDevices.Model
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
         public List<DeviceSp> Devices { get; set; } = new List<DeviceSp>();
+        public ICollection<IBinding2PathBehavior> BindingBehaviors { get; set; } = new List<IBinding2PathBehavior>();
 
         private string _errorString;
         public string ErrorString
@@ -132,22 +135,43 @@ namespace CommunicationDevices.Model
             }
 
 
+         
+
             //СОЗДАНИЕ УСТРОЙСТВ С ПОСЛЕДОВАТЕЛЬНЫМ ПОРТОМ------------------------------------------------------------------------------------------------
             foreach (var xmlDeviceSp in xmlDeviceSpSettings)
             {
                 ISerialPortExhangeBehavior behavior;
+                byte maxCountFaildRespowne;
                 switch (xmlDeviceSp.Name)
                 {
-                    case "MG6587":
-                        behavior= new SpMg6587ExhangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, 5);
+                    case "InformSvyaz":                      
+                        maxCountFaildRespowne = 3;
+                        behavior = new InformSvyazExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
                         Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
-                        break;
 
-                    case "MG7777":
-                        //создавать другое поведение
-                        behavior = new SpMg6587ExhangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, 5);
-                        Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
-                        break;
+                        //создание поведения привязка табло к пути.
+                        if(xmlDeviceSp.BindingType == BindingType.ToPath)
+                           BindingBehaviors.Add(new Binding2PathDevice2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                       
+                        //создание поведения привязка табло к главному расписанию
+                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                            ;
+
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                            ;
+
+                         break;
+
+
+                    //case "MG7777":
+                    //    //создавать другое поведение
+                    //    behavior = new SpMg6587ExhangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, 5);
+                    //    Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
+
+                    //    if (xmlDeviceSp.PathNumbers != null)
+                    //        BindingBehaviors.Add(new Binding2PathDevice2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                    //    break;
 
                     default:
                         throw new Exception($" Устройсвто с именем {xmlDeviceSp.Name} не найденно");
@@ -160,6 +184,12 @@ namespace CommunicationDevices.Model
             {
                 devSp.SpExhBehavior.PortCycleReConnect(BackGroundTasks);
             }
+
+
+            //Создадим внешнее поведение для устройств
+
+           
+     
 
 
             //DEBUG запуск циклических функций уст-ва --------------------------------------

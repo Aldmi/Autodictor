@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Xml.Linq;
 using Library.Logs;
 
@@ -7,6 +9,13 @@ using Library.Logs;
 
 namespace CommunicationDevices.Settings
 {
+    //ToPath: 1,2 - привязка к пути с перечислением номеров путей
+    //ToPath: Все - привязка ко всем путям
+    //ToGeneral - привязка к главному табло с расписанием
+    //ToArrivalAndDeparture - привязка к табло отправление / прибытие поездов
+    public enum BindingType {None, ToPath, ToGeneral, ToArrivalAndDeparture }
+
+
     public class XmlDeviceSerialPortSettings
     {
         #region prop
@@ -19,6 +28,10 @@ namespace CommunicationDevices.Settings
         public string Description { get; }
 
 
+        public BindingType BindingType { get; set; }
+        public IEnumerable<byte> PathNumbers { get; }
+
+
         #endregion
 
 
@@ -26,7 +39,7 @@ namespace CommunicationDevices.Settings
 
         #region ctor
 
-        private XmlDeviceSerialPortSettings(string id, string name, string port, string address, string timeRespone, string description)
+        private XmlDeviceSerialPortSettings(string id, string name, string port, string address, string timeRespone, string description, string binding)
         {
             Id = int.Parse(id);
             Name = name;
@@ -34,6 +47,28 @@ namespace CommunicationDevices.Settings
             Address = byte.Parse(address);
             TimeRespone = ushort.Parse(timeRespone);
             Description = description;
+
+            if (string.IsNullOrEmpty(binding))
+            {
+                BindingType= BindingType.None;
+            }
+            else
+            if(binding.ToLower() == "togeneral")
+            {
+                BindingType = BindingType.ToGeneral;
+            }
+            else
+            if (binding.ToLower() == "toarrivalanddeparture")
+            {
+                BindingType = BindingType.ToArrivalAndDeparture;
+            }
+            else
+            if (binding.ToLower().Contains("topath:"))
+            {
+                BindingType = BindingType.ToPath;
+                var pathNumbers = new string(binding.SkipWhile(c => c != ':').Skip(1).ToArray()).Split(',');
+                PathNumbers= (pathNumbers.First() == String.Empty) ? new List<byte>() : pathNumbers.Select(byte.Parse).ToList();      
+            }
         }
 
         #endregion
@@ -56,24 +91,11 @@ namespace CommunicationDevices.Settings
                            (string)el.Attribute("Port"),
                            (string)el.Attribute("Address"),
                            (string)el.Attribute("TimeRespone"),
-                           (string)el.Attribute("Description"));
+                           (string)el.Attribute("Description"),
+                           (string)el.Attribute("Binding"));
 
             return sett.ToList();
         }
-
-
-        //public static List<XmlCashierSettings> LoadXmlSetting(XElement xml)
-        //{
-        //    var sett =
-        //        from el in xml?.Element("Cashiers")?.Elements("Cashier")
-        //        select new XmlCashierSettings(
-        //                   (string)el.Attribute("Id"),
-        //                   (string)el.Attribute("PortNumber"),
-        //                   (string)el.Attribute("Prefix"),
-        //                   (string)el.Attribute("MaxCountTryHanding"));
-
-        //    return sett.ToList();
-        //}
 
         #endregion
     }

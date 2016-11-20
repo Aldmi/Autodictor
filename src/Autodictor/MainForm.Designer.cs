@@ -50,6 +50,7 @@
             this.Boards = new System.Windows.Forms.ToolStripMenuItem();
             this.данныеЦИСToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OperativeShedules = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegulatoryShedules = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -220,14 +221,15 @@
             // Boards
             // 
             this.Boards.Name = "Boards";
-            this.Boards.Size = new System.Drawing.Size(181, 26);
+            this.Boards.Size = new System.Drawing.Size(126, 26);
             this.Boards.Text = "Табло";
             this.Boards.Click += new System.EventHandler(this.Boards_Click);
             // 
             // данныеЦИСToolStripMenuItem
             // 
             this.данныеЦИСToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OperativeShedules});
+            this.OperativeShedules,
+            this.RegulatoryShedules});
             this.данныеЦИСToolStripMenuItem.Name = "данныеЦИСToolStripMenuItem";
             this.данныеЦИСToolStripMenuItem.Size = new System.Drawing.Size(111, 24);
             this.данныеЦИСToolStripMenuItem.Text = "Данные ЦИС";
@@ -238,6 +240,13 @@
             this.OperativeShedules.Size = new System.Drawing.Size(265, 26);
             this.OperativeShedules.Text = "Оперативное расписание";
             this.OperativeShedules.Click += new System.EventHandler(this.OperativeShedules_Click);
+            // 
+            // RegulatoryShedules
+            // 
+            this.RegulatoryShedules.Name = "RegulatoryShedules";
+            this.RegulatoryShedules.Size = new System.Drawing.Size(265, 26);
+            this.RegulatoryShedules.Text = "Регулярное расписание";
+            this.RegulatoryShedules.Click += new System.EventHandler(this.RegulatoryShedules_Click);
             // 
             // MainForm
             // 
@@ -284,6 +293,7 @@
         private System.Windows.Forms.ToolStripMenuItem OperativeShedules;
         private System.Windows.Forms.ToolStripMenuItem таблоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Boards;
+        private System.Windows.Forms.ToolStripMenuItem RegulatoryShedules;
     }
 }
 

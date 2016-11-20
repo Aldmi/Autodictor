@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Forms.VisualStyles;
+using CommunicationDevices.Behavior.BindingBehavior;
+using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using MainExample.Extension;
 
@@ -31,6 +35,7 @@ namespace MainExample
         public string НазваниеПоезда;
         public byte ОтображениеВТаблицах;
         public string Примечание;
+        public string[] НазванияТабло;                        //!!!
     };
 
 
@@ -44,6 +49,8 @@ namespace MainExample
         private bool ОбновлениеСписка = false;
         private bool ВоспроизводитьДвижениеПоездов = true;
 
+        private bool RaiseSendFlag = false;
+
         static public MainWindowForm myMainForm = null;
 
         private Предупреждение ОкноПредупреждения = null;
@@ -53,12 +60,16 @@ namespace MainExample
         private int ОбщееВремяВоспроизведения = 0;
         private float ВремяВоспроизведенияПроигранныхФайлов = 0f;
 
-        public CisClient CisClient { get; private set; }
+        public CisClient CisClient { get; }
+        static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }
+
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
 
+
+
         // Конструктор
-        public MainWindowForm(CisClient cisClient)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> bindingBehaviors)
         {
             if (myMainForm != null)
                 return;
@@ -73,6 +84,7 @@ namespace MainExample
             lblСостояние.Text = "ВЫКЛЮЧЕНА";
 
             CisClient = cisClient;
+            BindingBehaviors = bindingBehaviors;
 
             if (CisClient.IsConnect)
             {
@@ -100,6 +112,7 @@ namespace MainExample
              });
         }
 
+
         // Обработка таймера 100 мс для воспроизведения звуковых сообщений
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -113,6 +126,7 @@ namespace MainExample
 
             ОбработкаЗвуковогоПотка();
         }
+
 
         // Обработка нажатия кнопки блокировки/разрешения работы
         private void btnБлокировка_Click(object sender, EventArgs e)
@@ -133,12 +147,14 @@ namespace MainExample
             }
         }
 
+
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
         private void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
             ОбновитьСписокЗвуковыхСообщений();
             ОбновитьСписокЗвуковыхСообщенийВТаблице();
         }
+
 
         // Формирование списка воспроизведения
         public static void ОбновитьСписокЗвуковыхСообщений()
@@ -371,6 +387,8 @@ namespace MainExample
                                                         Record.Примечание = Config.Примечание;
                                                         Record.ОтображениеВТаблицах = Config.ShowInPanels;
 
+                                                        Record.НазванияТабло = Record.НомерПути != 0 ? BindingBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str=> str != null).ToArray() : null;
+                                                       
                                                         if (SoundRecords.ContainsKey(Key) == false)
                                                             SoundRecords.Add(Key, Record);
                                                     }
@@ -401,6 +419,7 @@ namespace MainExample
                 Record.БитыАктивностиПолей = 0x00;
                 Record.НомерПоезда = "";
                 Record.ШаблонВоспроизведенияПути = 0;
+                Record.НазванияТабло = null;                 //TODO: как выводить статику на табло
 
                 if (Config.Enable == true)
                 {
@@ -515,6 +534,7 @@ namespace MainExample
             SoundRecords.OrderBy(key => key.Value);
         }
 
+
         // Отображение сформированного списка воспроизведения в таблицу
         private void ОбновитьСписокЗвуковыхСообщенийВТаблице()
         {
@@ -534,6 +554,7 @@ namespace MainExample
 
             ОбновлениеСписка = false;
         }
+
 
         // Раскрасить записи в соответствии с состоянием
         private void ОбновитьСостояниеЗаписейТаблицы()
@@ -600,6 +621,7 @@ namespace MainExample
             }
         }
 
+
         // Определение композиций для запуска в данный момент времени
         private void ОпределитьКомпозициюДляЗапуска()
         {
@@ -652,6 +674,9 @@ namespace MainExample
                                         this.listView1.Items[item].Focused = true;
                                         this.listView1.Items[item].Selected = true;
                                         btnВоспроизвести_Click(null, null);
+                                  
+                                        //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
+                                        SendOnTable(Данные);
                                     }
 
                                     Данные.Состояние = SoundRecordStatus.Воспроизведение;
@@ -743,6 +768,7 @@ namespace MainExample
                 return;
             }
 
+
             foreach (int item in sic)
             {
                 string Key = this.listView1.Items[item].SubItems[1].Text;
@@ -809,12 +835,12 @@ namespace MainExample
                     ВремяВоспроизведенияПроигранныхФайлов = 0f;
                     ОбщееВремяВоспроизведения = (int)ОбщаяДлинаВоспроизведения;
 
-
                     if (ВоспроизводимыеФайлы.Length > 0)
                     {
                         string НазваниеФайла = ВоспроизводимыеФайлы[НомерВоспроизводимогоТрека++];
                         if (НазваниеФайла.Contains(".wav") == false)
                             НазваниеФайла = Program.GetFileName(НазваниеФайла);
+
 
                         if (Player.PlayFile(НазваниеФайла) == true)
                         {
@@ -826,12 +852,14 @@ namespace MainExample
             }
         }
 
+
         // Управление регулятором громкости
         private void tBРегуляторГромкости_Scroll(object sender, EventArgs e)
         {
             Volume = tBРегуляторГромкости.Value;
             Player.SetVolume(Volume);
         }
+
 
         // Обработка закрытия основной формы
         private void MainWindowForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -840,12 +868,14 @@ namespace MainExample
                 myMainForm = null;
         }
 
+
         // Обработка отключения сообщения
         public void ОтключитьСообщение(ListViewItem Item)
         {
             Item.Checked = false;
             ОбновитьСостояниеЗаписейТаблицы();
         }
+
 
         // Обработка двойного нажатия на сообщение (вызов формы сообщения)
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -875,6 +905,7 @@ namespace MainExample
 
                                 string НомерПоезда = Данные.НомерПоезда;
                                 byte НомерПути = Данные.НомерПути;
+                                string[] НазванияТабло = Данные.НазванияТабло;
 
 
                                 SoundRecords[Key] = Данные;
@@ -906,6 +937,7 @@ namespace MainExample
                                             НовыеДанные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
 
                                             НовыеДанные.НомерПути = НомерПути;
+                                            НовыеДанные.НазванияТабло = НазванияТабло;
                                             НовыеДанные.ВремяПрибытия = Данные.ВремяПрибытия;
                                             НовыеДанные.ВремяОтправления = Данные.ВремяОтправления;
                                             НовыеДанные.ВремяСтоянки = Данные.ВремяСтоянки;
@@ -926,6 +958,7 @@ namespace MainExample
             }
         }
 
+
         // Блокировка/разблокировка сообщения при нажатии на CheckBox
         private void listView1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -936,22 +969,26 @@ namespace MainExample
                 e.NewValue = e.CurrentValue;
         }
 
+
         // Блокировка/разблокирование сообщения при нажатии на CheckBox
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             ОбновитьСостояниеЗаписейТаблицы();
         }
 
+
         private void cB_ВоспроизведениеДвиженияПоездов_CheckedChanged(object sender, EventArgs e)
         {
             ВоспроизводитьДвижениеПоездов = cB_ВоспроизведениеДвиженияПоездов.Checked;
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
             ОкноРасписания окноРасписания = new ОкноРасписания();
             окноРасписания.Show(this);
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -964,6 +1001,21 @@ namespace MainExample
             ОкноРасписания2 окноРасписания = new ОкноРасписания2();
             окноРасписания.Show(this);
         }
+
+        //Отправка сообшений на табло
+        private void SendOnTable(SoundRecord data)
+        {
+            foreach (var devName in data.НазванияТабло)
+            {
+                var beh= BindingBehaviors.FirstOrDefault(b => b.GetDeviceName == devName);
+                if (beh != null)
+                {
+                    beh?.SendMessage4Path(data.НомерПути + data.НомерПоезда + data.НазваниеПоезда); // TODO: передавать не строку а данные, т.к. каждое таблов сформирует строку в нужном формате. UniversalInputType добавить поле SoundRecord.
+                    Debug.WriteLine($"НомерПути= {data.НомерПути} + НомерПоезда= {data.НомерПоезда} + НазваниеПоезда={data.НазваниеПоезда}");
+                }
+            }
+        }
+
 
         protected override void OnClosed(EventArgs e)
         {

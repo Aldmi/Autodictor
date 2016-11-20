@@ -78,12 +78,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behavior\BindingBehavior\ToDepartureArrivalSchedule\IBinding2DepatureArrivalShBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\BindingDevice2GeneralShBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
+    <Compile Include="Behavior\SerialPortBehavior\InformSvyazExchangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\ISerialPortExhangeBehavior.cs" />
-    <Compile Include="Behavior\SerialPortBehavior\SpMg6587ExhangeBehavior.cs" />
+    <Compile Include="Behavior\SerialPortBehavior\BaseExhangeSpBehavior.cs" />
     <Compile Include="ClientWCF\CisClient.cs" />
     <Compile Include="Devices\DeviceSp.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
-    <Compile Include="Infrastructure\PanelMg6587WriteDataProvider.cs" />
+    <Compile Include="Infrastructure\PanelInformSvyazWriteDataProvider.cs" />
     <Compile Include="Infrastructure\UniversalInputType.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -147,6 +147,12 @@
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RegulatorySheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegulatorySheduleForm.Designer.cs">
+      <DependentUpon>RegulatorySheduleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SoundConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OperativeSheduleForm.resx">
       <DependentUpon>OperativeSheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegulatorySheduleForm.resx">
+      <DependentUpon>RegulatorySheduleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SoundConfiguration.resx">
       <DependentUpon>SoundConfiguration.cs</DependentUpon>

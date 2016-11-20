@@ -54,7 +54,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient);
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.BindingBehaviors);
                 mainform.MdiParent = this;
                 mainform.Show();
             }
@@ -112,6 +112,7 @@ namespace MainExample
             }
         }
 
+
         private void OperativeShedules_Click(object sender, EventArgs e)
         {
             if (OperativeSheduleForm.MyOperativeSheduleForm != null)                                     //Открытие окна повторно, при открытом первом экземпляре.
@@ -124,6 +125,22 @@ namespace MainExample
                 OperativeSheduleForm operativeSheduleForm = new OperativeSheduleForm(ExchangeModel.CisClient);
                 operativeSheduleForm.MdiParent = this;
                 operativeSheduleForm.Show();
+            }
+        }
+
+
+        private void RegulatoryShedules_Click(object sender, EventArgs e)
+        {
+            if (RegulatorySheduleForm.MyRegulatorySheduleForm != null)                                     
+            {
+                RegulatorySheduleForm.MyRegulatorySheduleForm.Show();
+                RegulatorySheduleForm.MyRegulatorySheduleForm.WindowState = FormWindowState.Normal;
+            }
+            else                                                                                         
+            {
+                RegulatorySheduleForm regulatorySheduleForm = new RegulatorySheduleForm(ExchangeModel.CisClient);
+                regulatorySheduleForm.MdiParent = this;
+                regulatorySheduleForm.Show();
             }
         }
 
@@ -150,5 +167,7 @@ namespace MainExample
             ExchangeModel.Dispose();
             base.OnClosed(e);
         }
+
+
     }
 }

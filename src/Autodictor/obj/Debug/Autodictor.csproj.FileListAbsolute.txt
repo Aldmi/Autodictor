@@ -805,3 +805,4 @@ D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.Расписание.reso
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.exe
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.pdb
+D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MainExample
@@ -37,6 +38,7 @@ namespace MainExample
 
             ОбновитьТекстВОкне();
         }
+
 
         private void ОбновитьТекстВОкне()
         {
@@ -134,15 +136,34 @@ namespace MainExample
                 }
 
                 rTB_Сообщение.SelectionLength = 0;
-            }            
+            }
+
+            //Обновить список табло
+            comboBox_displayTable.Items.Clear();
+            comboBox_displayTable.SelectedIndex = -1;
+            if (Record.НазванияТабло != null && Record.НазванияТабло.Any())
+            {          
+                foreach (var table in Record.НазванияТабло)
+                {
+                    comboBox_displayTable.Items.Add(table);
+                }
+
+                comboBox_displayTable.BackColor = Color.White;
+            }
+            else
+            {
+                comboBox_displayTable.BackColor= Color.DarkRed;
+            }
         }
+
 
         private void cB_НомерПути_SelectedIndexChanged(object sender, EventArgs e)
         {
             Record.НомерПути = (byte)cB_НомерПути.SelectedIndex;
-
+            Record.НазванияТабло = Record.НомерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
             ОбновитьТекстВОкне();
         }
+
 
         private void rB_Нумерация_CheckedChanged(object sender, EventArgs e)
         {

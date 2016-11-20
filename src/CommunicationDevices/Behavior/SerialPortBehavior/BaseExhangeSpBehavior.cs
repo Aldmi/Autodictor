@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
 using System.Reactive.Subjects;
+using Castle.Components.DictionaryAdapter;
 
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
 
-    public class SpMg6587ExhangeBehavior : ISerialPortExhangeBehavior
+    public abstract class BaseExhangeSpBehavior : ISerialPortExhangeBehavior
     {
         #region Fields
 
@@ -26,12 +28,9 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region Prop
 
-        private MasterSerialPort Port { get; }
+        protected MasterSerialPort Port { get; }
 
         public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
-
-
-
 
         public UniversalInputType[] Data4CycleFunc { get; set; } = new UniversalInputType[1];        // для каждой циклической функции свои данные. 
 
@@ -97,7 +96,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region ctor
 
-        public SpMg6587ExhangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
+        protected BaseExhangeSpBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
         {
             Port = port;
             TimeRespone = timeRespone;
@@ -138,51 +137,42 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         }
 
 
+        /// <summary>
+        /// Добавление однократно вызываемых функций
+        /// </summary>
         public void AddOneTimeSendData(UniversalInputType inData)
         {
             if (inData != null)
             {
                 InDataQueue.Enqueue(inData);
-                Port.AddOneTimeSendData(ExchangeService);
+                Port.AddOneTimeSendData(OneTimeExchangeService);
             }
         }
 
+
         /// <summary>
         /// Добавление циклических функций.
-        /// Поведение устройства определяет нужное количесвто циклических функций.
+        /// Поведение устройства определяет нужное количество циклических функций. Добавляются все функции в очередь порта
         /// </summary>
         public void AddCycleFunc()
         {
-           Port.AddCycleFunc(CycleExchangeService);
-           //Port.AddCycleFunc(CycleExchangeService_222);
+            ListCycleFuncs?.ForEach(func=> Port.AddCycleFunc(func));
         }
 
-
-        private async Task ExchangeService(MasterSerialPort port, CancellationToken ct)
+        /// <summary>
+        /// Удаление циклических функций.
+        /// Удаляются все циклические функции из очереди порта.
+        /// </summary>
+        public void RemoveCycleFunc()
         {
-            LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            var writeProvider = new PanelMg6587WriteDataProvider() {InputData = LastSendData };
-            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            DataExchangeSuccess = true;//!DataExchangeSuccess;//DEBUG
-
-            await Task.Delay(2000);
-            //if (writeProvider.IsOutDataValid)
-            //{
-            //    //с outData девайс разберется сам writeProvider.OutputData
-            //}
+            ListCycleFuncs?.ForEach(func => Port.RemoveCycleFunc(func));
         }
 
 
-        private async Task CycleExchangeService(MasterSerialPort port, CancellationToken ct)
-        {
-            LastSendData = Data4CycleFunc[0];   //Каждая функция сама знает откуда брать входные данные
-            var writeProvider = new PanelMg6587WriteDataProvider() { InputData = LastSendData };
-            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            DataExchangeSuccess = true;//!DataExchangeSuccess;//DEBUG
 
 
-            await Task.Delay(4000);
-        }
+        protected abstract List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
+        protected abstract Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct);
 
         #endregion
     }

@@ -165,6 +165,17 @@ namespace Communication.SerialPort
                 Funcs.Add(action);
         }
 
+
+        /// <summary>
+        /// Удаление функций для циклического опроса
+        /// </summary>
+        public void RemoveCycleFunc(Func<MasterSerialPort, CancellationToken, Task> action)
+        {
+            if (action != null)
+                Funcs.Remove(action);
+        }
+
+
         /// <summary>
         /// Добавление данных для одиночной функции запроса DataExchangeAsync
         /// </summary>

@@ -19,7 +19,7 @@ namespace CommunicationDevices.ClientWCF
         #region Fields
 
         private const double PeriodTimer = 5000;
-        private const uint MinutLevel = (uint)(5000 / PeriodTimer); //60000
+        private const uint MinutLevel = (uint)(PeriodTimer / PeriodTimer); //60000
         private const uint TenMinutLevel = (uint)((60000 * 10) / PeriodTimer);
         private const uint HouerLevel = (uint)((60000 * 60) / PeriodTimer);
         private const uint TvelwHouerLevel = (uint)((60000 * 60 * 12) / PeriodTimer);
@@ -28,7 +28,7 @@ namespace CommunicationDevices.ClientWCF
         private readonly Timer _timer;
         private uint _tickCounter;
 
-        private List<OperativeScheduleData> _operativeScheduleDatas;
+   
         private bool _isConnect;
 
         #endregion
@@ -53,6 +53,7 @@ namespace CommunicationDevices.ClientWCF
         }
         public bool IsStart { get; private set; }
 
+        private List<OperativeScheduleData> _operativeScheduleDatas;
         public List<OperativeScheduleData> OperativeScheduleDatas
         {
             get
@@ -64,6 +65,22 @@ namespace CommunicationDevices.ClientWCF
                 if (value == _operativeScheduleDatas) return;
                 _operativeScheduleDatas = value;
                 OperativeScheduleDatasChange.OnNext(OperativeScheduleDatas);
+            }
+        }
+
+
+        private List<RegulatoryScheduleData> _regulatorySchedules;
+        public List<RegulatoryScheduleData> RegulatoryScheduleDatas
+        {
+            get
+            {
+                return _regulatorySchedules;
+            }
+            private set
+            {
+                if (value == _regulatorySchedules) return;
+                _regulatorySchedules = value;
+                RegulatoryScheduleDatasChange.OnNext(RegulatoryScheduleDatas);
             }
         }
 
@@ -104,6 +121,7 @@ namespace CommunicationDevices.ClientWCF
 
         public ISubject<bool> IsConnectChange { get; } = new Subject<bool>();
         public ISubject<List<OperativeScheduleData>> OperativeScheduleDatasChange { get; } = new Subject<List<OperativeScheduleData>>();
+        public ISubject<List<RegulatoryScheduleData>> RegulatoryScheduleDatasChange { get; } = new Subject<List<RegulatoryScheduleData>>();
 
         #endregion
 
@@ -120,6 +138,11 @@ namespace CommunicationDevices.ClientWCF
                     OperativeScheduleDatas = new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 1"));
                     IsConnect = true;
                     //Log.Add("Оперативное расписание полученно", Info);
+
+
+                    RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules("Вокзал 1"));
+                    IsConnect = true;
+                    //Log.Add("регулярное расписание полученно", Info);
 
 
                     //Pull модель опроса списка устройств. Перебираем список всех устройств (скрытых под интерфесом, ограничивающий доступ только к нужным данным)

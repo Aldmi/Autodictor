@@ -8,14 +8,15 @@
   <SerialPorts>
 	<Serial>
       <Port>1</Port>
-	  <BaudRate>57600</BaudRate>
+	  <BaudRate>19200</BaudRate>
 	  <DataBits>8</DataBits>
 	  <StopBits>1</StopBits>
     </Serial>
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="MG6587" Port="1" Address="1" TimeRespone="700" Description="Панель светодиодная, вывод регулярного расписания"/>
-	 <DeviceSp Id="2" Name="MG7777" Port="1" Address="2" TimeRespone="800" Description="Панель светодиодная, вывод оперативного расписания"/>
+	 <DeviceSp Id="1" Name="InformSvyaz" Port="1" Address="1" TimeRespone="2000" Description="Панель информсвязь, вывод главного расписания в холе." Binding="ToGeneral"/>
   </DevicesWithSP>
 </Root>
+
+

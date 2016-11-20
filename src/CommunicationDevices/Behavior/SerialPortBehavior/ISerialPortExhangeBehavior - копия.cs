@@ -21,7 +21,6 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         void PortCycleReConnect(ICollection<Task> backGroundTasks = null);
         void AddOneTimeSendData(UniversalInputType inData);
         void AddCycleFunc();
-        void RemoveCycleFunc();
 
 
         ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; }
