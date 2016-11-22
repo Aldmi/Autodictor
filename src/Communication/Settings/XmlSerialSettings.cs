@@ -15,6 +15,7 @@ namespace Communication.Settings
         public int BaudRate { get; }
         public int DataBits { get; }
         public StopBits StopBits { get; set; }
+        public Parity Parity { get; set; }
 
         #endregion
 
@@ -23,12 +24,39 @@ namespace Communication.Settings
 
         #region ctor
 
-        private XmlSerialSettings(string port, string baudRate, string dataBits, string stopBits)
+        private XmlSerialSettings(string port, string baudRate, string dataBits, string stopBits, string parity)
         {
             Port = port;
             BaudRate = int.Parse(baudRate);
             DataBits = int.Parse(dataBits);
             StopBits = (int.Parse(stopBits) == 1) ? StopBits.One : StopBits.Two;
+
+         
+            switch (parity.ToLower())
+            {
+                case "none":
+                    Parity=Parity.None;
+                    break;
+
+                case "even":
+                    Parity = Parity.Even;
+                    break;
+
+                case "mark":
+                    Parity = Parity.Mark;
+                    break;
+
+                case "odd":
+                    Parity = Parity.Odd;
+                    break;
+
+                case "space":
+                    Parity = Parity.Space;
+                    break;
+
+                default:
+                    throw new Exception("Parity указанно не верно");
+            }
         }
 
         #endregion
@@ -48,9 +76,9 @@ namespace Communication.Settings
                          (string)el.Element("Port"),
                          (string)el.Element("BaudRate"),
                          (string)el.Element("DataBits"),
-                         (string)el.Element("StopBits") );
+                         (string)el.Element("StopBits"),
+                         (string)el.Element("Parity"));
                         
-
             return sett.ToList();
         }
 

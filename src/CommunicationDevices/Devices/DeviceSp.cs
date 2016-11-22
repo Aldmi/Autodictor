@@ -47,13 +47,14 @@ namespace CommunicationDevices.Devices
 
         public void AddOneTimeSendData(UniversalInputType inData)
         {
-            inData.Address = Address;
+            inData.Address= Address;
             SpExhBehavior.AddOneTimeSendData(inData);
         }
 
 
         public void AddCycleFunc()
         {
+            SpExhBehavior.Data4CycleFunc[0]  = new UniversalInputType { Address= Address};   //передадим данные для 1-ой циклической функции 
             SpExhBehavior.AddCycleFunc();
         }
 

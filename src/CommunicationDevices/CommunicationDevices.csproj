@@ -89,6 +89,7 @@
     <Compile Include="ClientWCF\CisClient.cs" />
     <Compile Include="Devices\DeviceSp.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
+    <Compile Include="Infrastructure\PanelInformSvyazCheckConnectDataProvider.cs" />
     <Compile Include="Infrastructure\PanelInformSvyazWriteDataProvider.cs" />
     <Compile Include="Infrastructure\UniversalInputType.cs" />
     <Compile Include="Model\ExchangeModel.cs" />

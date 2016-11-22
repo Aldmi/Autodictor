@@ -35,21 +35,21 @@ namespace Communication.SerialPort
 
         #region ctor
 
-        public MasterSerialPort(string portName, int baudRate, int dataBits, StopBits stopBits)
+        public MasterSerialPort(string portName, int baudRate, int dataBits, StopBits stopBits, Parity parity)
         {
             _port = new System.IO.Ports.SerialPort("COM" + portName)
             {
                 BaudRate = baudRate,
-                DataBits = dataBits,
-                Parity = Parity.None,
-                StopBits = stopBits
+                DataBits = dataBits, 
+                StopBits = stopBits,
+                Parity = parity
             };
 
             PortNumber = byte.Parse(portName);
         }
 
         public MasterSerialPort(XmlSerialSettings xmlSerial) :
-            this(xmlSerial.Port, xmlSerial.BaudRate, xmlSerial.DataBits, xmlSerial.StopBits)
+            this(xmlSerial.Port, xmlSerial.BaudRate, xmlSerial.DataBits, xmlSerial.StopBits, xmlSerial.Parity)
         {
         }
 

@@ -11,11 +11,12 @@
 	  <BaudRate>19200</BaudRate>
 	  <DataBits>8</DataBits>
 	  <StopBits>1</StopBits>
+	  <Parity>None</Parity>  
     </Serial>
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="InformSvyaz" Port="1" Address="1" TimeRespone="2000" Description="Панель информсвязь, вывод главного расписания в холе." Binding="ToGeneral"/>
+	 <DeviceSp Id="1" Name="InformSvyaz" Port="1" Address="1" TimeRespone="2000" Description="Панель информсвязь, вывод главного расписания в холе." Binding="ToPath:1"/>
   </DevicesWithSP>
 </Root>
 

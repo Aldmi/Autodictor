@@ -161,6 +161,8 @@ namespace CommunicationDevices.Model
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
                             ;
 
+                        //добавим все функции циклического опроса
+                        Devices.Last().AddCycleFunc();
                          break;
 
 

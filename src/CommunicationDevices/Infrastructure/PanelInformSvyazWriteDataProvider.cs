@@ -10,35 +10,73 @@ using Communication.Interfaces;
 namespace CommunicationDevices.Infrastructure
 {
 
-    public class Mg6587Output
+    public class InformSvyazOutput
     {
-        public byte Var22 { get; set; }
-        public byte Var23 { get; set; }
+        private byte _errorCode;
+        public byte ErrorCode
+        {
+            get { return _errorCode; }
+            set
+            {
+                _errorCode = value;
+
+                switch (ErrorCode)
+                {
+                    case 0x00:
+                        ErrorMessage = string.Empty;
+                        break;
+
+                    case 0x01:
+                        ErrorMessage = "Несуществующий код команды";
+                        break;
+
+                    case 0x02:
+                        ErrorMessage = "Ошибка четности";
+                        break;
+
+                    case 0x04:
+                        ErrorMessage = "Зависание линии в старте";
+                        break;
+
+                    case 0x08:
+                        ErrorMessage = "Прерывание по таймауту";
+                        break;
+
+                    case 0x10:
+                        ErrorMessage = "Неверные данные";
+                        break;
+
+                    case 0x20:
+                        ErrorMessage = "Ошибка КС";
+                        break;
+
+                    case 0x40:
+                        ErrorMessage = "Ошибка длинны пакета";
+                        break;
+
+                    default:
+                        ErrorMessage = "Несколько ошибок сразу!!!";
+                        break;
+                }
+            }
+        }
+
+        public string ErrorMessage { get; set; }
     }
 
 
 
-    public class PanelInformSvyazWriteDataProvider : IExchangeDataProvider<UniversalInputType, Mg6587Output>
+    public class PanelInformSvyazWriteDataProvider : IExchangeDataProvider<UniversalInputType, InformSvyazOutput>
     {
-        #region field
-
-        private const ushort StartAddresWrite = 0x0002;
-        private const ushort NWriteRegister = 0x0001;
-
-        #endregion
-
-
-
-
         #region Prop
 
-        public int CountGetDataByte { get; private set; } = 4;
-        public int CountSetDataByte { get; private set; } = 2;
+        public int CountGetDataByte { get; private set; }    //вычисляется при отправке
+        public int CountSetDataByte { get; } = 5;
 
         public UniversalInputType InputData { get; set; }
-        public Mg6587Output OutputData { get; }
+        public InformSvyazOutput OutputData { get; }
 
-        public bool IsOutDataValid { get; }
+        public bool IsOutDataValid { get; private set; }
 
         #endregion
 
@@ -46,12 +84,12 @@ namespace CommunicationDevices.Infrastructure
 
 
         /// <summary>
-        /// Данные запроса по записи информации о билете (функц 0x10):
+        /// Данные запроса по записи строки на табло.
         /// байт[0]= адресс   0..0xFF
-        /// байт[1]= длинна пакета
-        /// байт[2]= код команды (0х03 - данные, 0х05- запрос освещенности, 0х06- установка яркости свечения)
-        /// байт[3...X]= информационная часть ( X= макисмум 250байт). Для команды 0х03 строка в кодировке OEM866 
-        /// байт[i]= КС. арифметическая сумма по MOD256 всех переданных данных
+        /// байт[1]= длинна пакета.
+        /// байт[2]= код команды (0х03 - данные).
+        /// байт[3...X]= информационная часть ( X= макисмум 250байт). Строка в кодировке OEM866.
+        /// байт[i]= КС. арифметическая сумма по MOD256 всех переданных данных.
         /// </summary>
         public byte[] GetDataByte()
         {
@@ -67,33 +105,47 @@ namespace CommunicationDevices.Infrastructure
             buf[1] = (byte) CountGetDataByte;
             buf[2] = 0x03;
 
-            buf[3] = 113;
-            buf[4] = 119;
-            buf[5] = 101;
-            buf[6] = 114;
-            buf[7] = 116;
-            buf[8] = 121;
+            messageBuf.CopyTo(buf, 3);
 
             var ks = (byte)((buf.Take(CountGetDataByte - 1).Sum(b => b)) / 256);
             buf[CountGetDataByte - 1] = ks;
+
             return buf;   
         }
 
-
         /// <summary>
-        /// Обработка ответа на данные записи информации о билете (функц 0x10):
-        /// байт[0]= InputData.Сashbox
-        /// байт[1]= 0x10
-        /// байт[2]= Адр. Ст.
-        /// байт[3]= Адр. Мл.
-        /// байт[4]= Кол-во. рег. Ст.
-        /// байт[5]= Кол-во. рег. Мл.
-        /// байт[6]= CRC Мл.
-        /// байт[7]= CRC Ст.
+        /// Данные ответа по записи строки на табло.
+        /// байт[0]= адресс   (0х00 .. 0xFF).
+        /// байт[1]= длинна пакета.
+        /// байт[2]= код ответа (0x80 - ошибка приема (смотри код ошибки), 0х83- данные приняты, 0х85 - значение освещенности, 0х86 - яркость свечения)
+        /// байт[3]= Байт ошибоки (если код ответа = 80)
+        /// байт[4]= КС. арифметическая сумма по MOD256 всех переданных данных
         /// </summary>
         public bool SetDataByte(byte[] data)
         {
-            throw new NotImplementedException();
+            if (data == null || data.Length != CountSetDataByte)
+            {
+                IsOutDataValid = false;
+                return false;
+            }
+
+            if (data[0] == byte.Parse(InputData.Address) &&
+                data[1] == CountSetDataByte)              
+            {
+                if (data[2] == 0x83)                         //успешно приняты
+                {
+                    IsOutDataValid = true;
+                    return true;
+                }
+           
+                if(data[2] == 0x80)                          //ошибка приема
+                {
+                    OutputData.ErrorCode = data[3];
+                }
+            }
+
+            IsOutDataValid = false;
+            return false;
         }
 
 

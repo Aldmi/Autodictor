@@ -18,7 +18,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         public InformSvyazExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
             : base(port, timeRespone, maxCountFaildRespowne)
         {
-            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> {CycleExchangeService}; //добавляем циклические функции
+            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> {CycleCheckConnectService}; //добавляем циклические функции
         }
 
         #endregion
@@ -28,14 +28,11 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region Methode
 
-        private async Task CycleExchangeService(MasterSerialPort port, CancellationToken ct)
+        private async Task CycleCheckConnectService(MasterSerialPort port, CancellationToken ct)
         {
-            LastSendData = Data4CycleFunc[0]; //Каждая функция сама знает откуда брать входные данные
-            var writeProvider = new PanelInformSvyazWriteDataProvider() {InputData = LastSendData};
-            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            DataExchangeSuccess = true; //!DataExchangeSuccess;//DEBUG
-
-            await Task.Delay(4000, ct);
+            var readProvider = new PanelInformSvyazCheckConnectDataProvider { InputData = Data4CycleFunc[0] };
+            DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, readProvider, ct);
+            await Task.Delay(4000, ct);  //задержка для задания периода опроса.
         }
 
         #endregion
@@ -60,10 +57,6 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             }
         }
 
-
-
-
         #endregion
-
     }
 }
