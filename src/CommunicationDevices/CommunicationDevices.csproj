@@ -111,6 +111,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Behavior\PcBehavior\" />
     <Folder Include="Behavior\TcpIpBehavior\" />
   </ItemGroup>
   <ItemGroup>

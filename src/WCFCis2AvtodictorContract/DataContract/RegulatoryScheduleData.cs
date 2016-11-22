@@ -11,7 +11,7 @@ namespace WCFCis2AvtodictorContract.DataContract
         public int Id { get; set; }
 
         [DataMember]
-        public int NumberOfTrain { get; set; }                   //Номер поезда в расписании
+        public string NumberOfTrain { get; set; }                   //Номер поезда в расписании
 
         [DataMember]
         public string RouteName { get; set; }                   //Станция отправления и станция назначения, а также фирменное название поезда, если есть.
