@@ -13,7 +13,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         UniversalInputType[] Data4CycleFunc { get; set; }
 
-        byte NumberSp { get; }
+        byte NumberSp { get; }                      //заменить на string
         bool IsOpenSp { get; }
         bool IsConnect { get;  set; }
         bool DataExchangeSuccess { get; set; }

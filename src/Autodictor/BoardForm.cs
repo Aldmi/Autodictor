@@ -25,7 +25,7 @@ namespace MainExample
     public partial class BoardForm : Form
     {
         static public BoardForm MyBoardForm = null;
-        private readonly IEnumerable<DeviceSp> _devises;
+        private readonly IEnumerable<Device> _devises;
 
 
 
@@ -36,7 +36,7 @@ namespace MainExample
 
 
 
-        public BoardForm(IEnumerable<DeviceSp> devices)
+        public BoardForm(IEnumerable<Device> devices)
         {
             if (MyBoardForm != null)
                 return;
@@ -88,12 +88,13 @@ namespace MainExample
             if (dataGridViewColumn != null && e.ColumnIndex == dataGridViewColumn.Index && e.RowIndex >= 0)
             {
                 var sendStr = (string)dataGridViewBoards[e.ColumnIndex - 1, e.RowIndex].FormattedValue;
-                _devises.ToList()[e.RowIndex].AddOneTimeSendData(new UniversalInputType { Message = sendStr });
+
+                _devises.ToList()[e.RowIndex].AddOneTimeSendData(new UniversalInputType { Message = sendStr});
             }
         }
 
 
-        private void FillBoardsDataGrid(IEnumerable<DeviceSp> dev)
+        private void FillBoardsDataGrid(IEnumerable<Device> dev)
         {
             foreach (var d in dev)
             {

@@ -7,7 +7,7 @@ using CommunicationDevices.Settings;
 
 namespace CommunicationDevices.Devices
 {
-    public class DeviceSp
+    public class Device
     {
         #region Prop
 
@@ -25,7 +25,7 @@ namespace CommunicationDevices.Devices
 
         #region ctor
 
-        protected DeviceSp(int id, string address, string name, string description, ISerialPortExhangeBehavior behavior)
+        protected Device(int id, string address, string name, string description, ISerialPortExhangeBehavior behavior)
         {
             Id = id;
             Address = address;
@@ -34,7 +34,7 @@ namespace CommunicationDevices.Devices
             SpExhBehavior = behavior;
         }
 
-        public DeviceSp(XmlDeviceSerialPortSettings xmlSet, ISerialPortExhangeBehavior behavior) : this(xmlSet.Id, xmlSet.Address.ToString(), xmlSet.Name, xmlSet.Description, behavior)
+        public Device(XmlDeviceSerialPortSettings xmlSet, ISerialPortExhangeBehavior behavior) : this(xmlSet.Id, xmlSet.Address.ToString(), xmlSet.Name, xmlSet.Description, behavior)
         {
         }
 

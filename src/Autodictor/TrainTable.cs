@@ -602,57 +602,78 @@ namespace MainExample
 
         private void LoadListFromCis()
         {
-            if (CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any())
+            var isOperShLoad = CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any();
+            var isRegShLoad = CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any();
+
+            if (!isRegShLoad && !isOperShLoad)
             {
-                bool tryLoad;
-                if (CisClient.IsConnect)
-                {
-                    tryLoad = true;
-                }
-                else
-                {
-                    tryLoad = MessageBox.Show("Продолжить загрузку данных с ЦИС ", "ЦИС не на связи", MessageBoxButtons.YesNo) == DialogResult.Yes;
-                }
+                MessageBox.Show("ОПЕРАТИВНОЕ И РЕГУЛЯРНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
+                return;
+            }
 
-                if (tryLoad)
-                {
-                    TrainTableRecords.Clear();
+            if (!isOperShLoad)
+            {
+                MessageBox.Show("ОПЕРАТИВНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
+                return;
+            }
 
-                    foreach (var op in CisClient.OperativeScheduleDatas)
-                    {
-                        TrainTableRecord Данные;
+            if (!isRegShLoad)
+            {
+                MessageBox.Show("РЕГУЛЯРНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
+                return;
+            }
 
-                        Данные.ID = op.Id;
-                        Данные.Num = op.NumberOfTrain.ToString();
-                        Данные.Name = op.RouteName;
-                        Данные.ArrivalTime = op.ArrivalTime.ToString(CultureInfo.InvariantCulture);
-                        Данные.StopTime = "NONE";
-                        Данные.DepartureTime = op.DepartureTime.ToString(CultureInfo.InvariantCulture);
-                        Данные.Days = "NONE";
-                        Данные.Active = true; //Settings[7] == "1" ? true : false;
-                        Данные.SoundTemplates = ""; //Settings[8];
-                        Данные.TrainPathDirection = 1;
-                        Данные.TrainPathNumber = 0;
-                        Данные.ShowInPanels = 0;
-                        Данные.Примечание = "примечание ТЕСЕ";
-
-                        if (Данные.TrainPathDirection > 2)
-                            Данные.TrainPathDirection = 0;
-
-                        if (Данные.TrainPathNumber > 10)
-                            Данные.TrainPathNumber = 0;
-
-                        TrainTableRecords.Add(Данные);
-
-                        if (Данные.ID > ID)
-                            ID = Данные.ID;
-                    }
-                }
+            bool tryLoad;
+            if (CisClient.IsConnect)
+            {
+                tryLoad = true;
             }
             else
             {
-                MessageBox.Show("ДАННЫЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННЫ");
+                tryLoad = MessageBox.Show("Продолжить загрузку данных с ЦИС ", "ЦИС не на связи", MessageBoxButtons.YesNo) == DialogResult.Yes;
             }
+
+            if (tryLoad)
+            {
+                TrainTableRecords.Clear();
+
+                //Заполним строки
+                foreach (var op in CisClient.OperativeScheduleDatas)
+                {
+                    TrainTableRecord Данные;
+
+                    Данные.ID = op.Id;
+                    Данные.Num = op.NumberOfTrain;
+                    Данные.Name = op.RouteName;
+                    Данные.ArrivalTime = op.ArrivalTime.ToLongTimeString();
+
+
+                    var stopTime = (op.ArrivalTime.Subtract(op.DepartureTime));
+                    Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
+
+
+                    Данные.DepartureTime = op.DepartureTime.ToLongTimeString();
+                    Данные.Days = CisClient.RegulatoryScheduleDatas.FirstOrDefault(reg=> reg.NumberOfTrain == op.NumberOfTrain)?.DaysFollowing;                                              //заполняется из регулярного расписания
+                    Данные.Active = false;
+                    Данные.SoundTemplates = "";
+                    Данные.TrainPathDirection = 1;                                   //заполняется из информации
+                    Данные.TrainPathNumber = 0;                                      //заполняется из информации
+                    Данные.ShowInPanels = 0;
+                    Данные.Примечание = "";
+
+                    if (Данные.TrainPathDirection > 2)
+                        Данные.TrainPathDirection = 0;
+
+                    if (Данные.TrainPathNumber > 10)
+                        Данные.TrainPathNumber = 0;
+
+                    TrainTableRecords.Add(Данные);
+
+                    if (Данные.ID > ID)
+                        ID = Данные.ID;
+                }
+            }
+
         }
 
 

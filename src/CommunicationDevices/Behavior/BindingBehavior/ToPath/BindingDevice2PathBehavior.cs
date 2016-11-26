@@ -11,13 +11,13 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
     /// </summary>
     public class Binding2PathDevice2PathBehavior : IBinding2PathBehavior
     {
-        private readonly DeviceSp _device;
+        private readonly Device _device;
         public IEnumerable<byte> CollectionPathNumber { get; }
 
         public string GetDeviceName => _device.Name;
 
 
-        public Binding2PathDevice2PathBehavior(DeviceSp device, IEnumerable<byte> pathNumbers)
+        public Binding2PathDevice2PathBehavior(Device device, IEnumerable<byte> pathNumbers)
         {
             _device = device;
             CollectionPathNumber = pathNumbers;
@@ -32,7 +32,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
             //привязка на указанные пути
             var result = CollectionPathNumber.Contains(pathNumber) ? $"{_device.Name}" : null;
-            return result ;
+            return result;
         }
 
 

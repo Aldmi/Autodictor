@@ -7,12 +7,12 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 {
     public class BindingDevice2GeneralShBehavior : IBinding2GeneralSchedule
     {
-        private readonly DeviceSp _device;
+        private readonly Device _device;
         public string GetDeviceName => _device.Name;
 
 
         //TODO: передать список общего расписания. 
-        public BindingDevice2GeneralShBehavior(DeviceSp device)
+        public BindingDevice2GeneralShBehavior(Device device)
         { 
             _device = device;
         }

@@ -46,3 +46,4 @@ H:\Git\Autodictor_SSD\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorC
 H:\Git\Autodictor_SSD\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
 H:\Git\Autodictor_SSD\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
 H:\Git\Autodictor_SSD\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+H:\Git\Autodictor_SSD\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache

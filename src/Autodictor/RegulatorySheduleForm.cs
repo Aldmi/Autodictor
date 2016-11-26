@@ -58,8 +58,8 @@ namespace MainExample
             {
                 str.NumberOfTrain.ToString(),
                 str.RouteName.ToString(),
-                str.ArrivalTime.ToString(CultureInfo.InvariantCulture),
-                str.DepartureTime.ToString(CultureInfo.InvariantCulture),
+                str.DepartureTime.ToLongTimeString(),
+                str.ArrivalTime.ToLongTimeString(),
                 str.DispatchStation.Name,
                 str.StationOfDestination.Name,
                 str.DaysFollowing

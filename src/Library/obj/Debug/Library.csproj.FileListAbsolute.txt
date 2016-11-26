@@ -33,6 +33,5 @@ D:\Git\Autodictor\src\Library\obj\Debug\Library.dll
 D:\Git\Autodictor\src\Library\obj\Debug\Library.pdb
 H:\Git\Autodictor_SSD\src\Library\bin\Debug\Library.dll
 H:\Git\Autodictor_SSD\src\Library\bin\Debug\Library.pdb
-H:\Git\Autodictor_SSD\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
 H:\Git\Autodictor_SSD\src\Library\obj\Debug\Library.dll
 H:\Git\Autodictor_SSD\src\Library\obj\Debug\Library.pdb

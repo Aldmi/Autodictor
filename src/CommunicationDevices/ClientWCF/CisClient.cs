@@ -84,7 +84,7 @@ namespace CommunicationDevices.ClientWCF
             }
         }
 
-        public IEnumerable<DeviceSp> Devices { get; set; }
+        public IEnumerable<Device> Devices { get; set; }
 
         //TODO: добавить лог. Который хранит список строк а запись на диск осушенсвялет по команде.
 
@@ -95,7 +95,7 @@ namespace CommunicationDevices.ClientWCF
 
         #region Ctor
 
-        public CisClient(EndpointAddress endpointAddress, IEnumerable<DeviceSp> devices)
+        public CisClient(EndpointAddress endpointAddress, IEnumerable<Device> devices)
         {
             BasicHttpBinding binding = new BasicHttpBinding
             {

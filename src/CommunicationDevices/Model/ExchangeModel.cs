@@ -40,7 +40,7 @@ namespace CommunicationDevices.Model
         public CisClient CisClient { get; private set; }
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
-        public List<DeviceSp> Devices { get; set; } = new List<DeviceSp>();
+        public List<Device> Devices { get; set; } = new List<Device>();
         public ICollection<IBinding2PathBehavior> BindingBehaviors { get; set; } = new List<IBinding2PathBehavior>();
 
         private string _errorString;
@@ -144,10 +144,10 @@ namespace CommunicationDevices.Model
                 byte maxCountFaildRespowne;
                 switch (xmlDeviceSp.Name)
                 {
-                    case "InformSvyaz":                      
+                    case "DispSys":                      
                         maxCountFaildRespowne = 3;
-                        behavior = new InformSvyazExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
+                        behavior = new DisplSysExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
+                        Devices.Add(new Device(xmlDeviceSp, behavior));
 
                         //создание поведения привязка табло к пути.
                         if(xmlDeviceSp.BindingType == BindingType.ToPath)
@@ -162,7 +162,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                       // Devices.Last().AddCycleFunc();
                          break;
 
 

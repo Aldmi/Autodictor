@@ -16,7 +16,7 @@
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="InformSvyaz" Port="1" Address="1" TimeRespone="2000" Description="Панель информсвязь, вывод главного расписания в холе." Binding="ToPath:1"/>
+	 <DeviceSp Id="1" Name="DispSys" Port="1" Address="1" TimeRespone="2000" Description="Панель Дисплейные системы, указатель на пути 1." Binding="ToPath:1"/>
   </DevicesWithSP>
 </Root>
 
