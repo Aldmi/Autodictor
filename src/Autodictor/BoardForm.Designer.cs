@@ -37,6 +37,7 @@ namespace MainExample
             this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddresCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DescriptionCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PortCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsConnectImageCol = new System.Windows.Forms.DataGridViewImageColumn();
@@ -50,6 +51,7 @@ namespace MainExample
             // 
             this.dataGridViewBoards.AllowUserToAddRows = false;
             this.dataGridViewBoards.AllowUserToDeleteRows = false;
+            this.dataGridViewBoards.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -63,6 +65,7 @@ namespace MainExample
             this.IdCol,
             this.AddresCol,
             this.NameCol,
+            this.Type,
             this.DescriptionCol,
             this.PortCol,
             this.IsConnectImageCol,
@@ -89,26 +92,40 @@ namespace MainExample
             // 
             this.IdCol.HeaderText = "Id";
             this.IdCol.Name = "IdCol";
+            this.IdCol.ReadOnly = true;
             // 
             // AddresCol
             // 
             this.AddresCol.HeaderText = "Адресс";
             this.AddresCol.Name = "AddresCol";
+            this.AddresCol.ReadOnly = true;
             // 
             // NameCol
             // 
             this.NameCol.HeaderText = "Имя";
+            this.NameCol.MinimumWidth = 40;
             this.NameCol.Name = "NameCol";
+            this.NameCol.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Тип";
+            this.Type.MinimumWidth = 20;
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
             // 
             // DescriptionCol
             // 
             this.DescriptionCol.HeaderText = "Описание";
             this.DescriptionCol.Name = "DescriptionCol";
+            this.DescriptionCol.ReadOnly = true;
             // 
             // PortCol
             // 
             this.PortCol.HeaderText = "Порт";
+            this.PortCol.MinimumWidth = 50;
             this.PortCol.Name = "PortCol";
+            this.PortCol.ReadOnly = true;
             // 
             // IsConnectImageCol
             // 
@@ -160,6 +177,7 @@ namespace MainExample
         private DataGridViewTextBoxColumn IdCol;
         private DataGridViewTextBoxColumn AddresCol;
         private DataGridViewTextBoxColumn NameCol;
+        private DataGridViewTextBoxColumn Type;
         private DataGridViewTextBoxColumn DescriptionCol;
         private DataGridViewTextBoxColumn PortCol;
         private DataGridViewImageColumn IsConnectImageCol;

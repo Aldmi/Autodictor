@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
 
-namespace CommunicationDevices.Behavior.SerialPortBehavior
+namespace CommunicationDevices.Behavior
 {
-    public interface ISerialPortExhangeBehavior
+    public interface IExhangeBehavior
     {
         Queue<UniversalInputType> InDataQueue { get; set; }
         UniversalInputType LastSendData { get; set; }
 
-        UniversalInputType[] Data4CycleFunc { get; set; }
+        ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }
 
         byte NumberSp { get; }                      //заменить на string
         bool IsOpenSp { get; }
@@ -24,8 +24,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         void RemoveCycleFunc();
 
 
-        ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; }
-        ISubject<ISerialPortExhangeBehavior> IsConnectChange { get; }
-        ISubject<ISerialPortExhangeBehavior> LastSendDataChange { get; }
+        ISubject<IExhangeBehavior> IsDataExchangeSuccessChange { get; }
+        ISubject<IExhangeBehavior> IsConnectChange { get; }
+        ISubject<IExhangeBehavior> LastSendDataChange { get; }
     }
 }

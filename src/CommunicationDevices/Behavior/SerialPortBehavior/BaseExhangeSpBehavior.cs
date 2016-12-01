@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using Castle.Components.DictionaryAdapter;
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
 
-    public abstract class BaseExhangeSpBehavior : ISerialPortExhangeBehavior
+    public abstract class BaseExhangeSpBehavior : IExhangeBehavior
     {
         #region Fields
 
@@ -32,7 +33,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
 
-        public UniversalInputType[] Data4CycleFunc { get; set; } = new UniversalInputType[1];        // для каждой циклической функции свои данные. 
+        public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }        // для каждой циклической функции свои данные. 
 
         public byte NumberSp => Port.PortNumber;
         public bool IsOpenSp => Port.IsOpen;
@@ -110,9 +111,9 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region Rx
 
-        public ISubject<ISerialPortExhangeBehavior> IsDataExchangeSuccessChange { get; } = new Subject<ISerialPortExhangeBehavior>();
-        public ISubject<ISerialPortExhangeBehavior> IsConnectChange { get; } = new Subject<ISerialPortExhangeBehavior>();
-        public ISubject<ISerialPortExhangeBehavior> LastSendDataChange { get; } = new Subject<ISerialPortExhangeBehavior>();
+        public ISubject<IExhangeBehavior> IsDataExchangeSuccessChange { get; } = new Subject<IExhangeBehavior>();
+        public ISubject<IExhangeBehavior> IsConnectChange { get; } = new Subject<IExhangeBehavior>();
+        public ISubject<IExhangeBehavior> LastSendDataChange { get; } = new Subject<IExhangeBehavior>();
         #endregion
 
 

@@ -1,5 +1,5 @@
-﻿using CommunicationDevices.Behavior;
-using CommunicationDevices.Behavior.BindingBehavior;
+﻿using System.Linq;
+using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.SerialPortBehavior;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
@@ -15,8 +15,9 @@ namespace CommunicationDevices.Devices
         public string Address { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public BindingType BindingType { get; private set; }
 
-        public ISerialPortExhangeBehavior SpExhBehavior { get; }        //TODO: вынести в отдельный класс. чтобы поведение включало в себя Device. (по аналогии с ToPAthbehavior) 
+        public IExhangeBehavior ExhBehavior { get; }        //TODO: вынести в отдельный класс. чтобы поведение включало в себя Device. (по аналогии с ToPAthbehavior) 
 
         #endregion
 
@@ -25,17 +26,18 @@ namespace CommunicationDevices.Devices
 
         #region ctor
 
-        protected Device(int id, string address, string name, string description, ISerialPortExhangeBehavior behavior)
+        protected Device(int id, string address, string name, string description, IExhangeBehavior behavior)
         {
             Id = id;
             Address = address;
             Name = name;
             Description = description;
-            SpExhBehavior = behavior;
+            ExhBehavior = behavior;
         }
 
-        public Device(XmlDeviceSerialPortSettings xmlSet, ISerialPortExhangeBehavior behavior) : this(xmlSet.Id, xmlSet.Address.ToString(), xmlSet.Name, xmlSet.Description, behavior)
+        public Device(XmlDeviceSerialPortSettings xmlSet, IExhangeBehavior behavior) : this(xmlSet.Id, xmlSet.Address.ToString(), xmlSet.Name, xmlSet.Description, behavior)
         {
+            BindingType = xmlSet.BindingType;
         }
 
         #endregion
@@ -47,15 +49,19 @@ namespace CommunicationDevices.Devices
 
         public void AddOneTimeSendData(UniversalInputType inData)
         {
-            inData.Address= Address;
-            SpExhBehavior.AddOneTimeSendData(inData);
+            inData.AddressDevice= Address;
+            ExhBehavior.AddOneTimeSendData(inData);
         }
 
 
         public void AddCycleFunc()
         {
-            SpExhBehavior.Data4CycleFunc[0]  = new UniversalInputType { Address= Address};   //передадим данные для 1-ой циклической функции 
-            SpExhBehavior.AddCycleFunc();
+            if (ExhBehavior.Data4CycleFunc != null && ExhBehavior.Data4CycleFunc.Any())
+            {
+
+                ExhBehavior.Data4CycleFunc[0].AddressDevice = Address; //передадим данные для 1-ой циклической функции 
+                ExhBehavior.AddCycleFunc();
+            }
         }
 
         #endregion

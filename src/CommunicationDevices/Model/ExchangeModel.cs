@@ -135,12 +135,10 @@ namespace CommunicationDevices.Model
             }
 
 
-         
-
             //СОЗДАНИЕ УСТРОЙСТВ С ПОСЛЕДОВАТЕЛЬНЫМ ПОРТОМ------------------------------------------------------------------------------------------------
             foreach (var xmlDeviceSp in xmlDeviceSpSettings)
             {
-                ISerialPortExhangeBehavior behavior;
+                IExhangeBehavior behavior;
                 byte maxCountFaildRespowne;
                 switch (xmlDeviceSp.Name)
                 {
@@ -166,14 +164,26 @@ namespace CommunicationDevices.Model
                          break;
 
 
-                    //case "MG7777":
-                    //    //создавать другое поведение
-                    //    behavior = new SpMg6587ExhangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, 5);
-                    //    Devices.Add(new DeviceSp(xmlDeviceSp, behavior));
+                    case "Vidor":
+                        maxCountFaildRespowne = 3;
+                        behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
+                        Devices.Add(new Device(xmlDeviceSp, behavior));
 
-                    //    if (xmlDeviceSp.PathNumbers != null)
-                    //        BindingBehaviors.Add(new Binding2PathDevice2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
-                    //    break;
+                        //создание поведения привязка табло к пути.
+                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
+                            BindingBehaviors.Add(new Binding2PathDevice2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+
+                        //создание поведения привязка табло к главному расписанию
+                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                            ;
+
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                            ;
+
+                        //добавим все функции циклического опроса
+                         //Devices.Last().AddCycleFunc();
+                        break;
 
                     default:
                         throw new Exception($" Устройсвто с именем {xmlDeviceSp.Name} не найденно");
@@ -182,9 +192,9 @@ namespace CommunicationDevices.Model
 
 
             //Все порты которые используют устройства откроем и запустим.
-            foreach (var devSp in Devices.GroupBy(d=> d.SpExhBehavior.NumberSp).Select(g=> g.First()))
+            foreach (var devSp in Devices.GroupBy(d=> d.ExhBehavior.NumberSp).Select(g=> g.First()))
             {
-                devSp.SpExhBehavior.PortCycleReConnect(BackGroundTasks);
+                devSp.ExhBehavior.PortCycleReConnect(BackGroundTasks);
             }
 
 

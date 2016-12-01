@@ -11,12 +11,13 @@
 	  <BaudRate>19200</BaudRate>
 	  <DataBits>8</DataBits>
 	  <StopBits>1</StopBits>
-	  <Parity>None</Parity>  
+	  <Parity>Even</Parity>  
     </Serial>
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="DispSys" Port="1" Address="1" TimeRespone="2000" Description="Панель Дисплейные системы, указатель на пути 1." Binding="ToPath:1"/>
+	 <DeviceSp Id="1" Name="DispSys" Port="1" Address="5" TimeRespone="2000" Description="Панель Дисплейные системы, указатель на пути 1." Binding="ToPath:1"/>
+	 <DeviceSp Id="2" Name="Vidor" Port="1" Address="19" TimeRespone="2000" Description="Панель Дисплейные системы, указатель на пути 5." Binding="ToPath:5"/>
   </DevicesWithSP>
 </Root>
 

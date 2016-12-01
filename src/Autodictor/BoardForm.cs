@@ -17,6 +17,7 @@ using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
 using CommunicationDevices.Behavior.SerialPortBehavior;
 using CommunicationDevices.Infrastructure;
+using CommunicationDevices.Settings;
 using MainExample.Properties;
 
 
@@ -53,29 +54,29 @@ namespace MainExample
 
             foreach (var devise in _devises)
             {
-                var disp= devise.SpExhBehavior.IsDataExchangeSuccessChange.Subscribe(async exc =>
+                var disp= devise.ExhBehavior.IsDataExchangeSuccessChange.Subscribe(async exc =>
                 {
-                    var dev= _devises.FirstOrDefault(d => d.SpExhBehavior.Equals(exc));
+                    var dev= _devises.FirstOrDefault(d => d.ExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
-                    dataGridViewBoards[6, row].Value = exc.DataExchangeSuccess ? Resources.ping_YES__ : Resources.ping_Error__;
+                    dataGridViewBoards[7, row].Value = exc.DataExchangeSuccess ? Resources.ping_YES__ : Resources.ping_Error__;
                     await Task.Delay(300);
-                    dataGridViewBoards[6, row].Value = Resources.ping_NO;
+                    dataGridViewBoards[7, row].Value = Resources.ping_NO;
                 });
                 DispouseIsDataExchangeSuccessChangeRx.Add(disp);
 
-                disp = devise.SpExhBehavior.IsConnectChange.Subscribe(exc =>
+                disp = devise.ExhBehavior.IsConnectChange.Subscribe(exc =>
                 {
-                    var dev = _devises.FirstOrDefault(d => d.SpExhBehavior.Equals(exc));
+                    var dev = _devises.FirstOrDefault(d => d.ExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
-                    dataGridViewBoards[5, row].Value = exc.IsConnect ? Resources.OkImg : Resources.CancelImg;
+                    dataGridViewBoards[6, row].Value = exc.IsConnect ? Resources.OkImg : Resources.CancelImg;
                 });
                 DispouseIsConnectChangeRx.Add(disp);
 
-                disp = devise.SpExhBehavior.LastSendDataChange.Subscribe(exc =>
+                disp = devise.ExhBehavior.LastSendDataChange.Subscribe(exc =>
                 {
-                    var dev = _devises.FirstOrDefault(d => d.SpExhBehavior.Equals(exc));
+                    var dev = _devises.FirstOrDefault(d => d.ExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
-                    dataGridViewBoards[7, row].Value = exc.LastSendData.Message;
+                    dataGridViewBoards[8, row].Value = exc.LastSendData.Message;
                 });
                 DispouseLastSendDataChangeRx.Add(disp);
             }
@@ -88,8 +89,34 @@ namespace MainExample
             if (dataGridViewColumn != null && e.ColumnIndex == dataGridViewColumn.Index && e.RowIndex >= 0)
             {
                 var sendStr = (string)dataGridViewBoards[e.ColumnIndex - 1, e.RowIndex].FormattedValue;
+                var type= (string)dataGridViewBoards[e.ColumnIndex - 6, e.RowIndex].FormattedValue;
 
-                _devises.ToList()[e.RowIndex].AddOneTimeSendData(new UniversalInputType { Message = sendStr});
+                var inData = new UniversalInputType { Message = sendStr };
+
+                switch (type)
+                {
+                    case "Путевое":                        //TODO: парсить Message
+                        inData.NumberOfTrain = "111";
+                        inData.PathNumber = "12";
+                        inData.Event = "ПРИБ.";
+                        inData.Time = new DateTime(2016, 11, 30, 18, 49, 0);  //16:20
+                        inData.Stations = "НОВОСИБИРСК";
+                        inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+                        break;
+
+                    case "Основное":
+                        break;
+
+                    case "Прибытие/Отправление":
+                        break;
+
+                    default:
+                       break;
+                }
+
+                _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+
+               // _devises.ToList()[e.RowIndex].SpExhBehavior.Data4CycleFunc[0].Event= "ОТПР.";
             }
         }
 
@@ -98,16 +125,37 @@ namespace MainExample
         {
             foreach (var d in dev)
             {
+                string bindType;
+                switch (d.BindingType)
+                {
+                   case BindingType.ToPath:
+                        bindType = "Путевое";
+                        break;
+
+                    case BindingType.ToGeneral:
+                        bindType = "Основное";
+                        break;
+
+                    case BindingType.ToArrivalAndDeparture:
+                        bindType = "Прибытие/Отправление";
+                        break;
+
+                    default:
+                        bindType = "НЕИЗВЕСТНО";
+                        break;
+                }
+
                 object[] row =
                 {
                     d.Id.ToString(),
                     d.Address,
                     d.Name,
+                    bindType,
                     d.Description,
-                    $"Порт {d.SpExhBehavior.NumberSp} : {(d.SpExhBehavior.IsOpenSp ? "Открыт" : "Закрыт")}",
-                    d.SpExhBehavior.IsConnect ? Resources.OkImg : Resources.CancelImg,
+                    $"Порт {d.ExhBehavior.NumberSp} : {(d.ExhBehavior.IsOpenSp ? "Открыт" : "Закрыт")}",
+                    d.ExhBehavior.IsConnect ? Resources.OkImg : Resources.CancelImg,
                     Resources.ping_NO,
-                    d.SpExhBehavior.LastSendData == null ? String.Empty : d.SpExhBehavior.LastSendData.Message,
+                    d.ExhBehavior.LastSendData == null ? String.Empty : d.ExhBehavior.LastSendData.Message,
                 };
                 this.InvokeIfNeeded(() => dataGridViewBoards.Rows.Add(row));
             }

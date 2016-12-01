@@ -151,8 +151,8 @@ namespace CommunicationDevices.ClientWCF
                     {
                         DeviceNumber = d.Id,
                         DeviceName = d.Name,
-                        Fault = d.SpExhBehavior.IsConnect ? "Нормальная работа" : "НЕ на связи",
-                        Status = d.SpExhBehavior.IsConnect ? 100 : -100,
+                        Fault = d.ExhBehavior.IsConnect ? "Нормальная работа" : "НЕ на связи",
+                        Status = d.ExhBehavior.IsConnect ? 100 : -100,
                     }).ToList();
                     Proxy.SetDiagnostics("Вокзал 1", listDiagnostic);
                 }

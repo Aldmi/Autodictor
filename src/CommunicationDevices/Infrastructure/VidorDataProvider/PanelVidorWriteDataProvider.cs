@@ -7,9 +7,10 @@ using System.Text;
 using Communication.Annotations;
 using Communication.Interfaces;
 
-namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
+
+namespace CommunicationDevices.Infrastructure.VidorDataProvider
 {
-    public class PanelDispSysWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
+    public class PanelVidorWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
     {
         #region Prop
 
@@ -61,7 +62,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
 
                 // %30 - синхр часов
                 // [3..8] - 5байт (hex) время в сек.   
-                var timeNow = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
+                var timeNow = DateTime.Now.Hour.ToString() +  DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
                 string format1 = "%30";
                 string message1 = $"{timeNow}";
                 string result1 = format1 + message1;
@@ -108,7 +109,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                 // 031 - Y1
                 // аттриб = 4 (бег.стр.)
                 string format6 = "%000771460314";
-                string message6 = $"%10$18$00$60$t3{numberOfTrain}";
+                string message6 =$"%10$18$00$60$t3{numberOfTrain}";
                 string result6 = format6 + message6;
 
                 // %01 - задание формата вывода станции

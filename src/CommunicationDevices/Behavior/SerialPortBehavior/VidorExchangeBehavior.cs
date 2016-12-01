@@ -9,19 +9,19 @@ using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Infrastructure.DisplaySysDataProvider;
 using CommunicationDevices.Infrastructure.VidorDataProvider;
 
+
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
-
-    public class DisplSysExchangeBehavior : BaseExhangeSpBehavior
+    public class VidorExchangeBehavior : BaseExhangeSpBehavior
     {
         #region ctor
 
-        public DisplSysExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
+        public VidorExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
             : base(port, timeRespone, maxCountFaildRespowne)
         {
             //добавляем циклические функции
-            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType() });  //данные для 1-ой циклической функции
-            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> { CycleExcangeService };                      // 1 циклическая функция
+            Data4CycleFunc= new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> {new UniversalInputType()}) ;  //данные для 1-ой циклической функции
+            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> {CycleExcangeService};                      // 1 циклическая функция
         }
 
         #endregion
@@ -33,7 +33,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var writeProvider = new PanelDispSysWriteDataProvider { InputData = Data4CycleFunc[0] };
+            var writeProvider = new PanelVidorWriteDataProvider { InputData = Data4CycleFunc[0] };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
             await Task.Delay(4000, ct);  //задержка для задания периода опроса.
         }
@@ -51,7 +51,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
             LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            var writeProvider = new PanelDispSysWriteDataProvider { InputData = LastSendData };
+            var writeProvider = new PanelVidorWriteDataProvider { InputData = LastSendData };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
 
 

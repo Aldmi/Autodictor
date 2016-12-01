@@ -101,7 +101,7 @@ namespace CommunicationDevices.Infrastructure
             CountGetDataByte = 3 + messageBuf.Length + 1;
             var buf= new byte[CountGetDataByte];
 
-            buf[0] = byte.Parse(InputData.Address);
+            buf[0] = byte.Parse(InputData.AddressDevice);
             buf[1] = (byte) CountGetDataByte;
             buf[2] = 0x03;
 
@@ -129,7 +129,7 @@ namespace CommunicationDevices.Infrastructure
                 return false;
             }
 
-            if (data[0] == byte.Parse(InputData.Address) &&
+            if (data[0] == byte.Parse(InputData.AddressDevice) &&
                 data[1] == CountSetDataByte)              
             {
                 if (data[2] == 0x83)                         //успешно приняты

@@ -36,7 +36,7 @@ namespace CommunicationDevices.Infrastructure
             CountGetDataByte = 4;
             var buf = new byte[CountGetDataByte];
 
-            buf[0] = byte.Parse(InputData.Address);
+            buf[0] = byte.Parse(InputData.AddressDevice);
             buf[1] = (byte)CountGetDataByte;
             buf[2] = 0x05;
             buf[3] = 0x00;
