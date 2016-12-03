@@ -1,27 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Xml;
 using CommunicationDevices.Devices;
 using CommunicationDevices.Infrastructure;
+
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 {
 
     /// <summary>
     /// привязка устройства к списку путей (1 табло может обслуживать несколько путей)
+    /// Если список путей пуст, то привязка считается ко всем путям и обслудивается как вывод табличной информации.
     /// </summary>
-    public class Binding2PathDevice2PathBehavior : IBinding2PathBehavior
+    public class Binding2PathBehavior : IBinding2PathBehavior
     {
         private readonly Device _device;
         public IEnumerable<byte> CollectionPathNumber { get; }
-
         public string GetDeviceName => _device.Name;
 
 
-        public Binding2PathDevice2PathBehavior(Device device, IEnumerable<byte> pathNumbers)
+
+
+        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers)
         {
             _device = device;
             CollectionPathNumber = pathNumbers;
         }
+
+
 
 
         public string GetDevicesName4Path(byte pathNumber)
@@ -36,10 +43,31 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         }
 
 
-        public void SendMessage4Path(string message)
+
+
+        public void SendMessage4Path(UniversalInputType inData)
         {
-            _device.AddOneTimeSendData(new UniversalInputType {Message = message});
-            
+            //привязка на все пути
+            if (!CollectionPathNumber.Any())
+            {
+                if (!string.IsNullOrEmpty(inData.Event))                                 //ДОБАВИТЬ В ТАБЛ.
+                {
+                    _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);
+                }
+                else                                                                     //УДАЛИТЬ ИЗ ТАБЛ.
+                {
+                    var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber);
+
+                    if (removeItem != null)
+                    {
+                        _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
+                    }
+                }
+                return;
+            }
+
+            //привязка на указанные пути
+            _device.AddCycleFuncData(0, inData);
         }
     }
 }

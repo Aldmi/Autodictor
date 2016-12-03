@@ -8,6 +8,7 @@ using System.Windows.Forms.VisualStyles;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.Infrastructure;
 using MainExample.Extension;
 
 
@@ -676,7 +677,7 @@ namespace MainExample
                                         btnВоспроизвести_Click(null, null);
                                   
                                         //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                                        SendOnTable(Данные);
+                                        SendOnPathTable(Данные);
                                     }
 
                                     Данные.Состояние = SoundRecordStatus.Воспроизведение;
@@ -706,6 +707,111 @@ namespace MainExample
             }
         }
 
+
+        // Определение композиций для запуска в данный момент времени
+        private void ОпределитьИнформациюДляОтображенияНаТабло()
+        {
+            for (int item = 0; item < this.listView1.Items.Count; item++)
+            {
+                if (item <= SoundRecords.Count)
+                {
+                    try
+                    {
+                        string Key = this.listView1.Items[item].SubItems[1].Text;
+
+                        if (SoundRecords.Keys.Contains(Key) == true)
+                        {
+                            SoundRecord Данные = SoundRecords[Key];
+
+                            if (this.listView1.Items[item].Checked && (Данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
+                            {
+                                //при изменении пути выставится путь в нескольких записях (прибытие, посадка, отправление)
+                                if (Данные.НомерПути > 0)
+                                {
+                                    //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
+
+                                    //сообщение о прибытии
+
+                                    var addMiliSec = 0;//-5*60 * 1000;
+                                    if ((DateTime.Now >= Данные.ВремяПрибытия.AddMilliseconds(addMiliSec) && (DateTime.Now <= Данные.ВремяПрибытия.AddMilliseconds(addMiliSec + 300))))
+                                    {
+                                        Debug.WriteLine("ВЫЗОВ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                                        SendOnPathTable(Данные);
+                                        //Данные.СтатусОтображения = СтатусОтображения.Отображение;
+                                    }
+                                }
+
+
+
+                                //DateTime НачалоИнтервала = Данные.Время;
+                                //DateTime КонецИнтервала = НачалоИнтервала.AddSeconds(Данные.Длительность);
+
+                                //if ((DateTime.Now >= НачалоИнтервала.AddSeconds(-25)) && (DateTime.Now < НачалоИнтервала.AddSeconds(-20)))
+                                //{
+                                //    if (ОкноПредупреждения != null)
+                                //        ОкноПредупреждения = null;
+                                //}
+                                //else if ((DateTime.Now >= НачалоИнтервала.AddSeconds(-20)) && (DateTime.Now < НачалоИнтервала))
+                                //{
+                                //    if ((Данные.Состояние == SoundRecordStatus.ОжиданиеВоспроизведения) && (РазрешениеРаботы == true) && (ОкноПредупреждения == null))
+                                //    {
+                                //        ОкноПредупреждения = new Предупреждение(this.listView1.Items[item]);
+                                //        ОкноПредупреждения.StartPosition = FormStartPosition.Manual;
+                                //        ОкноПредупреждения.Location = new Point(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - 301, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - 250);
+                                //        ОкноПредупреждения.Show();
+                                //        ОкноПредупреждения.WindowState = FormWindowState.Normal;
+                                //    }
+
+                                //    if ((ОкноПредупреждения != null) && this.listView1.Items[item].Checked)
+                                //        Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
+                                //}
+                                //else if ((DateTime.Now >= НачалоИнтервала) && (DateTime.Now < КонецИнтервала))
+                                //{
+                                //    if ((Данные.Состояние == SoundRecordStatus.ОжиданиеВоспроизведения) && (РазрешениеРаботы == true))
+                                //    {
+                                //        for (int i = 0; i < this.listView1.Items.Count; i++)
+                                //        {
+                                //            this.listView1.Items[i].Focused = false;
+                                //            this.listView1.Items[i].Selected = false;
+                                //        }
+
+                                //        this.listView1.Items[item].Focused = true;
+                                //        this.listView1.Items[item].Selected = true;
+                                //        btnВоспроизвести_Click(null, null);
+
+                                //       
+                                //    }
+
+                                //    Данные.Состояние = SoundRecordStatus.Воспроизведение;
+                                //}
+                                //else if (DateTime.Now >= КонецИнтервала)
+                                //{
+                                //    Данные.Состояние = SoundRecordStatus.Воспроизведена;
+                                //}
+                                //else
+                                //{
+                                //    Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
+                                //}
+                            }
+                            //else if (this.listView1.Items[item].Checked && (Данные.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное))
+                            //    Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
+                            //else
+                            //    Данные.Состояние = SoundRecordStatus.Выключена;
+
+                            SoundRecords[Key] = Данные;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
+
+
+
+
         // Формирование очереди воспроизведения звуковых файлов
         private void ОбработкаЗвуковогоПотка()
         {
@@ -717,6 +823,7 @@ namespace MainExample
             }
 
             ОпределитьКомпозициюДляЗапуска();
+            ОпределитьИнформациюДляОтображенияНаТабло();
             ОбновитьСостояниеЗаписейТаблицы();
 
             SoundFileStatus status = Player.GetFileStatus();
@@ -1003,14 +1110,31 @@ namespace MainExample
         }
 
         //Отправка сообшений на табло
-        private void SendOnTable(SoundRecord data)
+        private void SendOnPathTable(SoundRecord data)
         {
             foreach (var devName in data.НазванияТабло)
             {
                 var beh= BindingBehaviors.FirstOrDefault(b => b.GetDeviceName == devName);
                 if (beh != null)
                 {
-                    beh?.SendMessage4Path(data.НомерПути + data.НомерПоезда + data.НазваниеПоезда); // TODO: передавать не строку а данные, т.к. каждое таблов сформирует строку в нужном формате. UniversalInputType добавить поле SoundRecord.
+                    //inData.NumberOfTrain = "111";
+                    //inData.PathNumber = "12";
+                    //inData.Event = "ПРИБ.";
+                    //inData.Time = new DateTime(2016, 11, 30, 16, 20, 0);  //16:20
+                    //inData.Stations = "НОВОСИБИРСК";
+                    //inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+
+                    var inData = new UniversalInputType
+                    {
+                        NumberOfTrain = data.НомерПоезда, //data.НазваниеПоезда
+                        PathNumber = data.НомерПути.ToString(),
+                        Event = data.Описание,
+                        Time = data.ВремяПрибытия,
+                        Stations = "НОВОСИБИРСК"
+                    };
+                    inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+
+                    beh.SendMessage4Path(inData);
                     Debug.WriteLine($"НомерПути= {data.НомерПути} + НомерПоезда= {data.НомерПоезда} + НазваниеПоезда={data.НазваниеПоезда}");
                 }
             }

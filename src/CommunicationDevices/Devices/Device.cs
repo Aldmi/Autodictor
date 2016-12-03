@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Castle.Core.Internal;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.SerialPortBehavior;
 using CommunicationDevices.Infrastructure;
@@ -17,7 +18,7 @@ namespace CommunicationDevices.Devices
         public string Description { get; private set; }
         public BindingType BindingType { get; private set; }
 
-        public IExhangeBehavior ExhBehavior { get; }        //TODO: вынести в отдельный класс. чтобы поведение включало в себя Device. (по аналогии с ToPAthbehavior) 
+        public IExhangeBehavior ExhBehavior { get; }       
 
         #endregion
 
@@ -54,14 +55,28 @@ namespace CommunicationDevices.Devices
         }
 
 
+        public void AddCycleFuncData(int index, UniversalInputType inData)
+        {
+            inData.AddressDevice = Address;
+            ExhBehavior.GetData4CycleFunc[index].Initialize(inData);     
+        }
+
+
+
         public void AddCycleFunc()
         {
-            if (ExhBehavior.Data4CycleFunc != null && ExhBehavior.Data4CycleFunc.Any())
-            {
+            ExhBehavior.GetData4CycleFunc.ForEach(c=> c.AddressDevice = Address);       //Добавить во все данные циклического обмена адресс.
+            ExhBehavior.AddCycleFunc();
+        }
 
-                ExhBehavior.Data4CycleFunc[0].AddressDevice = Address; //передадим данные для 1-ой циклической функции 
-                ExhBehavior.AddCycleFunc();
-            }
+
+
+
+
+
+        public void RemoveCycleFunc()
+        {
+            ExhBehavior.RemoveCycleFunc();
         }
 
         #endregion

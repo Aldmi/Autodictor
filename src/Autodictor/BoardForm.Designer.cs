@@ -93,39 +93,43 @@ namespace MainExample
             this.IdCol.HeaderText = "Id";
             this.IdCol.Name = "IdCol";
             this.IdCol.ReadOnly = true;
+            this.IdCol.Width = 30;
             // 
             // AddresCol
             // 
             this.AddresCol.HeaderText = "Адресс";
             this.AddresCol.Name = "AddresCol";
             this.AddresCol.ReadOnly = true;
+            this.AddresCol.Width = 40;
             // 
             // NameCol
             // 
             this.NameCol.HeaderText = "Имя";
-            this.NameCol.MinimumWidth = 40;
+            this.NameCol.MinimumWidth = 80;
             this.NameCol.Name = "NameCol";
             this.NameCol.ReadOnly = true;
             // 
             // Type
             // 
             this.Type.HeaderText = "Тип";
-            this.Type.MinimumWidth = 20;
+            this.Type.MinimumWidth = 50;
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             // 
             // DescriptionCol
             // 
             this.DescriptionCol.HeaderText = "Описание";
+            this.DescriptionCol.MinimumWidth = 80;
             this.DescriptionCol.Name = "DescriptionCol";
             this.DescriptionCol.ReadOnly = true;
             // 
             // PortCol
             // 
             this.PortCol.HeaderText = "Порт";
-            this.PortCol.MinimumWidth = 50;
+            this.PortCol.MinimumWidth = 100;
             this.PortCol.Name = "PortCol";
             this.PortCol.ReadOnly = true;
+            this.PortCol.Width = 150;
             // 
             // IsConnectImageCol
             // 

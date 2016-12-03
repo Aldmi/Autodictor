@@ -95,14 +95,43 @@ namespace MainExample
 
                 switch (type)
                 {
-                    case "Путевое":                        //TODO: парсить Message
-                        inData.NumberOfTrain = "111";
-                        inData.PathNumber = "12";
-                        inData.Event = "ПРИБ.";
-                        inData.Time = new DateTime(2016, 11, 30, 18, 49, 0);  //16:20
-                        inData.Stations = "НОВОСИБИРСК";
+                    case "Путевое":                        //TODO: парсить Message для заполненния полей inData.
+                        //inData.NumberOfTrain = "111";
+                        //inData.PathNumber = "12";
+                        //inData.Event = "ПРИБ.";
+                        //inData.Time = new DateTime(2016, 11, 30, 18, 49, 0);  //16:20
+                        //inData.Stations = "НОВОСИБИРСК";
+                        //inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+
+
+                        inData.NumberOfTrain = "Э/П";
+                        inData.PathNumber = "6";
+                        inData.Event = "";
+                        inData.Time = new DateTime(2016, 11, 30, 16, 50, 00);  //16:50
+                        inData.Stations = "КРЮКОВО-ЛАСТОЧКА";
                         inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+
+                        if (sendStr == "AddRow")
+                        {
+                            if (_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData != null)
+                            {
+                                _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);                             // Изменили данные для циклического опроса
+                                _devises.ToList()[e.RowIndex].AddOneTimeSendData(_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос
+                            }
+                        }
+                        else
+                        if(sendStr == "RemoveRow")
+                        {
+                            var delRow = _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.LastOrDefault();
+                            if (delRow != null)
+                            {
+                                _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Remove(delRow);                            // Изменили данные для циклического опроса
+                                _devises.ToList()[e.RowIndex].AddOneTimeSendData(_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]);   // Отправили однократный запрос
+                            }
+                        }
+
                         break;
+
 
                     case "Основное":
                         break;
@@ -114,9 +143,11 @@ namespace MainExample
                        break;
                 }
 
-                _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+               // _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
 
-               // _devises.ToList()[e.RowIndex].SpExhBehavior.Data4CycleFunc[0].Event= "ОТПР.";
+                //_devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
+
+               // _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);
             }
         }
 
@@ -152,7 +183,7 @@ namespace MainExample
                     d.Name,
                     bindType,
                     d.Description,
-                    $"Порт {d.ExhBehavior.NumberSp} : {(d.ExhBehavior.IsOpenSp ? "Открыт" : "Закрыт")}",
+                    $"Порт {d.ExhBehavior.NumberSp} : {(d.ExhBehavior.IsOpen ? "Открыт" : "Закрыт")}",
                     d.ExhBehavior.IsConnect ? Resources.OkImg : Resources.CancelImg,
                     Resources.ping_NO,
                     d.ExhBehavior.LastSendData == null ? String.Empty : d.ExhBehavior.LastSendData.Message,

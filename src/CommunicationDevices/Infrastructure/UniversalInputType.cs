@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CommunicationDevices.Infrastructure
 {
@@ -26,5 +27,19 @@ namespace CommunicationDevices.Infrastructure
         public string Stations { get; set; }                         //Станции остановочные.
         public DateTime Time { get; set; }                           //Время
         public string Message { get; set; }                          //Сообщение
+
+        public List<UniversalInputType> TableData { get; set; }     //Данные для табличного представления
+
+
+        public void Initialize(UniversalInputType initializeData)
+        {
+            AddressDevice = initializeData.AddressDevice;
+            NumberOfTrain = initializeData.NumberOfTrain;
+            PathNumber = initializeData.PathNumber;
+            Event = initializeData.Event;
+            Stations = initializeData.Stations;
+            Time = initializeData.Time;
+            Message = initializeData.Message;
+        }
     }
 }

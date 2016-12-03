@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
-using CommunicationDevices.Infrastructure.DisplaySysDataProvider;
 using CommunicationDevices.Infrastructure.VidorDataProvider;
 
 
@@ -33,9 +32,10 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
+            //Вывод на путевое табло
             var writeProvider = new PanelVidorWriteDataProvider { InputData = Data4CycleFunc[0] };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            await Task.Delay(4000, ct);  //задержка для задания периода опроса.
+            await Task.Delay(2000, ct);  //задержка для задания периода опроса.         
         }
 
         #endregion

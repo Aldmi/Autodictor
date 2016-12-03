@@ -149,7 +149,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if(xmlDeviceSp.BindingType == BindingType.ToPath)
-                           BindingBehaviors.Add(new Binding2PathDevice2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                           BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
                        
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
@@ -160,7 +160,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                       // Devices.Last().AddCycleFunc();
+                        Devices.Last().AddCycleFunc();
                          break;
 
 
@@ -171,7 +171,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            BindingBehaviors.Add(new Binding2PathDevice2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
@@ -182,7 +182,30 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                         //Devices.Last().AddCycleFunc();
+                        Devices.Last().AddCycleFunc();
+                        break;
+
+
+
+                    case "VidorTable8":
+                        maxCountFaildRespowne = 3;
+                        behavior = new VidorTableExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 8);
+                        Devices.Add(new Device(xmlDeviceSp, behavior));
+
+                        //создание поведения привязка табло к пути.
+                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
+                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+
+                        //создание поведения привязка табло к главному расписанию
+                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                            ;
+
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
+                            ;
+
+                        //добавим все функции циклического опроса
+                        Devices.Last().AddCycleFunc();
                         break;
 
                     default:
@@ -194,34 +217,11 @@ namespace CommunicationDevices.Model
             //Все порты которые используют устройства откроем и запустим.
             foreach (var devSp in Devices.GroupBy(d=> d.ExhBehavior.NumberSp).Select(g=> g.First()))
             {
-                devSp.ExhBehavior.PortCycleReConnect(BackGroundTasks);
-            }
-
-
-            //Создадим внешнее поведение для устройств
-
-           
-     
-
-
-            //DEBUG запуск циклических функций уст-ва --------------------------------------
-            //var dev = Devices.First();
-            //dev.SpExhBehavior.Data4CycleFunc[0] = new UniversalInputType { Message = "dafdsfsdf" };
-            //Devices.First().AddCycleFunc();
-            //DEBUG--------------------------------------
-
-
-            //Использование------------------------------------------------------------
-            //передача данных девайсу и через него поведению
-            //var dev = Devices.FirstOrDefault(n => n.Name == "MG6587");
-            //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 1 прибывает на 2 путь в 19:56" });
-            //Thread.Sleep(1000);
-            //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поезд 152 прибывает на 21 путь в 10:00" });
-            //Thread.Sleep(1000);
-            //dev.AddOneTimeSendData(new UniversalInputType { Message = "Поеfgfdgfdg" });
-
-            // await Task.Delay(2000);
+                devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
+            }    
         }
+
+
 
         public void Dispose()
         {

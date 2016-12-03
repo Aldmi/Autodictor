@@ -83,6 +83,7 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
+    <Compile Include="Behavior\SerialPortBehavior\VidorTableExchangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\VidorExchangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\InformSvyazExchangeBehavior.cs" />
@@ -92,9 +93,9 @@
     <Compile Include="Devices\Device.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
     <Compile Include="Infrastructure\DisplaySysDataProvider\PanelDispSysWriteDataProvider.cs" />
-    <Compile Include="Infrastructure\InformSvyzDataProvider\PanelInformSvyazCheckConnectDataProvider.cs" />
     <Compile Include="Infrastructure\InformSvyzDataProvider\PanelInformSvyazWriteDataProvider.cs" />
     <Compile Include="Infrastructure\UniversalInputType.cs" />
+    <Compile Include="Infrastructure\VidorDataProvider\PanelVidorTableWriteDataProvider.cs" />
     <Compile Include="Infrastructure\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

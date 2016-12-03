@@ -196,9 +196,9 @@ namespace Communication.SerialPort
                     //вызов циклических функций опроса   
                     if (Funcs != null && Funcs.Any())
                     {
-                        if (indexCycleFunc > Funcs.Count)
+                        if (indexCycleFunc >= Funcs.Count)
                             indexCycleFunc = 0;
-                        await Funcs[indexCycleFunc](this, Cts.Token);
+                        await Funcs[indexCycleFunc++](this, Cts.Token);
                     }
 
 
@@ -253,7 +253,7 @@ namespace Communication.SerialPort
                 return false;
             }
             IsRunDataExchange = false;
-            return true;
+            return false;
         }
 
 

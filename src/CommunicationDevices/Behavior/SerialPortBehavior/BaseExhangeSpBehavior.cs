@@ -36,7 +36,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }        // для каждой циклической функции свои данные. 
 
         public byte NumberSp => Port.PortNumber;
-        public bool IsOpenSp => Port.IsOpen;
+        public bool IsOpen => Port.IsOpen;
 
         private bool _isConnect;
         public bool IsConnect
@@ -114,6 +114,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         public ISubject<IExhangeBehavior> IsDataExchangeSuccessChange { get; } = new Subject<IExhangeBehavior>();
         public ISubject<IExhangeBehavior> IsConnectChange { get; } = new Subject<IExhangeBehavior>();
         public ISubject<IExhangeBehavior> LastSendDataChange { get; } = new Subject<IExhangeBehavior>();
+
         #endregion
 
 
@@ -121,7 +122,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region Methode
 
-        public void PortCycleReConnect(ICollection<Task> backGroundTasks = null)
+        public void CycleReConnect(ICollection<Task> backGroundTasks = null)
         {
             if (Port != null)
             {
@@ -149,6 +150,13 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 Port.AddOneTimeSendData(OneTimeExchangeService);
             }
         }
+
+
+
+        /// <summary>
+        /// Изменение данных для циклических функций
+        /// </summary>
+        public ReadOnlyCollection<UniversalInputType> GetData4CycleFunc => Data4CycleFunc;
 
 
         /// <summary>

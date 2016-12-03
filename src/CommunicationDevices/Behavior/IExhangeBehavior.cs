@@ -8,20 +8,19 @@ namespace CommunicationDevices.Behavior
 {
     public interface IExhangeBehavior
     {
-        Queue<UniversalInputType> InDataQueue { get; set; }
         UniversalInputType LastSendData { get; set; }
+        ReadOnlyCollection<UniversalInputType> GetData4CycleFunc { get; }
 
-        ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }
-
-        byte NumberSp { get; }                      //заменить на string
-        bool IsOpenSp { get; }
+        byte NumberSp { get; }                      //TODO: заменить на string
+        bool IsOpen { get; }
         bool IsConnect { get;  set; }
         bool DataExchangeSuccess { get; set; }
 
-        void PortCycleReConnect(ICollection<Task> backGroundTasks = null);
-        void AddOneTimeSendData(UniversalInputType inData);
+        void CycleReConnect(ICollection<Task> backGroundTasks = null);
         void AddCycleFunc();
         void RemoveCycleFunc();
+
+        void AddOneTimeSendData(UniversalInputType inData);
 
 
         ISubject<IExhangeBehavior> IsDataExchangeSuccessChange { get; }

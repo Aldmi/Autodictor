@@ -10,9 +10,11 @@ using Communication.Interfaces;
 
 namespace CommunicationDevices.Infrastructure.VidorDataProvider
 {
-    public class PanelVidorWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
+    public class PanelVidorTableWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
     {
         #region Prop
+
+        public byte CurrentRow { get; set; }
 
         public int CountGetDataByte { get; private set; } //вычисляется при отправке
         public int CountSetDataByte { get; } = 8;
@@ -48,91 +50,72 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
         {
             try
             {
+                //STX                
+                //2D - аддр. 45
+                //85
+                //%000020470224 - 3 координты, Х1 = 002,  X2 = 047, Y = 022, формат = 4(горизонт.перемещ)
+                //%10$00$60$t3$12Э / П - текст, $00$60$t3$12Э / П, -код.табл по умолч, не мигать, по центру.  (Э / П)
+                //%000481650224 - 3 координты, Х1 = 048,  X2 = 165, Y = 022, формат = 4(горизонт.перемещ)
+                //%10$00$60$t3$12ПОДСОЛНЕЧНАЯ - текст, $00$60$t3$12Э / П, -код.табл по умолч, не мигать, по центру.  (ПОДСОЛНЕЧНАЯ)
+                //%001712070224 - 3 координты, Х1 = 171,  X2 = 207, Y = 022, формат = 4(горизонт.перемещ)
+                //%10$00$60$t3$1216:27 - текст, $00$60$t3$12Э / П, -код.табл по умолч, не мигать, по центру.  (16:27)
+                //%002312520224 - 3 координты, Х1 = 231,  X2 = 252, Y = 022, формат = 4(горизонт.перемещ)
+                //%10$00$60$t3$124 - текст, $00$60$t3$124, -код.табл по умолч, не мигать, по центру.           (4)
+                //A1               -  СRC
+                //ETX    
+
+
                 byte address = byte.Parse(InputData.AddressDevice);
 
-                byte numberOfTrain = byte.Parse(InputData.NumberOfTrain);
-                byte numberOfPath = byte.Parse(InputData.PathNumber);
-                string ev = InputData.Event;
-                string stations = InputData.Stations;
-                string time = InputData.Time.ToShortTimeString();
+                string numberOfTrain = string.IsNullOrEmpty(InputData.NumberOfTrain) ? " " : InputData.NumberOfTrain;
+                string numberOfPath = string.IsNullOrEmpty(InputData.PathNumber) ? " " : InputData.PathNumber;
+                string stations = string.IsNullOrEmpty(InputData.Stations) ? " " : InputData.Stations;
+                string time = (InputData.Time == DateTime.MinValue) ? " " : InputData.Time.ToShortTimeString();
+                string rowNumber = (11 * CurrentRow).ToString("D3");
 
 
 
-
-                // %30 - синхр часов
-                // [3..8] - 5байт (hex) время в сек.   
-                var timeNow = DateTime.Now.Hour.ToString() +  DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
-                string format1 = "%30";
-                string message1 = $"{timeNow}";
+                // %00 - задание формата вывода НАЗВАНИЯ ПОЕЗДА
+                // 001 - Х1
+                // 047 - X2
+                // вычисляется - Y
+                // аттриб = 4 (бег.стр.)
+                string format1 = $"%00002047{rowNumber}4";
+                string message1 = $"%10$00$60$t3$12{numberOfTrain}";
                 string result1 = format1 + message1;
 
-
-                // %01 - задание формата вывода ПУТИ
-                // 001 - Х1
-                // 146 - X2
-                // 014 - Y
+                // %01 - задание формата вывода СТАНЦИИ
+                // 048 - Х1
+                // 165 - X2
+                // вычисляется - Y
                 // аттриб = 4 (бег.стр.)
-                string format2 = "%000011460144";
-                string message2 = $"%10$18$00$60$t2ПУТЬ №{numberOfPath}";
+                string format2 = $"%00048165{rowNumber}4";
+                string message2 = $"%10$00$60$t3$12{stations}";
                 string result2 = format2 + message2;
 
-                // %01 - задание формата вывода события
-                // 152 - Х1
-                // 192 - X2
-                // 014 - Y
+                // %01 - задание формата вывода ВРЕМЕНИ
+                // 171 - Х1
+                // 207 - X2
+                // вычисляется - Y
                 // аттриб = 4 (бег.стр.)
-                string format3 = "%001521920144";
-                string message3 = $"%10$18$00$60$t3{ev}";
+                string format3 = $"%00171207{rowNumber}4";
+                string message3 = $"%10$00$60$t3$12{time}";
                 string result3 = format3 + message3;
 
-                // %01 - задание формата вывода слова ПОЕЗД№
-                // 152 - Х1
-                // 192 - X2
-                // 014 - Y
+                // %01 - задание формата вывода ПУТИ
+                // 231 - Х1
+                // 252 - X2
+                // вычисляется - Y
                 // аттриб = 4 (бег.стр.)
-                string format4 = "%000010750314";
-                string message4 = "%10$18$00$60$t3Поезд №";
+                string format4 = $"%00231252{rowNumber}4";
+                string message4 = $"%10$00$60$t3$12{numberOfPath}";
                 string result4 = format4 + message4;
 
-                // %42 - вывод верт. линии
-                // 001 - Х1
-                // 192 - Y1
-                // 016 - Y2
-                // 016 - ширина
-                string message5 = "%42001192016016";
-                string result5 = message5;
-
-                // %01 - задание формата номера поезда
-                // 077 - Х1
-                // 146 - X2
-                // 031 - Y1
-                // аттриб = 4 (бег.стр.)
-                string format6 = "%000771460314";
-                string message6 =$"%10$18$00$60$t3{numberOfTrain}";
-                string result6 = format6 + message6;
-
-                // %01 - задание формата вывода станции
-                // 077 - Х1
-                // 146 - X2
-                // 046 - Y1
-                // аттриб = 4 (бег.стр.)
-                string format7 = "%000011460464";
-                string message7 = $"%10$18$00$60$t3{stations}";
-                string result7 = format7 + message7;
-
-                // %01 - задание формата вывода времени
-                // 152 - Х1
-                // 192 - X2
-                // 046 - Y1
-                // аттриб = 4 (бег.стр.)
-                string format8 = "%001521920464";
-                string message8 = $"%10$18$00$60$t3{time}";
-                string result8 = format8 + message8;
 
 
 
                 //формируем КОНЕЧНУЮ строку
-                var sumResult = result1 + result2 + result3 + result4 + result5 + result6 + result7 + result8;
+                var sumResult = result1 + result2 + result3 + result4;
                 var resultstring = address.ToString("X2") + sumResult.Length.ToString("X2") + sumResult;
 
                 //вычисляем CRC
