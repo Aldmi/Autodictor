@@ -104,11 +104,19 @@ namespace MainExample
                         //inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
 
-                        inData.NumberOfTrain = "Э/П";
-                        inData.PathNumber = "6";
-                        inData.Event = "";
-                        inData.Time = new DateTime(2016, 11, 30, 16, 50, 00);  //16:50
-                        inData.Stations = "КРЮКОВО-ЛАСТОЧКА";
+                        //inData.NumberOfTrain = "125";
+                        //inData.PathNumber = "6";
+                        //inData.Event = "ОТПР.";
+                        //inData.Time = new DateTime(2016, 11, 30, 16, 50, 00);  //16:50
+                        //inData.Stations = "КРЮКОВО-ЛАСТОЧКА";
+
+                        inData.NumberOfTrain = "  ";
+                        inData.PathNumber = "  ";
+                        inData.Event = "  ";
+                        inData.Time = DateTime.MinValue;  //16:50
+                        inData.Stations = "  ";
+
+
                         inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
                         if (sendStr == "AddRow")
@@ -129,6 +137,11 @@ namespace MainExample
                                 _devises.ToList()[e.RowIndex].AddOneTimeSendData(_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]);   // Отправили однократный запрос
                             }
                         }
+                        else
+                        {
+                           // _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
+                            _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+                        }
 
                         break;
 
@@ -143,9 +156,7 @@ namespace MainExample
                        break;
                 }
 
-               // _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
 
-                //_devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
 
                // _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);
             }

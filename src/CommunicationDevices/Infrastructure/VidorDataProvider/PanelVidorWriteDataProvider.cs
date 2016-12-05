@@ -50,11 +50,11 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
             {
                 byte address = byte.Parse(InputData.AddressDevice);
 
-                byte numberOfTrain = byte.Parse(InputData.NumberOfTrain);
-                byte numberOfPath = byte.Parse(InputData.PathNumber);
-                string ev = InputData.Event;
-                string stations = InputData.Stations;
-                string time = InputData.Time.ToShortTimeString();
+                string numberOfTrain = string.IsNullOrEmpty(InputData.NumberOfTrain) ? " " : InputData.NumberOfTrain;
+                string numberOfPath = string.IsNullOrEmpty(InputData.PathNumber) ? " " : InputData.PathNumber;
+                string ev = string.IsNullOrEmpty(InputData.Event) ? " " : InputData.Event;
+                string stations = string.IsNullOrEmpty(InputData.Stations) ? " " : InputData.Stations;
+                string time = (InputData.Time == DateTime.MinValue) ? " " : InputData.Time.ToShortTimeString();
 
 
 

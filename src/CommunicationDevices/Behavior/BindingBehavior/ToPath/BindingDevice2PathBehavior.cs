@@ -45,29 +45,32 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public void SendMessage4Path(UniversalInputType inData)
+        public void SendMessage4Path(UniversalInputType inData, byte pathNumber)
         {
             //привязка на все пути
             if (!CollectionPathNumber.Any())
             {
-                if (!string.IsNullOrEmpty(inData.Event))                                 //ДОБАВИТЬ В ТАБЛ.
+                if (!string.IsNullOrWhiteSpace(inData.Event))               //ДОБАВИТЬ В ТАБЛ.
                 {
-                    _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);
+                    _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);  // Изменили данные для циклического опроса
+                      
                 }
-                else                                                                     //УДАЛИТЬ ИЗ ТАБЛ.
+                else                                                         //УДАЛИТЬ ИЗ ТАБЛ.
                 {
-                    var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber);
+                    var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == pathNumber.ToString());
 
                     if (removeItem != null)
                     {
                         _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
                     }
                 }
-                return;
             }
-
-            //привязка на указанные пути
-            _device.AddCycleFuncData(0, inData);
+            else
+            {
+                //привязка на указанные пути
+                _device.AddCycleFuncData(0, inData);
+            }
+            _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос (выставили запрос сразу на выполнение)
         }
     }
 }

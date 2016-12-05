@@ -16,9 +16,9 @@
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="DispSys" Port="1" Address="5" TimeRespone="2000" Description="Панель Дисплейные системы, указатель на пути 1." Binding="ToPath:1"/>
-	 <DeviceSp Id="2" Name="Vidor" Port="1" Address="19" TimeRespone="2000" Description="Панель Видор, указатель на пути 5." Binding="ToPath:5"/>
-	 <DeviceSp Id="3" Name="VidorTable8" Port="1" Address="45" TimeRespone="2000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:"/>
+	 <DeviceSp Id="15" Name="Vidor" Port="1" Address="19" TimeRespone="2000" Description="Панель Видор, указатель дальн. след. на пути 9 (xxxx)." Binding="ToPath:9"/>
+
+	 <DeviceSp Id="16" Name="VidorTable8" Port="1" Address="45" TimeRespone="2000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:"/>
   </DevicesWithSP>
 </Root>
 

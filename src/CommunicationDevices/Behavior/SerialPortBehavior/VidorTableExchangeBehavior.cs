@@ -52,6 +52,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 {
                     var writeTableProvider = (i < inData.TableData.Count) ? new PanelVidorTableWriteDataProvider { InputData = inData.TableData[i], CurrentRow = (byte) (i+1) } : new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType {AddressDevice = inData.AddressDevice}, CurrentRow = (byte)(i+1) };
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
+                    LastSendData = writeTableProvider.InputData;
                 }
             }
 

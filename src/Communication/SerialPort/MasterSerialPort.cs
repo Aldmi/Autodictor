@@ -252,8 +252,8 @@ namespace Communication.SerialPort
                 //ReOpen();
                 return false;
             }
-            IsRunDataExchange = false;
-            return false;
+            IsRunDataExchange = true;
+            return true;
         }
 
 
@@ -317,7 +317,7 @@ namespace Communication.SerialPort
                      var buffer = new byte[nBytesRead];
                      _port.Read(buffer, 0, nBytesRead);
 
-                     tcs.SetResult(buffer);
+                     tcs.TrySetResult(buffer);
                  }
              });
 
@@ -329,7 +329,7 @@ namespace Communication.SerialPort
             }
             catch (TimeoutException)
             {
-                tcs.SetCanceled();
+                tcs.TrySetCanceled();
                 throw;
             }
             finally

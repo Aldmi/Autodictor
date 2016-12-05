@@ -160,7 +160,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                       // Devices.Last().AddCycleFunc();
                          break;
 
 
@@ -182,7 +182,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                       // Devices.Last().AddCycleFunc();
                         break;
 
 
@@ -205,7 +205,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                       // Devices.Last().AddCycleFunc();
                         break;
 
                     default:
