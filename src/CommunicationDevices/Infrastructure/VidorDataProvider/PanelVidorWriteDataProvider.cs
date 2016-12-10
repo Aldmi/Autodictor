@@ -158,11 +158,14 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
 
         /// <summary>
         /// Данные ответа по записи строки на табло.
-        /// байт[0]= 
-        /// байт[1]= 
-        /// байт[2]= 
-        /// байт[3]=
-        /// байт[4]= 
+        /// байт[0]= 02
+        /// байт[1]= 30
+        /// байт[2]= 32
+        /// байт[3]= 30
+        /// байт[4]= 30
+        /// байт[5]= 46
+        /// байт[6]= 44
+        /// байт[7]= 03
         /// </summary>
         public bool SetDataByte(byte[] data)
         {
@@ -172,28 +175,21 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 return false;
             }
 
+            if (data[0] == 0x02 &&
+                data[1] == 0x30 &&
+                data[2] == 0x32 &&
+                data[3] == 0x30 &&
+                data[4] == 0x30 &&
+                data[5] == 0x46 &&
+                data[6] == 0x44 &&
+                data[7] == 0x03)
+            {
+                IsOutDataValid = true;
+                return true;
+            }
 
-            IsOutDataValid = true;
-            return true;
-
-
-            //if (data[0] == byte.Parse(InputData.Address) &&
-            //    data[1] == CountSetDataByte)
-            //{
-            //    if (data[2] == 0x83)                         //успешно приняты
-            //    {
-            //        IsOutDataValid = true;
-            //        return true;
-            //    }
-
-            //    if (data[2] == 0x80)                          //ошибка приема
-            //    {
-            //        OutputData.ErrorCode = data[3];
-            //    }
-            //}
-
-            //IsOutDataValid = false;
-            //return false;
+            IsOutDataValid = false;
+            return false;
         }
 
 

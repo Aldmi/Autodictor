@@ -221,6 +221,7 @@ namespace CommunicationDevices.ClientWCF
 
         public void Dispose()
         {
+            ((IClientChannel)Proxy).Close();
             ChannelFactory?.Close();
             _timer?.Dispose();
         }

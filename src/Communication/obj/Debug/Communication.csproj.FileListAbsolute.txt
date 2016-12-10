@@ -62,13 +62,6 @@ D:\Dropbox\C#\Project C#\Autodictor\src\Communication\bin\Debug\Library.pdb
 D:\Dropbox\C#\Project C#\Autodictor\src\Communication\obj\Debug\Communication.csprojResolveAssemblyReference.cache
 D:\Dropbox\C#\Project C#\Autodictor\src\Communication\obj\Debug\Communication.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\Communication\obj\Debug\Communication.pdb
-D:\Git\Autodictor\src\Communication\bin\Debug\Communication.dll
-D:\Git\Autodictor\src\Communication\bin\Debug\Communication.pdb
-D:\Git\Autodictor\src\Communication\bin\Debug\Library.dll
-D:\Git\Autodictor\src\Communication\bin\Debug\Library.pdb
-D:\Git\Autodictor\src\Communication\obj\Debug\Communication.csprojResolveAssemblyReference.cache
-D:\Git\Autodictor\src\Communication\obj\Debug\Communication.dll
-D:\Git\Autodictor\src\Communication\obj\Debug\Communication.pdb
 H:\Git\Autodictor_SSD\src\Communication\bin\Debug\Communication.dll
 H:\Git\Autodictor_SSD\src\Communication\bin\Debug\Communication.pdb
 H:\Git\Autodictor_SSD\src\Communication\bin\Debug\Library.dll
@@ -76,3 +69,17 @@ H:\Git\Autodictor_SSD\src\Communication\bin\Debug\Library.pdb
 H:\Git\Autodictor_SSD\src\Communication\obj\Debug\Communication.csprojResolveAssemblyReference.cache
 H:\Git\Autodictor_SSD\src\Communication\obj\Debug\Communication.dll
 H:\Git\Autodictor_SSD\src\Communication\obj\Debug\Communication.pdb
+D:\Git\Autodictor_SSD\src\Communication\bin\Debug\Communication.dll
+D:\Git\Autodictor_SSD\src\Communication\bin\Debug\Communication.pdb
+D:\Git\Autodictor_SSD\src\Communication\bin\Debug\Library.dll
+D:\Git\Autodictor_SSD\src\Communication\bin\Debug\Library.pdb
+D:\Git\Autodictor_SSD\src\Communication\obj\Debug\Communication.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor_SSD\src\Communication\obj\Debug\Communication.dll
+D:\Git\Autodictor_SSD\src\Communication\obj\Debug\Communication.pdb
+D:\Git\Autodictor\src\Communication\bin\Debug\Communication.dll
+D:\Git\Autodictor\src\Communication\bin\Debug\Communication.pdb
+D:\Git\Autodictor\src\Communication\bin\Debug\Library.dll
+D:\Git\Autodictor\src\Communication\bin\Debug\Library.pdb
+D:\Git\Autodictor\src\Communication\obj\Debug\Communication.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor\src\Communication\obj\Debug\Communication.dll
+D:\Git\Autodictor\src\Communication\obj\Debug\Communication.pdb

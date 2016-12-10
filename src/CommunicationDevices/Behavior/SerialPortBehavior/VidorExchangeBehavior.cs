@@ -11,6 +11,9 @@ using CommunicationDevices.Infrastructure.VidorDataProvider;
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
+    /// <summary>
+    /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ ТАБЛО "ВИДОР" ПО ПОСЛЕД. ПОРТУ
+    /// </summary>
     public class VidorExchangeBehavior : BaseExhangeSpBehavior
     {
         #region ctor
@@ -35,7 +38,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             //Вывод на путевое табло
             var writeProvider = new PanelVidorWriteDataProvider { InputData = Data4CycleFunc[0] };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            await Task.Delay(2000, ct);  //задержка для задания периода опроса.         
+            await Task.Delay(1000, ct);  //задержка для задания периода опроса.         
         }
 
         #endregion

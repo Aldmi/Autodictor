@@ -35,21 +35,23 @@ namespace Communication.SerialPort
 
         #region ctor
 
-        public MasterSerialPort(string portName, int baudRate, int dataBits, StopBits stopBits, Parity parity)
+        public MasterSerialPort(string portName, int baudRate, int dataBits, StopBits stopBits, Parity parity, bool dtrEnable, bool rtsEnable)
         {
             _port = new System.IO.Ports.SerialPort("COM" + portName)
             {
                 BaudRate = baudRate,
                 DataBits = dataBits, 
                 StopBits = stopBits,
-                Parity = parity
+                Parity = parity,
+                DtrEnable = dtrEnable,
+                RtsEnable = rtsEnable
             };
 
             PortNumber = byte.Parse(portName);
         }
 
         public MasterSerialPort(XmlSerialSettings xmlSerial) :
-            this(xmlSerial.Port, xmlSerial.BaudRate, xmlSerial.DataBits, xmlSerial.StopBits, xmlSerial.Parity)
+            this(xmlSerial.Port, xmlSerial.BaudRate, xmlSerial.DataBits, xmlSerial.StopBits, xmlSerial.Parity, xmlSerial.DtrEnable, xmlSerial.RtsEnable)
         {
         }
 
@@ -317,7 +319,7 @@ namespace Communication.SerialPort
                      var buffer = new byte[nBytesRead];
                      _port.Read(buffer, 0, nBytesRead);
 
-                     tcs.TrySetResult(buffer);
+                    tcs.TrySetResult(buffer);
                  }
              });
 

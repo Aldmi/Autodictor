@@ -12,6 +12,9 @@ using CommunicationDevices.Infrastructure.VidorDataProvider;
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
 
+    /// <summary>
+    /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ ТАБЛО "ДИСПЛЕЙНЫХ СИСТЕМ" ПО ПОСЛЕД. ПОРТУ
+    /// </summary>
     public class DisplSysExchangeBehavior : BaseExhangeSpBehavior
     {
         #region ctor
@@ -35,7 +38,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         {
             var writeProvider = new PanelDispSysWriteDataProvider { InputData = Data4CycleFunc[0] };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            await Task.Delay(4000, ct);  //задержка для задания периода опроса.
+            await Task.Delay(1000, ct);  //задержка для задания периода опроса.
         }
 
         #endregion

@@ -6,6 +6,7 @@ using CommunicationDevices.Devices;
 using CommunicationDevices.Infrastructure;
 
 
+
 namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 {
 
@@ -18,6 +19,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         private readonly Device _device;
         public IEnumerable<byte> CollectionPathNumber { get; }
         public string GetDeviceName => _device.Name;
+        public int GetDeviceId=> _device.Id;
 
 
 
@@ -35,10 +37,10 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         {
             //привязка на все пути
             if (!CollectionPathNumber.Any())                              
-                return $"{_device.Name}";
+                return $"{GetDeviceId}: {_device.Name}";
 
             //привязка на указанные пути
-            var result = CollectionPathNumber.Contains(pathNumber) ? $"{_device.Name}" : null;
+            var result = CollectionPathNumber.Contains(pathNumber) ? $"{GetDeviceId}: {_device.Name}" : null;
             return result;
         }
 
@@ -47,8 +49,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
         public void SendMessage4Path(UniversalInputType inData, byte pathNumber)
         {
-            //привязка на все пути
-            if (!CollectionPathNumber.Any())
+            //привязка на несколько путей
+            if (!CollectionPathNumber.Any() || CollectionPathNumber.Count() > 1)
             {
                 if (!string.IsNullOrWhiteSpace(inData.Event))               //ДОБАВИТЬ В ТАБЛ.
                 {
@@ -58,7 +60,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 else                                                         //УДАЛИТЬ ИЗ ТАБЛ.
                 {
                     var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == pathNumber.ToString());
-
                     if (removeItem != null)
                     {
                         _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);

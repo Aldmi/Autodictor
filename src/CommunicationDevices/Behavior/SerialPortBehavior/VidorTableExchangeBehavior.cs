@@ -11,6 +11,10 @@ using CommunicationDevices.Infrastructure.VidorDataProvider;
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
+
+    /// <summary>
+    /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ МНОГОСТРОЧНОГО ТАБЛО "ДИСПЛЕЙНЫХ СИСТЕМ" ПО ПОСЛЕД. ПОРТУ
+    /// </summary>
     public class VidorTableExchangeBehavior : BaseExhangeSpBehavior
     {
         #region fields
@@ -45,8 +49,14 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         {
           var inData = Data4CycleFunc[0];
             //Вывод на табличное табло построчной информации
-            if (inData.TableData != null)
+            if (inData?.TableData != null)
             {
+                //Ограничим кол-во строк в таблице.
+                if (inData.TableData.Count > _countRow)                                 
+                {
+                    inData.TableData = inData.TableData.Take(_countRow).ToList();
+                }
+
                 inData.TableData.ForEach(t=> t.AddressDevice= inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
@@ -56,7 +66,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 }
             }
 
-            await Task.Delay(1000, ct);  //задержка для задания периода опроса.    
+            await Task.Delay(500, ct);  //задержка для задания периода опроса.    
         }
 
         #endregion

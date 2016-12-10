@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DEA394E0-F62E-459B-98CF-3EC8DA2A90A3}</ProjectGuid>
+    <ProjectGuid>{E46E61B7-5EFB-4C62-99BA-DBA0971E2486}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Communication</RootNamespace>
-    <AssemblyName>Communication</AssemblyName>
+    <RootNamespace>WCFAvtodictor2PcTableContract</RootNamespace>
+    <AssemblyName>WCFAvtodictor2PcTableContract</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,26 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IExchangeDataProvider.cs" />
-    <Compile Include="Interfaces\IExchangeDataProviderBase.cs" />
-    <Compile Include="SerialPort\MasterSerialPort.cs" />
-    <Compile Include="Settings\XmlSerialSettings.cs" />
-    <Compile Include="TcpIp\ListenerTcpIp.cs" />
-    <Compile Include="TcpIp\MasterTcpIp.cs" />
-    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Contract\IPcTableContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\XmlMasterSettings.cs" />
-    <Compile Include="Settings\XmlListenerSettings.cs" />
+    <Compile Include="DataContract\UniversalDisplayType.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj">
-      <Project>{87b6f9ef-6a0d-4daf-9df0-718036b1c8e4}</Project>
-      <Name>Library</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -752,6 +752,117 @@ D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Core.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.xml
 D:\Dropbox\C#\Project C#\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe.config
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Автодиктор.exe
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Автодиктор.pdb
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.pdb
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\CommunicationDevices.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Library.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Windsor.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Communication.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Core.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Library.pdb
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Windsor.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Communication.pdb
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Core.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+F:\КОПИЯ SSD\SSD\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe.config
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe.config
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.pdb
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\CommunicationDevices.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Library.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Windsor.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Communication.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Core.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Library.pdb
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Windsor.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Communication.pdb
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Core.xml
+D:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Автодиктор.exe
+D:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Автодиктор.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe.config
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Автодиктор.pdb
@@ -768,8 +879,10 @@ D:\Git\Autodictor\src\Autodictor\bin\Debug\System.Runtime.InteropServices.Runtim
 D:\Git\Autodictor\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.dll
-D:\Git\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\AutoMapper.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\CommunicationDevices.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Library.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
@@ -782,12 +895,15 @@ D:\Git\Autodictor\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.pdb
-D:\Git\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\AutoMapper.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.MainForm.resources
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
@@ -805,58 +921,3 @@ D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.Расписание.reso
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.exe
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.pdb
-D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe.config
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Автодиктор.exe
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Автодиктор.pdb
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.exe
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Автодиктор.pdb
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\CommunicationDevices.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Library.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Core.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Windsor.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Communication.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Core.dll
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\CommunicationDevices.pdb
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Library.pdb
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Core.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Windsor.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Communication.pdb
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
-H:\Git\Autodictor_SSD\src\Autodictor\bin\Debug\Castle.Core.xml
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.MainForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\MainExample.Расписание.resources
-H:\Git\Autodictor_SSD\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache

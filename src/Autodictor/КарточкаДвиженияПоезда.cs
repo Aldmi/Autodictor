@@ -161,6 +161,7 @@ namespace MainExample
         {
             Record.НомерПути = (byte)cB_НомерПути.SelectedIndex;
             Record.НазванияТабло = Record.НомерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
+            //Record.СостояниеОтображения= TableRecordStatus.Выключена;
             ОбновитьТекстВОкне();
         }
 

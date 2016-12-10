@@ -12,7 +12,9 @@ using Castle.Components.DictionaryAdapter;
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
-
+    /// <summary>
+    /// АБСТРАКТНЫЙ КЛАСС ПОВЕДЕНИЯ ОБМЕНА ПО ПОСЛЕДОВАТЕЛЬНОМУ ПОРТУ.
+    /// </summary>
     public abstract class BaseExhangeSpBehavior : IExhangeBehavior
     {
         #region Fields
@@ -32,10 +34,9 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         protected MasterSerialPort Port { get; }
 
         public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
-
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }        // для каждой циклической функции свои данные. 
 
-        public byte NumberSp => Port.PortNumber;
+        public int NumberPort => Port.PortNumber;
         public bool IsOpen => Port.IsOpen;
 
         private bool _isConnect;
@@ -152,7 +153,6 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         }
 
 
-
         /// <summary>
         /// Изменение данных для циклических функций
         /// </summary>
@@ -163,21 +163,20 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         /// Добавление циклических функций.
         /// Поведение устройства определяет нужное количество циклических функций. Добавляются все функции в очередь порта
         /// </summary>
-        public void AddCycleFunc()
+        public void StartCycleExchange()
         {
             ListCycleFuncs?.ForEach(func=> Port.AddCycleFunc(func));
         }
+
 
         /// <summary>
         /// Удаление циклических функций.
         /// Удаляются все циклические функции из очереди порта.
         /// </summary>
-        public void RemoveCycleFunc()
+        public void StopCycleExchange()
         {
             ListCycleFuncs?.ForEach(func => Port.RemoveCycleFunc(func));
         }
-
-
 
 
         protected abstract List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }

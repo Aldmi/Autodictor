@@ -8,6 +8,10 @@ using CommunicationDevices.Settings;
 
 namespace CommunicationDevices.Devices
 {
+
+    /// <summary>
+    /// УСТРОЙСТВО. ОБМЕН ДАННЫМИ С КОТОРЫМ ОПРЕДЕЛЯЕТСЯ IExhangeBehavior.
+    /// </summary>
     public class Device
     {
         #region Prop
@@ -27,18 +31,14 @@ namespace CommunicationDevices.Devices
 
         #region ctor
 
-        protected Device(int id, string address, string name, string description, IExhangeBehavior behavior)
+        public Device(int id, string address, string name, string description, IExhangeBehavior behavior, BindingType bindingType)
         {
             Id = id;
             Address = address;
             Name = name;
             Description = description;
             ExhBehavior = behavior;
-        }
-
-        public Device(XmlDeviceSerialPortSettings xmlSet, IExhangeBehavior behavior) : this(xmlSet.Id, xmlSet.Address.ToString(), xmlSet.Name, xmlSet.Description, behavior)
-        {
-            BindingType = xmlSet.BindingType;
+            BindingType = bindingType;
         }
 
         #endregion
@@ -66,7 +66,7 @@ namespace CommunicationDevices.Devices
         public void AddCycleFunc()
         {
             ExhBehavior.GetData4CycleFunc.ForEach(c=> c.AddressDevice = Address);       //Добавить во все данные циклического обмена адресс.
-            ExhBehavior.AddCycleFunc();
+            ExhBehavior.StartCycleExchange();
         }
 
 
@@ -76,7 +76,7 @@ namespace CommunicationDevices.Devices
 
         public void RemoveCycleFunc()
         {
-            ExhBehavior.RemoveCycleFunc();
+            ExhBehavior.StopCycleExchange();
         }
 
         #endregion

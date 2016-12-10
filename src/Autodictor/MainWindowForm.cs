@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
 using System.Windows.Forms.VisualStyles;
+using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
@@ -17,8 +18,6 @@ namespace MainExample
     public enum SoundRecordStatus { Выключена = 0, ОжиданиеВоспроизведения, Воспроизведение, Воспроизведена };
     public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Очистка };
     public enum SoundRecordType { Обычное = 0, ДвижениеПоезда, ДвижениеПоездаНеПодтвержденное, Предупредительное, Важное };
-
-    public enum TrainAction { None = 0, Arrival, Departure };
 
     public struct SoundRecord
     {
@@ -48,7 +47,10 @@ namespace MainExample
     public partial class MainWindowForm : Form
     {
         private bool РазрешениеРаботы = false;
+
         static public SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
+        static public SortedDictionary<string, SoundRecord> SoundRecordsOld = new SortedDictionary<string, SoundRecord>();
+
         static private int ID = 1;
         private int ТекущаяДата = 0;
         private int Volume = 0;
@@ -67,8 +69,7 @@ namespace MainExample
         private float ВремяВоспроизведенияПроигранныхФайлов = 0f;
 
         public CisClient CisClient { get; }
-        static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }
-
+        static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }     
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
 
@@ -397,7 +398,10 @@ namespace MainExample
 
                                                         Record.СостояниеОтображения = TableRecordStatus.Выключена;
                                                         if (SoundRecords.ContainsKey(Key) == false)
+                                                        {
                                                             SoundRecords.Add(Key, Record);
+                                                            SoundRecordsOld.Add(Key, Record);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -716,8 +720,8 @@ namespace MainExample
         // Определение композиций для запуска в данный момент времени
         private void ОпределитьИнформациюДляОтображенияНаТабло()
         {
-            //удалим дублируюшие записиси по номеру поезда.
-            var distinctSoundRecords = SoundRecords.GroupBy(g => g.Value.НомерПоезда).Select(group => group.First()).ToDictionary(x=>x.Key, x=>x.Value);
+            if (!РазрешениеРаботы)
+                return;
 
             for (int item = 0; item < this.listView1.Items.Count; item++)
             {
@@ -726,120 +730,80 @@ namespace MainExample
                     try
                     {
                         string Key = this.listView1.Items[item].SubItems[1].Text;
-                        if (distinctSoundRecords.Keys.Contains(Key) == true)
+                        if (SoundRecords.Keys.Contains(Key) == true)
                         {
-                            SoundRecord Данные = distinctSoundRecords[Key];
-                            if (this.listView1.Items[item].Checked && (Данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
+                            SoundRecord Данные = SoundRecords[Key];
+                            SoundRecord ДанныеOld = SoundRecordsOld[Key];
+
+                            if (this.listView1.Items[item].Checked &&
+                                (Данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                             {
                                 //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                                if (Данные.НомерПути > 0)
+                                if (Данные.НомерПути > 0 || (Данные.НомерПути == 0 && ДанныеOld.НомерПути > 0))
                                 {
-                                    //сообщение о прибытии ОТОБРАЗИТЬ (за 2 мин)
-                                    if ((DateTime.Now >= Данные.ВремяПрибытия.AddMinutes(-2) && (DateTime.Now <= Данные.ВремяПрибытия)))
+                                    //ПОМЕНЯЛИ ПУТЬ
+                                    if (Данные.НомерПути != ДанныеOld.НомерПути)
                                     {
-                                        if ((Данные.СостояниеОтображения == TableRecordStatus.Выключена) ||
-                                            (Данные.СостояниеОтображения == TableRecordStatus.Очистка))
-                                        {
-                                            Debug.WriteLine($"ОТОБРАЖЕНИЕ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
-                                            Данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                                            SendOnPathTable(Данные, TrainAction.Arrival);
-                                        }
-                                    }
+                                        //вывод на новое табло
+                                       // Debug.WriteLine(
+                                       //     $"ОТОБРАЖЕНИЕ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}   {Данные.НомерПути}");
+                                        Данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                                        SendOnPathTable(Данные);
 
-                                    //сообщение о прибытии ОЧИСТИТЬ (сразу)
-                                    if ((DateTime.Now >= Данные.ВремяПрибытия && (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(0.1))))
-                                    {
-                                        if ((Данные.СостояниеОтображения == TableRecordStatus.Отображение))
-                                        {
-                                            Debug.WriteLine($"ОЧИСТКА ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
-                                            Данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                            SendOnPathTable(Данные, TrainAction.Arrival);
-                                        }
+                                        //очистили старый путь
+                                       // Debug.WriteLine(
+                                         //   $"ОЧИСТИТЬ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}   {Данные.НомерПути}");
+                                        ДанныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
+                                        SendOnPathTable(ДанныеOld);
                                     }
 
 
-                                    //сообщение об отправлении ОТОБРАЗИТЬ (за 2 мин)
-                                    if ((DateTime.Now >= Данные.ВремяОтправления.AddMinutes(-2) && (DateTime.Now <= Данные.ВремяОтправления)))
+                                    //ТРАНЗИТНЫЕ
+                                    if ((Данные.БитыАктивностиПолей & 0x14) == 0x14)
                                     {
-                                        if ((Данные.СостояниеОтображения == TableRecordStatus.Выключена) ||
-                                            (Данные.СостояниеОтображения == TableRecordStatus.Очистка))
+
+                                    }
+                                    else
+                                    {
+                                        //ПРИБЫТИЕ
+                                        if ((Данные.БитыАктивностиПолей & 0x04) == 0x04)
                                         {
-                                            Debug.WriteLine($"ОТОБРАЖЕНИЕ Отправления!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
-                                            Данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                                            SendOnPathTable(Данные, TrainAction.Departure);
+                                            //ОЧИСТИТЬ
+                                            if ((DateTime.Now >= Данные.ВремяПрибытия.AddMinutes(0) &&
+                                                 (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(1))))
+                                            {
+                                                if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                                {
+                                                  //  Debug.WriteLine(
+                                                  //      $"ОЧИСТИТЬ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
+                                                    Данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                                    SendOnPathTable(Данные);
+                                                }
+                                            }
+                                        }
+                                        else //ОТПРАВЛЕНИЕ
+                                        if ((Данные.БитыАктивностиПолей & 0x10) == 0x10)
+                                        {
+                                            //ОЧИСТИТЬ
+                                            if ((DateTime.Now >= Данные.ВремяОтправления.AddMinutes(0) &&
+                                                 (DateTime.Now <= Данные.ВремяОтправления.AddMinutes(1))))
+                                            {
+                                                if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                                {
+                                                 //  Debug.WriteLine(
+                                                    //    $"ОЧИСТИТЬ ОТПРАВЛЕНИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
+                                                    Данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                                    SendOnPathTable(Данные);
+                                                }
+                                            }
                                         }
                                     }
 
-                                    //сообщение об отправлении ОЧИСТИТЬ (сразу)
-                                    if ((DateTime.Now >= Данные.ВремяОтправления && (DateTime.Now <= Данные.ВремяОтправления.AddMinutes(0.1))))
-                                    {
-                                        if ((Данные.СостояниеОтображения == TableRecordStatus.Отображение))
-                                        {
-                                            Debug.WriteLine($"ОЧИСТКА Отправления!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
-                                            Данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                            SendOnPathTable(Данные, TrainAction.Departure);
-                                        }
-                                    }
                                 }
-
-
-
-                                //DateTime НачалоИнтервала = Данные.Время;
-                                //DateTime КонецИнтервала = НачалоИнтервала.AddSeconds(Данные.Длительность);
-
-                                //if ((DateTime.Now >= НачалоИнтервала.AddSeconds(-25)) && (DateTime.Now < НачалоИнтервала.AddSeconds(-20)))
-                                //{
-                                //    if (ОкноПредупреждения != null)
-                                //        ОкноПредупреждения = null;
-                                //}
-                                //else if ((DateTime.Now >= НачалоИнтервала.AddSeconds(-20)) && (DateTime.Now < НачалоИнтервала))
-                                //{
-                                //    if ((Данные.Состояние == SoundRecordStatus.ОжиданиеВоспроизведения) && (РазрешениеРаботы == true) && (ОкноПредупреждения == null))
-                                //    {
-                                //        ОкноПредупреждения = new Предупреждение(this.listView1.Items[item]);
-                                //        ОкноПредупреждения.StartPosition = FormStartPosition.Manual;
-                                //        ОкноПредупреждения.Location = new Point(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - 301, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - 250);
-                                //        ОкноПредупреждения.Show();
-                                //        ОкноПредупреждения.WindowState = FormWindowState.Normal;
-                                //    }
-
-                                //    if ((ОкноПредупреждения != null) && this.listView1.Items[item].Checked)
-                                //        Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                                //}
-                                //else if ((DateTime.Now >= НачалоИнтервала) && (DateTime.Now < КонецИнтервала))
-                                //{
-                                //    if ((Данные.Состояние == SoundRecordStatus.ОжиданиеВоспроизведения) && (РазрешениеРаботы == true))
-                                //    {
-                                //        for (int i = 0; i < this.listView1.Items.Count; i++)
-                                //        {
-                                //            this.listView1.Items[i].Focused = false;
-                                //            this.listView1.Items[i].Selected = false;
-                                //        }
-
-                                //        this.listView1.Items[item].Focused = true;
-                                //        this.listView1.Items[item].Selected = true;
-                                //        btnВоспроизвести_Click(null, null);
-
-                                //       
-                                //    }
-
-                                //    Данные.Состояние = SoundRecordStatus.Воспроизведение;
-                                //}
-                                //else if (DateTime.Now >= КонецИнтервала)
-                                //{
-                                //    Данные.Состояние = SoundRecordStatus.Воспроизведена;
-                                //}
-                                //else
-                                //{
-                                //    Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                                //}
                             }
-                            //else if (this.listView1.Items[item].Checked && (Данные.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное))
-                            //    Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                            //else
-                            //    Данные.Состояние = SoundRecordStatus.Выключена;
 
                             SoundRecords[Key] = Данные;
+                            SoundRecordsOld[Key] = Данные;
                         }
                     }
                     catch (Exception ex)
@@ -1151,36 +1115,47 @@ namespace MainExample
         }
 
         //Отправка сообшений на табло
-        private void SendOnPathTable(SoundRecord data, TrainAction act)
+        private void SendOnPathTable(SoundRecord data)
         {
             if (data.СостояниеОтображения == TableRecordStatus.Выключена || data.СостояниеОтображения == TableRecordStatus.ОжиданиеОтображения)
-               return;
+                return;
 
-            foreach (var devName in data.НазванияТабло)
+            if (data.НазванияТабло == null)
+                return;
+
+
+            var devicesId = data.НазванияТабло.Select(s => new string(s.TakeWhile(c => c != ':').ToArray())).Select(int.Parse).ToList();
+            foreach (var devId in devicesId)
             {
-                var beh = BindingBehaviors.FirstOrDefault(b => b.GetDeviceName == devName);
+                var beh = BindingBehaviors.FirstOrDefault(b => b.GetDeviceId == devId);
                 if (beh != null)
                 {
-                    //inData.NumberOfTrain = "111";
-                    //inData.PathNumber = "12";
-                    //inData.Event = "ПРИБ.";
-                    //inData.Time = new DateTime(2016, 11, 30, 16, 20, 0);  //16:20
-                    //inData.Stations = "НОВОСИБИРСК";
-                    //inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.NumberOfTrain}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+                    string actStr = "   ";
+                    if ((data.БитыАктивностиПолей & 0x14) == 0x14)
+                    {
+                        actStr = "СТОЯНКА";
+                    }
+                    else if ((data.БитыАктивностиПолей & 0x04) == 0x04)
+                    {
+                        actStr = "ПРИБ.";
+                    }
+                    else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
+                    {
+                        actStr = "ОТПР.";
+                    }
 
-                    var actStr = (act == TrainAction.Arrival) ? "ПРИБ." : "ОТПР.";
                     var inData = new UniversalInputType
                     {
-                        NumberOfTrain =  (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
+                        NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
                         PathNumber = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПути.ToString() : "   ",
                         Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
-                        Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((act == TrainAction.Arrival) ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                        Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
                         Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   "
                     };
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
-
+          
                     beh.SendMessage4Path(inData, data.НомерПути);
-                    Debug.WriteLine($" ТАБЛО= {beh.GetDeviceName}   НомерПути= {data.НомерПути}  НомерПоезда= {data.НомерПоезда}  НазваниеПоезда={data.НазваниеПоезда}");
+                    Debug.WriteLine($" ТАБЛО= {beh.GetDeviceName} для ПУТИ {data.НомерПути}.  Сообшение= {inData.Message}  ");
                 }
             }
         }

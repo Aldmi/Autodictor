@@ -9,6 +9,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
         IEnumerable<byte> CollectionPathNumber { get; }
         string GetDeviceName { get; }
+        int GetDeviceId { get; }
+
         void SendMessage4Path(UniversalInputType inData, byte pathNumber);
     }
 }

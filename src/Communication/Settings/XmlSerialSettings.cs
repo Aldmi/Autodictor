@@ -17,6 +17,9 @@ namespace Communication.Settings
         public StopBits StopBits { get; set; }
         public Parity Parity { get; set; }
 
+        public bool DtrEnable { get; set; }
+        public bool RtsEnable { get; set; }
+
         #endregion
 
 
@@ -24,7 +27,7 @@ namespace Communication.Settings
 
         #region ctor
 
-        private XmlSerialSettings(string port, string baudRate, string dataBits, string stopBits, string parity)
+        private XmlSerialSettings(string port, string baudRate, string dataBits, string stopBits, string parity, string dtrEnable, string rtsEnable)
         {
             Port = port;
             BaudRate = int.Parse(baudRate);
@@ -57,6 +60,9 @@ namespace Communication.Settings
                 default:
                     throw new Exception("Parity указанно не верно");
             }
+
+             DtrEnable = bool.Parse(dtrEnable);
+             RtsEnable = bool.Parse(rtsEnable);
         }
 
         #endregion
@@ -77,7 +83,9 @@ namespace Communication.Settings
                          (string)el.Element("BaudRate"),
                          (string)el.Element("DataBits"),
                          (string)el.Element("StopBits"),
-                         (string)el.Element("Parity"));
+                         (string)el.Element("Parity"),
+                         (string)el.Element("DtrEnable"),
+                         (string)el.Element("RtsEnable"));
                         
             return sett.ToList();
         }
