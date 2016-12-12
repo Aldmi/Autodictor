@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 
@@ -27,10 +30,16 @@ namespace MainExample
         private int НомерСтраницыПоездовДальнегоСледования = 0;
         private int НомерСтраницыЭлектропоездов = 0;
 
-        const int КоличествоСтрокДляПоездовДальнегоСледования = 6;
+        const int КоличествоСтрокДляПоездовДальнегоСледования = 5;
         const int КоличествоСтрокДляЭлектропоездов = 4;
 
         public byte СекундыРасписания = 0;
+        public int[] МассивСмещенийСтрок = new int[10];
+        public int СмещениеИнформационнойСтроки = 0;
+        public string ИнформационнаяСтрока = "";
+
+        public DateTime ВремяДействия = new DateTime(2016, 12, 12);
+
 
         public struct СтрокаВРасписаниии
         {
@@ -63,7 +72,6 @@ namespace MainExample
             DateTime ТекущееВремя = DateTime.Now;
             
 
-            //if (++ТаймерСекунды >= 50)
             if (DateTime.Now.Minute != ВремяПоследнегоОбновления.Minute)
             {
                 ВремяПоследнегоОбновления = DateTime.Now;
@@ -84,52 +92,26 @@ namespace MainExample
             
             Graphics g = Graphics.FromHwnd(panel1.Handle);
 
-            if (ТекущееВремя.Second >= 0 && ТекущееВремя.Second < 5)
-            {
-                if (СекундыРасписания != ТекущееВремя.Second)
-                {
-                    СекундыРасписания = (byte)ТекущееВремя.Second;
-                    g.FillRectangle(drawBrushBlue, new Rectangle(0, 00, 640, 280));
-                    g.DrawString("Московское время", dFontTime, drawBrushWhite, new Point(60, 48));
-                    g.DrawString(DateTime.Now.ToString("HH:mm:ss"), dFontTime, drawBrushWhite, new Point(200, 134));
-                }
-            }
-            else if (ТекущееВремя.Second >= 5 && ТекущееВремя.Second < 10)
-            {
-                if (СекундыРасписания != ТекущееВремя.Second)
-                {
-                    СекундыРасписания = (byte)ТекущееВремя.Second;
-                    g.FillRectangle(drawBrushBlue, new Rectangle(0, 00, 640, 280));
-                    g.DrawString("Местное время", dFontTime, drawBrushWhite, new Point(102, 48));
-                    g.DrawString(DateTime.Now.AddHours(4).ToString("HH:mm:ss"), dFontTime, drawBrushWhite, new Point(200, 134));
-                }
-            }
-            else if (ТекущееВремя.Second >= 10 && ТекущееВремя.Second < 15)
-            {
-                if ((СекундыРасписания < 10) || (СекундыРасписания >= 15))
-                {
-                    СекундыРасписания = (byte)ТекущееВремя.Second;
-                    g.FillRectangle(drawBrushBlue, new Rectangle(0, 00, 640, 280));
-                    g.DrawString("Комнаты отдыха", dFontTime, drawBrushWhite, new Point(87, 42));
-                    g.DrawString("8-961-718-3897", dFontTime, drawBrushWhite, new Point(116, 140));
-                }
-            }
-            else
             {
 
                 if (ОбноыитьРасписание)
                 {
                     СформироватьСписокСообщений();
 
-                    g.FillRectangle(drawBrushBlue, new Rectangle(0, 40, 640, 240));
+                    g.FillRectangle(drawBrushBlue, new Rectangle(0, 40, 640, 245));
                     g.FillRectangle(drawBrushRed, new Rectangle(0, 0, 640, 40));
-                    g.FillRectangle(drawBrushRed, new Rectangle(0, 150, 640, 40));
+                    g.FillRectangle(drawBrushRed, new Rectangle(0, 132, 640, 40));
 
-                    g.DrawString("Расписание движения поездов                                                                                                  Московское время:", drawFont, drawBrushWhite, new Point(6, 6));
-                    g.DrawString("№ Поезда| Маршрут следования                                                         |Приб. |Стоянка |Отпр.    |Дни", drawFont, drawBrushWhite, new Point(6, 25));
 
-                    g.DrawString("Расписание движения пригородных электропоездов                                                                 Местное время:", drawFont, drawBrushWhite, new Point(6, 156));
-                    g.DrawString("№ Поезда| Маршрут следования                                                         |Приб. |Стоянка |Отпр.    |Дни", drawFont, drawBrushWhite, new Point(6, 175));
+                    if (DateTime.Now < ВремяДействия)
+                        g.DrawString("Расписание движения поездов                  ДЕЙСТВИТЕЛЬНО ДО 11.12.16 !!!                    Московское время:", drawFont, drawBrushWhite, new Point(6, 6));
+                    else
+                        g.DrawString("Расписание движения поездов                                                                                                    Московское время:", drawFont, drawBrushWhite, new Point(6, 6));
+
+                    g.DrawString("№ Поезда| Маршрут следования                                         |Приб. |Стоянка |Отпр.    |Дни", drawFont, drawBrushWhite, new Point(6, 25));
+
+                    g.DrawString("Расписание движения пригородных электропоездов                                                                 Местное время:", drawFont, drawBrushWhite, new Point(6, 138));
+                    g.DrawString("№ Поезда| Маршрут следования                                         |Приб. |Стоянка |Отпр.    |Дни", drawFont, drawBrushWhite, new Point(6, 157));
 
                     int КоличествоСтраницПоездовДальнегоСледования = (РасписаниеПоездов.Count / КоличествоСтрокДляПоездовДальнегоСледования) + ((РасписаниеПоездов.Count % КоличествоСтрокДляПоездовДальнегоСледования) == 0 ? 0 : 1);
                     if (НомерСтраницыПоездовДальнегоСледования >= КоличествоСтраницПоездовДальнегоСледования)
@@ -148,10 +130,10 @@ namespace MainExample
                         {
                             g.DrawString(РасписаниеПоездов.ElementAt(i).Value.НомерПоезда, drawFont, drawBrushWhite, new Point(25, 45 + j * 18));
                             g.DrawString(РасписаниеПоездов.ElementAt(i).Value.НазваниеПоезда, drawFont, drawBrushWhite, new Point(70, 45 + j * 18));
-                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.ВремяПрибытия, drawFont, drawBrushWhite, new Point(363, 45 + j * 18));
-                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.ВремяСтоянки.ToString(), drawFont, drawBrushWhite, new Point(415, 45 + j * 18));
-                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.ВремяОтправления, drawFont, drawBrushWhite, new Point(452, 45 + j * 18));
-                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.Примечание, drawFont, drawBrushWhite, new Point(500, 45 + j * 18));
+                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.ВремяПрибытия, drawFont, drawBrushWhite, new Point(313, 45 + j * 18));
+                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.ВремяСтоянки.ToString(), drawFont, drawBrushWhite, new Point(365, 45 + j * 18));
+                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.ВремяОтправления, drawFont, drawBrushWhite, new Point(402, 45 + j * 18));
+                            g.DrawString(РасписаниеПоездов.ElementAt(i).Value.Примечание, drawFont, drawBrushWhite, new Point(450, 45 + j * 18));
                             j++;
                         }
                     }
@@ -162,26 +144,143 @@ namespace MainExample
 
                         if (j < КоличествоСтрокДляЭлектропоездов)
                         {
-                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.НомерПоезда, drawFont, drawBrushWhite, new Point(25, 190 + j * 18));
-                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.НазваниеПоезда, drawFont, drawBrushWhite, new Point(70, 190 + j * 18));
-                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.ВремяПрибытия, drawFont, drawBrushWhite, new Point(363, 190 + j * 18));
-                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.ВремяСтоянки.ToString(), drawFont, drawBrushWhite, new Point(415, 190 + j * 18));
-                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.ВремяОтправления, drawFont, drawBrushWhite, new Point(452, 190 + j * 18));
-                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.Примечание, drawFont, drawBrushWhite, new Point(500, 190 + j * 18));
+                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.НомерПоезда, drawFont, drawBrushWhite, new Point(25, 175 + j * 18));
+                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.НазваниеПоезда, drawFont, drawBrushWhite, new Point(70, 175 + j * 18));
+                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.ВремяПрибытия, drawFont, drawBrushWhite, new Point(313, 175 + j * 18));
+                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.ВремяСтоянки.ToString(), drawFont, drawBrushWhite, new Point(365, 175 + j * 18));
+                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.ВремяОтправления, drawFont, drawBrushWhite, new Point(402, 175 + j * 18));
+                            g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.Примечание, drawFont, drawBrushWhite, new Point(450, 175 + j * 18));
                             j++;
                         }
                     }
 
+
+                    // Бегущая строка
+                    if (ИнформационнаяСтрока != Program.ИнфСтрокаНаТабло)
+                    {
+                        СмещениеИнформационнойСтроки = 0;
+                        ИнформационнаяСтрока = Program.ИнфСтрокаНаТабло;
+                        g.DrawString(ИнформационнаяСтрока, drawFont, drawBrushWhite, new Point(3, 245));
+                    }
+                    else
+                    {
+                        Size len2 = TextRenderer.MeasureText(ИнформационнаяСтрока, drawFont);
+                        if (len2.Width >= 630)
+                        {
+                            if (СмещениеИнформационнойСтроки >= 10)
+                            {
+                                string SubString = ИнформационнаяСтрока.Substring(СмещениеИнформационнойСтроки - 10);
+                                g.DrawString(SubString, drawFont, drawBrushWhite, new Point(3, 245));
+                                if (SubString == "")
+                                {
+                                    СмещениеИнформационнойСтроки = 0;
+                                    g.DrawString(ИнформационнаяСтрока, drawFont, drawBrushWhite, new Point(3, 245));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            g.DrawString(ИнформационнаяСтрока, drawFont, drawBrushWhite, new Point(3, 245));
+                        }
+                    }
+
+
                     ОбноыитьРасписание = false;
+                    for (int i = 0; i < 10; i++)
+                        МассивСмещенийСтрок[i] = 0;
                 }
+
+
+                // Обновить движущуюся строку
+                {
+                    for (int i = 0, j = 0; i < РасписаниеПоездов.Count; i++)
+                    {
+                        if (i < (НомерСтраницыПоездовДальнегоСледования * КоличествоСтрокДляПоездовДальнегоСледования)) continue;
+
+                        if (j < КоличествоСтрокДляПоездовДальнегоСледования)
+                        {
+                            Size len = TextRenderer.MeasureText(РасписаниеПоездов.ElementAt(i).Value.Примечание, drawFont);
+                            if (len.Width >= 198)
+                            {
+                                if (++МассивСмещенийСтрок[j] < 10);
+                                else
+                                {
+                                    g.FillRectangle(drawBrushBlue, new Rectangle(450, 45 + j * 18, 198, 18));
+                                    string SubString = РасписаниеПоездов.ElementAt(i).Value.Примечание.Substring(МассивСмещенийСтрок[j] - 10);
+                                    g.DrawString(SubString, drawFont, drawBrushWhite, new Point(450, 45 + j * 18));
+                                    if (SubString == "")
+                                    {
+                                        МассивСмещенийСтрок[j] = 0;
+                                        g.DrawString(РасписаниеПоездов.ElementAt(i).Value.Примечание, drawFont, drawBrushWhite, new Point(450, 45 + j * 18));
+                                    }
+                                }
+                            }
+                            j++;
+                        }
+                    }
+
+                    for (int i = 0, j = 0; i < РасписаниеЭлектричек.Count; i++)
+                    {
+                        if (i < (НомерСтраницыЭлектропоездов * КоличествоСтрокДляЭлектропоездов)) continue;
+
+                        if (j < КоличествоСтрокДляЭлектропоездов)
+                        {
+                            Size len = TextRenderer.MeasureText(РасписаниеЭлектричек.ElementAt(i).Value.Примечание, drawFont);
+                            if (len.Width >= 197)
+                            {
+                                if (++МассивСмещенийСтрок[j + КоличествоСтрокДляПоездовДальнегоСледования] < 10);
+                                else
+                                {
+                                    g.FillRectangle(drawBrushBlue, new Rectangle(450, 175 + j * 18, 197, 18));
+                                    string SubString = РасписаниеЭлектричек.ElementAt(i).Value.Примечание.Substring(МассивСмещенийСтрок[j + КоличествоСтрокДляПоездовДальнегоСледования] - 10);
+                                    g.DrawString(SubString, drawFont, drawBrushWhite, new Point(450, 175 + j * 18));
+                                    if (SubString == "")
+                                    {
+                                        МассивСмещенийСтрок[j + КоличествоСтрокДляПоездовДальнегоСледования] = 0;
+                                        g.DrawString(РасписаниеЭлектричек.ElementAt(i).Value.Примечание, drawFont, drawBrushWhite, new Point(450, 175 + j * 18));
+                                    }
+                                }
+                            }
+                            j++;
+                        }
+                    }
+
+
+                    // Бегущая строка
+                    if (ИнформационнаяСтрока != Program.ИнфСтрокаНаТабло)
+                    {
+                        СмещениеИнформационнойСтроки = 0;
+                        ИнформационнаяСтрока = Program.ИнфСтрокаНаТабло;
+                        g.FillRectangle(drawBrushBlue, new Rectangle(0, 240, 640, 25));
+                        g.DrawString(ИнформационнаяСтрока, drawFont, drawBrushWhite, new Point(3, 245));
+                    }
+
+                    Size len2 = TextRenderer.MeasureText(ИнформационнаяСтрока, drawFont);
+                    if (len2.Width >= 630)
+                    {
+                        if (++СмещениеИнформационнойСтроки >= 10)
+                        {
+                            g.FillRectangle(drawBrushBlue, new Rectangle(0, 240, 640, 25));
+                            string SubString = ИнформационнаяСтрока.Substring(СмещениеИнформационнойСтроки - 10);
+                            g.DrawString(SubString, drawFont, drawBrushWhite, new Point(3, 245));
+                            if (SubString == "")
+                            {
+                                СмещениеИнформационнойСтроки = 0;
+                                g.DrawString(ИнформационнаяСтрока, drawFont, drawBrushWhite, new Point(3, 245));
+                            }
+                        }
+                    }
+                }
+
+
 
                 if (ОбновитьЧасы)
                 {
                     g.FillRectangle(drawBrushRed, new Rectangle(593, 5, 34, 18));
                     g.DrawString(DateTime.Now.ToString("HH:mm"), drawFont, drawBrushWhite, new Point(593, 6));
 
-                    g.FillRectangle(drawBrushRed, new Rectangle(593, 155, 34, 18));
-                    g.DrawString(DateTime.Now.AddHours(4).ToString("HH:mm"), drawFont, drawBrushWhite, new Point(593, 156));
+                    g.FillRectangle(drawBrushRed, new Rectangle(593, 137, 34, 18));
+                    g.DrawString(DateTime.Now.AddHours(4).ToString("HH:mm"), drawFont, drawBrushWhite, new Point(593, 138));
 
                     ОбновитьЧасы = false;
                 }
@@ -236,7 +335,15 @@ namespace MainExample
 
                         string Ключ = Строка.ВремяПрибытия == "" ? Строка.ВремяОтправления : Строка.ВремяПрибытия;
                         if (Config.ShowInPanels == 0x01)
-                            РасписаниеПоездов.Add(Ключ, Строка);
+                        {
+                            if (РасписаниеПоездов.ContainsKey(Ключ) == false)
+                                РасписаниеПоездов.Add(Ключ, Строка);
+                            else
+                            {
+                                if (РасписаниеПоездов.ContainsKey(Ключ + " ") == false)
+                                    РасписаниеПоездов.Add(Ключ + " ", Строка);
+                            }
+                        }
                         else if (Config.ShowInPanels == 0x02)
                         {
                             if (Строка.ВремяПрибытия != "")
@@ -259,7 +366,13 @@ namespace MainExample
                                     Строка.ВремяОтправления = Часы.ToString("00") + ":" + Минуты.ToString("00");
                                 }
                             }
-                            РасписаниеЭлектричек.Add(Ключ, Строка);
+                            if (РасписаниеЭлектричек.ContainsKey(Ключ) == false)
+                                РасписаниеЭлектричек.Add(Ключ, Строка);
+                            else
+                            {
+                                if (РасписаниеЭлектричек.ContainsKey(Ключ + " ") == false)
+                                    РасписаниеЭлектричек.Add(Ключ + " ", Строка);
+                            }
                         }
                     }
                 }

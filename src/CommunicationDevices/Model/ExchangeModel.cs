@@ -60,7 +60,7 @@ namespace CommunicationDevices.Model
                 //сработка события
             }
         }
-        public Log Log { get; set; }
+
         public List<Task> BackGroundTasks { get; set; } = new List<Task>();
 
         #endregion
@@ -114,7 +114,6 @@ namespace CommunicationDevices.Model
         {
             //ЗАГРУЗКА НАСТРОЕК----------------------------------------------------------------------------------------------------------------------------
             List<XmlSerialSettings> xmlSerialPorts;
-            XmlLogSettings xmlLog;
             List<XmlDeviceSerialPortSettings> xmlDeviceSpSettings;
             List<XmlDevicePcSettings> xmlDevicePcSettings;
 
@@ -125,24 +124,21 @@ namespace CommunicationDevices.Model
                     return;
 
                 xmlSerialPorts = XmlSerialSettings.LoadXmlSetting(xmlFile);
-                xmlLog = XmlLogSettings.LoadXmlSetting(xmlFile);
                 xmlDeviceSpSettings = XmlDeviceSerialPortSettings.LoadXmlSetting(xmlFile);
                 xmlDevicePcSettings = XmlDevicePcSettings.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
             {
                 ErrorString = "Файл Setting.xml не найденн";
+                Log.log.Error(ErrorString);
                 return;
             }
             catch (Exception ex)
             {
                 ErrorString = "ОШИБКА в узлах дерева XML файла настроек:  " + ex;
+                Log.log.Error(ErrorString);
                 return;
             }
-
-
-            //СОЗДАНИЕ ЛОГА------------------------------------------------------------------------------------------------------------------------------
-            Log = new Log("CommunicationLog.txt", xmlLog);
 
 
             //СОЗДАНИЕ ПОСЛЕДОВАТЕЛЬНЫХ ПОРТОВ----------------------------------------------------------------------------------------------------------
@@ -225,7 +221,9 @@ namespace CommunicationDevices.Model
                         break;
 
                     default:
-                        throw new Exception($" Устройсвто с именем {xmlDeviceSp.Name} не найденно");
+                        ErrorString = $" Устройсвто с именем {xmlDeviceSp.Name} не найденно";
+                        Log.log.Error(ErrorString);
+                        throw new Exception(ErrorString);
                 }
             }
 
@@ -261,7 +259,9 @@ namespace CommunicationDevices.Model
 
 
                     default:
-                        throw new Exception($" Устройсвто с именем {xmlDevicePc.Name} не найденно");
+                        ErrorString = $" Устройсвто с именем {xmlDevicePc.Name} не найденно";
+                        Log.log.Error(ErrorString);
+                        throw new Exception(ErrorString);
                 }
             }
 

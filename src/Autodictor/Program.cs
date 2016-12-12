@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using Library.Logs;
 
 
 namespace MainExample
@@ -15,6 +16,8 @@ namespace MainExample
         public static List<string> FilesFolder = null;
         public static List<string> TrainNumbersFolder = null;
 
+        public static string ИнфСтрокаНаТабло = "";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -23,8 +26,7 @@ namespace MainExample
         {
             if (InstanceExists())
                 return;
-            try
-            {
+       
                 var dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Sounds\");
                 FilesFolder = new List<string>();
                 foreach (FileInfo file in dir.GetFiles("*.wav"))
@@ -38,13 +40,25 @@ namespace MainExample
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
+                //ОБРАБОТКА НЕ ПЕРЕХВАЧЕННЫХ ИСКЛЮЧЕНИЙ
+                Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
+                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
                 Application.Run(new MainForm());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
+
+
+        static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Log.log.Fatal($"Исключение из не UI потока {e.Exception.Message}");
+        }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Log.log.Fatal($"Исключение основного UI потока {(e.ExceptionObject as Exception)?.Message}");
+        }
+
 
         static bool InstanceExists()
         {
@@ -62,20 +76,21 @@ namespace MainExample
             return sb.ToString().ToUpper();
         }
 
+       
         public static string GetFileName(string track)
         {
             string Path = Application.StartupPath + @"\";
 
-            if (track == "0 минут") return Path + @"Wav\Dynamic message\00 минут.wav";
-            if (track == "1 минута") return Path + @"Wav\Dynamic message\01 минута.wav";
-            if (track == "2 минуты") return Path + @"Wav\Dynamic message\02 минуты.wav";
-            if (track == "3 минуты") return Path + @"Wav\Dynamic message\03 минуты.wav";
-            if (track == "4 минуты") return Path + @"Wav\Dynamic message\04 минуты.wav";
-            if (track == "5 минут") return Path + @"Wav\Dynamic message\05 минут.wav";
-            if (track == "6 минут") return Path + @"Wav\Dynamic message\06 минут.wav";
-            if (track == "7 минут") return Path + @"Wav\Dynamic message\07 минут.wav";
-            if (track == "8 минут") return Path + @"Wav\Dynamic message\08 минут.wav";
-            if (track == "9 минут") return Path + @"Wav\Dynamic message\09 минут.wav";
+            if (track == "00 минут") return Path + @"Wav\Dynamic message\00 минут.wav";
+            if (track == "01 минута") return Path + @"Wav\Dynamic message\01 минута.wav";
+            if (track == "02 минуты") return Path + @"Wav\Dynamic message\02 минуты.wav";
+            if (track == "03 минуты") return Path + @"Wav\Dynamic message\03 минуты.wav";
+            if (track == "04 минуты") return Path + @"Wav\Dynamic message\04 минуты.wav";
+            if (track == "05 минут") return Path + @"Wav\Dynamic message\05 минут.wav";
+            if (track == "06 минут") return Path + @"Wav\Dynamic message\06 минут.wav";
+            if (track == "07 минут") return Path + @"Wav\Dynamic message\07 минут.wav";
+            if (track == "08 минут") return Path + @"Wav\Dynamic message\08 минут.wav";
+            if (track == "09 минут") return Path + @"Wav\Dynamic message\09 минут.wav";
             if (track == "10 минут") return Path + @"Wav\Dynamic message\10 минут.wav";
             if (track == "11 минут") return Path + @"Wav\Dynamic message\11 минут.wav";
             if (track == "12 минут") return Path + @"Wav\Dynamic message\12 минут.wav";
@@ -127,16 +142,16 @@ namespace MainExample
             if (track == "58 минут") return Path + @"Wav\Dynamic message\58 минут.wav";
             if (track == "59 минут") return Path + @"Wav\Dynamic message\59 минут.wav";
 
-            if (track == "В 0 часов") return Path + @"Wav\Dynamic message\В 00 часов.wav";
-            if (track == "В 1 час") return Path + @"Wav\Dynamic message\В 01 час.wav";
-            if (track == "В 2 часа") return Path + @"Wav\Dynamic message\В 02 часа.wav";
-            if (track == "В 3 часа") return Path + @"Wav\Dynamic message\В 03 часа.wav";
-            if (track == "В 4 часа") return Path + @"Wav\Dynamic message\В 04 часа.wav";
-            if (track == "В 5 часов") return Path + @"Wav\Dynamic message\В 05 часов.wav";
-            if (track == "В 6 часов") return Path + @"Wav\Dynamic message\В 06 часов.wav";
-            if (track == "В 7 часов") return Path + @"Wav\Dynamic message\В 07 часов.wav";
-            if (track == "В 8 часов") return Path + @"Wav\Dynamic message\В 08 часов.wav";
-            if (track == "В 9 часов") return Path + @"Wav\Dynamic message\В 09 часов.wav";
+            if (track == "В 00 часов") return Path + @"Wav\Dynamic message\В 00 часов.wav";
+            if (track == "В 01 час") return Path + @"Wav\Dynamic message\В 01 час.wav";
+            if (track == "В 02 часа") return Path + @"Wav\Dynamic message\В 02 часа.wav";
+            if (track == "В 03 часа") return Path + @"Wav\Dynamic message\В 03 часа.wav";
+            if (track == "В 04 часа") return Path + @"Wav\Dynamic message\В 04 часа.wav";
+            if (track == "В 05 часов") return Path + @"Wav\Dynamic message\В 05 часов.wav";
+            if (track == "В 06 часов") return Path + @"Wav\Dynamic message\В 06 часов.wav";
+            if (track == "В 07 часов") return Path + @"Wav\Dynamic message\В 07 часов.wav";
+            if (track == "В 08 часов") return Path + @"Wav\Dynamic message\В 08 часов.wav";
+            if (track == "В 09 часов") return Path + @"Wav\Dynamic message\В 09 часов.wav";
             if (track == "В 10 часов") return Path + @"Wav\Dynamic message\В 10 часов.wav";
             if (track == "В 11 часов") return Path + @"Wav\Dynamic message\В 11 часов.wav";
             if (track == "В 12 часов") return Path + @"Wav\Dynamic message\В 12 часов.wav";
@@ -162,6 +177,10 @@ namespace MainExample
             if (track == "На 8ой путь") return Path + @"Wav\Dynamic message\На 8ой путь.wav";
             if (track == "На 9ый путь") return Path + @"Wav\Dynamic message\На 9ый путь.wav";
             if (track == "На 10ый путь") return Path + @"Wav\Dynamic message\На 10ый путь.wav";
+            if (track == "На 11ый путь") return Path + @"Wav\Dynamic message\На 11ый путь.wav";
+            if (track == "На 12ый путь") return Path + @"Wav\Dynamic message\На 12ый путь.wav";
+            if (track == "На 13ый путь") return Path + @"Wav\Dynamic message\На 13ый путь.wav";
+            if (track == "На 14ый путь") return Path + @"Wav\Dynamic message\На 14ый путь.wav";
 
             if (track == "На 1ом пути") return Path + @"Wav\Dynamic message\На 1ом пути.wav";
             if (track == "На 2ом пути") return Path + @"Wav\Dynamic message\На 2ом пути.wav";
@@ -173,6 +192,10 @@ namespace MainExample
             if (track == "На 8ом пути") return Path + @"Wav\Dynamic message\На 8ом пути.wav";
             if (track == "На 9ом пути") return Path + @"Wav\Dynamic message\На 9ом пути.wav";
             if (track == "На 10ом пути") return Path + @"Wav\Dynamic message\На 10ом пути.wav";
+            if (track == "На 11ом пути") return Path + @"Wav\Dynamic message\На 11ом пути.wav";
+            if (track == "На 12ом пути") return Path + @"Wav\Dynamic message\На 12ом пути.wav";
+            if (track == "На 13ом пути") return Path + @"Wav\Dynamic message\На 13ом пути.wav";
+            if (track == "На 14ом пути") return Path + @"Wav\Dynamic message\На 14ом пути.wav";
 
             if (track == "С 1ого пути") return Path + @"Wav\Dynamic message\С 1ого пути.wav";
             if (track == "С 2ого пути") return Path + @"Wav\Dynamic message\С 2ого пути.wav";
@@ -184,6 +207,10 @@ namespace MainExample
             if (track == "С 8ого пути") return Path + @"Wav\Dynamic message\С 8ого пути.wav";
             if (track == "С 9ого пути") return Path + @"Wav\Dynamic message\С 9ого пути.wav";
             if (track == "С 10ого пути") return Path + @"Wav\Dynamic message\С 10ого пути.wav";
+            if (track == "С 11ого пути") return Path + @"Wav\Dynamic message\С 11ого пути.wav";
+            if (track == "С 12ого пути") return Path + @"Wav\Dynamic message\С 12ого пути.wav";
+            if (track == "С 13ого пути") return Path + @"Wav\Dynamic message\С 13ого пути.wav";
+            if (track == "С 14ого пути") return Path + @"Wav\Dynamic message\С 14ого пути.wav";
 
             if (track == "Нумерация с головы") return Path + @"Wav\Dynamic message\Нумерация с головы.wav";
             if (track == "Нумерация с хвоста") return Path + @"Wav\Dynamic message\Нумерация с хвоста.wav";
@@ -198,6 +225,5 @@ namespace MainExample
 
             return "";
         }
-
     }
 }

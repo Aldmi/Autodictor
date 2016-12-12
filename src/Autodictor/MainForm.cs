@@ -23,7 +23,7 @@ namespace MainExample
             SoundConfiguration.ЗагрузитьСписок();
            // TrainTable.ЗагрузитьСписок();                 //TODO: грузится из файла
 
-           // Player.PlayFile("");  //TODO: ???? включить
+           // Player.PlayFile("");                          //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
         }

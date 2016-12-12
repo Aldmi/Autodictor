@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using AutoMapper;
 using CommunicationDevices.Infrastructure;
+using Library.Logs;
 using WCFAvtodictor2PcTableContract.Contract;
 using WCFAvtodictor2PcTableContract.DataContract;
 using Timer = System.Timers.Timer;
@@ -214,17 +215,18 @@ namespace CommunicationDevices.Behavior.PcBehavior
             {
                 return await Proxy.GetDisplayData(displayType);
             }
-            catch (EndpointNotFoundException ex)             //Конечная точка не найденна.
+            catch (EndpointNotFoundException)             //Конечная точка не найденна.
             {
                 IsConnect = false;
-                //Log.Add("ex.ToString()", Error);
+                var errorString = $"ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  {ChannelFactory.Endpoint.Address.Uri.OriginalString}";
+                Log.log.Warn(errorString);
             }
             catch (Exception ex)
             {
-                //персозадим канал и прокси
-                ReOpenChanel();
                 IsConnect = false;
-                //Log.Add("ex.ToString()", Error);
+                var errorString = $"ОБМЕН ДАННЫМИ С PC ТАБЛО. Ошибка отправки на конечную точку: {ChannelFactory.Endpoint.Address.Uri.OriginalString}  ОШИБКА: {ex}";
+                Log.log.Error(errorString);
+                ReOpenChanel();            
             }
 
             return false;
@@ -261,6 +263,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
         }
 
         #endregion
+
 
 
 

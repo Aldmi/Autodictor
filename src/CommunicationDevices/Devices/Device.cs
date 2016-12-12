@@ -62,16 +62,11 @@ namespace CommunicationDevices.Devices
         }
 
 
-
         public void AddCycleFunc()
         {
             ExhBehavior.GetData4CycleFunc.ForEach(c=> c.AddressDevice = Address);       //Добавить во все данные циклического обмена адресс.
             ExhBehavior.StartCycleExchange();
         }
-
-
-
-
 
 
         public void RemoveCycleFunc()

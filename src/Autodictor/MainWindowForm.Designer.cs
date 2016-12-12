@@ -51,9 +51,9 @@
             this.Player_Label = new System.Windows.Forms.Label();
             this.btnВоспроизвести = new System.Windows.Forms.Button();
             this.tBРегуляторГромкости = new System.Windows.Forms.TrackBar();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tB_ИнфСтрокаНаТабло = new System.Windows.Forms.TextBox();
+            this.btn_ПередатьИнфСтрокуНаТабло = new System.Windows.Forms.Button();
             this.pnСостояниеCIS = new System.Windows.Forms.Panel();
             this.lblСостояниеCIS = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -294,38 +294,33 @@
             this.tBРегуляторГромкости.TabIndex = 0;
             this.tBРегуляторГромкости.Scroll += new System.EventHandler(this.tBРегуляторГромкости_Scroll);
             // 
-            // button1
+            // label2
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(981, 20);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(195, 36);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Открыть расписание";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(1, 141);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(406, 20);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Информационная строка на табло расписания";
             // 
-            // button2
+            // tB_ИнфСтрокаНаТабло
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(981, 59);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(195, 36);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Открыть приб.отпр.";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.tB_ИнфСтрокаНаТабло.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tB_ИнфСтрокаНаТабло.Location = new System.Drawing.Point(410, 139);
+            this.tB_ИнфСтрокаНаТабло.Name = "tB_ИнфСтрокаНаТабло";
+            this.tB_ИнфСтрокаНаТабло.Size = new System.Drawing.Size(696, 26);
+            this.tB_ИнфСтрокаНаТабло.TabIndex = 18;
             // 
-            // button3
+            // btn_ПередатьИнфСтрокуНаТабло
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(981, 98);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(195, 36);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "Открыть расписание 2";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btn_ПередатьИнфСтрокуНаТабло.Location = new System.Drawing.Point(1112, 142);
+            this.btn_ПередатьИнфСтрокуНаТабло.Name = "btn_ПередатьИнфСтрокуНаТабло";
+            this.btn_ПередатьИнфСтрокуНаТабло.Size = new System.Drawing.Size(64, 23);
+            this.btn_ПередатьИнфСтрокуНаТабло.TabIndex = 19;
+            this.btn_ПередатьИнфСтрокуНаТабло.Text = "Передать";
+            this.btn_ПередатьИнфСтрокуНаТабло.UseVisualStyleBackColor = true;
+            this.btn_ПередатьИнфСтрокуНаТабло.Click += new System.EventHandler(this.btn_ПередатьИнфСтрокуНаТабло_Click);
             // 
             // pnСостояниеCIS
             // 
@@ -353,9 +348,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1179, 639);
             this.Controls.Add(this.pnСостояниеCIS);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_ПередатьИнфСтрокуНаТабло);
+            this.Controls.Add(this.tB_ИнфСтрокаНаТабло);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pnСостояние);
@@ -376,6 +371,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкости)).EndInit();
             this.pnСостояниеCIS.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -403,9 +399,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label Player_Label;
         private System.Windows.Forms.CheckBox cB_ВоспроизведениеДвиженияПоездов;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tB_ИнфСтрокаНаТабло;
+        private System.Windows.Forms.Button btn_ПередатьИнфСтрокуНаТабло;
         private System.Windows.Forms.Panel pnСостояниеCIS;
         private System.Windows.Forms.Label lblСостояниеCIS;
     }

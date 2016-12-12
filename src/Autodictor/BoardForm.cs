@@ -58,9 +58,18 @@ namespace MainExample
                 {
                     var dev= _devises.FirstOrDefault(d => d.ExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
-                    dataGridViewBoards[7, row].Value = exc.DataExchangeSuccess ? Resources.ping_YES__ : Resources.ping_Error__;
+
+                    dataGridViewBoards.InvokeIfNeeded(() =>
+                    {
+                       dataGridViewBoards[7, row].Value = exc.DataExchangeSuccess ? Resources.ping_YES__ : Resources.ping_Error__;
+                    });
+
                     await Task.Delay(300);
-                    dataGridViewBoards[7, row].Value = Resources.ping_NO;
+
+                    dataGridViewBoards.InvokeIfNeeded(() =>
+                    {
+                        dataGridViewBoards[7, row].Value = Resources.ping_NO;
+                    });
                 });
                 DispouseIsDataExchangeSuccessChangeRx.Add(disp);
 

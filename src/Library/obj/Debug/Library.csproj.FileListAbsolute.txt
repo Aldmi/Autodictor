@@ -17,11 +17,6 @@ D:\Git\RailwayStationQueue\src\Library\bin\Debug\Library.pdb
 D:\Git\RailwayStationQueue\src\Library\obj\Debug\Library.dll
 D:\Git\RailwayStationQueue\src\Library\obj\Debug\Library.pdb
 D:\Git\RailwayStationQueue\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
-D:\Project C#\Autodictor\src\Library\bin\Debug\Library.dll
-D:\Project C#\Autodictor\src\Library\bin\Debug\Library.pdb
-D:\Project C#\Autodictor\src\Library\obj\Debug\Library.dll
-D:\Project C#\Autodictor\src\Library\obj\Debug\Library.pdb
-d:\Project C#\Autodictor\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
 D:\Dropbox\C#\Project C#\Autodictor\src\Library\bin\Debug\Library.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\Library\bin\Debug\Library.pdb
 D:\Dropbox\C#\Project C#\Autodictor\src\Library\obj\Debug\Library.dll
@@ -42,3 +37,11 @@ D:\Git\Autodictor\src\Library\bin\Debug\Library.pdb
 D:\Git\Autodictor\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\Library\obj\Debug\Library.dll
 D:\Git\Autodictor\src\Library\obj\Debug\Library.pdb
+D:\Project C#\Autodictor\src\Library\bin\Debug\NLog.config
+D:\Project C#\Autodictor\src\Library\bin\Debug\Library.dll
+D:\Project C#\Autodictor\src\Library\bin\Debug\Library.pdb
+D:\Project C#\Autodictor\src\Library\bin\Debug\NLog.dll
+D:\Project C#\Autodictor\src\Library\bin\Debug\NLog.xml
+D:\Project C#\Autodictor\src\Library\obj\Debug\Library.dll
+D:\Project C#\Autodictor\src\Library\obj\Debug\Library.pdb
+D:\Project C#\Autodictor\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache

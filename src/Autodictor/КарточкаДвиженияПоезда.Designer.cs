@@ -155,7 +155,7 @@
             // 
             this.cB_НомерПути.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cB_НомерПути.FormattingEnabled = true;
-            this.cB_НомерПути.Items.AddRange(new object[] {
+            this.cB_НомерПути.Items.AddRange(new object[]  {
             "Неизвестно",
             "Первый путь",
             "Второй путь",
@@ -166,7 +166,11 @@
             "Седьмой путь",
             "Восьмой путь",
             "Девятый путь",
-            "Десятый путь"});
+            "Десятый путь",
+            "Одиннадцатый путь",
+            "Двенадцатый путь",
+            "Тринадцатый путь",
+            "Четырнадцатый путь"});
             this.cB_НомерПути.Location = new System.Drawing.Point(144, 239);
             this.cB_НомерПути.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cB_НомерПути.Name = "cB_НомерПути";

@@ -10,6 +10,7 @@ using Communication.Annotations;
 using Communication.Interfaces;
 using Communication.Settings;
 using Library.Async;
+using Library.Logs;
 
 
 namespace Communication.SerialPort
@@ -216,7 +217,8 @@ namespace Communication.SerialPort
                 }
                 catch (Exception ex)
                 {
-                    StatusString = $"Ошибка работы с портом: {_port.PortName}. ОШИБКА: {ex}";
+                    StatusString = $"Ошибка работы с портом: {_port.PortName}. ОШИБКА: {ex}";              
+                    Log.log.Error(StatusString);         
                 }
             }
         }
@@ -356,21 +358,6 @@ namespace Communication.SerialPort
         }
 
         #endregion
-
-
-
-
-
-        #region Nested
-
-        public class OneTimeSendData
-        {
-            public int TimeRespoune { get; set; }
-            public IExchangeDataProviderBase DataProvider { get; set; }
-        }
-
-        #endregion
-
 
 
 

@@ -127,7 +127,7 @@ namespace MainExample
                         if (Данные.TrainPathDirection > 2)
                             Данные.TrainPathDirection = 0;
 
-                        if (Данные.TrainPathNumber > 10)
+                        if (Данные.TrainPathNumber > 14)
                             Данные.TrainPathNumber = 0;
 
                         TrainTableRecords.Add(Данные);
@@ -319,7 +319,7 @@ namespace MainExample
             else
                 Данные.ShowInPanels = 0x02;
 
-            if ((cB_НомерПути.SelectedIndex < 0) || (cB_НомерПути.SelectedIndex > 10))
+            if ((cB_НомерПути.SelectedIndex < 0) || (cB_НомерПути.SelectedIndex > 14))
                 Данные.TrainPathNumber = 0;
             else
                 Данные.TrainPathNumber = (byte)cB_НомерПути.SelectedIndex;
@@ -370,7 +370,7 @@ namespace MainExample
                             else
                                 Данные.ShowInPanels = 0x02;
 
-                            if ((cB_НомерПути.SelectedIndex < 0) || (cB_НомерПути.SelectedIndex > 10))
+                            if ((cB_НомерПути.SelectedIndex < 0) || (cB_НомерПути.SelectedIndex > 14))
                                 Данные.TrainPathNumber = 0;
                             else
                                 Данные.TrainPathNumber = (byte)cB_НомерПути.SelectedIndex;

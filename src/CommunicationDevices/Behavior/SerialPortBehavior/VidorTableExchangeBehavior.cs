@@ -94,7 +94,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 }
             }
 
-            await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
+            await Task.Delay(500, ct);  //задержка для задания периода опроса. 
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Timers;
 using CommunicationDevices.Devices;
+using Library.Logs;
 using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
 
@@ -133,14 +134,16 @@ namespace CommunicationDevices.ClientWCF
             try
             {
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 мин
-                if (((_tickCounter % MinutLevel) == 0))
+                if (((_tickCounter%MinutLevel) == 0))
                 {
-                    OperativeScheduleDatas = new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 1"));
+                    OperativeScheduleDatas =
+                        new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 1"));
                     IsConnect = true;
                     //Log.Add("Оперативное расписание полученно", Info);
 
 
-                    RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules("Вокзал 1"));
+                    RegulatoryScheduleDatas =
+                        new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules("Вокзал 1"));
                     IsConnect = true;
                     //Log.Add("регулярное расписание полученно", Info);
 
@@ -158,25 +161,25 @@ namespace CommunicationDevices.ClientWCF
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 10 мин
-                if (((_tickCounter % TenMinutLevel) == 0))
+                if (((_tickCounter%TenMinutLevel) == 0))
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 час
-                if (((_tickCounter % HouerLevel) == 0))
+                if (((_tickCounter%HouerLevel) == 0))
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 12 часов
-                if ((_tickCounter % TvelwHouerLevel) == 0)
+                if ((_tickCounter%TvelwHouerLevel) == 0)
                 {
 
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 сутки
-                if ((_tickCounter % DayLevel) == 0)
+                if ((_tickCounter%DayLevel) == 0)
                 {
 
                 }
@@ -185,14 +188,20 @@ namespace CommunicationDevices.ClientWCF
                 if (++_tickCounter >= uint.MaxValue)
                     _tickCounter = 0;
             }
-            catch (EndpointNotFoundException ex)             //Конечная точка не найденна.
+            catch (EndpointNotFoundException ex) //Конечная точка не найденна.
             {
                 IsConnect = false;
-                //Log.Add("ex.ToString()", Error);
+                Log.log.Warn($"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: {ex}");
+            }
+            catch (FaultException ex)
+            {
+                IsConnect = false;
+                Log.log.Error($"ОБМЕН С ЦИС. Ошибка выполнения на стороне ЦИС. ОШИБКА: {ex}");
             }
             catch (Exception ex)
             {
-                //Log.Add("ex.ToString()", Error);
+                IsConnect = false;
+                Log.log.Error($"ОБМЕН С ЦИС. Непредвиденная ошибка на стороне клиента. ОШИБКА: {ex}");
             }
         }
 

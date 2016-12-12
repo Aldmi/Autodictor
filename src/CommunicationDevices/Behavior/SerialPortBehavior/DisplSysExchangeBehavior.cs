@@ -8,6 +8,7 @@ using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Infrastructure.DisplaySysDataProvider;
 using CommunicationDevices.Infrastructure.VidorDataProvider;
+using Library.Logs;
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
 {
@@ -39,6 +40,12 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             var writeProvider = new PanelDispSysWriteDataProvider { InputData = Data4CycleFunc[0] };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
             await Task.Delay(1000, ct);  //задержка для задания периода опроса.
+
+
+            if (writeProvider.IsOutDataValid)
+            {
+                // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+            }
         }
 
         #endregion
@@ -56,12 +63,6 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
             var writeProvider = new PanelDispSysWriteDataProvider { InputData = LastSendData };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-
-
-            if (writeProvider.IsOutDataValid)
-            {
-                //с outData девайс разберется сам writeProvider.OutputData
-            }
         }
 
         #endregion

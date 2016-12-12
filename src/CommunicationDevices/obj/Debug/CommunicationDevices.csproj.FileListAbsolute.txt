@@ -1,12 +1,3 @@
-D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
-D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
-D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
-D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
-D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Library.dll
-D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Communication.pdb
-D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Library.pdb
-D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
-D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
 D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
 D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
 D:\Dropbox\C#\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
@@ -106,3 +97,36 @@ D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Thr
 D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
 D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\NLog.config
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\AutoMapper.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Library.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\NLog.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.PlatformServices.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\WCFAvtodictor2PcTableContract.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Communication.pdb
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Library.pdb
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\AutoMapper.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\NLog.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.PlatformServices.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Threading.xml
+D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
+D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
+D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
