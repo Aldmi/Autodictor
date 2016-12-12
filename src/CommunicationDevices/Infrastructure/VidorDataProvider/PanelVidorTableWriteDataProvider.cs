@@ -74,44 +74,55 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 string rowNumber = (11 * CurrentRow).ToString("D3");
 
 
+                string result1, result2, result3, result4;
+                if (CurrentRow == 0xFF)
+                {
+                    // %30 - синхр часов
+                    // [3..8] - 5байт (hex) время в сек.   
+                    var timeNow = DateTime.Now.Hour.ToString("D2") + DateTime.Now.Minute.ToString("D2") + DateTime.Now.Second.ToString("D2");
+                    string format1 = "%30";
+                    string message1 = $"{timeNow}";
+                    result1 = format1 + message1;
+                    result2 = result3 = result4 = string.Empty;
+                }
+                else
+                {
+                    // %00 - задание формата вывода НАЗВАНИЯ ПОЕЗДА
+                    // 001 - Х1
+                    // 047 - X2
+                    // вычисляется - Y
+                    // аттриб = 4 (бег.стр.)
+                    string format1 = $"%00002047{rowNumber}4";
+                    string message1 = $"%10$00$60$t3$12{numberOfTrain}";
+                    result1 = format1 + message1;
 
-                // %00 - задание формата вывода НАЗВАНИЯ ПОЕЗДА
-                // 001 - Х1
-                // 047 - X2
-                // вычисляется - Y
-                // аттриб = 4 (бег.стр.)
-                string format1 = $"%00002047{rowNumber}4";
-                string message1 = $"%10$00$60$t3$12{numberOfTrain}";
-                string result1 = format1 + message1;
+                    // %01 - задание формата вывода СТАНЦИИ
+                    // 048 - Х1
+                    // 165 - X2
+                    // вычисляется - Y
+                    // аттриб = 4 (бег.стр.)
+                    string format2 = $"%00048165{rowNumber}4";
+                    string message2 = $"%10$00$60$t3$12{stations}";
+                    result2 = format2 + message2;
 
-                // %01 - задание формата вывода СТАНЦИИ
-                // 048 - Х1
-                // 165 - X2
-                // вычисляется - Y
-                // аттриб = 4 (бег.стр.)
-                string format2 = $"%00048165{rowNumber}4";
-                string message2 = $"%10$00$60$t3$12{stations}";
-                string result2 = format2 + message2;
+                    // %01 - задание формата вывода ВРЕМЕНИ
+                    // 171 - Х1
+                    // 207 - X2
+                    // вычисляется - Y
+                    // аттриб = 4 (бег.стр.)
+                    string format3 = $"%00171207{rowNumber}4";
+                    string message3 = $"%10$00$60$t3$12{time}";
+                    result3 = format3 + message3;
 
-                // %01 - задание формата вывода ВРЕМЕНИ
-                // 171 - Х1
-                // 207 - X2
-                // вычисляется - Y
-                // аттриб = 4 (бег.стр.)
-                string format3 = $"%00171207{rowNumber}4";
-                string message3 = $"%10$00$60$t3$12{time}";
-                string result3 = format3 + message3;
-
-                // %01 - задание формата вывода ПУТИ
-                // 231 - Х1
-                // 252 - X2
-                // вычисляется - Y
-                // аттриб = 4 (бег.стр.)
-                string format4 = $"%00231252{rowNumber}4";
-                string message4 = $"%10$00$60$t3$12{numberOfPath}";
-                string result4 = format4 + message4;
-
-
+                    // %01 - задание формата вывода ПУТИ
+                    // 231 - Х1
+                    // 252 - X2
+                    // вычисляется - Y
+                    // аттриб = 4 (бег.стр.)
+                    string format4 = $"%00231252{rowNumber}4";
+                    string message4 = $"%10$00$60$t3$12{numberOfPath}";
+                    result4 = format4 + message4;
+                }
 
 
                 //формируем КОНЕЧНУЮ строку
@@ -122,7 +133,6 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 byte[] xorBytes = Encoding.GetEncoding("Windows-1251").GetBytes(resultstring);
                 byte xor = CalcXor(xorBytes);
                 resultstring += xor.ToString("X2");
-
 
                 //Преобразовываем КОНЕЧНУЮ строку в массив байт
                 var resultBuffer = Encoding.GetEncoding("Windows-1251").GetBytes(resultstring).ToList();
@@ -158,25 +168,6 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
 
             IsOutDataValid = true;
             return true;
-
-
-            //if (data[0] == byte.Parse(InputData.Address) &&
-            //    data[1] == CountSetDataByte)
-            //{
-            //    if (data[2] == 0x83)                         //успешно приняты
-            //    {
-            //        IsOutDataValid = true;
-            //        return true;
-            //    }
-
-            //    if (data[2] == 0x80)                          //ошибка приема
-            //    {
-            //        OutputData.ErrorCode = data[3];
-            //    }
-            //}
-
-            //IsOutDataValid = false;
-            //return false;
         }
 
 

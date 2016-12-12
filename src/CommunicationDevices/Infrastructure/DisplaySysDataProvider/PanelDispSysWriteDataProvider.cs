@@ -45,7 +45,6 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
         /// </summary>
         public byte[] GetDataByte()
         {
-            //"%0100202A00200C00040019%102402Лианозово, Марк, Долгопрудный, Лобня";
             try
             {
                 byte address = byte.Parse(InputData.AddressDevice);
@@ -54,81 +53,181 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                 string numberOfPath = string.IsNullOrEmpty(InputData.PathNumber) ? " " : InputData.PathNumber;
                 string ev = string.IsNullOrEmpty(InputData.Event) ? " " : InputData.Event;
                 string stations = string.IsNullOrEmpty(InputData.Stations) ? " " : InputData.Stations;
+                string note = string.IsNullOrEmpty(InputData.Note) ? " " : InputData.Note;
                 string time = (InputData.Time == DateTime.MinValue) ? " " : InputData.Time.ToShortTimeString();
 
+
+                string format1, format2, format3, format4, format5, format6, format7, format8;
+                string message1, message2, message3, message4, message5, message6, message7, message8;
+                string result1, result2, result3, result4, result5, result6, result7, result8;
 
 
 
                 // %30 - синхр часов
                 // [3..8] - 5байт (hex) время в сек.   
-                var timeNow = DateTime.Now.Hour.ToString("D2") + DateTime.Now.Minute.ToString("D2") + DateTime.Now.Second.ToString("D2");
-                string format1 = "%30";
-                string message1 = $"{timeNow}";
-                string result1 = format1 + message1;
+                var timeNow = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
+                format1 = "%30";
+                message1 = $"{timeNow}";
+                result1 = format1 + message1;
 
 
-                // %01 - задание формата вывода ПУТИ
-                // 001 - Х1
-                // 146 - X2
-                // 014 - Y
-                // аттриб = 4 (бег.стр.)
-                string format2 = "%000011460144";
-                string message2 = $"%10$18$00$60$t2ПУТЬ №{numberOfPath}";
-                string result2 = format2 + message2;
 
-                // %01 - задание формата вывода события
-                // 152 - Х1
-                // 192 - X2
-                // 014 - Y
-                // аттриб = 4 (бег.стр.)
-                string format3 = "%001521920144";
-                string message3 = $"%10$18$00$60$t3{ev}";
-                string result3 = format3 + message3;
+                //ВЫВОД НА ПРИГОРОД
+                //02 - Аддр.
+                //BB - 187 байт данных
+                //% 30143525 - синхр часов(14:35)                                                      [СИНХР.ВРЕМ.]            
 
-                // %01 - задание формата вывода слова ПОЕЗД№
-                // 152 - Х1
-                // 192 - X2
-                // 014 - Y
-                // аттриб = 4 (бег.стр.)
-                string format4 = "%000010750314";
-                string message4 = "%10$18$00$60$t3Поезд №";
-                string result4 = format4 + message4;
+                //% 000011920144 - 3 координты, Х1 = 001,  X2 = 192, Y = 014, формат = 4(горизонт.перемещ)
+                //% 10$18$00$60$t2ПУТЬ №2 - текст, $18$00$60$t2ПУТЬ №2                                 [ПУТЬ]
 
-                // %42 - вывод верт. линии
-                // 001 - Х1
-                // 192 - Y1
-                // 016 - Y2
-                // 016 - ширина
-                string message5 = "%42001192016016";
-                string result5 = message5;
+                //% 42001192016016 - гор.линия, Х1 = 001,  X2 = 192, Y1 = 016, Y2 = 016,               [ГОР.ЛИН.]
 
-                // %01 - задание формата номера поезда
-                // 077 - Х1
-                // 146 - X2
-                // 031 - Y1
-                // аттриб = 4 (бег.стр.)
-                string format6 = "%000771460314";
-                string message6 = $"%10$18$00$60$t3{numberOfTrain}";
-                string result6 = format6 + message6;
+                //% 000011500314 - 3 координты, Х1 = 001,  X2 = 150, Y = 031, формат = 4(горизонт.перемещ)
+                //% 10$18$00$60$t3КРЮКОВО - ЛАСТОЧКА - текст, $18$00$60$t3КРЮКОВО - ЛАСТОЧКА            [СТАНЦИИ]
 
-                // %01 - задание формата вывода станции
-                // 077 - Х1
-                // 146 - X2
-                // 046 - Y1
-                // аттриб = 4 (бег.стр.)
-                string format7 = "%000011460464";
-                string message7 = $"%10$18$00$60$t3{stations}";
-                string result7 = format7 + message7;
+                //% 000011920464 - 3 координты, Х1 = 001,  X2 = 192, Y = 046, формат = 4(горизонт.перемещ)
+                //% 10$18$00$60$t3с остановками:  Химки - текст, $18$00$60$t3с остановками:  Химки      [ПРИМЕЧАНИЕ]
 
-                // %01 - задание формата вывода времени
-                // 152 - Х1
-                // 192 - X2
-                // 046 - Y1
-                // аттриб = 4 (бег.стр.)
-                string format8 = "%001521920464";
-                string message8 = $"%10$18$00$60$t3{time}";
-                string result8 = format8 + message8;
+                //% 001521920314 - 3 координты, Х1 = 152,  X2 = 192, Y = 031, формат = 4(горизонт.перемещ)
+                //% 10$18$00$60$t315: 10 - текст, $18$00$60$t315: 10                                    [ВРЕМЯ]
+                if (InputData.TypeTrain == TypeTrain.Suburb)
+                {
+                    // %01 - задание формата вывода ПУТИ
+                    // 001 - Х1
+                    // 146 - X2
+                    // 014 - Y
+                    // аттриб = 4 (бег.стр.)
+                    format2 = "%000011920144";
+                    message2 = $"%10$18$00$60$t2ПУТЬ №{numberOfPath}";
+                    result2 = format2 + message2;
 
+                    // %42 - вывод гор. линии
+                    // 001 - Х1
+                    // 192 - Y1
+                    // 016 - Y2
+                    // 016 - ширина
+                    message3 = "%42001192016016";
+                    result3 = message3;
+
+                    // %01 - задание формата вывода станции
+                    // 077 - Х1
+                    // 150 - X2
+                    // 031 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format4 = "%000011500314";
+                    message4 = $"%10$18$00$60$t3{stations}";
+                    result4 = format4 + message4;
+
+                    // %01 - задание формата вывода примечания
+                    // 001 - Х1
+                    // 192 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format5 = "%000011920464";
+                    message5 = $"%10$18$00$60$t3{note}";
+                    result5 = format5 + message5;
+
+                    // %01 - задание формата вывода времени
+                    // 152 - Х1
+                    // 192 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format6 = "%001521920314";
+                    message6 = $"%10$18$00$60$t3{time}";
+                    result6 = format6 + message6;
+
+                    result7 = String.Empty;
+                    result8 = String.Empty;
+                }
+
+                //ВЫВРД ДАЛЬНЕГО СЛЕДОВАНИЯ
+                // 05 - Аддр.
+                //DA - 218 байт данных
+                //% 30161903 - синхр часов                                                                  [СИНХР.ВРЕМ.]   
+
+                //% 000011460144               - 3 координты, Х1 = 001,  X2 = 146, Y = 014, формат = 4(горизонт.перемещ)
+                //% 10$18$00$60$t2ПУТЬ №5      - текст, $18$00$60$t2ПУТЬ №5,                                 [ПУТЬ]
+
+                //%001521920144                - 3 координты, Х1=152,  X2= 192, Y= 014, формат=4 (горизонт.перемещ)
+                //%10$18$00$60$t3              - текст, $18$00$60$t3   ,(строка 3пробела)                    [СОБЫТИЕ]
+
+                //%000010750314                - 3 координты, Х1=001,  X2= 075, Y= 031, формат=4 (горизонт.перемещ)
+                //%10$18$00$60$t3Поезд №       - текст, $18$00$60$t3Поезд №,                                
+
+                //%42001192016016              - гор.линия, Х1=001,  X2= 192, Y1= 016, Y2= 016,             [ГОР.ЛИН]
+
+                //%000771460314                - 3 координты, Х1=077,  X2= 146, Y= 031, формат=4 (горизонт.перемещ)
+                //%10$18$00$60$t3              - текст, $18$00$60$t3   ,(строка 3пробела)                  [НОМЕР ПОЕЗДА dec]
+
+                //%000011460464                - 3 координты, Х1=001,  X2= 146, Y= 046, формат=4 (горизонт.перемещ)
+                //%10$18$00$60$t3              - текст, $18$00$60$t3,   (строка 3пробела)                  [СТАНЦИИ]
+
+                //%001521920464                - 3 координты, Х1=152,  X2= 192, Y= 046, формат=4 (горизонт.перемещ)
+                //%10$18$00$60$t3               - текст, $18$00$60$t3,  (строка 3пробела)                  [ВРЕМЯ]
+                else
+                {
+                    // %01 - задание формата вывода ПУТИ
+                    // 001 - Х1
+                    // 146 - X2
+                    // 014 - Y
+                    // аттриб = 4 (бег.стр.)
+                    format2 = "%000011460144";
+                    message2 = $"%10$18$00$60$t2ПУТЬ №{numberOfPath}";
+                    result2 = format2 + message2;
+
+                    // %01 - задание формата вывода события
+                    // 152 - Х1
+                    // 192 - X2
+                    // 014 - Y
+                    // аттриб = 4 (бег.стр.)
+                    format3 = "%001521920144";
+                    message3 = $"%10$18$00$60$t3{ev}";
+                    result3 = format3 + message3;
+
+                    // %01 - задание формата вывода слова ПОЕЗД№
+                    // 152 - Х1
+                    // 192 - X2
+                    // 014 - Y
+                    // аттриб = 4 (бег.стр.)
+                    format4 = "%000010750314";
+                    message4 = "%10$18$00$60$t3Поезд №";
+                    result4 = format4 + message4;
+
+                    // %42 - вывод гор. линии
+                    // 001 - Х1
+                    // 192 - Y1
+                    // 016 - Y2
+                    // 016 - ширина
+                    message5 = "%42001192016016";
+                    result5 = message5;
+
+                    // %01 - задание формата номера поезда
+                    // 077 - Х1
+                    // 146 - X2
+                    // 031 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format6 = "%000771460314";
+                    message6 = $"%10$18$00$60$t3{numberOfTrain}";
+                    result6 = format6 + message6;
+
+                    // %01 - задание формата вывода станции
+                    // 077 - Х1
+                    // 146 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format7 = "%000011460464";
+                    message7 = $"%10$18$00$60$t3{stations}";
+                    result7 = format7 + message7;
+
+                    // %01 - задание формата вывода времени
+                    // 152 - Х1
+                    // 192 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format8 = "%001521920464";
+                    message8 = $"%10$18$00$60$t3{time}";
+                    result8 = format8 + message8;
+                }
 
 
                 //формируем КОНЕЧНУЮ строку

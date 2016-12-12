@@ -70,7 +70,7 @@ namespace MainExample
         static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
-
+        public static int ProgressLoadMainList { get; set; }
 
 
         // Конструктор
@@ -83,6 +83,12 @@ namespace MainExample
 
             InitializeComponent();
             this.lblTime.Text = DateTime.Now.ToLongTimeString();
+
+            progressBar.Maximum = TrainTable.TrainTableRecords.Count() + SoundConfiguration.SoundConfigurationRecords.Count();
+            progressBar.Step = 1;
+            progressBar.Value = 0;
+
+
 
             btnБлокировка.Text = "ВКЛЮЧИТЬ";
             pnСостояние.BackColor = Color.Orange;
@@ -156,13 +162,33 @@ namespace MainExample
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
         private void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
+            btnОбновитьСписок.Enabled= false;
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
             ОбновитьСписокЗвуковыхСообщений();
             ОбновитьСписокЗвуковыхСообщенийВТаблице();
         }
 
+        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            btnОбновитьСписок.Enabled = true;
+            progressBar.Value = progressBar.Maximum;
+        }
+
+
+
 
         // Формирование списка воспроизведения
-        public static void ОбновитьСписокЗвуковыхСообщений()
+        public void ОбновитьСписокЗвуковыхСообщений()
         {
             SoundRecords.Clear();
             SoundRecordsOld.Clear();
@@ -177,6 +203,8 @@ namespace MainExample
             #region Создание звуковых файлов расписания ЖД транспорта
             foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
             {
+                backgroundWorker1.ReportProgress(ProgressLoadMainList++);
+
                 if (Config.Active == true)
                 {
 
@@ -482,9 +510,6 @@ namespace MainExample
                                                         SoundRecords.Add(Key, Record);
                                                         SoundRecordsOld.Add(Key, Record);
                                                     }
-
-
-
                                                 }
                                             }
                                         }
@@ -499,6 +524,8 @@ namespace MainExample
             #region Создание статических звуковых файлов
             foreach (SoundConfigurationRecord Config in SoundConfiguration.SoundConfigurationRecords)
             {
+                backgroundWorker1.ReportProgress(ProgressLoadMainList++);
+
                 SoundRecord Record;
                 Record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
                 Record.ТипСообщения = SoundRecordType.Обычное;
@@ -766,6 +793,12 @@ namespace MainExample
             }
             #endregion
 
+
+            var hh= ProgressLoadMainList;
+           
+
+
+
             SoundRecords.OrderBy(key => key.Value);
         }
 
@@ -775,17 +808,20 @@ namespace MainExample
         {
             ОбновлениеСписка = true;
 
-            listView1.Items.Clear();
-
-            for (int i = 0; i < SoundRecords.Count; i++)
+            listView1.InvokeIfNeeded(() =>
             {
-                var Данные = SoundRecords.ElementAt(i);
+                listView1.Items.Clear();
 
-                ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(), Данные.Value.Время.ToString("HH:mm:ss"), (Данные.Value.Длительность / 60).ToString("00") + ":" + (Данные.Value.Длительность % 60).ToString("00"), Данные.Value.НомерПоезда + Данные.Value.Описание });
-                lvi.Tag = Данные.Value.ID;
-                lvi.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
-                this.listView1.Items.Add(lvi);
-            }
+                for (int i = 0; i < SoundRecords.Count; i++)
+                {
+                    var Данные = SoundRecords.ElementAt(i);
+
+                    ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(), Данные.Value.Время.ToString("HH:mm:ss"), (Данные.Value.Длительность / 60).ToString("00") + ":" + (Данные.Value.Длительность % 60).ToString("00"), Данные.Value.НомерПути.ToString(), Данные.Value.НомерПоезда + Данные.Value.Описание });
+                    lvi.Tag = Данные.Value.ID;
+                    lvi.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                    this.listView1.Items.Add(lvi);
+                }
+            });
 
             ОбновлениеСписка = false;
         }
@@ -846,6 +882,13 @@ namespace MainExample
                                     this.listView1.Items[item].BackColor = Color.LightGray;
                                     break;
                             }
+
+                            //Обновить номер пути
+                            if (this.listView1.Items[item].SubItems[3].Text != Данные.НомерПути.ToString())
+                            {
+                                this.listView1.Items[item].SubItems[3].Text = Данные.НомерПути.ToString();
+                            }
+
                         }
                     }
                     catch (Exception ex)
@@ -1250,6 +1293,7 @@ namespace MainExample
                                     time = "0" + time;
 
 
+                                //Изменение времени в списке
                                 if (this.listView1.Items[item].SubItems[1].Text != time)
                                     if (SoundRecords.ContainsKey(time) == false)
                                     {
@@ -1257,6 +1301,7 @@ namespace MainExample
                                         SoundRecords.Remove(Key);
                                         SoundRecords.Add(time, Данные);
                                     }
+
 
 
                                 if (ПрименитьКоВсемСообщениям == true)
@@ -1275,7 +1320,7 @@ namespace MainExample
                                         НовыеДанные.ВремяСтоянки = Данные.ВремяСтоянки;
                                         SoundRecords[Ключ] = НовыеДанные;
 
-                                        if(i > 0)
+                                        if (i > 0)
                                            SoundRecordsOld[Ключ] = НовыеДанные;
                                     }
                                 }
@@ -1366,13 +1411,29 @@ namespace MainExample
                         actStr = "ОТПР.";
                     }
 
+                    TypeTrain typeTrain;
+                    if (data.ОтображениеВТаблицах == 0x00)
+                    {
+                        typeTrain= TypeTrain.None;
+                    }
+                    else if (data.ОтображениеВТаблицах == 0x01)
+                    {
+                        typeTrain = TypeTrain.LongDistance;
+                    }
+                    else
+                    {
+                        typeTrain = TypeTrain.Suburb;
+                    }
+
                     var inData = new UniversalInputType
                     {
                         NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
                         PathNumber = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПути.ToString() : "   ",
                         Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
                         Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
-                        Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   "
+                        Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   ",
+                        Note = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.Примечание : "   ",
+                        TypeTrain = typeTrain
                     };
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
@@ -1384,7 +1445,7 @@ namespace MainExample
 
         private void btn_ПередатьИнфСтрокуНаТабло_Click(object sender, EventArgs e)
         {
-            Program.ИнфСтрокаНаТабло = tB_ИнфСтрокаНаТабло.Text;
+            //Program.ИнфСтрокаНаТабло = tB_ИнфСтрокаНаТабло.Text;
         }
 
 
@@ -1393,5 +1454,7 @@ namespace MainExample
             DispouseCisClientIsConnectRx.Dispose();
             base.OnClosed(e);
         }
+
+
     }
 }

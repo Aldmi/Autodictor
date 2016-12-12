@@ -45,3 +45,6 @@ D:\Project C#\Autodictor\src\Library\bin\Debug\NLog.xml
 D:\Project C#\Autodictor\src\Library\obj\Debug\Library.dll
 D:\Project C#\Autodictor\src\Library\obj\Debug\Library.pdb
 D:\Project C#\Autodictor\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor\src\Library\bin\Debug\NLog.config
+D:\Git\Autodictor\src\Library\bin\Debug\NLog.dll
+D:\Git\Autodictor\src\Library\bin\Debug\NLog.xml

@@ -30,7 +30,6 @@ namespace MainExample
 
 
 
-
         public List<IDisposable> DispouseIsDataExchangeSuccessChangeRx { get; set; }= new List<IDisposable>();
         public List<IDisposable> DispouseIsConnectChangeRx { get; set; } = new List<IDisposable>();
         public List<IDisposable> DispouseLastSendDataChangeRx { get; set; } = new List<IDisposable>();
@@ -77,7 +76,11 @@ namespace MainExample
                 {
                     var dev = _devises.FirstOrDefault(d => d.ExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
-                    dataGridViewBoards[6, row].Value = exc.IsConnect ? Resources.OkImg : Resources.CancelImg;
+
+                    dataGridViewBoards.InvokeIfNeeded(() =>
+                    {
+                        dataGridViewBoards[6, row].Value = exc.IsConnect ? Resources.OkImg : Resources.CancelImg;
+                    });                  
                 });
                 DispouseIsConnectChangeRx.Add(disp);
 
@@ -85,7 +88,11 @@ namespace MainExample
                 {
                     var dev = _devises.FirstOrDefault(d => d.ExhBehavior.Equals(exc));
                     var row = _devises.ToList().IndexOf(dev);
-                    dataGridViewBoards[8, row].Value = exc.LastSendData.Message;
+
+                    dataGridViewBoards.InvokeIfNeeded(() =>
+                    {
+                        dataGridViewBoards[8, row].Value = exc.LastSendData.Message;
+                    });
                 });
                 DispouseLastSendDataChangeRx.Add(disp);
             }
@@ -107,10 +114,13 @@ namespace MainExample
                     case "Путевое":                        //TODO: парсить Message для заполненния полей inData.
 
                         inData.NumberOfTrain = "666";
-                        inData.PathNumber = "6";
+                        inData.PathNumber = "2";
                         inData.Event = "ПРИБ.";
-                        inData.Time = new DateTime(2016, 11, 30, 22, 22, 00);
+                        inData.Time = new DateTime(2016, 11, 30, 15, 10, 00);
                         inData.Stations = "Табло временно не работает!!!";
+                        inData.Note = "Кроме: Станции 1, Станции 2, Станции 3, Станции 4, Станции 5";
+                        inData.TypeTrain= TypeTrain.Suburb;
+
 
                         if (string.IsNullOrEmpty(sendStr) || string.IsNullOrWhiteSpace(sendStr))
                         {
@@ -119,6 +129,7 @@ namespace MainExample
                             inData.Event = "  ";
                             inData.Time = DateTime.MinValue;
                             inData.Stations = "  ";
+                            inData.Note = "  ";
 
                             _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
                             _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
@@ -149,7 +160,7 @@ namespace MainExample
                             }
                         }
 
-                        inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+                        inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}, ПРИМЕЧАНИЕ:{inData.Note}";
                         break;
 
 

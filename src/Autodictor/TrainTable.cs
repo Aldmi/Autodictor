@@ -46,6 +46,8 @@ namespace MainExample
             InitializeComponent();
             ОбновитьДанныеВСписке();
 
+            btnLoad_Click(null, EventArgs.Empty);  //загрузка по умолчанию 
+
 
             CisClient = cisClient;
             if (CisClient.IsConnect)

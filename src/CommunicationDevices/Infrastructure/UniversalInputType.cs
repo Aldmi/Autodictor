@@ -3,28 +3,33 @@ using System.Collections.Generic;
 
 namespace CommunicationDevices.Infrastructure
 {
-    public interface IUniversalInputType
-    {
-        string AddressDevice { get; set; }                    //Адресс устройсва
+    //public interface IUniversalInputType
+    //{
+    //    string AddressDevice { get; set; }                      //Адресс устройсва
 
-        string NumberOfTrain { get; set; }                      //Номер поезда
-        string PathNumber { get; set; }                         //Номер пути
-        string Event { get; set; }                              //Событие (отправление/прибытие)
-        string Stations { get; set; }                           //Станции остановочные.
-        DateTime Time { get; set; }                             //Время
+    //    string NumberOfTrain { get; set; }                      //Номер поезда
+    //    string PathNumber { get; set; }                         //Номер пути
+    //    string Event { get; set; }                              //Событие (отправление/прибытие)
+    //    string Stations { get; set; }                           //Станции Отправления-Назначения.
+    //    string Note { get; set; }                               //Примечание.
+    //    DateTime Time { get; set; }                             //Время
 
-        string Message { get; set; }                          //Сообщение
-    }
+    //    string Message { get; set; }                            //Сообщение
+    //}
 
 
-    public class UniversalInputType : IUniversalInputType
+    public enum TypeTrain {None, Suburb, LongDistance }
+
+    public class UniversalInputType //: IUniversalInputType
     {
         public string AddressDevice { get; set; }                    //Адресс устройсва
 
+        public TypeTrain TypeTrain { get; set; }                     //Приигород или дальнего следования
         public string NumberOfTrain { get; set; }                    //Номер поезда
         public string PathNumber { get; set; }                       //Номер пути
         public string Event { get; set; }                            //Событие (отправление/прибытие)
-        public string Stations { get; set; }                         //Станции остановочные.
+        public string Stations { get; set; }                         //Станции Отправления-Назначения.
+        public string Note { get; set; }                             //Примечание.
         public DateTime Time { get; set; }                           //Время
         public string Message { get; set; }                          //Сообщение
 

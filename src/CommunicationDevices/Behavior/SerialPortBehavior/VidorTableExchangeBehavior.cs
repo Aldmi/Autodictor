@@ -64,6 +64,10 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
                 }
+
+                //Запрос синхронизации времени
+                var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
+                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
             }
 
             await Task.Delay(500, ct);  //задержка для задания периода опроса.    

@@ -130,3 +130,6 @@ D:\Project C#\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Wind
 D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
 D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
 D:\Project C#\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.config
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.dll
+D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.xml
