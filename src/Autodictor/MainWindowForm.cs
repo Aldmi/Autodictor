@@ -46,6 +46,51 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
+      public static string[] Станции = new string[]
+        {
+            "Тверь",
+            "Клин",
+            "Крюково",
+            "Конаково",
+            "Подсолнечная",
+            "Рижская",
+            "Останкино",
+            "Петровско разумовское",
+            "НАТИ",
+            "Моссельмаш",
+            "Ховрино",
+            "Левобережье",
+            "Химки",
+            "Планерная",
+            "Новоподрезково",
+            "Подрезково",
+            "Сходня",
+            "Фирсановская",
+            "Малино",
+            "Алабушево",
+            "Радишево",
+            "Поваровка",
+            "Поварово 1",
+            "Берёзки",
+            "Сенеж",
+            "Головково",
+            "Покровка",
+            "Фроловская",
+            "Стриглово",
+            "Ямуга",
+            "Решетниково",
+            "Черничная",
+            "Завидово",
+            "Московское море",
+            "Редкино",
+            "Межево",
+            "Кузьминка",
+            "Чуприяновка",
+            "Лазурная",
+            "Путепроводная",
+            "Конаковский мох",
+            "Донховка",
+        };
         private bool РазрешениеРаботы = false;
 
         static public SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
@@ -70,7 +115,7 @@ namespace MainExample
         static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
-        public static int ProgressLoadMainList { get; set; }
+        public int ProgressLoadMainList { get; set; }
 
 
         // Конструктор
@@ -162,6 +207,8 @@ namespace MainExample
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
         private void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
+            ProgressLoadMainList = progressBar.Minimum;
+            progressBar.Value = progressBar.Minimum;
             btnОбновитьСписок.Enabled= false;
             backgroundWorker1.RunWorkerAsync();
         }
@@ -395,6 +442,34 @@ namespace MainExample
                                                                 НаличиеВШаблонеНумерацииСостава = true;
                                                                 break;
 
+
+                                                                case "СТАНЦИИ":
+                                                                    if (Config.Примечание.Contains("Со всеми остановками"))
+                                                                    {
+                                                                        if (Program.FilesFolder.Contains("СоВсемиОстановками"))
+                                                                            МассивЗвуковыхСообщений.Add("СоВсемиОстановками");
+                                                                    }
+                                                                    else if (Config.Примечание.Contains("С остановк"))
+                                                                    {
+                                                                        if (Program.FilesFolder.Contains("СОстановками"))
+                                                                            МассивЗвуковыхСообщений.Add("СОстановками");
+
+                                                                        foreach (var Станция in MainWindowForm.Станции)
+                                                                            if (Config.Примечание.Contains(Станция))
+                                                                                if (Program.FilesFolder.Contains(Станция))
+                                                                                    МассивЗвуковыхСообщений.Add(Станция);
+                                                                    }
+                                                                    else if (Config.Примечание.Contains("Кроме"))
+                                                                    {
+                                                                        if (Program.FilesFolder.Contains("СОстановкамиКроме"))
+                                                                            МассивЗвуковыхСообщений.Add("СОстановкамиКроме");
+
+                                                                        foreach (var Станция in MainWindowForm.Станции)
+                                                                            if (Config.Примечание.Contains(Станция))
+                                                                                if (Program.FilesFolder.Contains(Станция))
+                                                                                    МассивЗвуковыхСообщений.Add(Станция);
+                                                                    }
+                                                                    break;
                                                             default:
                                                                 if (Program.FilesFolder.Contains(шаблон))
                                                                     МассивЗвуковыхСообщений.Add(шаблон);
@@ -793,12 +868,6 @@ namespace MainExample
             }
             #endregion
 
-
-            var hh= ProgressLoadMainList;
-           
-
-
-
             SoundRecords.OrderBy(key => key.Value);
         }
 
@@ -1033,14 +1102,25 @@ namespace MainExample
                                         if ((Данные.БитыАктивностиПолей & 0x04) == 0x04)
                                         {
                                             //ОЧИСТИТЬ
-                                            if ((DateTime.Now >= Данные.ВремяПрибытия.AddMinutes(0) &&
-                                                 (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(10))))
+                                            if ((DateTime.Now >= Данные.ВремяПрибытия.AddMinutes(10) &&
+                                                 (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(10.02))))
                                             {
                                                 if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
                                                 {
                                                     //  Debug.WriteLine(
                                                     //      $"ОЧИСТИТЬ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
                                                     Данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                                    Данные.НомерПути = 0;
+                                                    Данные.НазванияТабло = null;
+                                                    SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList().ForEach(
+                                                        keyValuePair =>
+                                                        {
+                                                            SoundRecord новыеДанные = keyValuePair.Value;
+                                                            новыеДанные.НомерПути = 0;
+                                                            новыеДанные.НазванияТабло = null;
+                                                            SoundRecords[keyValuePair.Key]= новыеДанные;
+                                                        }); 
+
                                                     SendOnPathTable(Данные);
                                                 }
                                             }
@@ -1057,6 +1137,18 @@ namespace MainExample
                                                     //  Debug.WriteLine(
                                                     //    $"ОЧИСТИТЬ ОТПРАВЛЕНИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
                                                     Данные.СостояниеОтображения = TableRecordStatus.Очистка;
+
+                                                    Данные.НомерПути = 0;
+                                                    Данные.НазванияТабло = null;
+                                                    SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList().ForEach(
+                                                        keyValuePair =>
+                                                        {
+                                                            SoundRecord новыеДанные = keyValuePair.Value;
+                                                            новыеДанные.НомерПути = 0;
+                                                            новыеДанные.НазванияТабло = null;
+                                                            SoundRecords[keyValuePair.Key] = новыеДанные;
+                                                        });
+
                                                     SendOnPathTable(Данные);
                                                 }
                                             }
@@ -1075,6 +1167,26 @@ namespace MainExample
                         Console.WriteLine(ex.Message);
                     }
                 }
+            }
+        }
+
+
+        void ChangeLinesOnTemplate(SoundRecord Данные)
+        {
+            var equalLine = SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList();  //строки для такого же поезда
+            foreach (var keyValuePair in equalLine)
+            {
+                var ВременнаяПара = keyValuePair;
+                string Ключ = ВременнаяПара.Key;
+                SoundRecord НовыеДанные = ВременнаяПара.Value;
+
+            
+                //TODO: инициализировать все поля
+                НовыеДанные.НомерПути = Данные.НомерПути;
+                
+             
+
+                SoundRecords[Ключ] = НовыеДанные;
             }
         }
 

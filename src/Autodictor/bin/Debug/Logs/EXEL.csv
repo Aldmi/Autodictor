@@ -1,4 +1,5 @@
-2016/12/12 03:43:02.221|Warn|РћР‘РњР•Рќ РЎ Р¦РРЎ. РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р¦РРЎ. РћРЁРР‘РљРђ: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: РџРѕРґРєР»СЋС‡РµРЅРёРµ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ, С‚.Рє. РєРѕРЅРµС‡РЅС‹Р№ РєРѕРјРїСЊСЋС‚РµСЂ РѕС‚РІРµСЂРі Р·Р°РїСЂРѕСЃ РЅР° РїРѕРґРєР»СЋС‡РµРЅРёРµ 127.0.0.1:50000
+time;message;level
+2016-12-13 23:13:23.2977;"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -14,8 +15,8 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Project C#\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
-2016/12/12 03:43:09.026|Warn|РћР‘РњР•Рќ РЎ Р¦РРЎ. РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р¦РРЎ. РћРЁРР‘РљРђ: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: РџРѕРґРєР»СЋС‡РµРЅРёРµ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ, С‚.Рє. РєРѕРЅРµС‡РЅС‹Р№ РєРѕРјРїСЊСЋС‚РµСЂ РѕС‚РІРµСЂРі Р·Р°РїСЂРѕСЃ РЅР° РїРѕРґРєР»СЋС‡РµРЅРёРµ 127.0.0.1:50000
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()";Warn
+2016-12-13 23:13:28.0860;"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -31,9 +32,9 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Project C#\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
-2016/12/12 03:43:09.042|Warn|РћР‘РњР•Рќ Р”РђРќРќР«РњР РЎ PC РўРђР‘Р›Рћ. РљРѕРЅРµС‡РЅР°СЏ С‚РѕС‡РєР° РЅРµ РЅР°Р№РґРµРЅРЅР°:  http://localhost:8000/Service
-2016/12/12 03:43:12.287|Warn|РћР‘РњР•Рќ РЎ Р¦РРЎ. РћС€РёР±РєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р¦РРЎ. РћРЁРР‘РљРђ: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: РџРѕРґРєР»СЋС‡РµРЅРёРµ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ, С‚.Рє. РєРѕРЅРµС‡РЅС‹Р№ РєРѕРјРїСЊСЋС‚РµСЂ РѕС‚РІРµСЂРі Р·Р°РїСЂРѕСЃ РЅР° РїРѕРґРєР»СЋС‡РµРЅРёРµ 127.0.0.1:50000
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()";Warn
+2016-12-13 23:13:28.1490;ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service;Warn
+2016-12-13 23:13:33.1013;"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -49,4 +50,4 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Project C#\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()";Warn

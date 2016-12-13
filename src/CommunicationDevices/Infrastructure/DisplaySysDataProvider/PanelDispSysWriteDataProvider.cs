@@ -65,7 +65,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
 
                 // %30 - синхр часов
                 // [3..8] - 5байт (hex) время в сек.   
-                var timeNow = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
+                var timeNow = DateTime.Now.Hour.ToString("D2") + DateTime.Now.Minute.ToString("D2") + DateTime.Now.Second.ToString("D2");
                 format1 = "%30";
                 message1 = $"{timeNow}";
                 result1 = format1 + message1;

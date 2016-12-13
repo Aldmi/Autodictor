@@ -1,65 +1,70 @@
-2016/12/11 15:34:13.533|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:34:23.553|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:34:33.549|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:34:43.568|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:34:53.543|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:35:03.553|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:35:13.554|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:35:23.567|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:35:33.566|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:35:43.582|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:35:53.598|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:36:03.597|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:36:13.613|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:36:23.611|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:36:33.625|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:36:43.628|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:36:53.649|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:37:03.662|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:37:13.658|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:37:23.670|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:37:33.685|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:37:43.693|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:37:53.686|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:38:03.703|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:38:13.707|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:38:23.715|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:38:33.757|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:38:43.757|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:38:53.781|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:39:03.752|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:39:13.792|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:39:23.764|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:39:33.777|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:39:43.776|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:39:53.792|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:40:03.808|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:40:13.807|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:40:23.821|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:40:33.822|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:40:43.841|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:40:53.863|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:41:03.850|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:41:13.873|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:41:23.866|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:41:33.883|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:41:43.877|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:41:53.904|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:42:03.901|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:42:13.912|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:42:23.933|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:42:33.928|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:42:43.943|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:42:53.937|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:43:03.963|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:43:13.956|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:43:23.972|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:43:33.975|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:43:43.989|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:43:53.988|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:44:04.001|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:44:14.017|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:44:24.022|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:44:34.028|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:44:44.035|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/11 15:44:54.056|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/13 23:08:25.952|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
+2016/12/13 23:08:30.964|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
+2016/12/13 23:08:30.987|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/13 23:13:23.297|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
+2016/12/13 23:13:28.086|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
+2016/12/13 23:13:28.149|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service

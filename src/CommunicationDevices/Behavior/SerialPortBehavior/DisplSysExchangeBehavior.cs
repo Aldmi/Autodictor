@@ -63,6 +63,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
             var writeProvider = new PanelDispSysWriteDataProvider { InputData = LastSendData };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+            await Task.Delay(1000, ct);  //задержка для задания периода опроса.  
         }
 
         #endregion

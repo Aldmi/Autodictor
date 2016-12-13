@@ -86,3 +86,6 @@ D:\Project C#\Autodictor\src\Communication\bin\Debug\NLog.xml
 D:\Project C#\Autodictor\src\Communication\obj\Debug\Communication.csprojResolveAssemblyReference.cache
 D:\Project C#\Autodictor\src\Communication\obj\Debug\Communication.dll
 D:\Project C#\Autodictor\src\Communication\obj\Debug\Communication.pdb
+D:\Git\Autodictor\src\Communication\bin\Debug\NLog.config
+D:\Git\Autodictor\src\Communication\bin\Debug\NLog.dll
+D:\Git\Autodictor\src\Communication\bin\Debug\NLog.xml

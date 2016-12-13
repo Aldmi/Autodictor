@@ -135,6 +135,113 @@ namespace MainExample
                     rTB_Сообщение.SelectionColor = Color.Red;
                 }
 
+
+                lB_ПоСтанциям.Items.Clear();
+                lB_СписокСтанций.Items.Clear();
+                rB_ПоРасписанию.Checked = false;
+                rB_ПоСтанциям.Checked = false;
+                rB_КромеСтанций.Checked = false;
+                rB_СоВсемиОстановками.Checked = false;
+
+                if (this.Record.ОтображениеВТаблицах == 0x02)
+                {
+                    string Примечание = this.Record.Примечание;
+                    if (Примечание.Contains("С остановк"))
+                    {
+                        rB_ПоСтанциям.Checked = true;
+                        foreach (var Станция in MainWindowForm.Станции)
+                        {
+                            if (Примечание.Contains(Станция))
+                                lB_ПоСтанциям.Items.Add(Станция);
+                            else
+                                lB_СписокСтанций.Items.Add(Станция);
+                        }
+
+                        lB_СписокСтанций.Enabled = true;
+                        lB_ПоСтанциям.Enabled = true;
+                        button2.Enabled = true;
+                        button3.Enabled = true;
+                        button4.Enabled = true;
+                        button5.Enabled = true;
+                        button6.Enabled = true;
+                    }
+                    else if (Примечание.Contains("Со всеми остановками"))
+                    {
+                        rB_СоВсемиОстановками.Checked = true;
+                        foreach (var Станция in MainWindowForm.Станции)
+                            lB_ПоСтанциям.Items.Add(Станция);
+
+                        lB_СписокСтанций.Enabled = true;
+                        lB_ПоСтанциям.Enabled = true;
+                        button2.Enabled = true;
+                        button3.Enabled = true;
+                        button4.Enabled = true;
+                        button5.Enabled = true;
+                        button6.Enabled = true;
+                    }
+                    else if (Примечание.Contains("Кроме"))
+                    {
+                        rB_КромеСтанций.Checked = true;
+                        foreach (var Станция in MainWindowForm.Станции)
+                        {
+                            if (Примечание.Contains(Станция))
+                                lB_ПоСтанциям.Items.Add(Станция);
+                            else
+                                lB_СписокСтанций.Items.Add(Станция);
+                        }
+
+                        lB_СписокСтанций.Enabled = true;
+                        lB_ПоСтанциям.Enabled = true;
+                        button2.Enabled = true;
+                        button3.Enabled = true;
+                        button4.Enabled = true;
+                        button5.Enabled = true;
+                        button6.Enabled = true;
+                    }
+                    else
+                    {
+                        rB_ПоРасписанию.Checked = true;
+                        foreach (var Станция in MainWindowForm.Станции)
+                            lB_СписокСтанций.Items.Add(Станция);
+
+                        lB_СписокСтанций.Enabled = false;
+                        lB_ПоСтанциям.Enabled = false;
+                        button2.Enabled = false;
+                        button3.Enabled = false;
+                        button4.Enabled = false;
+                        button5.Enabled = false;
+                        button6.Enabled = false;
+                    }
+                }
+
+                
+                if (this.Record.ОтображениеВТаблицах == 0x02)
+                {
+                    if (rB_СоВсемиОстановками.Checked == true)
+                    {
+                        rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
+                    }
+                    else if (rB_ПоСтанциям.Checked == true)
+                    {
+                        rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
+                        foreach (var Станция in MainWindowForm.Станции)
+                            if (lB_ПоСтанциям.Items.Contains(Станция))
+                            {
+                                rTB_Сообщение.AppendText(Станция + " ");
+                            }
+                    }
+                    else if (rB_КромеСтанций.Checked == true)
+                    {
+                        rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
+                        foreach (var Станция in MainWindowForm.Станции)
+                            if (lB_ПоСтанциям.Items.Contains(Станция))
+                            {
+                                rTB_Сообщение.AppendText(Станция + " ");
+                            }
+                    }
+                }
+
+
                 rTB_Сообщение.SelectionLength = 0;
             }
 
@@ -216,5 +323,114 @@ namespace MainExample
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (lB_СписокСтанций.SelectedIndex != -1)
+            {
+                string Станция = (string)lB_СписокСтанций.SelectedItem;
+                lB_СписокСтанций.Items.Remove(Станция);
+                lB_ПоСтанциям.Items.Add(Станция);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            lB_СписокСтанций.Items.Clear();
+            foreach (var Станция in MainWindowForm.Станции)
+                lB_ПоСтанциям.Items.Add(Станция);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (lB_ПоСтанциям.SelectedIndex != -1)
+            {
+                string Станция = (string)lB_ПоСтанциям.SelectedItem;
+                lB_ПоСтанциям.Items.Remove(Станция);
+                lB_СписокСтанций.Items.Add(Станция);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            lB_ПоСтанциям.Items.Clear();
+            foreach (var Станция in MainWindowForm.Станции)
+                lB_СписокСтанций.Items.Add(Станция);
+        }
+
+        private void rB_ПоСтанциям_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((rB_ПоСтанциям.Checked == true) || (rB_КромеСтанций.Checked == true) || (rB_СоВсемиОстановками.Checked == true))
+            {
+                lB_СписокСтанций.Enabled = true;
+                lB_ПоСтанциям.Enabled = true;
+                button2.Enabled = true;
+                button3.Enabled = true;
+                button4.Enabled = true;
+                button5.Enabled = true;
+                button6.Enabled = true;
+            }
+            else
+            {
+                lB_СписокСтанций.Enabled = false;
+                lB_ПоСтанциям.Enabled = false;
+                button2.Enabled = false;
+                button3.Enabled = false;
+                button4.Enabled = false;
+                button5.Enabled = false;
+                button6.Enabled = false;
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            bool ПерваяСтанция = true;
+
+            if (this.Record.ОтображениеВТаблицах == 0x02)
+            {
+                string Примечание = "";
+                if (rB_СоВсемиОстановками.Checked == true)
+                {
+                    Примечание = "Со всеми остановками";
+                }
+                else if (rB_ПоСтанциям.Checked == true)
+                {
+                    Примечание = "С остановками: ";
+                    foreach (var Станция in MainWindowForm.Станции)
+                        if (lB_ПоСтанциям.Items.Contains(Станция))
+                        {
+                            if (ПерваяСтанция == true)
+                                ПерваяСтанция = false;
+                            else
+                                Примечание += ", ";
+
+                            Примечание += Станция;
+                        }
+                }
+                else if (rB_КромеСтанций.Checked == true)
+                {
+                    Примечание = "Кроме: ";
+                    foreach (var Станция in MainWindowForm.Станции)
+                        if (lB_ПоСтанциям.Items.Contains(Станция))
+                        {
+                            if (ПерваяСтанция == true)
+                                ПерваяСтанция = false;
+                            else
+                                Примечание += ", ";
+
+                            Примечание += Станция;
+                        }
+                }
+
+                this.Record.Примечание = Примечание;
+            }
+
+            ОбновитьТекстВОкне();
+        }
     }
 }
+
+
+
+    
+

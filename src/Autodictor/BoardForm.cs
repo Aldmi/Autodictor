@@ -117,8 +117,8 @@ namespace MainExample
                         inData.PathNumber = "2";
                         inData.Event = "ПРИБ.";
                         inData.Time = new DateTime(2016, 11, 30, 15, 10, 00);
-                        inData.Stations = "Табло временно не работает!!!";
-                        inData.Note = "Кроме: Станции 1, Станции 2, Станции 3, Станции 4, Станции 5";
+                        inData.Stations = "табло временно не работает";
+                        inData.Note = "с остановками:  Химки, Ласточка, Строгино  ";
                         inData.TypeTrain= TypeTrain.Suburb;
 
 

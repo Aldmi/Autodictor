@@ -56,6 +56,19 @@
             this.cB_ПрименитьКоВсем = new System.Windows.Forms.CheckBox();
             this.comboBox_displayTable = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rB_ПоРасписанию = new System.Windows.Forms.RadioButton();
+            this.rB_ПоСтанциям = new System.Windows.Forms.RadioButton();
+            this.rB_КромеСтанций = new System.Windows.Forms.RadioButton();
+            this.lB_ПоСтанциям = new System.Windows.Forms.ListBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.lB_СписокСтанций = new System.Windows.Forms.ListBox();
+            this.rB_СоВсемиОстановками = new System.Windows.Forms.RadioButton();
+            this.button6 = new System.Windows.Forms.Button();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -415,6 +428,153 @@
             this.label6.Size = new System.Drawing.Size(137, 28);
             this.label6.TabIndex = 17;
             this.label6.Text = "Список табло";
+          // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button6);
+            this.groupBox1.Controls.Add(this.rB_СоВсемиОстановками);
+            this.groupBox1.Controls.Add(this.lB_СписокСтанций);
+            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.button4);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.lB_ПоСтанциям);
+            this.groupBox1.Controls.Add(this.rB_КромеСтанций);
+            this.groupBox1.Controls.Add(this.rB_ПоСтанциям);
+            this.groupBox1.Controls.Add(this.rB_ПоРасписанию);
+            this.groupBox1.Location = new System.Drawing.Point(405, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(314, 556);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Движение с остановками";
+            // 
+            // rB_ПоРасписанию
+            // 
+            this.rB_ПоРасписанию.AutoSize = true;
+            this.rB_ПоРасписанию.Checked = true;
+            this.rB_ПоРасписанию.Location = new System.Drawing.Point(17, 20);
+            this.rB_ПоРасписанию.Name = "rB_ПоРасписанию";
+            this.rB_ПоРасписанию.Size = new System.Drawing.Size(97, 17);
+            this.rB_ПоРасписанию.TabIndex = 0;
+            this.rB_ПоРасписанию.TabStop = true;
+            this.rB_ПоРасписанию.Text = "не озвучивать";
+            this.rB_ПоРасписанию.UseVisualStyleBackColor = true;
+            this.rB_ПоРасписанию.CheckedChanged += new System.EventHandler(this.rB_ПоСтанциям_CheckedChanged);
+            // 
+            // rB_ПоСтанциям
+            // 
+            this.rB_ПоСтанциям.AutoSize = true;
+            this.rB_ПоСтанциям.Location = new System.Drawing.Point(17, 41);
+            this.rB_ПоСтанциям.Name = "rB_ПоСтанциям";
+            this.rB_ПоСтанциям.Size = new System.Drawing.Size(143, 17);
+            this.rB_ПоСтанциям.TabIndex = 1;
+            this.rB_ПоСтанциям.TabStop = true;
+            this.rB_ПоСтанциям.Text = "по станциям из списка";
+            this.rB_ПоСтанциям.UseVisualStyleBackColor = true;
+            this.rB_ПоСтанциям.CheckedChanged += new System.EventHandler(this.rB_ПоСтанциям_CheckedChanged);
+            // 
+            // rB_КромеСтанций
+            // 
+            this.rB_КромеСтанций.AutoSize = true;
+            this.rB_КромеСтанций.Location = new System.Drawing.Point(17, 61);
+            this.rB_КромеСтанций.Name = "rB_КромеСтанций";
+            this.rB_КромеСтанций.Size = new System.Drawing.Size(155, 17);
+            this.rB_КромеСтанций.TabIndex = 2;
+            this.rB_КромеСтанций.TabStop = true;
+            this.rB_КромеСтанций.Text = "кроме станций из списка";
+            this.rB_КромеСтанций.UseVisualStyleBackColor = true;
+            this.rB_КромеСтанций.CheckedChanged += new System.EventHandler(this.rB_ПоСтанциям_CheckedChanged);
+            // 
+            // lB_ПоСтанциям
+            // 
+            this.lB_ПоСтанциям.Enabled = false;
+            this.lB_ПоСтанциям.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lB_ПоСтанциям.FormattingEnabled = true;
+            this.lB_ПоСтанциям.ItemHeight = 20;
+            this.lB_ПоСтанциям.Location = new System.Drawing.Point(6, 115);
+            this.lB_ПоСтанциям.Name = "lB_ПоСтанциям";
+            this.lB_ПоСтанциям.Size = new System.Drawing.Size(302, 164);
+            this.lB_ПоСтанциям.Sorted = true;
+            this.lB_ПоСтанциям.TabIndex = 3;
+            // 
+            // button2
+            // 
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(39, 285);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(52, 29);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "^^";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(97, 285);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(52, 29);
+            this.button3.TabIndex = 14;
+            this.button3.Text = "^";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(155, 285);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(52, 29);
+            this.button4.TabIndex = 15;
+            this.button4.Text = "v";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Enabled = false;
+            this.button5.Location = new System.Drawing.Point(213, 285);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(52, 29);
+            this.button5.TabIndex = 16;
+            this.button5.Text = "vv";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // lB_СписокСтанций
+            // 
+            this.lB_СписокСтанций.Enabled = false;
+            this.lB_СписокСтанций.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lB_СписокСтанций.FormattingEnabled = true;
+            this.lB_СписокСтанций.ItemHeight = 20;
+            this.lB_СписокСтанций.Location = new System.Drawing.Point(6, 321);
+            this.lB_СписокСтанций.Name = "lB_СписокСтанций";
+            this.lB_СписокСтанций.Size = new System.Drawing.Size(302, 184);
+            this.lB_СписокСтанций.Sorted = true;
+            this.lB_СписокСтанций.TabIndex = 17;
+            // 
+            // rB_СоВсемиОстановками
+            // 
+            this.rB_СоВсемиОстановками.AutoSize = true;
+            this.rB_СоВсемиОстановками.Location = new System.Drawing.Point(17, 82);
+            this.rB_СоВсемиОстановками.Name = "rB_СоВсемиОстановками";
+            this.rB_СоВсемиОстановками.Size = new System.Drawing.Size(142, 17);
+            this.rB_СоВсемиОстановками.TabIndex = 18;
+            this.rB_СоВсемиОстановками.TabStop = true;
+            this.rB_СоВсемиОстановками.Text = "со всеми остановками";
+            this.rB_СоВсемиОстановками.UseVisualStyleBackColor = true;
+            this.rB_СоВсемиОстановками.CheckedChanged += new System.EventHandler(this.rB_ПоСтанциям_CheckedChanged);
+            // 
+            // button6
+            // 
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button6.Location = new System.Drawing.Point(6, 518);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(302, 38);
+            this.button6.TabIndex = 17;
+            this.button6.Text = "Подтвердить изменения";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // КарточкаДвиженияПоезда
             // 
@@ -451,6 +611,9 @@
             this.gB_Стоянка.PerformLayout();
             this.gB_Отправление.ResumeLayout(false);
             this.gB_Отправление.PerformLayout();
+
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -486,5 +649,17 @@
         private System.Windows.Forms.CheckBox cB_ПрименитьКоВсем;
         private System.Windows.Forms.ComboBox comboBox_displayTable;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ListBox lB_СписокСтанций;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListBox lB_ПоСтанциям;
+        private System.Windows.Forms.RadioButton rB_КромеСтанций;
+        private System.Windows.Forms.RadioButton rB_ПоСтанциям;
+        private System.Windows.Forms.RadioButton rB_ПоРасписанию;
+        private System.Windows.Forms.RadioButton rB_СоВсемиОстановками;
+        private System.Windows.Forms.Button button6;
     }
 }

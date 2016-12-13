@@ -34,11 +34,11 @@
 	 <DeviceSp Id="14" Name="Vidor" Port="2" Address="9" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 9." Binding="ToPath:9"/>
 	 <DeviceSp Id="15" Name="Vidor" Port="2" Address="19" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 9." Binding="ToPath:9"/>
 	 
-	 <DeviceSp Id="16" Name="VidorTable8" Port="2" Address="45" TimeRespone="600" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:2,4,6,8,10,12,14"/>
+	 <DeviceSp Id="16" Name="VidorTable8" Port="2" Address="45" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:2,4,6,8,10,12,14"/>
   </DevicesWithSP>
 
   <DevicesWithPC>
-	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="1000" Description="Панель на пути тест" Binding="ToPath:1"/>
+	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1"/>
   </DevicesWithPC>
 </Root>
 
