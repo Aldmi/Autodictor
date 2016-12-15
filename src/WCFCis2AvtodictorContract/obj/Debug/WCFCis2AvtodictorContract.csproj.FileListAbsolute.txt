@@ -50,3 +50,4 @@ D:\Project C#\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2Avtodict
 D:\Project C#\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
 D:\Project C#\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
 D:\Project C#\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache

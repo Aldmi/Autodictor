@@ -12,10 +12,17 @@ namespace MainExample.Extension
         /// <param name="doit">Делегат с некоторым действием</param>
         public static void InvokeIfNeeded(this Control control, Action doit)
         {
-            if (control.InvokeRequired)
-                control.Invoke(doit);
-            else
-                doit();
+            try
+            {
+                if (control.InvokeRequired)
+                    control.Invoke(doit);
+                else
+                    doit();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
 

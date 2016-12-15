@@ -1,4 +1,4 @@
-2016/12/13 23:08:06.130|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+2016/12/14 18:36:28.191|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -14,8 +14,8 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
-2016/12/13 23:08:10.928|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:36:33.125|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -31,9 +31,9 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
-2016/12/13 23:08:11.021|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
-2016/12/13 23:08:15.935|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:36:34.221|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:36:38.193|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -49,8 +49,8 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
-2016/12/13 23:08:20.940|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:36:44.770|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
    at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
    --- End of inner exception stack trace ---
@@ -66,5 +66,655 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
-   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext()
-2016/12/13 23:08:20.981|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:36:44.799|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:36:50.932|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:36:54.352|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:36:54.476|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:37:22.277|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:37:27.045|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:37:27.094|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:37:27.399|Fatal|Исключение основного UI потока Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+2016/12/14 18:37:43.073|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:37:50.110|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:37:51.184|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:37:53.964|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:37:58.976|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:37:58.993|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:09.823|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:10.899|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:38:11.847|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:16.869|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:21.619|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:38:22.456|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:27.386|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:31.548|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:38:32.385|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:37.382|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:43.168|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:38:44.214|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:47.471|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:51.587|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:38:52.491|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:38:57.421|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:39:01.609|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:39:03.511|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:45:44.225|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:45:48.893|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:45:49.208|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:47:43.976|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:47:48.580|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:47:48.900|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:47:53.580|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:47:58.599|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:47:58.794|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:48:03.591|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:08.591|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:08.795|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:48:13.656|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:18.681|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:18.784|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:48:23.623|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:28.641|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:28.785|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:48:33.639|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:38.665|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:38.772|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:48:46.022|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:48.795|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service
+2016/12/14 18:48:51.074|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:56.635|Warn|ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: System.ServiceModel.EndpointNotFoundException: There was no endpoint listening at http://localhost:50000/Service/Cis that could accept the message. This is often caused by an incorrect address or SOAP action. See InnerException, if present, for more details. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:50000
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.ClientWCF.CisClient.<OnTimedEvent>d__45.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\ClientWCF\CisClient.cs:line 139
+2016/12/14 18:48:58.961|Warn|ОБМЕН ДАННЫМИ С PC ТАБЛО. Конечная точка не найденна:  http://localhost:8000/Service

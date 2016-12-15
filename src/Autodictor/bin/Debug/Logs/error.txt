@@ -1,0 +1,206 @@
+2016/12/14 18:37:27.399|Fatal|Исключение основного UI потока Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+2016/12/14 18:51:11.453|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 16:38:18.787|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 17:36:58.692|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 17:38:14.279|Fatal|Исключение из не UI потока Value of '25' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:38:14.350|Error|ОБМЕН ДАННЫМИ С PC ТАБЛО. Ошибка отправки на конечную точку: http://localhost:8000/Service  ОШИБКА: System.ServiceModel.CommunicationException: An error (The request was aborted: The request was canceled.) occurred while transmitting data over the HTTP channel. ---> System.Net.WebException: The request was aborted: The request was canceled.
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.Behavior.PcBehavior.ExhangePcBehavior.<SendDisplayData>d__58.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\PcBehavior\ExhangePcBehavior.cs:line 216
+2016/12/15 17:38:15.694|Fatal|Исключение из не UI потока Value of '26' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:38:16.585|Fatal|Исключение из не UI потока Value of '27' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:38:17.526|Fatal|Исключение из не UI потока Value of '28' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:38:17.880|Fatal|Исключение из не UI потока Value of '29' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:38:17.880|Error|ОБМЕН ДАННЫМИ С PC ТАБЛО. Ошибка отправки на конечную точку: http://localhost:8000/Service  ОШИБКА: System.ServiceModel.CommunicationException: An error (The request was aborted: The request was canceled.) occurred while transmitting data over the HTTP channel. ---> System.Net.WebException: The request was aborted: The request was canceled.
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.Behavior.PcBehavior.ExhangePcBehavior.<SendDisplayData>d__58.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\PcBehavior\ExhangePcBehavior.cs:line 216
+2016/12/15 17:38:18.217|Fatal|Исключение из не UI потока Value of '30' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:39:49.619|Fatal|Исключение из не UI потока Value of '25' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:39:51.823|Fatal|Исключение из не UI потока Value of '26' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:40:03.511|Fatal|Исключение из не UI потока Value of '27' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:40:36.299|Error|ОБМЕН ДАННЫМИ С PC ТАБЛО. Ошибка отправки на конечную точку: http://localhost:8000/Service  ОШИБКА: System.ServiceModel.CommunicationException: An error (The request was aborted: The request was canceled.) occurred while transmitting data over the HTTP channel. ---> System.Net.WebException: The request was aborted: The request was canceled.
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.Behavior.PcBehavior.ExhangePcBehavior.<SendDisplayData>d__58.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\PcBehavior\ExhangePcBehavior.cs:line 216
+2016/12/15 17:40:36.364|Error|ОБМЕН ДАННЫМИ С PC ТАБЛО. Ошибка отправки на конечную точку: http://localhost:8000/Service  ОШИБКА: System.ServiceModel.CommunicationException: An error (The request was aborted: The request was canceled.) occurred while transmitting data over the HTTP channel. ---> System.Net.WebException: The request was aborted: The request was canceled.
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStreamAsyncResult.CompleteGetRequestStream(IAsyncResult result)
+   --- End of inner exception stack trace ---
+   at System.Runtime.AsyncResult.End[TAsyncResult](IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.SendAsyncResult.End(SendAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannel.EndCall(String action, Object[] outs, IAsyncResult result)
+   at System.ServiceModel.Channels.ServiceChannelProxy.TaskCreator.<>c__DisplayClass7_0`1.<CreateGenericTask>b__0(IAsyncResult asyncResult)
+   at System.Threading.Tasks.TaskFactory`1.FromAsyncCoreLogic(IAsyncResult iar, Func`2 endFunction, Action`1 endAction, Task`1 promise, Boolean requiresSynchronization)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at CommunicationDevices.Behavior.PcBehavior.ExhangePcBehavior.<SendDisplayData>d__58.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\PcBehavior\ExhangePcBehavior.cs:line 216
+2016/12/15 17:40:44.399|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 17:43:07.150|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 17:44:13.874|Fatal|Исключение из не UI потока Value of '25' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:14.876|Fatal|Исключение из не UI потока Value of '26' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:15.955|Fatal|Исключение из не UI потока Value of '27' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:16.549|Fatal|Исключение из не UI потока Value of '28' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:17.301|Fatal|Исключение из не UI потока Value of '29' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:17.733|Fatal|Исключение из не UI потока Value of '30' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:18.196|Fatal|Исключение из не UI потока Value of '31' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:25.964|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 17:44:46.342|Fatal|Исключение из не UI потока Value of '25' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:46.342|Fatal|Исключение из не UI потока Value of '26' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:46.342|Fatal|Исключение из не UI потока Value of '27' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:46.342|Fatal|Исключение из не UI потока Value of '28' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:46.342|Fatal|Исключение из не UI потока Value of '29' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:46.342|Fatal|Исключение из не UI потока Value of '30' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:46.349|Fatal|Исключение из не UI потока Value of '31' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.317|Fatal|Исключение из не UI потока Value of '25' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.317|Fatal|Исключение из не UI потока Value of '26' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.317|Fatal|Исключение из не UI потока Value of '27' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.317|Fatal|Исключение из не UI потока Value of '28' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.317|Fatal|Исключение из не UI потока Value of '29' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.323|Fatal|Исключение из не UI потока Value of '30' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:53.323|Fatal|Исключение из не UI потока Value of '31' is not valid for 'Value'. 'Value' should be between 'minimum' and 'maximum'.
+Parameter name: Value
+2016/12/15 17:44:56.334|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204
+2016/12/15 18:08:03.974|Error|Ошибка работы с портом: COM2. ОШИБКА: System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at CommunicationDevices.Behavior.SerialPortBehavior.DisplSysExchangeBehavior.<CycleExcangeService>d__1.MoveNext() in D:\Git\Autodictor\src\CommunicationDevices\Behavior\SerialPortBehavior\DisplSysExchangeBehavior.cs:line 42
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Communication.SerialPort.MasterSerialPort.<RunExchange>d__38.MoveNext() in D:\Git\Autodictor\src\Communication\SerialPort\MasterSerialPort.cs:line 204

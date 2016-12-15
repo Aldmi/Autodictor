@@ -65,10 +65,13 @@ namespace MainExample
 
                     await Task.Delay(300);
 
-                    dataGridViewBoards.InvokeIfNeeded(() =>
+                    if (!IsDisposed)                             //после Delay форма может быть закрыта
                     {
-                        dataGridViewBoards[7, row].Value = Resources.ping_NO;
-                    });
+                        dataGridViewBoards.InvokeIfNeeded(() =>
+                        {
+                            dataGridViewBoards[7, row].Value = Resources.ping_NO;
+                        });
+                    }
                 });
                 DispouseIsDataExchangeSuccessChangeRx.Add(disp);
 
@@ -222,7 +225,7 @@ namespace MainExample
         }
 
 
-        protected override void OnClosed(EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
             if (MyBoardForm == this)
                 MyBoardForm = null;
@@ -233,7 +236,7 @@ namespace MainExample
 
             dataGridViewBoards.CellClick -= dataGridView1_CellClick;
 
-            base.OnClosed(e);
+            base.OnClosing(e);
         }
     }
 }

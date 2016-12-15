@@ -57,85 +57,15 @@ namespace MainExample
                 string Text;
 
                 string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
-                                                                    "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути", 
+                                                                    "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути",
                                                                     "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути" };
 
                 string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация поезда с головы состава", "Нумерация поезда с хвоста состава" };
 
                 List<int> УказательВыделенныхФрагментов = new List<int>();
 
-                foreach (string шаблон in Record.ИменаФайлов)
-                {
-                    switch (шаблон)
-                    {
-                        case "НОМЕР ПУТИ":
-                            if ((Record.НомерПути >= 1) && (Record.НомерПути <= 14))
-                            {
-                                УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
 
-                                Text = "";
-                                if ((Record.ШаблонВоспроизведенияПути == 0) || (Record.ШаблонВоспроизведенияПути == 1))
-                                    Text = НазваниеФайловПутей[Record.НомерПути];
-                                else if ((Record.ШаблонВоспроизведенияПути == 2) || (Record.ШаблонВоспроизведенияПути == 3))
-                                    Text = НазваниеФайловПутей[Record.НомерПути + (Record.ШаблонВоспроизведенияПути - 1) * 14];
-
-                                УказательВыделенныхФрагментов.Add(Text.Length);
-                                rTB_Сообщение.AppendText(Text + " ");
-                            }
-                            break;
-
-                        case "ВРЕМЯ ПРИБЫТИЯ":
-                            rTB_Сообщение.Text += "Время прибытия: ";
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            Text = Record.ВремяПрибытия.ToString("HH:mm");
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                            break;
-
-                        case "ВРЕМЯ СТОЯНКИ":
-                            rTB_Сообщение.Text += "Стоянка: ";
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            Text = Record.ВремяСтоянки.ToString() + " минут";
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                            break;
-
-                        case "ВРЕМЯ ОТПРАВЛЕНИЯ":
-                            rTB_Сообщение.ForeColor = Color.Black;
-                            rTB_Сообщение.Text += "Время отправления: ";
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            rTB_Сообщение.ForeColor = Color.Red;
-                            Text = Record.ВремяОтправления.ToString("HH:mm");
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                            break;
-
-
-                        case "НУМЕРАЦИЯ СОСТАВА":
-                            if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
-                            {
-                                УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                                Text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
-                                УказательВыделенныхФрагментов.Add(Text.Length);
-                                rTB_Сообщение.AppendText(Text + " ");
-                            }
-                            break;
-
-
-                        default:
-                            rTB_Сообщение.AppendText(шаблон + " ");
-                            break;
-                    }
-                }
-
-                for (int i = 0; i < УказательВыделенныхФрагментов.Count / 2; i++)
-                {
-                    rTB_Сообщение.SelectionStart = УказательВыделенныхФрагментов[2 * i];
-                    rTB_Сообщение.SelectionLength = УказательВыделенныхФрагментов[2 * i + 1];
-                    rTB_Сообщение.SelectionColor = Color.Red;
-                }
-
-
+                #region Движение по станциям
                 lB_ПоСтанциям.Items.Clear();
                 lB_СписокСтанций.Items.Clear();
                 rB_ПоРасписанию.Checked = false;
@@ -213,43 +143,118 @@ namespace MainExample
                         button6.Enabled = false;
                     }
                 }
+                #endregion
 
-                
-                if (this.Record.ОтображениеВТаблицах == 0x02)
+
+                foreach (string шаблон in Record.ИменаФайлов)
                 {
-                    if (rB_СоВсемиОстановками.Checked == true)
+                    switch (шаблон)
                     {
-                        rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
-                    }
-                    else if (rB_ПоСтанциям.Checked == true)
-                    {
-                        rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
-                        foreach (var Станция in MainWindowForm.Станции)
-                            if (lB_ПоСтанциям.Items.Contains(Станция))
+                        case "НОМЕР ПУТИ":
+                            if ((Record.НомерПути >= 1) && (Record.НомерПути <= 14))
                             {
-                                rTB_Сообщение.AppendText(Станция + " ");
+                                УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+
+                                Text = "";
+                                if ((Record.ШаблонВоспроизведенияПути == 0) || (Record.ШаблонВоспроизведенияПути == 1))
+                                    Text = НазваниеФайловПутей[Record.НомерПути];
+                                else if ((Record.ШаблонВоспроизведенияПути == 2) || (Record.ШаблонВоспроизведенияПути == 3))
+                                    Text = НазваниеФайловПутей[Record.НомерПути + (Record.ШаблонВоспроизведенияПути - 1) * 14];
+
+                                УказательВыделенныхФрагментов.Add(Text.Length);
+                                rTB_Сообщение.AppendText(Text + " ");
                             }
-                    }
-                    else if (rB_КромеСтанций.Checked == true)
-                    {
-                        rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
-                        foreach (var Станция in MainWindowForm.Станции)
-                            if (lB_ПоСтанциям.Items.Contains(Станция))
+                            break;
+
+                        case "ВРЕМЯ ПРИБЫТИЯ":
+                            rTB_Сообщение.Text += "Время прибытия: ";
+                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            Text = Record.ВремяПрибытия.ToString("HH:mm");
+                            УказательВыделенныхФрагментов.Add(Text.Length);
+                            rTB_Сообщение.AppendText(Text + " ");
+                            break;
+
+                        case "ВРЕМЯ СТОЯНКИ":
+                            rTB_Сообщение.Text += "Стоянка: ";
+                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            Text = Record.ВремяСтоянки.ToString() + " минут";
+                            УказательВыделенныхФрагментов.Add(Text.Length);
+                            rTB_Сообщение.AppendText(Text + " ");
+                            break;
+
+                        case "ВРЕМЯ ОТПРАВЛЕНИЯ":
+                            rTB_Сообщение.ForeColor = Color.Black;
+                            rTB_Сообщение.Text += "Время отправления: ";
+                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            rTB_Сообщение.ForeColor = Color.Red;
+                            Text = Record.ВремяОтправления.ToString("HH:mm");
+                            УказательВыделенныхФрагментов.Add(Text.Length);
+                            rTB_Сообщение.AppendText(Text + " ");
+                            break;
+
+
+                        case "НУМЕРАЦИЯ СОСТАВА":
+                            if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
                             {
-                                rTB_Сообщение.AppendText(Станция + " ");
+                                УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                                Text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
+                                УказательВыделенныхФрагментов.Add(Text.Length);
+                                rTB_Сообщение.AppendText(Text + " ");
                             }
+                            break;
+
+
+                        case "СТАНЦИИ":
+                            if (this.Record.ОтображениеВТаблицах == 0x02)
+                            {
+                                if (rB_СоВсемиОстановками.Checked == true)
+                                {
+                                    rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
+                                }
+                                else if (rB_ПоСтанциям.Checked == true)
+                                {
+                                    rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
+                                    foreach (var Станция in MainWindowForm.Станции)
+                                        if (lB_ПоСтанциям.Items.Contains(Станция))
+                                        {
+                                            rTB_Сообщение.AppendText(Станция + " ");
+                                        }
+                                }
+                                else if (rB_КромеСтанций.Checked == true)
+                                {
+                                    rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
+                                    foreach (var Станция in MainWindowForm.Станции)
+                                        if (lB_ПоСтанциям.Items.Contains(Станция))
+                                        {
+                                            rTB_Сообщение.AppendText(Станция + " ");
+                                        }
+                                }
+                            }
+                            break;
+
+
+                        default:
+                            rTB_Сообщение.AppendText(шаблон + " ");
+                            break;
                     }
                 }
 
+                for (int i = 0; i < УказательВыделенныхФрагментов.Count / 2; i++)
+                {
+                    rTB_Сообщение.SelectionStart = УказательВыделенныхФрагментов[2 * i];
+                    rTB_Сообщение.SelectionLength = УказательВыделенныхФрагментов[2 * i + 1];
+                    rTB_Сообщение.SelectionColor = Color.Red;
+                }
 
                 rTB_Сообщение.SelectionLength = 0;
             }
+
 
             //Обновить список табло
             comboBox_displayTable.Items.Clear();
             comboBox_displayTable.SelectedIndex = -1;
             if (Record.НазванияТабло != null && Record.НазванияТабло.Any())
-            {          
+            {
                 foreach (var table in Record.НазванияТабло)
                 {
                     comboBox_displayTable.Items.Add(table);
@@ -259,7 +264,7 @@ namespace MainExample
             }
             else
             {
-                comboBox_displayTable.BackColor= Color.DarkRed;
+                comboBox_displayTable.BackColor = Color.DarkRed;
             }
         }
 
