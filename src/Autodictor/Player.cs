@@ -83,6 +83,8 @@ namespace MainExample
             return 0;
         }
 
+
+        //TODO: Exceptions при геннерации списка.
         public static SoundFileStatus GetFileStatus()
         {
             SoundFileStatus fileStatus = SoundFileStatus.Error;

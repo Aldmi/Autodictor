@@ -87,8 +87,6 @@ namespace CommunicationDevices.ClientWCF
 
         public IEnumerable<Device> Devices { get; set; }
 
-        //TODO: добавить лог. Который хранит список строк а запись на диск осушенсвялет по команде.
-
         #endregion
 
 
@@ -191,17 +189,17 @@ namespace CommunicationDevices.ClientWCF
             catch (EndpointNotFoundException ex) //Конечная точка не найденна.
             {
                 IsConnect = false;
-                Log.log.Warn($"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: {ex}");
+                // Log.log.Warn($"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: EndpointNotFoundException");
             }
             catch (FaultException ex)
             {
                 IsConnect = false;
-                Log.log.Error($"ОБМЕН С ЦИС. Ошибка выполнения на стороне ЦИС. ОШИБКА: {ex}");
+                //Log.log.Error($"ОБМЕН С ЦИС. Ошибка выполнения на стороне ЦИС. ОШИБКА: {ex}");
             }
             catch (Exception ex)
             {
                 IsConnect = false;
-                Log.log.Error($"ОБМЕН С ЦИС. Непредвиденная ошибка на стороне клиента. ОШИБКА: {ex}");
+                //Log.log.Error($"ОБМЕН С ЦИС. Непредвиденная ошибка на стороне клиента. ОШИБКА: {ex}");
             }
         }
 

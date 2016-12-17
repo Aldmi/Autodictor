@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -39,10 +40,19 @@ namespace MainExample
 
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
         private static int ID = 0;
-        //        private bool ОбновлениеСписка = false;
+        static public TrainTable myMainForm = null;
+
+
+
+
 
         public TrainTable(CisClient cisClient)
         {
+            if (myMainForm != null)
+                return;
+
+            myMainForm = this;
+
             InitializeComponent();
             ОбновитьДанныеВСписке();
 
@@ -578,16 +588,26 @@ namespace MainExample
 
         }
 
-
-        protected override void OnClosed(EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
+            if (myMainForm == this)
+                myMainForm = null;
+
             DispouseCisClientIsConnectRx.Dispose();
-            base.OnClosed(e);
+            base.OnClosing(e);
         }
 
 
-        //Загрузка расписание из выбранного источника
-        private void btnLoad_Click(object sender, EventArgs e)
+
+    //Загрузка расписание из выбранного источника
+    private void btnLoad_Click(object sender, EventArgs e)
+        {
+            SouceLoadMainList();
+            ОбновитьДанныеВСписке();
+        }
+
+
+        public void SouceLoadMainList()
         {
             if (rbSourseSheduleLocal.Checked)
             {
@@ -597,8 +617,6 @@ namespace MainExample
             {
                 LoadListFromCis();
             }
-
-            ОбновитьДанныеВСписке();
         }
 
 

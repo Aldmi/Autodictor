@@ -178,6 +178,9 @@ namespace MainExample
             else
                 this.lblDayOfWeek.ForeColor = Color.Green;
 
+            if (!btnОбновитьСписок.Enabled)  //DEBUG???????????????????
+               return;
+
             ОбработкаЗвуковогоПотка();
         }
 
@@ -212,6 +215,8 @@ namespace MainExample
             ProgressLoadMainList = progressBar.Minimum;
 
             btnОбновитьСписок.Enabled= false;
+            btnБлокировка.Enabled = false;
+
             backgroundWorker1.RunWorkerAsync();
         }
 
@@ -230,6 +235,7 @@ namespace MainExample
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             btnОбновитьСписок.Enabled = true;
+            btnБлокировка.Enabled = true;
             progressBar.Value = progressBar.Maximum;
         }
 
@@ -864,7 +870,14 @@ namespace MainExample
                 {
                     var Данные = SoundRecords.ElementAt(i);
 
-                    ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(), Данные.Value.Время.ToString("HH:mm:ss"), (Данные.Value.Длительность / 60).ToString("00") + ":" + (Данные.Value.Длительность % 60).ToString("00"), Данные.Value.НомерПути.ToString(), Данные.Value.НомерПоезда + Данные.Value.Описание });
+                    ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(),
+                                                                       Данные.Value.Время.ToString("HH:mm:ss"),
+                                                                      (Данные.Value.Длительность / 60).ToString("00") + ":" + (Данные.Value.Длительность % 60).ToString("00"),
+                                                                       Данные.Value.НомерПоезда.Replace(':', ' '),
+                                                                       Данные.Value.НомерПути.ToString(),
+                                                                       Данные.Value.НазваниеПоезда,
+                                                                       CreateActStr(Данные.Value),
+                                                                       Данные.Value.НомерПоезда + Данные.Value.Описание });
                     lvi.Tag = Данные.Value.ID;
                     lvi.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                     this.listView1.Items.Add(lvi);
@@ -932,9 +945,18 @@ namespace MainExample
                             }
 
                             //Обновить номер пути
-                            if (this.listView1.Items[item].SubItems[3].Text != Данные.НомерПути.ToString())
+                            if (this.listView1.Items[item].SubItems[4].Text != Данные.НомерПути.ToString())
                             {
-                                this.listView1.Items[item].SubItems[3].Text = Данные.НомерПути.ToString();
+                                this.listView1.Items[item].SubItems[4].Text = Данные.НомерПути.ToString();
+                            }
+
+                            //Обновить Время ПРИБ/ОТПР
+
+                            string actStr = CreateActStr(Данные);
+
+                            if (this.listView1.Items[item].SubItems[6].Text != actStr)
+                            {
+                                this.listView1.Items[item].SubItems[6].Text = actStr;
                             }
 
                         }
@@ -946,6 +968,8 @@ namespace MainExample
                 }
             }
         }
+
+
 
 
         // Определение композиций для запуска в данный момент времени
@@ -1032,8 +1056,8 @@ namespace MainExample
         // Определение информации для вывода на табло
         private void ОпределитьИнформациюДляОтображенияНаТабло()
         {
-            if (!РазрешениеРаботы)
-                return;
+            //if (!РазрешениеРаботы)
+            //    return;
 
             for (int item = 0; item < this.listView1.Items.Count; item++)
             {
@@ -1057,14 +1081,10 @@ namespace MainExample
                                     if (Данные.НомерПути != ДанныеOld.НомерПути)
                                     {
                                         //вывод на новое табло
-                                        // Debug.WriteLine(
-                                        //     $"ОТОБРАЖЕНИЕ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}   {Данные.НомерПути}");
                                         Данные.СостояниеОтображения = TableRecordStatus.Отображение;
                                         SendOnPathTable(Данные);
 
                                         //очистили старый путь
-                                        // Debug.WriteLine(
-                                        //   $"ОЧИСТИТЬ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}   {Данные.НомерПути}");
                                         ДанныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
                                         SendOnPathTable(ДанныеOld);
                                     }
@@ -1086,8 +1106,6 @@ namespace MainExample
                                             {
                                                 if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
                                                 {
-                                                    //  Debug.WriteLine(
-                                                    //      $"ОЧИСТИТЬ ПРИБЫТИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
                                                     Данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                     Данные.НомерПути = 0;
                                                     Данные.НазванияТабло = null;
@@ -1113,8 +1131,6 @@ namespace MainExample
                                             {
                                                 if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
                                                 {
-                                                    //  Debug.WriteLine(
-                                                    //    $"ОЧИСТИТЬ ОТПРАВЛЕНИЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  {Данные.ID}    {Данные.НомерПоезда}");
                                                     Данные.СостояниеОтображения = TableRecordStatus.Очистка;
 
                                                     Данные.НомерПути = 0;
@@ -1160,6 +1176,7 @@ namespace MainExample
                 if (cBАвтоматическаяГенерация.Checked == true)
                     btnОбновитьСписок_Click(null, null);
             }
+
 
             ОпределитьКомпозициюДляЗапуска();
             ОпределитьИнформациюДляОтображенияНаТабло();
@@ -1547,6 +1564,26 @@ namespace MainExample
                 }
             }
         }
+
+        private static string CreateActStr(SoundRecord Данные)
+        {
+            string actStr = "   ";
+            if ((Данные.БитыАктивностиПолей & 0x14) == 0x14)
+            {
+                actStr = $"Приб.{Данные.ВремяПрибытия.ToString("HH:mm")} Отпр.:{Данные.ВремяОтправления.ToString("HH:mm")}";
+            }
+            else if ((Данные.БитыАктивностиПолей & 0x04) == 0x04)
+            {
+                actStr = $"Приб.{Данные.ВремяПрибытия.ToString("HH:mm")}";
+            }
+            else if ((Данные.БитыАктивностиПолей & 0x10) == 0x10)
+            {
+                actStr = $"Отпр.:{Данные.ВремяОтправления.ToString("HH:mm")}";
+            }
+
+            return actStr;
+        }
+
 
 
         protected override void OnClosed(EventArgs e)

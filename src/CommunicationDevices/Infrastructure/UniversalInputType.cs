@@ -1,26 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CommunicationDevices.Infrastructure
 {
-    //public interface IUniversalInputType
-    //{
-    //    string AddressDevice { get; set; }                      //Адресс устройсва
-
-    //    string NumberOfTrain { get; set; }                      //Номер поезда
-    //    string PathNumber { get; set; }                         //Номер пути
-    //    string Event { get; set; }                              //Событие (отправление/прибытие)
-    //    string Stations { get; set; }                           //Станции Отправления-Назначения.
-    //    string Note { get; set; }                               //Примечание.
-    //    DateTime Time { get; set; }                             //Время
-
-    //    string Message { get; set; }                            //Сообщение
-    //}
-
-
     public enum TypeTrain {None, Suburb, LongDistance }
 
-    public class UniversalInputType //: IUniversalInputType
+    public class UniversalInputType
     {
         public string AddressDevice { get; set; }                    //Адресс устройсва
 
@@ -39,12 +25,19 @@ namespace CommunicationDevices.Infrastructure
         public void Initialize(UniversalInputType initializeData)
         {
             AddressDevice = initializeData.AddressDevice;
+            TypeTrain = initializeData.TypeTrain;
             NumberOfTrain = initializeData.NumberOfTrain;
             PathNumber = initializeData.PathNumber;
             Event = initializeData.Event;
             Stations = initializeData.Stations;
+            Note= initializeData.Note;
             Time = initializeData.Time;
             Message = initializeData.Message;
+  
+            if (initializeData.TableData != null && initializeData.TableData.Any())
+            {
+                TableData = new List<UniversalInputType>(initializeData.TableData);
+            }
         }
     }
 }

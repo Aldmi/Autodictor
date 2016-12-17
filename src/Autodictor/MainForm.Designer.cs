@@ -61,9 +61,9 @@
             this.fileMenu,
             this.controlSamplesToolStripMenuItem,
             this.dataSamplesToolStripMenuItem,
-            this.справкаToolStripMenuItem,
             this.таблоToolStripMenuItem,
-            this.данныеЦИСToolStripMenuItem});
+            this.данныеЦИСToolStripMenuItem,
+            this.справкаToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);

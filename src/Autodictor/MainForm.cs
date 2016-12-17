@@ -21,8 +21,8 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-           // TrainTable.ЗагрузитьСписок();                 //TODO: грузится из файла
-
+            TrainTable.ЗагрузитьСписок();                   //TODO: грузится из файла по умолчанию
+        
            // Player.PlayFile("");                          //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
@@ -54,8 +54,10 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.BindingBehaviors);
-                mainform.MdiParent = this;
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.BindingBehaviors)
+                {
+                    MdiParent = this
+                };
                 mainform.Show();
             }
         }
@@ -63,9 +65,16 @@ namespace MainExample
         //Расписание движения поездов
         private void listExample_Click(object sender, EventArgs e)
         {
-            TrainTable listForm = new TrainTable(ExchangeModel.CisClient);
-            listForm.MdiParent = this;
-            listForm.Show();
+            if (TrainTable.myMainForm != null)
+            {
+                TrainTable.myMainForm.Show();
+                TrainTable.myMainForm.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                TrainTable listForm = new TrainTable(ExchangeModel.CisClient) {MdiParent = this};
+                listForm.Show();
+            }
         }
 
         private void validationExample_Click(object sender, EventArgs e)
