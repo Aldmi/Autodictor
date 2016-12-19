@@ -23,6 +23,8 @@ namespace MainExample
             gB_Стоянка.Enabled = ((this.Record.БитыАктивностиПолей & 0x08) != 0x00) ? true : false;
             gB_Отправление.Enabled = ((this.Record.БитыАктивностиПолей & 0x10) != 0x00) ? true : false;
 
+            groupBox1.Enabled = (this.Record.ОтображениеВТаблицах == 0x02);   //разблокируем только для пригорода
+
             cB_НомерПути.SelectedIndex = this.Record.НомерПути;
             dTP_Время.Value = this.Record.Время;
             dTP_Прибытие.Value = this.Record.ВремяПрибытия;
@@ -183,10 +185,8 @@ namespace MainExample
                             break;
 
                         case "ВРЕМЯ ОТПРАВЛЕНИЯ":
-                            rTB_Сообщение.ForeColor = Color.Black;
                             rTB_Сообщение.Text += "Время отправления: ";
                             УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            rTB_Сообщение.ForeColor = Color.Red;
                             Text = Record.ВремяОтправления.ToString("HH:mm");
                             УказательВыделенныхФрагментов.Add(Text.Length);
                             rTB_Сообщение.AppendText(Text + " ");

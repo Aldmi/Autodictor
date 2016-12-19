@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -46,13 +47,9 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
+      
       public static string[] Станции = new string[]
         {
-            "Тверь",
-            "Клин",
-            "Крюково",
-            "Конаково",
-            "Подсолнечная",
             "Рижская",
             "Останкино",
             "Петровско разумовское",
@@ -67,16 +64,19 @@ namespace MainExample
             "Сходня",
             "Фирсановская",
             "Малино",
+            "Крюково",
             "Алабушево",
             "Радишево",
             "Поваровка",
             "Поварово 1",
             "Берёзки",
+            "Подсолнечная",
             "Сенеж",
             "Головково",
             "Покровка",
             "Фроловская",
             "Стриглово",
+            "Клин",
             "Ямуга",
             "Решетниково",
             "Черничная",
@@ -87,9 +87,11 @@ namespace MainExample
             "Кузьминка",
             "Чуприяновка",
             "Лазурная",
+            "Тверь",
             "Путепроводная",
             "Конаковский мох",
             "Донховка",
+            "Конаково",
         };
         private bool РазрешениеРаботы = false;
 
@@ -178,7 +180,7 @@ namespace MainExample
             else
                 this.lblDayOfWeek.ForeColor = Color.Green;
 
-            if (!btnОбновитьСписок.Enabled)  //DEBUG???????????????????
+            if (backgroundWorker1.IsBusy)  //DEBUG???????????????????
                return;
 
             ОбработкаЗвуковогоПотка();
@@ -208,23 +210,36 @@ namespace MainExample
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
         private void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
-            progressBar.Maximum = TrainTable.TrainTableRecords.Count() + SoundConfiguration.SoundConfigurationRecords.Count();
-            progressBar.Minimum = 0;
-            progressBar.Step = 1;
-            progressBar.Value = progressBar.Minimum;
-            ProgressLoadMainList = progressBar.Minimum;
+            if (backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.CancelAsync();
 
-            btnОбновитьСписок.Enabled= false;
-            btnБлокировка.Enabled = false;
+                btnОбновитьСписок.Text = "Обновить список";
+                btnОбновитьСписок.BackColor = DefaultBackColor;
+                btnБлокировка.Enabled = true;
+            }
+            else
+            {
+                progressBar.Maximum = TrainTable.TrainTableRecords.Count() + SoundConfiguration.SoundConfigurationRecords.Count();
+                progressBar.Minimum = 0;
+                progressBar.Step = 1;
+                progressBar.Value = progressBar.Minimum;
+                ProgressLoadMainList = progressBar.Minimum;
 
-            backgroundWorker1.RunWorkerAsync();
+
+                btnОбновитьСписок.Text = "Отмена";
+                btnОбновитьСписок.BackColor = Color.Crimson;
+                btnБлокировка.Enabled = false;
+                  
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
 
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            ОбновитьСписокЗвуковыхСообщений();
-            ОбновитьСписокЗвуковыхСообщенийВТаблице();
+            ОбновитьСписокЗвуковыхСообщений(e);
+            ОбновитьСписокЗвуковыхСообщенийВТаблице(e);
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
@@ -234,16 +249,35 @@ namespace MainExample
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            btnОбновитьСписок.Enabled = true;
+            if (e.Error!= null)
+            {
+                MessageBox.Show("Загрузка завершена с ОШИБКОЙ");
+            }
+            else
+            if (e.Cancelled)
+            {
+               MessageBox.Show("Загрузка отменена!!!");
+            }
+            else
+            {
+                progressBar.Value = progressBar.Maximum;
+            }
+
+            btnОбновитьСписок.Text = "Обновить список";
+            btnОбновитьСписок.BackColor = DefaultBackColor;
             btnБлокировка.Enabled = true;
-            progressBar.Value = progressBar.Maximum;
+        }
+
+
+        private void btn_cancelRefresh_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1.CancelAsync();
         }
 
 
 
-
         // Формирование списка воспроизведения
-        public void ОбновитьСписокЗвуковыхСообщений()
+        public void ОбновитьСписокЗвуковыхСообщений(DoWorkEventArgs e)
         {
             SoundRecords.Clear();
             SoundRecordsOld.Clear();
@@ -258,6 +292,11 @@ namespace MainExample
             #region Создание звуковых файлов расписания ЖД транспорта
             foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
             {
+                if (this.backgroundWorker1.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 backgroundWorker1.ReportProgress(ProgressLoadMainList++);
 
                 if (Config.Active == true)
@@ -432,8 +471,7 @@ namespace MainExample
                                                                 break;
 
                                                             case "ВРЕМЯ ПРИБЫТИЯ":
-                                                                МассивЗвуковыхСообщений.Add(ФайлыЧасов[ВремяПрибытия.Hour]);
-                                                                МассивЗвуковыхСообщений.Add(ФайлыМинут[ВремяПрибытия.Minute]);
+                                                                МассивЗвуковыхСообщений.Add("ВРЕМЯ ПРИБЫТИЯ");
                                                                 break;
 
                                                             case "ВРЕМЯ СТОЯНКИ":
@@ -441,8 +479,7 @@ namespace MainExample
                                                                 break;
 
                                                             case "ВРЕМЯ ОТПРАВЛЕНИЯ":
-                                                                МассивЗвуковыхСообщений.Add(ФайлыЧасов[ВремяОтправления.Hour]);
-                                                                МассивЗвуковыхСообщений.Add(ФайлыМинут[ВремяОтправления.Minute]);
+                                                                МассивЗвуковыхСообщений.Add("ВРЕМЯ ОТПРАВЛЕНИЯ");
                                                                 break;
 
                                                             case "НУМЕРАЦИЯ СОСТАВА":
@@ -584,6 +621,12 @@ namespace MainExample
             #region Создание статических звуковых файлов
             foreach (SoundConfigurationRecord Config in SoundConfiguration.SoundConfigurationRecords)
             {
+                if (this.backgroundWorker1.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
                 backgroundWorker1.ReportProgress(ProgressLoadMainList++);
 
                 SoundRecord Record;
@@ -858,7 +901,7 @@ namespace MainExample
 
 
         // Отображение сформированного списка воспроизведения в таблицу
-        private void ОбновитьСписокЗвуковыхСообщенийВТаблице()
+        private void ОбновитьСписокЗвуковыхСообщенийВТаблице(DoWorkEventArgs e)
         {
             ОбновлениеСписка = true;
 
@@ -868,6 +911,12 @@ namespace MainExample
 
                 for (int i = 0; i < SoundRecords.Count; i++)
                 {
+                    if (this.backgroundWorker1.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
                     var Данные = SoundRecords.ElementAt(i);
 
                     ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(),
@@ -1234,7 +1283,7 @@ namespace MainExample
         private void ВоспроизвестиЗапись()
         {
             ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
-            string[] ВоспроизводимыеФайлы;
+            List<String> ВоспроизводимыеФайлы;
 
             foreach (int item in sic)
             {
@@ -1246,9 +1295,7 @@ namespace MainExample
                     if (Данные.ИменаФайлов == null)
                         return;
 
-                    ВоспроизводимыеФайлы = new string[Данные.ИменаФайлов.Length];
-                    for (int i = 0; i < Данные.ИменаФайлов.Length; i++)
-                        ВоспроизводимыеФайлы[i] = Данные.ИменаФайлов[i];
+                    ВоспроизводимыеФайлы = new List<string>(Данные.ИменаФайлов);
 
 
                     string[] НазваниеФайловПутей = new string[] { "",
@@ -1264,9 +1311,14 @@ namespace MainExample
                         "45 минут", "46 минут", "47 минут", "48 минут", "49 минут", "50 минут", "51 минута", "52 минуты", "53 минуты",
                         "54 минуты", "55 минут", "56 минут", "57 минут", "58 минут", "59 минут" };
 
+
+                    string[] ФайлыЧасов = new string[] { "В 00 часов", "В 01 час", "В 02 часа", "В 03 часа", "В 04 часа", "В 05 часов", "В 06 часов", "В 07 часов",
+                                                                                        "В 08 часов", "В 09 часов", "В 10 часов", "В 11 часов", "В 12 часов", "В 13 часов", "В 14 часов", "В 15 часов",
+                                                                                        "В 16 часов", "В 17 часов", "В 18 часов", "В 19 часов", "В 20 часов", "В 21 час", "В 22 часа", "В 23 часа" };
+
                     string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация с головы", "Нумерация с хвоста" };
 
-                    for (int i = 0; i < ВоспроизводимыеФайлы.Length; i++)
+                    for (int i = 0; i < ВоспроизводимыеФайлы.Count; i++)
                     {
                         string FileName = ВоспроизводимыеФайлы[i];
 
@@ -1293,6 +1345,14 @@ namespace MainExample
                             continue;
                         }
 
+
+                        if (FileName == "ВРЕМЯ ПРИБЫТИЯ")
+                        {
+                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыЧасов[Данные.ВремяПрибытия.Hour]);
+                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыМинут[Данные.ВремяПрибытия.Minute]);
+                            continue;
+                        }
+                        
                         if (FileName == "ВРЕМЯ СТОЯНКИ")
                         {
                             if ((Данные.ВремяСтоянки > 0) && (Данные.ВремяСтоянки <= 59))
@@ -1302,6 +1362,13 @@ namespace MainExample
                             continue;
                         }
 
+                        if (FileName == "ВРЕМЯ ОТПРАВЛЕНИЯ")
+                        {
+                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыЧасов[Данные.ВремяОтправления.Hour]);
+                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыМинут[Данные.ВремяОтправления.Minute]);
+                            continue;
+                        }
+                       
                         if (FileName == "на посадку проходите через тоннель")
                         {
                             if (((Данные.БитыАктивностиПолей & 0x10) != 0x00) && (Данные.НомерПути == 0x01))
@@ -1591,6 +1658,7 @@ namespace MainExample
             DispouseCisClientIsConnectRx.Dispose();
             base.OnClosed(e);
         }
+
 
     }
 }
