@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Timers;
+using System.Xml;
 using CommunicationDevices.Devices;
 using Library.Logs;
 using WCFCis2AvtodictorContract.Contract;
@@ -20,7 +21,7 @@ namespace CommunicationDevices.ClientWCF
         #region Fields
 
         private const double PeriodTimer = 5000;
-        private const uint MinutLevel = (uint)(PeriodTimer / PeriodTimer); //60000
+        private const uint MinutLevel = (uint)(60000 / PeriodTimer); //60000
         private const uint TenMinutLevel = (uint)((60000 * 10) / PeriodTimer);
         private const uint HouerLevel = (uint)((60000 * 60) / PeriodTimer);
         private const uint TvelwHouerLevel = (uint)((60000 * 60 * 12) / PeriodTimer);
@@ -96,8 +97,30 @@ namespace CommunicationDevices.ClientWCF
 
         public CisClient(EndpointAddress endpointAddress, IEnumerable<Device> devices)
         {
+
+            //          < binding allowCookies = "true"
+            //       maxReceivedMessageSize = "20000000"
+            //       maxBufferSize = "20000000"
+            //       maxBufferPoolSize = "20000000"
+
+
+            //       openTimeout = "00:01:00"
+            //       closeTimeout = "00:01:00"
+            //       sendTimeout = "00:10:00"
+            //       receiveTimeout = "00:30:00" >
+            //< readerQuotas maxDepth = "32"
+            //      maxArrayLength = "200000000"
+            //      maxStringContentLength = "200000000" />
+
+
             BasicHttpBinding binding = new BasicHttpBinding
             {
+                AllowCookies = true,
+                MaxReceivedMessageSize = 20000000,
+                MaxBufferSize = 20000000,
+                MaxBufferPoolSize= 20000000, 
+                ReaderQuotas = new XmlDictionaryReaderQuotas { MaxDepth = 32, MaxArrayLength = 20000000, MaxStringContentLength = 20000000 },
+
                 OpenTimeout = new TimeSpan(0, 0, 10),
                 CloseTimeout = new TimeSpan(0, 0, 10),
                 SendTimeout = new TimeSpan(0, 0, 30)
@@ -134,34 +157,34 @@ namespace CommunicationDevices.ClientWCF
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 мин
                 if (((_tickCounter%MinutLevel) == 0))
                 {
-                    OperativeScheduleDatas =
-                        new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 1"));
-                    IsConnect = true;
+                    //OperativeScheduleDatas =
+                    //    new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules("Вокзал 1"));
+                    //IsConnect = true;
                     //Log.Add("Оперативное расписание полученно", Info);
 
 
-                    RegulatoryScheduleDatas =
-                        new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules("Вокзал 1"));
-                    IsConnect = true;
+                    //RegulatoryScheduleDatas =
+                    //    new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules("Курский"));
+                    //IsConnect = true;
                     //Log.Add("регулярное расписание полученно", Info);
 
 
                     //Pull модель опроса списка устройств. Перебираем список всех устройств (скрытых под интерфесом, ограничивающий доступ только к нужным данным)
                     // На каждое диагностируемое сво-во устройства формирум DiagnosticData и помещем в список.
-                    var listDiagnostic = Devices?.Select(d => new DiagnosticData
-                    {
-                        DeviceNumber = d.Id,
-                        DeviceName = d.Name,
-                        Fault = d.ExhBehavior.IsConnect ? "Нормальная работа" : "НЕ на связи",
-                        Status = d.ExhBehavior.IsConnect ? 100 : -100,
-                    }).ToList();
-                    Proxy.SetDiagnostics("Вокзал 1", listDiagnostic);
+                    //var listDiagnostic = Devices?.Select(d => new DiagnosticData
+                    //{
+                    //    DeviceNumber = d.Id,
+                    //    DeviceName = d.Name,
+                    //    Fault = d.ExhBehavior.IsConnect ? "Нормальная работа" : "НЕ на связи",
+                    //    Status = d.ExhBehavior.IsConnect ? 100 : -100,
+                    //}).ToList();
+                    //Proxy.SetDiagnostics("Курский", listDiagnostic);
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 10 мин
                 if (((_tickCounter%TenMinutLevel) == 0))
                 {
-
+              
                 }
 
                 //ВРЕМЕННОЙ УРОВЕНЬ 1 час
@@ -181,10 +204,38 @@ namespace CommunicationDevices.ClientWCF
                 {
 
                 }
-
+            }
+            catch (EndpointNotFoundException ex) //Конечная точка не найденна.
+            {
+                IsConnect = false;
+                // Log.log.Warn($"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: EndpointNotFoundException");
+            }
+            catch (FaultException ex)
+            {
+                IsConnect = false;
+                //Log.log.Error($"ОБМЕН С ЦИС. Ошибка выполнения на стороне ЦИС. ОШИБКА: {ex}");
+            }
+            catch (Exception ex)
+            {
+                IsConnect = false;
+                //Log.log.Error($"ОБМЕН С ЦИС. Непредвиденная ошибка на стороне клиента. ОШИБКА: {ex}");
+            }
+            finally
+            {
                 //Отсчет тиков
                 if (++_tickCounter >= uint.MaxValue)
                     _tickCounter = 0;
+            }
+        }
+
+
+        public async void ManualLoadingRegulatorySh(string nameRailwayStation)
+        {
+            try
+            {
+                RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules(nameRailwayStation));
+                IsConnect = true;
+                //Log.Add("регулярное расписание полученно", Info);
             }
             catch (EndpointNotFoundException ex) //Конечная точка не найденна.
             {
@@ -203,6 +254,31 @@ namespace CommunicationDevices.ClientWCF
             }
         }
 
+
+        public async void ManualLoadingOperativeSh(string nameRailwayStation)
+        {
+            try
+            {
+                OperativeScheduleDatas = new List<OperativeScheduleData>(await Proxy.GetOperativeSchedules(nameRailwayStation));
+                IsConnect = true;
+                //Log.Add("Оперативное расписание полученно", Info);
+            }
+            catch (EndpointNotFoundException ex) //Конечная точка не найденна.
+            {
+                IsConnect = false;
+                // Log.log.Warn($"ОБМЕН С ЦИС. Ошибка соединения с ЦИС. ОШИБКА: EndpointNotFoundException");
+            }
+            catch (FaultException ex)
+            {
+                IsConnect = false;
+                //Log.log.Error($"ОБМЕН С ЦИС. Ошибка выполнения на стороне ЦИС. ОШИБКА: {ex}");
+            }
+            catch (Exception ex)
+            {
+                IsConnect = false;
+                //Log.log.Error($"ОБМЕН С ЦИС. Непредвиденная ошибка на стороне клиента. ОШИБКА: {ex}");
+            }
+        }
 
 
 

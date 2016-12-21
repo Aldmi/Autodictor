@@ -36,6 +36,9 @@
             this.DispatchStation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StationOfDestination = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DaysFollowing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btn_LoadRegSh = new System.Windows.Forms.Button();
+            this.ListOfStops = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ListWithoutStops = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listRegSh
@@ -47,13 +50,14 @@
             this.DepartureTime,
             this.DispatchStation,
             this.StationOfDestination,
+            this.ListOfStops,
+            this.ListWithoutStops,
             this.DaysFollowing});
-            this.listRegSh.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listRegSh.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listRegSh.Location = new System.Drawing.Point(0, 0);
             this.listRegSh.Margin = new System.Windows.Forms.Padding(4);
             this.listRegSh.Name = "listRegSh";
-            this.listRegSh.Size = new System.Drawing.Size(1643, 696);
+            this.listRegSh.Size = new System.Drawing.Size(1643, 639);
             this.listRegSh.TabIndex = 1;
             this.listRegSh.UseCompatibleStateImageBehavior = false;
             this.listRegSh.View = System.Windows.Forms.View.Details;
@@ -99,11 +103,34 @@
             this.DaysFollowing.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.DaysFollowing.Width = 430;
             // 
+            // btn_LoadRegSh
+            // 
+            this.btn_LoadRegSh.Location = new System.Drawing.Point(30, 646);
+            this.btn_LoadRegSh.Name = "btn_LoadRegSh";
+            this.btn_LoadRegSh.Size = new System.Drawing.Size(130, 46);
+            this.btn_LoadRegSh.TabIndex = 2;
+            this.btn_LoadRegSh.Text = "Загрузить";
+            this.btn_LoadRegSh.UseVisualStyleBackColor = true;
+            this.btn_LoadRegSh.Click += new System.EventHandler(this.btn_LoadRegSh_Click);
+            // 
+            // ListOfStops
+            // 
+            this.ListOfStops.Text = "Остоновочные станции";
+            this.ListOfStops.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ListOfStops.Width = 250;
+            // 
+            // ListWithoutStops
+            // 
+            this.ListWithoutStops.Text = "Пропуск станций";
+            this.ListWithoutStops.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ListWithoutStops.Width = 250;
+            // 
             // RegulatorySheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1643, 696);
+            this.Controls.Add(this.btn_LoadRegSh);
             this.Controls.Add(this.listRegSh);
             this.Name = "RegulatorySheduleForm";
             this.Text = "RegulatorySheduleForm";
@@ -121,5 +148,8 @@
         private System.Windows.Forms.ColumnHeader DispatchStation;
         private System.Windows.Forms.ColumnHeader StationOfDestination;
         private System.Windows.Forms.ColumnHeader DaysFollowing;
+        private System.Windows.Forms.Button btn_LoadRegSh;
+        private System.Windows.Forms.ColumnHeader ListOfStops;
+        private System.Windows.Forms.ColumnHeader ListWithoutStops;
     }
 }

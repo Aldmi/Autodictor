@@ -33,6 +33,7 @@ namespace MainExample
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+           //TODO: адресс вынести в файл настроек.
            ExchangeModel.CreateCisClient(new EndpointAddress("http://localhost:50000/Service/Cis"));
            ExchangeModel.StartCisClient();
            ExchangeModel.LoadSetting();

@@ -35,6 +35,7 @@
             this.DepartureTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DispatchStation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StationOfDestination = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btn_LoadOperSh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listOperSh
@@ -50,9 +51,10 @@
             this.DispatchStation,
             this.StationOfDestination});
             this.listOperSh.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listOperSh.Location = new System.Drawing.Point(12, 12);
+            this.listOperSh.Location = new System.Drawing.Point(16, 15);
+            this.listOperSh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listOperSh.Name = "listOperSh";
-            this.listOperSh.Size = new System.Drawing.Size(982, 473);
+            this.listOperSh.Size = new System.Drawing.Size(1308, 528);
             this.listOperSh.TabIndex = 0;
             this.listOperSh.UseCompatibleStateImageBehavior = false;
             this.listOperSh.View = System.Windows.Forms.View.Details;
@@ -92,12 +94,24 @@
             this.StationOfDestination.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.StationOfDestination.Width = 145;
             // 
+            // btn_LoadOperSh
+            // 
+            this.btn_LoadOperSh.Location = new System.Drawing.Point(34, 554);
+            this.btn_LoadOperSh.Name = "btn_LoadOperSh";
+            this.btn_LoadOperSh.Size = new System.Drawing.Size(130, 46);
+            this.btn_LoadOperSh.TabIndex = 3;
+            this.btn_LoadOperSh.Text = "Загрузить";
+            this.btn_LoadOperSh.UseVisualStyleBackColor = true;
+            this.btn_LoadOperSh.Click += new System.EventHandler(this.btn_LoadOperSh_Click);
+            // 
             // OperativeSheduleForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 497);
+            this.ClientSize = new System.Drawing.Size(1341, 612);
+            this.Controls.Add(this.btn_LoadOperSh);
             this.Controls.Add(this.listOperSh);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "OperativeSheduleForm";
             this.Text = "OperativeSheduleForm";
             this.ResumeLayout(false);
@@ -113,5 +127,6 @@
         private System.Windows.Forms.ColumnHeader DepartureTime;
         private System.Windows.Forms.ColumnHeader DispatchStation;
         private System.Windows.Forms.ColumnHeader StationOfDestination;
+        private System.Windows.Forms.Button btn_LoadOperSh;
     }
 }

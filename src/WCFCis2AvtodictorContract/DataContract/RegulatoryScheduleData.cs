@@ -20,7 +20,7 @@ namespace WCFCis2AvtodictorContract.DataContract
         public StationsData DispatchStation { get; set; }        //Станция отправления
 
         [DataMember]
-        public StationsData StationOfDestination { get; set; }   //Станция назначения
+        public StationsData DestinationStation { get; set; }   //Станция назначения
 
         [DataMember]
         public DateTime ArrivalTime { get; set; }                  //Время прибытия поезда на станцию

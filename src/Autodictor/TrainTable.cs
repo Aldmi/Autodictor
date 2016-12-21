@@ -665,14 +665,21 @@ namespace MainExample
                     Данные.ID = op.Id;
                     Данные.Num = op.NumberOfTrain;
                     Данные.Name = op.RouteName;
-                    Данные.ArrivalTime = op.ArrivalTime.ToLongTimeString();
+                    Данные.ArrivalTime =  op.ArrivalTime?.ToLongTimeString() ?? "Не указанно";
 
 
-                    var stopTime = (op.ArrivalTime.Subtract(op.DepartureTime));
-                    Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
+                    if (op.ArrivalTime.HasValue && op.DepartureTime.HasValue)
+                    {
+                        var stopTime = (op.ArrivalTime.Value.Subtract(op.DepartureTime.Value));
+                        Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
+                    }
+                    else
+                    {
+                        Данные.StopTime = "---";
+                    }
 
 
-                    Данные.DepartureTime = op.DepartureTime.ToLongTimeString();
+                    Данные.DepartureTime = op.DepartureTime?.ToLongTimeString() ?? "Не указанно";
                     Данные.Days = CisClient.RegulatoryScheduleDatas.FirstOrDefault(reg=> reg.NumberOfTrain == op.NumberOfTrain)?.DaysFollowing;                                              //заполняется из регулярного расписания
                     Данные.Active = false;
                     Данные.SoundTemplates = "";

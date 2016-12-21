@@ -61,7 +61,9 @@ namespace MainExample
                 str.DepartureTime.ToLongTimeString(),
                 str.ArrivalTime.ToLongTimeString(),
                 str.DispatchStation.Name,
-                str.StationOfDestination.Name,
+                str.DestinationStation.Name,
+                ConcatStationNames(str.ListOfStops),
+                ConcatStationNames(str.ListWithoutStops),
                 str.DaysFollowing
             }).Select(s => new ListViewItem(s)).ToArray();
 
@@ -69,7 +71,21 @@ namespace MainExample
         }
 
 
+        private string ConcatStationNames(IEnumerable<StationsData> stations)
+        {
+            if (stations == null || !stations.Any())
+                return string.Empty;
 
+            StringBuilder str= new StringBuilder();
+
+            foreach (var stationsData in stations)
+            {
+                str.AppendLine(stationsData.Name);
+                str.AppendLine(", ");
+            }
+           
+            return str.ToString();
+        }
 
 
         protected override void OnClosed(EventArgs e)
@@ -79,6 +95,15 @@ namespace MainExample
 
             DispouseChangeRegulatorySheduleRx.Dispose();
             base.OnClosed(e);
+        }
+
+
+        private void btn_LoadRegSh_Click(object sender, EventArgs e)
+        {
+            //TODO: имя задавать в статическом синглтоне класса настроек.
+            const string nameRailwayStation = "Курский";
+
+            CisClient.ManualLoadingRegulatorySh(nameRailwayStation);
         }
     }
 }

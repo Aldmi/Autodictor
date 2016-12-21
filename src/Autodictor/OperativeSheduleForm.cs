@@ -53,10 +53,10 @@ namespace MainExample
             {
                 str.NumberOfTrain.ToString(),
                 str.RouteName.ToString(),
-                str.ArrivalTime.ToString(CultureInfo.InvariantCulture),
-                str.DepartureTime.ToString(CultureInfo.InvariantCulture),
+                str.ArrivalTime?.ToString(CultureInfo.InvariantCulture) ?? "Не указанно",
+                str.DepartureTime?.ToString(CultureInfo.InvariantCulture) ?? "Не указанно",
                 str.DispatchStation.Name,
-                str.StationOfDestination.Name
+                str.DestinationStation.Name
             }).Select(s=> new ListViewItem(s)).ToArray();
 
             this.InvokeIfNeeded(() => listOperSh.Items.AddRange(row));
@@ -73,6 +73,14 @@ namespace MainExample
 
             DispouseChangeOperativeSheduleRx.Dispose();
             base.OnClosed(e);
+        }
+
+        private void btn_LoadOperSh_Click(object sender, EventArgs e)
+        {
+            //TODO: имя задавать в статическом синглтоне класса настроек.
+            const string nameRailwayStation = "Курский";
+
+            CisClient.ManualLoadingOperativeSh(nameRailwayStation);
         }
     }
 }
