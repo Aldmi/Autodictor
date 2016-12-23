@@ -35,14 +35,17 @@
             this.DepartureTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DispatchStation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.StationOfDestination = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DaysFollowing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btn_LoadRegSh = new System.Windows.Forms.Button();
             this.ListOfStops = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ListWithoutStops = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DaysFollowing = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btn_LoadRegSh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listRegSh
             // 
+            this.listRegSh.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listRegSh.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NumberOfTrain,
             this.RouteName,
@@ -97,6 +100,18 @@
             this.StationOfDestination.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.StationOfDestination.Width = 241;
             // 
+            // ListOfStops
+            // 
+            this.ListOfStops.Text = "Остоновочные станции";
+            this.ListOfStops.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ListOfStops.Width = 250;
+            // 
+            // ListWithoutStops
+            // 
+            this.ListWithoutStops.Text = "Пропуск станций";
+            this.ListWithoutStops.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ListWithoutStops.Width = 250;
+            // 
             // DaysFollowing
             // 
             this.DaysFollowing.Text = "Дни следования";
@@ -112,18 +127,6 @@
             this.btn_LoadRegSh.Text = "Загрузить";
             this.btn_LoadRegSh.UseVisualStyleBackColor = true;
             this.btn_LoadRegSh.Click += new System.EventHandler(this.btn_LoadRegSh_Click);
-            // 
-            // ListOfStops
-            // 
-            this.ListOfStops.Text = "Остоновочные станции";
-            this.ListOfStops.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ListOfStops.Width = 250;
-            // 
-            // ListWithoutStops
-            // 
-            this.ListWithoutStops.Text = "Пропуск станций";
-            this.ListWithoutStops.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ListWithoutStops.Width = 250;
             // 
             // RegulatorySheduleForm
             // 

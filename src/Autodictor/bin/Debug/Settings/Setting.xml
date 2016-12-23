@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Root>
+  <CisSetting>
+    <Name>Курский</Name>
+    <EndpointAddress>http://localhost:50000/Service/Cis</EndpointAddress>
+  </CisSetting>
+
   <LogSetting>
     <PortionString>2</PortionString>
 	<CountPortion>2</CountPortion>

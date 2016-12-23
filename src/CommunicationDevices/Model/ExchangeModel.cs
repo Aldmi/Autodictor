@@ -33,6 +33,8 @@ namespace CommunicationDevices.Model
     {
         #region field
 
+        public static string NameRailwayStation;
+
         private readonly IWindsorContainer _container = new WindsorContainer();
 
         #endregion
@@ -91,13 +93,6 @@ namespace CommunicationDevices.Model
 
 
 
-
-        public void CreateCisClient(EndpointAddress endpointAddress)
-        {
-            CisClient= new CisClient(endpointAddress, Devices);
-        }
-
-
         public void StartCisClient()
         {
             CisClient.Start();
@@ -116,6 +111,7 @@ namespace CommunicationDevices.Model
             List<XmlSerialSettings> xmlSerialPorts;
             List<XmlDeviceSerialPortSettings> xmlDeviceSpSettings;
             List<XmlDevicePcSettings> xmlDevicePcSettings;
+            XmlCisSettings xmlCisSetting;
 
             try
             {
@@ -126,6 +122,7 @@ namespace CommunicationDevices.Model
                 xmlSerialPorts = XmlSerialSettings.LoadXmlSetting(xmlFile);
                 xmlDeviceSpSettings = XmlDeviceSerialPortSettings.LoadXmlSetting(xmlFile);
                 xmlDevicePcSettings = XmlDevicePcSettings.LoadXmlSetting(xmlFile);
+                xmlCisSetting= XmlCisSettings.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
             {
@@ -139,6 +136,12 @@ namespace CommunicationDevices.Model
                 Log.log.Error(ErrorString);
                 return;
             }
+
+
+            //СОЗДАНИЕ КЛИЕНТА ЦИС---------------------------------------------------------------------------------------------------------
+            NameRailwayStation = xmlCisSetting.Name;
+            CisClient = new CisClient(new EndpointAddress(xmlCisSetting.EndpointAddress), Devices);
+
 
 
             //СОЗДАНИЕ ПОСЛЕДОВАТЕЛЬНЫХ ПОРТОВ----------------------------------------------------------------------------------------------------------

@@ -109,6 +109,7 @@
     <Compile Include="Infrastructure\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\XmlCisSettings.cs" />
     <Compile Include="Settings\XmlDevicePcSettings.cs" />
     <Compile Include="Settings\XmlDeviceSerialPortSettings.cs" />
   </ItemGroup>

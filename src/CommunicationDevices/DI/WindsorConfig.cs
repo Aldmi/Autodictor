@@ -13,8 +13,6 @@ namespace CommunicationDevices.DI
         {
             container
               .Register(Component.For<IWindsorContainer>().Instance(container).LifeStyle.Singleton);
-          
-             //.Register(Component.For<IExchangeDataProvider<Mg6587Input, Mg6587Output>>().ImplementedBy<PanelMg6587WriteDataProvider>().LifeStyle.Transient)
         }
     }
 }
