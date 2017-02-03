@@ -178,8 +178,8 @@ namespace CommunicationDevices.ClientWCF
 
 
             //ВРЕМЕННОЙ УРОВЕНЬ 40сек (период таймера)
-            ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);       //DEBUG
-            //ManualSetDiagnostic(ExchangeModel.NameRailwayStation);
+            //ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);       //DEBUG
+            ManualSetDiagnostic(ExchangeModel.NameRailwayStation);
 
 
             //ВРЕМЕННОЙ УРОВЕНЬ 2мин
@@ -277,7 +277,7 @@ namespace CommunicationDevices.ClientWCF
         {
             try
             {
-                InfoScheduleDatas = new List<InfoData>(await Proxy.GetInfos("Курский"));
+                InfoScheduleDatas = new List<InfoData>(await Proxy.GetInfos(nameRailwayStation));
                 IsConnect = true;
             }
             catch (EndpointNotFoundException ex) //Конечная точка не найденна.
@@ -310,7 +310,7 @@ namespace CommunicationDevices.ClientWCF
                     Fault = d.ExhBehavior.IsConnect ? "Нормальная работа" : "НЕ на связи",
                     Status = d.ExhBehavior.IsConnect ? 100 : -100,
                 }).ToList();
-                Proxy.SetDiagnostics("Курский", listDiagnostic);
+                Proxy.SetDiagnostics(nameRailwayStation, listDiagnostic);
             }
             catch (EndpointNotFoundException ex) //Конечная точка не найденна.
             {

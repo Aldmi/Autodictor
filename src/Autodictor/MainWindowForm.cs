@@ -1151,13 +1151,12 @@ namespace MainExample
                                         {
                                             //ОЧИСТИТЬ
                                             if ((DateTime.Now >= Данные.ВремяПрибытия.AddMinutes(10) &&
-                                                 (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(10.02))))
+                                                (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(10.02))))
                                             {
                                                 if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
                                                 {
                                                     Данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                     Данные.НомерПути = 0;
-                                                    Данные.НазванияТабло = null;
                                                     SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList().ForEach(
                                                         keyValuePair =>
                                                         {
@@ -1165,6 +1164,7 @@ namespace MainExample
                                                             новыеДанные.НомерПути = 0;
                                                             новыеДанные.НазванияТабло = null;
                                                             SoundRecords[keyValuePair.Key]= новыеДанные;
+                                                            SoundRecordsOld[keyValuePair.Key] = новыеДанные;
                                                         }); 
 
                                                     SendOnPathTable(Данные);
@@ -1181,9 +1181,7 @@ namespace MainExample
                                                 if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
                                                 {
                                                     Данные.СостояниеОтображения = TableRecordStatus.Очистка;
-
                                                     Данные.НомерПути = 0;
-                                                    Данные.НазванияТабло = null;
                                                     SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList().ForEach(
                                                         keyValuePair =>
                                                         {
@@ -1191,6 +1189,7 @@ namespace MainExample
                                                             новыеДанные.НомерПути = 0;
                                                             новыеДанные.НазванияТабло = null;
                                                             SoundRecords[keyValuePair.Key] = новыеДанные;
+                                                            SoundRecordsOld[keyValuePair.Key] = новыеДанные;
                                                         });
 
                                                     SendOnPathTable(Данные);
@@ -1206,9 +1205,9 @@ namespace MainExample
                             SoundRecordsOld[Key] = Данные;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        Console.WriteLine(ex.Message);
+                        // ignored
                     }
                 }
             }
