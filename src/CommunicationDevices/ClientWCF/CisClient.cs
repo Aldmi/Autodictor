@@ -11,6 +11,7 @@ using Library.Logs;
 using WCFAvtodictor2PcTableContract.Contract;
 using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
+using WCFCis2AvtodictorContract.PostProcessing;
 
 
 namespace CommunicationDevices.ClientWCF
@@ -84,6 +85,21 @@ namespace CommunicationDevices.ClientWCF
             {
                 if (value == _regulatorySchedules) return;
                 _regulatorySchedules = value;
+
+                //Преобразовали ДниСледования от формата АПКД к формату Автодиктора
+                if (RegulatoryScheduleDatas != null && RegulatoryScheduleDatas.Any())                                   //TODO: проверить ск-ть выполнения кода конвертера.
+                {
+                    var converter = new DaysFollowingConverter(RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
+                    var newDaysFolowing = converter.Convert();
+                    if (newDaysFolowing != null && newDaysFolowing.Count == RegulatoryScheduleDatas.Count)
+                    {
+                        for (int i = 0; i < newDaysFolowing.Count; i++)
+                        {
+                            RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
+                        }
+                    }
+                }
+
                 RegulatoryScheduleDatasChange.OnNext(RegulatoryScheduleDatas);
             }
         }
@@ -187,8 +203,11 @@ namespace CommunicationDevices.ClientWCF
             {
                 _minutLevel2 = DateTime.Now;
 
+                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);//DEBUG
+
+
                 //считываем инфо.
-                //ManualLoadingInfoSh(ExchangeModel.NameRailwayStation);
+                // ManualLoadingInfoSh(ExchangeModel.NameRailwayStation);
             }
 
 
@@ -347,7 +366,7 @@ namespace CommunicationDevices.ClientWCF
         /// Закрыть, открыть канал и перслздать прокси.
         /// </summary>
         private bool ReOpenChanel()
-        {
+         {
             if (ChannelFactory?.Endpoint == null)
                 return false;
 

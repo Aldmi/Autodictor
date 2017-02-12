@@ -5,9 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
-using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Infrastructure;
@@ -23,102 +21,103 @@ namespace MainExample
     public struct SoundRecord
     {
         public int ID;
+        public string НомерПоезда;
+        public string НазваниеПоезда;
+        public string СтанцияОтправления;
+        public string СтанцияНазначения;
         public DateTime Время;
-        public float Длительность;
-        public string Описание;
-        public string[] ИменаФайлов;
-        public SoundRecordStatus Состояние;
-        public SoundRecordType ТипСообщения;
-        public byte НомерПути;
-        public byte НумерацияПоезда;
         public DateTime ВремяПрибытия;
         public uint ВремяСтоянки;
         public DateTime ВремяОтправления;
-        public byte БитыАктивностиПолей;
-        public string НомерПоезда;
-        public byte ШаблонВоспроизведенияПути;
-        public string НазваниеПоезда;
-        public byte ОтображениеВТаблицах;
+        public string ДниСледования;
+        public bool Активность;
+        public string ШаблонВоспроизведенияСообщений;
+        public byte НумерацияПоезда;
+        public string НомерПути;
+        public ТипПоезда ТипПоезда;
         public string Примечание;
+        public string Описание;
+        public SoundRecordStatus Состояние;
+        public SoundRecordType ТипСообщения;
+        public byte БитыАктивностиПолей;
         public string[] НазванияТабло;                        //!!!
         public TableRecordStatus СостояниеОтображения;        //!!!
+        public string[] ИменаФайлов;
+        public byte КоличествоПовторений;
+        public List<СостояниеФормируемогоСообщенияИШаблон> СписокФормируемыхСообщений;
+        public byte СостояниеКарточки;
+        public string ОписаниеСостоянияКарточки;
+        public byte БитыНештатныхСитуаций; // бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления
+        public uint ТаймерПовторения;
     };
+
+    public struct СтатическоеСообщение
+    {
+        public int ID;
+        public DateTime Время;
+        public string НазваниеКомпозиции;
+        public string ОписаниеКомпозиции;
+        public SoundRecordStatus СостояниеВоспроизведения;
+        public bool Активность;
+    };
+
+    public struct СостояниеФормируемогоСообщенияИШаблон
+    {
+        public bool Активность;
+        public bool Воспроизведен;
+        public int ВремяСмещения;
+        public string НазваниеШаблона;
+        public string Шаблон;
+        public int ПривязкаКВремени;
+    };
+
+    public struct ОписаниеСобытия
+    {
+        public DateTime Время;
+        public string Описание;
+        public byte НомерСписка; // 0 - Динамические сообщения, 1 - статические звуковые сообщения
+        public string Ключ;
+        public byte СостояниеСтроки; 
+    };
+
 
 
     public partial class MainWindowForm : Form
     {
       
-      public static string[] Станции = new string[]
-        {
-            "Рижская",
-            "Останкино",
-            "Петровско разумовское",
-            "НАТИ",
-            "Моссельмаш",
-            "Ховрино",
-            "Левобережье",
-            "Химки",
-            "Планерная",
-            "Новоподрезково",
-            "Подрезково",
-            "Сходня",
-            "Фирсановская",
-            "Малино",
-            "Крюково",
-            "Алабушево",
-            "Радишево",
-            "Поваровка",
-            "Поварово 1",
-            "Берёзки",
-            "Подсолнечная",
-            "Сенеж",
-            "Головково",
-            "Покровка",
-            "Фроловская",
-            "Стриглово",
-            "Клин",
-            "Ямуга",
-            "Решетниково",
-            "Черничная",
-            "Завидово",
-            "Московское море",
-            "Редкино",
-            "Межево",
-            "Кузьминка",
-            "Чуприяновка",
-            "Лазурная",
-            "Тверь",
-            "Путепроводная",
-            "Конаковский мох",
-            "Донховка",
-            "Конаково",
-        };
         private bool РазрешениеРаботы = false;
 
         static public SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
         static public SortedDictionary<string, SoundRecord> SoundRecordsOld = new SortedDictionary<string, SoundRecord>();
 
+        static public SortedDictionary<string, СтатическоеСообщение> СтатическиеЗвуковыеСообщения = new SortedDictionary<string, СтатическоеСообщение>();
+
+        static public SortedDictionary<string, ОписаниеСобытия> СписокБлижайшихСобытий = new SortedDictionary<string, ОписаниеСобытия>();
+
+
         static private int ID = 1;
-        private int ТекущаяДата = 0;
-        private int Volume = 0;
         private bool ОбновлениеСписка = false;
-        private bool ВоспроизводитьДвижениеПоездов = true;
 
         static public MainWindowForm myMainForm = null;
 
-        private Предупреждение ОкноПредупреждения = null;
-
-        private string[] ВоспроизводимыеФайлы;
-        private byte НомерВоспроизводимогоТрека = 0;
-        private int ОбщееВремяВоспроизведения = 0;
-        private float ВремяВоспроизведенияПроигранныхФайлов = 0f;
-
-        public List<string> ОчередьВоспроизводимыхЗвуковыхСообщений = new List<string>();
+        public static List<string> ОчередьВоспроизводимыхЗвуковыхСообщений = new List<string>();
+        private int VisibleMode = 0;
 
         public CisClient CisClient { get; }
         static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
         public int ProgressLoadMainList { get; set; }
+
+        public int ВремяЗадержкиМеждуСообщениями = 0;
+        private int ТекущаяСекунда = 0;
+        public static bool ФлагОбновитьСписокЗвуковыхСообщений = false;
+
+        public static byte РаботаПоНомеруДняНедели = 7;
+        public static bool ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели = false;
+
+        public static bool ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = false;
+
+        private string КлючВыбранныйМеню = "";
 
 
         // Конструктор
@@ -130,61 +129,89 @@ namespace MainExample
             myMainForm = this;
 
             InitializeComponent();
-            this.lblTime.Text = DateTime.Now.ToLongTimeString();
 
-
-            btnБлокировка.Text = "ВКЛЮЧИТЬ";
-            pnСостояние.BackColor = Color.Orange;
-            lblСостояние.Text = "ВЫКЛЮЧЕНА";
+            tableLayoutPanel1.Visible = false;
 
             CisClient = cisClient;
             BindingBehaviors = bindingBehaviors;
+            MainForm.Воспроизвести.Click += new System.EventHandler(this.btnВоспроизвести_Click);
+            MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
+            MainForm.ОбновитьСписок.Click += new System.EventHandler(this.btnОбновитьСписок_Click);
 
-           
+
+
 
             if (CisClient.IsConnect)
             {
-                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
-                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+                MainForm.СвязьСЦис.Text = "ЦИС на связи";
+                MainForm.СвязьСЦис.BackColor = Color.LightGreen;
             }
             else
             {
-                pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
-                lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+                MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
+                MainForm.СвязьСЦис.BackColor = Color.Orange;
             }
 
             DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
              {
                  if (isConnect)
                  {
-                     pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.LightGreen);
-                     lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС на связи");
+                     MainForm.СвязьСЦис.Text = "ЦИС на связи";
+                     MainForm.СвязьСЦис.BackColor = Color.LightGreen;
                  }
                  else
                  {
-                     pnСостояниеCIS.InvokeIfNeeded(() => pnСостояниеCIS.BackColor = Color.Orange);
-                     lblСостояниеCIS.InvokeIfNeeded(() => lblСостояниеCIS.Text = "ЦИС НЕ на связи");
+                     MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
+                     MainForm.СвязьСЦис.BackColor = Color.Orange;
                  }
              });
+
+            MainForm.Включить.BackColor = Color.Orange;
+            Program.ЗаписьЛога("Системное сообщение", "Программный комплекс включен");
         }
+
 
 
         // Обработка таймера 100 мс для воспроизведения звуковых сообщений
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.lblTime.Text = DateTime.Now.ToString("HH:mm:ss");
-            this.lblDate.Text = DateTime.Now.ToString("dd.MM.yyyy");
-            this.lblDayOfWeek.Text = DateTime.Now.ToString("dddd");
-            if ((DateTime.Now.DayOfWeek == System.DayOfWeek.Saturday) || (DateTime.Now.DayOfWeek == System.DayOfWeek.Sunday))
-                this.lblDayOfWeek.ForeColor = Color.Yellow;
-            else
-                this.lblDayOfWeek.ForeColor = Color.Green;
-
-            if (backgroundWorker1.IsBusy)  //DEBUG???????????????????
-               return;
-
             ОбработкаЗвуковогоПотка();
+            ОпределитьИнформациюДляОтображенияНаТабло();
+
+            if (VisibleMode != MainForm.VisibleStyle)
+            {
+                VisibleMode = MainForm.VisibleStyle;
+                if (VisibleMode == 0)
+                {
+                    listView1.Visible = true;
+                    tableLayoutPanel1.Visible = false;
+                }
+                else
+                {
+                    listView1.Visible = false;
+                    tableLayoutPanel1.Visible = true;
+                }
+            }
+
+            if (ФлагОбновитьСписокЗвуковыхСообщений == true)
+            {
+                ФлагОбновитьСписокЗвуковыхСообщений = false;
+                ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений();
+            }
+
+            if (ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели == true)
+            {
+                ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели = false;
+                btnОбновитьСписок_Click(null, null);
+            }
+
+            if (ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице == true)
+            {
+                ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = false;
+                ОбновитьСписокЗвуковыхСообщенийВТаблице();
+            }
         }
+
 
 
         // Обработка нажатия кнопки блокировки/разрешения работы
@@ -194,742 +221,399 @@ namespace MainExample
 
             if (РазрешениеРаботы == true)
             {
-                btnБлокировка.Text = "ОТКЛЮЧИТЬ";
-                pnСостояние.BackColor = Color.LightGreen;
-                lblСостояние.Text = "РАБОТА";
+                MainForm.Включить.Text = "ОТКЛЮЧИТЬ";
+                MainForm.Включить.BackColor = Color.LightGreen;
+                Program.ЗаписьЛога("Действие оператора", "Работа разрешена");
             }
             else
             {
-                btnБлокировка.Text = "ВКЛЮЧИТЬ";
-                pnСостояние.BackColor = Color.Orange;
-                lblСостояние.Text = "ВЫКЛЮЧЕНА";
+                MainForm.Включить.Text = "ВКЛЮЧИТЬ";
+                MainForm.Включить.BackColor = Color.Orange;
+                Program.ЗаписьЛога("Действие оператора", "Работа запрещена");
             }
         }
+
 
 
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
         private void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
-            if (backgroundWorker1.IsBusy)
-            {
-                backgroundWorker1.CancelAsync();
-
-                btnОбновитьСписок.Text = "Обновить список";
-                btnОбновитьСписок.BackColor = DefaultBackColor;
-                btnБлокировка.Enabled = true;
-            }
-            else
-            {
-                progressBar.Maximum = TrainTable.TrainTableRecords.Count() + SoundConfiguration.SoundConfigurationRecords.Count();
-                progressBar.Minimum = 0;
-                progressBar.Step = 1;
-                progressBar.Value = progressBar.Minimum;
-                ProgressLoadMainList = progressBar.Minimum;
-
-
-                btnОбновитьСписок.Text = "Отмена";
-                btnОбновитьСписок.BackColor = Color.Crimson;
-                btnБлокировка.Enabled = false;
-                  
-                backgroundWorker1.RunWorkerAsync();
-            }
-        }
-
-
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            ОбновитьСписокЗвуковыхСообщений(e);
-            ОбновитьСписокЗвуковыхСообщенийВТаблице(e);
-        }
-
-        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
-        {
-            progressBar.Value = e.ProgressPercentage;
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error!= null)
-            {
-                MessageBox.Show("Загрузка завершена с ОШИБКОЙ");
-            }
-            else
-            if (e.Cancelled)
-            {
-               MessageBox.Show("Загрузка отменена!!!");
-            }
-            else
-            {
-                progressBar.Value = progressBar.Maximum;
-            }
-
-            btnОбновитьСписок.Text = "Обновить список";
-            btnОбновитьСписок.BackColor = DefaultBackColor;
-            btnБлокировка.Enabled = true;
-        }
-
-
-        private void btn_cancelRefresh_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.CancelAsync();
+            ОбновитьСписокЗвуковыхСообщений(sender, e);
+            ОбновитьСписокЗвуковыхСообщенийВТаблице();
+            ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений();
+            ОбновитьСостояниеЗаписейТаблицы();
         }
 
 
 
         // Формирование списка воспроизведения
-        public void ОбновитьСписокЗвуковыхСообщений(DoWorkEventArgs e)
+        public void ОбновитьСписокЗвуковыхСообщений(object sender, EventArgs e)
         {
             SoundRecords.Clear();
             SoundRecordsOld.Clear();
-            ID = 1;
+            СтатическиеЗвуковыеСообщения.Clear();
 
-            int[] НачалоИнтервала = new int[10000];
-            int[] КонецИнтервала = new int[10000];
-            НачалоИнтервала[0] = 25 * 60 * 60;
-            КонецИнтервала[0] = 25 * 60 * 60;
-            int КоличествоИнтервалов = 1;
+            ID = 1;
 
             #region Создание звуковых файлов расписания ЖД транспорта
             foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
             {
-                if (this.backgroundWorker1.CancellationPending)
+                SoundRecord Record;
+
+                Record.НомерПоезда = Config.Num;
+                Record.НазваниеПоезда = Config.Name;
+
+                Record.СтанцияОтправления = "";
+                Record.СтанцияНазначения = "";
+                Record.ДниСледования = Config.Days;
+                Record.Активность = Config.Active;
+                Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
+                Record.НомерПути = Config.TrainPathNumber;
+                Record.НумерацияПоезда = Config.TrainPathDirection;
+                Record.Примечание = Config.Примечание;
+                Record.ТипПоезда = Config.ТипПоезда;
+                Record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
+                Record.ТипСообщения = SoundRecordType.ДвижениеПоездаНеПодтвержденное;
+                Record.Описание = "";
+                Record.КоличествоПовторений = 1;
+                Record.СостояниеКарточки = 0;
+                Record.ОписаниеСостоянияКарточки = "";
+                Record.БитыНештатныхСитуаций = 0x00;
+                Record.ТаймерПовторения = 0;
+
+                Record.ИменаФайлов = new string[0];
+
+                DateTime ТекущееВремя = DateTime.Now;
+                ПланРасписанияПоезда планРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(Config.Days);
+                if ((РаботаПоНомеруДняНедели == 7) || (планРасписанияПоезда.ПолучитьРежимРасписания() != РежимРасписанияДвиженияПоезда.ПоДням) || (Record.ТипПоезда == ТипПоезда.Пассажирский) || (Record.ТипПоезда == ТипПоезда.Скоростной) || (Record.ТипПоезда == ТипПоезда.Скорый))
                 {
-                    e.Cancel = true;
-                    return;
+                    if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(DateTime.Now.Month - 1), (byte)(DateTime.Now.Day - 1)) == false)
+                        continue;
                 }
-                backgroundWorker1.ReportProgress(ProgressLoadMainList++);
-
-                if (Config.Active == true)
+                else
                 {
+                    if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)4, (byte)РаботаПоНомеруДняНедели) == false)
+                        continue;
+                }
 
-                    DateTime ТекущееВремя = DateTime.Now;
-                    ПланРасписанияПоезда планРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(Config.Days);
 
+                string[] НазванияСтанций = Config.Name.Split('-');
+                if (НазванияСтанций.Length == 2)
+                {
+                    Record.СтанцияОтправления = НазванияСтанций[0].Trim();
+                    Record.СтанцияНазначения = НазванияСтанций[1].Trim();
+                }
+                else if (НазванияСтанций.Length == 1)
+                    Record.СтанцияНазначения = НазванияСтанций[0].Trim();
 
-                    if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(ТекущееВремя.Month - 1), (byte)(ТекущееВремя.Day - 1)) == true)
+                int Часы = 0;
+                int Минуты = 0;
+                DateTime ВремяСобытия = new DateTime(2000, 1, 1, 0, 0, 0);
+                DateTime ВремяПрибытия = new DateTime(2000, 1, 1, 0, 0, 0);
+                DateTime ВремяОтправления = new DateTime(2000, 1, 1, 0, 0, 0);
+
+                Record.ВремяПрибытия = DateTime.Now;
+                Record.ВремяОтправления = DateTime.Now;
+
+                byte НомерСписка = 0x00;
+                // бит 0 - задан номер пути
+                // бит 1 - задана нумерация поезда
+                // бит 2 - прибытие
+                // бит 3 - стоянка
+                // бит 4 - отправления
+
+                if (Config.ArrivalTime != "")
+                {
+                    string[] SubStrings = Config.ArrivalTime.Split(':');
+
+                    if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
                     {
-                        string[] ШаблонОповещения = Config.SoundTemplates.Split(':');
+                        ВремяПрибытия = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+                        Record.ВремяПрибытия = ВремяПрибытия;
+                        НомерСписка |= 0x04;
+                    }
+                }
 
-                        if (ШаблонОповещения.Length == 15)
-                            for (int j = 0; j < 5; j++)
+                if (Config.DepartureTime != "")
+                {
+                    string[] SubStrings = Config.DepartureTime.Split(':');
+
+                    if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
+                    {
+                        ВремяОтправления = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+                        Record.ВремяОтправления = ВремяОтправления;
+                        НомерСписка |= 0x10;
+                    }
+                }
+
+                int ВремяСтоянки = 0;
+                if (НомерСписка == 0x14)
+                {
+                    if (ВремяОтправления >= ВремяПрибытия)
+                        ВремяСтоянки = (ВремяОтправления - ВремяПрибытия).Minutes;
+                    else
+                        ВремяСтоянки = 1440 - ВремяПрибытия.Hour * 60 - ВремяПрибытия.Minute + ВремяОтправления.Hour * 60 + ВремяОтправления.Minute;
+
+                    НомерСписка |= 0x08;
+                }
+
+                Record.ВремяСтоянки = (uint)ВремяСтоянки;
+                Record.БитыАктивностиПолей = НомерСписка;
+                Record.БитыАктивностиПолей |= 0x03;
+
+                Record.ID = ID++;
+                byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
+                Record.НазванияТабло = Record.НомерПути != "0" ? BindingBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
+                Record.СостояниеОтображения = TableRecordStatus.Выключена;
+
+                if ((НомерСписка & 0x04) != 0x00)
+                    Record.Время = Record.ВремяПрибытия;
+                else
+                    Record.Время = Record.ВремяОтправления;
+
+
+                // Шаблоны оповещения
+                Record.СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
+                string[] ШаблонОповещения = Record.ШаблонВоспроизведенияСообщений.Split(':');
+                int ПривязкаВремени = 0;
+                if ((ШаблонОповещения.Length % 3) == 0)
+                {
+                    bool АктивностьШаблоновДанногоПоезда = false;
+                    if (Record.ТипПоезда == ТипПоезда.Пассажирский && Program.Настройки.АвтФормСообщНаПассажирскийПоезд) АктивностьШаблоновДанногоПоезда = true;
+                    if (Record.ТипПоезда == ТипПоезда.Пригородный && Program.Настройки.АвтФормСообщНаПригородныйЭлектропоезд) АктивностьШаблоновДанногоПоезда = true;
+                    if (Record.ТипПоезда == ТипПоезда.Скоростной && Program.Настройки.АвтФормСообщНаСкоростнойПоезд) АктивностьШаблоновДанногоПоезда = true;
+                    if (Record.ТипПоезда == ТипПоезда.Скорый && Program.Настройки.АвтФормСообщНаСкорыйПоезд) АктивностьШаблоновДанногоПоезда = true;
+                    if (Record.ТипПоезда == ТипПоезда.Ласточка && Program.Настройки.АвтФормСообщНаЛасточку) АктивностьШаблоновДанногоПоезда = true;
+                    if (Record.ТипПоезда == ТипПоезда.Фирменный && Program.Настройки.АвтФормСообщНаФирменный) АктивностьШаблоновДанногоПоезда = true;
+                    if (Record.ТипПоезда == ТипПоезда.РЭКС && Program.Настройки.АвтФормСообщНаРЭКС) АктивностьШаблоновДанногоПоезда = true;
+
+                    for (int i = 0; i < ШаблонОповещения.Length / 3; i++)
+                    {
+                        bool НаличиеШаблона = false;
+                        string Шаблон = "";
+                        foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
+                            if (Item.Name == ШаблонОповещения[3 * i + 0])
                             {
-                                foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
-                                    if (Item.Name == ШаблонОповещения[3 * j])
-                                    {
-                                        int ШаблонОповещенияПути = 0;
-                                        int.TryParse(ШаблонОповещения[3 * j + 2], out ШаблонОповещенияПути);
-
-                                        string[] ВременаРаботыШаблона = (ШаблонОповещения[3 * j + 1].Replace(" ", "")).Split(',');
-                                        if (ВременаРаботыШаблона.Length > 0)
-                                        {
-                                            foreach (string Time in ВременаРаботыШаблона)
-                                            {
-                                                int КоличествоМинут;
-                                                if (int.TryParse(Time, out КоличествоМинут))
-                                                {
-                                                    SoundRecord Record;
-                                                    Record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                                                    Record.ТипСообщения = SoundRecordType.ДвижениеПоездаНеПодтвержденное;
-                                                    Record.ШаблонВоспроизведенияПути = (byte)(((ШаблонОповещенияПути < 0) || (ШаблонОповещенияПути > 3)) ? 0 : ШаблонОповещенияПути);
-
-                                                    Record.Описание = Item.Name + " (" + КоличествоМинут.ToString() + " минут";
-                                                    switch (j)
-                                                    {
-                                                        case 0: Record.Описание += " до прибытия)"; break;
-                                                        case 1: Record.Описание += " после прибытия)"; break;
-                                                        case 2: Record.Описание += " до отправления)"; break;
-                                                        case 3: Record.Описание += " до отправления)"; break;
-                                                        case 4: Record.Описание += " после отправления)"; break;
-                                                    }
-
-                                                    Record.ИменаФайлов = new string[1];
-                                                    Record.ИменаФайлов[0] = StaticSoundForm.GetFilePath(Record.Описание);
-                                                    Record.НомерПоезда = "";
-                                                    Record.НазваниеПоезда = "";
-                                                    Record.ВремяОтправления = new DateTime(DateTime.Now.Ticks);
-                                                    Record.ВремяПрибытия = new DateTime(DateTime.Now.Ticks);
-
-                                                    int Часы = 0;
-                                                    int Минуты = 0;
-                                                    DateTime ВремяСобытия = new DateTime(2000, 1, 1, 0, 0, 0);
-                                                    DateTime ВремяПрибытия = new DateTime(2000, 1, 1, 0, 0, 0);
-                                                    DateTime ВремяОтправления = new DateTime(2000, 1, 1, 0, 0, 0);
-
-
-                                                    if (Config.ArrivalTime != "")
-                                                    {
-                                                        string[] SubStrings = Config.ArrivalTime.Split(':');
-
-                                                        if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
-                                                        {
-                                                            ВремяПрибытия = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
-                                                            Record.ВремяПрибытия = ВремяПрибытия;
-                                                        }
-                                                        else
-                                                            continue;
-                                                    }
-                                                    else if (j == 0 || j == 1)
-                                                        continue;
-
-                                                    if (Config.DepartureTime != "")
-                                                    {
-                                                        string[] SubStrings = Config.DepartureTime.Split(':');
-
-                                                        if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
-                                                        {
-                                                            ВремяОтправления = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
-                                                            Record.ВремяОтправления = ВремяОтправления;
-                                                        }
-                                                        else
-                                                            continue;
-                                                    }
-                                                    else if (j == 2 || j == 3 || j == 4)
-                                                        continue;
-
-
-                                                    Record.БитыАктивностиПолей = 0x00;
-                                                    switch (j)
-                                                    {
-                                                        case 0: // Предупреждение о прибытии
-                                                        case 1: // Предупреждение после прибытия
-                                                            ВремяСобытия = ВремяПрибытия.AddMinutes(j == 0 ? -КоличествоМинут : КоличествоМинут);
-                                                            break;
-
-                                                        case 2: // Стоянка до отправления
-                                                        case 3: // Предупреждение до отправления
-                                                        case 4: // Предупреждение после отправления
-                                                            ВремяСобытия = ВремяОтправления.AddMinutes(j == 4 ? КоличествоМинут : -КоличествоМинут);
-                                                            Record.БитыАктивностиПолей |= 0x20;
-                                                            break;
-                                                    }
-
-                                                    Record.ID = ID++;
-                                                    Record.Время = ВремяСобытия;
-                                                    List<string> МассивЗвуковыхСообщений = new List<string>();
-
-                                                    if (Item.Message.Contains("НОМЕР ПУТИ"))
-                                                        Record.БитыАктивностиПолей |= 0x01;
-
-                                                    if (Item.Message.Contains("НУМЕРАЦИЯ СОСТАВА"))
-                                                        Record.БитыАктивностиПолей |= 0x02;
-
-                                                    if (string.IsNullOrEmpty(Config.ArrivalTime) == false)
-                                                        Record.БитыАктивностиПолей |= 0x04;
-
-                                                    if (string.IsNullOrEmpty(Config.DepartureTime) == false)
-                                                        Record.БитыАктивностиПолей |= 0x10;
-
-                                                    if ((Record.БитыАктивностиПолей & 0x14) == 0x14)
-                                                    {
-                                                        int ВремяСтоянки = 0;
-
-                                                        if (Record.ВремяОтправления >= Record.ВремяПрибытия)
-                                                            ВремяСтоянки = (Record.ВремяОтправления - Record.ВремяПрибытия).Minutes;
-                                                        else
-                                                            ВремяСтоянки = 1440 - Record.ВремяПрибытия.Hour * 60 - Record.ВремяПрибытия.Minute + Record.ВремяОтправления.Hour * 60 + Record.ВремяОтправления.Minute;
-
-                                                        Record.ВремяСтоянки = (uint)ВремяСтоянки;
-                                                        Record.БитыАктивностиПолей |= 0x08;
-                                                    }
-                                                    else
-                                                        Record.ВремяСтоянки = 0;
-
-                                                    string[] ФайлыЧасов = new string[] { "В 00 часов", "В 01 час", "В 02 часа", "В 03 часа", "В 04 часа", "В 05 часов", "В 06 часов", "В 07 часов",
-                                                                                        "В 08 часов", "В 09 часов", "В 10 часов", "В 11 часов", "В 12 часов", "В 13 часов", "В 14 часов", "В 15 часов",
-                                                                                        "В 16 часов", "В 17 часов", "В 18 часов", "В 19 часов", "В 20 часов", "В 21 час", "В 22 часа", "В 23 часа" };
-
-                                                    string[] ФайлыМинут = new string[] { "00 минут", "01 минута", "02 минуты", "03 минуты", "04 минуты", "05 минут", "06 минут", "07 минут", "08 минут",
-                                                                                             "09 минут", "10 минут", "11 минут", "12 минут", "13 минут", "14 минут", "15 минут", "16 минут", "17 минут",
-                                                                                             "18 минут", "19 минут", "20 минут", "21 минута", "22 минуты", "23 минуты", "24 минуты", "25 минут", "26 минут",
-                                                                                             "27 минут", "28 минут", "29 минут", "30 минут", "31 минута", "32 минуты", "33 минуты", "34 минуты", "35 минут",
-                                                                                             "36 минут", "37 минут", "38 минут", "39 минут", "40 минут", "41 минута", "42 минуты", "43 минуты", "44 минуты",
-                                                                                             "45 минут", "46 минут", "47 минут", "48 минут", "49 минут", "50 минут", "51 минута", "52 минуты", "53 минуты",
-                                                                                             "54 минуты", "55 минут", "56 минут", "57 минут", "58 минут", "59 минут" };
-
-                                                    bool НаличиеВШаблонеНомераПути = false;
-                                                    bool НаличиеВШаблонеНумерацииСостава = false;
-
-                                                    Record.Длительность = 0f;
-                                                    string[] ШаблоныОповещения = Item.Message.Split('|');
-                                                    foreach (string шаблон in ШаблоныОповещения)
-                                                    {
-                                                        switch (шаблон)
-                                                        {
-                                                            case "НОМЕР ПОЕЗДА":
-                                                                if (Program.TrainNumbersFolder.Contains(Config.Num))
-                                                                {
-                                                                    Record.НомерПоезда = Config.Num + ": ";
-                                                                    Record.НазваниеПоезда = Config.Name;
-                                                                    МассивЗвуковыхСообщений.Add(Config.Num);
-                                                                }
-                                                                break;
-
-                                                            case "НОМЕР ПУТИ":
-                                                                МассивЗвуковыхСообщений.Add("НОМЕР ПУТИ");
-                                                                НаличиеВШаблонеНомераПути = true;
-                                                                Record.Длительность += 3.0f;
-                                                                break;
-
-                                                            case "ВРЕМЯ ПРИБЫТИЯ":
-                                                                МассивЗвуковыхСообщений.Add("ВРЕМЯ ПРИБЫТИЯ");
-                                                                break;
-
-                                                            case "ВРЕМЯ СТОЯНКИ":
-                                                                МассивЗвуковыхСообщений.Add("ВРЕМЯ СТОЯНКИ");
-                                                                break;
-
-                                                            case "ВРЕМЯ ОТПРАВЛЕНИЯ":
-                                                                МассивЗвуковыхСообщений.Add("ВРЕМЯ ОТПРАВЛЕНИЯ");
-                                                                break;
-
-                                                            case "НУМЕРАЦИЯ СОСТАВА":
-                                                                МассивЗвуковыхСообщений.Add("НУМЕРАЦИЯ СОСТАВА");
-                                                                НаличиеВШаблонеНумерацииСостава = true;
-                                                                break;
-
-
-                                                            case "СТАНЦИИ":
-                                                                 МассивЗвуковыхСообщений.Add("СТАНЦИИ");
-                                                                 break;
-
-                                                            default:
-                                                                if (Program.FilesFolder.Contains(шаблон))
-                                                                    МассивЗвуковыхСообщений.Add(шаблон);
-                                                                break;
-                                                        }
-                                                    }
-
-
-                                                    string[] ЗвуковыеФайлы = new string[МассивЗвуковыхСообщений.Count];
-                                                    for (int k = 0; k < МассивЗвуковыхСообщений.Count; k++)
-                                                    {
-                                                        ЗвуковыеФайлы[k] = МассивЗвуковыхСообщений[k];
-
-                                                        Player.PlayFile(Program.GetFileName(ЗвуковыеФайлы[k]));
-                                                        Record.Длительность += Player.GetDuration();
-                                                        Player.PlayFile(string.Empty);
-                                                    }
-
-                                                    Record.НомерПути = Config.TrainPathNumber;
-                                                    Record.НумерацияПоезда = Config.TrainPathDirection;
-                                                    Record.ИменаФайлов = ЗвуковыеФайлы;
-
-                                                    if (!НаличиеВШаблонеНомераПути || ((Config.TrainPathNumber > 0) && (Config.TrainPathNumber <= 14)))
-                                                        if (!НаличиеВШаблонеНумерацииСостава || ((Config.TrainPathDirection > 0) && (Config.TrainPathDirection <= 2)))
-                                                            Record.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-
-                                                    Record.Примечание = Config.Примечание;
-                                                    Record.ОтображениеВТаблицах = Config.ShowInPanels;
-
-                                                    Record.НазванияТабло = Record.НомерПути != 0 ? BindingBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
-                                                    Record.СостояниеОтображения = TableRecordStatus.Выключена;
-
-
-
-
-                                                    //========================================================================================================================================
-                                                    int ИнтервалВременныхУчастков = 0;
-                                                    int ВремяНачало = Record.Время.Hour * 60 * 60 + Record.Время.Minute * 60 + Record.Время.Second;
-                                                    int ВремяКонец = (int)(ВремяНачало + Record.Длительность + 1);
-
-
-                                                    if (ВремяКонец < НачалоИнтервала[0])
-                                                    {
-                                                        int jj = КоличествоИнтервалов;
-                                                        for (; jj > 0; jj--)
-                                                        {
-                                                            НачалоИнтервала[jj] = НачалоИнтервала[jj - 1];
-                                                            КонецИнтервала[jj] = КонецИнтервала[jj - 1];
-                                                        }
-
-                                                        НачалоИнтервала[0] = ВремяНачало;
-                                                        КонецИнтервала[0] = ВремяКонец;
-
-                                                        КоличествоИнтервалов++;
-                                                    }
-                                                    else
-                                                    {
-                                                        int КоличествоПопыток = 0;
-                                                        for (ИнтервалВременныхУчастков = 0; ИнтервалВременныхУчастков < (КоличествоИнтервалов - 1); ИнтервалВременныхУчастков++)
-                                                        {
-                                                            if (((ВремяНачало >= НачалоИнтервала[ИнтервалВременныхУчастков])) && (ВремяНачало < НачалоИнтервала[ИнтервалВременныхУчастков + 1]))
-                                                            {
-                                                                while (КоличествоПопыток < 5)
-                                                                {
-                                                                    if (ИнтервалВременныхУчастков < (КоличествоИнтервалов - 1))
-                                                                    {
-                                                                        if (ВремяНачало < КонецИнтервала[ИнтервалВременныхУчастков])
-                                                                        {
-                                                                            Record.Время = Record.Время.AddSeconds(КонецИнтервала[ИнтервалВременныхУчастков] + 1 - ВремяНачало);
-                                                                            ВремяНачало = КонецИнтервала[ИнтервалВременныхУчастков] + 1;
-                                                                            ВремяКонец = (int)(ВремяНачало + Record.Длительность + 1);
-                                                                        }
-
-                                                                        if (ВремяКонец < НачалоИнтервала[ИнтервалВременныхУчастков + 1])
-                                                                        {
-                                                                            int jj = КоличествоИнтервалов;
-                                                                            for (; jj > (ИнтервалВременныхУчастков + 1); jj--)
-                                                                            {
-                                                                                НачалоИнтервала[jj] = НачалоИнтервала[jj - 1];
-                                                                                КонецИнтервала[jj] = КонецИнтервала[jj - 1];
-                                                                            }
-
-                                                                            НачалоИнтервала[jj] = ВремяНачало;
-                                                                            КонецИнтервала[jj] = ВремяКонец;
-
-                                                                            КоличествоИнтервалов++;
-                                                                            break;
-                                                                        }
-                                                                    }
-
-                                                                    ИнтервалВременныхУчастков++;
-                                                                    КоличествоПопыток++;
-                                                                }
-
-                                                                break;
-                                                            }
-                                                        }
-
-                                                        if (КоличествоПопыток >= 5)
-                                                            continue;
-                                                    }
-                                                    //========================================================================================================================================
-
-
-
-                                                    string Key = Record.Время.ToString("HH:mm:ss");
-                                                    string[] SubKeys = Key.Split(':');
-                                                    if (SubKeys[0].Length == 1)
-                                                        Key = "0" + Key;
-
-                                                    if (SoundRecords.ContainsKey(Key) == false)
-                                                    {
-                                                        SoundRecords.Add(Key, Record);
-                                                        SoundRecordsOld.Add(Key, Record);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                НаличиеШаблона = true;
+                                Шаблон = Item.Message;
+                                break;
                             }
+
+                        if (НаличиеШаблона == true)
+                        {
+                            int.TryParse(ШаблонОповещения[3 * i + 2], out ПривязкаВремени);
+
+                            string[] ВремяАктивацииШаблона = ШаблонОповещения[3 * i + 1].Replace(" ", "").Split(',');
+                            if (ВремяАктивацииШаблона.Length > 0)
+                            {
+                                for (int j = 0; j < ВремяАктивацииШаблона.Length; j++)
+                                {
+                                    int ВремяСмещения = 0;
+                                    if ((int.TryParse(ВремяАктивацииШаблона[j], out ВремяСмещения)) == true)
+                                    {
+                                        СостояниеФормируемогоСообщенияИШаблон НовыйШаблон;
+
+                                        НовыйШаблон.Активность = АктивностьШаблоновДанногоПоезда;
+                                        НовыйШаблон.Воспроизведен = false;
+                                        НовыйШаблон.ВремяСмещения = ВремяСмещения;
+                                        НовыйШаблон.НазваниеШаблона = ШаблонОповещения[3 * i + 0];
+                                        НовыйШаблон.Шаблон = Шаблон;
+                                        НовыйШаблон.ПривязкаКВремени = ПривязкаВремени;
+
+                                        Record.СписокФормируемыхСообщений.Add(НовыйШаблон);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                int TryCounter = 50;
+                while (--TryCounter > 0)
+                {
+                    string Key = Record.Время.ToString("HH:mm:ss");
+                    string[] SubKeys = Key.Split(':');
+                    if (SubKeys[0].Length == 1)
+                        Key = "0" + Key;
+
+                    if (SoundRecords.ContainsKey(Key) == false)
+                    {
+                        SoundRecords.Add(Key, Record);
+                        SoundRecordsOld.Add(Key, Record);
+                        break;
                     }
 
+                    Record.Время = Record.Время.AddSeconds(1);
                 }
             }
+
             #endregion
 
             #region Создание статических звуковых файлов
             foreach (SoundConfigurationRecord Config in SoundConfiguration.SoundConfigurationRecords)
             {
-                if (this.backgroundWorker1.CancellationPending)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-
-                backgroundWorker1.ReportProgress(ProgressLoadMainList++);
-
-                SoundRecord Record;
-                Record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                Record.ТипСообщения = SoundRecordType.Обычное;
-                Record.ИменаФайлов = new string[1];
-
-                Record.НомерПути = 0;
-                Record.НазваниеПоезда = "";
-                Record.НумерацияПоезда = 0;
-                Record.ВремяПрибытия = new DateTime(2000, 1, 1, 0, 0, 0);
-                Record.ВремяСтоянки = 0;
-                Record.ВремяОтправления = new DateTime(2000, 1, 1, 0, 0, 0);
-                Record.БитыАктивностиПолей = 0x00;
-                Record.НомерПоезда = "";
-                Record.ШаблонВоспроизведенияПути = 0;
-                Record.НазванияТабло = null;                 //TODO: как выводить статику на табло
-                Record.СостояниеОтображения = TableRecordStatus.Выключена;
+                СтатическоеСообщение Record;
+                Record.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
 
                 if (Config.Enable == true)
                 {
                     if (Config.EnablePeriodic == true)
                     {
-                        Record.Описание = Config.Name;
-                        Record.ИменаФайлов[0] = StaticSoundForm.GetFilePath(Record.Описание);
+                        Record.ОписаниеКомпозиции = Config.Name;
+                        Record.НазваниеКомпозиции = Config.Name;
 
-                        if (Record.ИменаФайлов[0] == string.Empty)
+                        if (Record.НазваниеКомпозиции == string.Empty)
                             continue;
-
-
-                        Player.PlayFile(Record.ИменаФайлов[0]);
-                        Record.Длительность = Player.GetDuration();
-                        Player.PlayFile(string.Empty);
-
-                        if (Record.Длительность == 0)
-                            continue;
-
 
                         string[] Times = Config.MessagePeriodic.Split(',');
                         if (Times.Length != 3)
                             continue;
 
-                        try
+                        DateTime НачалоИнтервала2 = DateTime.Parse(Times[0]), КонецИнтервала2 = DateTime.Parse(Times[1]);
+                        int Интервал = int.Parse(Times[2]);
+
+                        while (НачалоИнтервала2 < КонецИнтервала2)
                         {
-                            DateTime НачалоИнтервала2 = DateTime.Parse(Times[0]), КонецИнтервала2 = DateTime.Parse(Times[1]);
-                            int Интервал = int.Parse(Times[2]);
+                            Record.ID = ID++;
+                            Record.Время = НачалоИнтервала2;
+                            Record.Активность = true;
 
-                            while (НачалоИнтервала2 < КонецИнтервала2)
+                            int ПопыткиВставитьСообщение = 5;
+                            while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                Record.ID = ID++;
-                                Record.Время = НачалоИнтервала2;
-
-                                foreach (var СуществующиеИнтервалы in SoundRecords)
-                                    if ((НачалоИнтервала2 >= СуществующиеИнтервалы.Value.Время) && (НачалоИнтервала2 <= СуществующиеИнтервалы.Value.Время.AddSeconds(СуществующиеИнтервалы.Value.Длительность + SoundConfiguration.МинимальныйИнтервалМеждуОповещениемСекунд)))
-                                        goto МеткаВремени0000;
-
-                                Record.ОтображениеВТаблицах = 0;
-                                Record.Примечание = "";
-
-
-                                //========================================================================================================================================
-                                int ИнтервалВременныхУчастков = 0;
-                                int ВремяНачало = Record.Время.Hour * 60 * 60 + Record.Время.Minute * 60 + Record.Время.Second;
-                                int ВремяКонец = (int)(ВремяНачало + Record.Длительность + 1);
-
-
-                                if (ВремяКонец < НачалоИнтервала[0])
-                                {
-                                    int jj = КоличествоИнтервалов;
-                                    for (; jj > 0; jj--)
-                                    {
-                                        НачалоИнтервала[jj] = НачалоИнтервала[jj - 1];
-                                        КонецИнтервала[jj] = КонецИнтервала[jj - 1];
-                                    }
-
-                                    НачалоИнтервала[0] = ВремяНачало;
-                                    КонецИнтервала[0] = ВремяКонец;
-
-                                    КоличествоИнтервалов++;
-                                }
-                                else
-                                {
-                                    int КоличествоПопыток = 0;
-                                    for (ИнтервалВременныхУчастков = 0; ИнтервалВременныхУчастков < (КоличествоИнтервалов - 1); ИнтервалВременныхУчастков++)
-                                    {
-                                        if (((ВремяНачало >= НачалоИнтервала[ИнтервалВременныхУчастков])) && (ВремяНачало < НачалоИнтервала[ИнтервалВременныхУчастков + 1]))
-                                        {
-                                            while (КоличествоПопыток < 5)
-                                            {
-                                                if (ИнтервалВременныхУчастков < (КоличествоИнтервалов - 1))
-                                                {
-                                                    if (ВремяНачало < КонецИнтервала[ИнтервалВременныхУчастков])
-                                                    {
-                                                        Record.Время = Record.Время.AddSeconds(КонецИнтервала[ИнтервалВременныхУчастков] + 1 - ВремяНачало);
-                                                        ВремяНачало = КонецИнтервала[ИнтервалВременныхУчастков] + 1;
-                                                        ВремяКонец = (int)(ВремяНачало + Record.Длительность + 1);
-                                                    }
-
-                                                    if (ВремяКонец < НачалоИнтервала[ИнтервалВременныхУчастков + 1])
-                                                    {
-                                                        int jj = КоличествоИнтервалов;
-                                                        for (; jj > (ИнтервалВременныхУчастков + 1); jj--)
-                                                        {
-                                                            НачалоИнтервала[jj] = НачалоИнтервала[jj - 1];
-                                                            КонецИнтервала[jj] = КонецИнтервала[jj - 1];
-                                                        }
-
-                                                        НачалоИнтервала[jj] = ВремяНачало;
-                                                        КонецИнтервала[jj] = ВремяКонец;
-
-                                                        КоличествоИнтервалов++;
-                                                        break;
-                                                    }
-                                                }
-
-                                                ИнтервалВременныхУчастков++;
-                                                КоличествоПопыток++;
-                                            }
-
-                                            break;
-                                        }
-                                    }
-
-                                    if (КоличествоПопыток >= 5)
-                                        continue;
-                                }
-                                //========================================================================================================================================
-
-
                                 string Key = Record.Время.ToString("HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
 
+                                if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
+                                {
+                                    Record.Время = Record.Время.AddSeconds(1);
+                                    continue;
+                                }
 
-                                SoundRecords.Add(Key, Record);
-
-                                МеткаВремени0000:
-                                НачалоИнтервала2 = НачалоИнтервала2.AddMinutes(Интервал);
+                                СтатическиеЗвуковыеСообщения.Add(Key, Record);
+                                break;
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
+
+                            НачалоИнтервала2 = НачалоИнтервала2.AddMinutes(Интервал);
                         }
                     }
 
 
                     if (Config.EnableSingle == true)
                     {
-                        Record.Описание = Config.Name;
-                        Record.ИменаФайлов[0] = StaticSoundForm.GetFilePath(Record.Описание);
+                        Record.ОписаниеКомпозиции = Config.Name;
+                        Record.НазваниеКомпозиции = Config.Name;
 
-                        if (Record.ИменаФайлов[0] == string.Empty)
+                        if (Record.НазваниеКомпозиции == string.Empty)
                             continue;
-
-
-                        Player.PlayFile(Record.ИменаФайлов[0]);
-                        Record.Длительность = Player.GetDuration();
-                        Player.PlayFile(string.Empty);
-
-                        if (Record.Длительность == 0)
-                            continue;
-
 
                         string[] Times = Config.MessageSingle.Split(',');
 
                         foreach (string time in Times)
                         {
-                            try
+                            Record.ID = ID++;
+                            Record.Время = DateTime.Parse(time);
+                            Record.Активность = true;
+
+                            int ПопыткиВставитьСообщение = 5;
+                            while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                Record.ID = ID++;
-                                Record.Время = DateTime.Parse(time);
-                                Record.Примечание = "";
-                                Record.ОтображениеВТаблицах = 0;
-
-                                foreach (var СуществующиеИнтервалы in SoundRecords)
-                                    if ((Record.Время >= СуществующиеИнтервалы.Value.Время) && (Record.Время <= СуществующиеИнтервалы.Value.Время.AddSeconds(СуществующиеИнтервалы.Value.Длительность + SoundConfiguration.МинимальныйИнтервалМеждуОповещениемСекунд)))
-                                        goto МеткаВремени0001;
-
-                                //========================================================================================================================================
-                                int ИнтервалВременныхУчастков = 0;
-                                int ВремяНачало = Record.Время.Hour * 60 * 60 + Record.Время.Minute * 60 + Record.Время.Second;
-                                int ВремяКонец = (int)(ВремяНачало + Record.Длительность + 1);
-
-
-                                if (ВремяКонец < НачалоИнтервала[0])
-                                {
-                                    int jj = КоличествоИнтервалов;
-                                    for (; jj > 0; jj--)
-                                    {
-                                        НачалоИнтервала[jj] = НачалоИнтервала[jj - 1];
-                                        КонецИнтервала[jj] = КонецИнтервала[jj - 1];
-                                    }
-
-                                    НачалоИнтервала[0] = ВремяНачало;
-                                    КонецИнтервала[0] = ВремяКонец;
-
-                                    КоличествоИнтервалов++;
-                                }
-                                else
-                                {
-                                    int КоличествоПопыток = 0;
-                                    for (ИнтервалВременныхУчастков = 0; ИнтервалВременныхУчастков < (КоличествоИнтервалов - 1); ИнтервалВременныхУчастков++)
-                                    {
-                                        if (((ВремяНачало >= НачалоИнтервала[ИнтервалВременныхУчастков])) && (ВремяНачало < НачалоИнтервала[ИнтервалВременныхУчастков + 1]))
-                                        {
-                                            while (КоличествоПопыток < 5)
-                                            {
-                                                if (ИнтервалВременныхУчастков < (КоличествоИнтервалов - 1))
-                                                {
-                                                    if (ВремяНачало < КонецИнтервала[ИнтервалВременныхУчастков])
-                                                    {
-                                                        Record.Время = Record.Время.AddSeconds(КонецИнтервала[ИнтервалВременныхУчастков] + 1 - ВремяНачало);
-                                                        ВремяНачало = КонецИнтервала[ИнтервалВременныхУчастков] + 1;
-                                                        ВремяКонец = (int)(ВремяНачало + Record.Длительность + 1);
-                                                    }
-
-                                                    if (ВремяКонец < НачалоИнтервала[ИнтервалВременныхУчастков + 1])
-                                                    {
-                                                        int jj = КоличествоИнтервалов;
-                                                        for (; jj > (ИнтервалВременныхУчастков + 1); jj--)
-                                                        {
-                                                            НачалоИнтервала[jj] = НачалоИнтервала[jj - 1];
-                                                            КонецИнтервала[jj] = КонецИнтервала[jj - 1];
-                                                        }
-
-                                                        НачалоИнтервала[jj] = ВремяНачало;
-                                                        КонецИнтервала[jj] = ВремяКонец;
-
-                                                        КоличествоИнтервалов++;
-                                                        break;
-                                                    }
-                                                }
-
-                                                ИнтервалВременныхУчастков++;
-                                                КоличествоПопыток++;
-                                            }
-
-                                            break;
-                                        }
-                                    }
-
-                                    if (КоличествоПопыток >= 5)
-                                        continue;
-                                }
-                                //========================================================================================================================================
-
                                 string Key = Record.Время.ToString("HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
 
-                                SoundRecords.Add(Key, Record);
+                                if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
+                                {
+                                    Record.Время = Record.Время.AddSeconds(1);
+                                    continue;
+                                }
 
-                                МеткаВремени0001:
-                                int i = 0;
-                                i++;
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
+                                СтатическиеЗвуковыеСообщения.Add(Key, Record);
+                                break;
                             }
                         }
                     }
                 }
             }
+            //СтатическиеЗвуковыеСообщения.OrderBy(key => key.Value);
             #endregion
-
-            SoundRecords.OrderBy(key => key.Value);
         }
 
 
+
         // Отображение сформированного списка воспроизведения в таблицу
-        private void ОбновитьСписокЗвуковыхСообщенийВТаблице(DoWorkEventArgs e)
+        private void ОбновитьСписокЗвуковыхСообщенийВТаблице()
         {
             ОбновлениеСписка = true;
 
             listView1.InvokeIfNeeded(() =>
             {
                 listView1.Items.Clear();
+                lVПрибытие.Items.Clear();
+                lVТранзит.Items.Clear();
+                lVОтправление.Items.Clear();
+
 
                 for (int i = 0; i < SoundRecords.Count; i++)
                 {
-                    if (this.backgroundWorker1.CancellationPending)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-
                     var Данные = SoundRecords.ElementAt(i);
 
-                    ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(),
-                                                                       Данные.Value.Время.ToString("HH:mm:ss"),
-                                                                      (Данные.Value.Длительность / 60).ToString("00") + ":" + (Данные.Value.Длительность % 60).ToString("00"),
+                    string ВремяОтправления = "";
+                    string ВремяПрибытия = "";
+                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm:ss");
+
+                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        Данные.Value.НазваниеПоезда,
-                                                                       CreateActStr(Данные.Value),
-                                                                       Данные.Value.НомерПоезда + Данные.Value.Описание });
-                    lvi.Tag = Данные.Value.ID;
-                    lvi.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
-                    this.listView1.Items.Add(lvi);
+                                                                       ВремяПрибытия,
+                                                                       ВремяОтправления,
+                                                                       Данные.Value.Примечание });
+                    lvi1.Tag = Данные.Value.ID;
+                    lvi1.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                    this.listView1.Items.Add(lvi1);
+
+                    if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x04)
+                    {
+                        ListViewItem lvi2 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НомерПоезда.Replace(':', ' '),
+                                                                       Данные.Value.НомерПути.ToString(),
+                                                                       Данные.Value.ВремяПрибытия.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НазваниеПоезда });
+                        lvi2.Tag = Данные.Value.ID;
+                        lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                        this.lVПрибытие.Items.Add(lvi2);
+                    }
+
+                    if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x14)
+                    {
+                        ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НомерПоезда.Replace(':', ' '),
+                                                                       Данные.Value.НомерПути.ToString(),
+                                                                       Данные.Value.ВремяПрибытия.ToString("HH:mm:ss"),
+                                                                       Данные.Value.ВремяОтправления.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НазваниеПоезда });
+                        lvi3.Tag = Данные.Value.ID;
+                        lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                        this.lVТранзит.Items.Add(lvi3);
+                    }
+
+                    if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x10)
+                    {
+                        ListViewItem lvi4 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НомерПоезда.Replace(':', ' '),
+                                                                       Данные.Value.НомерПути.ToString(),
+                                                                       Данные.Value.ВремяОтправления.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НазваниеПоезда });
+                        lvi4.Tag = Данные.Value.ID;
+                        lvi4.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                        this.lVОтправление.Items.Add(lvi4);
+                    }
                 }
             });
 
@@ -937,77 +621,159 @@ namespace MainExample
         }
 
 
+
+        private void ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений()
+        {
+            ОбновлениеСписка = true;
+
+            lVСтатическиеСообщения.InvokeIfNeeded(() =>
+            {
+                lVСтатическиеСообщения.Items.Clear();
+
+                for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count; i++)
+                {
+                    var Данные = СтатическиеЗвуковыеСообщения.ElementAt(i);
+
+                    ListViewItem lvi6 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                                                                       Данные.Value.НазваниеКомпозиции });
+                    lvi6.Tag = i;
+                    lvi6.Checked = Данные.Value.Активность;
+                    this.lVСтатическиеСообщения.Items.Add(lvi6);
+                }
+            });
+
+            ОбновлениеСписка = false;
+        }
+
+
+
         // Раскрасить записи в соответствии с состоянием
         private void ОбновитьСостояниеЗаписейТаблицы()
         {
-            for (int item = 0; item < this.listView1.Items.Count; item++)
+            #region Обновление списков поездов
+            ОбновлениеРаскраскиСписка(this.listView1);
+            ОбновлениеРаскраскиСписка(this.lVПрибытие);
+            ОбновлениеРаскраскиСписка(this.lVТранзит);
+            ОбновлениеРаскраскиСписка(this.lVОтправление);
+            #endregion
+
+            #region Обновление списка окна статических звуковых сообщений
+            for (int item = 0; item < this.lVСтатическиеСообщения.Items.Count; item++)
+            {
+                string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
+
+                if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
+                {
+                    СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+
+                    if (Данные.Активность == false)
+                    {
+                        if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGray)
+                            this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGray;
+                    }
+                    else
+                    {
+                        switch (Данные.СостояниеВоспроизведения)
+                        {
+                            default:
+                            case SoundRecordStatus.Выключена:
+                            case SoundRecordStatus.Воспроизведена:
+                                if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGray)
+                                    this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGray;
+                                break;
+
+                            case SoundRecordStatus.ОжиданиеВоспроизведения:
+                                if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGreen)
+                                    this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGreen;
+                                break;
+
+                            case SoundRecordStatus.Воспроизведение:
+                                if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightBlue)
+                                    this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightBlue;
+                                break;
+                        }
+                    }
+                }
+            }
+            #endregion
+
+        }
+
+
+
+        void ОбновлениеРаскраскиСписка(ListView lv)
+        {
+            for (int item = 0; item < lv.Items.Count; item++)
             {
                 if (item <= SoundRecords.Count)
                 {
                     try
                     {
-                        string Key = this.listView1.Items[item].SubItems[1].Text;
+                        string Key = lv.Items[item].SubItems[0].Text;
 
                         if (SoundRecords.Keys.Contains(Key) == true)
                         {
                             SoundRecord Данные = SoundRecords[Key];
-                            switch (Данные.Состояние)
+                            switch (Данные.СостояниеКарточки)
                             {
                                 default:
-                                case SoundRecordStatus.Выключена:
-                                    this.listView1.Items[item].BackColor = Color.LightGray;
+                                case 0: // Выключен или не актуален
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[0])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[0];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[1])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[1];
                                     break;
 
-                                case SoundRecordStatus.ОжиданиеВоспроизведения:
-                                    switch (Данные.ТипСообщения)
-                                    {
-                                        default:
-                                        case SoundRecordType.Обычное:
-                                            this.listView1.Items[item].BackColor = Color.LightGreen;
-                                            break;
-
-                                        case SoundRecordType.ДвижениеПоезда:
-                                            this.listView1.Items[item].BackColor = Color.GreenYellow;
-                                            break;
-
-                                        case SoundRecordType.ДвижениеПоездаНеПодтвержденное:
-                                            this.listView1.Items[item].BackColor = Color.Yellow;
-                                            break;
-
-                                        case SoundRecordType.Важное:
-                                            this.listView1.Items[item].BackColor = Color.Red;
-                                            break;
-
-                                        case SoundRecordType.Предупредительное:
-                                            this.listView1.Items[item].BackColor = Color.Orange;
-                                            break;
-                                    }
+                                case 1: // Отсутствую шаблоны оповещения
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[2])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[2];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[3])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[3];
                                     break;
 
-                                case SoundRecordStatus.Воспроизведение:
-                                    this.listView1.Items[item].BackColor = Color.LightBlue;
+                                case 2: // Время не подошло (за 30 минут)
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[4])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[4];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[5])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[5];
                                     break;
 
-                                case SoundRecordStatus.Воспроизведена:
-                                    this.listView1.Items[item].BackColor = Color.LightGray;
+                                case 3: // Не установлен путь
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[6])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[6];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[7])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[7];
+                                    break;
+
+                                case 4: // Не полностью включены все галочки
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[8])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[8];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[9])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[9];
+                                    break;
+
+                                case 5: // Полностью включены все галочки
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[10])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[10];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[11])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[11];
+                                    break;
+
+                                case 6: // Задержка
+                                    if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[12])
+                                        lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[12];
+                                    if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[13])
+                                        lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[13];
                                     break;
                             }
 
                             //Обновить номер пути
-                            if (this.listView1.Items[item].SubItems[4].Text != Данные.НомерПути.ToString())
-                            {
-                                this.listView1.Items[item].SubItems[4].Text = Данные.НомерПути.ToString();
-                            }
+                            if (lv.Items[item].SubItems[2].Text != Данные.НомерПути.ToString())
+                                lv.Items[item].SubItems[2].Text = Данные.НомерПути.ToString();
 
-                            //Обновить Время ПРИБ/ОТПР
-
-                            string actStr = CreateActStr(Данные);
-
-                            if (this.listView1.Items[item].SubItems[6].Text != actStr)
-                            {
-                                this.listView1.Items[item].SubItems[6].Text = actStr;
-                            }
-
+                            if (lv.Name == "listView1")
+                                if (lv.Items[item].SubItems[6].Text != Данные.Примечание)
+                                    lv.Items[item].SubItems[6].Text = Данные.Примечание;
                         }
                     }
                     catch (Exception ex)
@@ -1016,89 +782,368 @@ namespace MainExample
                     }
                 }
             }
-        }
 
+        }
 
 
 
         // Определение композиций для запуска в данный момент времени
         private void ОпределитьКомпозициюДляЗапуска()
         {
-            for (int item = 0; item < this.listView1.Items.Count; item++)
+            bool СообщениеИзменено;
+
+            СписокБлижайшихСобытий.Clear();
+
+
+            #region Определить композицию для запуска статических сообщений
+            for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count(); i++)
             {
-                if (item <= SoundRecords.Count)
+                string Key = СтатическиеЗвуковыеСообщения.ElementAt(i).Key;
+                СтатическоеСообщение Сообщение = СтатическиеЗвуковыеСообщения.ElementAt(i).Value;
+                СообщениеИзменено = false;
+
+
+                if (DateTime.Now < Сообщение.Время)
                 {
-                    try
+                    if (Сообщение.СостояниеВоспроизведения != SoundRecordStatus.ОжиданиеВоспроизведения)
                     {
-                        string Key = this.listView1.Items[item].SubItems[1].Text;
-
-                        if (SoundRecords.Keys.Contains(Key) == true)
+                        Сообщение.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
+                        СообщениеИзменено = true;
+                    }
+                }
+                else if (DateTime.Now >= Сообщение.Время.AddMinutes(2))
+                {
+                    if (Сообщение.СостояниеВоспроизведения != SoundRecordStatus.Воспроизведена)
+                    {
+                        Сообщение.СостояниеВоспроизведения = SoundRecordStatus.Воспроизведена;
+                        СообщениеИзменено = true;
+                    }
+                }
+                else if (Сообщение.СостояниеВоспроизведения == SoundRecordStatus.ОжиданиеВоспроизведения)
+                {
+                    СообщениеИзменено = true;
+                    Сообщение.СостояниеВоспроизведения = SoundRecordStatus.Воспроизведена;
+                    foreach (var Sound in StaticSoundForm.StaticSoundRecords)
+                    {
+                        if (Sound.Name == Сообщение.НазваниеКомпозиции)
                         {
-                            SoundRecord Данные = SoundRecords[Key];
-
-                            if (this.listView1.Items[item].Checked && (Данные.ТипСообщения == SoundRecordType.Важное || (Данные.ТипСообщения == SoundRecordType.ДвижениеПоезда && ВоспроизводитьДвижениеПоездов == true) || Данные.ТипСообщения == SoundRecordType.Обычное || Данные.ТипСообщения == SoundRecordType.Предупредительное))
+                            if (РазрешениеРаботы == true)
                             {
-                                DateTime НачалоИнтервала = Данные.Время;
-                                DateTime КонецИнтервала = НачалоИнтервала.AddSeconds(Данные.Длительность);
-
-                                if ((DateTime.Now >= НачалоИнтервала.AddSeconds(-25)) && (DateTime.Now < НачалоИнтервала.AddSeconds(-20)))
-                                {
-                                    if (ОкноПредупреждения != null)
-                                        ОкноПредупреждения = null;
-                                }
-                                else if ((DateTime.Now >= НачалоИнтервала.AddSeconds(-20)) && (DateTime.Now < НачалоИнтервала))
-                                {
-                                    if ((Данные.Состояние == SoundRecordStatus.ОжиданиеВоспроизведения) && (РазрешениеРаботы == true) && (ОкноПредупреждения == null))
-                                    {
-                                        //                                        ОкноПредупреждения = new Предупреждение(this.listView1.Items[item]);
-                                        //                                        ОкноПредупреждения.StartPosition = FormStartPosition.Manual;
-                                        //                                        ОкноПредупреждения.Location = new Point(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width - 301, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - 250);
-                                        //                                        ОкноПредупреждения.WindowState = FormWindowState.Normal;
-                                    }
-
-                                    if ((ОкноПредупреждения != null) && this.listView1.Items[item].Checked)
-                                        Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                                }
-                                else if ((DateTime.Now >= НачалоИнтервала) && (DateTime.Now < КонецИнтервала))
-                                {
-                                    if ((Данные.Состояние == SoundRecordStatus.ОжиданиеВоспроизведения) && (РазрешениеРаботы == true))
-                                    {
-                                        for (int i = 0; i < this.listView1.Items.Count; i++)
-                                        {
-                                            this.listView1.Items[i].Focused = false;
-                                            this.listView1.Items[i].Selected = false;
-                                        }
-
-                                        this.listView1.Items[item].Focused = true;
-                                        this.listView1.Items[item].Selected = true;
-                                        btnВоспроизвести_Click(null, null);
-                                    }
-
-                                    Данные.Состояние = SoundRecordStatus.Воспроизведение;
-                                }
-                                else if (DateTime.Now >= КонецИнтервала)
-                                {
-                                    Данные.Состояние = SoundRecordStatus.Воспроизведена;
-                                }
-                                else
-                                {
-                                    Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                                }
+                                Program.ЗаписьЛога("Автоматическое воспроизведение звукового сообщения", Сообщение.НазваниеКомпозиции);
+                                MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(Sound.Name);
                             }
-                            else if (this.listView1.Items[item].Checked && (Данные.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное))
-                                Данные.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-                            else
-                                Данные.Состояние = SoundRecordStatus.Выключена;
-
-                            SoundRecords[Key] = Данные;
+                            break;
                         }
                     }
-                    catch (Exception ex)
+                }
+
+                if (СообщениеИзменено == true)
+                    СтатическиеЗвуковыеСообщения[Key] = Сообщение;
+
+
+                //==================================================================================
+                if (DateTime.Now < Сообщение.Время && DateTime.Now > Сообщение.Время.AddMinutes(-30))
+                {
+                    ОписаниеСобытия событие;
+                    событие.НомерСписка = 1;
+                    событие.СостояниеСтроки = 2;
+                    событие.Описание = Сообщение.НазваниеКомпозиции;
+                    событие.Время = Сообщение.Время;
+                    событие.Ключ = Key;
+
+                    int КоличествоПопыток = 0;
+                    string Ключ;
+                    while (КоличествоПопыток++ < 10)
                     {
-                        Console.WriteLine(ex.Message);
+                        Ключ = событие.Время.ToString("HH:mm:ss");
+                        string[] parts = Ключ.Split(':');
+                        if (parts[0].Length == 1) Ключ = "0" + Ключ;
+
+                        if (СписокБлижайшихСобытий.ContainsKey(Ключ) == false)
+                        {
+                            СписокБлижайшихСобытий.Add(Ключ, событие);
+                            break;
+                        }
+
+                        событие.Время.AddSeconds(10);
                     }
                 }
             }
+            #endregion
+
+            #region Определить композицию для запуска сообщений о движении поездов
+            DateTime ТекущееВремя = DateTime.Now;
+            bool ВнесеныИзменения = false;
+            for (int i = 0; i < SoundRecords.Count; i++)
+            {
+                var Данные = SoundRecords.ElementAt(i).Value;
+                ВнесеныИзменения = false;
+
+                while (true)
+                {
+                    if (Данные.Активность == true)
+                    {
+                        // Проверка на нештатные ситуации
+                        if ((Данные.БитыНештатныхСитуаций & 0x07) != 0x00)
+                        {
+                            if (Данные.СостояниеКарточки != 6)
+                            {
+                                Данные.СостояниеКарточки = 6;
+                                if ((Данные.БитыНештатныхСитуаций & 0x01) != 0x00) Данные.ОписаниеСостоянияКарточки = "Поезд отменен";
+                                if ((Данные.БитыНештатныхСитуаций & 0x02) != 0x00) Данные.ОписаниеСостоянияКарточки = "Задержка прибытия поезда";
+                                if ((Данные.БитыНештатныхСитуаций & 0x04) != 0x00) Данные.ОписаниеСостоянияКарточки = "Задержка отправления поезда";
+                                ВнесеныИзменения = true;
+                            }
+
+                            if (РазрешениеРаботы == true)
+                            {
+                                DateTime ВременноеВремяСобытия = (Данные.БитыАктивностиПолей & 0x04) != 0x00 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
+                                //==================================================================================
+                                if (DateTime.Now < ВременноеВремяСобытия && DateTime.Now > ВременноеВремяСобытия.AddMinutes(-30))
+                                {
+                                    ОписаниеСобытия событие;
+                                    событие.НомерСписка = 0;
+                                    событие.СостояниеСтроки = 3;
+                                    событие.Описание = Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Аварийное событие";
+                                    событие.Время = ВременноеВремяСобытия;
+                                    событие.Ключ = SoundRecords.ElementAt(i).Key;
+
+                                    int КоличествоПопыток = 0;
+                                    string Ключ;
+                                    while (КоличествоПопыток++ < 10)
+                                    {
+                                        Ключ = событие.Время.ToString("HH:mm:ss");
+                                        string[] parts = Ключ.Split(':');
+                                        if (parts[0].Length == 1) Ключ = "0" + Ключ;
+
+                                        if (СписокБлижайшихСобытий.ContainsKey(Ключ) == false)
+                                        {
+                                            СписокБлижайшихСобытий.Add(Ключ, событие);
+                                            break;
+                                        }
+
+                                        событие.Время.AddSeconds(10);
+                                    }
+                                }
+
+
+
+
+
+
+
+                                Данные.ТаймерПовторения++;
+                                int ТипПоезда = (int)Данные.ТипПоезда;
+                                string ФормируемоеСообщение = "";
+                                if ((Данные.БитыНештатныхСитуаций & 0x01) != 0x00)
+                                    if (Данные.ТаймерПовторения >= (uint)(Program.Настройки.ИнтервалМеждуОповещениемОбОтменеПоезда * 60.0))
+                                    {
+                                        Данные.ТаймерПовторения = 0;
+                                        ФормируемоеСообщение = Program.ШаблонОповещенияОбОтменеПоезда[ТипПоезда];
+                                    }
+
+                                if ((Данные.БитыНештатныхСитуаций & 0x02) != 0x00)
+                                    if (Данные.ТаймерПовторения >= (uint)(Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеПрибытияПоезда * 60.0))
+                                    {
+                                        Данные.ТаймерПовторения = 0;
+                                        ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеПрибытияПоезда[ТипПоезда];
+                                    }
+
+                                if ((Данные.БитыНештатныхСитуаций & 0x04) != 0x00)
+                                    if (Данные.ТаймерПовторения >= (uint)(Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда * 60.0))
+                                    {
+                                        Данные.ТаймерПовторения = 0;
+                                        ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеОтправленияПоезда[ТипПоезда];
+                                    }
+
+
+                                if (ФормируемоеСообщение != "")
+                                {
+                                    bool НаличиеШаблона = false;
+                                    foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
+                                        if (Item.Name == ФормируемоеСообщение)
+                                        {
+                                            НаличиеШаблона = true;
+                                            ФормируемоеСообщение = Item.Message;
+                                            break;
+                                        }
+
+                                    if (НаличиеШаблона == true)
+                                        MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение сообщения о внештатной ситуации", Данные, ФормируемоеСообщение);
+                                }
+                            }
+                            break;
+                        }
+                        else
+                            Данные.ТаймерПовторения = 0;
+
+                        // Проверка на наличие шаблонов оповещения
+                        if (Данные.СписокФормируемыхСообщений.Count == 0)
+                        {
+                            if (Данные.СостояниеКарточки != 1)
+                            {
+                                Данные.СостояниеКарточки = 1;
+                                Данные.ОписаниеСостоянияКарточки = "Нет шаблонов оповещения";
+                                ВнесеныИзменения = true;
+                            }
+
+                            break;
+                        }
+
+                        // Проверка на приближения времени оповещения (за 30 минут) и завершения выполнения (после 3 минут)
+                        DateTime СамоеРаннееВремя = DateTime.Now, СамоеПозднееВремя = DateTime.Now;
+                        for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
+                        {
+                            var ФормируемоеСообщение = Данные.СписокФормируемыхСообщений[j];
+                            DateTime ВремяСобытия = ФормируемоеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
+                            ВремяСобытия = ВремяСобытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                            if (j == 0)
+                            {
+                                СамоеРаннееВремя = СамоеПозднееВремя = ВремяСобытия;
+                            }
+                            else
+                            {
+                                if (ВремяСобытия < СамоеРаннееВремя)
+                                    СамоеРаннееВремя = ВремяСобытия;
+
+                                if (ВремяСобытия > СамоеПозднееВремя)
+                                    СамоеПозднееВремя = ВремяСобытия;
+                            }
+                        }
+                        if (DateTime.Now < СамоеРаннееВремя.AddMinutes(-30))
+                        {
+                            if (Данные.СостояниеКарточки != 2)
+                            {
+                                Данные.СостояниеКарточки = 2;
+                                Данные.ОписаниеСостоянияКарточки = "Рано";
+                                ВнесеныИзменения = true;
+                            }
+
+                            break;
+                        }
+
+                        if (DateTime.Now > СамоеПозднееВремя.AddMinutes(3))
+                        {
+                            if (Данные.СостояниеКарточки != 0)
+                            {
+                                Данные.СостояниеКарточки = 0;
+                                Данные.ОписаниеСостоянияКарточки = "Поздно";
+                                ВнесеныИзменения = true;
+                            }
+
+                            break;
+                        }
+
+
+                        // Проверка на установку пути
+                        if (Данные.НомерПути == "")
+                        {
+                            if (Данные.СостояниеКарточки != 3)
+                            {
+                                Данные.СостояниеКарточки = 3;
+                                Данные.ОписаниеСостоянияКарточки = "Нет пути";
+                                ВнесеныИзменения = true;
+                            }
+                            break;
+                        }
+
+                        // Проверка на наличие всех включенных галочек
+                        int КоличествоВключенныхГалочек = 0;
+                        for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
+                        {
+                            var ФормируемоеСообщение = Данные.СписокФормируемыхСообщений[j];
+                            if (ФормируемоеСообщение.Активность == true)
+                            {
+                                КоличествоВключенныхГалочек++;
+                                if (ФормируемоеСообщение.Воспроизведен == false)
+                                {
+                                    DateTime ВремяСобытия = ФормируемоеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
+                                    ВремяСобытия = ВремяСобытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                                    if ((ТекущееВремя.Hour == ВремяСобытия.Hour) && (ТекущееВремя.Minute == ВремяСобытия.Minute) && (ТекущееВремя.Second == ВремяСобытия.Second))
+                                    {
+                                        ФормируемоеСообщение.Воспроизведен = true;
+                                        Данные.СписокФормируемыхСообщений[j] = ФормируемоеСообщение;
+                                        ВнесеныИзменения = true;
+
+                                        if (РазрешениеРаботы == true)
+                                            MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение расписания", Данные, ФормируемоеСообщение.Шаблон);
+                                    }
+
+                                    //==================================================================================
+                                    if (DateTime.Now < ВремяСобытия && DateTime.Now > ВремяСобытия.AddMinutes(-30))
+                                    {
+                                        ОписаниеСобытия событие;
+                                        событие.НомерСписка = 0;
+                                        событие.СостояниеСтроки = 1;
+                                        событие.Описание = Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + ФормируемоеСообщение.НазваниеШаблона;
+                                        событие.Время = ВремяСобытия;
+                                        событие.Ключ = SoundRecords.ElementAt(i).Key;
+
+                                        int КоличествоПопыток = 0;
+                                        string Ключ;
+                                        while (КоличествоПопыток++ < 10)
+                                        {
+                                            Ключ = событие.Время.ToString("HH:mm:ss");
+                                            string[] parts = Ключ.Split(':');
+                                            if (parts[0].Length == 1) Ключ = "0" + Ключ;
+
+                                            if (СписокБлижайшихСобытий.ContainsKey(Ключ) == false)
+                                            {
+                                                СписокБлижайшихСобытий.Add(Ключ, событие);
+                                                break;
+                                            }
+
+                                            событие.Время.AddSeconds(10);
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+
+                        if (КоличествоВключенныхГалочек < Данные.СписокФормируемыхСообщений.Count)
+                        {
+                            if (Данные.СостояниеКарточки != 4)
+                            {
+                                Данные.СостояниеКарточки = 4;
+                                Данные.ОписаниеСостоянияКарточки = "Не все шаблоны разрешены";
+                                ВнесеныИзменения = true;
+                            }
+                        }
+                        else
+                        {
+                            if (Данные.СостояниеКарточки != 5)
+                            {
+                                Данные.СостояниеКарточки = 5;
+                                Данные.ОписаниеСостоянияКарточки = "Все шаблоны разрешены";
+                                ВнесеныИзменения = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Данные.СостояниеКарточки != 0)
+                        {
+                            Данные.СостояниеКарточки = 0;
+                            Данные.ОписаниеСостоянияКарточки = "Отключена";
+                            ВнесеныИзменения = true;
+                        }
+                    }
+
+                    break;
+                }
+
+                if (ВнесеныИзменения == true)
+                {
+                    string Key = SoundRecords.ElementAt(i).Key;
+                    SoundRecords.Remove(Key);
+                    SoundRecords.Add(Key, Данные);                                     //TODO: изменение !!!
+                }
+            }
+            #endregion
+
+            //СписокБлижайшихСобытий.OrderBy(key => key.Value);
+            lVСобытия_ОбновитьСостояниеТаблицы();
         }
 
 
@@ -1108,159 +1153,138 @@ namespace MainExample
             //if (!РазрешениеРаботы)
             //    return;
 
-            for (int item = 0; item < this.listView1.Items.Count; item++)
+            for (var i = 0; i < SoundRecords.Count; i++)
             {
-                if (item <= SoundRecords.Count)
+                try
                 {
-                    try
+                    var key = SoundRecords.Keys.ElementAt(i);
+                    var данные = SoundRecords.ElementAt(i).Value;
+                    var данныеOld = SoundRecordsOld.ElementAt(i).Value;
+
+                    var _checked = данные.Состояние != SoundRecordStatus.Выключена;
+
+
+                    if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                     {
-                        string Key = this.listView1.Items[item].SubItems[1].Text;
-                        if (SoundRecords.Keys.Contains(Key) == true)
+                        //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
+                        byte номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
+                        byte номерПутиOld = Program.ПолучитьНомерПути(данныеOld.НомерПути);
+
+                        if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
                         {
-                            SoundRecord Данные = SoundRecords[Key];
-                            SoundRecord ДанныеOld = SoundRecordsOld[Key];
-
-                            if (this.listView1.Items[item].Checked &&
-                                (Данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
+                            //ПОМЕНЯЛИ ПУТЬ
+                            if (номерПути != номерПутиOld)
                             {
-                                //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                                if (Данные.НомерПути > 0 || (Данные.НомерПути == 0 && ДанныеOld.НомерПути > 0))
-                                {
-                                    //ПОМЕНЯЛИ ПУТЬ
-                                    if (Данные.НомерПути != ДанныеOld.НомерПути)
-                                    {
-                                        //вывод на новое табло
-                                        Данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                                        SendOnPathTable(Данные);
+                                //вывод на новое табло
+                                данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                                SendOnPathTable(данные);
 
-                                        //очистили старый путь
-                                        ДанныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
-                                        SendOnPathTable(ДанныеOld);
-                                    }
-
-
-                                    //ТРАНЗИТНЫЕ
-                                    if ((Данные.БитыАктивностиПолей & 0x14) == 0x14)
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        //ПРИБЫТИЕ
-                                        if ((Данные.БитыАктивностиПолей & 0x04) == 0x04)
-                                        {
-                                            //ОЧИСТИТЬ
-                                            if ((DateTime.Now >= Данные.ВремяПрибытия.AddMinutes(10) &&
-                                                (DateTime.Now <= Данные.ВремяПрибытия.AddMinutes(10.02))))
-                                            {
-                                                if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
-                                                {
-                                                    Данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                                    Данные.НомерПути = 0;
-                                                    SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList().ForEach(
-                                                        keyValuePair =>
-                                                        {
-                                                            SoundRecord новыеДанные = keyValuePair.Value;
-                                                            новыеДанные.НомерПути = 0;
-                                                            новыеДанные.НазванияТабло = null;
-                                                            SoundRecords[keyValuePair.Key]= новыеДанные;
-                                                            SoundRecordsOld[keyValuePair.Key] = новыеДанные;
-                                                        }); 
-
-                                                    SendOnPathTable(Данные);
-                                                }
-                                            }
-                                        }
-                                        else //ОТПРАВЛЕНИЕ
-                                        if ((Данные.БитыАктивностиПолей & 0x10) == 0x10)
-                                        {
-                                            //ОЧИСТИТЬ
-                                            if ((DateTime.Now >= Данные.ВремяОтправления.AddMinutes(2) &&
-                                                 (DateTime.Now <= Данные.ВремяОтправления.AddMinutes(2.02))))
-                                            {
-                                                if (Данные.СостояниеОтображения == TableRecordStatus.Отображение)
-                                                {
-                                                    Данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                                    Данные.НомерПути = 0;
-                                                    SoundRecords.Where(s => s.Value.НомерПоезда == Данные.НомерПоезда).ToList().ForEach(
-                                                        keyValuePair =>
-                                                        {
-                                                            SoundRecord новыеДанные = keyValuePair.Value;
-                                                            новыеДанные.НомерПути = 0;
-                                                            новыеДанные.НазванияТабло = null;
-                                                            SoundRecords[keyValuePair.Key] = новыеДанные;
-                                                            SoundRecordsOld[keyValuePair.Key] = новыеДанные;
-                                                        });
-
-                                                    SendOnPathTable(Данные);
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                }
+                                //очистили старый путь
+                                данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
+                                SendOnPathTable(данныеOld);
                             }
 
-                            SoundRecords[Key] = Данные;
-                            SoundRecordsOld[Key] = Данные;
+
+                            //ТРАНЗИТНЫЕ
+                            if ((данные.БитыАктивностиПолей & 0x14) == 0x14)
+                            {
+
+                            }
+                            else
+                            {
+                                //ПРИБЫТИЕ
+                                if ((данные.БитыАктивностиПолей & 0x04) == 0x04)
+                                {
+                                    //ОЧИСТИТЬ
+                                    if ((DateTime.Now >= данные.ВремяПрибытия.AddMinutes(0) &&
+                                        (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(0.02))))
+                                    {
+                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                        {
+                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                            данные.НомерПути = "0";
+                                            SendOnPathTable(данные);
+                                        }
+                                    }
+                                }
+                                else //ОТПРАВЛЕНИЕ
+                                if ((данные.БитыАктивностиПолей & 0x10) == 0x10)
+                                {
+                                    //ОЧИСТИТЬ
+                                    if ((DateTime.Now >= данные.ВремяОтправления.AddMinutes(0) &&
+                                         (DateTime.Now <= данные.ВремяОтправления.AddMinutes(0.02))))
+                                    {
+                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                        {
+                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                            данные.НомерПути = "0";
+                                            SendOnPathTable(данные);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-                    catch (Exception)
-                    {
-                        // ignored
-                    }
+
+                    SoundRecords[key] = данные;
+                    SoundRecordsOld[key] = данные;
+                }
+                catch (Exception)
+                {
+                    // ignored
                 }
             }
         }
 
 
 
-        // Формирование очереди воспроизведения звуковых файлов
+        // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
         private void ОбработкаЗвуковогоПотка()
         {
-            if (ТекущаяДата != DateTime.Now.Day)
+            int СекундаТекущегоВремени = DateTime.Now.Second;
+            if (СекундаТекущегоВремени != ТекущаяСекунда)
             {
-                ТекущаяДата = DateTime.Now.Day;
-                if (cBАвтоматическаяГенерация.Checked == true)
-                    btnОбновитьСписок_Click(null, null);
+                ТекущаяСекунда = СекундаТекущегоВремени;
+                ОпределитьКомпозициюДляЗапуска();
             }
 
+            
 
-            ОпределитьКомпозициюДляЗапуска();
-            ОпределитьИнформациюДляОтображенияНаТабло();
+
             ОбновитьСостояниеЗаписейТаблицы();
 
             SoundFileStatus status = Player.GetFileStatus();
 
-            if (btnВоспроизвести.Text == "Остановить")
+            if (MainForm.Воспроизвести.Text == "Остановить")
                 if ((status != SoundFileStatus.Playing) && (ОчередьВоспроизводимыхЗвуковыхСообщений.Count() == 0))
-                    btnВоспроизвести.Text = "Воспроизвести выбранную запись";
+                    MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
 
 
-            if (status == SoundFileStatus.Playing)
+            if (status != SoundFileStatus.Playing)
             {
-                int CurrentPosition = Player.GetCurrentPosition() + (int)ВремяВоспроизведенияПроигранныхФайлов;
-                Player_Label.Text = (CurrentPosition / 60).ToString() + ":" + (CurrentPosition % 60).ToString("00") + " / " + (ОбщееВремяВоспроизведения / 60).ToString("0") + ":" + (ОбщееВремяВоспроизведения % 60).ToString("00");
-            }
-            else
-            {
+                if (ВремяЗадержкиМеждуСообщениями > 0)
+                {
+                    ВремяЗадержкиМеждуСообщениями--;
+                    return;
+                }
+
                 if (ОчередьВоспроизводимыхЗвуковыхСообщений.Count() > 0)
                 {
-                    ВремяВоспроизведенияПроигранныхФайлов += Player.GetDuration();
                     string НазваниеФайла = ОчередьВоспроизводимыхЗвуковыхСообщений[0];
                     ОчередьВоспроизводимыхЗвуковыхСообщений.RemoveAt(0);
+
+                    if (НазваниеФайла.Contains("СТОП "))
+                    {
+                        ВремяЗадержкиМеждуСообщениями = int.Parse(НазваниеФайла.Substring(5));
+                        return;
+                    }
+
                     if (НазваниеФайла.Contains(".wav") == false)
                         НазваниеФайла = Program.GetFileName(НазваниеФайла);
 
                     if (Player.PlayFile(НазваниеФайла) == true)
-                    {
-                        Player.SetVolume(Volume);
-                        btnВоспроизвести.Text = "Остановить";
-                    }
+                        MainForm.Воспроизвести.Text = "Остановить";
                 }
-
-                int CurrentPosition = Player.GetCurrentPosition() + (int)ВремяВоспроизведенияПроигранныхФайлов;
-                Player_Label.Text = (CurrentPosition / 60).ToString() + ":" + (CurrentPosition % 60).ToString("00") + " / " + (ОбщееВремяВоспроизведения / 60).ToString("0") + ":" + (ОбщееВремяВоспроизведения % 60).ToString("00");
             }
         }
 
@@ -1268,261 +1292,20 @@ namespace MainExample
         // Воспроизведение выбраной в таблице записи
         private void btnВоспроизвести_Click(object sender, EventArgs e)
         {
-            if (btnВоспроизвести.Text == "Остановить")
+            if (MainForm.Воспроизвести.Text == "Остановить")
             {
                 ОчередьВоспроизводимыхЗвуковыхСообщений.Clear();
                 Player.PlayFile(string.Empty);
-                btnВоспроизвести.Text = "Воспроизвести выбранную запись";
+                MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
                 return;
             }
-
-            ВоспроизвестиЗапись();
         }
-
-        private void ВоспроизвестиЗапись()
-        {
-            ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
-            List<String> ВоспроизводимыеФайлы;
-
-            foreach (int item in sic)
-            {
-                string Key = this.listView1.Items[item].SubItems[1].Text;
-
-                if (SoundRecords.Keys.Contains(Key) == true)
-                {
-                    SoundRecord Данные = SoundRecords[Key];
-                    if (Данные.ИменаФайлов == null)
-                        return;
-
-                    ВоспроизводимыеФайлы = new List<string>(Данные.ИменаФайлов);
-
-
-                    string[] НазваниеФайловПутей = new string[] { "",
-                        "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
-                        "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути",
-                        "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути" };
-
-                    string[] ФайлыМинут = new string[] { "00 минут", "01 минута", "02 минуты", "03 минуты", "04 минуты", "05 минут", "06 минут", "07 минут", "08 минут",
-                        "09 минут", "10 минут", "11 минут", "12 минут", "13 минут", "14 минут", "15 минут", "16 минут", "17 минут",
-                        "18 минут", "19 минут", "20 минут", "21 минута", "22 минуты", "23 минуты", "24 минуты", "25 минут", "26 минут",
-                        "27 минут", "28 минут", "29 минут", "30 минут", "31 минута", "32 минуты", "33 минуты", "34 минуты", "35 минут",
-                        "36 минут", "37 минут", "38 минут", "39 минут", "40 минут", "41 минута", "42 минуты", "43 минуты", "44 минуты",
-                        "45 минут", "46 минут", "47 минут", "48 минут", "49 минут", "50 минут", "51 минута", "52 минуты", "53 минуты",
-                        "54 минуты", "55 минут", "56 минут", "57 минут", "58 минут", "59 минут" };
-
-
-                    string[] ФайлыЧасов = new string[] { "В 00 часов", "В 01 час", "В 02 часа", "В 03 часа", "В 04 часа", "В 05 часов", "В 06 часов", "В 07 часов",
-                                                                                        "В 08 часов", "В 09 часов", "В 10 часов", "В 11 часов", "В 12 часов", "В 13 часов", "В 14 часов", "В 15 часов",
-                                                                                        "В 16 часов", "В 17 часов", "В 18 часов", "В 19 часов", "В 20 часов", "В 21 час", "В 22 часа", "В 23 часа" };
-
-                    string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация с головы", "Нумерация с хвоста" };
-
-                    for (int i = 0; i < ВоспроизводимыеФайлы.Count; i++)
-                    {
-                        string FileName = ВоспроизводимыеФайлы[i];
-
-                        if (FileName == "НОМЕР ПУТИ")
-                        {
-                            if ((Данные.НомерПути > 0) && (Данные.НомерПути <= 14))
-                            {
-                                if ((Данные.ШаблонВоспроизведенияПути == 0) || (Данные.ШаблонВоспроизведенияПути == 1))
-                                    ВоспроизводимыеФайлы[i] = НазваниеФайловПутей[Данные.НомерПути];
-                                else if ((Данные.ШаблонВоспроизведенияПути == 2) || (Данные.ШаблонВоспроизведенияПути == 3))
-                                    ВоспроизводимыеФайлы[i] = НазваниеФайловПутей[Данные.НомерПути + (Данные.ШаблонВоспроизведенияПути - 1) * 14];
-                            }
-
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ВоспроизводимыеФайлы[i]);
-                            continue;
-                        }
-
-                        if (FileName == "НУМЕРАЦИЯ СОСТАВА")
-                        {
-                            if ((Данные.НумерацияПоезда > 0) && (Данные.НумерацияПоезда <= 2))
-                                ВоспроизводимыеФайлы[i] = НазваниеФайловНумерацииПутей[Данные.НумерацияПоезда];
-
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ВоспроизводимыеФайлы[i]);
-                            continue;
-                        }
-
-
-                        if (FileName == "ВРЕМЯ ПРИБЫТИЯ")
-                        {
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыЧасов[Данные.ВремяПрибытия.Hour]);
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыМинут[Данные.ВремяПрибытия.Minute]);
-                            continue;
-                        }
-                        
-                        if (FileName == "ВРЕМЯ СТОЯНКИ")
-                        {
-                            if ((Данные.ВремяСтоянки > 0) && (Данные.ВремяСтоянки <= 59))
-                                ВоспроизводимыеФайлы[i] = ФайлыМинут[Данные.ВремяСтоянки];
-
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ВоспроизводимыеФайлы[i]);
-                            continue;
-                        }
-
-                        if (FileName == "ВРЕМЯ ОТПРАВЛЕНИЯ")
-                        {
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыЧасов[Данные.ВремяОтправления.Hour]);
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ФайлыМинут[Данные.ВремяОтправления.Minute]);
-                            continue;
-                        }
-                       
-                        if (FileName == "на посадку проходите через тоннель")
-                        {
-                            if (((Данные.БитыАктивностиПолей & 0x10) != 0x00) && (Данные.НомерПути == 0x01))
-                                ВоспроизводимыеФайлы[i] = "на посадку проходите через вестибюль";
-
-                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ВоспроизводимыеФайлы[i]);
-                            continue;
-                        }
-
-
-                        if (FileName == "СТАНЦИИ")
-                        {
-                            if (Данные.Примечание.Contains("Со всеми остановками"))
-                            {
-                                if (Program.FilesFolder.Contains("СоВсемиОстановками"))
-                                    ОчередьВоспроизводимыхЗвуковыхСообщений.Add("СоВсемиОстановками");
-                            }
-                            else if (Данные.Примечание.Contains("С остановк"))
-                            {
-                                if (Program.FilesFolder.Contains("СОстановками"))
-                                    ОчередьВоспроизводимыхЗвуковыхСообщений.Add("СОстановками");
-
-                                foreach (var Станция in MainWindowForm.Станции)
-                                    if (Данные.Примечание.Contains(Станция))
-                                        if (Program.FilesFolder.Contains(Станция))
-                                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(Станция);
-                            }
-                            else if (Данные.Примечание.Contains("Кроме"))
-                            {
-                                if (Program.FilesFolder.Contains("СОстановкамиКроме"))
-                                    ОчередьВоспроизводимыхЗвуковыхСообщений.Add("СОстановкамиКроме");
-
-                                foreach (var Станция in MainWindowForm.Станции)
-                                    if (Данные.Примечание.Contains(Станция))
-                                        if (Program.FilesFolder.Contains(Станция))
-                                            ОчередьВоспроизводимыхЗвуковыхСообщений.Add(Станция);
-                            }
-                        }
-
-                        ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ВоспроизводимыеФайлы[i]);
-                    }
-
-                    break;
-                }
-            }
-        }
-
-
-        // Управление регулятором громкости
-        private void tBРегуляторГромкости_Scroll(object sender, EventArgs e)
-        {
-            Volume = tBРегуляторГромкости.Value;
-            Player.SetVolume(Volume);
-        }
-
 
         // Обработка закрытия основной формы
         private void MainWindowForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (myMainForm == this)
                 myMainForm = null;
-        }
-
-
-        // Обработка отключения сообщения
-        public void ОтключитьСообщение(ListViewItem Item)
-        {
-            Item.Checked = false;
-            ОбновитьСостояниеЗаписейТаблицы();
-        }
-
-
-        // Обработка двойного нажатия на сообщение (вызов формы сообщения)
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
-
-
-                foreach (int item in sic)
-                {
-                    if (item <= SoundRecords.Count)
-                    {
-                        string Key = this.listView1.Items[item].SubItems[1].Text;
-
-                        if (SoundRecords.Keys.Contains(Key) == true)
-                        {
-                            SoundRecord Данные = SoundRecords[Key];
-                            SoundRecord ДанныеOld = SoundRecordsOld[Key];
-
-                            КарточкаДвиженияПоезда Карточка = new КарточкаДвиженияПоезда(Данные);
-                            if (Карточка.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                            {
-                                bool ПрименитьКоВсемСообщениям = Карточка.ПрименитьКоВсемСообщениям;
-
-                                Данные = Карточка.ПолучитьИзмененнуюКарточку();
-                                Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-
-                                string НомерПоезда = Данные.НомерПоезда;
-                                byte НомерПути = Данные.НомерПути;
-                                string[] НазванияТабло = Данные.НазванияТабло;
-
-
-                                SoundRecords[Key] = Данные;
-                                string time = Данные.Время.ToString("HH:mm:ss");
-
-                                string[] TimeParts = time.Split(':');
-                                if (TimeParts[0].Length == 1)
-                                    time = "0" + time;
-
-
-                                //Изменение времени в списке
-                                if (this.listView1.Items[item].SubItems[1].Text != time)
-                                    if (SoundRecords.ContainsKey(time) == false)
-                                    {
-                                        this.listView1.Items[item].SubItems[1].Text = time;
-                                        SoundRecords.Remove(Key);
-                                        SoundRecords.Add(time, Данные);
-                                    }
-
-
-
-                                if (ПрименитьКоВсемСообщениям == true)
-                                {
-                                    var equalLine = SoundRecords.Where(s => s.Value.НомерПоезда == НомерПоезда).ToList();  //строки для такого же поезда
-                                    for (int i = 0; i < equalLine.Count; i++)
-                                    {
-                                        var ВременнаяПара = equalLine[i];
-                                        string Ключ = ВременнаяПара.Key;
-                                        SoundRecord НовыеДанные = ВременнаяПара.Value;
-                                        НовыеДанные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-                                        НовыеДанные.НомерПути = НомерПути;
-                                        НовыеДанные.НазванияТабло = НазванияТабло;
-                                        НовыеДанные.ВремяПрибытия = Данные.ВремяПрибытия;
-                                        НовыеДанные.ВремяОтправления = Данные.ВремяОтправления;
-                                        НовыеДанные.ВремяСтоянки = Данные.ВремяСтоянки;
-                                        НовыеДанные.Примечание = Данные.Примечание;
-                                        SoundRecords[Ключ] = НовыеДанные;
-
-                                        if (i > 0)
-                                           SoundRecordsOld[Ключ] = НовыеДанные;
-                                    }
-                                }
-
-                                ОбновитьСостояниеЗаписейТаблицы();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
 
 
@@ -1536,38 +1319,6 @@ namespace MainExample
                 e.NewValue = e.CurrentValue;
         }
 
-
-        // Блокировка/разблокирование сообщения при нажатии на CheckBox
-        private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            ОбновитьСостояниеЗаписейТаблицы();
-        }
-
-
-        private void cB_ВоспроизведениеДвиженияПоездов_CheckedChanged(object sender, EventArgs e)
-        {
-            ВоспроизводитьДвижениеПоездов = cB_ВоспроизведениеДвиженияПоездов.Checked;
-        }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ОкноРасписания окноРасписания = new ОкноРасписания();
-            окноРасписания.Show(this);
-        }
-
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ОкноПрибытияОтправления окноПибытияОтправления = new ОкноПрибытияОтправления();
-            окноПибытияОтправления.Show(this);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ОкноРасписания2 окноРасписания = new ОкноРасписания2();
-            окноРасписания.Show(this);
-        }
 
         //Отправка сообшений на табло
         private void SendOnPathTable(SoundRecord data)
@@ -1600,11 +1351,11 @@ namespace MainExample
                     }
 
                     TypeTrain typeTrain;
-                    if (data.ОтображениеВТаблицах == 0x00)
+                    if (data.ТипПоезда == ТипПоезда.НеОпределен)
                     {
                         typeTrain= TypeTrain.None;
                     }
-                    else if (data.ОтображениеВТаблицах == 0x01)
+                    else if (data.ТипПоезда == ТипПоезда.Пассажирский)
                     {
                         typeTrain = TypeTrain.LongDistance;
                     }
@@ -1625,8 +1376,8 @@ namespace MainExample
                     };
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
-                    beh.SendMessage4Path(inData, data.НомерПути);
-                    Debug.WriteLine($" ТАБЛО= {beh.GetDeviceName} для ПУТИ {data.НомерПути}.  Сообшение= {inData.Message}  ");
+                    beh.SendMessage4Path(inData, Program.ПолучитьНомерПути(data.НомерПути));
+                    Debug.WriteLine($" ТАБЛО= {beh.GetDeviceName}: {beh.GetDeviceId} для ПУТИ {data.НомерПути}.  Сообшение= {inData.Message}  ");
                 }
             }
         }
@@ -1658,6 +1409,830 @@ namespace MainExample
             base.OnClosed(e);
         }
 
+        private void listView6_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                ListView.SelectedIndexCollection sic = this.lVСтатическиеСообщения.SelectedIndices;
+
+                foreach (int item in sic)
+                {
+                    if (item <= СтатическиеЗвуковыеСообщения.Count)
+                    {
+                        string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
+
+                        if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
+                        {
+                            СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+
+                            КарточкаСтатическогоЗвуковогоСообщения Карточка = new КарточкаСтатическогоЗвуковогоСообщения(Данные);
+                            if (Карточка.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                Данные = Карточка.ПолучитьИзмененнуюКарточку();
+
+                                string Key2 = Данные.Время.ToString("HH:mm:ss");
+                                string[] SubKeys = Key.Split(':');
+                                if (SubKeys[0].Length == 1)
+                                    Key2 = "0" + Key2;
+
+                                if (Key == Key2)
+                                {
+                                    СтатическиеЗвуковыеСообщения[Key] = Данные;
+                                    this.lVСтатическиеСообщения.Items[item].SubItems[1].Text = Данные.НазваниеКомпозиции;
+                                }
+                                else
+                                {
+                                    СтатическиеЗвуковыеСообщения.Remove(Key);
+
+                                    int ПопыткиВставитьСообщение = 5;
+                                    while (ПопыткиВставитьСообщение-- > 0)
+                                    {
+                                        Key2 = Данные.Время.ToString("HH:mm:ss");
+                                        SubKeys = Key2.Split(':');
+                                        if (SubKeys[0].Length == 1)
+                                            Key2 = "0" + Key2;
+
+                                        if (СтатическиеЗвуковыеСообщения.ContainsKey(Key2))
+                                        {
+                                            Данные.Время = Данные.Время.AddSeconds(20);
+                                            continue;
+                                        }
+
+                                        СтатическиеЗвуковыеСообщения.Add(Key2, Данные);
+                                        break;
+                                    }
+
+                                    ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений();
+                                }
+                            }
+
+                            ОбновитьСостояниеЗаписейТаблицы();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        // Обработка двойного нажатия на сообщение (вызов формы сообщения)
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListView listView = sender as ListView;
+
+            try
+            {
+                ListView.SelectedIndexCollection sic = listView.SelectedIndices;
+
+
+                foreach (int item in sic)
+                {
+                    if (item <= SoundRecords.Count)
+                    {
+                        string Key = listView.Items[item].SubItems[0].Text;
+                        string actStr = "";
+
+                        if (SoundRecords.Keys.Contains(Key) == true)
+                        {
+                            SoundRecord Данные = SoundRecords[Key];
+                            //SoundRecord ДанныеOld = SoundRecordsOld[Key];
+
+                            КарточкаДвиженияПоезда Карточка = new КарточкаДвиженияПоезда(Данные);
+                            if (Карточка.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                bool ПрименитьКоВсемСообщениям = Карточка.ПрименитьКоВсемСообщениям;
+
+                                SoundRecord СтарыеДанные = Данные;
+                                Данные = Карточка.ПолучитьИзмененнуюКарточку();
+                                Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+
+                                string НомерПоезда = Данные.НомерПоезда;
+                                string НомерПути = Данные.НомерПути;
+                                string[] НазванияТабло = Данные.НазванияТабло;
+
+
+                                SoundRecords[Key] = Данные;
+                                string time = Данные.Время.ToString("HH:mm:ss");
+
+                                string[] TimeParts = time.Split(':');
+                                if (TimeParts[0].Length == 1)
+                                    time = "0" + time;
+
+
+                                //Изменение времени в списке
+                                if (listView.Items[item].SubItems[0].Text != time)
+                                    if (SoundRecords.ContainsKey(time) == false)
+                                    {
+                                        listView.Items[item].SubItems[0].Text = time;
+                                        SoundRecords.Remove(Key);
+                                        SoundRecords.Add(time, Данные);
+                                    }
+
+                                //Обновить Время ПРИБ
+                                if ((Данные.БитыАктивностиПолей & 0x04) != 0x00)
+                                {
+                                    actStr = Данные.ВремяПрибытия.ToString("HH:mm:ss");
+                                    switch (listView.Name)
+                                    {
+                                        case "listView1":
+                                            if (listView.Items[item].SubItems[4].Text != actStr)
+                                                listView.Items[item].SubItems[4].Text = actStr;
+                                            break;
+
+                                        case "lVПрибытие":
+                                        case "lVТранзит":
+                                            if (listView.Items[item].SubItems[3].Text != actStr)
+                                                listView.Items[item].SubItems[3].Text = actStr;
+                                            break;
+                                    }
+                                }
+
+                                //Обновить Время ОТПР
+                                if ((Данные.БитыАктивностиПолей & 0x10) != 0x00)
+                                {
+                                    actStr = Данные.ВремяОтправления.ToString("HH:mm:ss");
+                                    switch (listView.Name)
+                                    {
+                                        case "listView1":
+                                            if (listView.Items[item].SubItems[5].Text != actStr)
+                                                listView.Items[item].SubItems[5].Text = actStr;
+                                            break;
+
+                                        case "lVТранзит":
+                                            if (listView.Items[item].SubItems[4].Text != actStr)
+                                                listView.Items[item].SubItems[4].Text = actStr;
+                                            break;
+
+                                        case "lVОтправление":
+                                            if (listView.Items[item].SubItems[3].Text != actStr)
+                                                listView.Items[item].SubItems[3].Text = actStr;
+                                            break;
+                                    }
+                                }
+
+                                string СообщениеОбИзменениях = "";
+                                if (СтарыеДанные.НазваниеПоезда != Данные.НазваниеПоезда) СообщениеОбИзменениях += "Поезд: " + СтарыеДанные.НазваниеПоезда + " -> " + Данные.НазваниеПоезда + "; ";
+                                if (СтарыеДанные.НомерПоезда != Данные.НомерПоезда) СообщениеОбИзменениях += "№Поезда: " + СтарыеДанные.НомерПоезда + " -> " + Данные.НомерПоезда + "; ";
+                                if (СтарыеДанные.НомерПути != Данные.НомерПути) СообщениеОбИзменениях += "Путь: " + СтарыеДанные.НомерПути + " -> " + Данные.НомерПути + "; ";
+                                if (СтарыеДанные.НумерацияПоезда != Данные.НумерацияПоезда) СообщениеОбИзменениях += "Нум.пути: " + СтарыеДанные.НумерацияПоезда.ToString() + " -> " + Данные.НумерацияПоезда.ToString() + "; ";
+                                if (СтарыеДанные.СтанцияОтправления != Данные.СтанцияОтправления) СообщениеОбИзменениях += "Ст.Отпр.: " + СтарыеДанные.СтанцияОтправления + " -> " + Данные.СтанцияОтправления + "; ";
+                                if (СтарыеДанные.СтанцияНазначения != Данные.СтанцияНазначения) СообщениеОбИзменениях += "Ст.Назн.: " + СтарыеДанные.СтанцияНазначения + " -> " + Данные.СтанцияНазначения + "; ";
+                                if ((СтарыеДанные.БитыАктивностиПолей & 0x04) != 0x00) if (СтарыеДанные.ВремяПрибытия != Данные.ВремяПрибытия) СообщениеОбИзменениях += "Прибытие: " + СтарыеДанные.ВремяПрибытия.ToString("HH:mm") + " -> " + Данные.ВремяПрибытия.ToString("HH:mm") + "; ";
+                                if ((СтарыеДанные.БитыАктивностиПолей & 0x10) != 0x00) if (СтарыеДанные.ВремяОтправления != Данные.ВремяОтправления) СообщениеОбИзменениях += "Отправление: " + СтарыеДанные.ВремяОтправления.ToString("HH:mm") + " -> " + Данные.ВремяОтправления.ToString("HH:mm") + "; ";
+                                if (СообщениеОбИзменениях != "")
+                                    Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + СтарыеДанные.НомерПоезда + " " + СтарыеДанные.НазваниеПоезда + ": " + СообщениеОбИзменениях);
+
+                                ОбновитьСостояниеЗаписейТаблицы();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void lVПрибытие_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (this.ContextMenuStrip != null)
+                this.ContextMenuStrip = null;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                ListView list = sender as ListView;
+                if ((list.Name == "lVПрибытие") || (list.Name == "lVТранзит") || (list.Name == "lVОтправление") || (list.Name == "listView1"))
+                {
+                    if (list.SelectedIndices.Count > 0)
+                    {
+                        this.ContextMenuStrip = this.contextMenuStrip1;
+                        try
+                        {
+                            ListView.SelectedIndexCollection sic = list.SelectedIndices;
+
+                            foreach (int item in sic)
+                            {
+                                if (item <= SoundRecords.Count)
+                                {
+                                    string Key = list.Items[item].SubItems[0].Text;
+
+                                    if (SoundRecords.Keys.Contains(Key) == true)
+                                    {
+                                        SoundRecord Данные = SoundRecords[Key];
+                                        КлючВыбранныйМеню = Key;
+
+
+                                        ToolStripMenuItem[] СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь0ToolStripMenuItem };
+                                        for (int i = 0; i <= 14; i++)
+                                            СписокПолейПути[i].Checked = false;
+
+                                        int НомерПути = Program.НомераПутей.IndexOf(Данные.НомерПути) + 1;
+                                        if (НомерПути >= 1 && НомерПути <= 14)
+                                            СписокПолейПути[НомерПути].Checked = true;
+                                        else
+                                            СписокПолейПути[0].Checked = true;
+
+                                        ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
+                                        for (int i = 0; i < СписокНумерацииВагонов.Length; i++)
+                                            СписокНумерацииВагонов[i].Checked = false;
+
+                                        if (Данные.НумерацияПоезда <= 2)
+                                            СписокНумерацииВагонов[Данные.НумерацияПоезда].Checked = true;
+
+
+                                        ToolStripMenuItem[] СписокКоличестваПовторов = new ToolStripMenuItem[] { null, повтор1ToolStripMenuItem, повтор2ToolStripMenuItem, повтор3ToolStripMenuItem };
+                                        for (int i = 1; i < СписокКоличестваПовторов.Length; i++)
+                                            СписокКоличестваПовторов[i].Checked = false;
+
+                                        if (Данные.КоличествоПовторений >= 1 && Данные.КоличествоПовторений <= 3)
+                                            СписокКоличестваПовторов[Данные.КоличествоПовторений].Checked = true;
+
+
+                                        шаблоныОповещенияToolStripMenuItem1.DropDownItems.Clear();
+                                        for (int i = 0; i < Данные.СписокФормируемыхСообщений.Count(); i++)
+                                        {
+                                            var Сообщение = Данные.СписокФормируемыхСообщений[i];
+                                            ToolStripMenuItem tsmi = new ToolStripMenuItem(Сообщение.НазваниеШаблона);
+                                            tsmi.Size = new System.Drawing.Size(165, 22);
+                                            tsmi.Name = "ШаблонОповещения" + i.ToString();
+                                            tsmi.Checked = Сообщение.Активность;
+                                            tsmi.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+                                            шаблоныОповещенияToolStripMenuItem1.DropDownItems.Add(tsmi);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                }
+                else if (list.Name == "lVСтатическиеСообщения")
+                {
+                    if (list.SelectedIndices.Count > 0)
+                    {
+                        this.ContextMenuStrip = this.contextMenuStrip2;
+                        try
+                        {
+                            ListView.SelectedIndexCollection sic = this.lVСтатическиеСообщения.SelectedIndices;
+
+                            foreach (int item in sic)
+                            {
+                                if (item <= СтатическиеЗвуковыеСообщения.Count)
+                                {
+                                    string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
+
+                                    if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
+                                    {
+                                        СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+                                        включитьToolStripMenuItem.Text = Данные.Активность == true ? "Отключить" : "Включить";
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                }
+
+                //                contextMenuStrip1.Items.Add(list.Name);
+            }
+        }
+
+        public static void ВоспроизвестиШаблонОповещения(string ТипСообщения, SoundRecord Record, string Шаблон)
+        {
+            string Text;
+            string ФормируемоеСообщение = "";
+            List<String> ВоспроизводимыеФайлы;
+
+            string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
+                                                                    "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути",
+                                                                    "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути" };
+
+            string[] ФайлыМинут = new string[] { "00 минут", "01 минута", "02 минуты", "03 минуты", "04 минуты", "05 минут", "06 минут", "07 минут", "08 минут",
+                        "09 минут", "10 минут", "11 минут", "12 минут", "13 минут", "14 минут", "15 минут", "16 минут", "17 минут",
+                        "18 минут", "19 минут", "20 минут", "21 минута", "22 минуты", "23 минуты", "24 минуты", "25 минут", "26 минут",
+                        "27 минут", "28 минут", "29 минут", "30 минут", "31 минута", "32 минуты", "33 минуты", "34 минуты", "35 минут",
+                        "36 минут", "37 минут", "38 минут", "39 минут", "40 минут", "41 минута", "42 минуты", "43 минуты", "44 минуты",
+                        "45 минут", "46 минут", "47 минут", "48 минут", "49 минут", "50 минут", "51 минута", "52 минуты", "53 минуты",
+                        "54 минуты", "55 минут", "56 минут", "57 минут", "58 минут", "59 минут" };
+
+
+            string[] ФайлыЧасов = new string[] { "В 00 часов", "В 01 час", "В 02 часа", "В 03 часа", "В 04 часа", "В 05 часов", "В 06 часов", "В 07 часов",
+                                                                                        "В 08 часов", "В 09 часов", "В 10 часов", "В 11 часов", "В 12 часов", "В 13 часов", "В 14 часов", "В 15 часов",
+                                                                                        "В 16 часов", "В 17 часов", "В 18 часов", "В 19 часов", "В 20 часов", "В 21 час", "В 22 часа", "В 23 часа" };
+
+            string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация с головы", "Нумерация с хвоста" };
+
+            ВоспроизводимыеФайлы = new List<string>();
+
+            string[] ЭлементыШаблона = Шаблон.Split('|');
+            foreach (string шаблон in ЭлементыШаблона)
+            {
+                int ВидНомерацииПути = 0;
+                switch (шаблон)
+                {
+                    case "НА НОМЕР ПУТЬ":
+                    case "НА НОМЕРом ПУТИ":
+                    case "С НОМЕРого ПУТИ":
+                        if (шаблон == "НА НОМЕРом ПУТИ") ВидНомерацииПути = 1;
+                        if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
+                        if (Program.НомераПутей.Contains(Record.НомерПути))
+                        {
+                            Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(Record.НомерПути) + 1 + ВидНомерацииПути * 14];
+                            ФормируемоеСообщение += Text + " ";
+                            ВоспроизводимыеФайлы.Add(Text);
+                            continue;
+                        }
+                        break;
+
+
+                    case "СТ.ОТПРАВЛЕНИЯ":
+                        Text = Record.СтанцияОтправления;
+                        ФормируемоеСообщение += Text + " ";
+                        ВоспроизводимыеФайлы.Add(Text);
+                        break;
+
+
+                    case "НОМЕР ПОЕЗДА":
+                        Text = Record.НомерПоезда;
+                        ФормируемоеСообщение += Text + " ";
+                        ВоспроизводимыеФайлы.Add(Text);
+                        break;
+
+
+                    case "СТ.ПРИБЫТИЯ":
+                        Text = Record.СтанцияНазначения;
+                        ФормируемоеСообщение += Text + " ";
+                        ВоспроизводимыеФайлы.Add(Text);
+                        break;
+
+
+                    case "ВРЕМЯ ПРИБЫТИЯ":
+                        ФормируемоеСообщение += "Время прибытия: ";
+                        Text = Record.ВремяПрибытия.ToString("HH:mm");
+                        ФормируемоеСообщение += Text + " ";
+                        ВоспроизводимыеФайлы.Add(ФайлыЧасов[Record.ВремяПрибытия.Hour]);
+                        ВоспроизводимыеФайлы.Add(ФайлыМинут[Record.ВремяПрибытия.Minute]);
+                        continue;
+
+
+                    case "ВРЕМЯ СТОЯНКИ":
+                        ФормируемоеСообщение += "Стоянка: ";
+                        Text = Record.ВремяСтоянки.ToString() + " минут";
+                        ФормируемоеСообщение += Text + " ";
+                        ВоспроизводимыеФайлы.Add(ФайлыМинут[Record.ВремяСтоянки % 60]);
+                        continue;
+
+
+                    case "ВРЕМЯ ОТПРАВЛЕНИЯ":
+                        ФормируемоеСообщение += "Время отправления: ";
+                        Text = Record.ВремяОтправления.ToString("HH:mm");
+                        ФормируемоеСообщение += Text + " ";
+                        ВоспроизводимыеФайлы.Add(ФайлыЧасов[Record.ВремяОтправления.Hour]);
+                        ВоспроизводимыеФайлы.Add(ФайлыМинут[Record.ВремяОтправления.Minute]);
+                        continue;
+
+
+                    case "НУМЕРАЦИЯ СОСТАВА":
+                        if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
+                        {
+                            Text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
+                            ФормируемоеСообщение += Text + " ";
+                            ВоспроизводимыеФайлы.Add(Text);
+                            continue;
+                        }
+                        break;
+
+
+                    case "СТАНЦИИ":
+                        if ((Record.ТипПоезда == ТипПоезда.Пригородный) || (Record.ТипПоезда == ТипПоезда.Ласточка) || (Record.ТипПоезда == ТипПоезда.РЭКС))
+                        {
+                            if (Record.Примечание.Contains("Со всеми остановками"))
+                            {
+                                ФормируемоеСообщение += "Электропоезд движется со всеми остановками ";
+                                if (Program.FilesFolder.Contains("СоВсемиОстановками"))
+                                    ВоспроизводимыеФайлы.Add("СоВсемиОстановками");
+                            }
+                            else if (Record.Примечание.Contains("С остановк"))
+                            {
+                                ФормируемоеСообщение += "Электропоезд движется с остановками на станциях: ";
+                                foreach (var Станция in Program.Станции)
+                                    if (Record.Примечание.Contains(Станция))
+                                        ФормируемоеСообщение += Станция + " ";
+
+                                if (Program.FilesFolder.Contains("СОстановками"))
+                                    ВоспроизводимыеФайлы.Add("СОстановками");
+
+                                foreach (var Станция in Program.Станции)
+                                    if (Record.Примечание.Contains(Станция))
+                                        if (Program.FilesFolder.Contains(Станция))
+                                            ВоспроизводимыеФайлы.Add(Станция);
+                            }
+                            else if (Record.Примечание.Contains("Кроме"))
+                            {
+                                ФормируемоеСообщение += "Электропоезд движется с остановками кроме станций: ";
+                                foreach (var Станция in Program.Станции)
+                                    if (Record.Примечание.Contains(Станция))
+                                        ФормируемоеСообщение += Станция + " ";
+
+                                if (Program.FilesFolder.Contains("СОстановкамиКроме"))
+                                    ВоспроизводимыеФайлы.Add("СОстановкамиКроме");
+
+                                foreach (var Станция in Program.Станции)
+                                    if (Record.Примечание.Contains(Станция))
+                                        if (Program.FilesFolder.Contains(Станция))
+                                            ВоспроизводимыеФайлы.Add(Станция);
+                            }
+                        }
+                        break;
+
+
+                    default:
+                        ФормируемоеСообщение += шаблон + " ";
+                        ВоспроизводимыеФайлы.Add(шаблон);
+                        break;
+                }
+            }
+
+            ВоспроизводимыеФайлы.Add("СТОП " + ((int)(Program.Настройки.ЗадержкаМеждуЗвуковымиСообщениями * 10.0)).ToString());
+
+            for (int i = 0; i < Record.КоличествоПовторений; i++)
+                for (int j = 0; j < ВоспроизводимыеФайлы.Count(); j++)
+                    ОчередьВоспроизводимыхЗвуковыхСообщений.Add(ВоспроизводимыеФайлы[j]);
+
+            Program.ЗаписьЛога(ТипСообщения, "Формирование звукового сообщения: " + ФормируемоеСообщение + ". Повтор " + Record.КоличествоПовторений.ToString() + " раз.");
+        }
+
+        private void listView5_Enter(object sender, EventArgs e)
+        {
+            if (this.ContextMenuStrip != null)
+                this.ContextMenuStrip = null;
+        }
+
+        private void воспроизвестиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ListView.SelectedIndexCollection sic = this.lVСтатическиеСообщения.SelectedIndices;
+
+                foreach (int item in sic)
+                {
+                    if (item <= СтатическиеЗвуковыеСообщения.Count)
+                    {
+                        string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
+
+                        if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
+                        {
+                            СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+                            foreach (var Sound in StaticSoundForm.StaticSoundRecords)
+                            {
+                                if (Sound.Name == Данные.НазваниеКомпозиции)
+                                {
+                                    Program.ЗаписьЛога("Действие оператора", "Воспроизведение звукового сообщения: " + Sound.Name);
+                                    MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(Sound.Name);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void включитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ListView.SelectedIndexCollection sic = this.lVСтатическиеСообщения.SelectedIndices;
+
+                foreach (int item in sic)
+                {
+                    if (item <= СтатическиеЗвуковыеСообщения.Count)
+                    {
+                        string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
+
+                        if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
+                        {
+                            СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+                            Данные.Активность = !Данные.Активность;
+                            Program.ЗаписьЛога("Действие оператора", (Данные.Активность ? "Включение " : "Отключение ") +  "звукового сообщения: \"" + Данные.НазваниеКомпозиции + "\" (" + Данные.Время.ToString("HH:mm") + ")");
+                            СтатическиеЗвуковыеСообщения[Key] = Данные;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void путь1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+
+            try
+            {
+                if (SoundRecords.Keys.Contains(КлючВыбранныйМеню) == true)
+                {
+                    SoundRecord Данные = SoundRecords[КлючВыбранныйМеню];
+                    SoundRecord НеИзмененныеДанные = Данные;
+
+                    ToolStripMenuItem[] СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь0ToolStripMenuItem };
+                    string[] СтроковыйСписокПолейПути = new string[] { "путь0ToolStripMenuItem", "путь1ToolStripMenuItem", "путь2ToolStripMenuItem", "путь3ToolStripMenuItem", "путь4ToolStripMenuItem", "путь5ToolStripMenuItem", "путь6ToolStripMenuItem", "путь7ToolStripMenuItem", "путь8ToolStripMenuItem", "путь9ToolStripMenuItem", "путь10ToolStripMenuItem", "путь11ToolStripMenuItem", "путь12ToolStripMenuItem", "путь13ToolStripMenuItem", "путь14ToolStripMenuItem" };
+                    if (СтроковыйСписокПолейПути.Contains(tsmi.Name))
+                        for (int i = 0; i < СтроковыйСписокПолейПути.Length; i++)
+                            if (СтроковыйСписокПолейПути[i] == tsmi.Name)
+                            {
+                                string СтарыйНомерПути = Данные.НомерПути;
+                                Данные.НомерПути = i == 0 ? "" : Program.НомераПутей[i - 1];
+                                if (СтарыйНомерПути != Данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + Данные.НомерПути + "; ");
+
+                                Данные.ТипСообщения= SoundRecordType.ДвижениеПоезда;
+                                byte номерПути = Program.ПолучитьНомерПути(Данные.НомерПути);
+                                Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
+
+                                SoundRecords[КлючВыбранныйМеню] = Данные;
+                                return;
+                            }
+
+
+                    ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
+                    string[] СтроковыйСписокНумерацииВагонов = new string[] { "отсутсвуетToolStripMenuItem", "сГоловыСоставаToolStripMenuItem", "сХвостаСоставаToolStripMenuItem" };
+                    if (СтроковыйСписокНумерацииВагонов.Contains(tsmi.Name))
+                        for (int i = 0; i < СтроковыйСписокНумерацииВагонов.Length; i++)
+                            if (СтроковыйСписокНумерацииВагонов[i] == tsmi.Name)
+                            {
+                                byte СтараяНумерацияПоезда = Данные.НумерацияПоезда;
+                                Данные.НумерацияПоезда = (byte)i;
+                                if (СтараяНумерацияПоезда != Данные.НумерацияПоезда) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Нум.пути: " + СтараяНумерацияПоезда.ToString() + " -> " + Данные.НумерацияПоезда.ToString() + "; ");
+                                SoundRecords[КлючВыбранныйМеню] = Данные;
+                                return;
+                            }
+
+
+                    ToolStripMenuItem[] СписокКоличестваПовторов = new ToolStripMenuItem[] { повтор1ToolStripMenuItem, повтор2ToolStripMenuItem, повтор3ToolStripMenuItem };
+                    string[] СтроковыйСписокКоличестваПовторов = new string[] { "повтор1ToolStripMenuItem", "повтор2ToolStripMenuItem", "повтор3ToolStripMenuItem" };
+                    if (СтроковыйСписокКоличестваПовторов.Contains(tsmi.Name))
+                        for (int i = 0; i < СтроковыйСписокКоличестваПовторов.Length; i++)
+                            if (СтроковыйСписокКоличестваПовторов[i] == tsmi.Name)
+                            {
+                                byte СтароеКоличествоПовторений = Данные.КоличествоПовторений;
+                                Данные.КоличествоПовторений = (byte)(i + 1);
+                                if (СтароеКоличествоПовторений != Данные.КоличествоПовторений) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Кол.повт.: " + СтароеКоличествоПовторений.ToString() + " -> " + Данные.КоличествоПовторений.ToString() + "; ");
+                                SoundRecords[КлючВыбранныйМеню] = Данные;
+                                return;
+                            }
+
+
+                    if (шаблоныОповещенияToolStripMenuItem1.DropDownItems.Contains(tsmi))
+                    {
+                        int ИндексШаблона = шаблоныОповещенияToolStripMenuItem1.DropDownItems.IndexOf(tsmi);
+                        if (ИндексШаблона >= 0 && ИндексШаблона < 10 && ИндексШаблона < Данные.СписокФормируемыхСообщений.Count)
+                        {
+                            var ФормируемоеСообщение = Данные.СписокФормируемыхСообщений[ИндексШаблона];
+                            ФормируемоеСообщение.Активность = !tsmi.Checked;
+                            Данные.СписокФормируемыхСообщений[ИндексШаблона] = ФормируемоеСообщение;
+                            SoundRecords[КлючВыбранныйМеню] = Данные;
+                            return;
+                        }
+                    }
+
+                    ОбновитьСостояниеЗаписейТаблицы();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void lVСобытия_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lVСобытия_ОбновитьСостояниеТаблицы()
+        {
+            int НомерСтроки = 0;
+            foreach (var Данные in СписокБлижайшихСобытий)
+            {
+                if (НомерСтроки >= lVСобытия.Items.Count)
+                {
+                    ListViewItem lvi1 = new ListViewItem(new string[] { Данные.Key, Данные.Value.Описание });
+                    switch (Данные.Value.СостояниеСтроки)
+                    {
+                        case 0: lvi1.BackColor = Color.LightGray; break;
+                        case 1: lvi1.BackColor = Color.White; break;
+                        case 2: lvi1.BackColor = Color.LightGreen; break;
+                        case 3: lvi1.BackColor = Color.Orange; break;
+                    }
+                    lVСобытия.Items.Add(lvi1);
+                }
+                else
+                {
+                    if (lVСобытия.Items[НомерСтроки].SubItems[0].Text != Данные.Key)
+                        lVСобытия.Items[НомерСтроки].SubItems[0].Text = Данные.Key;
+                    if (lVСобытия.Items[НомерСтроки].SubItems[1].Text != Данные.Value.Описание)
+                        lVСобытия.Items[НомерСтроки].SubItems[1].Text = Данные.Value.Описание;
+                    switch (Данные.Value.СостояниеСтроки)
+                    {
+                        case 0: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightGray) lVСобытия.Items[НомерСтроки].BackColor = Color.LightGray; break;
+                        case 1: if (lVСобытия.Items[НомерСтроки].BackColor != Color.White) lVСобытия.Items[НомерСтроки].BackColor = Color.White; break;
+                        case 2: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightGreen) lVСобытия.Items[НомерСтроки].BackColor = Color.LightGreen; break;
+                        case 3: if (lVСобытия.Items[НомерСтроки].BackColor != Color.Orange) lVСобытия.Items[НомерСтроки].BackColor = Color.Orange; break;
+                    }
+                }
+
+                НомерСтроки++;
+            }
+
+            while (НомерСтроки < lVСобытия.Items.Count)
+                lVСобытия.Items.RemoveAt(НомерСтроки);
+        }
+
+        private void lVСобытия_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                string Key = lVСобытия.SelectedItems[0].SubItems[0].Text;
+                if (СписокБлижайшихСобытий.ContainsKey(Key))
+                {
+                    ОписаниеСобытия ДанныеСтроки = СписокБлижайшихСобытий[Key];
+                    if (ДанныеСтроки.НомерСписка == 1)
+                    {
+                        Key = ДанныеСтроки.Ключ;
+                        if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key))
+                        {
+                            СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+                            КарточкаСтатическогоЗвуковогоСообщения Карточка = new КарточкаСтатическогоЗвуковогоСообщения(Данные);
+                            if (Карточка.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                Данные = Карточка.ПолучитьИзмененнуюКарточку();
+
+                                string Key2 = Данные.Время.ToString("HH:mm:ss");
+                                string[] SubKeys = Key.Split(':');
+                                if (SubKeys[0].Length == 1)
+                                    Key2 = "0" + Key2;
+
+                                if (Key == Key2)
+                                {
+                                    СтатическиеЗвуковыеСообщения[Key] = Данные;
+                                    for (int i = 0; i < lVСтатическиеСообщения.Items.Count; i++)
+                                        if (lVСтатическиеСообщения.Items[i].SubItems[0].Text == Key)
+                                            if (lVСтатическиеСообщения.Items[i].SubItems[1].Text != Данные.ОписаниеКомпозиции)
+                                            {
+                                                lVСтатическиеСообщения.Items[i].SubItems[1].Text = Данные.ОписаниеКомпозиции;
+                                                break;
+                                            }
+                                }
+                                else
+                                {
+                                    СтатическиеЗвуковыеСообщения.Remove(Key);
+
+                                    int ПопыткиВставитьСообщение = 5;
+                                    while (ПопыткиВставитьСообщение-- > 0)
+                                    {
+                                        Key2 = Данные.Время.ToString("HH:mm:ss");
+                                        SubKeys = Key2.Split(':');
+                                        if (SubKeys[0].Length == 1)
+                                            Key2 = "0" + Key2;
+
+                                        if (СтатическиеЗвуковыеСообщения.ContainsKey(Key2))
+                                        {
+                                            Данные.Время = Данные.Время.AddSeconds(20);
+                                            continue;
+                                        }
+
+                                        СтатическиеЗвуковыеСообщения.Add(Key2, Данные);
+                                        break;
+                                    }
+
+                                    ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений();
+                                }
+                            }
+                        }
+                    }
+                    else // Динамические сообщения
+                    {
+                        Key = ДанныеСтроки.Ключ;
+                        string actStr = "";
+
+                        if (SoundRecords.Keys.Contains(Key) == true)
+                        {
+                            SoundRecord Данные = SoundRecords[Key];
+                            //SoundRecord ДанныеOld = SoundRecordsOld[Key];
+
+                            КарточкаДвиженияПоезда Карточка = new КарточкаДвиженияПоезда(Данные);
+                            if (Карточка.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                SoundRecord СтарыеДанные = Данные;
+                                Данные = Карточка.ПолучитьИзмененнуюКарточку();
+                                Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+
+                                string НомерПоезда = Данные.НомерПоезда;
+                                string НомерПути = Данные.НомерПути;
+                                string[] НазванияТабло = Данные.НазванияТабло;
+
+
+                                SoundRecords[Key] = Данные;
+                                string time = Данные.Время.ToString("HH:mm:ss");
+
+                                string[] TimeParts = time.Split(':');
+                                if (TimeParts[0].Length == 1)
+                                    time = "0" + time;
+
+                                /*
+                                //Изменение времени в списке
+                                if (listView.Items[item].SubItems[0].Text != time)
+                                    if (SoundRecords.ContainsKey(time) == false)
+                                    {
+                                        listView.Items[item].SubItems[0].Text = time;
+                                        SoundRecords.Remove(Key);
+                                        SoundRecords.Add(time, Данные);
+                                    }
+
+                                //Обновить Время ПРИБ
+                                if ((Данные.БитыАктивностиПолей & 0x04) != 0x00)
+                                {
+                                    actStr = Данные.ВремяПрибытия.ToString("HH:mm:ss");
+                                    switch (listView.Name)
+                                    {
+                                        case "listView1":
+                                            if (listView1.Items[item].SubItems[4].Text != actStr)
+                                                listView1.Items[item].SubItems[4].Text = actStr;
+                                            break;
+
+                                        case "lVПрибытие":
+                                        case "lVТранзит":
+                                            if (listView.Items[item].SubItems[3].Text != actStr)
+                                                listView.Items[item].SubItems[3].Text = actStr;
+                                            break;
+                                    }
+                                }
+
+                                //Обновить Время ОТПР
+                                if ((Данные.БитыАктивностиПолей & 0x10) != 0x00)
+                                {
+                                    actStr = Данные.ВремяОтправления.ToString("HH:mm:ss");
+                                    switch (listView.Name)
+                                    {
+                                        case "listView1":
+                                            if (listView.Items[item].SubItems[5].Text != actStr)
+                                                listView.Items[item].SubItems[5].Text = actStr;
+                                            break;
+
+                                        case "lVТранзит":
+                                            if (listView.Items[item].SubItems[4].Text != actStr)
+                                                listView.Items[item].SubItems[4].Text = actStr;
+                                            break;
+
+                                        case "lVОтправление":
+                                            if (listView.Items[item].SubItems[3].Text != actStr)
+                                                listView.Items[item].SubItems[3].Text = actStr;
+                                            break;
+                                    }
+                                }
+                                */
+
+                                string СообщениеОбИзменениях = "";
+                                if (СтарыеДанные.НазваниеПоезда != Данные.НазваниеПоезда) СообщениеОбИзменениях += "Поезд: " + СтарыеДанные.НазваниеПоезда + " -> " + Данные.НазваниеПоезда + "; ";
+                                if (СтарыеДанные.НомерПоезда != Данные.НомерПоезда) СообщениеОбИзменениях += "№Поезда: " + СтарыеДанные.НомерПоезда + " -> " + Данные.НомерПоезда + "; ";
+                                if (СтарыеДанные.НомерПути != Данные.НомерПути) СообщениеОбИзменениях += "Путь: " + СтарыеДанные.НомерПути + " -> " + Данные.НомерПути + "; ";
+                                if (СтарыеДанные.НумерацияПоезда != Данные.НумерацияПоезда) СообщениеОбИзменениях += "Нум.пути: " + СтарыеДанные.НумерацияПоезда.ToString() + " -> " + Данные.НумерацияПоезда.ToString() + "; ";
+                                if (СтарыеДанные.СтанцияОтправления != Данные.СтанцияОтправления) СообщениеОбИзменениях += "Ст.Отпр.: " + СтарыеДанные.СтанцияОтправления + " -> " + Данные.СтанцияОтправления + "; ";
+                                if (СтарыеДанные.СтанцияНазначения != Данные.СтанцияНазначения) СообщениеОбИзменениях += "Ст.Назн.: " + СтарыеДанные.СтанцияНазначения + " -> " + Данные.СтанцияНазначения + "; ";
+                                if ((СтарыеДанные.БитыАктивностиПолей & 0x04) != 0x00) if (СтарыеДанные.ВремяПрибытия != Данные.ВремяПрибытия) СообщениеОбИзменениях += "Прибытие: " + СтарыеДанные.ВремяПрибытия.ToString("HH:mm") + " -> " + Данные.ВремяПрибытия.ToString("HH:mm") + "; ";
+                                if ((СтарыеДанные.БитыАктивностиПолей & 0x10) != 0x00) if (СтарыеДанные.ВремяОтправления != Данные.ВремяОтправления) СообщениеОбИзменениях += "Отправление: " + СтарыеДанные.ВремяОтправления.ToString("HH:mm") + " -> " + Данные.ВремяОтправления.ToString("HH:mm") + "; ";
+                                if (СообщениеОбИзменениях != "")
+                                    Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + СтарыеДанные.НомерПоезда + " " + СтарыеДанные.НазваниеПоезда + ": " + СообщениеОбИзменениях);
+
+                                ОбновитьСостояниеЗаписейТаблицы();
+                            }
+                        }
+                    }
+
+                    ОбновитьСостояниеЗаписейТаблицы();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
 
     }
 }

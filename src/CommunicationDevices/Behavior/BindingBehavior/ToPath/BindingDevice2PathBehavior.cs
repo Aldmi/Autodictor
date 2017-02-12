@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml;
@@ -12,7 +13,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
     /// <summary>
     /// привязка устройства к списку путей (1 табло может обслуживать несколько путей)
-    /// Если список путей пуст, то привязка считается ко всем путям и обслудивается как вывод табличной информации.
+    /// Если список путей пуст, то привязка считается ко всем путям и обслуживается как вывод табличной информации.
     /// </summary>
     public class Binding2PathBehavior : IBinding2PathBehavior
     {
@@ -20,7 +21,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         public IEnumerable<byte> CollectionPathNumber { get; }
         public string GetDeviceName => _device.Name;
         public int GetDeviceId=> _device.Id;
-
+        public string GetDeviceAddress => _device.Address;
 
 
 
@@ -72,6 +73,28 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 _device.AddCycleFuncData(0, inData);
             }
             _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос (выставили запрос сразу на выполнение)
+        }
+
+        /// <summary>
+        /// Инициализация начальной строки вывода на дисплей.
+        /// Из всех привязанных путей берется первый путь для отображения.
+        /// </summary>
+        public void InitializeDevicePathInfo()
+        {
+          
+            var inData = new UniversalInputType
+            {
+                NumberOfTrain =  "   ",
+                PathNumber = (CollectionPathNumber != null && CollectionPathNumber.Any()) ? CollectionPathNumber.First().ToString() : "   ",
+                Event =  "   ",
+                Time = DateTime.MinValue,
+                Stations =  "   ",
+                Note = "   ",
+                TypeTrain = TypeTrain.None
+            };
+            inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
+
+            _device.AddCycleFuncData(0, inData);
         }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="DataContract\SimpleData\OperativeScheduleDataSimple.cs" />
     <Compile Include="DataContract\SimpleData\RegulatoryScheduleDataSimple.cs" />
     <Compile Include="DataContract\StationsData.cs" />
+    <Compile Include="PostProcessing\DaysFollowingConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

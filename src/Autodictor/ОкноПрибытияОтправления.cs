@@ -65,7 +65,7 @@ namespace MainExample
                 for (int i = 0, j = 0, k = 0; i < MainWindowForm.SoundRecords.Count; i++)
                 {
                     var Данные = MainWindowForm.SoundRecords.ElementAt(i);
-                    if (((Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоезда) || (Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное)) && (j < КоличествоСтрокДляПоездовДальнегоСледования) && (Данные.Value.ОтображениеВТаблицах == 0x01))
+                    if (((Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоезда) || (Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное)) && (j < КоличествоСтрокДляПоездовДальнегоСледования) && (Данные.Value.ТипПоезда == ТипПоезда.Пассажирский))
                     {
                         if (Поезда.Contains(Данные.Value.НомерПоезда) == true)
                             continue;
@@ -87,13 +87,13 @@ namespace MainExample
                         g.DrawString(Данные.Value.НазваниеПоезда, drawFont, drawBrushWhite, new Point(40, 45 + j * 18));
                         if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) g.DrawString(Данные.Value.ВремяПрибытия.ToString("HH:mm"), drawFont, drawBrushWhite, new Point(228, 45 + j * 18));
                         if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) g.DrawString(Данные.Value.ВремяОтправления.ToString("HH:mm"), drawFont, drawBrushWhite, new Point(268, 45 + j * 18));
-                        if (Данные.Value.НомерПути != 0) g.DrawString(Данные.Value.НомерПути.ToString(), drawFont, drawBrushWhite, new Point(308, 45 + j * 18));
+                        if (Данные.Value.НомерПути != "") g.DrawString(Данные.Value.НомерПути.ToString(), drawFont, drawBrushWhite, new Point(308, 45 + j * 18));
                         if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x14) g.DrawString(Данные.Value.ВремяСтоянки.ToString(), drawFont, drawBrushWhite, new Point(353, 45 + j * 18));
                         Поезда.Add(Данные.Value.НомерПоезда);
                         j++;
                     }
 
-                    if (((Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоезда) || (Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное)) && (k < КоличествоСтрокДляЭлектропоездов) && (Данные.Value.ОтображениеВТаблицах == 0x02))
+                    if (((Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоезда) || (Данные.Value.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное)) && (k < КоличествоСтрокДляЭлектропоездов) && (Данные.Value.ТипПоезда == ТипПоезда.Пригородный))
                     {
                         if (Поезда.Contains(Данные.Value.НомерПоезда) == true)
                             continue;
@@ -115,13 +115,13 @@ namespace MainExample
                         g.DrawString(Данные.Value.НазваниеПоезда, drawFont, drawBrushWhite, new Point(40, 190 + k * 18));
                         if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) g.DrawString(Данные.Value.ВремяПрибытия.AddHours(4).ToString("HH:mm"), drawFont, drawBrushWhite, new Point(228, 190 + k * 18));
                         if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) g.DrawString(Данные.Value.ВремяОтправления.AddHours(4).ToString("HH:mm"), drawFont, drawBrushWhite, new Point(268, 190 + k * 18));
-                        if (Данные.Value.НомерПути != 0) g.DrawString(Данные.Value.НомерПути.ToString(), drawFont, drawBrushWhite, new Point(308, 190 + k * 18));
+                        if (Данные.Value.НомерПути != "") g.DrawString(Данные.Value.НомерПути.ToString(), drawFont, drawBrushWhite, new Point(308, 190 + k * 18));
                         if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x14) g.DrawString(Данные.Value.ВремяСтоянки.ToString(), drawFont, drawBrushWhite, new Point(353, 190 + k * 18));
                         Поезда.Add(Данные.Value.НомерПоезда);
                         k++;
                     }
 
-                    ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(), Данные.Value.Время.ToString("HH:mm:ss"), (Данные.Value.Длительность / 60).ToString("00") + ":" + (Данные.Value.Длительность % 60).ToString("00"), Данные.Value.НомерПоезда + Данные.Value.Описание });
+                    ListViewItem lvi = new ListViewItem(new string[] { Данные.Value.ID.ToString(), Данные.Value.Время.ToString("HH:mm:ss"), "00:00", Данные.Value.НомерПоезда + Данные.Value.Описание });
                 }
 
 

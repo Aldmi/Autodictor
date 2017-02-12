@@ -19,14 +19,10 @@ namespace MainExample
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.OK;
-            MainWindowForm.myMainForm.ОтключитьСообщение(myItem);
+            //MainWindowForm.myMainForm.ОтключитьСообщение(myItem);
             this.Close();
         }
 

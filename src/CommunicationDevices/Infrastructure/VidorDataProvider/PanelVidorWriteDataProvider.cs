@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Communication.Annotations;
 using Communication.Interfaces;
+using NLog.Fluent;
+using Log = Library.Logs.Log;
 
 
 namespace CommunicationDevices.Infrastructure.VidorDataProvider
@@ -240,6 +242,9 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 byte xor = CalcXor(xorBytes);
                 resultstring += xor.ToString("X2");
 
+                //DEBUG---------------------------------------------------------
+                Log.log.Fatal(resultstring);
+                //DEBUG---------------------------------------------------------
 
                 //Преобразовываем КОНЕЧНУЮ строку в массив байт
                 var resultBuffer = Encoding.GetEncoding("Windows-1251").GetBytes(resultstring).ToList();

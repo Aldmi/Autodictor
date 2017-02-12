@@ -32,7 +32,11 @@ namespace MainExample
             InitializeComponent();
 
             this.comboBox_Messages.Items.Add("НОМЕР ПОЕЗДА");
-            this.comboBox_Messages.Items.Add("НОМЕР ПУТИ");
+            this.comboBox_Messages.Items.Add("СТ.ОТПРАВЛЕНИЯ");
+            this.comboBox_Messages.Items.Add("СТ.ПРИБЫТИЯ");
+            this.comboBox_Messages.Items.Add("НА НОМЕР ПУТЬ");
+            this.comboBox_Messages.Items.Add("НА НОМЕРом ПУТИ");
+            this.comboBox_Messages.Items.Add("С НОМЕРого ПУТИ");
             this.comboBox_Messages.Items.Add("ВРЕМЯ ПРИБЫТИЯ");
             this.comboBox_Messages.Items.Add("ВРЕМЯ СТОЯНКИ");
             this.comboBox_Messages.Items.Add("ВРЕМЯ ОТПРАВЛЕНИЯ");
@@ -236,42 +240,40 @@ namespace MainExample
         public static void ЗагрузитьСписок()
         {
             DynamicSoundRecords.Clear();
+            Program.ШаблоныОповещения.Clear();
             ID = 0;
-
-            System.IO.StreamReader file = null;
 
             try
             {
-                file = new System.IO.StreamReader("DynamicSound.ini");
-
-                string line;
-
-                while ((line = file.ReadLine()) != null)
+                using (System.IO.StreamReader file = new System.IO.StreamReader("DynamicSound.ini"))
                 {
-                    string[] Settings = line.Split(';');
-                    if (Settings.Length == 3)
+                    string line;
+
+                    while ((line = file.ReadLine()) != null)
                     {
-                        DynamicSoundRecord Данные;
+                        string[] Settings = line.Split(';');
+                        if (Settings.Length == 3)
+                        {
+                            DynamicSoundRecord Данные;
 
-                        Данные.ID = int.Parse(Settings[0]);
-                        Данные.Name = Settings[1];
-                        Данные.Message = Settings[2];
+                            Данные.ID = int.Parse(Settings[0]);
+                            Данные.Name = Settings[1];
+                            Данные.Message = Settings[2];
 
-                        DynamicSoundRecords.Add(Данные);
+                            DynamicSoundRecords.Add(Данные);
+                            Program.ШаблоныОповещения.Add(Settings[1]);
 
-                        if (Данные.ID > ID)
-                            ID = Данные.ID;
+                            if (Данные.ID > ID)
+                                ID = Данные.ID;
+                        }
                     }
+
+                    file.Close();
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                if (file != null)
-                    file.Close();
             }
         }
 
@@ -279,13 +281,13 @@ namespace MainExample
         {
             try
             {
-                System.IO.StreamWriter DumpFile = new System.IO.StreamWriter("DynamicSound.ini");
+                using (System.IO.StreamWriter DumpFile = new System.IO.StreamWriter("DynamicSound.ini"))
+                {
+                    foreach (var Данные in DynamicSoundRecords)
+                        DumpFile.WriteLine(Данные.ID.ToString() + ";" + Данные.Name + ";" + Данные.Message);
 
-                foreach (var Данные in DynamicSoundRecords)
-                    DumpFile.WriteLine(Данные.ID.ToString() + ";" + Данные.Name + ";" + Данные.Message);
-
-                DumpFile.Flush();
-                DumpFile.Dispose();
+                    DumpFile.Close();
+                }
             }
             catch (Exception ex)
             {

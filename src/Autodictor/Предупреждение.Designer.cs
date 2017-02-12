@@ -57,7 +57,6 @@
             this.label2.Size = new System.Drawing.Size(284, 21);
             this.label2.TabIndex = 1;
             this.label2.Text = "Через указанное время произойдет";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -68,7 +67,6 @@
             this.label3.Size = new System.Drawing.Size(279, 21);
             this.label3.TabIndex = 1;
             this.label3.Text = "воспроизведение звукового файла";
-            this.label3.Click += new System.EventHandler(this.label2_Click);
             // 
             // lbl_Timer
             // 

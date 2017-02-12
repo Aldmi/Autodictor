@@ -11,24 +11,32 @@ namespace MainExample
     {
         private SoundRecord Record;
         public bool ПрименитьКоВсемСообщениям = true;
+        private bool СделаныИзменения = false;
+        private bool РазрешениеИзменений = false;
 
         public КарточкаДвиженияПоезда(SoundRecord Record)
         {
             this.Record = Record;
             InitializeComponent();
+            cBОтменен.Checked = !Record.Активность;
 
-            cB_НомерПути.Enabled = ((this.Record.БитыАктивностиПолей & 0x01) != 0x00) ? true : false;
-            gB_НумерацияПоезда.Enabled = ((this.Record.БитыАктивностиПолей & 0x02) != 0x00) ? true : false;
-            gB_Прибытие.Enabled = ((this.Record.БитыАктивностиПолей & 0x04) != 0x00) ? true : false;
-            gB_Стоянка.Enabled = ((this.Record.БитыАктивностиПолей & 0x08) != 0x00) ? true : false;
-            gB_Отправление.Enabled = ((this.Record.БитыАктивностиПолей & 0x10) != 0x00) ? true : false;
+            cBПрибытие.Checked = ((this.Record.БитыАктивностиПолей & 0x04) != 0x00) ? true : false;
+            cBОтправление.Checked = ((this.Record.БитыАктивностиПолей & 0x10) != 0x00) ? true : false;
 
-            groupBox1.Enabled = (this.Record.ОтображениеВТаблицах == 0x02);   //разблокируем только для пригорода
+            dTP_Прибытие.Enabled = cBПрибытие.Checked;
+            btn_ИзменитьВремяПрибытия.Enabled = cBПрибытие.Checked;
 
-            cB_НомерПути.SelectedIndex = this.Record.НомерПути;
-            dTP_Время.Value = this.Record.Время;
+            dTP_ВремяОтправления.Enabled = cBОтправление.Checked;
+            btn_ИзменитьВремяОтправления.Enabled = cBОтправление.Checked;
+
+            groupBox1.Enabled = (this.Record.ТипПоезда == ТипПоезда.Пригородный) || (this.Record.ТипПоезда == ТипПоезда.Ласточка) || (this.Record.ТипПоезда == ТипПоезда.РЭКС);   //разблокируем только для пригорода
+
+            cB_НомерПути.Items.Add("Не определен");
+            foreach (var Путь in Program.НомераПутей)
+                cB_НомерПути.Items.Add(Путь);
+
+            cB_НомерПути.SelectedIndex = Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1;
             dTP_Прибытие.Value = this.Record.ВремяПрибытия;
-            tB_ВремяСтоянки.Text = this.Record.ВремяСтоянки.ToString();
             dTP_ВремяОтправления.Value = this.Record.ВремяОтправления;
 
             switch (this.Record.НумерацияПоезда)
@@ -39,6 +47,75 @@ namespace MainExample
             }
 
             ОбновитьТекстВОкне();
+
+            string Text = "Карточка ";
+            switch (Record.ТипПоезда)
+            {
+                case ТипПоезда.Пассажирский: Text += "пассажирского поезда: "; break;
+                case ТипПоезда.Пригородный: Text += "пригородного электропоезда: "; break;
+                case ТипПоезда.Скоростной: Text += "скоростного поезда: "; break;
+                case ТипПоезда.Скорый: Text += "скорого поезда: "; break;
+                case ТипПоезда.Ласточка: Text += "скоростного поезда Ласточка: "; break;
+                case ТипПоезда.РЭКС: Text += "скоростного поезда РЭКС: "; break;
+                case ТипПоезда.Фирменный: Text += "фирменного поезда: "; break;
+            }
+            Text += Record.НомерПоезда + ": " + Record.СтанцияОтправления + " - " + Record.СтанцияНазначения;
+            this.Text = Text;
+
+            foreach (var НомерПоезда in Program.НомераПоездов)
+                cBНомерПоезда.Items.Add(НомерПоезда);
+            cBНомерПоезда.Text = Record.НомерПоезда;
+
+            foreach (var Станция in Program.Станции)
+            {
+                cBОткуда.Items.Add(Станция);
+                cBКуда.Items.Add(Станция);
+            }
+
+            cBОткуда.Text = Record.СтанцияОтправления;
+            cBКуда.Text = Record.СтанцияНазначения;
+
+            switch (Record.КоличествоПовторений)
+            {
+                default:
+                case 1:
+                    btnПовторения.Text = "1 ПОВТОР";
+                    break;
+
+                case 2:
+                    btnПовторения.Text = "2 ПОВТОРА";
+                    break;
+
+                case 3:
+                    btnПовторения.Text = "3 ПОВТОРА";
+                    break;
+            };
+
+            for (int i = 0; i < Record.СписокФормируемыхСообщений.Count(); i++)
+            {
+                var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[i];
+
+                DateTime ВремяАктивации = DateTime.Now;
+                if (ФормируемоеСообщение.ПривязкаКВремени == 0)
+                    ВремяАктивации = this.Record.ВремяПрибытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                else
+                    ВремяАктивации = this.Record.ВремяОтправления.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+
+                ListViewItem lvi = new ListViewItem(new string[] { ВремяАктивации.ToString("HH:mm"), ФормируемоеСообщение.НазваниеШаблона });
+                lvi.Checked = ФормируемоеСообщение.Активность;
+                lvi.Tag = i;
+                this.lVШаблоны.Items.Add(lvi);
+
+                gBНастройкиПоезда.Enabled = Record.Активность;
+            }
+
+            cBПоездОтменен.Checked = false;
+            cBПрибытиеЗадерживается.Checked = false;
+            cBОтправлениеЗадерживается.Checked = false;
+            if ((this.Record.БитыНештатныхСитуаций & 0x01) != 0x00) cBПоездОтменен.Checked = true;
+            else if ((this.Record.БитыНештатныхСитуаций & 0x02) != 0x00) cBПрибытиеЗадерживается.Checked = true;
+            else if ((this.Record.БитыНештатныхСитуаций & 0x04) != 0x00) cBОтправлениеЗадерживается.Checked = true;
+
         }
 
 
@@ -55,198 +132,57 @@ namespace MainExample
             }
             else if ((Record.ТипСообщения == SoundRecordType.ДвижениеПоезда) || (Record.ТипСообщения == SoundRecordType.ДвижениеПоездаНеПодтвержденное))
             {
-                rTB_Сообщение.Text = "";
-                string Text;
-
-                string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
-                                                                    "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути",
-                                                                    "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути" };
-
-                string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация поезда с головы состава", "Нумерация поезда с хвоста состава" };
-
-                List<int> УказательВыделенныхФрагментов = new List<int>();
-
-
                 #region Движение по станциям
                 lB_ПоСтанциям.Items.Clear();
-                lB_СписокСтанций.Items.Clear();
                 rB_ПоРасписанию.Checked = false;
                 rB_ПоСтанциям.Checked = false;
                 rB_КромеСтанций.Checked = false;
                 rB_СоВсемиОстановками.Checked = false;
 
-                if (this.Record.ОтображениеВТаблицах == 0x02)
+                if ((this.Record.ТипПоезда == ТипПоезда.Пригородный) || (this.Record.ТипПоезда == ТипПоезда.Ласточка) || (this.Record.ТипПоезда == ТипПоезда.РЭКС))
                 {
                     string Примечание = this.Record.Примечание;
                     if (Примечание.Contains("С остановк"))
                     {
                         rB_ПоСтанциям.Checked = true;
-                        foreach (var Станция in MainWindowForm.Станции)
+                        foreach (var Станция in Program.Станции)
                         {
                             if (Примечание.Contains(Станция))
                                 lB_ПоСтанциям.Items.Add(Станция);
-                            else
-                                lB_СписокСтанций.Items.Add(Станция);
                         }
 
-                        lB_СписокСтанций.Enabled = true;
                         lB_ПоСтанциям.Enabled = true;
-                        button2.Enabled = true;
-                        button3.Enabled = true;
-                        button4.Enabled = true;
-                        button5.Enabled = true;
-                        button6.Enabled = true;
+                        btnРедактировать.Enabled = true;
                     }
                     else if (Примечание.Contains("Со всеми остановками"))
                     {
                         rB_СоВсемиОстановками.Checked = true;
-                        foreach (var Станция in MainWindowForm.Станции)
+                        foreach (var Станция in Program.Станции)
                             lB_ПоСтанциям.Items.Add(Станция);
 
-                        lB_СписокСтанций.Enabled = true;
                         lB_ПоСтанциям.Enabled = true;
-                        button2.Enabled = true;
-                        button3.Enabled = true;
-                        button4.Enabled = true;
-                        button5.Enabled = true;
-                        button6.Enabled = true;
+                        btnРедактировать.Enabled = true;
                     }
                     else if (Примечание.Contains("Кроме"))
                     {
                         rB_КромеСтанций.Checked = true;
-                        foreach (var Станция in MainWindowForm.Станции)
+                        foreach (var Станция in Program.Станции)
                         {
                             if (Примечание.Contains(Станция))
                                 lB_ПоСтанциям.Items.Add(Станция);
-                            else
-                                lB_СписокСтанций.Items.Add(Станция);
                         }
 
-                        lB_СписокСтанций.Enabled = true;
                         lB_ПоСтанциям.Enabled = true;
-                        button2.Enabled = true;
-                        button3.Enabled = true;
-                        button4.Enabled = true;
-                        button5.Enabled = true;
-                        button6.Enabled = true;
+                        btnРедактировать.Enabled = true;
                     }
                     else
                     {
                         rB_ПоРасписанию.Checked = true;
-                        foreach (var Станция in MainWindowForm.Станции)
-                            lB_СписокСтанций.Items.Add(Станция);
-
-                        lB_СписокСтанций.Enabled = false;
                         lB_ПоСтанциям.Enabled = false;
-                        button2.Enabled = false;
-                        button3.Enabled = false;
-                        button4.Enabled = false;
-                        button5.Enabled = false;
-                        button6.Enabled = false;
+                        btnРедактировать.Enabled = false;
                     }
                 }
                 #endregion
-
-
-                foreach (string шаблон in Record.ИменаФайлов)
-                {
-                    switch (шаблон)
-                    {
-                        case "НОМЕР ПУТИ":
-                            if ((Record.НомерПути >= 1) && (Record.НомерПути <= 14))
-                            {
-                                УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-
-                                Text = "";
-                                if ((Record.ШаблонВоспроизведенияПути == 0) || (Record.ШаблонВоспроизведенияПути == 1))
-                                    Text = НазваниеФайловПутей[Record.НомерПути];
-                                else if ((Record.ШаблонВоспроизведенияПути == 2) || (Record.ШаблонВоспроизведенияПути == 3))
-                                    Text = НазваниеФайловПутей[Record.НомерПути + (Record.ШаблонВоспроизведенияПути - 1) * 14];
-
-                                УказательВыделенныхФрагментов.Add(Text.Length);
-                                rTB_Сообщение.AppendText(Text + " ");
-                            }
-                            break;
-
-                        case "ВРЕМЯ ПРИБЫТИЯ":
-                            rTB_Сообщение.Text += "Время прибытия: ";
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            Text = Record.ВремяПрибытия.ToString("HH:mm");
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                            break;
-
-                        case "ВРЕМЯ СТОЯНКИ":
-                            rTB_Сообщение.Text += "Стоянка: ";
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            Text = Record.ВремяСтоянки.ToString() + " минут";
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                            break;
-
-                        case "ВРЕМЯ ОТПРАВЛЕНИЯ":
-                            rTB_Сообщение.Text += "Время отправления: ";
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                            Text = Record.ВремяОтправления.ToString("HH:mm");
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                            break;
-
-
-                        case "НУМЕРАЦИЯ СОСТАВА":
-                            if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
-                            {
-                                УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-                                Text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
-                                УказательВыделенныхФрагментов.Add(Text.Length);
-                                rTB_Сообщение.AppendText(Text + " ");
-                            }
-                            break;
-
-
-                        case "СТАНЦИИ":
-                            if (this.Record.ОтображениеВТаблицах == 0x02)
-                            {
-                                if (rB_СоВсемиОстановками.Checked == true)
-                                {
-                                    rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
-                                }
-                                else if (rB_ПоСтанциям.Checked == true)
-                                {
-                                    rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
-                                    foreach (var Станция in MainWindowForm.Станции)
-                                        if (lB_ПоСтанциям.Items.Contains(Станция))
-                                        {
-                                            rTB_Сообщение.AppendText(Станция + " ");
-                                        }
-                                }
-                                else if (rB_КромеСтанций.Checked == true)
-                                {
-                                    rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
-                                    foreach (var Станция in MainWindowForm.Станции)
-                                        if (lB_ПоСтанциям.Items.Contains(Станция))
-                                        {
-                                            rTB_Сообщение.AppendText(Станция + " ");
-                                        }
-                                }
-                            }
-                            break;
-
-
-                        default:
-                            rTB_Сообщение.AppendText(шаблон + " ");
-                            break;
-                    }
-                }
-
-                for (int i = 0; i < УказательВыделенныхФрагментов.Count / 2; i++)
-                {
-                    rTB_Сообщение.SelectionStart = УказательВыделенныхФрагментов[2 * i];
-                    rTB_Сообщение.SelectionLength = УказательВыделенныхФрагментов[2 * i + 1];
-                    rTB_Сообщение.SelectionColor = Color.Red;
-                }
-
-                rTB_Сообщение.SelectionLength = 0;
             }
 
 
@@ -271,9 +207,11 @@ namespace MainExample
 
         private void cB_НомерПути_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Record.НомерПути = (byte)cB_НомерПути.SelectedIndex;
-            Record.НазванияТабло = Record.НомерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
+            int НомерПути = cB_НомерПути.SelectedIndex;
+            Record.НомерПути = cB_НомерПути.SelectedIndex == 0 ? "" : cB_НомерПути.Text;
+            Record.НазванияТабло = НомерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path((byte)НомерПути)).Where(str => str != null).ToArray() : null;
             ОбновитьТекстВОкне();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
 
@@ -287,35 +225,35 @@ namespace MainExample
                 Record.НумерацияПоезда = 2;
 
             ОбновитьТекстВОкне();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
         private void btn_Подтвердить_Click(object sender, EventArgs e)
         {
-            ПрименитьКоВсемСообщениям = cB_ПрименитьКоВсем.Checked;
+            Record.СтанцияОтправления = cBОткуда.Text;
+            Record.СтанцияНазначения = cBКуда.Text;
             DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
         private void btn_ЗадатьВремя_Click(object sender, EventArgs e)
         {
-            Record.Время = dTP_Время.Value;
+            //Record.Время = dTP_Время.Value;
         }
 
         private void btn_ИзменитьВремяПрибытия_Click(object sender, EventArgs e)
         {
             Record.ВремяПрибытия = dTP_Прибытие.Value;
             ОбновитьТекстВОкне();
-        }
-
-        private void btn_ИзменитьВремяСтоянки_Click(object sender, EventArgs e)
-        {
-            uint.TryParse(tB_ВремяСтоянки.Text, out Record.ВремяСтоянки);
-            ОбновитьТекстВОкне();
+            ОбновитьСостояниеТаблицыШаблонов();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
         private void btn_ИзменитьВремяОтправления_Click(object sender, EventArgs e)
         {
             Record.ВремяОтправления = dTP_ВремяОтправления.Value;
             ОбновитьТекстВОкне();
+            ОбновитьСостояниеТаблицыШаблонов();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
         public SoundRecord ПолучитьИзмененнуюКарточку()
@@ -329,70 +267,23 @@ namespace MainExample
             this.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (lB_СписокСтанций.SelectedIndex != -1)
-            {
-                string Станция = (string)lB_СписокСтанций.SelectedItem;
-                lB_СписокСтанций.Items.Remove(Станция);
-                lB_ПоСтанциям.Items.Add(Станция);
-            }
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            lB_СписокСтанций.Items.Clear();
-            foreach (var Станция in MainWindowForm.Станции)
-                lB_ПоСтанциям.Items.Add(Станция);
-        }
+            string СписокВыбранныхСтанций = "";
+            for (int i = 0; i < lB_ПоСтанциям.Items.Count; i++)
+                СписокВыбранныхСтанций += lB_ПоСтанциям.Items[i] + ",";
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (lB_ПоСтанциям.SelectedIndex != -1)
+            СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций);
+
+            if (списокСтанций.ShowDialog() == DialogResult.OK)
             {
-                string Станция = (string)lB_ПоСтанциям.SelectedItem;
-                lB_ПоСтанциям.Items.Remove(Станция);
-                lB_СписокСтанций.Items.Add(Станция);
-            }
-        }
+                System.Collections.Generic.List<string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
+                lB_ПоСтанциям.Items.Clear();
+                foreach (var res in РезультирующиеСтанции)
+                    lB_ПоСтанциям.Items.Add(res);
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            lB_ПоСтанциям.Items.Clear();
-            foreach (var Станция in MainWindowForm.Станции)
-                lB_СписокСтанций.Items.Add(Станция);
-        }
+                bool ПерваяСтанция = true;
 
-        private void rB_ПоСтанциям_CheckedChanged(object sender, EventArgs e)
-        {
-            if ((rB_ПоСтанциям.Checked == true) || (rB_КромеСтанций.Checked == true) || (rB_СоВсемиОстановками.Checked == true))
-            {
-                lB_СписокСтанций.Enabled = true;
-                lB_ПоСтанциям.Enabled = true;
-                button2.Enabled = true;
-                button3.Enabled = true;
-                button4.Enabled = true;
-                button5.Enabled = true;
-                button6.Enabled = true;
-            }
-            else
-            {
-                lB_СписокСтанций.Enabled = false;
-                lB_ПоСтанциям.Enabled = false;
-                button2.Enabled = false;
-                button3.Enabled = false;
-                button4.Enabled = false;
-                button5.Enabled = false;
-                button6.Enabled = false;
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            bool ПерваяСтанция = true;
-
-            if (this.Record.ОтображениеВТаблицах == 0x02)
-            {
                 string Примечание = "";
                 if (rB_СоВсемиОстановками.Checked == true)
                 {
@@ -401,7 +292,7 @@ namespace MainExample
                 else if (rB_ПоСтанциям.Checked == true)
                 {
                     Примечание = "С остановками: ";
-                    foreach (var Станция in MainWindowForm.Станции)
+                    foreach (var Станция in Program.Станции)
                         if (lB_ПоСтанциям.Items.Contains(Станция))
                         {
                             if (ПерваяСтанция == true)
@@ -415,27 +306,412 @@ namespace MainExample
                 else if (rB_КромеСтанций.Checked == true)
                 {
                     Примечание = "Кроме: ";
-                    foreach (var Станция in MainWindowForm.Станции)
+                    foreach (var Станция in Program.Станции)
                         if (lB_ПоСтанциям.Items.Contains(Станция))
                         {
                             if (ПерваяСтанция == true)
                                 ПерваяСтанция = false;
                             else
                                 Примечание += ", ";
-
                             Примечание += Станция;
                         }
                 }
 
                 this.Record.Примечание = Примечание;
+
+                ОбновитьТекстВОкне();
+                if (РазрешениеИзменений == true) СделаныИзменения = true;
+            }
+        }
+
+        private void rB_ПоСтанциям_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((rB_ПоСтанциям.Checked == true) || (rB_КромеСтанций.Checked == true) || (rB_СоВсемиОстановками.Checked == true))
+            {
+                lB_ПоСтанциям.Enabled = true;
+                btnРедактировать.Enabled = true;
+            }
+            else
+            {
+                lB_ПоСтанциям.Enabled = false;
+                btnРедактировать.Enabled = false;
+            }
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+        private void btnПовторения_Click(object sender, EventArgs e)
+        {
+            if (btnПовторения.Text == "1 ПОВТОР")
+            {
+                btnПовторения.Text = "2 ПОВТОРА";
+                Record.КоличествоПовторений = 2;
+            }
+            else if (btnПовторения.Text == "2 ПОВТОРА")
+            {
+                btnПовторения.Text = "3 ПОВТОРА";
+                Record.КоличествоПовторений = 3;
+            }
+            else
+            {
+                btnПовторения.Text = "1 ПОВТОР";
+                Record.КоличествоПовторений = 1;
+            }
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+        private void cBПрибытие_CheckedChanged(object sender, EventArgs e)
+        {
+            dTP_Прибытие.Enabled = cBПрибытие.Checked;
+            btn_ИзменитьВремяПрибытия.Enabled = cBПрибытие.Checked;
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+        private void cBОтправление_CheckedChanged(object sender, EventArgs e)
+        {
+            dTP_ВремяОтправления.Enabled = cBОтправление.Checked;
+            btn_ИзменитьВремяОтправления.Enabled = cBОтправление.Checked;
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+        private void lVШаблоны_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView.SelectedIndexCollection sic = this.lVШаблоны.SelectedIndices;
+
+            foreach (int item in sic)
+            {
+                string Key = this.lVШаблоны.Items[item].SubItems[1].Text;
+                string Шаблон = "";
+
+                bool НаличиеШаблона = false;
+                foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
+                    if (Item.Name == Key)
+                    {
+                        НаличиеШаблона = true;
+                        Шаблон = Item.Message;
+                        int ТекущийШаблон = (int)this.lVШаблоны.Items[item].Tag;
+                        if (ТекущийШаблон < Record.СписокФормируемыхСообщений.Count())
+                        {
+                            var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[ТекущийШаблон];
+                        }
+                        break;
+                    }
+
+                if (НаличиеШаблона == true)
+                    ОтобразитьШаблонОповещенияВОкне(Шаблон);
+            }
+        }
+
+        private void ОтобразитьШаблонОповещенияВОкне(string ШаблонОповещения)
+        {
+            rTB_Сообщение.Text = "";
+            string Text;
+
+            string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
+                                                                    "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути",
+                                                                    "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути" };
+
+            string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация поезда с головы состава", "Нумерация поезда с хвоста состава" };
+
+            List<int> УказательВыделенныхФрагментов = new List<int>();
+
+            string[] ЭлементыШаблона = ШаблонОповещения.Split('|');
+            foreach (string шаблон in ЭлементыШаблона)
+            {
+                int ВидНомерацииПути = 0;
+                switch (шаблон)
+                {
+                    case "НА НОМЕР ПУТЬ":
+                    case "НА НОМЕРом ПУТИ":
+                    case "С НОМЕРого ПУТИ":
+                        if (шаблон == "НА НОМЕРом ПУТИ") ВидНомерацииПути = 1;
+                        if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
+                        if (Program.НомераПутей.Contains(Record.НомерПути))
+                        {
+                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1 + ВидНомерацииПути * 14];
+
+                            УказательВыделенныхФрагментов.Add(Text.Length);
+                            rTB_Сообщение.AppendText(Text + " ");
+                        }
+                        break;
+
+                    case "СТ.ОТПРАВЛЕНИЯ":
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = Record.СтанцияОтправления;
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+                    case "НОМЕР ПОЕЗДА":
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = Record.НомерПоезда;
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+                    case "СТ.ПРИБЫТИЯ":
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = Record.СтанцияНазначения;
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+                    case "ВРЕМЯ ПРИБЫТИЯ":
+                        rTB_Сообщение.Text += "Время прибытия: ";
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = Record.ВремяПрибытия.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+                    case "ВРЕМЯ СТОЯНКИ":
+                        rTB_Сообщение.Text += "Стоянка: ";
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = Record.ВремяСтоянки.ToString() + " минут";
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+                    case "ВРЕМЯ ОТПРАВЛЕНИЯ":
+                        rTB_Сообщение.Text += "Время отправления: ";
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = Record.ВремяОтправления.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+
+                    case "НУМЕРАЦИЯ СОСТАВА":
+                        if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
+                        {
+                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            Text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
+                            УказательВыделенныхФрагментов.Add(Text.Length);
+                            rTB_Сообщение.AppendText(Text + " ");
+                        }
+                        break;
+
+
+                    case "СТАНЦИИ":
+                        if ((Record.ТипПоезда == ТипПоезда.Пригородный) || (Record.ТипПоезда == ТипПоезда.Ласточка) || (Record.ТипПоезда == ТипПоезда.РЭКС))
+                        {
+                            if (rB_СоВсемиОстановками.Checked == true)
+                            {
+                                rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
+                            }
+                            else if (rB_ПоСтанциям.Checked == true)
+                            {
+                                rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
+                                foreach (var Станция in Program.Станции)
+                                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                                    {
+                                        rTB_Сообщение.AppendText(Станция + " ");
+                                    }
+                            }
+                            else if (rB_КромеСтанций.Checked == true)
+                            {
+                                rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
+                                foreach (var Станция in Program.Станции)
+                                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                                    {
+                                        rTB_Сообщение.AppendText(Станция + " ");
+                                    }
+                            }
+                        }
+                        break;
+
+
+                    default:
+                        rTB_Сообщение.AppendText(шаблон + " ");
+                        break;
+                }
             }
 
-            ОбновитьТекстВОкне();
+            for (int i = 0; i < УказательВыделенныхФрагментов.Count / 2; i++)
+            {
+                rTB_Сообщение.SelectionStart = УказательВыделенныхФрагментов[2 * i];
+                rTB_Сообщение.SelectionLength = УказательВыделенныхФрагментов[2 * i + 1];
+                rTB_Сообщение.SelectionColor = Color.Red;
+            }
+
+            rTB_Сообщение.SelectionLength = 0;
+        }
+
+        private void lVШаблоны_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            for (int item = 0; item < this.lVШаблоны.Items.Count; item++)
+            {
+                if (item <= Record.СписокФормируемыхСообщений.Count)
+                {
+                    var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[item];
+                    ФормируемоеСообщение.Активность = this.lVШаблоны.Items[item].Checked;
+                    Record.СписокФормируемыхСообщений[item] = ФормируемоеСообщение;
+                }
+            }
+
+            ОбновитьСостояниеТаблицыШаблонов();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+        private void btnВоспроизвестиВыбранныйШаблон_Click(object sender, EventArgs e)
+        {
+            ListView.SelectedIndexCollection sic = this.lVШаблоны.SelectedIndices;
+
+            foreach (int item in sic)
+            {
+                int НомерШаблона = (int)this.lVШаблоны.Items[item].Tag;
+
+                if (НомерШаблона < Record.СписокФормируемыхСообщений.Count())
+                {
+                    var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[НомерШаблона];
+                    ФормируемоеСообщение.Воспроизведен = true;
+                    Record.СписокФормируемыхСообщений[item] = ФормируемоеСообщение;
+                    MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, ФормируемоеСообщение.Шаблон);
+                    break;
+                }
+            }
+
+            ОбновитьСостояниеТаблицыШаблонов();
+        }
+
+        private void ОбновитьСостояниеТаблицыШаблонов()
+        {
+            for (int item = 0; item < this.lVШаблоны.Items.Count; item++)
+            {
+                if (item <= Record.СписокФормируемыхСообщений.Count)
+                {
+                    var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[item];
+
+                    DateTime ВремяАктивации = DateTime.Now;
+                    if (ФормируемоеСообщение.ПривязкаКВремени == 0)
+                        ВремяАктивации = this.Record.ВремяПрибытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                    else
+                        ВремяАктивации = this.Record.ВремяОтправления.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                    string ТекстовоеПредставлениеВремениАктивации = ВремяАктивации.ToString("HH:mm");
+
+                    if (this.lVШаблоны.Items[item].Text != ТекстовоеПредставлениеВремениАктивации)
+                        this.lVШаблоны.Items[item].Text = ТекстовоеПредставлениеВремениАктивации;
+
+                    if (ФормируемоеСообщение.Воспроизведен == true)
+                        this.lVШаблоны.Items[item].BackColor = Color.LightGray;
+                    else
+                    {
+                        if (ФормируемоеСообщение.Активность == true)
+                            this.lVШаблоны.Items[item].BackColor = Color.LightGreen;
+                        else
+                            this.lVШаблоны.Items[item].BackColor = Color.White;
+                    }
+                }
+            }
+        }
+
+
+
+        private void КарточкаДвиженияПоезда_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (СделаныИзменения == false)
+                {
+                    Close();
+                }
+                else
+                {
+                    DialogResult Результат = MessageBox.Show("Вы желаете сохранить изменения?", "Внимание !!!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    if (Результат == DialogResult.Yes)
+                    {
+                        btn_Подтвердить_Click(null, null);
+                    }
+                    else if (Результат == DialogResult.No)
+                    {
+                        Close();
+                    }
+                }
+            }
+        }
+
+        private void КарточкаДвиженияПоезда_Load(object sender, EventArgs e)
+        {
+            РазрешениеИзменений = true;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            Record.Активность = !cBОтменен.Checked;
+            СделаныИзменения = true;
+            gBНастройкиПоезда.Enabled = Record.Активность;
+        }
+
+        private void btnОтменаПоезда_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы точно хотите воспроизвести данное сообщение в эфир?", "Внимание !!!", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+
+            string ФормируемоеСообщение = "";
+            int ТипПоезда = (int)Record.ТипПоезда;
+
+            switch ((sender as Button).Name)
+            {
+                case "btnОтменаПоезда":
+                    ФормируемоеСообщение = Program.ШаблонОповещенияОбОтменеПоезда[ТипПоезда];
+                    break;
+
+                case "btnЗадержкаПрибытия":
+                    ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеПрибытияПоезда[ТипПоезда];
+                    break;
+
+                case "btnЗадержкаОтправления":
+                    ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеОтправленияПоезда[ТипПоезда];
+                    break;
+            }
+
+            bool НаличиеШаблона = false;
+            foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
+                if (Item.Name == ФормируемоеСообщение)
+                {
+                    НаличиеШаблона = true;
+                    ФормируемоеСообщение = Item.Message;
+                    break;
+                }
+
+            if (НаличиеШаблона == true)
+                MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, ФормируемоеСообщение);
+        }
+
+        private void cBПоездОтменен_CheckedChanged(object sender, EventArgs e)
+        {
+            Record.БитыНештатныхСитуаций &= (byte)0xF8;
+
+            if ((sender as CheckBox).Checked == true)
+            switch ((sender as CheckBox).Name)
+            {
+                case "cBПоездОтменен":
+                    Record.БитыНештатныхСитуаций |= 0x01;
+
+                    if (cBПрибытиеЗадерживается.Checked == true)
+                        cBПрибытиеЗадерживается.Checked = false;
+                    if (cBОтправлениеЗадерживается.Checked == true)
+                        cBОтправлениеЗадерживается.Checked = false;
+                    break;
+
+                case "cBПрибытиеЗадерживается":
+                     Record.БитыНештатныхСитуаций |= 0x02;
+
+                    if (cBПоездОтменен.Checked == true)
+                        cBПоездОтменен.Checked = false;
+                    if (cBОтправлениеЗадерживается.Checked == true)
+                        cBОтправлениеЗадерживается.Checked = false;
+                    break;
+
+                case "cBОтправлениеЗадерживается":
+                    Record.БитыНештатныхСитуаций |= 0x04;
+
+                    if (cBПоездОтменен.Checked == true)
+                        cBПоездОтменен.Checked = false;
+                    if (cBПрибытиеЗадерживается.Checked == true)
+                        cBПрибытиеЗадерживается.Checked = false;
+                    break;
+            }
         }
     }
 }
-
-
-
-    
-

@@ -64,14 +64,14 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
-            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(11, 24);
             this.listView1.Margin = new System.Windows.Forms.Padding(2);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1164, 293);
+            this.listView1.Size = new System.Drawing.Size(1164, 265);
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -85,7 +85,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Имя";
-            this.columnHeader2.Width = 225;
+            this.columnHeader2.Width = 600;
             // 
             // columnHeader3
             // 
@@ -105,44 +105,49 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 327);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(8, 309);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.Size = new System.Drawing.Size(44, 20);
             this.label2.TabIndex = 11;
             this.label2.Text = "Имя:";
             // 
             // textBox_Name
             // 
             this.textBox_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_Name.Location = new System.Drawing.Point(50, 324);
+            this.textBox_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_Name.Location = new System.Drawing.Point(50, 303);
             this.textBox_Name.Name = "textBox_Name";
-            this.textBox_Name.Size = new System.Drawing.Size(228, 20);
+            this.textBox_Name.Size = new System.Drawing.Size(228, 29);
             this.textBox_Name.TabIndex = 12;
             // 
             // textBox_Message
             // 
             this.textBox_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_Message.Location = new System.Drawing.Point(87, 352);
+            this.textBox_Message.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox_Message.Location = new System.Drawing.Point(114, 347);
             this.textBox_Message.Name = "textBox_Message";
             this.textBox_Message.ReadOnly = true;
-            this.textBox_Message.Size = new System.Drawing.Size(1004, 20);
+            this.textBox_Message.Size = new System.Drawing.Size(1061, 29);
             this.textBox_Message.TabIndex = 14;
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 357);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(8, 354);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.Size = new System.Drawing.Size(100, 20);
             this.label3.TabIndex = 13;
             this.label3.Text = "Сообщение:";
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(15, 383);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(15, 404);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(162, 34);
             this.button1.TabIndex = 17;
@@ -153,7 +158,8 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(193, 383);
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(193, 404);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(162, 34);
             this.button2.TabIndex = 18;
@@ -164,7 +170,8 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(377, 383);
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button3.Location = new System.Drawing.Point(377, 404);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(162, 34);
             this.button3.TabIndex = 19;
@@ -175,7 +182,8 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Location = new System.Drawing.Point(559, 383);
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button4.Location = new System.Drawing.Point(559, 404);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(162, 34);
             this.button4.TabIndex = 20;
@@ -186,9 +194,10 @@
             // button_insert
             // 
             this.button_insert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_insert.Location = new System.Drawing.Point(985, 322);
+            this.button_insert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_insert.Location = new System.Drawing.Point(878, 301);
             this.button_insert.Name = "button_insert";
-            this.button_insert.Size = new System.Drawing.Size(64, 22);
+            this.button_insert.Size = new System.Drawing.Size(109, 34);
             this.button_insert.TabIndex = 21;
             this.button_insert.Text = "Вставить";
             this.button_insert.UseVisualStyleBackColor = true;
@@ -199,18 +208,20 @@
             this.comboBox_Messages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox_Messages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_Messages.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox_Messages.FormattingEnabled = true;
-            this.comboBox_Messages.Location = new System.Drawing.Point(284, 324);
+            this.comboBox_Messages.Location = new System.Drawing.Point(284, 302);
             this.comboBox_Messages.Name = "comboBox_Messages";
-            this.comboBox_Messages.Size = new System.Drawing.Size(695, 21);
+            this.comboBox_Messages.Size = new System.Drawing.Size(588, 32);
             this.comboBox_Messages.TabIndex = 22;
             // 
             // button_left
             // 
             this.button_left.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_left.Location = new System.Drawing.Point(1055, 322);
+            this.button_left.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_left.Location = new System.Drawing.Point(993, 301);
             this.button_left.Name = "button_left";
-            this.button_left.Size = new System.Drawing.Size(23, 22);
+            this.button_left.Size = new System.Drawing.Size(39, 34);
             this.button_left.TabIndex = 23;
             this.button_left.Text = "<";
             this.button_left.UseVisualStyleBackColor = true;
@@ -219,9 +230,10 @@
             // button_right
             // 
             this.button_right.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_right.Location = new System.Drawing.Point(1084, 322);
+            this.button_right.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_right.Location = new System.Drawing.Point(1035, 301);
             this.button_right.Name = "button_right";
-            this.button_right.Size = new System.Drawing.Size(23, 22);
+            this.button_right.Size = new System.Drawing.Size(38, 34);
             this.button_right.TabIndex = 24;
             this.button_right.Text = ">";
             this.button_right.UseVisualStyleBackColor = true;
@@ -230,9 +242,10 @@
             // button_delete
             // 
             this.button_delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_delete.Location = new System.Drawing.Point(1113, 322);
+            this.button_delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_delete.Location = new System.Drawing.Point(1076, 301);
             this.button_delete.Name = "button_delete";
-            this.button_delete.Size = new System.Drawing.Size(62, 22);
+            this.button_delete.Size = new System.Drawing.Size(99, 34);
             this.button_delete.TabIndex = 25;
             this.button_delete.Text = "Удалить";
             this.button_delete.UseVisualStyleBackColor = true;
@@ -243,9 +256,10 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.Player_Label);
             this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Location = new System.Drawing.Point(916, 377);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(916, 383);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 40);
+            this.groupBox1.Size = new System.Drawing.Size(259, 55);
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Проигрыватель";
@@ -254,7 +268,7 @@
             // 
             this.Player_Label.AutoSize = true;
             this.Player_Label.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Player_Label.Location = new System.Drawing.Point(110, 16);
+            this.Player_Label.Location = new System.Drawing.Point(127, 25);
             this.Player_Label.Name = "Player_Label";
             this.Player_Label.Size = new System.Drawing.Size(105, 21);
             this.Player_Label.TabIndex = 24;
@@ -263,9 +277,10 @@
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button6.Location = new System.Drawing.Point(6, 16);
+            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button6.Location = new System.Drawing.Point(6, 21);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(88, 21);
+            this.button6.Size = new System.Drawing.Size(88, 31);
             this.button6.TabIndex = 23;
             this.button6.Text = "Пуск";
             this.button6.UseVisualStyleBackColor = true;
@@ -279,7 +294,8 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button5.Location = new System.Drawing.Point(741, 383);
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button5.Location = new System.Drawing.Point(741, 404);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(162, 34);
             this.button5.TabIndex = 27;
@@ -291,7 +307,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1187, 432);
+            this.ClientSize = new System.Drawing.Size(1187, 453);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button_delete);

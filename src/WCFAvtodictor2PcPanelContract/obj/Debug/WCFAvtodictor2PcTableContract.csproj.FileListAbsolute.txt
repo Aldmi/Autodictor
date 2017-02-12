@@ -17,3 +17,26 @@ D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTa
 D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
 D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
 D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170203_2000\src\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170203_2000\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.dll
+D:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
+D:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache
+C:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache
+C:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Project C#\Autodictor_050217\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Project C#\Autodictor\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Project C#\Autodictor\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Project C#\Autodictor\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Project C#\Autodictor\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb

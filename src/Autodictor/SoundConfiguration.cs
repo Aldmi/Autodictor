@@ -54,7 +54,7 @@ namespace MainExample
 
                 ListViewItem lvi = new ListViewItem(new string[] { Данные.ID.ToString(), Данные.Name, Message });
                 lvi.Tag = Данные.ID;
-                lvi.BackColor = (НомерЭлемента++ % 2) == 0 ? Color.Aqua : Color.LightGreen;
+                lvi.BackColor = (НомерЭлемента++ % 2) == 0 ? Color.PaleGreen : Color.LightGreen;
                 lvi.Checked = Данные.Enable;
                 this.listView1.Items.Add(lvi);
             }

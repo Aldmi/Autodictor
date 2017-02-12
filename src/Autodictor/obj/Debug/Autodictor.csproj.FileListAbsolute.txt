@@ -938,3 +938,1087 @@ D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.Расписание.reso
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.exe
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20161219_1530\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Автодиктор.exe.config
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\Автодиктор.exe
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\Автодиктор.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\NLog.config
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Автодиктор.exe
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Автодиктор.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\CommunicationDevices.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Library.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\NLog.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Castle.Windsor.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Communication.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\AutoMapper.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Castle.Core.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Library.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\NLog.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Castle.Windsor.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Communication.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\AutoMapper.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Castle.Core.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+e:\Щербелев\Автодиктор\20161219\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Автодиктор.exe.config
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\Автодиктор.exe
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\Автодиктор.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\NLog.config
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Автодиктор.exe
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Автодиктор.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\CommunicationDevices.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Library.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\NLog.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Castle.Windsor.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Communication.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\AutoMapper.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Castle.Core.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Library.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\NLog.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Castle.Windsor.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Communication.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\AutoMapper.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Castle.Core.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+e:\Щербелев\Автодиктор\20161221\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20161225new\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Автодиктор.exe.config
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\Автодиктор.exe
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\Автодиктор.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\NLog.config
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Автодиктор.exe
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Автодиктор.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\CommunicationDevices.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Library.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\NLog.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Castle.Windsor.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Communication.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\AutoMapper.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Castle.Core.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Library.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\NLog.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Castle.Windsor.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Communication.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\AutoMapper.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Castle.Core.xml
+e:\Яяяяяяяяяяяя\Автодиктор\20170125\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170127_0400\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170130_0830\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+E:\Projects\_AutoDictor\20170131_1500\src\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170201_1100\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170203_0300\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170203_1200\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.AboutForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.BoardForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.MainForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.TrainTable.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.Оповещение.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.Расписание.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\NLog.config
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Автодиктор.exe.config
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\CommunicationDevices.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Library.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Microsoft.DirectX.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\NLog.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Core.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Linq.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Castle.Windsor.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Communication.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\AutoMapper.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Castle.Core.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\CommunicationDevices.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Library.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Microsoft.DirectX.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\NLog.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Core.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Linq.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Castle.Windsor.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Communication.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\AutoMapper.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Castle.Core.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\Автодиктор.exe
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\Автодиктор.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\NLog.config
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Автодиктор.exe.config
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Автодиктор.exe
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Автодиктор.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\CommunicationDevices.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Library.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Microsoft.DirectX.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\NLog.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Core.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Linq.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Castle.Windsor.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Communication.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\AutoMapper.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Castle.Core.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\CommunicationDevices.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Library.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Microsoft.DirectX.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\NLog.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Core.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Linq.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Castle.Windsor.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Communication.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\AutoMapper.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Castle.Core.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.AboutForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.BoardForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.MainForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.TrainTable.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.Оповещение.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.Расписание.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\Автодиктор.exe
+C:\Users\Aldmi\Desktop\avto8\avto8\Autodictor\obj\Debug\Автодиктор.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Автодиктор.exe.config
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Автодиктор.exe
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Автодиктор.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\NLog.config
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Автодиктор.exe
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Автодиктор.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\CommunicationDevices.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Library.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\NLog.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Core.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Linq.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Windsor.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Communication.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\AutoMapper.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Core.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\CommunicationDevices.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Library.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\NLog.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Core.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Linq.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Windsor.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Communication.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\AutoMapper.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Core.xml
+D:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.AboutForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.BoardForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.MainForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.TrainTable.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Оповещение.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Расписание.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+D:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Автодиктор.exe.config
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Автодиктор.exe
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Автодиктор.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\NLog.config
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Автодиктор.exe
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Автодиктор.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\CommunicationDevices.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Library.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\NLog.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Core.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Linq.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Windsor.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Communication.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\AutoMapper.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Core.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\CommunicationDevices.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Library.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\NLog.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Core.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Linq.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Windsor.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Communication.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\AutoMapper.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Castle.Core.xml
+C:\Project C#\Autodictor_050217\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.AboutForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.BoardForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.MainForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.TrainTable.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Оповещение.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.Расписание.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+C:\Project C#\Autodictor_050217\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Автодиктор.exe.config
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\Автодиктор.exe
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\Автодиктор.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\NLog.config
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Автодиктор.exe
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Автодиктор.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\CommunicationDevices.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Library.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Microsoft.DirectX.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\NLog.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Core.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Linq.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Castle.Windsor.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Communication.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\AutoMapper.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Castle.Core.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\CommunicationDevices.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Library.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Microsoft.DirectX.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Microsoft.DirectX.AudioVideoPlayback.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\NLog.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Core.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Linq.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Castle.Windsor.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Communication.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\AutoMapper.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Castle.Core.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.AboutForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.BoardForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.MainForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.TrainTable.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.Оповещение.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.Расписание.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+D:\ProjectC#\Autodictor_080217\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Автодиктор.exe.config
+C:\Project C#\Autodictor\Autodictor\obj\Debug\Автодиктор.exe
+C:\Project C#\Autodictor\Autodictor\obj\Debug\Автодиктор.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\NLog.config
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Автодиктор.exe
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Автодиктор.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\CommunicationDevices.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Library.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\NLog.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Core.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Linq.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.PlatformServices.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Windows.Threading.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\WCFCis2AvtodictorContract.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Castle.Windsor.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Communication.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\AutoMapper.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Castle.Core.dll
+C:\Project C#\Autodictor\Autodictor\bin\Debug\CommunicationDevices.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Library.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\NLog.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Core.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Interfaces.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Linq.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.PlatformServices.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\System.Reactive.Windows.Threading.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Castle.Windsor.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Communication.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\AutoMapper.xml
+C:\Project C#\Autodictor\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Project C#\Autodictor\Autodictor\bin\Debug\Castle.Core.xml
+C:\Project C#\Autodictor\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.AboutForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.BoardForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.OperativeSheduleForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.RegulatorySheduleForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.SoundConfiguration.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.MainForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.TrainTable.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.MainWindowForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.Properties.Resources.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.StaticSoundForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.DynamicSoundForm.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.КарточкаСтатическогоЗвуковогоСообщения.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.КарточкаДвиженияПоезда.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.ОкноДобавленияПоезда.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.ОкноНастроек.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.ОкноПрибытияОтправления.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.ОкноРасписания.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.ОкноРасписания2.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.Оповещение.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.Предупреждение.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.Расписание.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
+C:\Project C#\Autodictor\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache

@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.Model;
 using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
+using WCFCis2AvtodictorContract.PostProcessing;
 
 
 namespace MainExample
@@ -54,6 +56,24 @@ namespace MainExample
 
         private void FillListView(IEnumerable<RegulatoryScheduleData> op)
         {
+            //Преобразовали ДниСледования
+            //if (CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any())
+            //{
+            //    var converter = new DaysFollowingConverter(CisClient.RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
+            //    var newDaysFolowing = converter.Convert();
+            //    if (newDaysFolowing != null && newDaysFolowing.Count() == CisClient.RegulatoryScheduleDatas.Count)
+            //    {
+            //        for (int i = 0; i < newDaysFolowing.Count(); i++)
+            //        {
+            //            CisClient.RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
+            //        }
+            //    }
+            //}
+
+
+
+
+
             var row = op.Select(str => new[]
             {
                 str.NumberOfTrain.ToString(),
@@ -64,7 +84,8 @@ namespace MainExample
                 str.DestinationStation.Name,
                 ConcatStationNames(str.ListOfStops),
                 ConcatStationNames(str.ListWithoutStops),
-                str.DaysFollowing
+                str.DaysFollowing,
+                str.DaysFollowingConverted
             }).Select(s => new ListViewItem(s)).ToArray();
 
             this.InvokeIfNeeded(() => listRegSh.Items.AddRange(row));
@@ -76,14 +97,14 @@ namespace MainExample
             if (stations == null || !stations.Any())
                 return string.Empty;
 
-            StringBuilder str= new StringBuilder();
+            StringBuilder str = new StringBuilder();
 
             foreach (var stationsData in stations)
             {
                 str.AppendLine(stationsData.Name);
                 str.AppendLine(", ");
             }
-           
+
             return str.ToString();
         }
 
@@ -100,10 +121,8 @@ namespace MainExample
 
         private void btn_LoadRegSh_Click(object sender, EventArgs e)
         {
-            //TODO: имя задавать в статическом синглтоне класса настроек.
-            const string nameRailwayStation = "Курский";
-
-            CisClient.ManualLoadingRegulatorySh(nameRailwayStation);
+            //загрузили данные с ЦИС
+            CisClient.ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);
         }
     }
 }

@@ -2,7 +2,7 @@
 <Root>
   <CisSetting>
     <Name>Рижский</Name>
-    <EndpointAddress>http://192.168.199.195:50000/Service/Cis</EndpointAddress>
+    <EndpointAddress>http://192.168.0.47:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 
   <LogSetting>
@@ -44,7 +44,7 @@
   </DevicesWithSP>
 
   <DevicesWithPC>
-	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1"/>
+	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:2"/>
   </DevicesWithPC>
 </Root>
 

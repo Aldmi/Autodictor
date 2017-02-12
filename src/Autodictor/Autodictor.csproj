@@ -189,11 +189,29 @@
     <Compile Include="DynamicSoundForm.Designer.cs">
       <DependentUpon>DynamicSoundForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="КарточкаСтатическогоЗвуковогоСообщения.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="КарточкаСтатическогоЗвуковогоСообщения.Designer.cs">
+      <DependentUpon>КарточкаСтатическогоЗвуковогоСообщения.cs</DependentUpon>
+    </Compile>
     <Compile Include="КарточкаДвиженияПоезда.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="КарточкаДвиженияПоезда.Designer.cs">
       <DependentUpon>КарточкаДвиженияПоезда.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ОкноДобавленияПоезда.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ОкноДобавленияПоезда.Designer.cs">
+      <DependentUpon>ОкноДобавленияПоезда.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ОкноНастроек.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ОкноНастроек.Designer.cs">
+      <DependentUpon>ОкноНастроек.cs</DependentUpon>
     </Compile>
     <Compile Include="ОкноПрибытияОтправления.cs">
       <SubType>Form</SubType>
@@ -231,6 +249,18 @@
     </Compile>
     <Compile Include="Расписание.Designer.cs">
       <DependentUpon>Расписание.cs</DependentUpon>
+    </Compile>
+    <Compile Include="СписокВоспроизведения.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="СписокВоспроизведения.Designer.cs">
+      <DependentUpon>СписокВоспроизведения.cs</DependentUpon>
+    </Compile>
+    <Compile Include="СписокСтанций.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="СписокСтанций.Designer.cs">
+      <DependentUpon>СписокСтанций.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -272,8 +302,17 @@
     <EmbeddedResource Include="DynamicSoundForm.resx">
       <DependentUpon>DynamicSoundForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="КарточкаСтатическогоЗвуковогоСообщения.resx">
+      <DependentUpon>КарточкаСтатическогоЗвуковогоСообщения.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="КарточкаДвиженияПоезда.resx">
       <DependentUpon>КарточкаДвиженияПоезда.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ОкноДобавленияПоезда.resx">
+      <DependentUpon>ОкноДобавленияПоезда.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ОкноНастроек.resx">
+      <DependentUpon>ОкноНастроек.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ОкноПрибытияОтправления.resx">
       <DependentUpon>ОкноПрибытияОтправления.cs</DependentUpon>
@@ -292,6 +331,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Расписание.resx">
       <DependentUpon>Расписание.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="СписокВоспроизведения.resx">
+      <DependentUpon>СписокВоспроизведения.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="СписокСтанций.resx">
+      <DependentUpon>СписокСтанций.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>

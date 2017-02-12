@@ -39,7 +39,6 @@ namespace MainExample
             try
             {
                 track_to_play = new Audio(TrackPath);
-
                 track_to_play.Play();
                 return true;
             }
@@ -119,7 +118,7 @@ namespace MainExample
             if (track_to_play != null)
                 return track_to_play.Volume;
 
-            return 100;
+            return 0;
         }
 
         public static void SetVolume(int Volume)

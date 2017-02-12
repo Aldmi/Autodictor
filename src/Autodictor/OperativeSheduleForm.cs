@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.Model;
 using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
 
@@ -12,7 +13,7 @@ namespace MainExample
 {
     public partial class OperativeSheduleForm : Form
     {
-        static public OperativeSheduleForm MyOperativeSheduleForm = null;
+        public static OperativeSheduleForm MyOperativeSheduleForm = null;
 
         public CisClient CisClient { get; set; }
         public IDisposable DispouseChangeOperativeSheduleRx { get; set; }
@@ -30,7 +31,7 @@ namespace MainExample
             InitializeComponent();
 
             CisClient = cisClient;
-            if(CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any())
+            if (CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any())
                 FillListView(CisClient.OperativeScheduleDatas);
 
             DispouseChangeOperativeSheduleRx = CisClient.OperativeScheduleDatasChange.Subscribe(op =>
@@ -57,7 +58,7 @@ namespace MainExample
                 str.DepartureTime?.ToString(CultureInfo.InvariantCulture) ?? "Не указанно",
                 str.DispatchStation.Name,
                 str.DestinationStation.Name
-            }).Select(s=> new ListViewItem(s)).ToArray();
+            }).Select(s => new ListViewItem(s)).ToArray();
 
             this.InvokeIfNeeded(() => listOperSh.Items.AddRange(row));
         }
@@ -77,10 +78,7 @@ namespace MainExample
 
         private void btn_LoadOperSh_Click(object sender, EventArgs e)
         {
-            //TODO: имя задавать в статическом синглтоне класса настроек.
-            const string nameRailwayStation = "Курский";
-
-            CisClient.ManualLoadingOperativeSh(nameRailwayStation);
+            CisClient.ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation);
         }
     }
 }

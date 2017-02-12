@@ -31,6 +31,8 @@ namespace WCFCis2AvtodictorContract.DataContract
         [DataMember]
         public string DaysFollowing { get; set; }                    //Дни следования поезда(ежедневно, четные, по рабочим и т.п.)
 
+        public string DaysFollowingConverted { get; set; }           //Дни следования поезда(ежедневно, четные, по рабочим и т.п.)
+
         [DataMember]
         public ICollection<StationsData> ListOfStops { get; set; }
 

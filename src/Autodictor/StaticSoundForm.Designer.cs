@@ -64,14 +64,13 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
-            this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listView1.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(11, 24);
-            this.listView1.Margin = new System.Windows.Forms.Padding(2);
+            this.listView1.Location = new System.Drawing.Point(15, 37);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1168, 289);
+            this.listView1.Size = new System.Drawing.Size(1556, 442);
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -85,7 +84,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Имя";
-            this.columnHeader2.Width = 225;
+            this.columnHeader2.Width = 404;
             // 
             // columnHeader3
             // 
@@ -100,9 +99,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 9);
+            this.label1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(11, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 13);
+            this.label1.Size = new System.Drawing.Size(429, 22);
             this.label1.TabIndex = 10;
             this.label1.Text = "Зарегистрированные в системе сообщения";
             // 
@@ -110,36 +111,42 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 327);
+            this.label2.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(12, 500);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.Size = new System.Drawing.Size(54, 22);
             this.label2.TabIndex = 11;
             this.label2.Text = "Имя:";
             // 
             // textBox_Name
             // 
             this.textBox_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_Name.Location = new System.Drawing.Point(50, 324);
+            this.textBox_Name.Location = new System.Drawing.Point(67, 498);
+            this.textBox_Name.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox_Name.Name = "textBox_Name";
-            this.textBox_Name.Size = new System.Drawing.Size(228, 20);
+            this.textBox_Name.Size = new System.Drawing.Size(303, 26);
             this.textBox_Name.TabIndex = 12;
             // 
             // textBox_Message
             // 
             this.textBox_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_Message.Location = new System.Drawing.Point(377, 324);
+            this.textBox_Message.Location = new System.Drawing.Point(503, 498);
+            this.textBox_Message.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox_Message.Name = "textBox_Message";
-            this.textBox_Message.Size = new System.Drawing.Size(802, 20);
+            this.textBox_Message.Size = new System.Drawing.Size(1068, 26);
             this.textBox_Message.TabIndex = 14;
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(298, 327);
+            this.label3.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(373, 501);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.Size = new System.Drawing.Size(128, 22);
             this.label3.TabIndex = 13;
             this.label3.Text = "Сообщение:";
             // 
@@ -147,27 +154,32 @@
             // 
             this.textBox_Path.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_Path.Location = new System.Drawing.Point(97, 352);
+            this.textBox_Path.Location = new System.Drawing.Point(162, 542);
+            this.textBox_Path.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox_Path.Name = "textBox_Path";
-            this.textBox_Path.Size = new System.Drawing.Size(1011, 20);
+            this.textBox_Path.Size = new System.Drawing.Size(1296, 26);
             this.textBox_Path.TabIndex = 16;
             // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 355);
+            this.label4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(8, 545);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.Size = new System.Drawing.Size(146, 22);
             this.label4.TabIndex = 15;
             this.label4.Text = "Путь к файлу:";
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(15, 383);
+            this.button1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(20, 589);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(162, 34);
+            this.button1.Size = new System.Drawing.Size(216, 52);
             this.button1.TabIndex = 17;
             this.button1.Text = "Обновить список";
             this.button1.UseVisualStyleBackColor = true;
@@ -176,9 +188,11 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(193, 383);
+            this.button2.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(257, 589);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(162, 34);
+            this.button2.Size = new System.Drawing.Size(216, 52);
             this.button2.TabIndex = 18;
             this.button2.Text = "Добавить сообщение";
             this.button2.UseVisualStyleBackColor = true;
@@ -187,9 +201,11 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(377, 383);
+            this.button3.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button3.Location = new System.Drawing.Point(503, 589);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(162, 34);
+            this.button3.Size = new System.Drawing.Size(216, 52);
             this.button3.TabIndex = 19;
             this.button3.Text = "Изменить сообщение";
             this.button3.UseVisualStyleBackColor = true;
@@ -198,9 +214,11 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Location = new System.Drawing.Point(559, 383);
+            this.button4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button4.Location = new System.Drawing.Point(745, 589);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(162, 34);
+            this.button4.Size = new System.Drawing.Size(216, 52);
             this.button4.TabIndex = 20;
             this.button4.Text = "Удалить сообщение";
             this.button4.UseVisualStyleBackColor = true;
@@ -209,9 +227,11 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(1114, 352);
+            this.button5.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button5.Location = new System.Drawing.Point(1467, 537);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(64, 22);
+            this.button5.Size = new System.Drawing.Size(104, 34);
             this.button5.TabIndex = 21;
             this.button5.Text = "Выбрать";
             this.button5.UseVisualStyleBackColor = true;
@@ -220,9 +240,11 @@
             // btnСохранить
             // 
             this.btnСохранить.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnСохранить.Location = new System.Drawing.Point(737, 383);
+            this.btnСохранить.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnСохранить.Location = new System.Drawing.Point(983, 589);
+            this.btnСохранить.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnСохранить.Name = "btnСохранить";
-            this.btnСохранить.Size = new System.Drawing.Size(162, 34);
+            this.btnСохранить.Size = new System.Drawing.Size(216, 52);
             this.btnСохранить.TabIndex = 22;
             this.btnСохранить.Text = "Сохранить список";
             this.btnСохранить.UseVisualStyleBackColor = true;
@@ -231,9 +253,11 @@
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button6.Location = new System.Drawing.Point(6, 16);
+            this.button6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button6.Location = new System.Drawing.Point(8, 25);
+            this.button6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(88, 21);
+            this.button6.Size = new System.Drawing.Size(117, 32);
             this.button6.TabIndex = 23;
             this.button6.Text = "Пуск";
             this.button6.UseVisualStyleBackColor = true;
@@ -244,9 +268,12 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.Player_Label);
             this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Location = new System.Drawing.Point(919, 380);
+            this.groupBox1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(1225, 585);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 40);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(345, 62);
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Проигрыватель";
@@ -255,7 +282,8 @@
             // 
             this.Player_Label.AutoSize = true;
             this.Player_Label.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Player_Label.Location = new System.Drawing.Point(110, 16);
+            this.Player_Label.Location = new System.Drawing.Point(147, 25);
+            this.Player_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Player_Label.Name = "Player_Label";
             this.Player_Label.Size = new System.Drawing.Size(105, 21);
             this.Player_Label.TabIndex = 24;
@@ -269,9 +297,9 @@
             // 
             // StaticSoundForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 432);
+            this.ClientSize = new System.Drawing.Size(1588, 665);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnСохранить);
             this.Controls.Add(this.button5);
@@ -288,10 +316,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "StaticSoundForm";
             this.Text = "Статические сообщения системы звукового оповещения";
-            this.SizeChanged += new System.EventHandler(this.staticSoundForm_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

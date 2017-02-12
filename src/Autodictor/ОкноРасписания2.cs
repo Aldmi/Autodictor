@@ -190,8 +190,7 @@ namespace MainExample
                         Size len = TextRenderer.MeasureText(РасписаниеПоездов.ElementAt(i).Value.Примечание, drawFont);
                         if (len.Width >= 90)
                         {
-                            if (++МассивСмещенийСтрок[j] < 10);
-                            else
+                            if (++МассивСмещенийСтрок[j] >= 10)
                             {
                                 g.FillRectangle(drawBrushBlue, new Rectangle(310, 45 + j * 18, 90, 18));
                                 string SubString = РасписаниеПоездов.ElementAt(i).Value.Примечание.Substring(МассивСмещенийСтрок[j] - 10);
@@ -325,7 +324,7 @@ namespace MainExample
                         Строка.Примечание = Config.Примечание;
 
                         string Ключ = Строка.ВремяПрибытия == "" ? Строка.ВремяОтправления : Строка.ВремяПрибытия;                        
-                        if (Config.ShowInPanels == 0x01)
+                        if ((Config.ТипПоезда == ТипПоезда.Пассажирский) || (Config.ТипПоезда == ТипПоезда.Скоростной) || (Config.ТипПоезда == ТипПоезда.Скорый) || (Config.ТипПоезда == ТипПоезда.Фирменный))
                         {
                             if (РасписаниеПоездов.ContainsKey(Ключ) == false)
                                 РасписаниеПоездов.Add(Ключ, Строка);
@@ -335,7 +334,7 @@ namespace MainExample
                                     РасписаниеПоездов.Add(Ключ + " ", Строка);
                             }
                         }
-                        else if (Config.ShowInPanels == 0x02)
+                        else
                         {
                             if (Строка.ВремяПрибытия != "")
                             {

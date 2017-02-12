@@ -37,9 +37,9 @@ namespace MainExample
 
             foreach (var Данные in StaticSoundRecords)
             {
-                ListViewItem lvi = new ListViewItem(new string[] { Данные.ID.ToString(), Данные.Name, Данные.Message, Данные.Path });
+                ListViewItem lvi = new ListViewItem(new string[] { Данные.ID.ToString(), Данные.Name, Данные.Message, Данные.Path.Replace(Application.StartupPath, "") });
                 lvi.Tag = Данные.ID;
-                lvi.BackColor = (НомерЭлемента++ % 2) == 0 ? Color.Aqua : Color.LightGreen;
+                lvi.BackColor = (НомерЭлемента++ % 2) == 0 ? Color.PaleGreen : Color.LightGreen;
                 this.listView1.Items.Add(lvi);
             }
         }
@@ -104,7 +104,7 @@ namespace MainExample
                 {
                     this.textBox_Name.Text = this.listView1.Items[item].SubItems[1].Text;
                     this.textBox_Message.Text = this.listView1.Items[item].SubItems[2].Text;
-                    this.textBox_Path.Text = this.listView1.Items[item].SubItems[3].Text;
+                    this.textBox_Path.Text = Application.StartupPath + this.listView1.Items[item].SubItems[3].Text;
                 }
             }
             catch (Exception ex)
@@ -120,10 +120,6 @@ namespace MainExample
                 this.textBox_Path.Text = dialog.FileName;
         }
 
-        private void staticSoundForm_SizeChanged(object sender, EventArgs e)
-        {
-        }
-
         private void btnСохранить_Click(object sender, EventArgs e)
         {
             СохранитьСписок();
@@ -134,30 +130,29 @@ namespace MainExample
             StaticSoundRecords.Clear();
             ID = 0;
 
-            System.IO.StreamReader file = null;
-
             try
             {
-                file = new System.IO.StreamReader("StaticSound.ini");
-
-                string line;
-
-                while ((line = file.ReadLine()) != null)
+                using (System.IO.StreamReader file = new System.IO.StreamReader("StaticSound.ini"))
                 {
-                    string[] Settings = line.Split(';');
-                    if (Settings.Length == 4)
+                    string line;
+
+                    while ((line = file.ReadLine()) != null)
                     {
-                        StaticSoundRecord Данные;
+                        string[] Settings = line.Split(';');
+                        if (Settings.Length == 4)
+                        {
+                            StaticSoundRecord Данные;
 
-                        Данные.ID = int.Parse(Settings[0]);
-                        Данные.Name = Settings[1];
-                        Данные.Message = Settings[2];
-                        Данные.Path = Settings[3];
+                            Данные.ID = int.Parse(Settings[0]);
+                            Данные.Name = Settings[1];
+                            Данные.Message = Settings[2];
+                            Данные.Path = Application.StartupPath + @"\Wav\Static message\" + Settings[3];
 
-                        StaticSoundRecords.Add(Данные);
+                            StaticSoundRecords.Add(Данные);
 
-                        if (Данные.ID > ID)
-                            ID = Данные.ID;
+                            if (Данные.ID > ID)
+                                ID = Данные.ID;
+                        }
                     }
                 }
             }
@@ -165,24 +160,19 @@ namespace MainExample
             {
                 Console.WriteLine(e.Message);
             }
-            finally
-            {
-                if (file != null)
-                    file.Close();
-            }
         }
 
         private static void СохранитьСписок()
         {
             try
             {
-                System.IO.StreamWriter DumpFile = new System.IO.StreamWriter("StaticSound.ini");
+                using (System.IO.StreamWriter DumpFile = new System.IO.StreamWriter("StaticSound.ini"))
+                {
+                    foreach (var Данные in StaticSoundRecords)
+                        DumpFile.WriteLine(Данные.ID.ToString() + ";" + Данные.Name + ";" + Данные.Message + ";" + Данные.Path.Replace(Application.StartupPath + @"\Wav\Static message\", ""));
 
-                foreach (var Данные in StaticSoundRecords)
-                    DumpFile.WriteLine(Данные.ID.ToString() + ";" + Данные.Name + ";" + Данные.Message + ";" + Данные.Path);
-
-                DumpFile.Flush();
-                DumpFile.Dispose();
+                    DumpFile.Close();
+                }
             }
             catch (Exception ex)
             {

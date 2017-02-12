@@ -4,6 +4,18 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.ServiceModel;
 using CommunicationDevices.Model;
+using System.Drawing;
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms.VisualStyles;
+using System.Windows.Input;
+using CommunicationDevices.Behavior.BindingBehavior;
+using CommunicationDevices.Behavior.BindingBehavior.ToPath;
+using CommunicationDevices.ClientWCF;
+using CommunicationDevices.Infrastructure;
+using MainExample.Extension;
+
 
 
 namespace MainExample
@@ -11,8 +23,18 @@ namespace MainExample
     public partial class MainForm : Form
     {
         public ExchangeModel ExchangeModel { get; set; }
+        public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
-        
+        static public int VisibleStyle = 0;
+
+        static public MainForm mainForm = null;
+        static public ToolStripButton СвязьСЦис = null;
+        static public ToolStripButton Воспроизвести = null;
+        static public ToolStripButton Включить = null;
+        static public ToolStripButton ОбновитьСписок = null;
+
+
+
 
         public MainForm()
         {
@@ -21,11 +43,23 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-            TrainTable.ЗагрузитьСписок();                   //TODO: грузится из файла по умолчанию
+            TrainTable.ЗагрузитьСписок();                 
         
            // Player.PlayFile("");                          //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
+
+            if (mainForm == null)
+                mainForm = this;
+
+            СвязьСЦис = tSLСостояниеСвязиСЦИС;
+            СвязьСЦис.BackColor = Color.Orange;
+
+            Воспроизвести = tSBВоспроизвести;
+            Включить = tSBВключить;
+            ОбновитьСписок = tSBОбновитьСписок;
+
+            Включить.BackColor = Color.Orange;
         }
 
 
@@ -33,8 +67,24 @@ namespace MainExample
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-           ExchangeModel.LoadSetting();
-           ExchangeModel.StartCisClient();
+            ExchangeModel.LoadSetting();
+            ExchangeModel.StartCisClient();
+
+            DispouseCisClientIsConnectRx = ExchangeModel.CisClient.IsConnectChange.Subscribe(isConnect =>
+            {
+                if (isConnect)
+                {
+                    СвязьСЦис = tSLСостояниеСвязиСЦИС;
+                    СвязьСЦис.BackColor = Color.LightGreen;
+                    СвязьСЦис.Text = "ЦИС на связи";
+                }
+                else
+                {
+                    СвязьСЦис = tSLСостояниеСвязиСЦИС;
+                    СвязьСЦис.BackColor = Color.Orange;
+                    СвязьСЦис.Text = "ЦИС НЕ на связи";
+                }
+            });
         }
 
 
@@ -160,7 +210,7 @@ namespace MainExample
                 BoardForm.MyBoardForm.Show();
                 BoardForm.MyBoardForm.WindowState = FormWindowState.Normal;
             }
-            else                                                                                         //Открытие окна
+            else                                                                   //Открытие окна
             {
                 BoardForm boardForm = new BoardForm(ExchangeModel.Devices);
                 boardForm.MdiParent = this;
@@ -172,10 +222,160 @@ namespace MainExample
 
         protected override void OnClosed(EventArgs e)
         {
+            DispouseCisClientIsConnectRx.Dispose();
+
             ExchangeModel.Dispose();
             base.OnClosed(e);
         }
 
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            toolStripMenuItem1.Checked = true;
+            toolStripMenuItem2.Checked = false;
+            VisibleStyle = 0;
+        }
 
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            toolStripMenuItem1.Checked = false;
+            toolStripMenuItem2.Checked = true;
+            VisibleStyle = 1;
+        }
+
+        private void добавитьСтатическоеСообщениеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            СтатическоеСообщение Сообщение;
+            Сообщение.ID = 0;
+            Сообщение.Активность = true;
+            Сообщение.Время = DateTime.Now;
+            Сообщение.НазваниеКомпозиции = "";
+            Сообщение.ОписаниеКомпозиции = "";
+            Сообщение.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
+            КарточкаСтатическогоЗвуковогоСообщения ОкноСообщения = new КарточкаСтатическогоЗвуковогоСообщения(Сообщение);
+            if (ОкноСообщения.ShowDialog() == DialogResult.OK)
+            {
+                Сообщение = ОкноСообщения.ПолучитьИзмененнуюКарточку();
+
+                int ПопыткиВставитьСообщение = 5;
+                while (ПопыткиВставитьСообщение-- > 0)
+                {
+                    string Key = Сообщение.Время.ToString("HH:mm:ss");
+                    string[] SubKeys = Key.Split(':');
+                    if (SubKeys[0].Length == 1)
+                        Key = "0" + Key;
+
+                    if (MainWindowForm.СтатическиеЗвуковыеСообщения.ContainsKey(Key))
+                    {
+                        Сообщение.Время = Сообщение.Время.AddSeconds(1);
+                        continue;
+                    }
+
+                    MainWindowForm.СтатическиеЗвуковыеСообщения.Add(Key, Сообщение);
+                    MainWindowForm.СтатическиеЗвуковыеСообщения.OrderBy(key => key.Value);
+                    MainWindowForm.ФлагОбновитьСписокЗвуковыхСообщений = true;
+                    break;
+                }
+            }
+        }
+
+        private void TSMIПоКалендарю_Click(object sender, EventArgs e)
+        {
+            TSMIПоПонедельнику.Checked = false;
+            TSMIПоВторнику.Checked = false;
+            TSMIПоСреде.Checked = false;
+            TSMIПоЧетвергу.Checked = false;
+            TSMIПоПятнице.Checked = false;
+            TSMIПоСубботе.Checked = false;
+            TSMIПоВоскресенью.Checked = false;
+            TSMIПоКалендарю.Checked = false;
+
+            (sender as ToolStripMenuItem).Checked = true;
+
+            tSDDBРаботаПоДням.BackColor = TSMIПоКалендарю.Checked == true ? Color.LightGray : Color.Yellow;
+            switch ((sender as ToolStripMenuItem).Name)
+            {
+                case "TSMIПоПонедельнику":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО ПОНЕДЕЛЬНИКУ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 0;
+                    break;
+
+                case "TSMIПоВторнику":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО ВТОРНИКУ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 1;
+                    break;
+
+                case "TSMIПоСреде":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО СРЕДЕ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 2;
+                    break;
+
+                case "TSMIПоЧетвергу":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО ЧЕТВЕРГУ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 3;
+                    break;
+
+                case "TSMIПоПятнице":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО ПЯТНИЦЕ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 4;
+                    break;
+
+                case "TSMIПоСубботе":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО СУББОТЕ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 5;
+                    break;
+
+                case "TSMIПоВоскресенью":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО ВОСКРЕСЕНЬЮ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 6;
+                    break;
+
+                case "TSMIПоКалендарю":
+                    tSDDBРаботаПоДням.Text = "РАБОТА ПО КАЛЕНДАРЮ";
+                    MainWindowForm.РаботаПоНомеруДняНедели = 7;
+                    break;
+            }
+
+            MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели = true;
+        }
+
+        private void настройкиToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ОкноНастроек окно = new ОкноНастроек();
+            окно.ShowDialog();
+        }
+
+        private void добавитьВнештатныйПоездToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ОкноДобавленияПоезда окно = new ОкноДобавленияПоезда();
+            if (окно.ShowDialog() == DialogResult.OK)
+            {
+                SoundRecord Record = окно.Record;
+                int TryCounter = 50;
+                while (--TryCounter > 0)
+                {
+                    string Key = Record.Время.ToString("HH:mm:ss");
+                    string[] SubKeys = Key.Split(':');
+                    if (SubKeys[0].Length == 1)
+                        Key = "0" + Key;
+
+                    if (MainWindowForm.SoundRecords.ContainsKey(Key) == false)
+                    {
+                        MainWindowForm.SoundRecords.Add(Key, Record);
+                        break;
+                    }
+
+                    Record.Время = Record.Время.AddSeconds(1);
+                }
+
+                MainWindowForm.SoundRecords.OrderBy(key => key.Value);
+                MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            СписокВоспроизведения список = new СписокВоспроизведения();
+            список.ShowDialog();
+        }
     }
 }

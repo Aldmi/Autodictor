@@ -51,3 +51,30 @@ D:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContr
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+E:\Projects\_AutoDictor\20170203_2000\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170203_2000\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+E:\Projects\_AutoDictor\20170203_2000\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+E:\Projects\_AutoDictor\20170203_2000\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+C:\Users\Aldmi\Desktop\avto8\avto8\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+C:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+C:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+C:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+C:\Project C#\Autodictor_050217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\ProjectC#\Autodictor_080217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+D:\ProjectC#\Autodictor_080217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\ProjectC#\Autodictor_080217\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\ProjectC#\Autodictor_080217\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\ProjectC#\Autodictor_080217\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Project C#\Autodictor\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+C:\Project C#\Autodictor\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+C:\Project C#\Autodictor\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+C:\Project C#\Autodictor\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb

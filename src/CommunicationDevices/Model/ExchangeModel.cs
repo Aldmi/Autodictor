@@ -95,13 +95,15 @@ namespace CommunicationDevices.Model
 
         public void StartCisClient()
         {
-            CisClient.Start();
+            if (CisClient != null)
+                CisClient.Start();
         }
 
 
         public void StopCisClient()
         {
-            CisClient.Stop();
+            if (CisClient != null)
+                CisClient.Stop();
         }
 
 
@@ -164,9 +166,13 @@ namespace CommunicationDevices.Model
                         Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if(xmlDeviceSp.BindingType == BindingType.ToPath)
-                           BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
-                       
+                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
+                        {
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers);
+                            BindingBehaviors.Add(bindingBeh);
+                            bindingBeh.InitializeDevicePathInfo();                       //Вывод номера пути в пустом сообщении
+                        }
+
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
                             ;
@@ -187,7 +193,11 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                        {
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers);
+                            BindingBehaviors.Add(bindingBeh);
+                            bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
+                        }
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
