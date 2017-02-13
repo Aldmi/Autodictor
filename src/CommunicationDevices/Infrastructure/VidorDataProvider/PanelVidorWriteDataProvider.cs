@@ -6,8 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Communication.Annotations;
 using Communication.Interfaces;
-using NLog.Fluent;
-using Log = Library.Logs.Log;
 
 
 namespace CommunicationDevices.Infrastructure.VidorDataProvider
@@ -100,7 +98,7 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     // 146 - X2
                     // 014 - Y
                     // аттриб = 4 (бег.стр.)
-                    format2 = "%000011920144";
+                    format2 = "%000011460144";
                     message2 = $"%10$18$00$60$t2ПУТЬ №{numberOfPath}";
                     result2 = format2 + message2;
 
@@ -117,7 +115,7 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     // 150 - X2
                     // 031 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format4 = "%000011500314";
+                    format4 = "%000771460314";
                     message4 = $"%10$18$00$60$t3{stations}";
                     result4 = format4 + message4;
 
@@ -126,7 +124,7 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format5 = "%000011920464";
+                    format5 = "%000011460464";
                     message5 = $"%10$18$00$60$t3{note}";
                     result5 = format5 + message5;
 
@@ -227,7 +225,7 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format8 = "%001521920464";
+                    format8 = "%001521920314";
                     message8 = $"%10$18$00$60$t3{time}";
                     result8 = format8 + message8;
                 }
@@ -242,9 +240,6 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 byte xor = CalcXor(xorBytes);
                 resultstring += xor.ToString("X2");
 
-                //DEBUG---------------------------------------------------------
-                Log.log.Fatal(resultstring);
-                //DEBUG---------------------------------------------------------
 
                 //Преобразовываем КОНЕЧНУЮ строку в массив байт
                 var resultBuffer = Encoding.GetEncoding("Windows-1251").GetBytes(resultstring).ToList();

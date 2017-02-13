@@ -447,7 +447,6 @@
             this.lVСобытия.TabIndex = 1;
             this.lVСобытия.UseCompatibleStateImageBehavior = false;
             this.lVСобытия.View = System.Windows.Forms.View.Details;
-            this.lVСобытия.SelectedIndexChanged += new System.EventHandler(this.lVСобытия_SelectedIndexChanged);
             this.lVСобытия.Enter += new System.EventHandler(this.listView5_Enter);
             this.lVСобытия.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lVСобытия_MouseDoubleClick);
             // 

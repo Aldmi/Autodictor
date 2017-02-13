@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 
 namespace WCFCis2AvtodictorContract.PostProcessing
@@ -37,7 +38,7 @@ namespace WCFCis2AvtodictorContract.PostProcessing
 
 
 
-       public IList<string> Convert()               //TODO: DaysFollowingCis передавать напрямую
+       public async Task<IList<string>> Convert()               //TODO: DaysFollowingCis передавать напрямую
         {
             //foreach (var days in DaysFollowingCis)
             //{
@@ -51,7 +52,7 @@ namespace WCFCis2AvtodictorContract.PostProcessing
             // "Тип: \"ОН\"   Дни: \"Кроме: 23.12, 25.12, 26.12, 29.12, 30.12, 01.01, 06.01, 08.01, 13.01, 15.01, 20.01, 22.01, 27.01, 29.01, 03.02, 05.02, 10.02, 12.02, 17.02\"";
 
             
-             DaysFollowingAutodictor.Add(ConvertDays(inStr));
+             DaysFollowingAutodictor.Add(await ConvertDays(inStr));
             //DRBUG------------------------------------------------
 
             return DaysFollowingAutodictor;
@@ -59,117 +60,123 @@ namespace WCFCis2AvtodictorContract.PostProcessing
 
 
 
-        private string ConvertDays(string days)
+        private async Task<string> ConvertDays(string days)
         {
-            //парсим информацию между кавычками
-            Regex regex = new Regex("\"[^\"]*\"", RegexOptions.IgnoreCase);
-            MatchCollection matches = regex.Matches(days);
+           return await Task<string>.Factory.StartNew(() =>
+           {
+               //парсим информацию между кавычками
+               Regex regex = new Regex("\"[^\"]*\"", RegexOptions.IgnoreCase);
+               MatchCollection matches = regex.Matches(days);
 
-            string type= null;
-            string specification = null;
-            if (matches.Count == 2)
-            {
-               type = matches[0].Value.Trim(new[] { '"' });
-               specification = matches[1].Value.Trim(new[] { '"' });
-            }
-            else
-            {
-                return "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
-            }
+               string type = null;
+               string specification = null;
+               if (matches.Count == 2)
+               {
+                   type = matches[0].Value.Trim(new[] { '"' });
+                   specification = matches[1].Value.Trim(new[] { '"' });
+               }
+               else
+               {
+                   return "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
+               }
 
-            var daysSpecification = new DaysSpecification();
+               var daysSpecification = new DaysSpecification();
 
-            if (!string.IsNullOrEmpty(specification))
-            {
-                var indexInclude= specification.IndexOf("Включая:", StringComparison.Ordinal);
-                var indexExclude = specification.IndexOf("Кроме:", StringComparison.Ordinal);
+               if (!string.IsNullOrEmpty(specification))
+               {
+                   var indexInclude = specification.IndexOf("Включая:", StringComparison.Ordinal);
+                   var indexExclude = specification.IndexOf("Кроме:", StringComparison.Ordinal);
 
-                string strInclude = null;
-                string strExclude = null;
-                if (indexInclude >= 0 && indexExclude >= 0)
-                {
-                    //вначале строки секция Кроме:.
-                    if (indexExclude < indexInclude)    
-                    {
-                        var indexSemicolon = specification.IndexOf(";", StringComparison.Ordinal);
-                        if (indexSemicolon >= 0)
-                        {
-                            strExclude = specification.Substring((indexExclude + "Кроме:".Length), (indexSemicolon - "Кроме:".Length));
-                            strInclude = specification.Substring((indexInclude + "Включая:".Length));
-                        }
-                    }
+                   string strInclude = null;
+                   string strExclude = null;
+                   if (indexInclude >= 0 && indexExclude >= 0)
+                   {
+                       //вначале строки секция Кроме:.
+                       if (indexExclude < indexInclude)
+                       {
+                           var indexSemicolon = specification.IndexOf(";", StringComparison.Ordinal);
+                           if (indexSemicolon >= 0)
+                           {
+                               strExclude = specification.Substring((indexExclude + "Кроме:".Length), (indexSemicolon - "Кроме:".Length));
+                               strInclude = specification.Substring((indexInclude + "Включая:".Length));
+                           }
+                       }
 
-                    //вначале строки секция Включая:.
-                    if (indexInclude < indexExclude)
-                    {
-                        var indexSemicolon = specification.IndexOf(";", StringComparison.Ordinal);
-                        if (indexSemicolon >= 0)
-                        {
-                            strInclude = specification.Substring((indexInclude + "Включая:".Length), (indexSemicolon - "Включая:".Length));
-                            strExclude = specification.Substring((indexExclude + "Кроме:".Length));
-                        }
-                    }
-                }
-                else
-                if(indexInclude >= 0)
-                {
-                    strInclude = specification.Substring(indexInclude + "Включая:".Length);
-                }
-                else
-                if(indexExclude >= 0)
-                {
-                    strExclude = specification.Substring(indexExclude + "Кроме:".Length);
-                }
-
-
-                if (!string.IsNullOrEmpty(strInclude))
-                {
-                    daysSpecification.IncludingDays = new List<KeyValuePair<string, string>>();
-                    var dateCollection = strInclude.Split(',');
-                    foreach (var date in dateCollection)
-                    {
-                        var monthDay = date.Split('.');
-                        if (monthDay.Length == 2)
-                        {
-                            daysSpecification.IncludingDays.Add(new KeyValuePair<string, string>(monthDay[0], monthDay[1]));
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(strExclude))
-                {
-                    daysSpecification.ExcludingDays = new List<KeyValuePair<string, string>>();
-                    var dateCollection = strExclude.Split(',');
-                    foreach (var date in dateCollection)
-                    {
-                        var monthDay = date.Split('.');
-                        if (monthDay.Length == 2)
-                        {
-                            daysSpecification.ExcludingDays.Add(new KeyValuePair<string, string>(monthDay[0], monthDay[1]));
-                        }
-                    }
-                }
-
-            }
+                       //вначале строки секция Включая:.
+                       if (indexInclude < indexExclude)
+                       {
+                           var indexSemicolon = specification.IndexOf(";", StringComparison.Ordinal);
+                           if (indexSemicolon >= 0)
+                           {
+                               strInclude = specification.Substring((indexInclude + "Включая:".Length), (indexSemicolon - "Включая:".Length));
+                               strExclude = specification.Substring((indexExclude + "Кроме:".Length));
+                           }
+                       }
+                   }
+                   else
+                   if (indexInclude >= 0)
+                   {
+                       strInclude = specification.Substring(indexInclude + "Включая:".Length);
+                   }
+                   else
+                   if (indexExclude >= 0)
+                   {
+                       strExclude = specification.Substring(indexExclude + "Кроме:".Length);
+                   }
 
 
-   
-            switch (type)
-            {
-                case "ОН":
-                    ONHandler(daysSpecification);
-                    break;
+                   if (!string.IsNullOrEmpty(strInclude))
+                   {
+                       daysSpecification.IncludingDays = new List<KeyValuePair<string, string>>();
+                       var dateCollection = strInclude.Split(',');
+                       foreach (var date in dateCollection)
+                       {
+                           var monthDay = date.Split('.');
+                           if (monthDay.Length == 2)
+                           {
+                               daysSpecification.IncludingDays.Add(new KeyValuePair<string, string>(monthDay[0], monthDay[1]));
+                           }
+                       }
+                   }
 
-                case "ЧЕТН":
-                    EvenHandler(daysSpecification);
-                    break;
+                   if (!string.IsNullOrEmpty(strExclude))
+                   {
+                       daysSpecification.ExcludingDays = new List<KeyValuePair<string, string>>();
+                       var dateCollection = strExclude.Split(',');
+                       foreach (var date in dateCollection)
+                       {
+                           var monthDay = date.Split('.');
+                           if (monthDay.Length == 2)
+                           {
+                               daysSpecification.ExcludingDays.Add(new KeyValuePair<string, string>(monthDay[0], monthDay[1]));
+                           }
+                       }
+                   }
 
-                default:
-                    return "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
-            }
+               }
 
 
-            return days + "!!!!!!";
+               string result = null;
+               switch (type)
+               {
+                   case "ОН":
+                       result= ONHandler(daysSpecification);
+                       break;
+
+                   case "ЧЕТН":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   default:
+                       result = "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
+                       break;
+               }
+
+
+               return result;
+           });
+
+
 
         }
 

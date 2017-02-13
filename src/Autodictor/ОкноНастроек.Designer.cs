@@ -83,6 +83,8 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tBРегуляторГромкости = new System.Windows.Forms.TrackBar();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -262,6 +264,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок);
+            this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.tBИнтОповещОЗадержкеОтправления);
             this.groupBox2.Controls.Add(this.label21);
             this.groupBox2.Controls.Add(this.tBИнтОповещОЗадержкеПрибытия);
@@ -649,6 +653,24 @@
             this.tBРегуляторГромкости.TabIndex = 0;
             this.tBРегуляторГромкости.Scroll += new System.EventHandler(this.tBРегуляторГромкости_Scroll);
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(8, 152);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(397, 20);
+            this.label22.TabIndex = 8;
+            this.label22.Text = "Разрешить добавление заблокированных поездов";
+            // 
+            // cBРазрешениеДобавленияЗаблокированныхПоездовВСписок
+            // 
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.AutoSize = true;
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 156);
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Name = "cBРазрешениеДобавленияЗаблокированныхПоездовВСписок";
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Size = new System.Drawing.Size(15, 14);
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.TabIndex = 15;
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.UseVisualStyleBackColor = true;
+            // 
             // ОкноНастроек
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -735,5 +757,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TrackBar tBРегуляторГромкости;
+        private System.Windows.Forms.CheckBox cBРазрешениеДобавленияЗаблокированныхПоездовВСписок;
+        private System.Windows.Forms.Label label22;
     }
 }

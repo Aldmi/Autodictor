@@ -86,20 +86,6 @@ namespace CommunicationDevices.ClientWCF
                 if (value == _regulatorySchedules) return;
                 _regulatorySchedules = value;
 
-                //Преобразовали ДниСледования от формата АПКД к формату Автодиктора
-                if (RegulatoryScheduleDatas != null && RegulatoryScheduleDatas.Any())                                   //TODO: проверить ск-ть выполнения кода конвертера.
-                {
-                    var converter = new DaysFollowingConverter(RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
-                    var newDaysFolowing = converter.Convert();
-                    if (newDaysFolowing != null && newDaysFolowing.Count == RegulatoryScheduleDatas.Count)
-                    {
-                        for (int i = 0; i < newDaysFolowing.Count; i++)
-                        {
-                            RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
-                        }
-                    }
-                }
-
                 RegulatoryScheduleDatasChange.OnNext(RegulatoryScheduleDatas);
             }
         }
@@ -240,7 +226,23 @@ namespace CommunicationDevices.ClientWCF
             try
             {
                 _isSuccessGetRegSh = false;
-                RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(await Proxy.GetRegulatorySchedules(nameRailwayStation));
+                var data = await Proxy.GetRegulatorySchedules(nameRailwayStation);
+                RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(data);
+
+                //Преобразовали ДниСледования от формата АПКД к формату Автодиктора
+                if (RegulatoryScheduleDatas != null && RegulatoryScheduleDatas.Any())                                   //TODO: проверить ск-ть выполнения кода конвертера.
+                {
+                    var converter = new DaysFollowingConverter(RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
+                    var newDaysFolowing = await converter.Convert();
+                    if (newDaysFolowing != null && newDaysFolowing.Count == RegulatoryScheduleDatas.Count)
+                    {
+                        for (int i = 0; i < newDaysFolowing.Count; i++)
+                        {
+                            RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
+                        }
+                    }
+                }
+         
                 _isSuccessGetRegSh = true;
                 IsConnect = true;
             }

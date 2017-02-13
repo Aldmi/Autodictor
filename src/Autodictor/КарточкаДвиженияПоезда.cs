@@ -115,7 +115,6 @@ namespace MainExample
             if ((this.Record.БитыНештатныхСитуаций & 0x01) != 0x00) cBПоездОтменен.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x02) != 0x00) cBПрибытиеЗадерживается.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x04) != 0x00) cBОтправлениеЗадерживается.Checked = true;
-
         }
 
 
@@ -230,8 +229,45 @@ namespace MainExample
 
         private void btn_Подтвердить_Click(object sender, EventArgs e)
         {
+            bool ПерваяСтанция = true;
+            string Примечание = "";
+
+            if (rB_СоВсемиОстановками.Checked == true)
+                Примечание = "Со всеми остановками";
+            else if (rB_ПоСтанциям.Checked == true)
+            {
+                Примечание = "С остановками: ";
+                foreach (var Станция in Program.Станции)
+                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                    {
+                        if (ПерваяСтанция == true)
+                            ПерваяСтанция = false;
+                        else
+                            Примечание += ", ";
+
+                        Примечание += Станция;
+                    }
+            }
+            else if (rB_КромеСтанций.Checked == true)
+            {
+                Примечание = "Кроме: ";
+                foreach (var Станция in Program.Станции)
+                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                    {
+                        if (ПерваяСтанция == true)
+                            ПерваяСтанция = false;
+                        else
+                            Примечание += ", ";
+                        Примечание += Станция;
+                    }
+            }
+            this.Record.Примечание = Примечание;
+
             Record.СтанцияОтправления = cBОткуда.Text;
             Record.СтанцияНазначения = cBКуда.Text;
+
+            Record.НазваниеПоезда = Record.СтанцияОтправления == "" ? Record.СтанцияНазначения : Record.СтанцияОтправления + " - " + Record.СтанцияНазначения;
+
             DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 

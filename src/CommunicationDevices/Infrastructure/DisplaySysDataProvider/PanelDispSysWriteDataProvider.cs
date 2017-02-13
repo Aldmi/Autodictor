@@ -224,14 +224,14 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format8 = "%001521920464";
+                    format8 = "%001521920314";
                     message8 = $"%10$18$00$60$t3{time}";
                     result8 = format8 + message8;
                 }
 
 
                 //формируем КОНЕЧНУЮ строку
-                var sumResult = result1 + result2 + result3 + result4 + result5 + result6 + result7 + result8;
+                var sumResult = result1 + result2 + result3 + result4 + result5 + result6 + result7 +  result8;
                 var resultstring = address.ToString("X2") + sumResult.Length.ToString("X2") + sumResult;
 
                 //вычисляем CRC

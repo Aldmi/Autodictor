@@ -56,7 +56,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 if (!string.IsNullOrWhiteSpace(inData.Event))               //ДОБАВИТЬ В ТАБЛ.
                 {
                     _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);  // Изменили данные для циклического опроса
-                      
                 }
                 else                                                         //УДАЛИТЬ ИЗ ТАБЛ.
                 {
@@ -81,7 +80,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         /// </summary>
         public void InitializeDevicePathInfo()
         {
-          
             var inData = new UniversalInputType
             {
                 NumberOfTrain =  "   ",
