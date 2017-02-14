@@ -10,14 +10,16 @@ namespace WCFCis2AvtodictorContract.PostProcessing
     /// <summary>
     /// указанные дни в строке спецификации
     /// в формате пар ключ-значние, где
-    /// ключ- номер дня
-    /// значение- номер месяца
+    /// ключ- номер месяца
+    /// значение- список дней
     /// </summary>
     public struct DaysSpecification
     {
-        public List<KeyValuePair<string, string>> IncludingDays;        // включая дни
-        public List<KeyValuePair<string, string>> ExcludingDays;        // исключая дни
+        public Dictionary<byte, List<byte>> IncludingDays;        // включая дни
+        public Dictionary<byte, List<byte>> ExcludingDays;        // исключая дни
     }
+
+
 
 
 
@@ -26,7 +28,21 @@ namespace WCFCis2AvtodictorContract.PostProcessing
         public IEnumerable<string> DaysFollowingCis { get; }                           //входная коллекция
         private List<string> DaysFollowingAutodictor { get; }= new List<string>();     //выходная коллекция
 
-
+       public Dictionary<byte, string> MathingNameMonth { get; }= new Dictionary<byte, string>
+       {
+           {1, "Январь"},
+           {2, "Февраль"},
+           {3, "Март"},
+           {4, "Апрель"},
+           {5, "Май"},
+           {6, "Июнь"},
+           {7, "Июль"},
+           {8, "Август"},
+           {9, "Сентябрь"},
+           {10, "Октябрь"},
+           {11, "Ноябрь"},
+           {12, "Декабрь"},
+       }; 
 
 
 
@@ -47,11 +63,11 @@ namespace WCFCis2AvtodictorContract.PostProcessing
 
             //DRBUG------------------------------------------------
             var inStr =
-                "Тип: \"ОН\"   Дни: \"Включая: 26.12, 29.12, 02.01, 04.01, 05.01; Кроме: 07.01, 09.03\"";
+                  "Тип: \"ОН\"   Дни: \"Включая: 26.12, 22.12, 03.12, 29.12, 02.01, 04.01, 05.01; Кроме: 07.01, 09.03\"";
 
-            // "Тип: \"ОН\"   Дни: \"Кроме: 23.12, 25.12, 26.12, 29.12, 30.12, 01.01, 06.01, 08.01, 13.01, 15.01, 20.01, 22.01, 27.01, 29.01, 03.02, 05.02, 10.02, 12.02, 17.02\"";
+             // "Тип: \"ОН\"   Дни: \"Кроме: 23.12, 25.12, 26.12, 29.12, 30.12, 01.01, 06.01, 08.01, 13.01, 15.01, 20.01, 22.01, 27.01, 29.01, 03.02, 05.02, 10.02, 12.02, 17.02\"";
 
-            
+
              DaysFollowingAutodictor.Add(await ConvertDays(inStr));
             //DRBUG------------------------------------------------
 
@@ -127,32 +143,43 @@ namespace WCFCis2AvtodictorContract.PostProcessing
 
                    if (!string.IsNullOrEmpty(strInclude))
                    {
-                       daysSpecification.IncludingDays = new List<KeyValuePair<string, string>>();
+                       daysSpecification.IncludingDays=new Dictionary<byte, List<byte>>();
                        var dateCollection = strInclude.Split(',');
                        foreach (var date in dateCollection)
                        {
                            var monthDay = date.Split('.');
                            if (monthDay.Length == 2)
                            {
-                               daysSpecification.IncludingDays.Add(new KeyValuePair<string, string>(monthDay[0], monthDay[1]));
+                               byte key= Byte.Parse(monthDay[1]);
+                               byte value= Byte.Parse(monthDay[0]);
+
+                               if (!daysSpecification.IncludingDays.ContainsKey(key))
+                                   daysSpecification.IncludingDays[key] = new List<byte>();
+                             
+                               daysSpecification.IncludingDays[key].Add(value);                
                            }
                        }
                    }
 
                    if (!string.IsNullOrEmpty(strExclude))
                    {
-                       daysSpecification.ExcludingDays = new List<KeyValuePair<string, string>>();
+                       daysSpecification.ExcludingDays = new Dictionary<byte, List<byte>>();
                        var dateCollection = strExclude.Split(',');
                        foreach (var date in dateCollection)
                        {
                            var monthDay = date.Split('.');
                            if (monthDay.Length == 2)
                            {
-                               daysSpecification.ExcludingDays.Add(new KeyValuePair<string, string>(monthDay[0], monthDay[1]));
+                               byte key = Byte.Parse(monthDay[1]);
+                               byte value = Byte.Parse(monthDay[0]);
+
+                               if (!daysSpecification.ExcludingDays.ContainsKey(key))
+                                   daysSpecification.ExcludingDays[key] = new List<byte>();
+
+                               daysSpecification.ExcludingDays[key].Add(value);
                            }
                        }
                    }
-
                }
 
 
@@ -164,6 +191,46 @@ namespace WCFCis2AvtodictorContract.PostProcessing
                        break;
 
                    case "ЧЕТН":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "НЕЧЕТН":
+                       //result = OddHandler(daysSpecification);
+                       break;
+
+                   case "Еж.":
+                       //result = EverydayHandler(daysSpecification);
+                       break;
+
+                   case "В":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "Р":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "ПТ":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "ПТ ВСК":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "ПТ СБ":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "ПТ СБ ВСК":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "ЧТ":
+                       result = EvenHandler(daysSpecification);
+                       break;
+
+                   case "ЧТ ВСК":
                        result = EvenHandler(daysSpecification);
                        break;
 
@@ -188,8 +255,60 @@ namespace WCFCis2AvtodictorContract.PostProcessing
         /// </summary>
         private string ONHandler(DaysSpecification daysSpecification)
         {
+            //"Тип: \"ОН\"   Дни: \"Включая: 26.12, 22.12, 03.12, 29.12, 02.01, 04.01, 05.01; Кроме: 07.01, 09.03\"";
 
-            return "  ";
+            if ((daysSpecification.IncludingDays == null) || (!daysSpecification.IncludingDays.Any()))
+            {
+                return "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
+            }
+
+            var year = DateTime.Now.Year;
+
+            string sumStr= "Режим работы: Выборочные дни: ";                                 //TODO: заменить string на StringBuilder
+
+
+            foreach (var key in daysSpecification.IncludingDays.Keys)
+            {
+                sumStr += MathingNameMonth[key] + ":";                //Название месяца.
+                foreach (var day in daysSpecification.IncludingDays[key])
+                {
+                    sumStr += day + ",";
+                }
+            }
+
+
+
+            //foreach (var kvp in daysSpecification.IncludingDays)
+            //{
+            //    var month = int.Parse(kvp.Key);
+
+            //    //foreach (var VARIABLE in sumStr)
+            //    //{
+
+            //    //}
+
+            //    var day = int.Parse(kvp.Value);
+            //    var currentDay = new DateTime(year, month, day);
+
+            //    sumStr += currentDay.DayOfWeek;
+            //}
+
+
+
+
+            //var year = DateTime.Now.Year;
+            //var month = 2;
+            //var startDay = new DateTime(year, month, 1);
+            //var endDay = startDay.AddMonths(1);
+            //for (var date = startDay; date != endDay; date = date.AddDays(1))
+            //{
+
+            //    Console.WriteLine($"Number: {date.Day}, day of week: {date.DayOfWeek}   ");
+            //}
+
+
+
+            return sumStr;
         }
 
 

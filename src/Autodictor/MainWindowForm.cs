@@ -242,6 +242,8 @@ namespace MainExample
             ОбновитьСписокЗвуковыхСообщенийВТаблице();
             ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений();
             ОбновитьСостояниеЗаписейТаблицы();
+
+            ОчиститьВсеТабло();
         }
 
 
@@ -1200,9 +1202,12 @@ namespace MainExample
                                 данные.СостояниеОтображения = TableRecordStatus.Отображение;
                                 SendOnPathTable(данные);
 
-                                //очистили старый путь
-                                данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
-                                SendOnPathTable(данныеOld);
+                                //очистили старый путь, если он не "0";
+                                if (номерПутиOld > 0)
+                                {
+                                    данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
+                                    SendOnPathTable(данныеOld);
+                                }
                             }
 
 
@@ -1225,8 +1230,11 @@ namespace MainExample
                                         {
                                             данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                             данные.НомерПути = "0";
-                                            SendOnPathTable(данные);
-                                        }
+
+                                            var данныеОчистки = данные;
+                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                            SendOnPathTable(данныеОчистки);
+                                         }
                                     }
                                 }
                                 else //ОТПРАВЛЕНИЕ
@@ -1241,10 +1249,10 @@ namespace MainExample
                                             {
                                                 данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                 данные.НомерПути = "0";
-
+                                                
                                                 var данныеОчистки = данные;
                                                 данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                                SendOnPathTable(данныеОчистки); //данные
+                                                SendOnPathTable(данныеОчистки);
                                             }
                                     }
                                 }
@@ -1391,15 +1399,14 @@ namespace MainExample
                     }
 
                     var inData = new UniversalInputType
-                    {//Номер пути выводим всегда. 
+                    { 
                         NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
-                        //PathNumber = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПути.ToString() : "   ",
-                        PathNumber =  data.НомерПути,
+                        PathNumber =  data.НомерПути, //Номер пути выводим всегда.
                         Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
                         Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
                         Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   ",
                         Note = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.Примечание : "   ",
-                        TypeTrain =  TypeTrain.Suburb//typeTrain  //DEBUG!!!!!!!!!!!!!!!!!
+                        TypeTrain =  typeTrain
                     };
                     
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
@@ -1409,6 +1416,16 @@ namespace MainExample
                 }
             }
         }
+
+
+        private void ОчиститьВсеТабло()
+        {
+            foreach (var beh in BindingBehaviors)
+            {
+                beh.InitializeDevicePathInfo();
+            }
+        }
+
 
         private static string CreateActStr(SoundRecord Данные)
         {

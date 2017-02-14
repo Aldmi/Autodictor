@@ -128,17 +128,27 @@ namespace MainExample
                         if (string.IsNullOrEmpty(sendStr) || string.IsNullOrWhiteSpace(sendStr))
                         {
                             inData.NumberOfTrain = "  ";
-                            inData.PathNumber = "  ";
+                            inData.PathNumber = "1";
                             inData.Event = "  ";
                             inData.Time = DateTime.MinValue;
                             inData.Stations = "  ";
                             inData.Note = "  ";
 
+
                             _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
                             _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
                         }
-                        else if (sendStr.ToLower() == "test")
+                        else if (sendStr.ToLower() == "test")                                  //Шаблон отправки ПРИГОРОД
                         {
+                            inData.TypeTrain = TypeTrain.Suburb;
+
+                            _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
+                            _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+                        }
+                        else if (sendStr.ToLower() == "testLong")                               //Шаблон отправки ДАЛЬНИЕ
+                        {
+
+                            inData.TypeTrain = TypeTrain.LongDistance;
                             _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
                             _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
                         }

@@ -115,7 +115,8 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     // 150 - X2
                     // 031 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format4 = "%000771460314";
+                    //format4 = "%000771460314";
+                    format4 = "%0000011460314";                                //!!!
                     message4 = $"%10$18$00$60$t3{stations}";
                     result4 = format4 + message4;
 
@@ -124,7 +125,8 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format5 = "%000011460464";
+                    format5 = "%000011920464";                                 //!!!
+                    //format5 = "%000011460464";
                     message5 = $"%10$18$00$60$t3{note}";
                     result5 = format5 + message5;
 
@@ -211,28 +213,39 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                     message6 = $"%10$18$00$60$t3{numberOfTrain}";
                     result6 = format6 + message6;
 
-                    // %01 - задание формата вывода станции
-                    // 077 - Х1
-                    // 146 - X2
-                    // 046 - Y1
-                    // аттриб = 4 (бег.стр.)
-                    format7 = "%000011460464";
-                    message7 = $"%10$18$00$60$t3{stations}";
-                    result7 = format7 + message7;
-
                     // %01 - задание формата вывода времени
                     // 152 - Х1
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format8 = "%001521920314";
-                    message8 = $"%10$18$00$60$t3{time}";
+                    format7 = "%001521920314";
+                    message7 = $"%10$18$00$60$t3{time}";
+                    result7 = format7 + message7;
+
+
+                    // %01 - задание формата вывода станции
+                    // 077 - Х1
+                    // 146 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    //format7 = "%000011460464";
+                    format8 = "%000011920464";                         //!!!
+                    message8 = $"%10$18$00$60$t3{stations}";
                     result8 = format8 + message8;
                 }
 
 
                 //формируем КОНЕЧНУЮ строку
                 var sumResult = result1 + result2 + result3 + result4 + result5 + result6 + result7 + result8;
+
+                //Обрежем конец строки если ее длинна превышает допустимые 254 символа.
+                byte maxLenght = 0xFE;
+                if (sumResult.Length >= maxLenght)
+                {
+                    var removeCount = sumResult.Length - maxLenght;
+                    sumResult = sumResult.Remove(maxLenght, removeCount);
+                }
+
                 var resultstring = address.ToString("X2") + sumResult.Length.ToString("X2") + sumResult;
 
                 //вычисляем CRC

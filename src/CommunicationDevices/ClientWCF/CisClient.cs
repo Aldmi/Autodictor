@@ -226,23 +226,23 @@ namespace CommunicationDevices.ClientWCF
             try
             {
                 _isSuccessGetRegSh = false;
-                var data = await Proxy.GetRegulatorySchedules(nameRailwayStation);
-                RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(data);
-
+                var data = (await Proxy.GetRegulatorySchedules(nameRailwayStation)).ToList();
+              
                 //Преобразовали ДниСледования от формата АПКД к формату Автодиктора
-                if (RegulatoryScheduleDatas != null && RegulatoryScheduleDatas.Any())                                   //TODO: проверить ск-ть выполнения кода конвертера.
+                if (data.Any())                                   //TODO: проверить ск-ть выполнения кода конвертора.
                 {
-                    var converter = new DaysFollowingConverter(RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
+                    var converter = new DaysFollowingConverter(data.Select(r => r.DaysFollowing));
                     var newDaysFolowing = await converter.Convert();
-                    if (newDaysFolowing != null && newDaysFolowing.Count == RegulatoryScheduleDatas.Count)
+                    if (newDaysFolowing != null) //&& newDaysFolowing.Count == data.Count
                     {
                         for (int i = 0; i < newDaysFolowing.Count; i++)
                         {
-                            RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
+                            data[i].DaysFollowingConverted = newDaysFolowing[i];
                         }
                     }
                 }
-         
+
+                RegulatoryScheduleDatas = new List<RegulatoryScheduleData>(data);
                 _isSuccessGetRegSh = true;
                 IsConnect = true;
             }

@@ -2,3 +2,4 @@ D:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorCon
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorContract.pdb
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.dll
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.pdb
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache

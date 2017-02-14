@@ -2,7 +2,7 @@
 <Root>
   <CisSetting>
     <Name>Рижский</Name>
-    <EndpointAddress>http://192.168.88.21:50000/Service/Cis</EndpointAddress>
+    <EndpointAddress>http://127.0.0.1:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 
   <LogSetting>

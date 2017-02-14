@@ -54,27 +54,23 @@ namespace MainExample
         }
 
 
-        private void FillListView(IEnumerable<RegulatoryScheduleData> op)
+        private async void FillListView(IEnumerable<RegulatoryScheduleData> regSh)
         {
             //Преобразовали ДниСледования
             //if (CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any())
             //{
             //    var converter = new DaysFollowingConverter(CisClient.RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
-            //    var newDaysFolowing = converter.Convert();
-            //    if (newDaysFolowing != null && newDaysFolowing.Count() == CisClient.RegulatoryScheduleDatas.Count)
+            //    var newDaysFolowing = await converter.Convert();
+            //    if (newDaysFolowing != null && newDaysFolowing.Count == CisClient.RegulatoryScheduleDatas.Count)
             //    {
-            //        for (int i = 0; i < newDaysFolowing.Count(); i++)
+            //        for (int i = 0; i < newDaysFolowing.Count; i++)
             //        {
             //            CisClient.RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
             //        }
             //    }
             //}
 
-
-
-
-
-            var row = op.Select(str => new[]
+            var row = regSh.Select(str => new[]
             {
                 str.NumberOfTrain.ToString(),
                 str.RouteName.ToString(),

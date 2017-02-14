@@ -11,6 +11,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         string GetDeviceName { get; }
         int GetDeviceId { get; }
 
+        void InitializeDevicePathInfo();
+
         void SendMessage4Path(UniversalInputType inData, byte pathNumber);
     }
 }

@@ -97,7 +97,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     // 146 - X2
                     // 014 - Y
                     // аттриб = 4 (бег.стр.)
-                    format2 = "%000011460144";
+                    format2 = "%000011920144";
                     message2 = $"%10$18$00$60$t2ПУТЬ №{numberOfPath}";
                     result2 = format2 + message2;
 
@@ -114,8 +114,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     // 150 - X2
                     // 031 - Y1
                     // аттриб = 4 (бег.стр.)
-                    //format4 = "%000771460314";
-                    format4 = "%0000011460314";                                //!!!
+                    format4 = "%000011500314";
                     message4 = $"%10$18$00$60$t3{stations}";
                     result4 = format4 + message4;
 
@@ -124,8 +123,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format5 = "%000011920464";                                 //!!!
-                    //format5 = "%000011460464";
+                    format5 = "%000011920464";
                     message5 = $"%10$18$00$60$t3{note}";
                     result5 = format5 + message5;
 
@@ -142,21 +140,21 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     result8 = String.Empty;
                 }
 
-                //ВЫВРД ДАЛЬНЕГО СЛЕДОВАНИЯ
+                //ВЫВОД ДАЛЬНЕГО СЛЕДОВАНИЯ
                 // 05 - Аддр.
                 //DA - 218 байт данных
-                //% 30161903 - синхр часов                                                               [СИНХР.ВРЕМ.]   
+                //% 30161903 - синхр часов                                                                  [СИНХР.ВРЕМ.]   
 
                 //% 000011460144               - 3 координты, Х1 = 001,  X2 = 146, Y = 014, формат = 4(горизонт.перемещ)
-                //% 10$18$00$60$t2ПУТЬ №5      - текст, $18$00$60$t2ПУТЬ №5,                              [ПУТЬ]
+                //% 10$18$00$60$t2ПУТЬ №5      - текст, $18$00$60$t2ПУТЬ №5,                                 [ПУТЬ]
 
                 //%001521920144                - 3 координты, Х1=152,  X2= 192, Y= 014, формат=4 (горизонт.перемещ)
-                //%10$18$00$60$t3              - текст, $18$00$60$t3   ,(строка 3пробела)                 [СОБЫТИЕ]
+                //%10$18$00$60$t3              - текст, $18$00$60$t3   ,(строка 3пробела)                    [СОБЫТИЕ]
 
                 //%000010750314                - 3 координты, Х1=001,  X2= 075, Y= 031, формат=4 (горизонт.перемещ)
                 //%10$18$00$60$t3Поезд №       - текст, $18$00$60$t3Поезд №,                                
 
-                //%42001192016016              - гор.линия, Х1=001,  X2= 192, Y1= 016, Y2= 016,            [ГОР.ЛИН]
+                //%42001192016016              - гор.линия, Х1=001,  X2= 192, Y1= 016, Y2= 016,             [ГОР.ЛИН]
 
                 //%000771460314                - 3 координты, Х1=077,  X2= 146, Y= 031, формат=4 (горизонт.перемещ)
                 //%10$18$00$60$t3              - текст, $18$00$60$t3   ,(строка 3пробела)                  [НОМЕР ПОЕЗДА dec]
@@ -165,7 +163,7 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                 //%10$18$00$60$t3              - текст, $18$00$60$t3,   (строка 3пробела)                  [СТАНЦИИ]
 
                 //%001521920464                - 3 координты, Х1=152,  X2= 192, Y= 046, формат=4 (горизонт.перемещ)
-                //%10$18$00$60$t3              - текст, $18$00$60$t3,  (строка 3пробела)                  [ВРЕМЯ]
+                //%10$18$00$60$t3               - текст, $18$00$60$t3,  (строка 3пробела)                  [ВРЕМЯ]
                 else
                 {
                     // %01 - задание формата вывода ПУТИ
@@ -212,39 +210,28 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     message6 = $"%10$18$00$60$t3{numberOfTrain}";
                     result6 = format6 + message6;
 
-                    // %01 - задание формата вывода времени
-                    // 152 - Х1
-                    // 192 - X2
-                    // 046 - Y1
-                    // аттриб = 4 (бег.стр.)
-                    format7 = "%001521920314";
-                    message7 = $"%10$18$00$60$t3{time}";
-                    result7 = format7 + message7;
-
-
                     // %01 - задание формата вывода станции
                     // 077 - Х1
                     // 146 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    //format7 = "%000011460464";
-                    format8 = "%000011920464";                         //!!!
-                    message8 = $"%10$18$00$60$t3{stations}";
+                    format7 = "%000011460464";
+                    message7 = $"%10$18$00$60$t3{stations}";
+                    result7 = format7 + message7;
+
+                    // %01 - задание формата вывода времени
+                    // 152 - Х1
+                    // 192 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format8 = "%001521920314";
+                    message8 = $"%10$18$00$60$t3{time}";
                     result8 = format8 + message8;
                 }
 
 
                 //формируем КОНЕЧНУЮ строку
-                var sumResult = result1 + result2 + result3 + result4 + result5 + result6 + result7 + result8;
-
-                //Обрежем конец строки если ее длинна превышает допустимые 254 символа.
-                byte maxLenght = 0xFE;
-                if (sumResult.Length >= maxLenght)
-                {
-                    var removeCount = sumResult.Length - maxLenght;
-                    sumResult = sumResult.Remove(maxLenght, removeCount);
-                }
-
+                var sumResult = result1 + result2 + result3 + result4 + result5 + result6 + result7 +  result8;
                 var resultstring = address.ToString("X2") + sumResult.Length.ToString("X2") + sumResult;
 
                 //вычисляем CRC
