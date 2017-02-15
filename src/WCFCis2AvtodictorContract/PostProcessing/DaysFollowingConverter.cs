@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -63,12 +64,17 @@ namespace WCFCis2AvtodictorContract.PostProcessing
 
             //DRBUG------------------------------------------------
             var inStr =
-                  "Тип: \"ОН\"   Дни: \"Включая: 26.12, 22.12, 03.12, 29.12, 02.01, 04.01, 05.01; Кроме: 07.01, 09.03\"";
+                 "Тип: \"Р\"   Дни: \"Включая: 05.03, 09.03, 27.12, 21.03-24.03\"";
 
-             // "Тип: \"ОН\"   Дни: \"Кроме: 23.12, 25.12, 26.12, 29.12, 30.12, 01.01, 06.01, 08.01, 13.01, 15.01, 20.01, 22.01, 27.01, 29.01, 03.02, 05.02, 10.02, 12.02, 17.02\"";
+            //"Тип: \"ОН\"   Дни: \"Включая: 26.12, 22.12, 03.12, 29.12, 02.01, 04.01, 05.01, 06.05-20.06; Кроме: 07.01, 03.08-13.09, 09.03\"";
+            //"Тип: \"Еж.\"   Дни: \"\"";
+            //"Тип: \"Еж.\"   Дни: \"Кроме: 05.03, 03.08-06.08, 09.03\"";
+            //"Тип: \"НЕЧЕТН\"   Дни: \"Кроме: 05.03, 03.08-20.08, 09.03, 27.12\"";
+            // "Тип: \"В\"   Дни: \"Включая: 05.03, 09.03, 27.12, 21.03-24.03\"";
 
 
-             DaysFollowingAutodictor.Add(await ConvertDays(inStr));
+
+            DaysFollowingAutodictor.Add(await ConvertDays(inStr));
             //DRBUG------------------------------------------------
 
             return DaysFollowingAutodictor;
@@ -147,6 +153,19 @@ namespace WCFCis2AvtodictorContract.PostProcessing
                        var dateCollection = strInclude.Split(',');
                        foreach (var date in dateCollection)
                        {
+                           //Выделим  диапазон дат
+                           if (date.Contains("-"))
+                           {
+                               var range = date.Split('-');
+                               if (range.Length == 2)
+                               {
+                                   RangeDaysConverter(range[0], range[1], daysSpecification.IncludingDays);
+                               }
+
+                               continue;
+                           }
+
+                           //Выделим конкретные даты
                            var monthDay = date.Split('.');
                            if (monthDay.Length == 2)
                            {
@@ -167,6 +186,18 @@ namespace WCFCis2AvtodictorContract.PostProcessing
                        var dateCollection = strExclude.Split(',');
                        foreach (var date in dateCollection)
                        {
+                           //Выделим  диапазон дат
+                           if (date.Contains("-"))
+                           {
+                               var range = date.Split('-');
+                               if (range.Length == 2)
+                               {
+                                   RangeDaysConverter(range[0], range[1], daysSpecification.ExcludingDays);
+                               }
+
+                               continue;
+                           }
+
                            var monthDay = date.Split('.');
                            if (monthDay.Length == 2)
                            {
@@ -183,6 +214,37 @@ namespace WCFCis2AvtodictorContract.PostProcessing
                }
 
 
+               //сортировка по возростанию месяцев (ключей) и дней (значений)
+               if (daysSpecification.IncludingDays != null && daysSpecification.IncludingDays.Any())
+               {
+                   daysSpecification.IncludingDays =
+                       daysSpecification.IncludingDays.OrderBy(key => key.Key)
+                           .ToDictionary(k => k.Key, pair => pair.Value);
+                   foreach (var key in daysSpecification.IncludingDays.Keys)
+                   {
+                       var daysCurrent = daysSpecification.IncludingDays[key];
+                       var sortList = daysCurrent.OrderBy(b => b).ToList();
+                       daysSpecification.IncludingDays[key].Clear();
+                       daysSpecification.IncludingDays[key].AddRange(sortList);
+                   }
+               }
+
+               if (daysSpecification.ExcludingDays != null && daysSpecification.ExcludingDays.Any())
+               {
+                   daysSpecification.ExcludingDays =
+                       daysSpecification.ExcludingDays.OrderBy(key => key.Key)
+                           .ToDictionary(k => k.Key, pair => pair.Value);
+                   foreach (var key in daysSpecification.ExcludingDays.Keys)
+                   {
+                       var daysCurrent = daysSpecification.ExcludingDays[key];
+                       var sortList = daysCurrent.OrderBy(b => b).ToList();
+                       daysSpecification.ExcludingDays[key].Clear();
+                       daysSpecification.ExcludingDays[key].AddRange(sortList);
+                   }
+               }
+
+
+               //Вызов обработчика 
                string result = null;
                switch (type)
                {
@@ -195,57 +257,58 @@ namespace WCFCis2AvtodictorContract.PostProcessing
                        break;
 
                    case "НЕЧЕТН":
-                       //result = OddHandler(daysSpecification);
+                       result = OddHandler(daysSpecification);             //???
                        break;
 
                    case "Еж.":
-                       //result = EverydayHandler(daysSpecification);
+                       result = EveryDayHandler(daysSpecification);        //???
                        break;
 
-                   case "В":
-                       result = EvenHandler(daysSpecification);
+                   case "В":                                               //???
+                       result = WeekendHandler(daysSpecification);
                        break;
 
-                   case "Р":
-                       result = EvenHandler(daysSpecification);
-                       break;
-
-                   case "ПТ":
-                       result = EvenHandler(daysSpecification);
-                       break;
-
-                   case "ПТ ВСК":
-                       result = EvenHandler(daysSpecification);
-                       break;
-
-                   case "ПТ СБ":
-                       result = EvenHandler(daysSpecification);
-                       break;
-
-                   case "ПТ СБ ВСК":
-                       result = EvenHandler(daysSpecification);
-                       break;
-
-                   case "ЧТ":
-                       result = EvenHandler(daysSpecification);
-                       break;
-
-                   case "ЧТ ВСК":
-                       result = EvenHandler(daysSpecification);
+                   case "Р":                                               //???
+                       result = WeekdaysHandler(daysSpecification);
                        break;
 
                    default:
-                       result = "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
+                       result = DayOfWeekHandler(daysSpecification);
                        break;
                }
 
 
                return result;
            });
-
-
-
         }
+
+
+       public void RangeDaysConverter(string startMonthDay, string endMonthDay, Dictionary<byte, List<byte>> days)
+       {
+           var startMd = startMonthDay.Split('.');
+           var endMd = endMonthDay.Split('.');
+
+           if (startMd.Length != 2 || endMd.Length != 2)
+              return;
+
+           if(days == null)
+              return;
+           
+            var year = DateTime.Now.Year;
+            var startDay = new DateTime(year, Byte.Parse(startMd[1]), Byte.Parse(startMd[0]));
+            var endDay = new DateTime(year, Byte.Parse(endMd[1]), Byte.Parse(endMd[0])).AddDays(1);
+            for (var date = startDay; date != endDay; date = date.AddDays(1))
+            {
+                var key = (byte) date.Month;
+                var value = (byte) date.Day;
+
+                if (!days.ContainsKey(key))
+                    days[key] = new List<byte>();
+
+                days[key].Add(value);
+            }
+        }
+
 
 
 
@@ -255,62 +318,25 @@ namespace WCFCis2AvtodictorContract.PostProcessing
         /// </summary>
         private string ONHandler(DaysSpecification daysSpecification)
         {
-            //"Тип: \"ОН\"   Дни: \"Включая: 26.12, 22.12, 03.12, 29.12, 02.01, 04.01, 05.01; Кроме: 07.01, 09.03\"";
-
             if ((daysSpecification.IncludingDays == null) || (!daysSpecification.IncludingDays.Any()))
             {
                 return "НЕ КОРРЕКТНОЕ ПРЕОБРАЗОВАНИЕ";
             }
 
-            var year = DateTime.Now.Year;
-
-            string sumStr= "Режим работы: Выборочные дни: ";                                 //TODO: заменить string на StringBuilder
-
+            StringBuilder sumStrBuilder= new StringBuilder("Режим работы: Выборочные дни: ");
 
             foreach (var key in daysSpecification.IncludingDays.Keys)
             {
-                sumStr += MathingNameMonth[key] + ":";                //Название месяца.
+                sumStrBuilder.Append(MathingNameMonth[key]).Append(":");
                 foreach (var day in daysSpecification.IncludingDays[key])
                 {
-                    sumStr += day + ",";
+                    sumStrBuilder.Append(day).Append(",");
                 }
             }
+            sumStrBuilder.Remove(sumStrBuilder.Length - 1, 1);
 
-
-
-            //foreach (var kvp in daysSpecification.IncludingDays)
-            //{
-            //    var month = int.Parse(kvp.Key);
-
-            //    //foreach (var VARIABLE in sumStr)
-            //    //{
-
-            //    //}
-
-            //    var day = int.Parse(kvp.Value);
-            //    var currentDay = new DateTime(year, month, day);
-
-            //    sumStr += currentDay.DayOfWeek;
-            //}
-
-
-
-
-            //var year = DateTime.Now.Year;
-            //var month = 2;
-            //var startDay = new DateTime(year, month, 1);
-            //var endDay = startDay.AddMonths(1);
-            //for (var date = startDay; date != endDay; date = date.AddDays(1))
-            //{
-
-            //    Console.WriteLine($"Number: {date.Day}, day of week: {date.DayOfWeek}   ");
-            //}
-
-
-
-            return sumStr;
+            return sumStrBuilder.ToString();
         }
-
 
 
 
@@ -319,19 +345,248 @@ namespace WCFCis2AvtodictorContract.PostProcessing
         /// </summary>
         private string EvenHandler(DaysSpecification daysSpecification)
         {
-            //все четные дни года
-            if (!daysSpecification.ExcludingDays.Any())
+            if ((daysSpecification.ExcludingDays) == null || !(daysSpecification.ExcludingDays.Any()))
             {
                 return "Режим работы: По четным дням";
             }
 
 
-            //Пробегаем по всем месяцам календаря выбираем четные дни, если номера дня нету в списке ExcludingDays
-            //для этого месяца и формируем строку для каждого месяца "{Название_месяца}: " + Номер дня + ","
-            
+            StringBuilder sumStrBuilder = new StringBuilder("Режим работы: Выборочные дни: ");
 
-            // Режим работы: Выборочные дни: Январь: 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,Февраль: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,Август: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,Сентябрь: 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,Октябрь: 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,Ноябрь: 2,4,6,8,10,13,14,16,18,20,22,24,26,28,30,Декабрь: 4,11,18,25
+            var year = DateTime.Now.Year;
+            var month = 1;
+            var startDay = new DateTime(year, month, 2);
+            var endDay = startDay.AddMonths(12).AddDays(-1);
 
+            int currentMonth = 0;
+            for (var date = startDay; date != endDay; date = date.AddDays(1))
+            {
+                if ((date.Day % 2) != 0)
+                {
+                    continue;
+                }
+
+
+                if (date.Month != currentMonth)
+                {
+                    currentMonth = date.Month;
+                    sumStrBuilder.Append(MathingNameMonth[(byte)currentMonth]).Append(":");
+                }
+
+                if (daysSpecification.ExcludingDays.ContainsKey((byte)currentMonth))
+                    if (daysSpecification.ExcludingDays[(byte)currentMonth].Contains((byte)date.Day))
+                    {
+                        continue;
+                    }
+
+                sumStrBuilder.Append(date.Day).Append(",");
+            }
+
+            sumStrBuilder.Remove(sumStrBuilder.Length - 1, 1);
+
+            return sumStrBuilder.ToString();
+        }
+
+
+
+
+        /// <summary>
+        /// Обработчик НЕчетных дней
+        /// </summary>
+        private string OddHandler(DaysSpecification daysSpecification)
+        {
+            if ((daysSpecification.ExcludingDays) == null || !(daysSpecification.ExcludingDays.Any()))
+            {
+                return "Режим работы: По нечетным дням";
+            }
+
+
+            StringBuilder sumStrBuilder = new StringBuilder("Режим работы: Выборочные дни: ");
+
+            var year = DateTime.Now.Year;
+            var month = 1;
+            var startDay = new DateTime(year, month, 1);
+            var endDay = startDay.AddMonths(12);
+
+            int currentMonth = 0;
+            for (var date = startDay; date != endDay; date = date.AddDays(1))
+            {
+                if ((date.Day % 2) == 0)
+                {
+                    continue;
+                }
+
+                if (date.Month != currentMonth)
+                {
+                    currentMonth = date.Month;
+                    sumStrBuilder.Append(MathingNameMonth[(byte)currentMonth]).Append(":");
+                }
+
+                if (daysSpecification.ExcludingDays.ContainsKey((byte)currentMonth))
+                    if (daysSpecification.ExcludingDays[(byte)currentMonth].Contains((byte)date.Day))
+                    {
+                        continue;
+                    }
+
+                sumStrBuilder.Append(date.Day).Append(",");
+            }
+
+            sumStrBuilder.Remove(sumStrBuilder.Length - 1, 1);
+
+            return sumStrBuilder.ToString();
+        }
+
+
+
+
+        /// <summary>
+        /// Обработчик всех дней.
+        /// В секции "исключая" находятся дни которые нужно исключить.
+        /// </summary>
+        private string EveryDayHandler(DaysSpecification daysSpecification)
+        {
+            if ((daysSpecification.ExcludingDays) == null || !(daysSpecification.ExcludingDays.Any()))
+            {
+                return "Режим работы: Ежедневно";
+            }
+
+            StringBuilder sumStrBuilder = new StringBuilder("Режим работы: Выборочные дни: ");
+
+            var year = DateTime.Now.Year;
+            var month = 1;
+            var startDay = new DateTime(year, month, 1);
+            var endDay = startDay.AddMonths(12);
+
+            int currentMonth= 0;
+            for (var date = startDay; date != endDay; date = date.AddDays(1))
+            {
+                if (date.Month != currentMonth)
+                {
+                    currentMonth = date.Month;
+                    sumStrBuilder.Append(MathingNameMonth[(byte)currentMonth]).Append(":");
+                }
+
+                if(daysSpecification.ExcludingDays.ContainsKey((byte)currentMonth))
+                if (daysSpecification.ExcludingDays[(byte) currentMonth].Contains((byte) date.Day))
+                {
+                   continue;
+                }
+
+                sumStrBuilder.Append(date.Day).Append(",");
+            }
+
+            sumStrBuilder.Remove(sumStrBuilder.Length - 1, 1);
+
+            return sumStrBuilder.ToString();
+        }
+
+
+
+        /// <summary>
+        /// Обработчик выходных дней.
+        /// В секции "включая" находятся дни которые нужно включить к вых. дням.
+        /// </summary>
+        private string WeekendHandler(DaysSpecification daysSpecification)
+        {
+            if ((daysSpecification.IncludingDays) == null || !(daysSpecification.IncludingDays.Any()))
+            {
+                return "Режим работы: По дням недели: Суббота,Воскресенье";
+            }
+
+            StringBuilder sumStrBuilder = new StringBuilder("Режим работы: Выборочные дни: ");
+
+            var year = DateTime.Now.Year;
+            var month = 1;
+            var startDay = new DateTime(year, month, 1);
+            var endDay = startDay.AddMonths(12);
+
+            int currentMonth = 0;
+            for (var date = startDay; date != endDay; date = date.AddDays(1))
+            {
+                if ((date.DayOfWeek == DayOfWeek.Saturday) || (date.DayOfWeek == DayOfWeek.Sunday))
+                {
+                    if (date.Month != currentMonth)
+                    {
+                        currentMonth = date.Month;
+                        sumStrBuilder.Append(MathingNameMonth[(byte) currentMonth]).Append(":");
+                    }
+
+                    sumStrBuilder.Append(date.Day).Append(",");
+                }
+                else
+                {
+                    if (daysSpecification.IncludingDays.ContainsKey((byte)currentMonth))
+                        if (daysSpecification.IncludingDays[(byte)currentMonth].Contains((byte)date.Day))
+                        {
+                            sumStrBuilder.Append(date.Day).Append(",");
+                        }
+                }
+            }
+
+            sumStrBuilder.Remove(sumStrBuilder.Length - 1, 1);
+
+            return sumStrBuilder.ToString();
+        }
+
+
+
+        /// <summary>
+        /// Обработчик рабочих дней.
+        /// В секции "исключая" находятся дни которые нужно исключить из раб. дней.
+        /// </summary>
+        private string WeekdaysHandler(DaysSpecification daysSpecification)
+        {
+            if (!daysSpecification.ExcludingDays.Any())
+            {
+                return "Режим работы: По дням недели: Понедельник,Вторник,Среда,Четверг,Пятница";
+            }
+
+            StringBuilder sumStrBuilder = new StringBuilder("Режим работы: Выборочные дни: ");
+
+            var year = DateTime.Now.Year;
+            var month = 1;
+            var startDay = new DateTime(year, month, 1);
+            var endDay = startDay.AddMonths(12);
+
+            int currentMonth = 0;
+            for (var date = startDay; date != endDay; date = date.AddDays(1))
+            {
+                if ((date.DayOfWeek == DayOfWeek.Saturday) || (date.DayOfWeek == DayOfWeek.Sunday))
+                {
+                    continue;
+                }
+
+                if (date.Month != currentMonth)
+                {
+                    currentMonth = date.Month;
+                    sumStrBuilder.Append(MathingNameMonth[(byte)currentMonth]).Append(":");
+                }
+
+                if (daysSpecification.ExcludingDays.ContainsKey((byte)currentMonth))
+                    if (daysSpecification.ExcludingDays[(byte)currentMonth].Contains((byte)date.Day))
+                    {
+                        continue;
+                    }
+
+                sumStrBuilder.Append(date.Day).Append(",");
+            }
+
+            sumStrBuilder.Remove(sumStrBuilder.Length - 1, 1);
+
+            return sumStrBuilder.ToString();
+        }
+
+
+
+        /// <summary>
+        /// Обработчик произвольных дней недели
+        /// </summary>
+        private string DayOfWeekHandler(DaysSpecification daysSpecification)
+        {
+            if (!daysSpecification.ExcludingDays.Any())
+            {
+                return "!!!!";
+            }
 
             return "  ";
         }

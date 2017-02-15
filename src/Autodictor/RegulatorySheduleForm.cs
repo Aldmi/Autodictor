@@ -56,20 +56,6 @@ namespace MainExample
 
         private async void FillListView(IEnumerable<RegulatoryScheduleData> regSh)
         {
-            //Преобразовали ДниСледования
-            //if (CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any())
-            //{
-            //    var converter = new DaysFollowingConverter(CisClient.RegulatoryScheduleDatas.Select(r => r.DaysFollowing));
-            //    var newDaysFolowing = await converter.Convert();
-            //    if (newDaysFolowing != null && newDaysFolowing.Count == CisClient.RegulatoryScheduleDatas.Count)
-            //    {
-            //        for (int i = 0; i < newDaysFolowing.Count; i++)
-            //        {
-            //            CisClient.RegulatoryScheduleDatas[i].DaysFollowingConverted = newDaysFolowing[i];
-            //        }
-            //    }
-            //}
-
             var row = regSh.Select(str => new[]
             {
                 str.NumberOfTrain.ToString(),

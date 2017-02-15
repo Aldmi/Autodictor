@@ -117,7 +117,16 @@ namespace CommunicationDevices.Behavior.PcBehavior
         {
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
 
-            WSHttpBinding binding = new WSHttpBinding(SecurityMode.None)
+
+            //HttpBindingBase binding = new BasicHttpBinding
+            //{
+            //    OpenTimeout = new TimeSpan(0, 0, 8),
+            //    CloseTimeout = new TimeSpan(0, 0, 8),
+            //    SendTimeout = new TimeSpan(0, 0, 9)
+            //}; ;
+
+
+            WSHttpBinding binding = new WSHttpBinding(SecurityMode.None, true)
             {
                 OpenTimeout = new TimeSpan(0, 0, 8),
                 CloseTimeout = new TimeSpan(0, 0, 8),
