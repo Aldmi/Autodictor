@@ -2,7 +2,7 @@
 <Root>
   <CisSetting>
     <Name>Рижский</Name>
-    <EndpointAddress>http://192.168.1.40:50000/Service/Cis</EndpointAddress>
+    <EndpointAddress>http://127.0.0.1:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 
   <LogSetting>
@@ -41,10 +41,13 @@
 	 
 	 <DeviceSp Id="16" Name="VidorTable8" Port="2" Address="45" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:2,4,6,8,10,12,14"/>
 	 <DeviceSp Id="17" Name="VidorTable8" Port="2" Address="46" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:2,4,6,8,10,12,14"/>
+	 
+	 
+	 <DeviceSp Id="18" Name="VidorTableMin2" Port="2" Address="99" TimeRespone="1000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:1,2"/>
   </DevicesWithSP>
 
   <DevicesWithPC>
-	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1"/>
+	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:2"/>
   </DevicesWithPC>
 </Root>
 

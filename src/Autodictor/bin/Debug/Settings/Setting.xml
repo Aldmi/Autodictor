@@ -22,25 +22,8 @@
     </Serial>
   </SerialPorts>
 
-  <DevicesWithSP>
-	 <DeviceSp Id="1" Name="DispSys" Port="2" Address="5" TimeRespone="1000" Description="Панель Дисплейные системы, указатель дальн. след. на пути 5 (2 табло)." Binding="ToPath:5"/>
-	 <DeviceSp Id="3" Name="DispSys" Port="2" Address="8" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 8." Binding="ToPath:8"/>
-	 <DeviceSp Id="4" Name="DispSys" Port="2" Address="6" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 6." Binding="ToPath:6"/>
-	 <DeviceSp Id="5" Name="DispSys" Port="2" Address="4" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 4." Binding="ToPath:4"/>
-	 <DeviceSp Id="6" Name="DispSys" Port="2" Address="2" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 2." Binding="ToPath:2"/>
-	 <DeviceSp Id="7" Name="DispSys" Port="2" Address="10" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 10." Binding="ToPath:10"/>
-	 <DeviceSp Id="8" Name="DispSys" Port="2" Address="102" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 12." Binding="ToPath:12"/>
-	 <DeviceSp Id="9" Name="DispSys" Port="2" Address="104" TimeRespone="1000" Description="Панель Дисплейные системы, указатель пригород на пути 14." Binding="ToPath:14"/>
-	 <DeviceSp Id="10" Name="DispSys" Port="2" Address="3" TimeRespone="1000" Description="Панель Дисплейные системы, указатель дальн. след. на пути 3 (2 табло)." Binding="ToPath:3"/>
-	 
-	 <DeviceSp Id="11" Name="Vidor" Port="2" Address="1" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 1." Binding="ToPath:1"/>
-	 <DeviceSp Id="12" Name="Vidor" Port="2" Address="7" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 7." Binding="ToPath:7"/>
-	 <DeviceSp Id="13" Name="Vidor" Port="2" Address="17" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 7." Binding="ToPath:7"/>
-	 <DeviceSp Id="14" Name="Vidor" Port="2" Address="9" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 9." Binding="ToPath:9"/>
-	 <DeviceSp Id="15" Name="Vidor" Port="2" Address="19" TimeRespone="1000" Description="Панель Видор, указатель дальн. след. на пути 9." Binding="ToPath:9"/>
-	 
-	 <DeviceSp Id="16" Name="VidorTable8" Port="2" Address="45" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:2,4,6,8,10,12,14"/>
-	 <DeviceSp Id="17" Name="VidorTable8" Port="2" Address="46" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:2,4,6,8,10,12,14"/>
+  <DevicesWithSP>	 
+	 <DeviceSp Id="18" Name="VidorTableMin2" Port="2" Address="99" TimeRespone="1000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4"/>
   </DevicesWithSP>
 
   <DevicesWithPC>

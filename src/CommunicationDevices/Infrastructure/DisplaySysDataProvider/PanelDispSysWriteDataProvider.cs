@@ -115,27 +115,28 @@ namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
                     // 031 - Y1
                     // аттриб = 4 (бег.стр.)
                     //format4 = "%000771460314";
-                    format4 = "%0000011460314";                                //!!!
+                    format4 = "%000011460314";                                //!!!
                     message4 = $"%10$18$00$60$t3{stations}";
                     result4 = format4 + message4;
 
-                    // %01 - задание формата вывода примечания
-                    // 001 - Х1
-                    // 192 - X2
-                    // 046 - Y1
-                    // аттриб = 4 (бег.стр.)
-                    format5 = "%000011920464";                                 //!!!
-                    //format5 = "%000011460464";
-                    message5 = $"%10$18$00$60$t3{note}";
-                    result5 = format5 + message5;
 
                     // %01 - задание формата вывода времени
                     // 152 - Х1
                     // 192 - X2
                     // 046 - Y1
                     // аттриб = 4 (бег.стр.)
-                    format6 = "%001521920314";
-                    message6 = $"%10$18$00$60$t3{time}";
+                    format5 = "%001521920314";
+                    message5 = $"%10$18$00$60$t3{time}";
+                    result5 = format5 + message5;
+
+
+                    // %01 - задание формата вывода примечания
+                    // 001 - Х1
+                    // 192 - X2
+                    // 046 - Y1
+                    // аттриб = 4 (бег.стр.)
+                    format6 = "%000011920464";                                 //!!!
+                    message6 = $"%10$18$00$60$t3{note}";
                     result6 = format6 + message6;
 
                     result7 = String.Empty;

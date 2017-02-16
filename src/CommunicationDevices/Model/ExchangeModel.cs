@@ -233,6 +233,28 @@ namespace CommunicationDevices.Model
                         Devices.Last().AddCycleFunc();
                         break;
 
+
+                    case "VidorTableMin2":
+                        maxCountFaildRespowne = 3;
+                        behavior = new VidorTableMinExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 2);
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
+
+                        //создание поведения привязка табло к пути.
+                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
+                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+
+                        //создание поведения привязка табло к главному расписанию
+                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                            ;
+
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
+                            ;
+
+                        //добавим все функции циклического опроса
+                        Devices.Last().AddCycleFunc();
+                        break;
+
                     default:
                         ErrorString = $" Устройсвто с именем {xmlDeviceSp.Name} не найденно";
                         Log.log.Error(ErrorString);
