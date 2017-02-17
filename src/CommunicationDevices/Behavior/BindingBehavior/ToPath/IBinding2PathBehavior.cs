@@ -13,6 +13,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
         void InitializeDevicePathInfo();
 
-        void SendMessage4Path(UniversalInputType inData, byte pathNumber);
+        void SendMessage4Path(UniversalInputType inData, string numberOfTrain);
     }
 }

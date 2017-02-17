@@ -48,7 +48,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public void SendMessage4Path(UniversalInputType inData, byte pathNumber)
+        public void SendMessage4Path(UniversalInputType inData, string numberOfTrain)
         {
             //привязка на несколько путей
             if (!CollectionPathNumber.Any() || CollectionPathNumber.Count() > 1)
@@ -59,7 +59,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 }
                 else                                                         //УДАЛИТЬ ИЗ ТАБЛ.
                 {
-                    var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == pathNumber.ToString());
+                    var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
                     if (removeItem != null)
                     {
                         _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);

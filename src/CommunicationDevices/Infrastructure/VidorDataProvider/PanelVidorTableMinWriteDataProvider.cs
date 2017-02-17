@@ -49,84 +49,96 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
         public byte[] GetDataByte()
         {
             try
-            {
+            {   // первые 2-е строки
                 //STX                
-                //2D - аддр. 45
+                //01 - аддр. 01
                 //85
-                //%000020470224 - 3 координты, Х1 = 002,  X2 = 047, Y = 022, формат = 4(горизонт.перемещ)
-                //%10$00$60$t3$12Э / П - текст, $00$60$t3$12Э / П, -код.табл по умолч, не мигать, по центру.  (Э / П)
-                //%000481650224 - 3 координты, Х1 = 048,  X2 = 165, Y = 022, формат = 4(горизонт.перемещ)
-                //%10$00$60$t3$12ПОДСОЛНЕЧНАЯ - текст, $00$60$t3$12Э / П, -код.табл по умолч, не мигать, по центру.  (ПОДСОЛНЕЧНАЯ)
-                //%001712070224 - 3 координты, Х1 = 171,  X2 = 207, Y = 022, формат = 4(горизонт.перемещ)
-                //%10$00$60$t3$1216:27 - текст, $00$60$t3$12Э / П, -код.табл по умолч, не мигать, по центру.  (16:27)
-                //%002312520224 - 3 координты, Х1 = 231,  X2 = 252, Y = 022, формат = 4(горизонт.перемещ)
-                //%10$00$60$t3$124 - текст, $00$60$t3$124, -код.табл по умолч, не мигать, по центру.           (4)
-                //A1               -  СRC
-                //ETX    
+                //%000011030114                          - 3 координты, Х1 = 001,  X2 = 103, Y = 011, формат = 4(горизонт.перемещ)
+                //%10$12$00$60$t3НАХАБИНО                - текст, $00$60$t3$123, -код.табл по умолч, не мигать, по центру.  (НАХАБИНО)
 
+                //%001051440114                          - 3 координты, Х1 = 105,  X2 = 144, Y = 011, формат = 4(горизонт.перемещ)
+                //%10$12$00$60$t317:40                   - текст, $00$60$t3$1217:40, -код.табл по умолч, не мигать, по центру.  (17:40)
+
+                //%001471760114                          - 3 координты, Х1 = 147,  X2 = 176, Y = 011, формат = 4(горизонт.перемещ)
+                //%10$12$00$60$t3Путь                    - текст, $00$60$t3$1216:50, -код.табл по умолч, не мигать, по центру.
+
+                //%001811900114                          - 3 координты, Х1 = 181,  X2 = 190, Y = 011, формат = 4(горизонт.перемещ)
+                //%10$12$00$60$t33                       - текст, $00$60$t3$123, -код.табл по умолч, не мигать, по центру.  (3)
+
+                //%000011920234                          - 3 координты, Х1 = 001,  X2 = 192, Y = 023, формат = 4(горизонт.перемещ)
+                //%10$12$00$60$t3со всеми остановками    - текст, $12$00$60$t3со всеми остановками, -код.табл по умолч, не мигать, по центру.  (Э / П)
+                //A1                                     -  СRC
+                //ETX    
 
                 byte address = byte.Parse(InputData.AddressDevice);
 
-                string numberOfTrain = string.IsNullOrEmpty(InputData.NumberOfTrain) ? " " : InputData.NumberOfTrain;
                 string numberOfPath = string.IsNullOrEmpty(InputData.PathNumber) ? " " : InputData.PathNumber;
                 string stations = string.IsNullOrEmpty(InputData.Stations) ? " " : InputData.Stations;
                 string time = (InputData.Time == DateTime.MinValue) ? " " : InputData.Time.ToShortTimeString();
-                string rowNumber = (11 * CurrentRow).ToString("D3");
+                string followingStation = string.IsNullOrEmpty(InputData.Note) ? " " : InputData.Note;
 
 
-                string result1, result2, result3, result4;
-                if (CurrentRow == 0xFF)
+                //первая надпись занмиает 2-е строки
+                string y1Str = "011";   //Y1
+                string y2Str = "023";   //Y2
+                if (CurrentRow > 1)
                 {
-                    // %30 - синхр часов
-                    // [3..8] - 5байт (hex) время в сек.   
-                    var timeNow = DateTime.Now.Hour.ToString("D2") + DateTime.Now.Minute.ToString("D2") + DateTime.Now.Second.ToString("D2");
-                    string format1 = "%30";
-                    string message1 = $"{timeNow}";
-                    result1 = format1 + message1;
-                    result2 = result3 = result4 = string.Empty;
+                    y1Str = y1Str + (24 * (CurrentRow - 1));
+                    y2Str = y2Str + (24 * (CurrentRow - 1));
                 }
-                else
-                {
-                    // %00 - задание формата вывода НАЗВАНИЯ ПОЕЗДА
-                    // 001 - Х1
-                    // 047 - X2
-                    // вычисляется - Y
-                    // аттриб = 4 (бег.стр.)
-                    string format1 = $"%00002047{rowNumber}4";
-                    string message1 = $"%10$00$60$t3$12{numberOfTrain}";
-                    result1 = format1 + message1;
 
-                    // %01 - задание формата вывода СТАНЦИИ
-                    // 048 - Х1
-                    // 165 - X2
-                    // вычисляется - Y
-                    // аттриб = 4 (бег.стр.)
-                    string format2 = $"%00048165{rowNumber}4";
-                    string message2 = $"%10$00$60$t3$12{stations}";
-                    result2 = format2 + message2;
 
-                    // %01 - задание формата вывода ВРЕМЕНИ
-                    // 171 - Х1
-                    // 207 - X2
-                    // вычисляется - Y
-                    // аттриб = 4 (бег.стр.)
-                    string format3 = $"%00171207{rowNumber}4";
-                    string message3 = $"%10$00$60$t3$12{time}";
-                    result3 = format3 + message3;
+                string result1, result2, result3, result4, result5;
 
-                    // %01 - задание формата вывода ПУТИ
-                    // 231 - Х1
-                    // 252 - X2
-                    // вычисляется - Y
-                    // аттриб = 4 (бег.стр.)
-                    string format4 = $"%00231252{rowNumber}4";
-                    string message4 = $"%10$00$60$t3$12{numberOfPath}";
-                    result4 = format4 + message4;
-                }
+                // %00 - задание формата вывода СТАНЦИИ (Отпр или Назн)
+                // 001 - Х1
+                // 103 - X2
+                // вычисляется - Y
+                // аттриб = 4 (бег.стр.)
+                string format1 = $"%00001103{y1Str}4";
+                string message1 = $"%10$12$00$60$t3{stations}";
+                result1 = format1 + message1;
+
+                // %01 - задание формата вывода ВРЕМЕНИ
+                // 105 - Х1
+                // 144 - X2
+                // вычисляется - Y
+                // аттриб = 4 (бег.стр.)
+                string format2 = $"%00105144{y1Str}4";
+                string message2 = $"10$12$00$60$t3{time}";
+                result2 = format2 + message2;
+
+                // %01 - задание формата вывода слова ПУТЬ
+                // 147 - Х1
+                // 176 - X2
+                // вычисляется - Y
+                // аттриб = 4 (бег.стр.)
+                string format3 = $"%00147176{y1Str}4";
+                string message3 = "%10$12$00$60$t3Путь";
+                result3 = format3 + message3;
+
+                // %01 - задание формата вывода номера пути
+                // 181 - Х1
+                // 190 - X2
+                // вычисляется - Y
+                // аттриб = 4 (бег.стр.)
+                string format4 = $"%00181190{y1Str}4";
+                string message4 = $"%10$12$00$60$t3{numberOfPath}";
+                result4 = format4 + message4;
+
+                // %01 - задание формата вывода станций следования
+                // 001 - Х1
+                // 192 - X2
+                // вычисляется - Y
+                // аттриб = 4 (бег.стр.)
+                string format5 = $"%00001192{y2Str}4";
+                string message5 = $"%10$12$00$60$t3{followingStation}";
+                result5 = format5 + message5;
+
 
 
                 //формируем КОНЕЧНУЮ строку
-                var sumResult = result1 + result2 + result3 + result4;
+                var sumResult = result1 + result2 + result3 + result4 + result5;
 
                 //Обрежем конец строки если ее длинна превышает допустимые 254 символа.
                 byte maxLenght = 0xFE;
@@ -174,9 +186,21 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 return false;
             }
 
+            if (data[0] == 0x02 &&
+                data[1] == 0x30 &&
+                data[2] == 0x32 &&
+                data[3] == 0x30 &&
+                data[4] == 0x30 &&
+                data[5] == 0x46 &&
+                data[6] == 0x44 &&
+                data[7] == 0x03)
+            {
+                IsOutDataValid = true;
+                return true;
+            }
 
-            IsOutDataValid = true;
-            return true;
+            IsOutDataValid = false;
+            return false;
         }
 
 

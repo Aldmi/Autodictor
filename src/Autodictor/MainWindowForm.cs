@@ -1411,7 +1411,7 @@ namespace MainExample
                     
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
-                    beh.SendMessage4Path(inData, Program.ПолучитьНомерПути(data.НомерПути));
+                    beh.SendMessage4Path(inData, data.НомерПоезда);
                     Debug.WriteLine($" ТАБЛО= {beh.GetDeviceName}: {beh.GetDeviceId} для ПУТИ {data.НомерПути}.  Сообшение= {inData.Message}  ");
                 }
             }

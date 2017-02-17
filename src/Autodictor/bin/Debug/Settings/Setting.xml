@@ -23,7 +23,7 @@
   </SerialPorts>
 
   <DevicesWithSP>	 
-	 <DeviceSp Id="18" Name="VidorTableMin2" Port="2" Address="99" TimeRespone="1000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4"/>
+	 <DeviceSp Id="18" Name="VidorTableMin2" Port="2" Address="99" TimeRespone="3000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4"/>
   </DevicesWithSP>
 
   <DevicesWithPC>
