@@ -42,6 +42,10 @@
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.1.0\lib\net35\MoreLinq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.3.11\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
@@ -92,6 +96,7 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
+    <Compile Include="Behavior\PcBehavior\ExhangePcArivDepartBehavior.cs" />
     <Compile Include="Behavior\PcBehavior\ExhangePcBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\VidorTableMinExchangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\VidorTableExchangeBehavior.cs" />

@@ -103,7 +103,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.BindingBehaviors)
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors)
                 {
                     MdiParent = this
                 };

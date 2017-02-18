@@ -50,6 +50,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
         public void SendMessage4Path(UniversalInputType inData, string numberOfTrain)
         {
+            //inData.Stations = inData.Stations.Trim(new Char[] { '-', ' ' });   //убран знак тире и пробел в названии станции
+
             //привязка на несколько путей
             if (!CollectionPathNumber.Any() || CollectionPathNumber.Count() > 1)
             {
@@ -57,7 +59,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 {
                     _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);  // Изменили данные для циклического опроса
                 }
-                else                                                         //УДАЛИТЬ ИЗ ТАБЛ.
+                else                                                        //УДАЛИТЬ ИЗ ТАБЛ.
                 {
                     var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
                     if (removeItem != null)
@@ -65,7 +67,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                         _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
                     }
                 }
-            }
+            }                
             else
             {
                 //привязка на указанные пути

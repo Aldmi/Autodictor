@@ -44,7 +44,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
         private ChannelFactory<IPcTableContract> ChannelFactory { get; set; }
         private IPcTableContract Proxy { get; set; }
 
-        public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
+       // public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }
 
         public int NumberPort => ChannelFactory.Endpoint.Address.Uri.Port;
@@ -115,23 +115,23 @@ namespace CommunicationDevices.Behavior.PcBehavior
 
         public ExhangePcBehavior(string connectionString, byte maxCountFaildRespowne)
         {
-            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
+           // Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
 
 
-            //HttpBindingBase binding = new BasicHttpBinding
-            //{
-            //    OpenTimeout = new TimeSpan(0, 0, 8),
-            //    CloseTimeout = new TimeSpan(0, 0, 8),
-            //    SendTimeout = new TimeSpan(0, 0, 9)
-            //}; ;
-
-
-            WSHttpBinding binding = new WSHttpBinding(SecurityMode.None, true)
+            HttpBindingBase binding = new BasicHttpBinding
             {
                 OpenTimeout = new TimeSpan(0, 0, 8),
                 CloseTimeout = new TimeSpan(0, 0, 8),
                 SendTimeout = new TimeSpan(0, 0, 9)
             };
+
+
+            //WSHttpBinding binding = new WSHttpBinding(SecurityMode.None, true)
+            //{
+            //    OpenTimeout = new TimeSpan(0, 0, 8),
+            //    CloseTimeout = new TimeSpan(0, 0, 8),
+            //    SendTimeout = new TimeSpan(0, 0, 9)
+            //};
 
 
             var endpointAddress = new EndpointAddress(connectionString);
@@ -218,7 +218,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
         }
 
 
-        private async Task<bool> SendDisplayData(UniversalDisplayType displayType)
+        protected virtual async Task<bool> SendDisplayData(UniversalDisplayType displayType)
         {
             try
             {

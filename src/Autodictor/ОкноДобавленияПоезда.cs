@@ -527,7 +527,7 @@ namespace MainExample
 
                             Record.ID = ID++;
                             byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
-                            Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
+                            Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
                             Record.СостояниеОтображения = TableRecordStatus.Выключена;
 
                             if ((НомерСписка & 0x04) != 0x00)

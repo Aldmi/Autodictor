@@ -533,6 +533,7 @@ D:\Git\Autodictor\src\Autodictor\bin\Release\Communication.dll
 D:\Git\Autodictor\src\Autodictor\bin\Release\AutoMapper.dll
 D:\Git\Autodictor\src\Autodictor\bin\Release\WCFAvtodictor2PcTableContract.dll
 D:\Git\Autodictor\src\Autodictor\bin\Release\Castle.Core.dll
+D:\Git\Autodictor\src\Autodictor\bin\Release\MoreLinq.dll
 D:\Git\Autodictor\src\Autodictor\bin\Release\Microsoft.DirectX.Direct3D.dll
 D:\Git\Autodictor\src\Autodictor\bin\Release\CommunicationDevices.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Release\Library.pdb
@@ -550,6 +551,7 @@ D:\Git\Autodictor\src\Autodictor\bin\Release\Communication.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Release\AutoMapper.xml
 D:\Git\Autodictor\src\Autodictor\bin\Release\WCFAvtodictor2PcTableContract.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Release\Castle.Core.xml
+D:\Git\Autodictor\src\Autodictor\bin\Release\MoreLinq.xml
 D:\Git\Autodictor\src\Autodictor\bin\Release\Microsoft.DirectX.Direct3D.xml
 D:\Git\Autodictor\src\Autodictor\obj\Release\Autodictor.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.AboutForm.resources

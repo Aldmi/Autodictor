@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Infrastructure.VidorDataProvider;
+using MoreLinq;
 
 
 namespace CommunicationDevices.Behavior.SerialPortBehavior
@@ -35,8 +37,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         {
             _countRow = countRow;
             //добавляем циклические функции
-            Data4CycleFunc= new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> {new UniversalInputType {TableData = new List<UniversalInputType>()} }) ;  //данные для 1-ой циклической функции
-            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> {CycleExcangeService};                      // 1 циклическая функция
+            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
+            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> { CycleExcangeService };                      // 1 циклическая функция
         }
 
         #endregion
@@ -48,46 +50,34 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
-          var inData = Data4CycleFunc[0];
+            var inData = Data4CycleFunc[0];
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                //TODO: TableData содержит всю информацию про поезда выставленные на привязанные к устройству пути.
+                //TableData содержит всю информацию про поезда выставленные на привязанные к устройству пути.
                 // т.е. больше _countRow записей. Нужно выводить _countRow ближайших по времени к текущему времени записей.
                 // если выбранных записей меньше _countRow, то выводить _countRow и  очищать остальные строки.
 
-                //DEBUG----------------------------------------
-                //фильтрация по времени
-                //TODO: Филтровать по юлтжайшему времени к текушему времени
-                //var filtredInData= inData.TableData.OrderByDescending(t => t.Time).Take(_countRow).ToList();
-                ////DEBUG---------------------------------
-                //Debug.WriteLine($"filtredInData.Count= {filtredInData.Count} ");
-                //foreach (var filtr in filtredInData)
-                //{
-                //    Debug.WriteLine($" filtr= {filtr.Time}  filtr= {filtr.PathNumber}");
-                //}
-                //DEBUG---------------------------------
+                //Исключаем прибывающие поезда
+                //фильтрация по ближайшему времени к текущему времени.
+                var excludingArrival = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
+                var filtredCollection = inData.TableData.Count > _countRow ? GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
 
-                //Ограничим кол-во строк в таблице.
-                if (inData.TableData.Count > _countRow)
-                {
-                    inData.TableData = inData.TableData.Take(_countRow).ToList();
-                }
-
-                //TODO: пердавать фильтрованные данные (inData.TableData будет хранить все записи привязанные на этот путь)
-                inData.TableData.ForEach(t=> t.AddressDevice= inData.AddressDevice);
+                filtredCollection.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    var writeTableProvider = (i < inData.TableData.Count) ?
-                        new PanelVidorTableMinWriteDataProvider { InputData = inData.TableData[i], CurrentRow = (byte) (i+1) } :                                           // Отрисовка строк
-                        new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType {AddressDevice = inData.AddressDevice}, CurrentRow = (byte)(i+1) };   // Обнуление строк
+                    var writeTableProvider = (i < filtredCollection.Count) ?
+                        new PanelVidorTableMinWriteDataProvider { InputData = filtredCollection[i], CurrentRow = (byte)(i + 1) } :                                           // Отрисовка строк
+                        new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
+
+                    await Task.Delay(500, ct);
                 }
             }
 
-            await Task.Delay(500, ct);  //задержка для задания периода опроса.    
+            await Task.Delay(10000, ct);  //задержка для задания периода опроса.    
         }
 
         #endregion
@@ -102,25 +92,61 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null; 
+            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                inData.TableData.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                //TableData содержит всю информацию про поезда выставленные на привязанные к устройству пути.
+                // т.е. больше _countRow записей. Нужно выводить _countRow ближайших по времени к текущему времени записей.
+                // если выбранных записей меньше _countRow, то выводить _countRow и  очищать остальные строки.
+
+                //Исключаем прибывающие поезда
+                //фильтрация по ближайшему времени к текущему времени.
+                var excludingArrival = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
+                var filtredCollection = inData.TableData.Count > _countRow ? GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
+
+                filtredCollection.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    var writeTableProvider = (i < inData.TableData.Count) ?
-                       new PanelVidorTableMinWriteDataProvider { InputData = inData.TableData[i], CurrentRow = (byte)(i + 1) } :                                              // Отрисовка строк
-                       new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
+                    var writeTableProvider = (i < filtredCollection.Count) ?
+                        new PanelVidorTableMinWriteDataProvider { InputData = filtredCollection[i], CurrentRow = (byte)(i + 1) } :                                           // Отрисовка строк
+                        new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
+
+                    await Task.Delay(300, ct);
                 }
             }
 
-            await Task.Delay(500, ct);  //задержка для задания периода опроса. 
+            await Task.Delay(10000, ct);  //задержка для задания периода опроса. 
         }
 
         #endregion
+
+
+
+
+        private List<UniversalInputType> GetFilteringByDateTimeTable(int outElement, IList<UniversalInputType> table)
+        {
+            if (outElement <= 0)
+                return null;
+
+            if (table.Count < outElement)
+                return null;
+
+
+            var filtredCollection = new List<UniversalInputType>();
+            var copyTableData = new List<UniversalInputType>(table);
+            var today = DateTime.Now;
+            for (int i = 0; i < outElement; i++)
+            {
+                var nearVal = copyTableData.MinBy(d => (d.Time - today).Duration());
+                filtredCollection.Add(nearVal);
+                copyTableData.RemoveAt(copyTableData.IndexOf(nearVal));
+            }
+
+            return filtredCollection;
+        }
     }
 }

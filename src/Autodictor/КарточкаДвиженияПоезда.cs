@@ -208,7 +208,7 @@ namespace MainExample
         {
             int НомерПути = cB_НомерПути.SelectedIndex;
             Record.НомерПути = cB_НомерПути.SelectedIndex == 0 ? "" : cB_НомерПути.Text;
-            Record.НазванияТабло = НомерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path((byte)НомерПути)).Where(str => str != null).ToArray() : null;
+            Record.НазванияТабло = НомерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)НомерПути)).Where(str => str != null).ToArray() : null;
             ОбновитьТекстВОкне();
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }

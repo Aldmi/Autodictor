@@ -104,7 +104,7 @@ namespace MainExample
         private int VisibleMode = 0;
 
         public CisClient CisClient { get; }
-        static public IEnumerable<IBinding2PathBehavior> BindingBehaviors { get; set; }
+        static public IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
         public int ProgressLoadMainList { get; set; }
 
@@ -121,7 +121,7 @@ namespace MainExample
 
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> bindingBehaviors)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors)
         {
             if (myMainForm != null)
                 return;
@@ -133,7 +133,9 @@ namespace MainExample
             tableLayoutPanel1.Visible = false;
 
             CisClient = cisClient;
-            BindingBehaviors = bindingBehaviors;
+
+            Binding2PathBehaviors = binding2PathBehaviors;
+
             MainForm.Воспроизвести.Click += new System.EventHandler(this.btnВоспроизвести_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
             MainForm.ОбновитьСписок.Click += new System.EventHandler(this.btnОбновитьСписок_Click);
@@ -244,8 +246,36 @@ namespace MainExample
             ОбновитьСостояниеЗаписейТаблицы();
 
             ОчиститьВсеТабло();
+            ИнициализироватьВсеТабло();
         }
 
+
+        private void ОчиститьВсеТабло()
+        {
+            foreach (var beh in Binding2PathBehaviors)
+            {
+                beh.InitializeDevicePathInfo();
+            }
+        }
+
+
+        private void ИнициализироватьВсеТабло()
+        {
+            foreach (var soundRecord in SoundRecords)
+            {
+                var номерПути= Program.ПолучитьНомерПути(soundRecord.Value.НомерПути);
+                var времяОтправления = soundRecord.Value.ВремяОтправления;
+                var времяПрибытия = soundRecord.Value.ВремяОтправления;
+                bool timeFlag = (времяОтправления >= DateTime.Now) || (времяПрибытия >= DateTime.Now);
+
+                if (номерПути > 0 && timeFlag)
+                {
+                    var value = soundRecord.Value;
+                    value.СостояниеОтображения= TableRecordStatus.Отображение;
+                    SendOnPathTable(value);
+                }
+            }
+        }
 
 
         // Формирование списка воспроизведения
@@ -369,7 +399,7 @@ namespace MainExample
 
                 Record.ID = ID++;
                 byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
-                Record.НазванияТабло = Record.НомерПути != "0" ? BindingBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
+                Record.НазванияТабло = Record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
                 Record.СостояниеОтображения = TableRecordStatus.Выключена;
 
                 if ((НомерСписка & 0x04) != 0x00)
@@ -1367,7 +1397,7 @@ namespace MainExample
             var devicesId = data.НазванияТабло.Select(s => new string(s.TakeWhile(c => c != ':').ToArray())).Select(int.Parse).ToList();
             foreach (var devId in devicesId)
             {
-                var beh = BindingBehaviors.FirstOrDefault(b => b.GetDeviceId == devId);
+                var beh = Binding2PathBehaviors.FirstOrDefault(b => b.GetDeviceId == devId);
                 if (beh != null)
                 {
                     string actStr = "   ";
@@ -1417,14 +1447,6 @@ namespace MainExample
             }
         }
 
-
-        private void ОчиститьВсеТабло()
-        {
-            foreach (var beh in BindingBehaviors)
-            {
-                beh.InitializeDevicePathInfo();
-            }
-        }
 
 
         private static string CreateActStr(SoundRecord Данные)
@@ -1991,7 +2013,7 @@ namespace MainExample
 
                                 Данные.ТипСообщения= SoundRecordType.ДвижениеПоезда;
                                 byte номерПути = Program.ПолучитьНомерПути(Данные.НомерПути);
-                                Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.BindingBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
+                                Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
 
                                 SoundRecords[КлючВыбранныйМеню] = Данные;
                                 return;

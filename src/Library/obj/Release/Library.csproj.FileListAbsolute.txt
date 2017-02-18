@@ -20,4 +20,3 @@ D:\Git\Autodictor\src\Library\bin\Release\NLog.dll
 D:\Git\Autodictor\src\Library\bin\Release\NLog.xml
 D:\Git\Autodictor\src\Library\obj\Release\Library.dll
 D:\Git\Autodictor\src\Library\obj\Release\Library.pdb
-D:\Git\Autodictor\src\Library\obj\Release\Library.csprojResolveAssemblyReference.cache

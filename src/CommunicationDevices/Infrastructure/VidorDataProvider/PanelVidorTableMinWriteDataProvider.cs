@@ -67,7 +67,7 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
 
                 //%000011920234                          - 3 координты, Х1 = 001,  X2 = 192, Y = 023, формат = 4(горизонт.перемещ)
                 //%10$12$00$60$t3со всеми остановками    - текст, $12$00$60$t3со всеми остановками, -код.табл по умолч, не мигать, по центру.  (Э / П)
-                //A1                                     -  СRC
+                //A1                                     - СRC
                 //ETX    
 
                 byte address = byte.Parse(InputData.AddressDevice);
@@ -83,8 +83,8 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 string y2Str = "023";   //Y2
                 if (CurrentRow > 1)
                 {
-                    y1Str = y1Str + (24 * (CurrentRow - 1));
-                    y2Str = y2Str + (24 * (CurrentRow - 1));
+                    y1Str = "035";//y1Str + (24 * (CurrentRow - 1));
+                    y2Str = "047"; //y2Str + (24 * (CurrentRow - 1));
                 }
 
 
@@ -105,7 +105,7 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 // вычисляется - Y
                 // аттриб = 4 (бег.стр.)
                 string format2 = $"%00105144{y1Str}4";
-                string message2 = $"10$12$00$60$t3{time}";
+                string message2 = $"%10$12$00$60$t3{time}";
                 result2 = format2 + message2;
 
                 // %01 - задание формата вывода слова ПУТЬ

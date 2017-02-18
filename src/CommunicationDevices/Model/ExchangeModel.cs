@@ -49,7 +49,7 @@ namespace CommunicationDevices.Model
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
         public List<Device> Devices { get; set; } = new List<Device>();
-        public ICollection<IBinding2PathBehavior> BindingBehaviors { get; set; } = new List<IBinding2PathBehavior>();
+        public ICollection<IBinding2PathBehavior> Binding2PathBehaviors { get; set; } = new List<IBinding2PathBehavior>();
 
         private string _errorString;
         public string ErrorString
@@ -169,7 +169,7 @@ namespace CommunicationDevices.Model
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
                         {
                             var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers);
-                            BindingBehaviors.Add(bindingBeh);
+                            Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                       //Вывод номера пути в пустом сообщении
                         }
 
@@ -178,7 +178,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
@@ -195,7 +195,7 @@ namespace CommunicationDevices.Model
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
                         {
                             var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers);
-                            BindingBehaviors.Add(bindingBeh);
+                            Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
 
@@ -204,7 +204,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
@@ -219,7 +219,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
@@ -241,7 +241,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
@@ -273,12 +273,12 @@ namespace CommunicationDevices.Model
                 {
                     case "PcTable":
                         maxCountFaildRespowne = 3;
-                        behavior = new ExhangePcBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
+                        behavior = new ExhangePcArivDepartBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
                         Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, xmlDevicePc.BindingType));
 
                         //создание поведения привязка табло к пути.
                         if (xmlDevicePc.BindingType == BindingType.ToPath)
-                            BindingBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDevicePc.BindingType == BindingType.ToGeneral)
