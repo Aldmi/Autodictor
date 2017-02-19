@@ -24,8 +24,6 @@
 
   <DevicesWithSP>
 	 <DeviceSp Id="20" Name="VidorTableMin2" Port="2" Address="1" TimeRespone="3000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4"/>
-	 
-	 <DeviceSp Id="17" Name="VidorTable8" Port="2" Address="46" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5"/>
   </DevicesWithSP>
 
   <DevicesWithPC>

@@ -34,8 +34,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         {
             _countRow = countRow;
             //добавляем циклические функции
-            Data4CycleFunc= new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> {new UniversalInputType {TableData = new List<UniversalInputType>()} }) ;  //данные для 1-ой циклической функции
-            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> {CycleExcangeService};                      // 1 циклическая функция
+            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
+            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> { CycleExcangeService };                      // 1 циклическая функция
         }
 
         #endregion
@@ -47,28 +47,34 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
-          var inData = Data4CycleFunc[0];
+            var inData = Data4CycleFunc[0];
+
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                //Ограничим кол-во строк в таблице.
-                if (inData.TableData.Count > _countRow)                                 
-                {
-                    inData.TableData = inData.TableData.Take(_countRow).ToList();
-                }
+                //фильтрация по ближайшему времени к текущему времени.
+                var filteredData = inData.TableData;   //.Where(d => d.Event != "ПРИБ.").ToList();
+                var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
 
-                inData.TableData.ForEach(t=> t.AddressDevice= inData.AddressDevice);
+                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    var writeTableProvider = (i < inData.TableData.Count) ? new PanelVidorTableWriteDataProvider { InputData = inData.TableData[i], CurrentRow = (byte) (i+1) } : new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType {AddressDevice = inData.AddressDevice}, CurrentRow = (byte)(i+1) };
+                    var writeTableProvider = (i < timeSampling.Count) ?
+                        new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                                  // Отрисовка строк
+                        new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
+
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
+
+                    await Task.Delay(500, ct);
                 }
 
                 //Запрос синхронизации времени
                 var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
                 DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
             }
+
+
 
             await Task.Delay(500, ct);  //задержка для задания периода опроса.    
         }
@@ -85,17 +91,31 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null; 
+            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
+
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
-            {
-                inData.TableData.ForEach(t => t.AddressDevice = inData.AddressDevice);
+            {        
+                var filteredData = inData.TableData;   //.Where(d => d.Event != "ПРИБ.").ToList();
+                 //фильтрация по ближайшему времени к текущему времени.
+                var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
+
+                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    var writeTableProvider = (i < inData.TableData.Count) ? new PanelVidorTableWriteDataProvider { InputData = inData.TableData[i], CurrentRow = (byte)(i + 1) } : new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };
+                    var writeTableProvider = (i < timeSampling.Count) ?
+                        new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                                  // Отрисовка строк
+                        new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
+
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
+
+                    await Task.Delay(500, ct);
                 }
+
+                //Запрос синхронизации времени
+                var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
+                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
             }
 
             await Task.Delay(500, ct);  //задержка для задания периода опроса. 

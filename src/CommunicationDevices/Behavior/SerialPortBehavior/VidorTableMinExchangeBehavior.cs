@@ -60,14 +60,14 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
                 //Исключаем прибывающие поезда
                 //фильтрация по ближайшему времени к текущему времени.
-                var excludingArrival = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
-                var filtredCollection = inData.TableData.Count > _countRow ? GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
+                var filteredData = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
+                var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
 
-                filtredCollection.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    var writeTableProvider = (i < filtredCollection.Count) ?
-                        new PanelVidorTableMinWriteDataProvider { InputData = filtredCollection[i], CurrentRow = (byte)(i + 1) } :                                           // Отрисовка строк
+                    var writeTableProvider = (i < timeSampling.Count) ?
+                        new PanelVidorTableMinWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                           // Отрисовка строк
                         new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
@@ -103,7 +103,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 //Исключаем прибывающие поезда
                 //фильтрация по ближайшему времени к текущему времени.
                 var excludingArrival = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
-                var filtredCollection = inData.TableData.Count > _countRow ? GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
+                var filtredCollection = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
 
                 filtredCollection.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
@@ -123,30 +123,5 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         }
 
         #endregion
-
-
-
-
-        private List<UniversalInputType> GetFilteringByDateTimeTable(int outElement, IList<UniversalInputType> table)
-        {
-            if (outElement <= 0)
-                return null;
-
-            if (table.Count < outElement)
-                return null;
-
-
-            var filtredCollection = new List<UniversalInputType>();
-            var copyTableData = new List<UniversalInputType>(table);
-            var today = DateTime.Now;
-            for (int i = 0; i < outElement; i++)
-            {
-                var nearVal = copyTableData.MinBy(d => (d.Time - today).Duration());
-                filtredCollection.Add(nearVal);
-                copyTableData.RemoveAt(copyTableData.IndexOf(nearVal));
-            }
-
-            return filtredCollection;
-        }
     }
 }

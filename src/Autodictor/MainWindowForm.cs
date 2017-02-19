@@ -84,7 +84,7 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
-      
+
         private bool РазрешениеРаботы = false;
 
         static public SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
@@ -261,25 +261,25 @@ namespace MainExample
 
         private void ИнициализироватьВсеТабло()
         {
-            foreach (var soundRecord in SoundRecords)
-            {
-                var номерПути= Program.ПолучитьНомерПути(soundRecord.Value.НомерПути);
-                var времяОтправления = soundRecord.Value.ВремяОтправления;
-                var времяПрибытия = soundRecord.Value.ВремяОтправления;
-                bool timeFlag = (времяОтправления >= DateTime.Now) || (времяПрибытия >= DateTime.Now);
-
-                if (номерПути > 0 && timeFlag)
+            for (var i = 0; i < SoundRecords.Count; i++)
+            {              
+                var данные = SoundRecords.ElementAt(i).Value;
+                var номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
+                if (номерПути > 0)
                 {
-                    var value = soundRecord.Value;
-                    value.СостояниеОтображения= TableRecordStatus.Отображение;
-                    SendOnPathTable(value);
+                    var key = SoundRecords.Keys.ElementAt(i);
+                    данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                    данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+                    SoundRecords[key] = данные;
+                    SendOnPathTable(SoundRecords[key]);
                 }
             }
         }
 
 
         // Формирование списка воспроизведения
-        public void ОбновитьСписокЗвуковыхСообщений(object sender, EventArgs e)
+        public
+        void ОбновитьСписокЗвуковыхСообщений(object sender, EventArgs e)
         {
             SoundRecords.Clear();
             SoundRecordsOld.Clear();
@@ -462,6 +462,13 @@ namespace MainExample
                             }
                         }
                     }
+                }
+
+
+                //СБРОСИТЬ НОМЕР ПУТИ, НА ВРЕМЯ БОЛЬШЕ ТЕКУЩЕГО
+                if (!(Record.Время >= DateTime.Now))
+                {
+                    Record.НомерПути = String.Empty;
                 }
 
 
@@ -1256,15 +1263,15 @@ namespace MainExample
                                         (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(10.02))))
                                     {
                                         if ((данные.БитыНештатныхСитуаций & 0x07) == 0x00)
-                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение)
-                                        {
-                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                            данные.НомерПути = "0";
+                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                            {
+                                                данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                                данные.НомерПути = "0";
 
-                                            var данныеОчистки = данные;
-                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                            SendOnPathTable(данныеОчистки);
-                                         }
+                                                var данныеОчистки = данные;
+                                                данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                                SendOnPathTable(данныеОчистки);
+                                            }
                                     }
                                 }
                                 else //ОТПРАВЛЕНИЕ
@@ -1279,7 +1286,7 @@ namespace MainExample
                                             {
                                                 данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                 данные.НомерПути = "0";
-                                                
+
                                                 var данныеОчистки = данные;
                                                 данныеОчистки.НомерПути = данныеOld.НомерПути;
                                                 SendOnPathTable(данныеОчистки);
@@ -1312,7 +1319,7 @@ namespace MainExample
                 ОпределитьКомпозициюДляЗапуска();
             }
 
-            
+
 
 
             ОбновитьСостояниеЗаписейТаблицы();
@@ -1417,7 +1424,7 @@ namespace MainExample
                     TypeTrain typeTrain;
                     if (data.ТипПоезда == ТипПоезда.НеОпределен)
                     {
-                        typeTrain= TypeTrain.None;
+                        typeTrain = TypeTrain.None;
                     }
                     else if ((data.ТипПоезда == ТипПоезда.Пассажирский) || (data.ТипПоезда == ТипПоезда.Скоростной) || (data.ТипПоезда == ТипПоезда.Скорый) || (data.ТипПоезда == ТипПоезда.Фирменный))
                     {
@@ -1429,16 +1436,16 @@ namespace MainExample
                     }
 
                     var inData = new UniversalInputType
-                    { 
+                    {
                         NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
-                        PathNumber =  data.НомерПути, //Номер пути выводим всегда.
+                        PathNumber = data.НомерПути, //Номер пути выводим всегда.
                         Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
                         Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
                         Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   ",
                         Note = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.Примечание : "   ",
-                        TypeTrain =  typeTrain
+                        TypeTrain = typeTrain
                     };
-                    
+
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
                     beh.SendMessage4Path(inData, data.НомерПоезда);
@@ -1978,7 +1985,7 @@ namespace MainExample
                         {
                             СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
                             Данные.Активность = !Данные.Активность;
-                            Program.ЗаписьЛога("Действие оператора", (Данные.Активность ? "Включение " : "Отключение ") +  "звукового сообщения: \"" + Данные.НазваниеКомпозиции + "\" (" + Данные.Время.ToString("HH:mm") + ")");
+                            Program.ЗаписьЛога("Действие оператора", (Данные.Активность ? "Включение " : "Отключение ") + "звукового сообщения: \"" + Данные.НазваниеКомпозиции + "\" (" + Данные.Время.ToString("HH:mm") + ")");
                             СтатическиеЗвуковыеСообщения[Key] = Данные;
                         }
                     }
@@ -2011,7 +2018,7 @@ namespace MainExample
                                 Данные.НомерПути = i == 0 ? "" : Program.НомераПутей[i - 1];
                                 if (СтарыйНомерПути != Данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + Данные.НомерПути + "; ");
 
-                                Данные.ТипСообщения= SoundRecordType.ДвижениеПоезда;
+                                Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
                                 byte номерПути = Program.ПолучитьНомерПути(Данные.НомерПути);
                                 Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
 

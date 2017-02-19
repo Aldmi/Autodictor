@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MoreLinq;
 
 namespace CommunicationDevices.Infrastructure
 {
@@ -38,6 +39,29 @@ namespace CommunicationDevices.Infrastructure
             {
                 TableData = new List<UniversalInputType>(initializeData.TableData);
             }
+        }
+
+
+        public static List<UniversalInputType> GetFilteringByDateTimeTable(int outElement, IList<UniversalInputType> table)
+        {
+            if (outElement <= 0)
+                return null;
+
+            if (table.Count < outElement)
+                return null;
+
+
+            var filtredCollection = new List<UniversalInputType>();
+            var copyTableData = new List<UniversalInputType>(table);
+            var today = DateTime.Now;
+            for (int i = 0; i < outElement; i++)
+            {
+                var nearVal = copyTableData.MinBy(d => (d.Time - today).Duration());
+                filtredCollection.Add(nearVal);
+                copyTableData.RemoveAt(copyTableData.IndexOf(nearVal));
+            }
+
+            return filtredCollection;
         }
     }
 }
