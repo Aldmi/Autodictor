@@ -165,9 +165,21 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
                 return false;
             }
 
+            if (data[0] == 0x02 &&
+                data[1] == 0x30 &&
+                data[2] == 0x32 &&
+                data[3] == 0x30 &&
+                data[4] == 0x30 &&
+                data[5] == 0x46 &&
+                data[6] == 0x44 &&
+                data[7] == 0x03)
+            {
+                IsOutDataValid = true;
+                return true;
+            }
 
-            IsOutDataValid = true;
-            return true;
+            IsOutDataValid = false;
+            return false;
         }
 
 

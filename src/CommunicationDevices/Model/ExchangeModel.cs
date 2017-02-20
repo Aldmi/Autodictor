@@ -168,7 +168,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers);
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                       //Вывод номера пути в пустом сообщении
                         }
@@ -194,7 +194,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers);
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
@@ -219,7 +219,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
@@ -241,7 +241,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
@@ -278,7 +278,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDevicePc.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers, null)); //TODO: передвать ограничения
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDevicePc.BindingType == BindingType.ToGeneral)

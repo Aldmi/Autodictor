@@ -19,16 +19,18 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
     {
         private readonly Device _device;
         public IEnumerable<byte> CollectionPathNumber { get; }
+        public UniversalInputType Contrains { get; }
         public string GetDeviceName => _device.Name;
-        public int GetDeviceId=> _device.Id;
+        public int GetDeviceId => _device.Id;
         public string GetDeviceAddress => _device.Address;
 
 
 
-        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers)
+        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, UniversalInputType contrains)
         {
             _device = device;
             CollectionPathNumber = pathNumbers;
+            Contrains = contrains;
         }
 
 
@@ -37,7 +39,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         public string GetDevicesName4Path(byte pathNumber)
         {
             //привязка на все пути
-            if (!CollectionPathNumber.Any())                              
+            if (!CollectionPathNumber.Any())
                 return $"{GetDeviceId}: {_device.Name}";
 
             //привязка на указанные пути
@@ -48,8 +50,12 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public void SendMessage4Path(UniversalInputType inData, string numberOfTrain)
+        public void SendMessage4Path(UniversalInputType inData, string numberOfTrain, Func<UniversalInputType, bool> checkContrains)
         {
+            //проверка ограничения
+            if (!checkContrains(inData))
+                return;
+
             //inData.Stations = inData.Stations.Trim(new Char[] { '-', ' ' });   //убран знак тире и пробел в названии станции
 
             //привязка на несколько путей
@@ -67,7 +73,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                         _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
                     }
                 }
-            }                
+            }
             else
             {
                 //привязка на указанные пути
@@ -75,6 +81,26 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
             }
             _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос (выставили запрос сразу на выполнение)
         }
+
+
+
+        /// <summary>
+        /// Проверка ограничения првязки.
+        /// </summary>
+        public bool CheckContrains(UniversalInputType inData)
+        {
+            if (Contrains == null)
+                return true;
+
+
+            var r = inData.TypeTrain != Contrains.TypeTrain &&
+                    inData.Event != Contrains.Event;
+
+            return inData.TypeTrain != Contrains.TypeTrain &&
+                   inData.Event != Contrains.Event;
+        }
+
+
 
         /// <summary>
         /// Инициализация начальной строки вывода на дисплей.
@@ -84,11 +110,11 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         {
             var inData = new UniversalInputType
             {
-                NumberOfTrain =  "   ",
+                NumberOfTrain = "   ",
                 PathNumber = (CollectionPathNumber != null && CollectionPathNumber.Any()) ? CollectionPathNumber.First().ToString() : "   ",
-                Event =  "   ",
+                Event = "   ",
                 Time = DateTime.MinValue,
-                Stations =  "   ",
+                Stations = "   ",
                 Note = "   ",
                 TypeTrain = TypeTrain.None
             };

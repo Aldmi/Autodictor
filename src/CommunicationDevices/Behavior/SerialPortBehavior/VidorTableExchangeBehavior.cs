@@ -53,7 +53,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             if (inData?.TableData != null)
             {
                 //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData;   //.Where(d => d.Event != "ПРИБ.").ToList();
+                var filteredData = inData.TableData;
                 var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
 
                 timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
@@ -76,7 +76,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
 
 
-            await Task.Delay(500, ct);  //задержка для задания периода опроса.    
+            await Task.Delay(1000, ct);  //задержка для задания периода опроса.    
         }
 
         #endregion
@@ -96,7 +96,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {        
-                var filteredData = inData.TableData;   //.Where(d => d.Event != "ПРИБ.").ToList();
+                var filteredData = inData.TableData;
                  //фильтрация по ближайшему времени к текущему времени.
                 var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
 
@@ -110,7 +110,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
 
-                    await Task.Delay(500, ct);
+                    await Task.Delay(1000, ct);
                 }
 
                 //Запрос синхронизации времени

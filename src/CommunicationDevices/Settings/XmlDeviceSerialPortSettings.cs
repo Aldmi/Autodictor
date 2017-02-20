@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Configuration;
 using System.Xml.Linq;
+using CommunicationDevices.Infrastructure;
 using Library.Logs;
 
 
@@ -30,6 +31,8 @@ namespace CommunicationDevices.Settings
         public BindingType BindingType { get; set; }
         public IEnumerable<byte> PathNumbers { get; }
 
+        public UniversalInputType Contrains { get; set; }
+
         #endregion
 
 
@@ -37,7 +40,7 @@ namespace CommunicationDevices.Settings
 
         #region ctor
 
-        private XmlDeviceSerialPortSettings(string id, string name, string port, string address, string timeRespone, string description, string binding)
+        private XmlDeviceSerialPortSettings(string id, string name, string port, string address, string timeRespone, string description, string binding, string contrains)
         {
             Id = int.Parse(id);
             Name = name;
@@ -67,6 +70,39 @@ namespace CommunicationDevices.Settings
                 var pathNumbers = new string(binding.SkipWhile(c => c != ':').Skip(1).ToArray()).Split(',');
                 PathNumbers= (pathNumbers.First() == String.Empty) ? new List<byte>() : pathNumbers.Select(byte.Parse).ToList();      
             }
+
+
+            var contr = contrains.Split(';');
+            if (contr.Any())
+            {
+                Contrains= new UniversalInputType();
+                foreach (var s in contr)
+                {
+                    switch (s)
+                    {
+                        case "ПРИБ.":
+                            Contrains.Event = s;
+                            break;
+
+                        case "ОТПР.":
+                            Contrains.Event = s;
+                            break;
+
+                        case "ПРИГ.":
+                            Contrains.TypeTrain = TypeTrain.Suburb;
+                            break;
+
+                        case "ДАЛЬН.":
+                            Contrains.TypeTrain = TypeTrain.LongDistance;
+                            break;
+
+                        default:
+                            Contrains = null;
+                            return;
+                    }
+                }
+            }
+
         }
 
         #endregion
@@ -90,7 +126,8 @@ namespace CommunicationDevices.Settings
                            (string)el.Attribute("Address"),
                            (string)el.Attribute("TimeRespone"),
                            (string)el.Attribute("Description"),
-                           (string)el.Attribute("Binding"));
+                           (string)el.Attribute("Binding"),
+                           (string)el.Attribute("Contrains"));
 
             return sett.ToList();
         }

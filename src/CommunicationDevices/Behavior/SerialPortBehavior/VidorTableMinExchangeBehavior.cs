@@ -54,13 +54,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                //TableData содержит всю информацию про поезда выставленные на привязанные к устройству пути.
-                // т.е. больше _countRow записей. Нужно выводить _countRow ближайших по времени к текущему времени записей.
-                // если выбранных записей меньше _countRow, то выводить _countRow и  очищать остальные строки.
-
-                //Исключаем прибывающие поезда
                 //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
+                var filteredData = inData.TableData;
                 var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
 
                 timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
@@ -96,13 +91,8 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                //TableData содержит всю информацию про поезда выставленные на привязанные к устройству пути.
-                // т.е. больше _countRow записей. Нужно выводить _countRow ближайших по времени к текущему времени записей.
-                // если выбранных записей меньше _countRow, то выводить _countRow и  очищать остальные строки.
-
-                //Исключаем прибывающие поезда
                 //фильтрация по ближайшему времени к текущему времени.
-                var excludingArrival = inData.TableData.Where(d => d.Event != "ПРИБ.").ToList();
+                var excludingArrival = inData.TableData;
                 var filtredCollection = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
 
                 filtredCollection.ForEach(t => t.AddressDevice = inData.AddressDevice);

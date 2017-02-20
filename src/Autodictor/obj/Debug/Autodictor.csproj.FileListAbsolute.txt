@@ -1981,8 +1981,8 @@ D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\AutoMapper.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.dll
-D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\MoreLinq.dll
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.dll
 D:\Git\Autodictor\src\Autodictor\bin\Debug\CommunicationDevices.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Library.pdb
@@ -1999,8 +1999,8 @@ D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Windsor.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Communication.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\AutoMapper.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\WCFAvtodictor2PcTableContract.pdb
-D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\MoreLinq.xml
+D:\Git\Autodictor\src\Autodictor\bin\Debug\Castle.Core.xml
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Microsoft.DirectX.Direct3D.xml
 D:\Git\Autodictor\src\Autodictor\obj\Debug\Autodictor.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.AboutForm.resources

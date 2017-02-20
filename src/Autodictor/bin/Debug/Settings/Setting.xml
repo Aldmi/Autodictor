@@ -23,14 +23,17 @@
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="20" Name="VidorTableMin2" Port="2" Address="1" TimeRespone="3000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4"/>
+	 <DeviceSp Id="1" Name="VidorTableMin2" Port="2" Address="1" TimeRespone="3000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4" Contrains="ПРИБ."/>
 	 
-	 <DeviceSp Id="17" Name="VidorTable8" Port="2" Address="46" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5"/>
+	 <DeviceSp Id="2" Name="VidorTable8" Port="2" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5" Contrains="ПРИБ."/>
   </DevicesWithSP>
 
   <DevicesWithPC>
 	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1,2,3,4,5"/>
   </DevicesWithPC>
 </Root>
+
+
+<!--Contrains= (ПРИГ./ДАЛЬН.) (ПРИБ./ОТПР.) -->
 
 

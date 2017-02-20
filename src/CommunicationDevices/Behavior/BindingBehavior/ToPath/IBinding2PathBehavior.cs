@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
@@ -13,6 +14,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
         void InitializeDevicePathInfo();
 
-        void SendMessage4Path(UniversalInputType inData, string numberOfTrain);
+        void SendMessage4Path(UniversalInputType inData, string numberOfTrain, Func<UniversalInputType, bool> checkContrains);
+        bool CheckContrains(UniversalInputType inData);
     }
 }
