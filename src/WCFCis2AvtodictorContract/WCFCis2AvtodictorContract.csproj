@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Contract\IServerContract.cs" />
     <Compile Include="Contract\IServerContractSimple.cs" />
+    <Compile Include="Converters\DaysFollowingConverter.cs" />
+    <Compile Include="Converters\ПланРасписанияПоезда.cs" />
     <Compile Include="DataContract\DiagnosticData.cs" />
     <Compile Include="DataContract\InfoData.cs" />
     <Compile Include="DataContract\OperativeScheduleData.cs" />
@@ -53,7 +55,6 @@
     <Compile Include="DataContract\SimpleData\OperativeScheduleDataSimple.cs" />
     <Compile Include="DataContract\SimpleData\RegulatoryScheduleDataSimple.cs" />
     <Compile Include="DataContract\StationsData.cs" />
-    <Compile Include="PostProcessing\DaysFollowingConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

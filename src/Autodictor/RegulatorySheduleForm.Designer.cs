@@ -44,6 +44,8 @@
             // 
             // listRegSh
             // 
+            this.listRegSh.AllowColumnReorder = true;
+            this.listRegSh.AllowDrop = true;
             this.listRegSh.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -60,7 +62,7 @@
             this.DaysFollowingConverted});
             this.listRegSh.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listRegSh.Location = new System.Drawing.Point(1, 0);
-            this.listRegSh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listRegSh.Margin = new System.Windows.Forms.Padding(4);
             this.listRegSh.Name = "listRegSh";
             this.listRegSh.Size = new System.Drawing.Size(1643, 640);
             this.listRegSh.TabIndex = 1;
@@ -122,7 +124,7 @@
             // DaysFollowingConverted
             // 
             this.DaysFollowingConverted.Text = "Дни следования преобразованные";
-            this.DaysFollowingConverted.Width = 1200;
+            this.DaysFollowingConverted.Width = 2500;
             // 
             // btn_LoadRegSh
             // 

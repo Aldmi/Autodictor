@@ -79,13 +79,16 @@ namespace CommunicationDevices.Infrastructure.VidorDataProvider
 
 
                 //первая надпись занмиает 2-е строки
-                string y1Str = "011";   //Y1
-                string y2Str = "023";   //Y2
+                int y1 = 11;   //Y1
+                int y2 = 23;   //Y2
                 if (CurrentRow > 1)
                 {
-                    y1Str = "035";//y1Str + (24 * (CurrentRow - 1));
-                    y2Str = "047"; //y2Str + (24 * (CurrentRow - 1));
+                    y1 = y1 + (24 * (CurrentRow - 1));   
+                    y2 = y2 + (24 * (CurrentRow - 1));
                 }
+
+                string y1Str = y1.ToString("D3");
+                string y2Str = y2.ToString("D3");
 
 
                 string result1, result2, result3, result4, result5;

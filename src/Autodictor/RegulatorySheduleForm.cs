@@ -12,7 +12,7 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Model;
 using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
-using WCFCis2AvtodictorContract.PostProcessing;
+
 
 
 namespace MainExample

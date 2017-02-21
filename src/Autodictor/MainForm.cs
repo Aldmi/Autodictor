@@ -72,18 +72,19 @@ namespace MainExample
 
             DispouseCisClientIsConnectRx = ExchangeModel.CisClient.IsConnectChange.Subscribe(isConnect =>
             {
-                if (isConnect)
-                {
-                    СвязьСЦис = tSLСостояниеСвязиСЦИС;
-                    СвязьСЦис.BackColor = Color.LightGreen;
-                    СвязьСЦис.Text = "ЦИС на связи";
-                }
-                else
-                {
-                    СвязьСЦис = tSLСостояниеСвязиСЦИС;
-                    СвязьСЦис.BackColor = Color.Orange;
-                    СвязьСЦис.Text = "ЦИС НЕ на связи";
-                }
+                //TODO: вызывать через Invoke
+                //if (isConnect)
+                //{
+                //    СвязьСЦис = tSLСостояниеСвязиСЦИС;
+                //    СвязьСЦис.BackColor = Color.LightGreen;
+                //    СвязьСЦис.Text = "ЦИС на связи";
+                //}
+                //else
+                //{
+                //    СвязьСЦис = tSLСостояниеСвязиСЦИС;
+                //    СвязьСЦис .BackColor = Color.Orange;
+                //    СвязьСЦис.Text = "ЦИС НЕ на связи";
+                //}
             });
         }
 

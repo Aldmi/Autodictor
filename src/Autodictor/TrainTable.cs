@@ -414,12 +414,12 @@ namespace MainExample
         //Загрузка расписание из выбранного источника
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            SouceLoadMainList();
+            SourceLoadMainList();
             ОбновитьДанныеВСписке();
         }
 
 
-        public void SouceLoadMainList()
+        public void SourceLoadMainList()
         {
             if (rbSourseSheduleLocal.Checked)
             {
@@ -437,17 +437,17 @@ namespace MainExample
             var isOperShLoad = CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any();
             var isRegShLoad = CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any();
 
-            if (!isRegShLoad && !isOperShLoad)
-            {
-                MessageBox.Show("ОПЕРАТИВНОЕ И РЕГУЛЯРНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
-                return;
-            }
+            //if (!isRegShLoad && !isOperShLoad)
+            //{
+            //    MessageBox.Show("ОПЕРАТИВНОЕ И РЕГУЛЯРНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
+            //    return;
+            //}
 
-            if (!isOperShLoad)
-            {
-                MessageBox.Show("ОПЕРАТИВНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
-                return;
-            }
+            //if (!isOperShLoad)
+            //{
+            //    MessageBox.Show("ОПЕРАТИВНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
+            //    return;
+            //}
 
             if (!isRegShLoad)
             {
@@ -470,42 +470,67 @@ namespace MainExample
                 TrainTableRecords.Clear();
 
                 //Заполним строки
-                foreach (var op in CisClient.OperativeScheduleDatas)
+                foreach (var reg in CisClient.RegulatoryScheduleDatas)
                 {
                     TrainTableRecord Данные;
 
-                    Данные.ID = op.Id;
-                    Данные.Num = op.NumberOfTrain;
-                    Данные.Name = op.RouteName;
-                    Данные.ArrivalTime = op.ArrivalTime?.ToLongTimeString() ?? "Не указанно";
+                    Данные.ID = reg.Id;
+                    Данные.Num = reg.NumberOfTrain;
+                    Данные.Name = reg.RouteName;
+                    Данные.ArrivalTime = reg.ArrivalTime.ToShortTimeString();
+                    Данные.DepartureTime = reg.DepartureTime.ToShortTimeString();
+                    Данные.StopTime = "";  //вычисляется для транзитных
+                    Данные.Days = reg.DaysFollowingConverted;
 
 
-                    if (op.ArrivalTime.HasValue && op.DepartureTime.HasValue)
+
+                    Данные.Active = true;
+                    Данные.SoundTemplates = "";
+                    Данные.TrainPathDirection = 1;                                   //заполняется из информации
+                    Данные.TrainPathNumber = "";                                     //заполняется из информации
+                    Данные.ТипПоезда = ТипПоезда.НеОпределен;                        //
+
+                    // "С остановками: Клин,Завидово,В.Новгород"
+                    // "Кроме: Кузьминка,Конаково"  
+                    // "Со всеми остановками"  
+                    // "Без остановок"
+                    // ""                        - не оповещать
+
+
+                    if (reg.ListOfStops != null && reg.ListOfStops.Any())
                     {
-                        var stopTime = (op.ArrivalTime.Value.Subtract(op.DepartureTime.Value));
-                        Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
+                        Данные.Примечание = "С остановками: ";
+                        foreach (var stopStat in reg.ListOfStops)
+                        {
+                            Данные.Примечание+= stopStat.Name + "," ;
+                        }
+                        Данные.Примечание= Данные.Примечание.Remove(Данные.Примечание.Length - 1);
+                        Данные.ТипПоезда = ТипПоезда.Пригородный;
+                    }
+                    else
+                    if (reg.ListWithoutStops != null && reg.ListWithoutStops.Any())
+                    {
+                        Данные.Примечание = "Кроме: ";
+                        foreach (var withoutStopStat in reg.ListWithoutStops)
+                        {
+                            Данные.Примечание+= withoutStopStat.Name + ",";
+                        }
+                        Данные.Примечание= Данные.Примечание.Remove(Данные.Примечание.Length - 1);
+                        Данные.ТипПоезда = ТипПоезда.Пригородный;
                     }
                     else
                     {
-                        Данные.StopTime = "---";
+                        //не оповещать
+                        Данные.Примечание = "";
+                        Данные.ТипПоезда = ТипПоезда.Скорый;      //дальнего след.
                     }
 
+                                                         
+                                                                                       
 
-                    Данные.DepartureTime = op.DepartureTime?.ToLongTimeString() ?? "Не указанно";
-                    Данные.Days = CisClient.RegulatoryScheduleDatas.FirstOrDefault(reg=> reg.NumberOfTrain == op.NumberOfTrain)?.DaysFollowing;                                              //заполняется из регулярного расписания
-                    Данные.Active = false;
-                    Данные.SoundTemplates = "";
-                    Данные.TrainPathDirection = 1;                                   //заполняется из информации
-                    Данные.TrainPathNumber = "";                                      //заполняется из информации
-                    Данные.ТипПоезда = ТипПоезда.НеОпределен;
-                    Данные.Примечание = "";
-
-                    if (Данные.TrainPathDirection > 2)
-                        Данные.TrainPathDirection = 0;
 
                     if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
                         Данные.TrainPathNumber = "";
-
 
                     Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
                     Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
@@ -515,6 +540,54 @@ namespace MainExample
                     if (Данные.ID > ID)
                         ID = Данные.ID;
                 }
+
+
+
+                //foreach (var op in CisClient.OperativeScheduleDatas)
+                //{
+                //    TrainTableRecord Данные;
+
+                //    Данные.ID = op.Id;
+                //    Данные.Num = op.NumberOfTrain;
+                //    Данные.Name = op.RouteName;
+                //    Данные.ArrivalTime = op.ArrivalTime?.ToLongTimeString() ?? "Не указанно";
+
+
+                //    if (op.ArrivalTime.HasValue && op.DepartureTime.HasValue)
+                //    {
+                //        var stopTime = (op.ArrivalTime.Value.Subtract(op.DepartureTime.Value));
+                //        Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
+                //    }
+                //    else
+                //    {
+                //        Данные.StopTime = "---";
+                //    }
+
+
+                //    Данные.DepartureTime = op.DepartureTime?.ToLongTimeString() ?? "Не указанно";
+                //    Данные.Days = CisClient.RegulatoryScheduleDatas.FirstOrDefault(reg=> reg.NumberOfTrain == op.NumberOfTrain)?.DaysFollowing;                                              //заполняется из регулярного расписания
+                //    Данные.Active = false;
+                //    Данные.SoundTemplates = "";
+                //    Данные.TrainPathDirection = 1;                                   //заполняется из информации
+                //    Данные.TrainPathNumber = "";                                      //заполняется из информации
+                //    Данные.ТипПоезда = ТипПоезда.НеОпределен;
+                //    Данные.Примечание = "";
+
+                //    if (Данные.TrainPathDirection > 2)
+                //        Данные.TrainPathDirection = 0;
+
+                //    if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
+                //        Данные.TrainPathNumber = "";
+
+
+                //    Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
+                //    Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+
+                //    TrainTableRecords.Add(Данные);
+
+                //    if (Данные.ID > ID)
+                //        ID = Данные.ID;
+                //}
             }
         }
 

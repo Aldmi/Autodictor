@@ -8,10 +8,11 @@ using System.Xml;
 using CommunicationDevices.Devices;
 using CommunicationDevices.Model;
 using Library.Logs;
+using MainExample.Converters;
 using WCFAvtodictor2PcTableContract.Contract;
 using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
-using WCFCis2AvtodictorContract.PostProcessing;
+
 
 
 namespace CommunicationDevices.ClientWCF
@@ -235,7 +236,7 @@ namespace CommunicationDevices.ClientWCF
                     var newDaysFolowing = await converter.Convert();
                     if (newDaysFolowing != null) //&& newDaysFolowing.Count == data.Count
                     {
-                        for (int i = 0; i < newDaysFolowing.Count; i++)
+                        for (var i = 0; i < newDaysFolowing.Count; i++)
                         {
                             data[i].DaysFollowingConverted = newDaysFolowing[i];
                         }
