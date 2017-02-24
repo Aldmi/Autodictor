@@ -68,6 +68,7 @@ namespace Communication.TcpIp
                 OnPropertyChanged();
             }
         }
+
         public bool IsConnect
         {
             get { return _isConnect; }
@@ -78,6 +79,7 @@ namespace Communication.TcpIp
                 OnPropertyChanged();
             }
         }
+
         public bool IsRunDataExchange
         {
             get { return _isRunDataExchange; }
@@ -136,13 +138,13 @@ namespace Communication.TcpIp
 
 
 
-        public async Task RequestAndRespoune(IExchangeDataProviderBase dataProvider)
+        public async Task<bool> RequestAndRespoune(IExchangeDataProviderBase dataProvider)
         {
             if (!IsConnect)
-                return;
+                return false;
 
             if (dataProvider == null)
-                return;
+                return false;
 
             IsRunDataExchange = true;
             if (await SendData(dataProvider))
@@ -158,25 +160,33 @@ namespace Communication.TcpIp
                     StatusString = "операция  прерванна";
 
                     if (++_countTryingTakeData > _numberTryingTakeData)
-                        await ReConnect();
+                        ReConnect();
+
+                    return false;
                 }
                 catch (TimeoutException)
                 {
                     StatusString = "Время на ожидание ответа вышло";
 
                     if (++_countTryingTakeData > _numberTryingTakeData)
-                        await ReConnect();
+                        ReConnect();
+
+                    return false;
                 }
                 catch (IOException)
                 {
-                    await ReConnect();
+                     ReConnect();
+
+                    return false;
                 }
             }
             else                                                           //не смогли отрпавить данные. СРАЗУ ЖЕ переподключение
             {
-                await ReConnect();
+                ReConnect();
+                return false;
             }
             IsRunDataExchange = false;
+            return true;
         }
 
 

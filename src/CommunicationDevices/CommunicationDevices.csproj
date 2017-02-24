@@ -106,6 +106,7 @@
     <Compile Include="Behavior\SerialPortBehavior\InformSvyazExchangeBehavior.cs" />
     <Compile Include="Behavior\IExhangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\BaseExhangeSpBehavior.cs" />
+    <Compile Include="Behavior\TcpIpBehavior\ExhangeTcpIpBehavior.cs" />
     <Compile Include="ClientWCF\CisClient.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\XmlCisSettings.cs" />
+    <Compile Include="Settings\XmlDeviceTcpIpSettings.cs" />
     <Compile Include="Settings\XmlDevicePcSettings.cs" />
     <Compile Include="Settings\XmlDeviceSerialPortSettings.cs" />
   </ItemGroup>
@@ -139,9 +141,7 @@
       <Name>WCFCis2AvtodictorContract</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Behavior\TcpIpBehavior\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

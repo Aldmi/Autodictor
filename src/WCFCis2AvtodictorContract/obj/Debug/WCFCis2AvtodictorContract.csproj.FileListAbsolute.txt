@@ -73,3 +73,8 @@ C:\Project C#\Autodictor\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorCo
 C:\Project C#\Autodictor\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
 C:\Project C#\Autodictor\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
 C:\Project C#\Autodictor\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
+D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb

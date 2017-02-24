@@ -86,3 +86,11 @@ C:\Project C#\Autodictor\Library\bin\Debug\NLog.dll
 C:\Project C#\Autodictor\Library\bin\Debug\NLog.xml
 C:\Project C#\Autodictor\Library\obj\Debug\Library.dll
 C:\Project C#\Autodictor\Library\obj\Debug\Library.pdb
+D:\Git\Autodictor\src\Library\bin\Debug\NLog.config
+D:\Git\Autodictor\src\Library\bin\Debug\Library.dll
+D:\Git\Autodictor\src\Library\bin\Debug\Library.pdb
+D:\Git\Autodictor\src\Library\bin\Debug\NLog.dll
+D:\Git\Autodictor\src\Library\bin\Debug\NLog.xml
+D:\Git\Autodictor\src\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
+D:\Git\Autodictor\src\Library\obj\Debug\Library.dll
+D:\Git\Autodictor\src\Library\obj\Debug\Library.pdb

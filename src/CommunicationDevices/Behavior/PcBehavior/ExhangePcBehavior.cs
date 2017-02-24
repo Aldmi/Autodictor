@@ -43,7 +43,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
         private ChannelFactory<IPcTableContract> ChannelFactory { get; set; }
         private IPcTableContract Proxy { get; set; }
 
-        // public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
+
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }
 
         public int NumberPort => ChannelFactory.Endpoint.Address.Uri.Port;

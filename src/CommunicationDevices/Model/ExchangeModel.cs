@@ -14,6 +14,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.PcBehavior;
 using CommunicationDevices.Behavior.SerialPortBehavior;
+using CommunicationDevices.Behavior.TcpIpBehavior;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
@@ -115,6 +116,7 @@ namespace CommunicationDevices.Model
             List<XmlSerialSettings> xmlSerialPorts;
             List<XmlDeviceSerialPortSettings> xmlDeviceSpSettings;
             List<XmlDevicePcSettings> xmlDevicePcSettings;
+            List<XmlDeviceTcpIpSettings> xmlDeviceTcpIpSettings;
             XmlCisSettings xmlCisSetting;
 
             try
@@ -126,6 +128,7 @@ namespace CommunicationDevices.Model
                 xmlSerialPorts = XmlSerialSettings.LoadXmlSetting(xmlFile);
                 xmlDeviceSpSettings = XmlDeviceSerialPortSettings.LoadXmlSetting(xmlFile);
                 xmlDevicePcSettings = XmlDevicePcSettings.LoadXmlSetting(xmlFile);
+                xmlDeviceTcpIpSettings = XmlDeviceTcpIpSettings.LoadXmlSetting(xmlFile);
                 xmlCisSetting= XmlCisSettings.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
@@ -306,11 +309,56 @@ namespace CommunicationDevices.Model
 
 
 
-            //Все порты которые используют устройства откроем и запустим.
-            foreach (var devSp in Devices.GroupBy(d=> d.ExhBehavior.NumberPort).Select(g=> g.First()))
+            //СОЗДАНИЕ УСТРОЙСТВ С TcpIp ------------------------------------------------------------------------------------------------
+            foreach (var xmlDeviceTcpIp in xmlDeviceTcpIpSettings)
+            {
+                IExhangeBehavior behavior;
+                byte maxCountFaildRespowne;
+                switch (xmlDeviceTcpIp.Name)
+                {
+                    case "TcpIpTable":
+                        maxCountFaildRespowne = 3;
+                        behavior = new ExhangeTcpIpBehavior(xmlDeviceTcpIp.Address, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone);
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, xmlDeviceTcpIp.BindingType));
+
+                        //создание поведения привязка табло к пути.
+                        if (xmlDeviceTcpIp.BindingType == BindingType.ToPath)
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceTcpIp.PathNumbers, xmlDeviceTcpIp.Contrains));
+
+                        //создание поведения привязка табло к главному расписанию
+                        if (xmlDeviceTcpIp.BindingType == BindingType.ToGeneral)
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDeviceTcpIp.Contrains, xmlDeviceTcpIp.CountPage, xmlDeviceTcpIp.TimePaging));
+
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (xmlDeviceTcpIp.BindingType == BindingType.ToArrivalAndDeparture)
+                            ;
+
+                        //добавим все функции циклического опроса
+                        Devices.Last().AddCycleFunc();
+                        break;
+
+
+                    default:
+                        ErrorString = $" Устройсвто с именем {xmlDeviceTcpIp.Name} не найденно";
+                        Log.log.Error(ErrorString);
+                        throw new Exception(ErrorString);
+                }
+            }
+
+
+             //ЗАПУТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ
+             //Защита от повторного открытия одного и тогоже порта разными ус-вами.   
+            var serialPortDev = Devices.Where(d => d.ExhBehavior is BaseExhangeSpBehavior).ToList();
+            foreach (var devSp in serialPortDev.GroupBy(d => d.ExhBehavior.NumberPort).Select(g => g.First()))
             {
                 devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
-            }    
+            }
+
+            var otherDev = Devices.Except(serialPortDev).ToList();
+            foreach (var devSp in otherDev)
+            {
+                devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
+            }
         }
 
 
