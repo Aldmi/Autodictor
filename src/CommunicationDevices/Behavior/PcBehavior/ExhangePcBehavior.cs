@@ -32,7 +32,6 @@ namespace CommunicationDevices.Behavior.PcBehavior
 
         private const double PeriodTimer = 10000;
         private readonly Timer _timer;
-        private uint _tickCounter;
 
         #endregion
 
@@ -44,7 +43,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
         private ChannelFactory<IPcTableContract> ChannelFactory { get; set; }
         private IPcTableContract Proxy { get; set; }
 
-       // public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
+        // public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }
 
         public int NumberPort => ChannelFactory.Endpoint.Address.Uri.Port;
@@ -115,7 +114,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
 
         public ExhangePcBehavior(string connectionString, byte maxCountFaildRespowne)
         {
-           // Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
+            // Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
 
 
             HttpBindingBase binding = new BasicHttpBinding
@@ -180,16 +179,35 @@ namespace CommunicationDevices.Behavior.PcBehavior
         }
 
 
+        private bool sendLock;
         /// <summary>
         /// Добавление однократно вызываемых функций
         /// </summary>
         public async void AddOneTimeSendData(UniversalInputType inData)
         {
+            if (sendLock)
+                return;
+
+            sendLock = true;
+
             if (inData != null)
             {
                 var displayData = Mapper.Map<UniversalDisplayType>(inData);
                 DataExchangeSuccess = await SendDisplayData(displayData);
+
+
+                inData.Message = $"Размер табл. = {inData.TableData.Count}";
+                LastSendData = inData;
             }
+
+            sendLock = false;
+        }
+
+
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            AddOneTimeSendData(GetData4CycleFunc[0]);
         }
 
 
@@ -207,6 +225,7 @@ namespace CommunicationDevices.Behavior.PcBehavior
         {
             _timer.Enabled = true;
         }
+
 
         /// <summary>
         /// Удаление циклических функций.
@@ -235,26 +254,16 @@ namespace CommunicationDevices.Behavior.PcBehavior
                 IsConnect = false;
                 var errorString = $"ОБМЕН ДАННЫМИ С PC ТАБЛО. Ошибка отправки на конечную точку: {ChannelFactory.Endpoint.Address.Uri.OriginalString}  ОШИБКА: {ex}";
                 Log.log.Error(errorString);
-                ReOpenChanel();            
+                ReOpenChanel();
             }
 
             return false;
         }
 
 
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
-        {
-            AddOneTimeSendData(GetData4CycleFunc[0]);
-
-            //Отсчет тиков
-            if (++_tickCounter >= uint.MaxValue)
-                _tickCounter = 0;
-        }
-
-
 
         /// <summary>
-        /// Закрыть, открыть канал и перслздать прокси.
+        /// Закрыть, открыть канал и пересоздать прокси.
         /// </summary>
         private bool ReOpenChanel()
         {

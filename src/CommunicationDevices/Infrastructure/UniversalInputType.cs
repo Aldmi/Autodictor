@@ -7,6 +7,8 @@ namespace CommunicationDevices.Infrastructure
 {
     public enum TypeTrain {None, Suburb, LongDistance }
 
+    public enum Command { None, Clear, Restart }
+
     public class UniversalInputType
     {
         public string AddressDevice { get; set; }                    //Адресс устройсва
@@ -19,6 +21,8 @@ namespace CommunicationDevices.Infrastructure
         public string Note { get; set; }                             //Примечание.
         public DateTime Time { get; set; }                           //Время
         public string Message { get; set; }                          //Сообщение
+
+        public Command Command { get; set; }                         //Команда (если указанна команда, то приоритет отдается выполнению команды.)
 
         public List<UniversalInputType> TableData { get; set; }     //Данные для табличного представления
 

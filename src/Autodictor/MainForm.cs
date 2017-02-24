@@ -70,6 +70,10 @@ namespace MainExample
             ExchangeModel.LoadSetting();
             ExchangeModel.StartCisClient();
 
+            // ExchangeModel.Binding2GeneralSchedules.
+
+            var t = TrainTable.TrainTableRecords;
+
             DispouseCisClientIsConnectRx = ExchangeModel.CisClient.IsConnectChange.Subscribe(isConnect =>
             {
                 //TODO: вызывать через Invoke
@@ -104,7 +108,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors)
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules)
                 {
                     MdiParent = this
                 };

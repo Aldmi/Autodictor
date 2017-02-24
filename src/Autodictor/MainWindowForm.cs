@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
 using System.Windows.Input;
+using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Infrastructure;
@@ -105,6 +106,7 @@ namespace MainExample
 
         public CisClient CisClient { get; }
         static public IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
+        static public IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
         public int ProgressLoadMainList { get; set; }
 
@@ -119,9 +121,10 @@ namespace MainExample
 
         private string КлючВыбранныйМеню = "";
 
+        private uint _tickCounter = 0;
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors)
         {
             if (myMainForm != null)
                 return;
@@ -135,6 +138,7 @@ namespace MainExample
             CisClient = cisClient;
 
             Binding2PathBehaviors = binding2PathBehaviors;
+            Binding2GeneralScheduleBehaviors = binding2GeneralScheduleBehaviors;
 
             MainForm.Воспроизвести.Click += new System.EventHandler(this.btnВоспроизвести_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
@@ -1213,6 +1217,32 @@ namespace MainExample
             //if (!РазрешениеРаботы)
             //    return;
 
+            //ВЫВОД РАСПИСАНИЯ НА ТАБЛО--------------------------
+            if (_tickCounter++ > 50)
+            {
+                _tickCounter = 0;
+                if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
+                {
+                    var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
+                    {
+                        Event = "ОТПР.",
+                        TypeTrain = (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburb : TypeTrain.LongDistance,
+                        Note = t.Примечание,
+                        PathNumber = t.TrainPathNumber,
+                        NumberOfTrain = t.Num,
+                        Stations = t.Name,
+                        //Time =  DateTime.Parse(t.ArrivalTime)
+                    }).ToList();
+
+                    var inData = new UniversalInputType {TableData = table};
+                    foreach (var beh in Binding2GeneralScheduleBehaviors)
+                    {
+                        beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                    }
+                }
+            }
+
+            //ВЫВОД НА ПУТЕВЫЕ ТАБЛО-----------------------------
             for (var i = 0; i < SoundRecords.Count; i++)
             {
                 try

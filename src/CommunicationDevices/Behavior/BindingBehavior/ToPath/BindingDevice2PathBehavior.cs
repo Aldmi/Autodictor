@@ -92,10 +92,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
             if (Contrains == null)
                 return true;
 
-
-            var r = inData.TypeTrain != Contrains.TypeTrain &&
-                    inData.Event != Contrains.Event;
-
             return inData.TypeTrain != Contrains.TypeTrain &&
                    inData.Event != Contrains.Event;
         }

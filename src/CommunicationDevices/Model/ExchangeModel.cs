@@ -10,6 +10,7 @@ using Castle.Windsor;
 using Communication.SerialPort;
 using Communication.Settings;
 using CommunicationDevices.Behavior;
+using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.PcBehavior;
 using CommunicationDevices.Behavior.SerialPortBehavior;
@@ -49,7 +50,10 @@ namespace CommunicationDevices.Model
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
         public List<Device> Devices { get; set; } = new List<Device>();
+
         public ICollection<IBinding2PathBehavior> Binding2PathBehaviors { get; set; } = new List<IBinding2PathBehavior>();
+        public ICollection<IBinding2GeneralSchedule> Binding2GeneralSchedules { get; set; } = new List<IBinding2GeneralSchedule>();
+
 
         private string _errorString;
         public string ErrorString
@@ -95,15 +99,13 @@ namespace CommunicationDevices.Model
 
         public void StartCisClient()
         {
-            if (CisClient != null)
-                CisClient.Start();
+            CisClient?.Start();
         }
 
 
         public void StopCisClient()
         {
-            if (CisClient != null)
-                CisClient.Stop();
+            CisClient?.Stop();
         }
 
 
@@ -245,7 +247,8 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
-                            ;
+                
+                            
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
@@ -278,14 +281,14 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDevicePc.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers, null)); //TODO: передвать ограничения
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers, xmlDevicePc.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDevicePc.BindingType == BindingType.ToGeneral)
-                            ;
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDevicePc.Contrains, xmlDevicePc.CountPage, xmlDevicePc.TimePaging));
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDevicePc.BindingType == BindingType.ToGeneral)
+                        if (xmlDevicePc.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
