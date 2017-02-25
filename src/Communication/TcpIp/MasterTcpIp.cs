@@ -214,6 +214,14 @@ namespace Communication.TcpIp
         {
             byte[] bDataTemp = new byte[256];
 
+            //int nByteTake=0;
+            //while (true)
+            //{
+            //    nByteTake = _terminalNetStream.Read(bDataTemp, 0, nbytes);
+            //    Task.Delay(500);
+            //}
+
+            //TODO: создать task в котором считывать пока не считаем нужное кол-во байт. Прерывать этот task по таймауту  AsyncHelp.WithTimeout
             int nByteTake = await AsyncHelp.WithTimeout(_terminalNetStream.ReadAsync(bDataTemp, 0, nbytes, ct), timeOut, ct);
             if (nByteTake == nbytes)
             {

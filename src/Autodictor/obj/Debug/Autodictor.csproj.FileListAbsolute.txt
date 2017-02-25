@@ -1961,8 +1961,8 @@ C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.Расписание.r
 C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.СписокВоспроизведения.resources
 C:\Project C#\Autodictor\Autodictor\obj\Debug\MainExample.СписокСтанций.resources
 C:\Project C#\Autodictor\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
-D:\Git\Autodictor\src\Autodictor\bin\Debug\NLog.config
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe.config
+D:\Git\Autodictor\src\Autodictor\bin\Debug\NLog.config
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Автодиктор.exe
 D:\Git\Autodictor\src\Autodictor\bin\Debug\Автодиктор.pdb
 D:\Git\Autodictor\src\Autodictor\bin\Debug\CommunicationDevices.dll

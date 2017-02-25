@@ -179,28 +179,27 @@ namespace CommunicationDevices.Behavior.PcBehavior
         }
 
 
-        private bool sendLock;
+        private bool _sendLock;
         /// <summary>
         /// Добавление однократно вызываемых функций
         /// </summary>
         public async void AddOneTimeSendData(UniversalInputType inData)
         {
-            if (sendLock)
+            if (_sendLock)
                 return;
 
-            sendLock = true;
+            _sendLock = true;
 
             if (inData != null)
             {
                 var displayData = Mapper.Map<UniversalDisplayType>(inData);
                 DataExchangeSuccess = await SendDisplayData(displayData);
 
-
                 inData.Message = $"Размер табл. = {inData.TableData.Count}";
                 LastSendData = inData;
             }
 
-            sendLock = false;
+            _sendLock = false;
         }
 
 
@@ -217,20 +216,12 @@ namespace CommunicationDevices.Behavior.PcBehavior
         public ReadOnlyCollection<UniversalInputType> GetData4CycleFunc => Data4CycleFunc;
 
 
-        /// <summary>
-        /// Добавление циклических функций.
-        /// Поведение устройства определяет нужное количество циклических функций. Добавляются все функции в очередь порта
-        /// </summary>
         public void StartCycleExchange()
         {
             _timer.Enabled = true;
         }
 
 
-        /// <summary>
-        /// Удаление циклических функций.
-        /// Удаляются все циклические функции из очереди порта.
-        /// </summary>
         public void StopCycleExchange()
         {
             _timer.Enabled = false;

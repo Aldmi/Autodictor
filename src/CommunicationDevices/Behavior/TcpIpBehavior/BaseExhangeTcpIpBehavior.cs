@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Communication.TcpIp;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Infrastructure.VidorDataProvider;
@@ -13,19 +14,14 @@ using Timer = System.Timers.Timer;
 
 namespace CommunicationDevices.Behavior.TcpIpBehavior
 {
-    public class ExhangeTcpIpBehavior : IExhangeBehavior, IDisposable
+    public class BaseExhangeTcpIpBehavior : IExhangeBehavior, IDisposable
     {
-
         #region Fields
 
-        private const double PeriodTimer = 10000;
         private readonly Timer _timer;
 
-
-        private readonly byte _countRow = 1; //кол-во строк на табло   DEBUG!!!!!!!!!!!!!
-
-     
         #endregion
+
 
 
 
@@ -86,19 +82,21 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
 
         #region ctor
 
-        public ExhangeTcpIpBehavior(string connectionString, byte maxCountFaildRespowne, int timeRespown)
+        public BaseExhangeTcpIpBehavior(string connectionString, byte maxCountFaildRespowne, int timeRespown, double taimerPeriod)
         {
+            string ip = null;
             var strArr = connectionString.Split(':');
-            if (strArr.Length != 2)
-                return;
-           
-            var ip = strArr[0];
-            NumberPort = int.Parse(strArr[1]);
+            if (strArr.Length == 2)
+            {
+                ip = strArr[0];
+                NumberPort = int.Parse(strArr[1]);
+            }
 
-            MasterTcpIp= new MasterTcpIp(ip, NumberPort, timeRespown, maxCountFaildRespowne);
+            MasterTcpIp = new MasterTcpIp(ip, NumberPort, timeRespown, maxCountFaildRespowne);
             MasterTcpIp.PropertyChanged += MasterTcpIp_PropertyChanged;
 
-            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
+            _timer = new Timer(taimerPeriod);
+            _timer.Elapsed += OnTimedEvent;
         }
 
         #endregion
@@ -113,6 +111,7 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
         public ISubject<IExhangeBehavior> LastSendDataChange { get; } = new Subject<IExhangeBehavior>();
 
         #endregion
+
 
 
 
@@ -135,7 +134,6 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
 
 
 
-
         #region Methode
 
         public void CycleReConnect(ICollection<Task> backGroundTasks = null)
@@ -147,48 +145,29 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
 
         public void StartCycleExchange()
         {
-            return;
+            _timer.Enabled = true;
         }
 
 
         public void StopCycleExchange()
         {
+            _timer.Enabled = false;
+        }
+
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            AddOneTimeSendData(GetData4CycleFunc[0]);
+        }
+
+
+        public virtual void AddOneTimeSendData(UniversalInputType inData)
+        {
+            //БАЗОВАЯ РЕАЛИЗАЦИЯ
             return;
         }
 
 
-        public async void AddOneTimeSendData(UniversalInputType inData)
-        {
-            if (MasterTcpIp.IsConnect)
-            {
-               // ----------------------
-                //Вывод на табличное табло построчной информации
-                if (inData?.TableData != null)
-                {
-                    var filteredData = inData.TableData;
-                    //фильтрация по ближайшему времени к текущему времени.
-                    var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
-
-                    timeSampling.ForEach(t => t.AddressDevice = "1");  //inData.AddressDevice
-                    for (byte i = 0; i < _countRow; i++)
-                    {
-                        var writeTableProvider = (i < timeSampling.Count) ?
-                            new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                                  // Отрисовка строк
-                            new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
-
-                        DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(writeTableProvider);
-                        LastSendData = writeTableProvider.InputData;
-
-                        await Task.Delay(1000);
-                    }
-
-                    //Запрос синхронизации времени
-                    //var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
-                    //DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(syncTimeProvider);
-                }
-            }
-
-        }
 
 
         /// <summary>

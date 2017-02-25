@@ -316,9 +316,9 @@ namespace CommunicationDevices.Model
                 byte maxCountFaildRespowne;
                 switch (xmlDeviceTcpIp.Name)
                 {
-                    case "TcpIpTable":
+                    case "VidorTable8":
                         maxCountFaildRespowne = 3;
-                        behavior = new ExhangeTcpIpBehavior(xmlDeviceTcpIp.Address, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone);
+                        behavior = new VidorTableExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8);
                         Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, xmlDeviceTcpIp.BindingType));
 
                         //создание поведения привязка табло к пути.
@@ -338,7 +338,7 @@ namespace CommunicationDevices.Model
                         break;
 
 
-                    default:
+                     default:
                         ErrorString = $" Устройсвто с именем {xmlDeviceTcpIp.Name} не найденно";
                         Log.log.Error(ErrorString);
                         throw new Exception(ErrorString);

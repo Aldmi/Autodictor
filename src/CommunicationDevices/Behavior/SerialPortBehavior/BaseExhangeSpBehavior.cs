@@ -23,7 +23,6 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         private byte _countFaildRespowne;
         protected readonly ushort TimeRespone;
 
-
         #endregion
 
 

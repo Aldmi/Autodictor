@@ -19,6 +19,8 @@ namespace CommunicationDevices.Settings
         public string Name { get; }
 
         public string Address { get; }
+        public List<string> DeviceAdress { get; set; }
+
         public ushort TimeRespone { get;}
         public string Description { get; }
 
@@ -38,11 +40,17 @@ namespace CommunicationDevices.Settings
 
         #region ctor
 
-        private XmlDeviceTcpIpSettings(string id, string name, string address, string timeRespone, string description, string binding, string contrains, string paging)
+        private XmlDeviceTcpIpSettings(string id, string name, string address, string deviceAdress, string timeRespone, string description, string binding, string contrains, string paging)
         {
             Id = int.Parse(id);
             Name = name;
             Address = address;
+
+            if (!string.IsNullOrEmpty(deviceAdress))
+            {
+                DeviceAdress = deviceAdress.Split(',').ToList();
+            }
+
             TimeRespone = ushort.Parse(timeRespone);
             Description = description;
 
@@ -126,11 +134,13 @@ namespace CommunicationDevices.Settings
                            (string)el.Attribute("Id"),
                            (string)el.Attribute("Name"),
                            (string)el.Attribute("Address"),
+                           (string)el.Attribute("DeviceAddress"),
                            (string)el.Attribute("TimeRespone"),
                            (string)el.Attribute("Description"),
                            (string)el.Attribute("Binding"),
                            (string)el.Attribute("Contrains"),
                            (string)el.Attribute("Paging"));
+                           
 
             return sett.ToList();
         }

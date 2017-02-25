@@ -25,17 +25,16 @@
   <DevicesWithSP>
 	 <DeviceSp Id="1" Name="VidorTableMin2" Port="4" Address="1" TimeRespone="3000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:100" Contrains="ПРИБ."/>
 	 
-	 <DeviceSp Id="2" Name="VidorTable8" Port="4" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:100" Contrains="ПРИБ."/>
+	 <!-- <DeviceSp Id="2" Name="VidorTable8" Port="4" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:100" Contrains="ПРИБ."/> -->
   </DevicesWithSP>
 
   <DevicesWithPC>
 	 <!-- <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1,2,3,4,5" Contrains="ПРИБ." Paging=""/> -->
-	 
 	 <DevicePc Id="101" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToGeneral" Contrains="ПРИБ." Paging="7,5"/>
   </DevicesWithPC>
    
   <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="TcpIpTable" Address="192.168.1.42:45862" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." Paging=""/>
+	 <DeviceTcpIp Id="200" Name="VidorTable8" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." Paging=""/>
   </DevicesWithTcpIp>
 </Root>
 

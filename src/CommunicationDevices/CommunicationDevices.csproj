@@ -106,7 +106,8 @@
     <Compile Include="Behavior\SerialPortBehavior\InformSvyazExchangeBehavior.cs" />
     <Compile Include="Behavior\IExhangeBehavior.cs" />
     <Compile Include="Behavior\SerialPortBehavior\BaseExhangeSpBehavior.cs" />
-    <Compile Include="Behavior\TcpIpBehavior\ExhangeTcpIpBehavior.cs" />
+    <Compile Include="Behavior\TcpIpBehavior\BaseExhangeTcpIpBehavior.cs" />
+    <Compile Include="Behavior\TcpIpBehavior\VidorTableExchangeTcpIpBehavior.cs" />
     <Compile Include="ClientWCF\CisClient.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
