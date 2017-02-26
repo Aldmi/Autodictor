@@ -284,18 +284,27 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (xmlDevicePc.BindingType == BindingType.ToPath)
+                        {
                             Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers, xmlDevicePc.Contrains));
+                            Devices.Last().AddCycleFunc(); //добавим все функции циклического опроса
+                        }
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDevicePc.BindingType == BindingType.ToGeneral)
+                        {
                             Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDevicePc.Contrains, xmlDevicePc.CountPage, xmlDevicePc.TimePaging));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                Devices.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                        }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (xmlDevicePc.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
-                        //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                 
                         break;
 
 

@@ -114,9 +114,6 @@ namespace CommunicationDevices.Behavior.PcBehavior
 
         public ExhangePcBehavior(string connectionString, byte maxCountFaildRespowne)
         {
-            // Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
-
-
             HttpBindingBase binding = new BasicHttpBinding
             {
                 OpenTimeout = new TimeSpan(0, 0, 8),

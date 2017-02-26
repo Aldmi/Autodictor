@@ -1217,27 +1217,45 @@ namespace MainExample
             //if (!РазрешениеРаботы)
             //    return;
 
-            //ВЫВОД РАСПИСАНИЯ НА ТАБЛО--------------------------
-            if (_tickCounter++ > 50)
+            //ВЫВОД ОБЩЕГО РАСПИСАНИЯ НА ТАБЛО--------------------------
+            if (Binding2GeneralScheduleBehaviors != null && Binding2GeneralScheduleBehaviors.Any())
             {
-                _tickCounter = 0;
-                if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
+                Func<string, string, DateTime> timePars = (arrival, depart) =>
                 {
-                    var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
-                    {
-                        Event = "ОТПР.",
-                        TypeTrain = (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburb : TypeTrain.LongDistance,
-                        Note = t.Примечание,
-                        PathNumber = t.TrainPathNumber,
-                        NumberOfTrain = t.Num,
-                        Stations = t.Name,
-                        //Time =  DateTime.Parse(t.ArrivalTime)
-                    }).ToList();
+                    DateTime outData;
 
-                    var inData = new UniversalInputType {TableData = table};
-                    foreach (var beh in Binding2GeneralScheduleBehaviors)
+                    if (DateTime.TryParse(arrival, out outData))
+                        return outData;
+
+                    if (DateTime.TryParse(depart, out outData))
+                        return outData;
+
+                    return DateTime.MinValue;
+                };
+
+
+                if (_tickCounter++ > 50)
+                {
+                    _tickCounter = 0;
+                    if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                     {
-                        beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                        var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
+                        {
+                            Event = (string.IsNullOrEmpty(t.ArrivalTime)) ? "ОТПР." : "ПРИБ.",
+                            TypeTrain =
+                                (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburb : TypeTrain.LongDistance,
+                            Note = t.Примечание, //C остановками: ...
+                            PathNumber = t.TrainPathNumber,
+                            NumberOfTrain = t.Num,
+                            Stations = t.Name,
+                            Time = timePars(t.ArrivalTime, t.DepartureTime),
+                        }).ToList();
+
+                        var inData = new UniversalInputType {TableData = table};
+                        foreach (var beh in Binding2GeneralScheduleBehaviors)
+                        {
+                            beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                        }
                     }
                 }
             }

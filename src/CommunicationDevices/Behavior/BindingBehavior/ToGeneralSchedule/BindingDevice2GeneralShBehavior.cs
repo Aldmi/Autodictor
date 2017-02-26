@@ -13,15 +13,25 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 {
     public class BindingDevice2GeneralShBehavior : IBinding2GeneralSchedule, IDisposable
     {
-        private readonly bool _isPaging;
+        #region fields
+
         private readonly Device _device;
 
+        #endregion
 
 
 
+
+
+        #region prop
+
+        public bool IsPaging { get; }
         public UniversalInputType Contrains { get; }
         public PaggingHelper PagingHelper { get; set; }
         public IDisposable DispousePagingListSendRx { get; set; }
+
+        #endregion
+
 
 
 
@@ -36,9 +46,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
             //если указанны настройки пагинатора.
             if (countPage > 0 && timePaging > 0)
             {
-                _isPaging = true;
+                IsPaging = true;
                 PagingHelper = new PaggingHelper(timePaging * 1000, countPage);
-
                 DispousePagingListSendRx = PagingHelper.PagingListSend.Subscribe(OnNext);     //подписка на отправку сообщений пагинатором
             }
         }
@@ -48,22 +57,25 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 
 
 
+
         private void OnNext(PagingList pagingList)
         {
             var inData = new UniversalInputType
-            { TableData = pagingList.List,
-              Note = pagingList.CurrentPage.ToString()};
+            {
+                TableData = pagingList.List,
+                Note = pagingList.CurrentPage.ToString()
+            };
 
             _device.ExhBehavior.AddOneTimeSendData(inData);
-            _device.ExhBehavior.GetData4CycleFunc[0].Initialize(inData);
+
         }
 
 
         public void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains)
         {
-            var filteredTable= inData.TableData.Where(checkContrains).ToList();
+            var filteredTable = inData.TableData.Where(checkContrains).ToList();
 
-            if (_isPaging)
+            if (IsPaging)
             {
                 PagingHelper.PagingBuffer = filteredTable;
             }

@@ -29,8 +29,8 @@
   </DevicesWithSP>
 
   <DevicesWithPC>
-	 <!-- <DevicePc Id="100" Name="PcTable" Address="http://localhost:8000/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1,2,3,4,5" Contrains="ПРИБ." Paging=""/> -->
-	 <DevicePc Id="101" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToGeneral" Contrains="ПРИБ." Paging="7,5"/>
+	 <DevicePc Id="100" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1,2,3,4,5" Contrains="ПРИБ." Paging=""/>
+	 <!-- <DevicePc Id="101" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToGeneral" Contrains="ПРИБ." Paging="7,5"/> -->
   </DevicesWithPC>
    
   <DevicesWithTcpIp>
