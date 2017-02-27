@@ -15,7 +15,6 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Devices;
 using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
-using CommunicationDevices.Behavior.SerialPortBehavior;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
 using MainExample.Properties;

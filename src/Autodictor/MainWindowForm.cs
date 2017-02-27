@@ -266,7 +266,7 @@ namespace MainExample
         private void ИнициализироватьВсеТабло()
         {
             for (var i = 0; i < SoundRecords.Count; i++)
-            {              
+            {
                 var данные = SoundRecords.ElementAt(i).Value;
                 var номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
                 if (номерПути > 0)
@@ -1206,7 +1206,6 @@ namespace MainExample
             }
             #endregion
 
-            //СписокБлижайшихСобытий.OrderBy(key => key.Value);
             lVСобытия_ОбновитьСостояниеТаблицы();
         }
 
@@ -1214,47 +1213,66 @@ namespace MainExample
         // Определение информации для вывода на табло
         private void ОпределитьИнформациюДляОтображенияНаТабло()
         {
-            //if (!РазрешениеРаботы)
-            //    return;
-
-            //ВЫВОД ОБЩЕГО РАСПИСАНИЯ НА ТАБЛО--------------------------
+            //ВЫВОД РАСПИСАНИЯ НА ТАБЛО (из главного окна или из окна расписания)--------------------------
             if (Binding2GeneralScheduleBehaviors != null && Binding2GeneralScheduleBehaviors.Any())
             {
-                Func<string, string, DateTime> timePars = (arrival, depart) =>
-                {
-                    DateTime outData;
-
-                    if (DateTime.TryParse(arrival, out outData))
-                        return outData;
-
-                    if (DateTime.TryParse(depart, out outData))
-                        return outData;
-
-                    return DateTime.MinValue;
-                };
-
-
                 if (_tickCounter++ > 50)
                 {
                     _tickCounter = 0;
-                    if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
-                    {
-                        var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
-                        {
-                            Event = (string.IsNullOrEmpty(t.ArrivalTime)) ? "ОТПР." : "ПРИБ.",
-                            TypeTrain =
-                                (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburb : TypeTrain.LongDistance,
-                            Note = t.Примечание, //C остановками: ...
-                            PathNumber = t.TrainPathNumber,
-                            NumberOfTrain = t.Num,
-                            Stations = t.Name,
-                            Time = timePars(t.ArrivalTime, t.DepartureTime),
-                        }).ToList();
 
-                        var inData = new UniversalInputType {TableData = table};
-                        foreach (var beh in Binding2GeneralScheduleBehaviors)
+                    var binding2MainWindow = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.MainWindow).ToList();
+                    var binding2Shedule = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.Shedule).ToList();
+
+                    Func<string, string, DateTime> timePars = (arrival, depart) =>
+                    {
+                        DateTime outData;
+
+                        if (DateTime.TryParse(arrival, out outData))
+                            return outData;
+
+                        if (DateTime.TryParse(depart, out outData))
+                            return outData;
+
+                        return DateTime.MinValue;
+                    };
+
+                    //Отправить расписание из окна РАСПИАНИЕ
+                    if (binding2Shedule.Any())
+                    {
+                        if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
-                            beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                            var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
+                            {
+                                Event = (string.IsNullOrEmpty(t.ArrivalTime)) ? "ОТПР." : "ПРИБ.",
+                                TypeTrain = (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburb : TypeTrain.LongDistance,
+                                Note = t.Примечание, //C остановками: ...
+                                PathNumber = t.TrainPathNumber,
+                                NumberOfTrain = t.Num,
+                                Stations = t.Name,
+                                Time = timePars(t.ArrivalTime, t.DepartureTime),
+                            }).ToList();
+
+                            var inData = new UniversalInputType { TableData = table };
+                            foreach (var beh in binding2Shedule)
+                            {
+                                beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                            }
+                        }
+                    }
+                    //Отправить расписание из ГЛАВНОГО окна
+                    else
+                    if (binding2MainWindow.Any())
+                    {
+                        if (SoundRecords != null && SoundRecords.Any())
+                        {
+                            var table = SoundRecords                                                      //Where(s => s.Value.ТипСообщения == SoundRecordType.ДвижениеПоезда)
+                                .Select(t => MapSoundRecord2UniveralInputType(t.Value, false)).ToList();
+
+                            var inData = new UniversalInputType { TableData = table };
+                            foreach (var beh in binding2MainWindow)
+                            {
+                                beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                            }
                         }
                     }
                 }
@@ -1522,6 +1540,70 @@ namespace MainExample
             }
 
             return actStr;
+        }
+
+
+
+        private static UniversalInputType MapSoundRecord2UniveralInputType(SoundRecord data, bool isShow)
+        {
+            string actStr = "   ";
+            if ((data.БитыАктивностиПолей & 0x14) == 0x14)
+            {
+                actStr = "СТОЯНКА";
+            }
+            else if ((data.БитыАктивностиПолей & 0x04) == 0x04)
+            {
+                actStr = "ПРИБ.";
+            }
+            else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
+            {
+                actStr = "ОТПР.";
+            }
+
+            TypeTrain typeTrain;
+            if (data.ТипПоезда == ТипПоезда.НеОпределен)
+            {
+                typeTrain = TypeTrain.None;
+            }
+            else if ((data.ТипПоезда == ТипПоезда.Пассажирский) || (data.ТипПоезда == ТипПоезда.Скоростной) || (data.ТипПоезда == ТипПоезда.Скорый) || (data.ТипПоезда == ТипПоезда.Фирменный))
+            {
+                typeTrain = TypeTrain.LongDistance;
+            }
+            else
+            {
+                typeTrain = TypeTrain.Suburb;
+            }
+
+            UniversalInputType outData;
+            if (isShow)
+            {
+                outData = new UniversalInputType
+                {
+                    NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
+
+                    PathNumber = data.НомерПути, //Номер пути выводим всегда.
+                    Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
+                    Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                    Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   ",
+                    Note = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.Примечание : "   ",
+                    TypeTrain = typeTrain
+                };
+            }
+            else
+            {
+                outData = new UniversalInputType
+                {
+                    NumberOfTrain = data.НомерПоезда,
+                    PathNumber = data.НомерПути, //Номер пути выводим всегда.
+                    Event = actStr,
+                    Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),
+                    Stations = data.НазваниеПоезда,
+                    Note = data.Примечание,
+                    TypeTrain = typeTrain
+                };
+            }
+
+            return outData;
         }
 
 

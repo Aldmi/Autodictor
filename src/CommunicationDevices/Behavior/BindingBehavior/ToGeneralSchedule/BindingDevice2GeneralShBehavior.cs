@@ -26,6 +26,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         #region prop
 
         public bool IsPaging { get; }
+        public SourceLoad SourceLoad { get; set; }
         public UniversalInputType Contrains { get; }
         public PaggingHelper PagingHelper { get; set; }
         public IDisposable DispousePagingListSendRx { get; set; }
@@ -38,10 +39,11 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 
         #region ctor
 
-        public BindingDevice2GeneralShBehavior(Device device, UniversalInputType contrains, int countPage, int timePaging)
+        public BindingDevice2GeneralShBehavior(Device device, SourceLoad source, UniversalInputType contrains, int countPage, int timePaging)
         {
             Contrains = contrains;
             _device = device;
+            SourceLoad = source;
 
             //если указанны настройки пагинатора.
             if (countPage > 0 && timePaging > 0)
@@ -100,8 +102,21 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
             if (Contrains == null)
                 return true;
 
+            var timeFilter = false;
+            if (Contrains.Command == Command.Clear)    //"МеньшеТекВремени"
+            {
+                timeFilter = inData.Time < DateTime.Now;
+            }
+
+            if (Contrains.Command == Command.Restart)  //"БольшеТекВремени"
+            {
+                timeFilter = inData.Time > DateTime.Now;
+            }
+
+
             return inData.TypeTrain != Contrains.TypeTrain &&
-                   inData.Event != Contrains.Event;
+                   inData.Event != Contrains.Event &&
+                   timeFilter;
         }
 
 

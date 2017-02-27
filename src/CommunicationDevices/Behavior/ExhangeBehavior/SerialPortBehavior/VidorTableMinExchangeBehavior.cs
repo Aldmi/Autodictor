@@ -5,17 +5,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
+using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.Infrastructure;
-using CommunicationDevices.Infrastructure.VidorDataProvider;
 
-
-namespace CommunicationDevices.Behavior.SerialPortBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
 
     /// <summary>
     /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ МНОГОСТРОЧНОГО ТАБЛО "ДИСПЛЕЙНЫХ СИСТЕМ" ПО ПОСЛЕД. ПОРТУ
     /// </summary>
-    public class VidorTableExchangeBehavior : BaseExhangeSpBehavior
+    public class VidorTableMinExchangeBehavior : BaseExhangeSpBehavior
     {
         #region fields
 
@@ -29,7 +28,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         #region ctor
 
-        public VidorTableExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne, byte countRow)
+        public VidorTableMinExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne, byte countRow)
             : base(port, timeRespone, maxCountFaildRespowne)
         {
             _countRow = countRow;
@@ -48,7 +47,6 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
             var inData = Data4CycleFunc[0];
-
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
@@ -60,23 +58,17 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
                 for (byte i = 0; i < _countRow; i++)
                 {
                     var writeTableProvider = (i < timeSampling.Count) ?
-                        new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                                  // Отрисовка строк
-                        new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
+                        new PanelVidorTableMinWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                           // Отрисовка строк
+                        new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
 
                     await Task.Delay(500, ct);
                 }
-
-                //Запрос синхронизации времени
-                var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
             }
 
-
-
-            await Task.Delay(1000, ct);  //задержка для задания периода опроса.    
+            await Task.Delay(10000, ct);  //задержка для задания периода опроса.    
         }
 
         #endregion
@@ -92,33 +84,28 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
             var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
-            {        
-                var filteredData = inData.TableData;
-                 //фильтрация по ближайшему времени к текущему времени.
-                var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
+            {
+                //фильтрация по ближайшему времени к текущему времени.
+                var excludingArrival = inData.TableData;
+                var filtredCollection = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(2, excludingArrival) : excludingArrival;
 
-                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                filtredCollection.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    var writeTableProvider = (i < timeSampling.Count) ?
-                        new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                                  // Отрисовка строк
-                        new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
+                    var writeTableProvider = (i < filtredCollection.Count) ?
+                        new PanelVidorTableMinWriteDataProvider { InputData = filtredCollection[i], CurrentRow = (byte)(i + 1) } :                                           // Отрисовка строк
+                        new PanelVidorTableMinWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
                     LastSendData = writeTableProvider.InputData;
 
-                    await Task.Delay(1000, ct);
+                    await Task.Delay(300, ct);
                 }
-
-                //Запрос синхронизации времени
-                var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
             }
 
-            await Task.Delay(500, ct);  //задержка для задания периода опроса. 
+            await Task.Delay(10000, ct);  //задержка для задания периода опроса. 
         }
 
         #endregion

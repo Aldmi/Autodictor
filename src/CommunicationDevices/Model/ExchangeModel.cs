@@ -12,10 +12,12 @@ using Communication.Settings;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
-using CommunicationDevices.Behavior.PcBehavior;
-using CommunicationDevices.Behavior.SerialPortBehavior;
-using CommunicationDevices.Behavior.TcpIpBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
 using CommunicationDevices.Infrastructure;
@@ -219,8 +221,11 @@ namespace CommunicationDevices.Model
 
                     case "VidorTable8":
                         maxCountFaildRespowne = 3;
-                        behavior = new VidorTableExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 8);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
+                        var beh = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 8)
+                        {
+                            ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
+                        };
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, beh, xmlDeviceSp.BindingType));
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
@@ -292,7 +297,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDevicePc.BindingType == BindingType.ToGeneral)
                         {
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDevicePc.Contrains, xmlDevicePc.CountPage, xmlDevicePc.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDevicePc.SourceLoad, xmlDevicePc.Contrains, xmlDevicePc.CountPage, xmlDevicePc.TimePaging));
                             //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
                             if (!Binding2GeneralSchedules.Last().IsPaging)
                             {
@@ -321,14 +326,17 @@ namespace CommunicationDevices.Model
             //СОЗДАНИЕ УСТРОЙСТВ С TcpIp ------------------------------------------------------------------------------------------------
             foreach (var xmlDeviceTcpIp in xmlDeviceTcpIpSettings)
             {
-                IExhangeBehavior behavior;
                 byte maxCountFaildRespowne;
                 switch (xmlDeviceTcpIp.Name)
                 {
                     case "VidorTable8":
                         maxCountFaildRespowne = 3;
-                        behavior = new VidorTableExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8);
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, xmlDeviceTcpIp.BindingType));
+                        var beh = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8)
+                        {
+                            ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
+                        };
+                    
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, beh, xmlDeviceTcpIp.BindingType));
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceTcpIp.BindingType == BindingType.ToPath)
@@ -336,7 +344,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (xmlDeviceTcpIp.BindingType == BindingType.ToGeneral)
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDeviceTcpIp.Contrains, xmlDeviceTcpIp.CountPage, xmlDeviceTcpIp.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDeviceTcpIp.SourceLoad, xmlDeviceTcpIp.Contrains, xmlDeviceTcpIp.CountPage, xmlDeviceTcpIp.TimePaging));
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (xmlDeviceTcpIp.BindingType == BindingType.ToArrivalAndDeparture)

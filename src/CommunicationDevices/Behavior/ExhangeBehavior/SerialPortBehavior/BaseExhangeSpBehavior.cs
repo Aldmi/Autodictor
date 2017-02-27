@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
-using System.Reactive.Subjects;
-using Castle.Components.DictionaryAdapter;
 
-
-namespace CommunicationDevices.Behavior.SerialPortBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
     /// <summary>
     /// АБСТРАКТНЫЙ КЛАСС ПОВЕДЕНИЯ ОБМЕНА ПО ПОСЛЕДОВАТЕЛЬНОМУ ПОРТУ.

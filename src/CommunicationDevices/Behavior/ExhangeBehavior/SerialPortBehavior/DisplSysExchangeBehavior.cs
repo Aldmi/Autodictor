@@ -5,25 +5,25 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
+using CommunicationDevices.DataProviders.DisplaySysDataProvider;
 using CommunicationDevices.Infrastructure;
-using CommunicationDevices.Infrastructure.VidorDataProvider;
 
-
-namespace CommunicationDevices.Behavior.SerialPortBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
+
     /// <summary>
-    /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ ТАБЛО "ВИДОР" ПО ПОСЛЕД. ПОРТУ
+    /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ ТАБЛО "ДИСПЛЕЙНЫХ СИСТЕМ" ПО ПОСЛЕД. ПОРТУ
     /// </summary>
-    public class VidorExchangeBehavior : BaseExhangeSpBehavior
+    public class DisplSysExchangeBehavior : BaseExhangeSpBehavior
     {
         #region ctor
 
-        public VidorExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
+        public DisplSysExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
             : base(port, timeRespone, maxCountFaildRespowne)
         {
             //добавляем циклические функции
-            Data4CycleFunc= new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> {new UniversalInputType {Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue} }) ;  //данные для 1-ой циклической функции
-            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> {CycleExcangeService};                      // 1 циклическая функция
+            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
+            ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> { CycleExcangeService };                      // 1 циклическая функция
         }
 
         #endregion
@@ -35,10 +35,10 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
-            //Вывод на путевое табло
-            var writeProvider = new PanelVidorWriteDataProvider { InputData = Data4CycleFunc[0] };
+            var writeProvider = new PanelDispSysWriteDataProvider { InputData = Data4CycleFunc[0] };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            await Task.Delay(1000, ct);  //задержка для задания периода опроса.    
+            await Task.Delay(1000, ct);  //задержка для задания периода опроса.
+
 
             if (writeProvider.IsOutDataValid)
             {
@@ -59,7 +59,7 @@ namespace CommunicationDevices.Behavior.SerialPortBehavior
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
             LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            var writeProvider = new PanelVidorWriteDataProvider { InputData = LastSendData };
+            var writeProvider = new PanelDispSysWriteDataProvider { InputData = LastSendData };
             DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
             await Task.Delay(1000, ct);  //задержка для задания периода опроса.  
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Configuration;
 using System.Xml.Linq;
+using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Infrastructure;
 using Library.Logs;
 
@@ -24,7 +25,8 @@ namespace CommunicationDevices.Settings
 
 
         public BindingType BindingType { get; set; }
-        public IEnumerable<byte> PathNumbers { get; }
+        public IEnumerable<byte> PathNumbers { get; }               // при привязке на путь
+        public SourceLoad SourceLoad { get; set; }                  // при привязке к расписанию
 
         public UniversalInputType Contrains { get; set; }
 
@@ -51,9 +53,18 @@ namespace CommunicationDevices.Settings
                 BindingType= BindingType.None;
             }
             else
-            if(binding.ToLower() == "togeneral")
+            if(binding.ToLower().Contains("togeneral"))
             {
                 BindingType = BindingType.ToGeneral;
+                if (binding.ToLower().Contains("главноеокно"))
+                {
+                    SourceLoad = SourceLoad.MainWindow;
+                }
+                else
+                if (binding.ToLower().Contains("окнорасписания"))
+                {
+                    SourceLoad = SourceLoad.Shedule;
+                }
             }
             else
             if (binding.ToLower() == "toarrivalanddeparture")
@@ -90,6 +101,14 @@ namespace CommunicationDevices.Settings
 
                         case "ДАЛЬН.":
                             Contrains.TypeTrain = TypeTrain.LongDistance;
+                            break;
+
+                        case "МеньшеТекВремени":
+                            Contrains.Command = Command.Clear;             //закодируем состояние в команде
+                            break;
+
+                        case "БольшеТекВремени": 
+                            Contrains.Command = Command.Restart;          //закодируем состояние в команде
                             break;
 
                         default:

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Castle.Core.Internal;
 using CommunicationDevices.Behavior;
-using CommunicationDevices.Behavior.SerialPortBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
 

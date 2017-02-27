@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 using System.Timers;
 using Communication.TcpIp;
 using CommunicationDevices.Infrastructure;
-using CommunicationDevices.Infrastructure.VidorDataProvider;
 using Timer = System.Timers.Timer;
 
 
-namespace CommunicationDevices.Behavior.TcpIpBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 {
-    public class BaseExhangeTcpIpBehavior : IExhangeBehavior, IDisposable
+    public abstract class BaseExhangeTcpIpBehavior : IExhangeBehavior, IDisposable
     {
         #region Fields
 
@@ -48,7 +47,6 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
             }
         }
 
-
         private bool _dataExchangeSuccess;
         public bool DataExchangeSuccess
         {
@@ -60,7 +58,6 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
             }
         }
 
-
         private UniversalInputType _lastSendData;
         public UniversalInputType LastSendData
         {
@@ -71,7 +68,6 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
                 LastSendDataChange.OnNext(this);
             }
         }
-
 
         public CancellationTokenSource Cts { get; set; } = new CancellationTokenSource();
 
@@ -161,13 +157,8 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
         }
 
 
-        public virtual void AddOneTimeSendData(UniversalInputType inData)
-        {
-            //БАЗОВАЯ РЕАЛИЗАЦИЯ
-            return;
-        }
-
-
+        public abstract void AddOneTimeSendData(UniversalInputType inData);
+   
 
 
         /// <summary>

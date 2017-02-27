@@ -6,8 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Communication.Annotations;
 using Communication.Interfaces;
+using CommunicationDevices.Infrastructure;
 
-namespace CommunicationDevices.Infrastructure.DisplaySysDataProvider
+namespace CommunicationDevices.DataProviders.DisplaySysDataProvider
 {
     public class PanelDispSysWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
     {

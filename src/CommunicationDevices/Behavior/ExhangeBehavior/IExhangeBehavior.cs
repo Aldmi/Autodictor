@@ -4,7 +4,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using CommunicationDevices.Infrastructure;
 
-namespace CommunicationDevices.Behavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior
 {
     /// <summary>
     /// УНИВЕРСАЛЬНОЕ ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ СО ВСЕМИ ТАБЛО.

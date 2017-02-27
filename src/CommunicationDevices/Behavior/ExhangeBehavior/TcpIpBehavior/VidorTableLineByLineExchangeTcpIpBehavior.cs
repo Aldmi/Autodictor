@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunicationDevices.DataProviders;
+using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.Infrastructure;
-using CommunicationDevices.Infrastructure.VidorDataProvider;
 
-namespace CommunicationDevices.Behavior.TcpIpBehavior
+
+namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 {
-    public class VidorTableExchangeTcpIpBehavior : BaseExhangeTcpIpBehavior
+    public class VidorTableLineByLineExchangeTcpIpBehavior : BaseExhangeTcpIpBehavior
     {
         #region fields
 
@@ -17,11 +19,19 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
 
 
 
+        #region prop
+
+        public ILineByLineDrawingTableDataProvider ForTableViewDataProvider { get; set; }
+
+        #endregion
+
+
+
 
 
         #region ctor
 
-        public VidorTableExchangeTcpIpBehavior(string connectionString, List<string> internalAddress, byte maxCountFaildRespowne, int timeRespown, byte countRow)
+        public VidorTableLineByLineExchangeTcpIpBehavior(string connectionString, List<string> internalAddress, byte maxCountFaildRespowne, int timeRespown, byte countRow)
             : base(connectionString, maxCountFaildRespowne, timeRespown, 12000)
         {
             _countRow = countRow;
@@ -57,19 +67,25 @@ namespace CommunicationDevices.Behavior.TcpIpBehavior
                         timeSampling.ForEach(t => t.AddressDevice = internalAddr);
                         for (byte i = 0; i < _countRow; i++)
                         {
-                            var writeTableProvider = (i < timeSampling.Count) ?
-                                new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                          // Отрисовка строк
-                                new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = internalAddr }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
+                            //var writeTableProvider = (i < timeSampling.Count) ?
+                            //    new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                          // Отрисовка строк
+                            //    new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = internalAddr }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
 
-                            DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(writeTableProvider);
-                            LastSendData = writeTableProvider.InputData;
+                            ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                               // Отрисовка строк
+                            ForTableViewDataProvider.InputData= (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = internalAddr };          // Обнуление строк
+
+                            DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(ForTableViewDataProvider);
+                            LastSendData = ForTableViewDataProvider.InputData;
 
                             await Task.Delay(500);
                         }
 
                         //Запрос синхронизации времени
-                        var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = internalAddr }, CurrentRow = 0xFF };
-                        DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(syncTimeProvider);
+                       // var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = internalAddr }, CurrentRow = 0xFF };
+
+                        ForTableViewDataProvider.CurrentRow = 0xFF;
+                        ForTableViewDataProvider.InputData = new UniversalInputType {AddressDevice = internalAddr};
+                        DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(ForTableViewDataProvider);
 
                         await Task.Delay(500);
                     }

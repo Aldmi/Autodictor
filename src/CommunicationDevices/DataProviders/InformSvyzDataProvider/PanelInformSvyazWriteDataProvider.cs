@@ -1,13 +1,12 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Communication.Annotations;
 using Communication.Interfaces;
+using CommunicationDevices.Infrastructure;
 
-
-namespace CommunicationDevices.Infrastructure
+namespace CommunicationDevices.DataProviders.InformSvyzDataProvider
 {
 
     public class InformSvyazOutput

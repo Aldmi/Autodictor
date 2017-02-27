@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
-using Communication.SerialPort;
 using CommunicationDevices.Infrastructure;
 using WCFAvtodictor2PcTableContract.DataContract;
 
-namespace CommunicationDevices.Behavior.PcBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior
 {
     public class ExhangePcArivDepartBehavior : ExhangePcBehavior
     {

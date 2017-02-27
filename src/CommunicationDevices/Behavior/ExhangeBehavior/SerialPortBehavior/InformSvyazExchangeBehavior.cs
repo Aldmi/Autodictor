@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
+using CommunicationDevices.DataProviders.InformSvyzDataProvider;
 using CommunicationDevices.Infrastructure;
 
-
-namespace CommunicationDevices.Behavior.SerialPortBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
 
     public class InformSvyazExchangeBehavior : BaseExhangeSpBehavior

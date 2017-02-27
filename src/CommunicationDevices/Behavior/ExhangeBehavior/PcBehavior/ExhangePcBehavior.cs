@@ -14,7 +14,7 @@ using WCFAvtodictor2PcTableContract.DataContract;
 using Timer = System.Timers.Timer;
 
 
-namespace CommunicationDevices.Behavior.PcBehavior
+namespace CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior
 {
 
     /// <summary>
@@ -64,7 +64,6 @@ namespace CommunicationDevices.Behavior.PcBehavior
             }
         }
 
-
         private bool _dataExchangeSuccess;
         public bool DataExchangeSuccess
         {
@@ -90,7 +89,6 @@ namespace CommunicationDevices.Behavior.PcBehavior
             }
         }
 
-
         private UniversalInputType _lastSendData;
         public UniversalInputType LastSendData
         {
@@ -101,7 +99,6 @@ namespace CommunicationDevices.Behavior.PcBehavior
                 LastSendDataChange.OnNext(this);
             }
         }
-
 
         public CancellationTokenSource Cts { get; set; } = new CancellationTokenSource();
 
