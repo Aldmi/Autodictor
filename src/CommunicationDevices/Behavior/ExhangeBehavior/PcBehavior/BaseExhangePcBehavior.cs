@@ -21,7 +21,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior
     /// КЛИЕНТ ОБМЕНА ДАННЫМИ С ПК ТАБЛО.
     /// По интерфейсу IPcTableContract
     /// </summary>
-    public class ExhangePcBehavior : IExhangeBehavior, IDisposable
+    public class BaseExhangePcBehavior : IExhangeBehavior, IDisposable
     {
         #region Fields
 
@@ -109,7 +109,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior
 
         #region ctor
 
-        public ExhangePcBehavior(string connectionString, byte maxCountFaildRespowne)
+        public BaseExhangePcBehavior(string connectionString, byte maxCountFaildRespowne)
         {
             HttpBindingBase binding = new BasicHttpBinding
             {

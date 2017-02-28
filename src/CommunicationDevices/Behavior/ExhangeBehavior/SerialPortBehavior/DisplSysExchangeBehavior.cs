@@ -8,6 +8,7 @@ using Communication.SerialPort;
 using CommunicationDevices.DataProviders.DisplaySysDataProvider;
 using CommunicationDevices.Infrastructure;
 
+
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
 

@@ -10,7 +10,7 @@ using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.DataProviders.VidorDataProvider
 {
-    public class PanelVidorTableMinWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
+    public class PanelVidorTableMinWriteDataProvider : ILineByLineDrawingTableDataProvider
     {
         #region Prop
 

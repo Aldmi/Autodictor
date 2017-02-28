@@ -6,9 +6,9 @@ using WCFAvtodictor2PcTableContract.DataContract;
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior
 {
-    public class ExhangePcArivDepartBehavior : ExhangePcBehavior
+    public class ArivDepartExhangePcBehavior : BaseExhangePcBehavior
     {
-        public ExhangePcArivDepartBehavior(string connectionString, byte maxCountFaildRespowne) : base(connectionString, maxCountFaildRespowne)
+        public ArivDepartExhangePcBehavior(string connectionString, byte maxCountFaildRespowne) : base(connectionString, maxCountFaildRespowne)
         {
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
         }

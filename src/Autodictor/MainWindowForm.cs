@@ -11,6 +11,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.Infrastructure;
 using MainExample.Extension;
+using MainExample.Infrastructure;
 
 
 namespace MainExample
@@ -1312,6 +1313,16 @@ namespace MainExample
                                     SendOnPathTable(данныеOld);
                                 }
                             }
+                            else
+                            {
+                                //ИЗДАНИЕ СОБЫТИЯ ИЗМЕНЕНИЯ ДАННЫХ В ЗАПИСИ SoundRecords.
+                                if (!StructCompare.SoundRecordComparer(ref данные, ref данныеOld))
+                                {
+                                    //на изменение данных
+                                    //SendOnPathTable(данные);
+                                    var t = 6 + 6;
+                                }
+                            }
 
 
                             //ТРАНЗИТНЫЕ
@@ -1362,6 +1373,8 @@ namespace MainExample
                             }
                         }
                     }
+
+
 
                     SoundRecords[key] = данные;
                     SoundRecordsOld[key] = данные;

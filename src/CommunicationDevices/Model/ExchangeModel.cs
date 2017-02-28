@@ -221,11 +221,11 @@ namespace CommunicationDevices.Model
 
                     case "VidorTable8":
                         maxCountFaildRespowne = 3;
-                        var beh = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 8)
+                        var behTable8 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 8, true, 1000)
                         {
                             ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
                         };
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, beh, xmlDeviceSp.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, xmlDeviceSp.BindingType));
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
@@ -246,8 +246,11 @@ namespace CommunicationDevices.Model
 
                     case "VidorTableMin2":
                         maxCountFaildRespowne = 3;
-                        behavior = new VidorTableMinExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 2);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
+                        var behTableMin2 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber),xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 2, false, 10000)
+                        {
+                           ForTableViewDataProvider = new PanelVidorTableMinWriteDataProvider()
+                        };
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, xmlDeviceSp.BindingType));
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceSp.BindingType == BindingType.ToPath)
@@ -284,7 +287,7 @@ namespace CommunicationDevices.Model
                 {
                     case "PcTable":
                         maxCountFaildRespowne = 3;
-                        behavior = new ExhangePcArivDepartBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
+                        behavior = new ArivDepartExhangePcBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
                         Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, xmlDevicePc.BindingType));
 
                         //создание поведения привязка табло к пути.
@@ -331,12 +334,12 @@ namespace CommunicationDevices.Model
                 {
                     case "VidorTable8":
                         maxCountFaildRespowne = 3;
-                        var beh = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8)
+                        var behTable8 = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8, false, 1000)
                         {
                             ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
                         };
                     
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, beh, xmlDeviceTcpIp.BindingType));
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behTable8, xmlDeviceTcpIp.BindingType));
 
                         //создание поведения привязка табло к пути.
                         if (xmlDeviceTcpIp.BindingType == BindingType.ToPath)

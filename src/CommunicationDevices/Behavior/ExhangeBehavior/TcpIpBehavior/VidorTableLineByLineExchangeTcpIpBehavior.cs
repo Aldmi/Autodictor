@@ -19,27 +19,35 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
 
 
+
+
         #region prop
 
         public ILineByLineDrawingTableDataProvider ForTableViewDataProvider { get; set; }
 
-        #endregion
+        public bool IsSyncTime { get; set; }
+        public int PeriodTimer { get; set; }                              //Период опроса в мСек.
 
+        #endregion
 
 
 
 
         #region ctor
 
-        public VidorTableLineByLineExchangeTcpIpBehavior(string connectionString, List<string> internalAddress, byte maxCountFaildRespowne, int timeRespown, byte countRow)
+        public VidorTableLineByLineExchangeTcpIpBehavior(string connectionString, List<string> internalAddress, byte maxCountFaildRespowne, int timeRespown, byte countRow, bool isSyncTime, int periodTimer)
             : base(connectionString, maxCountFaildRespowne, timeRespown, 12000)
         {
             _countRow = countRow;
             InternalAddressCollection = internalAddress;
+            IsSyncTime = isSyncTime;
+            PeriodTimer = periodTimer;
+
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
         }
 
         #endregion
+
 
 
 
@@ -67,10 +75,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                         timeSampling.ForEach(t => t.AddressDevice = internalAddr);
                         for (byte i = 0; i < _countRow; i++)
                         {
-                            //var writeTableProvider = (i < timeSampling.Count) ?
-                            //    new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                          // Отрисовка строк
-                            //    new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = internalAddr }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
-
                             ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                               // Отрисовка строк
                             ForTableViewDataProvider.InputData= (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = internalAddr };          // Обнуление строк
 
@@ -81,13 +85,14 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                         }
 
                         //Запрос синхронизации времени
-                       // var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = internalAddr }, CurrentRow = 0xFF };
+                        if (IsSyncTime)
+                        {
+                            ForTableViewDataProvider.CurrentRow = 0xFF;
+                            ForTableViewDataProvider.InputData = new UniversalInputType {AddressDevice = internalAddr};
+                            DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(ForTableViewDataProvider);
+                        }
 
-                        ForTableViewDataProvider.CurrentRow = 0xFF;
-                        ForTableViewDataProvider.InputData = new UniversalInputType {AddressDevice = internalAddr};
-                        DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(ForTableViewDataProvider);
-
-                        await Task.Delay(500);
+                        await Task.Delay(PeriodTimer);
                     }
                 }
             }
