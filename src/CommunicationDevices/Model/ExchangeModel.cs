@@ -334,7 +334,7 @@ namespace CommunicationDevices.Model
                 {
                     case "VidorTable8":
                         maxCountFaildRespowne = 3;
-                        var behTable8 = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8, false, 1000)
+                        var behTable8 = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8, true, 1000)
                         {
                             ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
                         };
