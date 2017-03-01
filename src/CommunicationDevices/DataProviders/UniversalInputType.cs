@@ -7,7 +7,7 @@ namespace CommunicationDevices.Infrastructure
 {
     public enum TypeTrain {None, Suburb, LongDistance }
 
-    public enum Command { None, Clear, Restart }
+    public enum Command { None, View, Update, Clear, Restart }
 
     public class UniversalInputType
     {

@@ -17,7 +17,7 @@ using MainExample.Infrastructure;
 namespace MainExample
 {
     public enum SoundRecordStatus { Выключена = 0, ОжиданиеВоспроизведения, Воспроизведение, Воспроизведена };
-    public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Очистка };
+    public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Обновление, Очистка };
     public enum SoundRecordType { Обычное = 0, ДвижениеПоезда, ДвижениеПоездаНеПодтвержденное, Предупредительное, Важное };
 
     public struct SoundRecord
@@ -1318,9 +1318,8 @@ namespace MainExample
                                 //ИЗДАНИЕ СОБЫТИЯ ИЗМЕНЕНИЯ ДАННЫХ В ЗАПИСИ SoundRecords.
                                 if (!StructCompare.SoundRecordComparer(ref данные, ref данныеOld))
                                 {
-                                    //на изменение данных
-                                    //SendOnPathTable(данные);
-                                    var t = 6 + 6;
+                                    данные.СостояниеОтображения = TableRecordStatus.Обновление;
+                                    SendOnPathTable(данные);
                                 }
                             }
 
@@ -1340,7 +1339,8 @@ namespace MainExample
                                         (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(10.02))))
                                     {
                                         if ((данные.БитыНештатныхСитуаций & 0x07) == 0x00)
-                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                               (данные.СостояниеОтображения == TableRecordStatus.Обновление))
                                             {
                                                 данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                 данные.НомерПути = "0";
@@ -1359,7 +1359,8 @@ namespace MainExample
                                          (DateTime.Now <= данные.ВремяОтправления.AddMinutes(1.02))))
                                     {
                                         if ((данные.БитыНештатныхСитуаций & 0x07) == 0x00)
-                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение)
+                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                              (данные.СостояниеОтображения == TableRecordStatus.Обновление))
                                             {
                                                 данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                 данные.НомерПути = "0";
@@ -1514,16 +1515,33 @@ namespace MainExample
                         typeTrain = TypeTrain.Suburb;
                     }
 
+                    var command = Command.None;
+                    switch (data.СостояниеОтображения)
+                    {
+                        case TableRecordStatus.Отображение:
+                            command = Command.View;
+                            break;
+
+                        case TableRecordStatus.Очистка:
+                            command = Command.Clear;
+                            break;
+
+                        case TableRecordStatus.Обновление:
+                            command = Command.Update;
+                            break;
+                    }
+
 
                     var inData = new UniversalInputType
                     {
-                        NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
+                        NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
                         PathNumber = data.НомерПути, //Номер пути выводим всегда.
-                        Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
-                        Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
-                        Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   ",
-                        Note = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.Примечание : "   ",
-                        TypeTrain = typeTrain
+                        Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
+                        Time = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                        Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
+                        Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
+                        TypeTrain = typeTrain,
+                        Command = command
                     };
 
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";

@@ -56,22 +56,35 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
             if (!checkContrains(inData))
                 return;
 
-            //inData.Stations = inData.Stations.Trim(new Char[] { '-', ' ' });   //убран знак тире и пробел в названии станции
-
             //привязка на несколько путей
             if (!CollectionPathNumber.Any() || CollectionPathNumber.Count() > 1)
             {
-                if (!string.IsNullOrWhiteSpace(inData.Event))               //ДОБАВИТЬ В ТАБЛ.
-                {
-                    _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);  // Изменили данные для циклического опроса
-                }
-                else                                                        //УДАЛИТЬ ИЗ ТАБЛ.
-                {
-                    var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
-                    if (removeItem != null)
-                    {
-                        _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
-                    }
+                switch (inData.Command)
+                { 
+                    //ДОБАВИТЬ В ТАБЛ.
+                    case Command.View:             
+                        _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);  // Изменили данные для циклического опроса
+                        break;
+
+                    //УДАЛИТЬ ИЗ ТАБЛ.
+                    case Command.Clear:
+                        var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
+                        if (removeItem != null)
+                        {
+                            _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
+                        }
+                        break;
+
+                    // ОБНОВИТЬ В ТАБЛ.
+                    case Command.Update:
+                        var updateItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
+                        if (updateItem != null)
+                        {
+                            var indexUpdateItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.IndexOf(updateItem);
+                            _device.ExhBehavior.GetData4CycleFunc[0].TableData[indexUpdateItem] = inData;
+                        }
+                        break;
+                        
                 }
             }
             else
@@ -79,6 +92,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 //привязка на указанные пути
                 _device.AddCycleFuncData(0, inData);
             }
+
             _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос (выставили запрос сразу на выполнение)
         }
 
