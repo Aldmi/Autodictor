@@ -82,6 +82,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -120,9 +121,14 @@
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\XmlCisSettings.cs" />
-    <Compile Include="Settings\XmlDeviceTcpIpSettings.cs" />
-    <Compile Include="Settings\XmlDevicePcSettings.cs" />
-    <Compile Include="Settings\XmlDeviceSerialPortSettings.cs" />
+    <Compile Include="Settings\XmlSettingFactory.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlBindingSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlContrainsSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlCountRowSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPagingSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlPcSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlTcpIpSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlSpSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communication\Communication.csproj">

@@ -4,6 +4,7 @@ using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 
 
 namespace CommunicationDevices.Devices

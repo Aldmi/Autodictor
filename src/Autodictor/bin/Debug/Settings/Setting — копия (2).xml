@@ -23,8 +23,9 @@
   </SerialPorts>
 
   <DevicesWithSP>
-	 <DeviceSp Id="1" Name="VidorTableStr2" Port="4" Address="1" TimeRespone="1000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4" Contrains="ПРИБ." CountRow="8"/>	 
-	 <DeviceSp Id="2" Name="VidorTableStr1" Port="4" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/>
+	 <DeviceSp Id="1" Name="VidorTableMin2" Port="4" Address="1" TimeRespone="1000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding1="ToPath:3,4" Contrains="ПРИБ."/>
+	 
+	 <DeviceSp Id="2" Name="VidorTable8" Port="4" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" Contrains="ПРИБ."/>
   </DevicesWithSP>
 
   <DevicesWithPC>
@@ -33,20 +34,15 @@
   </DevicesWithPC>
    
   <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/>
+	 <DeviceTcpIp Id="200" Name="VidorTable8" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." Paging=""/>
   </DevicesWithTcpIp>
 </Root>
 
-
-<!-- Если Paging и Contrains не используются их можно не включать в настройки. -->
-
 <!-- Paging="7,12" -->
-<!-- Paging="5,10" - Разбиение на страницы по 5 элементов на каждой, перебирать страницы раз в 10сек. -->
 
+<!-- Paging="5,10" - Разбиение на страницы по 5 элементов на каждой, перебирать страницы раз в 10сек. -->
 <!-- Contrains="ПРИБ.;ПРИГ." - Не выводить прибывающий пригородный поезд. -->
-<!--Варианты (ПРИГ./ДАЛЬН.) 
-             (ПРИБ./ОТПР.) 
-             ("МеньшеТекВремени/БольшеТекВремени") -->
-			 
+<!--Варианты (ПРИГ./ДАЛЬН.) (ПРИБ./ОТПР.)  ("МеньшеТекВремени/БольшеТекВремени") -->
+
 <!-- Binding="ToGeneral:ГлавноеОкно" -->
 <!--Варианты (ГлавноеОкно/ОкноРасписания)-->

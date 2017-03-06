@@ -2,8 +2,7 @@
 using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
-{
-    
+{   
     public enum SourceLoad                       // источник загрузки
     {
         None,

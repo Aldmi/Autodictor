@@ -17,6 +17,7 @@ using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
 using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using MainExample.Properties;
 
 
