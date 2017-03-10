@@ -8,7 +8,6 @@ using Communication.SerialPort;
 using Communication.TcpIp;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.VidorDataProvider;
-using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
@@ -30,7 +29,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         #region prop
 
         public ILineByLineDrawingTableDataProvider ForTableViewDataProvider { get; set; }
-
+        public bool IsSyncTime { get; set; }
+        public int PeriodTimer { get; set; }                              //Период опроса в мСек.
         #endregion
 
 
@@ -38,10 +38,13 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         #region ctor
 
-        public VidorTableLineByLineExchangeSpBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne, byte countRow)
+        public VidorTableLineByLineExchangeSpBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne, byte countRow, bool isSyncTime, int periodTimer)
             : base(port, timeRespone, maxCountFaildRespowne)
         {
             _countRow = countRow;
+            IsSyncTime = isSyncTime;
+            PeriodTimer = periodTimer;
+
             //добавляем циклические функции
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
             ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> { CycleExcangeService };                      // 1 циклическая функция
@@ -79,21 +82,18 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
 
                 //Запрос синхронизации времени
-                //var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
-                //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
-
-                ForTableViewDataProvider.CurrentRow = 0xFF;
-                ForTableViewDataProvider.InputData = new UniversalInputType { AddressDevice = inData.AddressDevice };
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                if (IsSyncTime)
+                {
+                    ForTableViewDataProvider.CurrentRow = 0xFF;
+                    ForTableViewDataProvider.InputData = new UniversalInputType {AddressDevice = inData.AddressDevice};
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                }
             }
 
-
-
-            await Task.Delay(1000, ct);  //задержка для задания периода опроса.    
+            await Task.Delay(PeriodTimer, ct);  //задержка для задания периода опроса.    
         }
 
         #endregion
-
 
 
 
@@ -114,18 +114,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
 
                 timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
-                //for (byte i = 0; i < _countRow; i++)
-                //{
-                //    var writeTableProvider = (i < timeSampling.Count) ?
-                //        new PanelVidorTableWriteDataProvider { InputData = timeSampling[i], CurrentRow = (byte)(i + 1) } :                                                  // Отрисовка строк
-                //        new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = (byte)(i + 1) };   // Обнуление строк
-
-                //    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeTableProvider, ct);
-                //    LastSendData = writeTableProvider.InputData;
-
-                //    await Task.Delay(1000, ct);
-                //}
-
                 for (byte i = 0; i < _countRow; i++)
                 {
                     ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        // Отрисовка строк
@@ -137,17 +125,16 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                     await Task.Delay(500, ct);
                 }
 
-
                 //Запрос синхронизации времени
-                //var syncTimeProvider = new PanelVidorTableWriteDataProvider { InputData = new UniversalInputType { AddressDevice = inData.AddressDevice }, CurrentRow = 0xFF };
-                //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, syncTimeProvider, ct);
-
-                ForTableViewDataProvider.CurrentRow = 0xFF;
-                ForTableViewDataProvider.InputData = new UniversalInputType { AddressDevice = inData.AddressDevice };
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                if (IsSyncTime)
+                {
+                    ForTableViewDataProvider.CurrentRow = 0xFF;
+                    ForTableViewDataProvider.InputData = new UniversalInputType {AddressDevice = inData.AddressDevice};
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                }
             }
 
-            await Task.Delay(500, ct);  //задержка для задания периода опроса. 
+            await Task.Delay(PeriodTimer, ct);  //задержка для задания периода опроса. 
         }
 
         #endregion

@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using CommunicationDevices.Infrastructure;
+using CommunicationDevices.DataProviders;
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior
 {

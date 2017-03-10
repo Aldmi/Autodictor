@@ -143,6 +143,7 @@
       <DependentUpon>BoardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extension\ControlExtentions.cs" />
+    <Compile Include="Infrastructure\StructCompare.cs" />
     <Compile Include="OperativeSheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>

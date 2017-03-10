@@ -2,7 +2,6 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Communication.Interfaces;
-using CommunicationDevices.Infrastructure;
 
 
 namespace CommunicationDevices.DI

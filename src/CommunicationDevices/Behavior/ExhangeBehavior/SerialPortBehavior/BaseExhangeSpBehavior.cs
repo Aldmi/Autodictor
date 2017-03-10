@@ -5,7 +5,7 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
-using CommunicationDevices.Infrastructure;
+using CommunicationDevices.DataProviders;
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {

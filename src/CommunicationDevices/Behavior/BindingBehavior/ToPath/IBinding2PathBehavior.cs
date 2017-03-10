@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommunicationDevices.Infrastructure;
+using CommunicationDevices.DataProviders;
+using CommunicationDevices.Devices;
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 {
@@ -9,8 +10,10 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         string GetDevicesName4Path(byte pathNumber);
 
         IEnumerable<byte> CollectionPathNumber { get; }
+
         string GetDeviceName { get; }
         int GetDeviceId { get; }
+        DeviceSetting GetDeviceSetting { get; }
 
         void InitializeDevicePathInfo();
 

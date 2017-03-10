@@ -5,11 +5,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Communication.Annotations;
-using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.DataProviders.VidorDataProvider
 {
-    public class PanelVidorTableWriteDataProvider : ILineByLineDrawingTableDataProvider //IExchangeDataProvider<UniversalInputType, byte>
+    public class PanelVidorTableWriteDataProvider : ILineByLineDrawingTableDataProvider
     {
         #region Prop
 

@@ -2,8 +2,9 @@
 using Castle.Core.Internal;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.ExhangeBehavior;
-using CommunicationDevices.Infrastructure;
+using CommunicationDevices.DataProviders;
 using CommunicationDevices.Settings;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 
 
 namespace CommunicationDevices.Devices
@@ -21,8 +22,9 @@ namespace CommunicationDevices.Devices
         public string Name { get; private set; }
         public string Description { get; private set; }
         public BindingType BindingType { get; private set; }
+        public IExhangeBehavior ExhBehavior { get; }
 
-        public IExhangeBehavior ExhBehavior { get; }       
+        public DeviceSetting Setting { get; set; }       
 
         #endregion
 
@@ -39,6 +41,8 @@ namespace CommunicationDevices.Devices
             Description = description;
             ExhBehavior = behavior;
             BindingType = bindingType;
+
+            Setting= new DeviceSetting {PathPermission = true};
         }
 
         #endregion

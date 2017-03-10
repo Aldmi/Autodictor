@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using AutoMapper;
 using Castle.Windsor;
 using Communication.SerialPort;
@@ -17,11 +18,15 @@ using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
-using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
+using CommunicationDevices.Settings.XmlCisSettings;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
+
 using Library.Logs;
 using Library.Xml;
 using WCFAvtodictor2PcTableContract.DataContract;
@@ -33,7 +38,7 @@ namespace CommunicationDevices.Model
     /// ОСНОВНОЙ КЛАСС БИЗНЕСС ЛОГИКИ.
     /// СОДЕРЖИТ ВСЕ УСТРОЙСТВА, СЕРВИСЫ, ПОВЕДЕНИЯ НАД УСТРОЙСТВАМИ
     /// </summary>
-    public class ExchangeModel : IDisposable 
+    public class ExchangeModel : IDisposable
     {
         #region field
 
@@ -116,10 +121,10 @@ namespace CommunicationDevices.Model
         {
             //ЗАГРУЗКА НАСТРОЕК----------------------------------------------------------------------------------------------------------------------------
             List<XmlSerialSettings> xmlSerialPorts;
-            List<XmlDeviceSerialPortSettings> xmlDeviceSpSettings;
-            List<XmlDevicePcSettings> xmlDevicePcSettings;
-            List<XmlDeviceTcpIpSettings> xmlDeviceTcpIpSettings;
-            XmlCisSettings xmlCisSetting;
+            List<XmlSpSetting> xmlDeviceSpSettings;
+            List<XmlPcSetting> xmlDevicePcSettings;
+            List<XmlTcpIpSetting> xmlDeviceTcpIpSettings;
+            XmlCisSetting xmlCisSetting;
 
             try
             {
@@ -128,10 +133,10 @@ namespace CommunicationDevices.Model
                     return;
 
                 xmlSerialPorts = XmlSerialSettings.LoadXmlSetting(xmlFile);
-                xmlDeviceSpSettings = XmlDeviceSerialPortSettings.LoadXmlSetting(xmlFile);
-                xmlDevicePcSettings = XmlDevicePcSettings.LoadXmlSetting(xmlFile);
-                xmlDeviceTcpIpSettings = XmlDeviceTcpIpSettings.LoadXmlSetting(xmlFile);
-                xmlCisSetting= XmlCisSettings.LoadXmlSetting(xmlFile);
+                xmlDeviceSpSettings = XmlSettingFactory.CreateXmlSpSetting(xmlFile);
+                xmlDevicePcSettings = XmlSettingFactory.CreateXmlPcSetting(xmlFile);
+                xmlDeviceTcpIpSettings = XmlSettingFactory.CreateXmlTcpIpSetting(xmlFile);
+                xmlCisSetting = XmlCisSetting.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
             {
@@ -165,53 +170,86 @@ namespace CommunicationDevices.Model
             {
                 IExhangeBehavior behavior;
                 byte maxCountFaildRespowne;
+
+                XmlBindingSetting binding = null;
+                XmlContrainsSetting contrains = null;
+                XmlPagingSetting paging = null;
+                XmlCountRowSetting countRow = null;
+
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("Binding"))
+                {
+                    binding = xmlDeviceSp.SpecialDictionary["Binding"] as XmlBindingSetting;
+                }
+
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("Contrains"))
+                {
+                    contrains = xmlDeviceSp.SpecialDictionary["Contrains"] as XmlContrainsSetting;
+                }
+
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("Paging"))
+                {
+                    paging = xmlDeviceSp.SpecialDictionary["Paging"] as XmlPagingSetting;
+                }
+
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("CountRow"))
+                {
+                    countRow = xmlDeviceSp.SpecialDictionary["CountRow"] as XmlCountRowSetting;
+                }
+
+                //привязка обязательный параметр
+                if (binding == null)
+                {
+                    MessageBox.Show($"Не указанны настройки привязки у ус-ва {xmlDeviceSp.Id}");
+                    return;
+                }
+
                 switch (xmlDeviceSp.Name)
                 {
-                    case "DispSys":                      
+                    case "DispSys":
                         maxCountFaildRespowne = 3;
                         behavior = new DisplSysExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
+                        if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                       //Вывод номера пути в пустом сообщении
                         }
 
                         //создание поведения привязка табло к главному расписанию
-                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                        if (binding.BindingType == BindingType.ToGeneral)
                             ;
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
                         Devices.Last().AddCycleFunc();
-                         break;
+                        break;
 
 
                     case "Vidor":
                         maxCountFaildRespowne = 3;
                         behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
+                        if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
 
                         //создание поведения привязка табло к главному расписанию
-                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                        if (binding.BindingType == BindingType.ToGeneral)
                             ;
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
@@ -219,24 +257,32 @@ namespace CommunicationDevices.Model
                         break;
 
 
-                    case "VidorTable8":
+                    case "VidorTableStr1":
                         maxCountFaildRespowne = 3;
-                        var beh = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 8)
+
+                        // кол-во строк обязательный параметр
+                        if (countRow == null)
+                        {
+                            MessageBox.Show($"Не указанны кол-во строк у многострочного табло {xmlDeviceSp.Id}");
+                            return;
+                        }
+
+                        var behTable8 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, countRow.CountRow, true, 1000)
                         {
                             ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
                         };
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, beh, xmlDeviceSp.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, binding.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains));
+                        if (binding.BindingType == BindingType.ToPath)
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
-                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
+                        if (binding.BindingType == BindingType.ToGeneral)
                             ;
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
@@ -244,22 +290,33 @@ namespace CommunicationDevices.Model
                         break;
 
 
-                    case "VidorTableMin2":
+                    case "VidorTableStr2":
                         maxCountFaildRespowne = 3;
-                        behavior = new VidorTableMinExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, 2);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, xmlDeviceSp.BindingType));
+
+                        // кол-во строк обязательный параметр
+                        if (countRow == null)
+                        {
+                            MessageBox.Show($"Не указанны кол-во строк у многострочного табло {xmlDeviceSp.Id}");
+                            return;
+                        }
+
+                        var behTableMin2 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, countRow.CountRow, false, 10000)
+                        {
+                            ForTableViewDataProvider = new PanelVidorTableMinWriteDataProvider()
+                        };
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, binding.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if (xmlDeviceSp.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceSp.PathNumbers, xmlDeviceSp.Contrains));
+                        if (binding.BindingType == BindingType.ToPath)
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
+
 
                         //создание поведения привязка табло к главному расписанию
-                        if (xmlDeviceSp.BindingType == BindingType.ToGeneral)
-                
-                            
+                        if (binding.BindingType == BindingType.ToGeneral)
+                            ;
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceSp.BindingType == BindingType.ToArrivalAndDeparture)
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
@@ -280,24 +337,65 @@ namespace CommunicationDevices.Model
             {
                 IExhangeBehavior behavior;
                 byte maxCountFaildRespowne;
+
+                XmlBindingSetting binding = null;
+                XmlContrainsSetting contrains = null;
+                XmlPagingSetting paging = null;
+                XmlCountRowSetting countRow = null;
+
+                if (xmlDevicePc.SpecialDictionary.ContainsKey("Binding"))
+                {
+                    binding = xmlDevicePc.SpecialDictionary["Binding"] as XmlBindingSetting;
+                }
+
+                if (xmlDevicePc.SpecialDictionary.ContainsKey("Contrains"))
+                {
+                    contrains = xmlDevicePc.SpecialDictionary["Contrains"] as XmlContrainsSetting;
+                }
+
+                if (xmlDevicePc.SpecialDictionary.ContainsKey("Paging"))
+                {
+                    paging = xmlDevicePc.SpecialDictionary["Paging"] as XmlPagingSetting;
+                }
+
+                if (xmlDevicePc.SpecialDictionary.ContainsKey("CountRow"))
+                {
+                    countRow = xmlDevicePc.SpecialDictionary["CountRow"] as XmlCountRowSetting;
+                }
+
+                //привязка обязательный параметр
+                if (binding == null)
+                {
+                    MessageBox.Show($"Не указанны настройки привязки у ус-ва {xmlDevicePc.Id}");
+                    return;
+                }
+
                 switch (xmlDevicePc.Name)
                 {
                     case "PcTable":
                         maxCountFaildRespowne = 3;
-                        behavior = new ExhangePcArivDepartBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, xmlDevicePc.BindingType));
+
+                        // кол-во строк обязательный параметр
+                        if (paging == null)
+                        {
+                            MessageBox.Show($"Не указанны настройки paging у PcTable табло {xmlDevicePc.Id}");
+                            return;
+                        }
+
+                        behavior = new ArivDepartExhangePcBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
+                        Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, binding.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if (xmlDevicePc.BindingType == BindingType.ToPath)
+                        if (binding.BindingType == BindingType.ToPath)
                         {
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDevicePc.PathNumbers, xmlDevicePc.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
                             Devices.Last().AddCycleFunc(); //добавим все функции циклического опроса
                         }
 
                         //создание поведения привязка табло к главному расписанию
-                        if (xmlDevicePc.BindingType == BindingType.ToGeneral)
+                        if (binding.BindingType == BindingType.ToGeneral)
                         {
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDevicePc.SourceLoad, xmlDevicePc.Contrains, xmlDevicePc.CountPage, xmlDevicePc.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
                             //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
                             if (!Binding2GeneralSchedules.Last().IsPaging)
                             {
@@ -306,10 +404,10 @@ namespace CommunicationDevices.Model
                         }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDevicePc.BindingType == BindingType.ToArrivalAndDeparture)
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
-                 
+
                         break;
 
 
@@ -327,27 +425,69 @@ namespace CommunicationDevices.Model
             foreach (var xmlDeviceTcpIp in xmlDeviceTcpIpSettings)
             {
                 byte maxCountFaildRespowne;
+
+                XmlBindingSetting binding = null;
+                XmlContrainsSetting contrains = null;
+                XmlPagingSetting paging = null;
+                XmlCountRowSetting countRow = null;
+
+                if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Binding"))
+                {
+                    binding = xmlDeviceTcpIp.SpecialDictionary["Binding"] as XmlBindingSetting;
+                }
+
+                if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Contrains"))
+                {
+                    contrains = xmlDeviceTcpIp.SpecialDictionary["Contrains"] as XmlContrainsSetting;
+                }
+
+                if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Paging"))
+                {
+                    paging = xmlDeviceTcpIp.SpecialDictionary["Paging"] as XmlPagingSetting;
+                }
+
+                if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("CountRow"))
+                {
+                    countRow = xmlDeviceTcpIp.SpecialDictionary["CountRow"] as XmlCountRowSetting;
+                }
+
+                //привязка обязательный параметр
+                if (binding == null)
+                {
+                    MessageBox.Show($"Не указанны настройки привязки у ус-ва {xmlDeviceTcpIp.Id}");
+                    return;
+                }
+
+
                 switch (xmlDeviceTcpIp.Name)
                 {
-                    case "VidorTable8":
+                    case "VidorTableStr1":
                         maxCountFaildRespowne = 3;
-                        var beh = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, 8)
+
+                        // кол-во строк обязательный параметр
+                        if (countRow == null)
+                        {
+                            MessageBox.Show($"Не указанны кол-во строк у многострочного табло {xmlDeviceTcpIp.Id}");
+                            return;
+                        }
+
+                        var behTable8 = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, countRow.CountRow, true, 1000)
                         {
                             ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
                         };
-                    
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, beh, xmlDeviceTcpIp.BindingType));
+
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behTable8, binding.BindingType));
 
                         //создание поведения привязка табло к пути.
-                        if (xmlDeviceTcpIp.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), xmlDeviceTcpIp.PathNumbers, xmlDeviceTcpIp.Contrains));
+                        if (binding.BindingType == BindingType.ToPath)
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
-                        if (xmlDeviceTcpIp.BindingType == BindingType.ToGeneral)
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), xmlDeviceTcpIp.SourceLoad, xmlDeviceTcpIp.Contrains, xmlDeviceTcpIp.CountPage, xmlDeviceTcpIp.TimePaging));
+                        if (binding.BindingType == BindingType.ToGeneral)
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (xmlDeviceTcpIp.BindingType == BindingType.ToArrivalAndDeparture)
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
@@ -355,7 +495,7 @@ namespace CommunicationDevices.Model
                         break;
 
 
-                     default:
+                    default:
                         ErrorString = $" Устройсвто с именем {xmlDeviceTcpIp.Name} не найденно";
                         Log.log.Error(ErrorString);
                         throw new Exception(ErrorString);
@@ -363,8 +503,8 @@ namespace CommunicationDevices.Model
             }
 
 
-             //ЗАПУТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ
-             //Защита от повторного открытия одного и тогоже порта разными ус-вами.   
+            //ЗАПУТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ
+            //Защита от повторного открытия одного и тогоже порта разными ус-вами.   
             var serialPortDev = Devices.Where(d => d.ExhBehavior is BaseExhangeSpBehavior).ToList();
             foreach (var devSp in serialPortDev.GroupBy(d => d.ExhBehavior.NumberPort).Select(g => g.First()))
             {
@@ -383,7 +523,7 @@ namespace CommunicationDevices.Model
         public void Dispose()
         {
             CisClient?.Dispose();
-            MasterSerialPorts?.ForEach(s=> s.Dispose());
+            MasterSerialPorts?.ForEach(s => s.Dispose());
         }
     }
 }

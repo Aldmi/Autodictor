@@ -82,6 +82,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -98,9 +99,8 @@
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
     <Compile Include="DataProviders\ILineByLineDrawingTableDataProvider.cs" />
-    <Compile Include="Behavior\ExhangeBehavior\PcBehavior\ExhangePcArivDepartBehavior.cs" />
-    <Compile Include="Behavior\ExhangeBehavior\PcBehavior\ExhangePcBehavior.cs" />
-    <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\VidorTableMinExchangeBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\PcBehavior\ArivDepartExhangePcBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\PcBehavior\BaseExhangePcBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\VidorTableLineByLineExchangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\VidorExchangeBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\DisplSysExchangeBehavior.cs" />
@@ -111,6 +111,7 @@
     <Compile Include="Behavior\ExhangeBehavior\TcpIpBehavior\VidorTableLineByLineExchangeTcpIpBehavior.cs" />
     <Compile Include="ClientWCF\CisClient.cs" />
     <Compile Include="Devices\Device.cs" />
+    <Compile Include="Devices\DeviceSetting.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
     <Compile Include="DataProviders\DisplaySysDataProvider\PanelDispSysWriteDataProvider.cs" />
     <Compile Include="DataProviders\InformSvyzDataProvider\PanelInformSvyazWriteDataProvider.cs" />
@@ -120,10 +121,15 @@
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\XmlCisSettings.cs" />
-    <Compile Include="Settings\XmlDeviceTcpIpSettings.cs" />
-    <Compile Include="Settings\XmlDevicePcSettings.cs" />
-    <Compile Include="Settings\XmlDeviceSerialPortSettings.cs" />
+    <Compile Include="Settings\XmlCisSettings\XmlCisSetting.cs" />
+    <Compile Include="Settings\XmlSettingFactory.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlBindingSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlContrainsSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlCountRowSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPagingSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlPcSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlTcpIpSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlSpSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communication\Communication.csproj">

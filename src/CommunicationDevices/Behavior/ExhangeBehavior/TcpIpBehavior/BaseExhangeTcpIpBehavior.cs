@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Communication.TcpIp;
-using CommunicationDevices.Infrastructure;
+using CommunicationDevices.DataProviders;
 using Timer = System.Timers.Timer;
 
 

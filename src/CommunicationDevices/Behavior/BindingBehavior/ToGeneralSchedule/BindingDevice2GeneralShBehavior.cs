@@ -5,8 +5,8 @@ using System.Linq;
 using System.ServiceModel;
 using System.Timers;
 using CommunicationDevices.Behavior.BindingBehavior.Helpers;
+using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
-using CommunicationDevices.Infrastructure;
 
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule

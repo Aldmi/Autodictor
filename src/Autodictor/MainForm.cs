@@ -13,7 +13,6 @@ using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
-using CommunicationDevices.Infrastructure;
 using MainExample.Extension;
 
 
@@ -381,6 +380,11 @@ namespace MainExample
         {
             СписокВоспроизведения список = new СписокВоспроизведения();
             список.ShowDialog();
+        }
+
+        private void timer_Clock_Tick(object sender, EventArgs e)
+        {
+            toolClockLabel.Text = DateTime.Now.ToLongTimeString();
         }
     }
 }

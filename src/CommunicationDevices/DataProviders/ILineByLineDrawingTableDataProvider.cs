@@ -1,5 +1,4 @@
 ﻿using Communication.Interfaces;
-using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.DataProviders
 {

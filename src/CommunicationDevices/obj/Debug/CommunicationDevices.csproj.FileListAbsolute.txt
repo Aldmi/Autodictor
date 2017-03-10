@@ -333,3 +333,38 @@ D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Thr
 D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
 D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\NLog.config
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\AutoMapper.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Library.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\MoreLinq.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\NLog.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.PlatformServices.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\WCFAvtodictor2PcTableContract.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\WCFCis2AvtodictorContract.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Communication.pdb
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Library.pdb
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\WCFAvtodictor2PcTableContract.pdb
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\WCFCis2AvtodictorContract.pdb
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\AutoMapper.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\MoreLinq.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\NLog.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.PlatformServices.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Threading.xml
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
+D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb

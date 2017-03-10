@@ -6,11 +6,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Communication.Annotations;
 using Communication.Interfaces;
-using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.DataProviders.VidorDataProvider
 {
-    public class PanelVidorTableMinWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
+    public class PanelVidorTableMinWriteDataProvider : ILineByLineDrawingTableDataProvider
     {
         #region Prop
 

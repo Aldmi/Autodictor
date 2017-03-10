@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.controlSamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +72,10 @@
             this.TSMIПоВоскресенью = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIПоКалендарю = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolClockLabel = new System.Windows.Forms.ToolStripLabel();
+            this.timer_Clock = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -102,14 +107,14 @@
             this.отображатьНеАктивныеПоездаToolStripMenuItem,
             this.добавитьВременныйПоездВРасписаниеToolStripMenuItem});
             this.controlSamplesToolStripMenuItem.Name = "controlSamplesToolStripMenuItem";
-            this.controlSamplesToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.controlSamplesToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.controlSamplesToolStripMenuItem.Text = "&Расписание";
             // 
             // mainWindow
             // 
             this.mainWindow.Name = "mainWindow";
             this.mainWindow.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.mainWindow.Size = new System.Drawing.Size(290, 22);
+            this.mainWindow.Size = new System.Drawing.Size(304, 22);
             this.mainWindow.Text = "&Основное окно";
             this.mainWindow.ToolTipText = "Окно, содержащее текущий список программы";
             this.mainWindow.Click += new System.EventHandler(this.buttonExample_Click);
@@ -118,7 +123,7 @@
             // 
             this.trainMessages.Name = "trainMessages";
             this.trainMessages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F2)));
-            this.trainMessages.Size = new System.Drawing.Size(290, 22);
+            this.trainMessages.Size = new System.Drawing.Size(304, 22);
             this.trainMessages.Text = "&Расписание движения поездов";
             this.trainMessages.Click += new System.EventHandler(this.listExample_Click);
             // 
@@ -126,7 +131,7 @@
             // 
             this.regularMessages.Name = "regularMessages";
             this.regularMessages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F3)));
-            this.regularMessages.Size = new System.Drawing.Size(290, 22);
+            this.regularMessages.Size = new System.Drawing.Size(304, 22);
             this.regularMessages.Text = "Р&егулярные сообщения";
             this.regularMessages.Click += new System.EventHandler(this.validationExample_Click);
             // 
@@ -134,7 +139,7 @@
             // 
             this.alarmMessages.Name = "alarmMessages";
             this.alarmMessages.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.alarmMessages.Size = new System.Drawing.Size(290, 22);
+            this.alarmMessages.Size = new System.Drawing.Size(304, 22);
             this.alarmMessages.Text = "&Внештатные сообщения";
             this.alarmMessages.Click += new System.EventHandler(this.textBoxExample_Click);
             // 
@@ -143,13 +148,13 @@
             this.отображатьНеАктивныеПоездаToolStripMenuItem.Checked = true;
             this.отображатьНеАктивныеПоездаToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.отображатьНеАктивныеПоездаToolStripMenuItem.Name = "отображатьНеАктивныеПоездаToolStripMenuItem";
-            this.отображатьНеАктивныеПоездаToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
+            this.отображатьНеАктивныеПоездаToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.отображатьНеАктивныеПоездаToolStripMenuItem.Text = "Отображать не активные поезда";
             // 
             // добавитьВременныйПоездВРасписаниеToolStripMenuItem
             // 
             this.добавитьВременныйПоездВРасписаниеToolStripMenuItem.Name = "добавитьВременныйПоездВРасписаниеToolStripMenuItem";
-            this.добавитьВременныйПоездВРасписаниеToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
+            this.добавитьВременныйПоездВРасписаниеToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.добавитьВременныйПоездВРасписаниеToolStripMenuItem.Text = "Добавить временный поезд в расписание";
             // 
             // dataSamplesToolStripMenuItem
@@ -160,14 +165,14 @@
             this.добавитьСтатическоеСообщениеToolStripMenuItem,
             this.добавитьВнештатныйПоездToolStripMenuItem});
             this.dataSamplesToolStripMenuItem.Name = "dataSamplesToolStripMenuItem";
-            this.dataSamplesToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
+            this.dataSamplesToolStripMenuItem.Size = new System.Drawing.Size(139, 20);
             this.dataSamplesToolStripMenuItem.Text = "&Звуковые сообщения";
             // 
             // staticSound
             // 
             this.staticSound.Name = "staticSound";
             this.staticSound.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
-            this.staticSound.Size = new System.Drawing.Size(287, 22);
+            this.staticSound.Size = new System.Drawing.Size(305, 22);
             this.staticSound.Text = "&Статические сообщения";
             this.staticSound.ToolTipText = "Список статических сообщений системы";
             this.staticSound.Click += new System.EventHandler(this.dataSetExample_Click);
@@ -176,7 +181,7 @@
             // 
             this.dynamicSound.Name = "dynamicSound";
             this.dynamicSound.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F2)));
-            this.dynamicSound.Size = new System.Drawing.Size(287, 22);
+            this.dynamicSound.Size = new System.Drawing.Size(305, 22);
             this.dynamicSound.Text = "&Динамические сообщения";
             this.dynamicSound.Click += new System.EventHandler(this.arrayDataSourceExample_Click);
             // 
@@ -184,7 +189,7 @@
             // 
             this.добавитьСтатическоеСообщениеToolStripMenuItem.Name = "добавитьСтатическоеСообщениеToolStripMenuItem";
             this.добавитьСтатическоеСообщениеToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F3)));
-            this.добавитьСтатическоеСообщениеToolStripMenuItem.Size = new System.Drawing.Size(287, 22);
+            this.добавитьСтатическоеСообщениеToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.добавитьСтатическоеСообщениеToolStripMenuItem.Text = "Добавить статическое сообщение";
             this.добавитьСтатическоеСообщениеToolStripMenuItem.Click += new System.EventHandler(this.добавитьСтатическоеСообщениеToolStripMenuItem_Click);
             // 
@@ -192,7 +197,7 @@
             // 
             this.добавитьВнештатныйПоездToolStripMenuItem.Name = "добавитьВнештатныйПоездToolStripMenuItem";
             this.добавитьВнештатныйПоездToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.добавитьВнештатныйПоездToolStripMenuItem.Size = new System.Drawing.Size(287, 22);
+            this.добавитьВнештатныйПоездToolStripMenuItem.Size = new System.Drawing.Size(305, 22);
             this.добавитьВнештатныйПоездToolStripMenuItem.Text = "Добавить внештатный поезд";
             this.добавитьВнештатныйПоездToolStripMenuItem.Click += new System.EventHandler(this.добавитьВнештатныйПоездToolStripMenuItem_Click);
             // 
@@ -201,13 +206,13 @@
             this.таблоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Boards});
             this.таблоToolStripMenuItem.Name = "таблоToolStripMenuItem";
-            this.таблоToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.таблоToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.таблоToolStripMenuItem.Text = "Устройства";
             // 
             // Boards
             // 
             this.Boards.Name = "Boards";
-            this.Boards.Size = new System.Drawing.Size(105, 22);
+            this.Boards.Size = new System.Drawing.Size(108, 22);
             this.Boards.Text = "Табло";
             this.Boards.Click += new System.EventHandler(this.Boards_Click);
             // 
@@ -217,20 +222,20 @@
             this.OperativeShedules,
             this.RegulatoryShedules});
             this.данныеЦИСToolStripMenuItem.Name = "данныеЦИСToolStripMenuItem";
-            this.данныеЦИСToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.данныеЦИСToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
             this.данныеЦИСToolStripMenuItem.Text = "Данные ЦИС";
             // 
             // OperativeShedules
             // 
             this.OperativeShedules.Name = "OperativeShedules";
-            this.OperativeShedules.Size = new System.Drawing.Size(204, 22);
+            this.OperativeShedules.Size = new System.Drawing.Size(215, 22);
             this.OperativeShedules.Text = "Оперативное расписание";
             this.OperativeShedules.Click += new System.EventHandler(this.OperativeShedules_Click);
             // 
             // RegulatoryShedules
             // 
             this.RegulatoryShedules.Name = "RegulatoryShedules";
-            this.RegulatoryShedules.Size = new System.Drawing.Size(204, 22);
+            this.RegulatoryShedules.Size = new System.Drawing.Size(215, 22);
             this.RegulatoryShedules.Text = "Регулярное расписание";
             this.RegulatoryShedules.Click += new System.EventHandler(this.RegulatoryShedules_Click);
             // 
@@ -239,13 +244,13 @@
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.настройкиToolStripMenuItem1});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // настройкиToolStripMenuItem1
             // 
             this.настройкиToolStripMenuItem1.Name = "настройкиToolStripMenuItem1";
-            this.настройкиToolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
+            this.настройкиToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
             this.настройкиToolStripMenuItem1.Text = "Общие настройки";
             this.настройкиToolStripMenuItem1.Click += new System.EventHandler(this.настройкиToolStripMenuItem1_Click);
             // 
@@ -255,7 +260,7 @@
             this.просмотрСправкиToolStripMenuItem,
             this.оПрограммеToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.справкаToolStripMenuItem.Text = "&Справка";
             // 
             // просмотрСправкиToolStripMenuItem
@@ -263,7 +268,7 @@
             this.просмотрСправкиToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("просмотрСправкиToolStripMenuItem.Image")));
             this.просмотрСправкиToolStripMenuItem.Name = "просмотрСправкиToolStripMenuItem";
             this.просмотрСправкиToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.просмотрСправкиToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.просмотрСправкиToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.просмотрСправкиToolStripMenuItem.Text = "&Просмотр справки";
             this.просмотрСправкиToolStripMenuItem.Click += new System.EventHandler(this.просмотрСправкиToolStripMenuItem_Click);
             // 
@@ -271,7 +276,7 @@
             // 
             this.оПрограммеToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("оПрограммеToolStripMenuItem.Image")));
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.оПрограммеToolStripMenuItem.Text = "&О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
@@ -285,10 +290,13 @@
             this.tSBВоспроизвести,
             this.tSBВключить,
             this.tSDDBРаботаПоДням,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripSeparator2,
+            this.toolClockLabel,
+            this.toolStripSeparator3});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
-            this.tSCommands.Size = new System.Drawing.Size(1241, 27);
+            this.tSCommands.Size = new System.Drawing.Size(1241, 38);
             this.tSCommands.TabIndex = 3;
             this.tSCommands.Text = "toolStrip1";
             // 
@@ -302,7 +310,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(82, 24);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(82, 27);
             this.toolStripDropDownButton1.Text = "Вид окон";
             // 
             // toolStripMenuItem1
@@ -324,7 +332,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
             // tSLСостояниеСвязиСЦИС
             // 
@@ -334,7 +342,7 @@
             this.tSLСостояниеСвязиСЦИС.Image = ((System.Drawing.Image)(resources.GetObject("tSLСостояниеСвязиСЦИС.Image")));
             this.tSLСостояниеСвязиСЦИС.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSLСостояниеСвязиСЦИС.Name = "tSLСостояниеСвязиСЦИС";
-            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 24);
+            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 27);
             this.tSLСостояниеСвязиСЦИС.Text = "ЦИС НЕ на связи";
             // 
             // tSBОбновитьСписок
@@ -344,7 +352,7 @@
             this.tSBОбновитьСписок.Image = ((System.Drawing.Image)(resources.GetObject("tSBОбновитьСписок.Image")));
             this.tSBОбновитьСписок.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBОбновитьСписок.Name = "tSBОбновитьСписок";
-            this.tSBОбновитьСписок.Size = new System.Drawing.Size(144, 24);
+            this.tSBОбновитьСписок.Size = new System.Drawing.Size(144, 27);
             this.tSBОбновитьСписок.Text = "ОБНОВИТЬ СПИСОК";
             // 
             // tSBВоспроизвести
@@ -354,7 +362,7 @@
             this.tSBВоспроизвести.Image = ((System.Drawing.Image)(resources.GetObject("tSBВоспроизвести.Image")));
             this.tSBВоспроизвести.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBВоспроизвести.Name = "tSBВоспроизвести";
-            this.tSBВоспроизвести.Size = new System.Drawing.Size(130, 24);
+            this.tSBВоспроизвести.Size = new System.Drawing.Size(130, 27);
             this.tSBВоспроизвести.Text = "ВОСПРОИЗВЕСТИ";
             // 
             // tSBВключить
@@ -365,7 +373,7 @@
             this.tSBВключить.Image = ((System.Drawing.Image)(resources.GetObject("tSBВключить.Image")));
             this.tSBВключить.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBВключить.Name = "tSBВключить";
-            this.tSBВключить.Size = new System.Drawing.Size(88, 24);
+            this.tSBВключить.Size = new System.Drawing.Size(88, 27);
             this.tSBВключить.Text = "ВКЛЮЧИТЬ";
             // 
             // tSDDBРаботаПоДням
@@ -385,7 +393,7 @@
             this.tSDDBРаботаПоДням.Image = ((System.Drawing.Image)(resources.GetObject("tSDDBРаботаПоДням.Image")));
             this.tSDDBРаботаПоДням.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSDDBРаботаПоДням.Name = "tSDDBРаботаПоДням";
-            this.tSDDBРаботаПоДням.Size = new System.Drawing.Size(188, 24);
+            this.tSDDBРаботаПоДням.Size = new System.Drawing.Size(188, 27);
             this.tSDDBРаботаПоДням.Text = "РАБОТА ПО КАЛЕНДАРЮ";
             // 
             // TSMIПоПонедельнику
@@ -453,9 +461,37 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(217, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(217, 27);
             this.toolStripButton1.Text = "ОЧЕРЕДЬ ВОСПРОИЗВЕДЕНИЯ";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.toolStripSeparator2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
+            // 
+            // toolClockLabel
+            // 
+            this.toolClockLabel.BackColor = System.Drawing.Color.Red;
+            this.toolClockLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolClockLabel.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.toolClockLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.toolClockLabel.Name = "toolClockLabel";
+            this.toolClockLabel.Size = new System.Drawing.Size(131, 35);
+            this.toolClockLabel.Text = "00:00:00";
+            // 
+            // timer_Clock
+            // 
+            this.timer_Clock.Enabled = true;
+            this.timer_Clock.Interval = 1000;
+            this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
             // 
             // MainForm
             // 
@@ -526,6 +562,10 @@
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem добавитьВнештатныйПоездToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel toolClockLabel;
+        private System.Windows.Forms.Timer timer_Clock;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
 
-namespace CommunicationDevices.Infrastructure
+namespace CommunicationDevices.DataProviders
 {
     public enum TypeTrain {None, Suburb, LongDistance }
 
-    public enum Command { None, Clear, Restart }
+    public enum Command { None, View, Update, Clear, Restart }
 
     public class UniversalInputType
     {

@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Timers;
+using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
-using CommunicationDevices.Infrastructure;
 
 namespace CommunicationDevices.Behavior.BindingBehavior.Helpers
 {

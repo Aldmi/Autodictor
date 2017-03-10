@@ -12,11 +12,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 using MainExample.Extension;
 using WCFCis2AvtodictorContract.DataContract;
-using CommunicationDevices.Infrastructure;
 using CommunicationDevices.Settings;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using MainExample.Properties;
 
 
