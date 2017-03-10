@@ -92,25 +92,25 @@ namespace MainExample
 
         private bool РазрешениеРаботы = false;
 
-        static public SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
-        static public SortedDictionary<string, SoundRecord> SoundRecordsOld = new SortedDictionary<string, SoundRecord>();
+        public static SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
+        public static SortedDictionary<string, SoundRecord> SoundRecordsOld = new SortedDictionary<string, SoundRecord>();
 
-        static public SortedDictionary<string, СтатическоеСообщение> СтатическиеЗвуковыеСообщения = new SortedDictionary<string, СтатическоеСообщение>();
+        public static SortedDictionary<string, СтатическоеСообщение> СтатическиеЗвуковыеСообщения = new SortedDictionary<string, СтатическоеСообщение>();
 
-        static public SortedDictionary<string, ОписаниеСобытия> СписокБлижайшихСобытий = new SortedDictionary<string, ОписаниеСобытия>();
+        public static SortedDictionary<string, ОписаниеСобытия> СписокБлижайшихСобытий = new SortedDictionary<string, ОписаниеСобытия>();
 
 
-        static private int ID = 1;
+        private static int ID = 1;
         private bool ОбновлениеСписка = false;
 
-        static public MainWindowForm myMainForm = null;
+        public static MainWindowForm myMainForm = null;
 
         public static List<string> ОчередьВоспроизводимыхЗвуковыхСообщений = new List<string>();
         private int VisibleMode = 0;
 
         public CisClient CisClient { get; }
-        static public IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
-        static public IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
+        public static IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
+        public static IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
         public int ProgressLoadMainList { get; set; }
 
@@ -1271,13 +1271,11 @@ namespace MainExample
                     {
                         if (SoundRecords != null && SoundRecords.Any())
                         {
-                            var table = SoundRecords
-                                .Select(t => MapSoundRecord2UniveralInputType(t.Value, false)).ToList();
-
-                            var inData = new UniversalInputType { TableData = table };
                             foreach (var beh in binding2MainWindow)
                             {
-                                beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                                //var table = SoundRecords.Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                //var inData = new UniversalInputType { TableData = table };
+                                //beh.InitializePagingBuffer(inData, beh.CheckContrains);
                             }
                         }
                     }
@@ -1492,80 +1490,81 @@ namespace MainExample
                 var beh = Binding2PathBehaviors.FirstOrDefault(b => b.GetDeviceId == devId);
                 if (beh != null)
                 {
-                    string actStr = "   ";
-                    if ((data.БитыАктивностиПолей & 0x14) == 0x14)
-                    {
-                        actStr = "СТОЯНКА";
-                    }
-                    else if ((data.БитыАктивностиПолей & 0x04) == 0x04)
-                    {
-                        actStr = "ПРИБ.";
-                    }
-                    else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
-                    {
-                        actStr = "ОТПР.";
-                    }
+                    //string actStr = "   ";
+                    //if ((data.БитыАктивностиПолей & 0x14) == 0x14)
+                    //{
+                    //    actStr = "СТОЯНКА";
+                    //}
+                    //else if ((data.БитыАктивностиПолей & 0x04) == 0x04)
+                    //{
+                    //    actStr = "ПРИБ.";
+                    //}
+                    //else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
+                    //{
+                    //    actStr = "ОТПР.";
+                    //}
 
-                    TypeTrain typeTrain;
-                    if (data.ТипПоезда == ТипПоезда.НеОпределен)
-                    {
-                        typeTrain = TypeTrain.None;
-                    }
-                    else if ((data.ТипПоезда == ТипПоезда.Пассажирский) || (data.ТипПоезда == ТипПоезда.Скоростной) || (data.ТипПоезда == ТипПоезда.Скорый) || (data.ТипПоезда == ТипПоезда.Фирменный))
-                    {
-                        typeTrain = TypeTrain.LongDistance;
-                    }
-                    else
-                    {
-                        typeTrain = TypeTrain.Suburb;
-                    }
+                    //TypeTrain typeTrain;
+                    //if (data.ТипПоезда == ТипПоезда.НеОпределен)
+                    //{
+                    //    typeTrain = TypeTrain.None;
+                    //}
+                    //else if ((data.ТипПоезда == ТипПоезда.Пассажирский) || (data.ТипПоезда == ТипПоезда.Скоростной) || (data.ТипПоезда == ТипПоезда.Скорый) || (data.ТипПоезда == ТипПоезда.Фирменный))
+                    //{
+                    //    typeTrain = TypeTrain.LongDistance;
+                    //}
+                    //else
+                    //{
+                    //    typeTrain = TypeTrain.Suburb;
+                    //}
 
-                    var command = Command.None;
-                    switch (data.СостояниеОтображения)
-                    {
-                        case TableRecordStatus.Отображение:
-                            command = Command.View;
-                            break;
+                    //var command = Command.None;
+                    //switch (data.СостояниеОтображения)
+                    //{
+                    //    case TableRecordStatus.Отображение:
+                    //        command = Command.View;
+                    //        break;
 
-                        case TableRecordStatus.Очистка:
-                            command = Command.Clear;
-                            break;
+                    //    case TableRecordStatus.Очистка:
+                    //        command = Command.Clear;
+                    //        break;
 
-                        case TableRecordStatus.Обновление:
-                            command = Command.Update;
-                            break;
-                    }
+                    //    case TableRecordStatus.Обновление:
+                    //        command = Command.Update;
+                    //        break;
+                    //}
 
-                    var номерПути = string.Empty;
-                    switch (data.РазрешениеНаОтображениеПути)
-                    {
-                        case PathPermissionType.ИзФайлаНастроек:
-                            номерПути = beh.GetDeviceSetting.PathPermission ? data.НомерПути  : string.Empty;
-                            break;
+                    //var номерПути = string.Empty;
+                    //switch (data.РазрешениеНаОтображениеПути)
+                    //{
+                    //    case PathPermissionType.ИзФайлаНастроек:
+                    //        номерПути = beh.GetDeviceSetting.PathPermission ? data.НомерПути : string.Empty;
+                    //        break;
 
-                        case PathPermissionType.Отображать:
-                            номерПути = data.НомерПути;
-                            break;
+                    //    case PathPermissionType.Отображать:
+                    //        номерПути = data.НомерПути;
+                    //        break;
 
-                        case PathPermissionType.НеОтображать:
-                            номерПути = String.Empty;
-                            break;
-                    }
+                    //    case PathPermissionType.НеОтображать:
+                    //        номерПути = String.Empty;
+                    //        break;
+                    //}
 
 
 
-                    var inData = new UniversalInputType
-                    {
-                        NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
-                        PathNumber = номерПути,
-                        Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
-                        Time = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
-                        Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
-                        Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
-                        TypeTrain = typeTrain,
-                        Command = command
-                    };
+                    //var inData = new UniversalInputType
+                    //{
+                    //    NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
+                    //    PathNumber = номерПути,
+                    //    Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
+                    //    Time = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                    //    Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
+                    //    Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
+                    //    TypeTrain = typeTrain,
+                    //    Command = command
+                    //};
 
+                     var inData = MapSoundRecord2UniveralInputType(data, beh.GetDeviceSetting.PathPermission, true);
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
                     beh.SendMessage4Path(inData, data.НомерПоезда, beh.CheckContrains);
@@ -1597,7 +1596,7 @@ namespace MainExample
 
 
 
-        private static UniversalInputType MapSoundRecord2UniveralInputType(SoundRecord data, bool isShow)
+        private static UniversalInputType MapSoundRecord2UniveralInputType(SoundRecord data, bool pathPermission, bool isShow)
         {
             string actStr = "   ";
             if ((data.БитыАктивностиПолей & 0x14) == 0x14)
@@ -1627,19 +1626,52 @@ namespace MainExample
                 typeTrain = TypeTrain.Suburb;
             }
 
+            var command = Command.None;
+            switch (data.СостояниеОтображения)
+            {
+                case TableRecordStatus.Отображение:
+                    command = Command.View;
+                    break;
+
+                case TableRecordStatus.Очистка:
+                    command = Command.Clear;
+                    break;
+
+                case TableRecordStatus.Обновление:
+                    command = Command.Update;
+                    break;
+            }
+
+            var номерПути = string.Empty;
+            switch (data.РазрешениеНаОтображениеПути)
+            {
+                case PathPermissionType.ИзФайлаНастроек:
+                    номерПути = pathPermission ? data.НомерПути : "   ";
+                    break;
+
+                case PathPermissionType.Отображать:
+                    номерПути = data.НомерПути;
+                    break;
+
+                case PathPermissionType.НеОтображать:
+                    номерПути = "   ";
+                    break;
+            }
+
+
             UniversalInputType outData;
             if (isShow)
             {
                 outData = new UniversalInputType
                 {
-                    NumberOfTrain = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НомерПоезда : "   ",
-
-                    PathNumber = data.НомерПути, //Номер пути выводим всегда.
-                    Event = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? actStr : "   ",
-                    Time = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
-                    Stations = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.НазваниеПоезда : "   ",
-                    Note = (data.СостояниеОтображения == TableRecordStatus.Отображение) ? data.Примечание : "   ",
-                    TypeTrain = typeTrain
+                    NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
+                    PathNumber = номерПути,
+                    Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
+                    Time = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                    Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
+                    Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
+                    TypeTrain = typeTrain,
+                    Command = command
                 };
             }
             else
@@ -1647,12 +1679,13 @@ namespace MainExample
                 outData = new UniversalInputType
                 {
                     NumberOfTrain = data.НомерПоезда,
-                    PathNumber = data.НомерПути, //Номер пути выводим всегда.
+                    PathNumber = номерПути,
                     Event = actStr,
                     Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),
                     Stations = data.НазваниеПоезда,
                     Note = data.Примечание,
-                    TypeTrain = typeTrain
+                    TypeTrain = typeTrain,
+                    Command = command
                 };
             }
 

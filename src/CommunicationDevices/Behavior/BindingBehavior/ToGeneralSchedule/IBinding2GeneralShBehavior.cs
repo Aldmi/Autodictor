@@ -1,5 +1,6 @@
 ﻿using System;
 using CommunicationDevices.DataProviders;
+using CommunicationDevices.Devices;
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 {   
@@ -16,5 +17,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         SourceLoad SourceLoad { get; set; }
         void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains);
         bool CheckContrains(UniversalInputType inData);
+
+        DeviceSetting GetDeviceSetting { get; }
     }
 }

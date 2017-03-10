@@ -75,7 +75,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                         break;
 
                     // ОБНОВИТЬ В ТАБЛ.
-                    case Command.Update:
+                    case Command.Update: //TODO:  Пробелма в поиске записи по условию: p.PathNumber == inData.PathNumber.ToString(). Т.к. номер пути может быть сброшенн.
                         var updateItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
                         if (updateItem != null)
                         {

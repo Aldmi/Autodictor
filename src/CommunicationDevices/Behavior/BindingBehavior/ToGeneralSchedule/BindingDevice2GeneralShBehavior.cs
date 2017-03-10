@@ -31,6 +31,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         public PaggingHelper PagingHelper { get; set; }
         public IDisposable DispousePagingListSendRx { get; set; }
 
+        public DeviceSetting GetDeviceSetting => _device.Setting;
+
         #endregion
 
 
