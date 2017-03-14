@@ -11,6 +11,8 @@ namespace CommunicationDevices.DataProviders
 
     public class UniversalInputType
     {
+        public int Id { get; set; }
+
         public string AddressDevice { get; set; }                    //Адресс устройсва
 
         public TypeTrain TypeTrain { get; set; }                     //Пригород или дальнего следования

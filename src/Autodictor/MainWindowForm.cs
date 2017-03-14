@@ -1664,6 +1664,7 @@ namespace MainExample
             {
                 outData = new UniversalInputType
                 {
+                    Id= data.ID,
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
@@ -1678,6 +1679,7 @@ namespace MainExample
             {
                 outData = new UniversalInputType
                 {
+                    Id = data.ID,
                     NumberOfTrain = data.НомерПоезда,
                     PathNumber = номерПути,
                     Event = actStr,
