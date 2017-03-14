@@ -269,7 +269,7 @@ namespace CommunicationDevices.Model
 
                         var behTable8 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, countRow.CountRow, true, 1000)
                         {
-                            ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
+                            ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
                         Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, binding.BindingType));
 
@@ -300,9 +300,9 @@ namespace CommunicationDevices.Model
                             return;
                         }
 
-                        var behTableMin2 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, countRow.CountRow, false, 10000)
+                        var behTableMin2 = new VidorTableLineByLineExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, countRow.CountRow, true, 10000)
                         {
-                            ForTableViewDataProvider = new PanelVidorTableMinWriteDataProvider()
+                            ForTableViewDataProvider = new PanelVidorTable2StrWriteDataProvider()
                         };
                         Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, binding.BindingType));
 
@@ -473,7 +473,7 @@ namespace CommunicationDevices.Model
 
                         var behTable8 = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, countRow.CountRow, true, 1000)
                         {
-                            ForTableViewDataProvider = new PanelVidorTableWriteDataProvider()
+                            ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
 
                         Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behTable8, binding.BindingType));

@@ -116,8 +116,8 @@
     <Compile Include="DataProviders\DisplaySysDataProvider\PanelDispSysWriteDataProvider.cs" />
     <Compile Include="DataProviders\InformSvyzDataProvider\PanelInformSvyazWriteDataProvider.cs" />
     <Compile Include="DataProviders\UniversalInputType.cs" />
-    <Compile Include="DataProviders\VidorDataProvider\PanelVidorTableMinWriteDataProvider.cs" />
-    <Compile Include="DataProviders\VidorDataProvider\PanelVidorTableWriteDataProvider.cs" />
+    <Compile Include="DataProviders\VidorDataProvider\PanelVidorTable2StrWriteDataProvider.cs" />
+    <Compile Include="DataProviders\VidorDataProvider\PanelVidorTable1StrWriteDataProvider.cs" />
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
