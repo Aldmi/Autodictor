@@ -60,6 +60,18 @@ namespace CommunicationDevices.Settings
                     spSett.SpecialDictionary.Add("CountRow", new XmlCountRowSetting(countRow));
                 }
 
+                if (el.Element("Settings") != null)
+                {
+                    var pathPermissionElem = el.Element("Settings")?.Element("PathPermission");
+                    if (pathPermissionElem != null)
+                    {
+                        var pathPermissionEnable= (string)pathPermissionElem.Attribute("Enable");
+                        spSett.SpecialDictionary.Add("PathPermission", new XmlPathPermissionSetting(pathPermissionEnable));
+                    }
+                }
+
+
+
                 listSpSett.Add(spSett);
             }
 

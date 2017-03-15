@@ -175,6 +175,7 @@ namespace CommunicationDevices.Model
                 XmlContrainsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
+                XmlPathPermissionSetting pathPermission = null;
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -196,6 +197,16 @@ namespace CommunicationDevices.Model
                     countRow = xmlDeviceSp.SpecialDictionary["CountRow"] as XmlCountRowSetting;
                 }
 
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("PathPermission"))
+                {
+                    pathPermission = xmlDeviceSp.SpecialDictionary["PathPermission"] as XmlPathPermissionSetting;
+                }
+
+                var setting = new DeviceSetting
+                {
+                    PathPermission = pathPermission?.Enable ?? true
+                };
+
                 //привязка обязательный параметр
                 if (binding == null)
                 {
@@ -208,7 +219,7 @@ namespace CommunicationDevices.Model
                     case "DispSys":
                         maxCountFaildRespowne = 3;
                         behavior = new DisplSysExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
@@ -234,7 +245,7 @@ namespace CommunicationDevices.Model
                     case "Vidor":
                         maxCountFaildRespowne = 3;
                         behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
@@ -271,7 +282,7 @@ namespace CommunicationDevices.Model
                         {
                             ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, binding.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
@@ -304,7 +315,7 @@ namespace CommunicationDevices.Model
                         {
                             ForTableViewDataProvider = new PanelVidorTable2StrWriteDataProvider()
                         };
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, binding.BindingType));
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
@@ -342,6 +353,7 @@ namespace CommunicationDevices.Model
                 XmlContrainsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
+                XmlPathPermissionSetting pathPermission = null;
 
                 if (xmlDevicePc.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -363,6 +375,16 @@ namespace CommunicationDevices.Model
                     countRow = xmlDevicePc.SpecialDictionary["CountRow"] as XmlCountRowSetting;
                 }
 
+                if (xmlDevicePc.SpecialDictionary.ContainsKey("PathPermission"))
+                {
+                    pathPermission = xmlDevicePc.SpecialDictionary["PathPermission"] as XmlPathPermissionSetting;
+                }
+
+                var setting = new DeviceSetting
+                {
+                    PathPermission = pathPermission?.Enable ?? true
+                };
+
                 //привязка обязательный параметр
                 if (binding == null)
                 {
@@ -383,7 +405,7 @@ namespace CommunicationDevices.Model
                         }
 
                         behavior = new ArivDepartExhangePcBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, binding.BindingType));
+                        Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
@@ -430,6 +452,7 @@ namespace CommunicationDevices.Model
                 XmlContrainsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
+                XmlPathPermissionSetting pathPermission = null;
 
                 if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -450,6 +473,16 @@ namespace CommunicationDevices.Model
                 {
                     countRow = xmlDeviceTcpIp.SpecialDictionary["CountRow"] as XmlCountRowSetting;
                 }
+
+                if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("PathPermission"))
+                {
+                    pathPermission = xmlDeviceTcpIp.SpecialDictionary["PathPermission"] as XmlPathPermissionSetting;
+                }
+
+                var setting = new DeviceSetting
+                {
+                    PathPermission = pathPermission?.Enable ?? true
+                };
 
                 //привязка обязательный параметр
                 if (binding == null)
@@ -476,7 +509,7 @@ namespace CommunicationDevices.Model
                             ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
 
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behTable8, binding.BindingType));
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behTable8, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)

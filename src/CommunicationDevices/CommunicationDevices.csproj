@@ -122,6 +122,7 @@
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\XmlCisSettings\XmlCisSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPathPermissionSetting.cs" />
     <Compile Include="Settings\XmlSettingFactory.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlBindingSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlContrainsSetting.cs" />
