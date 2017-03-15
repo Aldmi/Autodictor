@@ -29,6 +29,8 @@
 	   </Settings>
 	 </DeviceSp>
 	 
+	 <DeviceSp Id="22" Name="Vidor" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1"/>
+	 
 <!-- 	 <DeviceSp Id="2" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/> -->
   </DevicesWithSP>
 

@@ -286,8 +286,7 @@ namespace MainExample
 
 
         // Формирование списка воспроизведения
-        public
-        void ОбновитьСписокЗвуковыхСообщений(object sender, EventArgs e)
+        public void ОбновитьСписокЗвуковыхСообщений(object sender, EventArgs e)
         {
             SoundRecords.Clear();
             SoundRecordsOld.Clear();
@@ -506,17 +505,17 @@ namespace MainExample
             #region Создание статических звуковых файлов
             foreach (SoundConfigurationRecord Config in SoundConfiguration.SoundConfigurationRecords)
             {
-                СтатическоеСообщение Record;
-                Record.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
+                СтатическоеСообщение statRecord;
+                statRecord.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
 
                 if (Config.Enable == true)
                 {
                     if (Config.EnablePeriodic == true)
                     {
-                        Record.ОписаниеКомпозиции = Config.Name;
-                        Record.НазваниеКомпозиции = Config.Name;
+                        statRecord.ОписаниеКомпозиции = Config.Name;
+                        statRecord.НазваниеКомпозиции = Config.Name;
 
-                        if (Record.НазваниеКомпозиции == string.Empty)
+                        if (statRecord.НазваниеКомпозиции == string.Empty)
                             continue;
 
                         string[] Times = Config.MessagePeriodic.Split(',');
@@ -528,25 +527,25 @@ namespace MainExample
 
                         while (НачалоИнтервала2 < КонецИнтервала2)
                         {
-                            Record.ID = ID++;
-                            Record.Время = НачалоИнтервала2;
-                            Record.Активность = true;
+                            statRecord.ID = ID++;
+                            statRecord.Время = НачалоИнтервала2;
+                            statRecord.Активность = true;
 
                             int ПопыткиВставитьСообщение = 5;
                             while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                string Key = Record.Время.ToString("HH:mm:ss");
+                                string Key = statRecord.Время.ToString("HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
 
                                 if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
                                 {
-                                    Record.Время = Record.Время.AddSeconds(1);
+                                    statRecord.Время = statRecord.Время.AddSeconds(1);
                                     continue;
                                 }
 
-                                СтатическиеЗвуковыеСообщения.Add(Key, Record);
+                                СтатическиеЗвуковыеСообщения.Add(Key, statRecord);
                                 break;
                             }
 
@@ -557,35 +556,35 @@ namespace MainExample
 
                     if (Config.EnableSingle == true)
                     {
-                        Record.ОписаниеКомпозиции = Config.Name;
-                        Record.НазваниеКомпозиции = Config.Name;
+                        statRecord.ОписаниеКомпозиции = Config.Name;
+                        statRecord.НазваниеКомпозиции = Config.Name;
 
-                        if (Record.НазваниеКомпозиции == string.Empty)
+                        if (statRecord.НазваниеКомпозиции == string.Empty)
                             continue;
 
                         string[] Times = Config.MessageSingle.Split(',');
 
                         foreach (string time in Times)
                         {
-                            Record.ID = ID++;
-                            Record.Время = DateTime.Parse(time);
-                            Record.Активность = true;
+                            statRecord.ID = ID++;
+                            statRecord.Время = DateTime.Parse(time);
+                            statRecord.Активность = true;
 
                             int ПопыткиВставитьСообщение = 5;
                             while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                string Key = Record.Время.ToString("HH:mm:ss");
+                                string Key = statRecord.Время.ToString("HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
 
                                 if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
                                 {
-                                    Record.Время = Record.Время.AddSeconds(1);
+                                    statRecord.Время = statRecord.Время.AddSeconds(1);
                                     continue;
                                 }
 
-                                СтатическиеЗвуковыеСообщения.Add(Key, Record);
+                                СтатическиеЗвуковыеСообщения.Add(Key, statRecord);
                                 break;
                             }
                         }
@@ -845,6 +844,31 @@ namespace MainExample
                 }
             }
 
+        }
+
+
+
+        private void УпорядочитьЗаписиПоВремени()
+        {
+
+            //SoundRecords = SoundRecords.OrderBy(s =>
+            //{
+            //    var прибывает = (s.Value.БитыАктивностиПолей & 0x04) != 0x00;
+            //    var отправляется = (s.Value.БитыАктивностиПолей & 0x10) != 0x00;
+
+            //    if (прибывает)
+            //        return s.Value.ВремяПрибытия;
+
+            //    if (отправляется)
+            //    {
+            //        return s.Value.ВремяПрибытия;
+            //    }
+
+
+            //    return s.Value.ВремяПрибытия;
+
+
+            //});
         }
 
 
@@ -1490,81 +1514,7 @@ namespace MainExample
                 var beh = Binding2PathBehaviors.FirstOrDefault(b => b.GetDeviceId == devId);
                 if (beh != null)
                 {
-                    //string actStr = "   ";
-                    //if ((data.БитыАктивностиПолей & 0x14) == 0x14)
-                    //{
-                    //    actStr = "СТОЯНКА";
-                    //}
-                    //else if ((data.БитыАктивностиПолей & 0x04) == 0x04)
-                    //{
-                    //    actStr = "ПРИБ.";
-                    //}
-                    //else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
-                    //{
-                    //    actStr = "ОТПР.";
-                    //}
-
-                    //TypeTrain typeTrain;
-                    //if (data.ТипПоезда == ТипПоезда.НеОпределен)
-                    //{
-                    //    typeTrain = TypeTrain.None;
-                    //}
-                    //else if ((data.ТипПоезда == ТипПоезда.Пассажирский) || (data.ТипПоезда == ТипПоезда.Скоростной) || (data.ТипПоезда == ТипПоезда.Скорый) || (data.ТипПоезда == ТипПоезда.Фирменный))
-                    //{
-                    //    typeTrain = TypeTrain.LongDistance;
-                    //}
-                    //else
-                    //{
-                    //    typeTrain = TypeTrain.Suburb;
-                    //}
-
-                    //var command = Command.None;
-                    //switch (data.СостояниеОтображения)
-                    //{
-                    //    case TableRecordStatus.Отображение:
-                    //        command = Command.View;
-                    //        break;
-
-                    //    case TableRecordStatus.Очистка:
-                    //        command = Command.Clear;
-                    //        break;
-
-                    //    case TableRecordStatus.Обновление:
-                    //        command = Command.Update;
-                    //        break;
-                    //}
-
-                    //var номерПути = string.Empty;
-                    //switch (data.РазрешениеНаОтображениеПути)
-                    //{
-                    //    case PathPermissionType.ИзФайлаНастроек:
-                    //        номерПути = beh.GetDeviceSetting.PathPermission ? data.НомерПути : string.Empty;
-                    //        break;
-
-                    //    case PathPermissionType.Отображать:
-                    //        номерПути = data.НомерПути;
-                    //        break;
-
-                    //    case PathPermissionType.НеОтображать:
-                    //        номерПути = String.Empty;
-                    //        break;
-                    //}
-
-
-
-                    //var inData = new UniversalInputType
-                    //{
-                    //    NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
-                    //    PathNumber = номерПути,
-                    //    Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
-                    //    Time = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
-                    //    Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
-                    //    Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
-                    //    TypeTrain = typeTrain,
-                    //    Command = command
-                    //};
-
-                     var inData = MapSoundRecord2UniveralInputType(data, beh.GetDeviceSetting.PathPermission, true);
+                    var inData = MapSoundRecord2UniveralInputType(data, beh.GetDeviceSetting.PathPermission, true);
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
                     beh.SendMessage4Path(inData, data.НомерПоезда, beh.CheckContrains);
@@ -1664,7 +1614,7 @@ namespace MainExample
             {
                 outData = new UniversalInputType
                 {
-                    Id= data.ID,
+                    Id = data.ID,
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
@@ -1861,6 +1811,13 @@ namespace MainExample
                                     }
                                 }
 
+
+                                if (SoundRecords.ContainsKey(Key) == false)  // поменяли время приб. или отпр. т.е. изменили ключ записи. 
+                                {
+                                    ОбновитьСписокЗвуковыхСообщенийВТаблице(); //Перерисуем список на UI.
+                                }
+
+
                                 ОбновитьСостояниеЗаписейТаблицы();
                             }
                         }
@@ -1941,7 +1898,7 @@ namespace MainExample
 
 
 
-                                            шаблоныОповещенияToolStripMenuItem1.DropDownItems.Clear();
+                                        шаблоныОповещенияToolStripMenuItem1.DropDownItems.Clear();
                                         for (int i = 0; i < Данные.СписокФормируемыхСообщений.Count(); i++)
                                         {
                                             var Сообщение = Данные.СписокФормируемыхСообщений[i];
@@ -2462,32 +2419,65 @@ namespace MainExample
             string[] НазванияТабло = Данные.НазванияТабло;
 
 
-            SoundRecords[Key] = Данные;
-
-            string time = Данные.Время.ToString("HH:mm:ss");
-            string[] TimeParts = time.Split(':');
-            if (TimeParts[0].Length == 1)
-                time = "0" + time;
-
-            if (Key != time)
+            //Поменяли время-----------------------------------------
+            if ((СтарыеДанные.ВремяПрибытия != Данные.ВремяПрибытия) ||
+                (СтарыеДанные.ВремяОтправления != Данные.ВремяОтправления))
             {
-                int КоличествоПопытокВставкиДанных = 5;
-                while (КоличествоПопытокВставкиДанных > 0)
+                Данные.Время = (Данные.БитыАктивностиПолей & 0x04) != 0x00 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
+
+                //Если ключ с таким временем присутствует, изменить ключ добавляя секунды.
+                int tryCounter = 50;
+                while (--tryCounter > 0)
                 {
-                    if (SoundRecords.ContainsKey(time) == false)
+                    string keyNew = Данные.Время.ToString("HH:mm:ss");
+                    string[] SubKeys = keyNew.Split(':');
+                    if (SubKeys[0].Length == 1)
+                        keyNew = "0" + keyNew;
+
+                    if (SoundRecords.ContainsKey(keyNew) == false)       //Если с таким временем уже есть запись.
                     {
-                        SoundRecords.Remove(Key);
-                        SoundRecords.Add(time, Данные);
+                        SoundRecords.Remove(Key);           //удалим старую запись
+                        SoundRecordsOld.Remove(Key);
+                        SoundRecords.Add(keyNew, Данные);   //Добавим запись под новым ключем
+                        SoundRecordsOld.Add(keyNew, Данные);
+
                         break;
                     }
 
-                    Данные.Время = Данные.Время.AddSeconds(20);
-                    time = Данные.Время.ToString("HH:mm:ss");
-                    TimeParts = time.Split(':');
-                    if (TimeParts[0].Length == 1)
-                        time = "0" + time;
+                    Данные.Время = Данные.Время.AddSeconds(1);
                 }
+
             }
+            //--------------------------------
+   
+
+
+            // SoundRecords[Key] = Данные;
+
+            //string time = Данные.Время.ToString("HH:mm:ss");
+            //string[] TimeParts = time.Split(':');
+            //if (TimeParts[0].Length == 1)
+            //    time = "0" + time;
+
+            //if (Key != time)
+            //{
+            //    int КоличествоПопытокВставкиДанных = 5;
+            //    while (КоличествоПопытокВставкиДанных > 0)
+            //    {
+            //        if (SoundRecords.ContainsKey(time) == false)
+            //        {
+            //            SoundRecords.Remove(Key);
+            //            SoundRecords.Add(time, Данные);
+            //            break;
+            //        }
+
+            //        Данные.Время = Данные.Время.AddSeconds(20);
+            //        time = Данные.Время.ToString("HH:mm:ss");
+            //        TimeParts = time.Split(':');
+            //        if (TimeParts[0].Length == 1)
+            //            time = "0" + time;
+            //    }
+            //}
 
             string СообщениеОбИзменениях = "";
             if (СтарыеДанные.НазваниеПоезда != Данные.НазваниеПоезда) СообщениеОбИзменениях += "Поезд: " + СтарыеДанные.НазваниеПоезда + " -> " + Данные.НазваниеПоезда + "; ";

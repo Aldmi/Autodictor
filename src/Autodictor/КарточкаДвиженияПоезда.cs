@@ -75,6 +75,10 @@ namespace MainExample
             cBОткуда.Text = Record.СтанцияОтправления;
             cBКуда.Text = Record.СтанцияНазначения;
 
+            // cBОткуда.SelectedIndex = cBОткуда.Items.IndexOf(Record.СтанцияОтправления);
+            //cBКуда.SelectedIndex = cBКуда.Items.IndexOf(Record.СтанцияНазначения);
+
+
             switch (Record.КоличествоПовторений)
             {
                 default:
