@@ -168,13 +168,13 @@
             // 
             this.columnHeader7.Text = "ПРИБ.";
             this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader7.Width = 90;
+            this.columnHeader7.Width = 160;
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "ОТПР.";
             this.columnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader1.Width = 90;
+            this.columnHeader1.Width = 160;
             // 
             // columnHeader8
             // 
@@ -490,7 +490,7 @@
             this.toolStripSeparator1,
             this.ТаблоToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 142);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 120);
             // 
             // номерПутиToolStripMenuItem1
             // 
@@ -517,105 +517,105 @@
             // путь0ToolStripMenuItem
             // 
             this.путь0ToolStripMenuItem.Name = "путь0ToolStripMenuItem";
-            this.путь0ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь0ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь0ToolStripMenuItem.Text = "Нет пути";
             this.путь0ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь1ToolStripMenuItem
             // 
             this.путь1ToolStripMenuItem.Name = "путь1ToolStripMenuItem";
-            this.путь1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь1ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь1ToolStripMenuItem.Text = "Путь 1";
             this.путь1ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь2ToolStripMenuItem
             // 
             this.путь2ToolStripMenuItem.Name = "путь2ToolStripMenuItem";
-            this.путь2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь2ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь2ToolStripMenuItem.Text = "Путь 2";
             this.путь2ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь3ToolStripMenuItem
             // 
             this.путь3ToolStripMenuItem.Name = "путь3ToolStripMenuItem";
-            this.путь3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь3ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь3ToolStripMenuItem.Text = "Путь 3";
             this.путь3ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь4ToolStripMenuItem
             // 
             this.путь4ToolStripMenuItem.Name = "путь4ToolStripMenuItem";
-            this.путь4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь4ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь4ToolStripMenuItem.Text = "Путь 4";
             this.путь4ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь5ToolStripMenuItem
             // 
             this.путь5ToolStripMenuItem.Name = "путь5ToolStripMenuItem";
-            this.путь5ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь5ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь5ToolStripMenuItem.Text = "Путь 5";
             this.путь5ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь6ToolStripMenuItem
             // 
             this.путь6ToolStripMenuItem.Name = "путь6ToolStripMenuItem";
-            this.путь6ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь6ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь6ToolStripMenuItem.Text = "Путь 6";
             this.путь6ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь7ToolStripMenuItem
             // 
             this.путь7ToolStripMenuItem.Name = "путь7ToolStripMenuItem";
-            this.путь7ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь7ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь7ToolStripMenuItem.Text = "Путь 7";
             this.путь7ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь8ToolStripMenuItem
             // 
             this.путь8ToolStripMenuItem.Name = "путь8ToolStripMenuItem";
-            this.путь8ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь8ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь8ToolStripMenuItem.Text = "Путь 8";
             this.путь8ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь9ToolStripMenuItem
             // 
             this.путь9ToolStripMenuItem.Name = "путь9ToolStripMenuItem";
-            this.путь9ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь9ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь9ToolStripMenuItem.Text = "Путь 9";
             this.путь9ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь10ToolStripMenuItem
             // 
             this.путь10ToolStripMenuItem.Name = "путь10ToolStripMenuItem";
-            this.путь10ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь10ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь10ToolStripMenuItem.Text = "Путь 10";
             this.путь10ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь11ToolStripMenuItem
             // 
             this.путь11ToolStripMenuItem.Name = "путь11ToolStripMenuItem";
-            this.путь11ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь11ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь11ToolStripMenuItem.Text = "Путь 11";
             this.путь11ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь12ToolStripMenuItem
             // 
             this.путь12ToolStripMenuItem.Name = "путь12ToolStripMenuItem";
-            this.путь12ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь12ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь12ToolStripMenuItem.Text = "Путь 12";
             this.путь12ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь13ToolStripMenuItem
             // 
             this.путь13ToolStripMenuItem.Name = "путь13ToolStripMenuItem";
-            this.путь13ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь13ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь13ToolStripMenuItem.Text = "Путь 13";
             this.путь13ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // путь14ToolStripMenuItem
             // 
             this.путь14ToolStripMenuItem.Name = "путь14ToolStripMenuItem";
-            this.путь14ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.путь14ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь14ToolStripMenuItem.Text = "Путь 14";
             // 
             // нумерацияПоездаToolStripMenuItem1
@@ -662,21 +662,21 @@
             // повтор1ToolStripMenuItem
             // 
             this.повтор1ToolStripMenuItem.Name = "повтор1ToolStripMenuItem";
-            this.повтор1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.повтор1ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.повтор1ToolStripMenuItem.Text = "1 Повтор";
             this.повтор1ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // повтор2ToolStripMenuItem
             // 
             this.повтор2ToolStripMenuItem.Name = "повтор2ToolStripMenuItem";
-            this.повтор2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.повтор2ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.повтор2ToolStripMenuItem.Text = "2 Повтора";
             this.повтор2ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // повтор3ToolStripMenuItem
             // 
             this.повтор3ToolStripMenuItem.Name = "повтор3ToolStripMenuItem";
-            this.повтор3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.повтор3ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.повтор3ToolStripMenuItem.Text = "3 Повтора";
             this.повтор3ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 

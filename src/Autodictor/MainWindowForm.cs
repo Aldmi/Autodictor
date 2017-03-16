@@ -292,9 +292,18 @@ namespace MainExample
             SoundRecordsOld.Clear();
             СтатическиеЗвуковыеСообщения.Clear();
 
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now, null);                                        // на тек. сутки
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 2)); // на след. сутки на 2 первых часа
+
+            СозданиеСтатическихЗвуковыхФайлов();
+        }
+
+
+
+        private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime день, Func<int, bool> ограничениеВремениПоЧасам)
+        {
             ID = 1;
 
-            #region Создание звуковых файлов расписания ЖД транспорта
             foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
             {
                 SoundRecord Record;
@@ -327,18 +336,43 @@ namespace MainExample
 
                 Record.ИменаФайлов = new string[0];
 
-                DateTime ТекущееВремя = DateTime.Now;
+
+
+
                 ПланРасписанияПоезда планРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(Config.Days);
                 if ((РаботаПоНомеруДняНедели == 7) || (планРасписанияПоезда.ПолучитьРежимРасписания() != РежимРасписанияДвиженияПоезда.ПоДням) || (Record.ТипПоезда == ТипПоезда.Пассажирский) || (Record.ТипПоезда == ТипПоезда.Скоростной) || (Record.ТипПоезда == ТипПоезда.Скорый))
                 {
-                    if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(DateTime.Now.Month - 1), (byte)(DateTime.Now.Day - 1)) == false)
+                    var активностьНаДень = планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(день.Month - 1), (byte)(день.Day - 1));
+                    if(активностьНаДень == false)
                         continue;
+
+                    if (ограничениеВремениПоЧасам != null)
+                    {
+                        DateTime времяПрибытия;
+                        if (DateTime.TryParse(Config.ArrivalTime, out времяПрибытия))
+                        {
+                            if(!ограничениеВремениПоЧасам(времяПрибытия.Hour))
+                                continue;
+
+                            var t = 6 + 65;
+                        }
+
+                        DateTime времяОтправления;
+                        if (DateTime.TryParse(Config.DepartureTime, out времяОтправления))
+                        {
+                            if (!ограничениеВремениПоЧасам(времяОтправления.Hour))
+                                continue;
+
+                            var t = 6 + 65;
+                        }
+                    }
                 }
                 else
                 {
                     if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)4, (byte)РаботаПоНомеруДняНедели) == false)
                         continue;
                 }
+
 
 
                 string[] НазванияСтанций = Config.Name.Split('-');
@@ -352,7 +386,7 @@ namespace MainExample
 
                 int Часы = 0;
                 int Минуты = 0;
-                DateTime ВремяСобытия = new DateTime(2000, 1, 1, 0, 0, 0);
+
                 DateTime ВремяПрибытия = new DateTime(2000, 1, 1, 0, 0, 0);
                 DateTime ВремяОтправления = new DateTime(2000, 1, 1, 0, 0, 0);
 
@@ -372,7 +406,7 @@ namespace MainExample
 
                     if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
                     {
-                        ВремяПрибытия = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+                        ВремяПрибытия = new DateTime(день.Year, день.Month, день.Day, Часы, Минуты, 0);
                         Record.ВремяПрибытия = ВремяПрибытия;
                         НомерСписка |= 0x04;
                     }
@@ -384,7 +418,7 @@ namespace MainExample
 
                     if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
                     {
-                        ВремяОтправления = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+                        ВремяОтправления = new DateTime(день.Year, день.Month, день.Day, Часы, Минуты, 0);
                         Record.ВремяОтправления = ВремяОтправления;
                         НомерСписка |= 0x10;
                     }
@@ -406,6 +440,7 @@ namespace MainExample
                 Record.БитыАктивностиПолей |= 0x03;
 
                 Record.ID = ID++;
+
                 byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
                 Record.НазванияТабло = Record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
                 Record.СостояниеОтображения = TableRecordStatus.Выключена;
@@ -484,7 +519,7 @@ namespace MainExample
                 int TryCounter = 50;
                 while (--TryCounter > 0)
                 {
-                    string Key = Record.Время.ToString("HH:mm:ss");
+                    string Key = Record.Время.ToString("dd.MM  HH:mm:ss");
                     string[] SubKeys = Key.Split(':');
                     if (SubKeys[0].Length == 1)
                         Key = "0" + Key;
@@ -499,10 +534,13 @@ namespace MainExample
                     Record.Время = Record.Время.AddSeconds(1);
                 }
             }
+        }
 
-            #endregion
 
-            #region Создание статических звуковых файлов
+
+
+        private void СозданиеСтатическихЗвуковыхФайлов()
+        {
             foreach (SoundConfigurationRecord Config in SoundConfiguration.SoundConfigurationRecords)
             {
                 СтатическоеСообщение statRecord;
@@ -591,8 +629,6 @@ namespace MainExample
                     }
                 }
             }
-            //СтатическиеЗвуковыеСообщения.OrderBy(key => key.Value);
-            #endregion
         }
 
 
@@ -616,10 +652,10 @@ namespace MainExample
 
                     string ВремяОтправления = "";
                     string ВремяПрибытия = "";
-                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("HH:mm:ss");
-                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("dd.MM  HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("dd.MM  HH:mm:ss");
 
-                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        Данные.Value.НазваниеПоезда,
@@ -632,10 +668,10 @@ namespace MainExample
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x04)
                     {
-                        ListViewItem lvi2 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                        ListViewItem lvi2 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяПрибытия.ToString("HH:mm:ss"),
+                                                                       Данные.Value.ВремяПрибытия.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НазваниеПоезда });
                         lvi2.Tag = Данные.Value.ID;
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -644,11 +680,11 @@ namespace MainExample
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x14)
                     {
-                        ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                        ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяПрибытия.ToString("HH:mm:ss"),
-                                                                       Данные.Value.ВремяОтправления.ToString("HH:mm:ss"),
+                                                                       Данные.Value.ВремяПрибытия.ToString("dd.MM  HH:mm:ss"),
+                                                                       Данные.Value.ВремяОтправления.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НазваниеПоезда });
                         lvi3.Tag = Данные.Value.ID;
                         lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -657,10 +693,10 @@ namespace MainExample
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x10)
                     {
-                        ListViewItem lvi4 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                        ListViewItem lvi4 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяОтправления.ToString("HH:mm:ss"),
+                                                                       Данные.Value.ВремяОтправления.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НазваниеПоезда });
                         lvi4.Tag = Данные.Value.ID;
                         lvi4.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -846,30 +882,6 @@ namespace MainExample
 
         }
 
-
-
-        private void УпорядочитьЗаписиПоВремени()
-        {
-
-            //SoundRecords = SoundRecords.OrderBy(s =>
-            //{
-            //    var прибывает = (s.Value.БитыАктивностиПолей & 0x04) != 0x00;
-            //    var отправляется = (s.Value.БитыАктивностиПолей & 0x10) != 0x00;
-
-            //    if (прибывает)
-            //        return s.Value.ВремяПрибытия;
-
-            //    if (отправляется)
-            //    {
-            //        return s.Value.ВремяПрибытия;
-            //    }
-
-
-            //    return s.Value.ВремяПрибытия;
-
-
-            //});
-        }
 
 
 
@@ -1772,7 +1784,7 @@ namespace MainExample
                                 //Обновить Время ПРИБ
                                 if ((Данные.БитыАктивностиПолей & 0x04) != 0x00)
                                 {
-                                    actStr = Данные.ВремяПрибытия.ToString("HH:mm:ss");
+                                    actStr = Данные.ВремяПрибытия.ToString("dd.MM  HH:mm:ss");
                                     switch (listView.Name)
                                     {
                                         case "listView1":
@@ -1791,7 +1803,7 @@ namespace MainExample
                                 //Обновить Время ОТПР
                                 if ((Данные.БитыАктивностиПолей & 0x10) != 0x00)
                                 {
-                                    actStr = Данные.ВремяОтправления.ToString("HH:mm:ss");
+                                    actStr = Данные.ВремяОтправления.ToString("dd.MM  HH:mm:ss");
                                     switch (listView.Name)
                                     {
                                         case "listView1":
@@ -2429,7 +2441,7 @@ namespace MainExample
                 int tryCounter = 50;
                 while (--tryCounter > 0)
                 {
-                    string keyNew = Данные.Время.ToString("HH:mm:ss");
+                    string keyNew = Данные.Время.ToString("dd.MM  HH:mm:ss");
                     string[] SubKeys = keyNew.Split(':');
                     if (SubKeys[0].Length == 1)
                         keyNew = "0" + keyNew;
