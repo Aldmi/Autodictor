@@ -384,7 +384,7 @@ namespace MainExample
 
         private void timer_Clock_Tick(object sender, EventArgs e)
         {
-            toolClockLabel.Text = DateTime.Now.ToLongTimeString();
+            toolClockLabel.Text = DateTime.Now.ToString("dd.MM  HH:mm:ss");
         }
     }
 }

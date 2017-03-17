@@ -353,8 +353,6 @@ namespace MainExample
                         {
                             if(!ограничениеВремениПоЧасам(времяПрибытия.Hour))
                                 continue;
-
-                            var t = 6 + 65;
                         }
 
                         DateTime времяОтправления;
@@ -362,8 +360,6 @@ namespace MainExample
                         {
                             if (!ограничениеВремениПоЧасам(времяОтправления.Hour))
                                 continue;
-
-                            var t = 6 + 65;
                         }
                     }
                 }
@@ -1309,9 +1305,9 @@ namespace MainExample
                         {
                             foreach (var beh in binding2MainWindow)
                             {
-                                //var table = SoundRecords.Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
-                                //var inData = new UniversalInputType { TableData = table };
-                                //beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                                var table = SoundRecords.Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                var inData = new UniversalInputType { TableData = table };
+                                beh.InitializePagingBuffer(inData, beh.CheckContrains);
                             }
                         }
                     }
@@ -1664,6 +1660,8 @@ namespace MainExample
             base.OnClosed(e);
         }
 
+
+
         private void listView6_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
@@ -1731,6 +1729,9 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
+
+
+
 
         // Обработка двойного нажатия на сообщение (вызов формы сообщения)
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)

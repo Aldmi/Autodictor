@@ -43,6 +43,14 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                             Contrains.TypeTrain = TypeTrain.LongDistance;
                             break;
 
+                        case "МеньшеТекВремени":
+                            Contrains.Command = Command.Clear;
+                            break;
+
+                        case "БольшеТекВремени":
+                            Contrains.Command = Command.Restart;
+                            break;
+
                         default:
                             Contrains = null;
                             return;

@@ -8,8 +8,3 @@ D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFAvtodictor2PcPanelC
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.pdb
-C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.dll
-C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.pdb
-C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache
-C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll
-C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.pdb
