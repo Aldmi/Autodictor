@@ -112,7 +112,7 @@ namespace MainExample
         public static IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
         public static IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
-        public int ProgressLoadMainList { get; set; }
+
 
         public int ВремяЗадержкиМеждуСообщениями = 0;
         private int ТекущаяСекунда = 0;
@@ -214,6 +214,12 @@ namespace MainExample
                 ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели = false;
                 btnОбновитьСписок_Click(null, null);
             }
+         
+            if (Program.Настройки.РазрешениеАвтообновленияРасписания &&
+                (DateTime.Now >= Program.Настройки.ВремяАвтообновленияРасписания) && (DateTime.Now <= Program.Настройки.ВремяАвтообновленияРасписания.AddMilliseconds(150)))
+            {
+                btnОбновитьСписок_Click(null, null);
+            }
 
             if (ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице == true)
             {
@@ -221,6 +227,7 @@ namespace MainExample
                 ОбновитьСписокЗвуковыхСообщенийВТаблице();
             }
         }
+
 
 
 
@@ -568,7 +575,7 @@ namespace MainExample
                             int ПопыткиВставитьСообщение = 5;
                             while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                string Key = statRecord.Время.ToString("HH:mm:ss");
+                                string Key = statRecord.Время.ToString("dd.MM  HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
@@ -607,7 +614,7 @@ namespace MainExample
                             int ПопыткиВставитьСообщение = 5;
                             while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                string Key = statRecord.Время.ToString("HH:mm:ss");
+                                string Key = statRecord.Время.ToString("dd.MM  HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
@@ -715,7 +722,7 @@ namespace MainExample
             {
                 if (НомерСтроки >= lVСтатическиеСообщения.Items.Count)
                 {
-                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("HH:mm:ss"),
+                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НазваниеКомпозиции });
                     lvi1.Tag = НомерСтроки;
                     lvi1.Checked = Данные.Value.Активность;
@@ -723,8 +730,8 @@ namespace MainExample
                 }
                 else
                 {
-                    if (lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text != Данные.Value.Время.ToString("HH:mm:ss"))
-                        lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text = Данные.Value.Время.ToString("HH:mm:ss");
+                    if (lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text != Данные.Value.Время.ToString("dd.MM  HH:mm:ss"))
+                        lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text = Данные.Value.Время.ToString("dd.MM  HH:mm:ss");
                     if (lVСтатическиеСообщения.Items[НомерСтроки].SubItems[1].Text != Данные.Value.НазваниеКомпозиции)
                         lVСтатическиеСообщения.Items[НомерСтроки].SubItems[1].Text = Данные.Value.НазваниеКомпозиции;
                 }
@@ -956,7 +963,7 @@ namespace MainExample
                     string Ключ;
                     while (КоличествоПопыток++ < 10)
                     {
-                        Ключ = событие.Время.ToString("HH:mm:ss");
+                        Ключ = событие.Время.ToString("dd.MM  HH:mm:ss");
                         string[] parts = Ключ.Split(':');
                         if (parts[0].Length == 1) Ключ = "0" + Ключ;
 
@@ -971,6 +978,8 @@ namespace MainExample
                 }
             }
             #endregion
+
+
 
             #region Определить композицию для запуска сообщений о движении поездов
             DateTime ТекущееВремя = DateTime.Now;
@@ -1013,7 +1022,7 @@ namespace MainExample
                                     string Ключ;
                                     while (КоличествоПопыток++ < 10)
                                     {
-                                        Ключ = событие.Время.ToString("HH:mm:ss");
+                                        Ключ = событие.Время.ToString("dd.MM  HH:mm:ss");
                                         string[] parts = Ключ.Split(':');
                                         if (parts[0].Length == 1) Ключ = "0" + Ключ;
 
@@ -1185,7 +1194,7 @@ namespace MainExample
                                         string Ключ;
                                         while (КоличествоПопыток++ < 10)
                                         {
-                                            Ключ = событие.Время.ToString("HH:mm:ss");
+                                            Ключ = событие.Время.ToString("dd.MM  HH:mm:ss");
                                             string[] parts = Ключ.Split(':');
                                             if (parts[0].Length == 1) Ключ = "0" + Ключ;
 

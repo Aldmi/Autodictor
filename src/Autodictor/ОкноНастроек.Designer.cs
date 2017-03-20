@@ -46,6 +46,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.dTP_Автообновление = new System.Windows.Forms.DateTimePicker();
+            this.cbРазрешитьАвтоОбновлениеРасписания = new System.Windows.Forms.CheckBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок = new System.Windows.Forms.CheckBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.tBИнтОповещОЗадержкеОтправления = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tBИнтОповещОЗадержкеПрибытия = new System.Windows.Forms.TextBox();
@@ -83,8 +89,6 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tBРегуляторГромкости = new System.Windows.Forms.TrackBar();
-            this.label22 = new System.Windows.Forms.Label();
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -264,6 +268,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label24);
+            this.groupBox2.Controls.Add(this.dTP_Автообновление);
+            this.groupBox2.Controls.Add(this.cbРазрешитьАвтоОбновлениеРасписания);
+            this.groupBox2.Controls.Add(this.label23);
             this.groupBox2.Controls.Add(this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок);
             this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.tBИнтОповещОЗадержкеОтправления);
@@ -280,6 +288,61 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Общие настройки";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(8, 206);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(281, 20);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Время автообновление расписания";
+            // 
+            // dTP_Автообновление
+            // 
+            this.dTP_Автообновление.CustomFormat = "HH:mm";
+            this.dTP_Автообновление.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dTP_Автообновление.Location = new System.Drawing.Point(396, 206);
+            this.dTP_Автообновление.Name = "dTP_Автообновление";
+            this.dTP_Автообновление.ShowUpDown = true;
+            this.dTP_Автообновление.Size = new System.Drawing.Size(85, 26);
+            this.dTP_Автообновление.TabIndex = 18;
+            // 
+            // cbРазрешитьАвтоОбновлениеРасписания
+            // 
+            this.cbРазрешитьАвтоОбновлениеРасписания.AutoSize = true;
+            this.cbРазрешитьАвтоОбновлениеРасписания.Location = new System.Drawing.Point(428, 182);
+            this.cbРазрешитьАвтоОбновлениеРасписания.Name = "cbРазрешитьАвтоОбновлениеРасписания";
+            this.cbРазрешитьАвтоОбновлениеРасписания.Size = new System.Drawing.Size(15, 14);
+            this.cbРазрешитьАвтоОбновлениеРасписания.TabIndex = 17;
+            this.cbРазрешитьАвтоОбновлениеРасписания.UseVisualStyleBackColor = true;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(8, 178);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(317, 20);
+            this.label23.TabIndex = 16;
+            this.label23.Text = "Разрешить автообновление расписания";
+            // 
+            // cBРазрешениеДобавленияЗаблокированныхПоездовВСписок
+            // 
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.AutoSize = true;
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 156);
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Name = "cBРазрешениеДобавленияЗаблокированныхПоездовВСписок";
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Size = new System.Drawing.Size(15, 14);
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.TabIndex = 15;
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(8, 152);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(397, 20);
+            this.label22.TabIndex = 8;
+            this.label22.Text = "Разрешить добавление заблокированных поездов";
             // 
             // tBИнтОповещОЗадержкеОтправления
             // 
@@ -653,24 +716,6 @@
             this.tBРегуляторГромкости.TabIndex = 0;
             this.tBРегуляторГромкости.Scroll += new System.EventHandler(this.tBРегуляторГромкости_Scroll);
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 152);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(397, 20);
-            this.label22.TabIndex = 8;
-            this.label22.Text = "Разрешить добавление заблокированных поездов";
-            // 
-            // cBРазрешениеДобавленияЗаблокированныхПоездовВСписок
-            // 
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.AutoSize = true;
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 156);
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Name = "cBРазрешениеДобавленияЗаблокированныхПоездовВСписок";
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Size = new System.Drawing.Size(15, 14);
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.TabIndex = 15;
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.UseVisualStyleBackColor = true;
-            // 
             // ОкноНастроек
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -759,5 +804,9 @@
         private System.Windows.Forms.TrackBar tBРегуляторГромкости;
         private System.Windows.Forms.CheckBox cBРазрешениеДобавленияЗаблокированныхПоездовВСписок;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox cbРазрешитьАвтоОбновлениеРасписания;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.DateTimePicker dTP_Автообновление;
     }
 }
