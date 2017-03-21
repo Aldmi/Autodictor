@@ -1297,7 +1297,8 @@ namespace MainExample
                                 NumberOfTrain = t.Num,
                                 Stations = t.Name,
                                 Time = timePars(t.ArrivalTime, t.DepartureTime),
-                            }).ToList();
+                                DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания()
+                        }).ToList();
 
                             var inData = new UniversalInputType { TableData = table };
                             foreach (var beh in binding2Shedule)

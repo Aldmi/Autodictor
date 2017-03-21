@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.ServiceModel;
 using CommunicationDevices.Model;
 using System.Drawing;
 

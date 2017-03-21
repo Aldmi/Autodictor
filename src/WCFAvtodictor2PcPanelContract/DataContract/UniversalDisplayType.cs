@@ -27,6 +27,9 @@ namespace WCFAvtodictor2PcTableContract.DataContract
         public string Note { get; set; }                              //Примечание. (станции следования)
 
         [DataMember]
+        public string DaysFollowing { get; set; }                     //Дни следования
+
+        [DataMember]
         public string Stations { get; set; }                           //Станции
 
         [DataMember]

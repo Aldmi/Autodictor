@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Microsoft.DirectX.AudioVideoPlayback;
+using System.IO;
 
 
 namespace MainExample
@@ -36,9 +37,12 @@ namespace MainExample
 
             try
             {
-                track_to_play = new Audio(TrackPath);
-                track_to_play.Play();
-                return true;
+                if (System.IO.File.Exists(TrackPath) == true)
+                {
+                    track_to_play = new Audio(TrackPath);
+                    track_to_play.Play();
+                    return true;
+                }
             }
             catch (Exception ex)
             {

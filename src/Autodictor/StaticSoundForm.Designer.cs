@@ -51,13 +51,14 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Player_Label = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnЗаписатьСообщение = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -130,7 +131,7 @@
             // 
             // textBox_Message
             // 
-            this.textBox_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_Message.Location = new System.Drawing.Point(503, 498);
             this.textBox_Message.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -152,12 +153,12 @@
             // 
             // textBox_Path
             // 
-            this.textBox_Path.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox_Path.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_Path.Location = new System.Drawing.Point(162, 542);
+            this.textBox_Path.Location = new System.Drawing.Point(422, 542);
             this.textBox_Path.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox_Path.Name = "textBox_Path";
-            this.textBox_Path.Size = new System.Drawing.Size(1296, 26);
+            this.textBox_Path.Size = new System.Drawing.Size(1036, 26);
             this.textBox_Path.TabIndex = 16;
             // 
             // label4
@@ -165,7 +166,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(8, 545);
+            this.label4.Location = new System.Drawing.Point(268, 544);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(146, 22);
@@ -295,11 +296,25 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btnЗаписатьСообщение
+            // 
+            this.btnЗаписатьСообщение.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnЗаписатьСообщение.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnЗаписатьСообщение.Location = new System.Drawing.Point(20, 533);
+            this.btnЗаписатьСообщение.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnЗаписатьСообщение.Name = "btnЗаписатьСообщение";
+            this.btnЗаписатьСообщение.Size = new System.Drawing.Size(240, 42);
+            this.btnЗаписатьСообщение.TabIndex = 25;
+            this.btnЗаписатьСообщение.Text = "Записать сообщение";
+            this.btnЗаписатьСообщение.UseVisualStyleBackColor = true;
+            this.btnЗаписатьСообщение.Click += new System.EventHandler(this.btnЗаписатьСообщение_Click);
+            // 
             // StaticSoundForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1588, 665);
+            this.Controls.Add(this.btnЗаписатьСообщение);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnСохранить);
             this.Controls.Add(this.button5);
@@ -352,5 +367,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label Player_Label;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnЗаписатьСообщение;
     }
 }

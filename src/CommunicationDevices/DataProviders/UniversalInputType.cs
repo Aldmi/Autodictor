@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MoreLinq;
 
+
+
 namespace CommunicationDevices.DataProviders
 {
     public enum TypeTrain {None, Suburb, LongDistance }
@@ -21,12 +23,16 @@ namespace CommunicationDevices.DataProviders
         public string Event { get; set; }                            //Событие (отправление/прибытие)
         public string Stations { get; set; }                         //Станции Отправления-Назначения.
         public string Note { get; set; }                             //Примечание.
+        public string DaysFollowing { get; set; }                    //Дни следования
         public DateTime Time { get; set; }                           //Время
         public string Message { get; set; }                          //Сообщение
+
 
         public Command Command { get; set; }                         //Команда (если указанна команда, то приоритет отдается выполнению команды.)
 
         public List<UniversalInputType> TableData { get; set; }     //Данные для табличного представления
+
+
 
 
         public void Initialize(UniversalInputType initializeData)

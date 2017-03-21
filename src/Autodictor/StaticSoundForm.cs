@@ -231,5 +231,40 @@ namespace MainExample
 
             return "";
         }
+
+
+        private void btnЗаписатьСообщение_Click(object sender, EventArgs e)
+        {
+            ФормаЗаписиСообщения формаЗаписиСообщения = new ФормаЗаписиСообщения();
+            if (формаЗаписиСообщения.ShowDialog() == DialogResult.OK)
+            {
+                StaticSoundRecord Данные;
+
+                Данные.ID = ++ID;
+                Данные.Name = формаЗаписиСообщения.НазваниеСообщения;
+                Данные.Message = формаЗаписиСообщения.ТекстСообщения;
+                Данные.Path = Application.StartupPath + @"\" + формаЗаписиСообщения.ПутьЗаписиСообщения;
+
+                bool НайденаНужнаяЗаписьВСписке = false;
+                for (int i = 0; i < StaticSoundRecords.Count; i++)
+                    if (StaticSoundRecords[i].Name == Данные.Name)
+                    {
+                        --ID;
+                        Данные.ID = StaticSoundRecords[i].ID;
+                        StaticSoundRecords[i] = Данные;
+
+                        НайденаНужнаяЗаписьВСписке = true;
+                        break;
+                    }
+
+                if (НайденаНужнаяЗаписьВСписке == false)
+                    StaticSoundRecords.Add(Данные);
+
+                ОбновитьДанныеВСписке();
+            }
+
+            формаЗаписиСообщения.Dispose();
+            формаЗаписиСообщения = null;
+        }
     }
 }
