@@ -470,7 +470,8 @@
             // 
             this.tBComments.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.tBComments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tBComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tBComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tBComments.ForeColor = System.Drawing.Color.DarkOliveGreen;
             this.tBComments.Location = new System.Drawing.Point(0, 0);
             this.tBComments.Multiline = true;
             this.tBComments.Name = "tBComments";
@@ -478,6 +479,7 @@
             this.tBComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tBComments.Size = new System.Drawing.Size(693, 110);
             this.tBComments.TabIndex = 0;
+            this.tBComments.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tBComments.Enter += new System.EventHandler(this.listView5_Enter);
             // 
             // contextMenuStrip1

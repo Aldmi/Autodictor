@@ -214,7 +214,7 @@ namespace MainExample
                 ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели = false;
                 btnОбновитьСписок_Click(null, null);
             }
-         
+
             if (Program.Настройки.РазрешениеАвтообновленияРасписания &&
                 (DateTime.Now >= Program.Настройки.ВремяАвтообновленияРасписания) && (DateTime.Now <= Program.Настройки.ВремяАвтообновленияРасписания.AddMilliseconds(150)))
             {
@@ -350,7 +350,7 @@ namespace MainExample
                 if ((РаботаПоНомеруДняНедели == 7) || (планРасписанияПоезда.ПолучитьРежимРасписания() != РежимРасписанияДвиженияПоезда.ПоДням) || (Record.ТипПоезда == ТипПоезда.Пассажирский) || (Record.ТипПоезда == ТипПоезда.Скоростной) || (Record.ТипПоезда == ТипПоезда.Скорый))
                 {
                     var активностьНаДень = планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(день.Month - 1), (byte)(день.Day - 1));
-                    if(активностьНаДень == false)
+                    if (активностьНаДень == false)
                         continue;
 
                     if (ограничениеВремениПоЧасам != null)
@@ -358,7 +358,7 @@ namespace MainExample
                         DateTime времяПрибытия;
                         if (DateTime.TryParse(Config.ArrivalTime, out времяПрибытия))
                         {
-                            if(!ограничениеВремениПоЧасам(времяПрибытия.Hour))
+                            if (!ограничениеВремениПоЧасам(времяПрибытия.Hour))
                                 continue;
                         }
 
@@ -1039,9 +1039,6 @@ namespace MainExample
 
 
 
-
-
-
                                 Данные.ТаймерПовторения++;
                                 int ТипПоезда = (int)Данные.ТипПоезда;
                                 string ФормируемоеСообщение = "";
@@ -1254,6 +1251,8 @@ namespace MainExample
             #endregion
 
             lVСобытия_ОбновитьСостояниеТаблицы();
+
+            ОтобразитьСубтитры();
         }
 
 
@@ -1298,7 +1297,7 @@ namespace MainExample
                                 Stations = t.Name,
                                 Time = timePars(t.ArrivalTime, t.DepartureTime),
                                 DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания()
-                        }).ToList();
+                            }).ToList();
 
                             var inData = new UniversalInputType { TableData = table };
                             foreach (var beh in binding2Shedule)
@@ -2318,7 +2317,7 @@ namespace MainExample
                         case 1: lvi1.BackColor = Color.White; break;
                         case 2: lvi1.BackColor = Color.LightGreen; break;
                         case 3: lvi1.BackColor = Color.Orange; break;
-                        case 4: lvi1.BackColor = Color.LightBlue; break;
+                        case 4: lvi1.BackColor = Color.CadetBlue; break;
                     }
                     lVСобытия.Items.Add(lvi1);
                 }
@@ -2334,7 +2333,7 @@ namespace MainExample
                         case 1: if (lVСобытия.Items[НомерСтроки].BackColor != Color.White) lVСобытия.Items[НомерСтроки].BackColor = Color.White; break;
                         case 2: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightGreen) lVСобытия.Items[НомерСтроки].BackColor = Color.LightGreen; break;
                         case 3: if (lVСобытия.Items[НомерСтроки].BackColor != Color.Orange) lVСобытия.Items[НомерСтроки].BackColor = Color.Orange; break;
-                        case 4: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightBlue) lVСобытия.Items[НомерСтроки].BackColor = Color.LightBlue; break;
+                        case 4: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightBlue) lVСобытия.Items[НомерСтроки].BackColor = Color.CadetBlue; break;
                     }
                 }
 
@@ -2344,6 +2343,32 @@ namespace MainExample
             while (НомерСтроки < lVСобытия.Items.Count)
                 lVСобытия.Items.RemoveAt(НомерСтроки);
         }
+
+
+        private void ОтобразитьСубтитры()
+        {
+            var subtaitles = СписокБлижайшихСобытий.Values.FirstOrDefault(ev => ev.СостояниеСтроки == 4);
+
+            if (subtaitles.СостояниеСтроки == 4)
+            {
+                if (СписокБлижайшихСобытий.ContainsKey(subtaitles.Ключ))
+                {
+                    if (subtaitles.НомерСписка == 1) //статические звуковые сообщения
+                    {
+                        if (СтатическиеЗвуковыеСообщения.Keys.Contains(subtaitles.Ключ))
+                        {
+                            var statSound = StaticSoundForm.StaticSoundRecords.FirstOrDefault(sound => sound.Name == subtaitles.Описание);
+                            tBComments.Text = statSound.Message;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                tBComments.Text = String.Empty;
+            }
+        }
+
 
         private void lVСобытия_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -2475,7 +2500,7 @@ namespace MainExample
                 SoundRecords[Key] = Данные;
             }
             //--------------------------------
-   
+
 
 
             // SoundRecords[Key] = Данные;
