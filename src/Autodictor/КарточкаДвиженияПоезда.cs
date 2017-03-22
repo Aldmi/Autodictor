@@ -439,13 +439,15 @@ namespace MainExample
                     }
 
                 if (НаличиеШаблона == true)
-                    ОтобразитьШаблонОповещенияВОкне(Шаблон);
+                    ОтобразитьШаблонОповещенияНаRichTb(Шаблон, rTB_Сообщение);
             }
         }
 
-        private void ОтобразитьШаблонОповещенияВОкне(string ШаблонОповещения)
+
+
+        public void ОтобразитьШаблонОповещенияНаRichTb(string шаблонОповещения, RichTextBox rTb)
         {
-            rTB_Сообщение.Text = "";
+            rTb.Text = "";
             string Text;
 
             string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
@@ -456,7 +458,7 @@ namespace MainExample
 
             List<int> УказательВыделенныхФрагментов = new List<int>();
 
-            string[] ЭлементыШаблона = ШаблонОповещения.Split('|');
+            string[] ЭлементыШаблона = шаблонОповещения.Split('|');
             foreach (string шаблон in ЭлементыШаблона)
             {
                 int ВидНомерацииПути = 0;
@@ -469,67 +471,67 @@ namespace MainExample
                         if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
                         if (Program.НомераПутей.Contains(Record.НомерПути))
                         {
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                             Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1 + ВидНомерацииПути * 14];
 
                             УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
+                            rTb.AppendText(Text + " ");
                         }
                         break;
 
                     case "СТ.ОТПРАВЛЕНИЯ":
-                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.СтанцияОтправления;
                         УказательВыделенныхФрагментов.Add(Text.Length);
-                        rTB_Сообщение.AppendText(Text + " ");
+                        rTb.AppendText(Text + " ");
                         break;
 
                     case "НОМЕР ПОЕЗДА":
-                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.НомерПоезда;
                         УказательВыделенныхФрагментов.Add(Text.Length);
-                        rTB_Сообщение.AppendText(Text + " ");
+                        rTb.AppendText(Text + " ");
                         break;
 
                     case "СТ.ПРИБЫТИЯ":
-                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.СтанцияНазначения;
                         УказательВыделенныхФрагментов.Add(Text.Length);
-                        rTB_Сообщение.AppendText(Text + " ");
+                        rTb.AppendText(Text + " ");
                         break;
 
                     case "ВРЕМЯ ПРИБЫТИЯ":
-                        rTB_Сообщение.Text += "Время прибытия: ";
-                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        rTb.Text += "Время прибытия: ";
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.ВремяПрибытия.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
-                        rTB_Сообщение.AppendText(Text + " ");
+                        rTb.AppendText(Text + " ");
                         break;
 
                     case "ВРЕМЯ СТОЯНКИ":
-                        rTB_Сообщение.Text += "Стоянка: ";
-                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        rTb.Text += "Стоянка: ";
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.ВремяСтоянки.ToString() + " минут";
                         УказательВыделенныхФрагментов.Add(Text.Length);
-                        rTB_Сообщение.AppendText(Text + " ");
+                        rTb.AppendText(Text + " ");
                         break;
 
                     case "ВРЕМЯ ОТПРАВЛЕНИЯ":
-                        rTB_Сообщение.Text += "Время отправления: ";
-                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        rTb.Text += "Время отправления: ";
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.ВремяОтправления.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
-                        rTB_Сообщение.AppendText(Text + " ");
+                        rTb.AppendText(Text + " ");
                         break;
 
 
                     case "НУМЕРАЦИЯ СОСТАВА":
                         if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
                         {
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                            УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                             Text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
                             УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
+                            rTb.AppendText(Text + " ");
                         }
                         break;
 
@@ -539,11 +541,11 @@ namespace MainExample
                         {
                             if (rB_СоВсемиОстановками.Checked == true)
                             {
-                                rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
+                                rTb.AppendText("Электропоезд движется со всеми остановками");
                             }
                             else if (rB_ПоСтанциям.Checked == true)
                             {
-                                rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
+                                rTb.AppendText("Электропоезд движется с остановками на станциях: ");
                                 foreach (var Станция in Program.Станции)
                                     if (lB_ПоСтанциям.Items.Contains(Станция))
                                     {
@@ -552,7 +554,7 @@ namespace MainExample
                             }
                             else if (rB_КромеСтанций.Checked == true)
                             {
-                                rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
+                                rTb.AppendText("Электропоезд движется с остановками кроме станций: ");
                                 foreach (var Станция in Program.Станции)
                                     if (lB_ПоСтанциям.Items.Contains(Станция))
                                     {
@@ -564,23 +566,20 @@ namespace MainExample
 
 
                     default:
-                        rTB_Сообщение.AppendText(шаблон + " ");
+                        rTb.AppendText(шаблон + " ");
                         break;
                 }
             }
 
             for (int i = 0; i < УказательВыделенныхФрагментов.Count / 2; i++)
             {
-                rTB_Сообщение.SelectionStart = УказательВыделенныхФрагментов[2 * i];
-                rTB_Сообщение.SelectionLength = УказательВыделенныхФрагментов[2 * i + 1];
-                rTB_Сообщение.SelectionColor = Color.Red;
+                rTb.SelectionStart = УказательВыделенныхФрагментов[2 * i];
+                rTb.SelectionLength = УказательВыделенныхФрагментов[2 * i + 1];
+                rTb.SelectionColor = Color.Red;
             }
 
-            rTB_Сообщение.SelectionLength = 0;
+            rTb.SelectionLength = 0;
         }
-
-
-
 
 
 
