@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MainExample
@@ -13,6 +14,7 @@ namespace MainExample
         public bool ПрименитьКоВсемСообщениям = true;
         private bool СделаныИзменения = false;
         private bool РазрешениеИзменений = false;
+
 
         public КарточкаДвиженияПоезда(SoundRecord Record)
         {
@@ -576,6 +578,126 @@ namespace MainExample
 
             rTB_Сообщение.SelectionLength = 0;
         }
+
+
+
+
+
+
+        public static string ЗаполнитьШаблонОбовещения(string шаблонОповещения, SoundRecord record)
+        {
+            StringBuilder resultStr= new StringBuilder();
+
+            string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь",
+                                                                    "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути",
+                                                                    "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути" };
+
+            string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация поезда с головы состава", "Нумерация поезда с хвоста состава" };
+
+            List<int> УказательВыделенныхФрагментов = new List<int>();
+
+            string[] ЭлементыШаблона = шаблонОповещения.Split('|');
+            foreach (string шаблон in ЭлементыШаблона)
+            {
+                int ВидНомерацииПути = 0;
+                string text;
+                switch (шаблон)
+                {
+                    case "НА НОМЕР ПУТЬ":
+                    case "НА НОМЕРом ПУТИ":
+                    case "С НОМЕРого ПУТИ":
+                        if (шаблон == "НА НОМЕРом ПУТИ") ВидНомерацииПути = 1;
+                        if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
+                        if (Program.НомераПутей.Contains(record.НомерПути))
+                        {
+                            text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(record.НомерПути) + 1 + ВидНомерацииПути * 14];
+                            resultStr.Append(text + " ");
+                        }
+                        break;
+
+                    case "СТ.ОТПРАВЛЕНИЯ":
+                        text = record.СтанцияОтправления;
+                        resultStr.Append(text + " ");
+                        break;
+
+                    case "НОМЕР ПОЕЗДА":
+                        text = record.НомерПоезда;
+                        resultStr.Append(text + " ");
+                        break;
+
+                    case "СТ.ПРИБЫТИЯ":
+                        text = record.СтанцияНазначения;
+                        resultStr.Append(text + " ");
+                        break;
+
+                    case "ВРЕМЯ ПРИБЫТИЯ":
+                        resultStr.Append("Время прибытия: ");
+                        text = record.ВремяПрибытия.ToString("HH:mm");
+                        resultStr.Append(text + " ");
+                        break;
+
+                    case "ВРЕМЯ СТОЯНКИ":
+                        resultStr.Append("Стоянка: ");
+                        text = record.ВремяСтоянки.ToString() + " минут";
+                        resultStr.Append(text + " ");
+                        break;
+
+                    case "ВРЕМЯ ОТПРАВЛЕНИЯ":
+                        resultStr.Append("Время отправления: ");
+                        text = record.ВремяОтправления.ToString("HH:mm");
+                        resultStr.Append(text + " ");
+                        break;
+
+
+                    case "НУМЕРАЦИЯ СОСТАВА":
+                        if ((record.НумерацияПоезда > 0) && (record.НумерацияПоезда <= 2))
+                        {
+                            text = НазваниеФайловНумерацииПутей[record.НумерацияПоезда];
+                            resultStr.Append(text + " ");
+                        }
+                        break;
+
+
+                    case "СТАНЦИИ":
+                        if ((record.ТипПоезда == ТипПоезда.Пригородный) || (record.ТипПоезда == ТипПоезда.Ласточка) || (record.ТипПоезда == ТипПоезда.РЭКС))
+                        {
+                            //if (rB_СоВсемиОстановками.Checked == true)
+                            //{
+                            //    rTB_Сообщение.AppendText("Электропоезд движется со всеми остановками");
+                            //}
+                            //else if (rB_ПоСтанциям.Checked == true)
+                            //{
+                            //    rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
+                            //    foreach (var Станция in Program.Станции)
+                            //        if (lB_ПоСтанциям.Items.Contains(Станция))
+                            //        {
+                            //            rTB_Сообщение.AppendText(Станция + " ");
+                            //        }
+                            //}
+                            //else if (rB_КромеСтанций.Checked == true)
+                            //{
+                            //    rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
+                            //    foreach (var Станция in Program.Станции)
+                            //        if (lB_ПоСтанциям.Items.Contains(Станция))
+                            //        {
+                            //            rTB_Сообщение.AppendText(Станция + " ");
+                            //        }
+                            //}
+                        }
+                        break;
+
+
+                    default:
+                        resultStr.Append(шаблон + " ");
+                        break;
+                }
+            }
+
+
+            return resultStr.ToString();
+        }
+
+
 
         private void lVШаблоны_ItemChecked(object sender, ItemCheckedEventArgs e)
         {

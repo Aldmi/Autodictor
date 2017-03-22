@@ -83,6 +83,7 @@ namespace MainExample
         public byte НомерСписка; // 0 - Динамические сообщения, 1 - статические звуковые сообщения
         public string Ключ;
         public byte СостояниеСтроки; // 0 - Выключена, 1 - движение поезда, 2 - статическое сообщение, 3 - аварийное сообщение, 4 - воспроизведение
+        public string ЗаполненныйШаблон;
     };
 
 
@@ -655,8 +656,8 @@ namespace MainExample
 
                     string ВремяОтправления = "";
                     string ВремяПрибытия = "";
-                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("dd.MM  HH:mm:ss");
-                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("dd.MM  HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm:ss");
 
                     ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
@@ -946,12 +947,15 @@ namespace MainExample
                 //==================================================================================
                 if (DateTime.Now < Сообщение.Время.AddSeconds(20) && DateTime.Now > Сообщение.Время.AddMinutes(-30))
                 {
+                    var statSound = StaticSoundForm.StaticSoundRecords.FirstOrDefault(sound => sound.Name == Сообщение.НазваниеКомпозиции);
+
                     ОписаниеСобытия событие;
                     событие.НомерСписка = 1;
                     событие.СостояниеСтроки = 2;
                     событие.Описание = Сообщение.НазваниеКомпозиции;
                     событие.Время = Сообщение.Время;
                     событие.Ключ = Key;
+                    событие.ЗаполненныйШаблон = statSound.Message;
 
                     if (DateTime.Now >= Сообщение.Время)
                         событие.СостояниеСтроки = 4;
@@ -1017,6 +1021,7 @@ namespace MainExample
                                     событие.Описание = Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Аварийное событие";
                                     событие.Время = ВременноеВремяСобытия;
                                     событие.Ключ = SoundRecords.ElementAt(i).Key;
+                                    событие.ЗаполненныйШаблон = "TEST!!!";
 
                                     int КоличествоПопыток = 0;
                                     string Ключ;
@@ -1169,7 +1174,6 @@ namespace MainExample
                                     ВремяСобытия = ВремяСобытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
                                     if ((ТекущееВремя.Hour == ВремяСобытия.Hour) && (ТекущееВремя.Minute == ВремяСобытия.Minute) && (ТекущееВремя.Second == ВремяСобытия.Second))
                                     {
-                                        ФормируемоеСообщение.Воспроизведен = true;
                                         Данные.СписокФормируемыхСообщений[j] = ФормируемоеСообщение;
                                         ВнесеныИзменения = true;
 
@@ -1177,8 +1181,10 @@ namespace MainExample
                                             MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение расписания", Данные, ФормируемоеСообщение.Шаблон);
                                     }
 
+
+                                    //Динамическое сообщение попадет в список если ФормируемоеСообщение еще не воспроезведенно  и не прошло 20 сек с момента попадания в список.
                                     //==================================================================================
-                                    if (DateTime.Now < ВремяСобытия && DateTime.Now > ВремяСобытия.AddMinutes(-30))
+                                    if (DateTime.Now < ВремяСобытия.AddSeconds(20) && DateTime.Now > ВремяСобытия.AddMinutes(-30))
                                     {
                                         ОписаниеСобытия событие;
                                         событие.НомерСписка = 0;
@@ -1186,7 +1192,12 @@ namespace MainExample
                                         событие.Описание = Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + ФормируемоеСообщение.НазваниеШаблона;
                                         событие.Время = ВремяСобытия;
                                         событие.Ключ = SoundRecords.ElementAt(i).Key;
+                                        событие.ЗаполненныйШаблон = КарточкаДвиженияПоезда.ЗаполнитьШаблонОбовещения(ФормируемоеСообщение.Шаблон, SoundRecords[событие.Ключ]);
 
+                                        if (DateTime.Now >= ВремяСобытия)
+                                            событие.СостояниеСтроки = 4;
+                
+                                        
                                         int КоличествоПопыток = 0;
                                         string Ключ;
                                         while (КоличествоПопыток++ < 10)
@@ -1204,7 +1215,7 @@ namespace MainExample
                                             событие.Время.AddSeconds(10);
                                         }
                                     }
-
+          
                                 }
                             }
                         }
@@ -2333,7 +2344,7 @@ namespace MainExample
                         case 1: if (lVСобытия.Items[НомерСтроки].BackColor != Color.White) lVСобытия.Items[НомерСтроки].BackColor = Color.White; break;
                         case 2: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightGreen) lVСобытия.Items[НомерСтроки].BackColor = Color.LightGreen; break;
                         case 3: if (lVСобытия.Items[НомерСтроки].BackColor != Color.Orange) lVСобытия.Items[НомерСтроки].BackColor = Color.Orange; break;
-                        case 4: if (lVСобытия.Items[НомерСтроки].BackColor != Color.LightBlue) lVСобытия.Items[НомерСтроки].BackColor = Color.CadetBlue; break;
+                        case 4: if (lVСобытия.Items[НомерСтроки].BackColor != Color.CadetBlue) lVСобытия.Items[НомерСтроки].BackColor = Color.CadetBlue; break;
                     }
                 }
 
@@ -2351,16 +2362,17 @@ namespace MainExample
 
             if (subtaitles.СостояниеСтроки == 4)
             {
-                if (СписокБлижайшихСобытий.ContainsKey(subtaitles.Ключ))
+                if (subtaitles.НомерСписка == 1) //статические звуковые сообщения
                 {
-                    if (subtaitles.НомерСписка == 1) //статические звуковые сообщения
+                    if (СтатическиеЗвуковыеСообщения.Keys.Contains(subtaitles.Ключ))
                     {
-                        if (СтатическиеЗвуковыеСообщения.Keys.Contains(subtaitles.Ключ))
-                        {
-                            var statSound = StaticSoundForm.StaticSoundRecords.FirstOrDefault(sound => sound.Name == subtaitles.Описание);
-                            tBComments.Text = statSound.Message;
-                        }
+                        tBComments.Text = subtaitles.ЗаполненныйШаблон;
                     }
+                }
+                else
+                if (subtaitles.НомерСписка == 0) //динамические звуковые сообщения
+                {
+                    tBComments.Text = subtaitles.ЗаполненныйШаблон;                           
                 }
             }
             else

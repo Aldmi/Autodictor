@@ -459,7 +459,7 @@
             // columnHeader13
             // 
             this.columnHeader13.Text = "Время";
-            this.columnHeader13.Width = 100;
+            this.columnHeader13.Width = 160;
             // 
             // columnHeader26
             // 

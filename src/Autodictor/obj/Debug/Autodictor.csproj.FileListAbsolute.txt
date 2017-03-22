@@ -1,3 +1,0 @@
-C:\Git\Autodictor\src\Autodictor\bin\Debug\NLog.dll
-C:\Git\Autodictor\src\Autodictor\bin\Debug\System.Reactive.Core.dll
-C:\Git\Autodictor\src\Autodictor\bin\Debug\System.Reactive.Interfaces.dll
