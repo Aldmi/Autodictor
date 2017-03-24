@@ -25,6 +25,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         public DeviceSetting GetDeviceSetting => _device.Setting;
 
 
+
+
         public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, UniversalInputType contrains)
         {
             _device = device;

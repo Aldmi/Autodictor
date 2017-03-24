@@ -35,6 +35,10 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                             Contrains.Event = s;
                             break;
 
+                        case "ПРИБ + ПРИГ.":
+                           // Contrains.Command=  ;
+                            break;
+
                         case "ПРИГ.":
                             Contrains.TypeTrain = TypeTrain.Suburb;
                             break;
