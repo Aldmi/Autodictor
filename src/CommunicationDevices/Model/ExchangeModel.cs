@@ -245,6 +245,14 @@ namespace CommunicationDevices.Model
                     case "Vidor":
                         maxCountFaildRespowne = 3;
                         behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
+
+                        //-----------------------
+                        //var rules = new ExchangeRules(xmlDeviceSp.ExchangeRules);
+                        //behavior = new ExchangeBehavior4Rule(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, rules);
+
+                        //ExchangeBehavior4Rule перебирает правила обмена и из каждого правила создает провайдер данных ForRuleDataProvider. 
+                        //-----------------------
+
                         Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.

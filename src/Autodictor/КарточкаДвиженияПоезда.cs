@@ -77,9 +77,6 @@ namespace MainExample
             cBОткуда.Text = Record.СтанцияОтправления;
             cBКуда.Text = Record.СтанцияНазначения;
 
-            // cBОткуда.SelectedIndex = cBОткуда.Items.IndexOf(Record.СтанцияОтправления);
-            //cBКуда.SelectedIndex = cBКуда.Items.IndexOf(Record.СтанцияНазначения);
-
 
             switch (Record.КоличествоПовторений)
             {
@@ -549,7 +546,7 @@ namespace MainExample
                                 foreach (var Станция in Program.Станции)
                                     if (lB_ПоСтанциям.Items.Contains(Станция))
                                     {
-                                        rTB_Сообщение.AppendText(Станция + " ");
+                                        rTb.AppendText(Станция + " ");
                                     }
                             }
                             else if (rB_КромеСтанций.Checked == true)
@@ -558,7 +555,7 @@ namespace MainExample
                                 foreach (var Станция in Program.Станции)
                                     if (lB_ПоСтанциям.Items.Contains(Станция))
                                     {
-                                        rTB_Сообщение.AppendText(Станция + " ");
+                                        rTb.AppendText(Станция + " ");
                                     }
                             }
                         }

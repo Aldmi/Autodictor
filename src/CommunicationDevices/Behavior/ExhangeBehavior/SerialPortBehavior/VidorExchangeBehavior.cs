@@ -53,7 +53,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         #region OverrideMembers
 
-        protected override sealed List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
+        protected sealed override List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
 
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
