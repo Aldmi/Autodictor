@@ -176,6 +176,7 @@ namespace CommunicationDevices.Model
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
+                List<XmlExchangeRule> exhangeRules = null;
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -206,6 +207,12 @@ namespace CommunicationDevices.Model
                 {
                     PathPermission = pathPermission?.Enable ?? true
                 };
+
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("ExchangeRules"))
+                {
+                    exhangeRules = xmlDeviceSp.SpecialDictionary["ExchangeRules"] as List<XmlExchangeRule>;
+                }
+
 
                 //привязка обязательный параметр
                 if (binding == null)
@@ -342,10 +349,46 @@ namespace CommunicationDevices.Model
                         Devices.Last().AddCycleFunc();
                         break;
 
+
+
                     default:
-                        ErrorString = $" Устройсвто с именем {xmlDeviceSp.Name} не найденно";
-                        Log.log.Error(ErrorString);
-                        throw new Exception(ErrorString);
+                        //ErrorString = $" Устройсвто с именем {xmlDeviceSp.Name} не найденно";
+                        //Log.log.Error(ErrorString);
+                        //throw new Exception(ErrorString);
+
+
+                        //-----------------------------------------------------------------------------------------
+                        //maxCountFaildRespowne = 3;
+                        //behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
+
+                        ////-----------------------
+                        ////var rules = new ExchangeRules(xmlDeviceSp.ExchangeRules);
+                        ////behavior = new ExchangeBehavior4Rule(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, rules);
+
+                        ////ExchangeBehavior4Rule перебирает правила обмена и из каждого правила создает провайдер данных ForRuleDataProvider. 
+                        ////-----------------------
+
+                        //Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
+
+                        ////создание поведения привязка табло к пути.
+                        //if (binding.BindingType == BindingType.ToPath)
+                        //{
+                        //    var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                        //    Binding2PathBehaviors.Add(bindingBeh);
+                        //    bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
+                        //}
+
+                        ////создание поведения привязка табло к главному расписанию
+                        //if (binding.BindingType == BindingType.ToGeneral)
+                        //    ;
+
+                        ////создание поведения привязка табло к системе отправление/прибытие поездов
+                        //if (binding.BindingType == BindingType.ToArrivalAndDeparture)
+                        //    ;
+
+                        ////добавим все функции циклического опроса
+                        //Devices.Last().AddCycleFunc();
+                        break;
                 }
             }
 
