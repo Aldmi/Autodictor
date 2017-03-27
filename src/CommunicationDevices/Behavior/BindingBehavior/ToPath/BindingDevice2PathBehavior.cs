@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Xml;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
+using CommunicationDevices.Settings;
 
 
 namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
@@ -18,7 +19,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
     {
         private readonly Device _device;
         public IEnumerable<byte> CollectionPathNumber { get; }
-        public UniversalInputType Contrains { get; }
+        public Contrains Contrains { get; }
         public string GetDeviceName => _device.Name;
         public int GetDeviceId => _device.Id;
         public string GetDeviceAddress => _device.Address;
@@ -27,7 +28,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, UniversalInputType contrains)
+        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, Contrains contrains)
         {
             _device = device;
             CollectionPathNumber = pathNumbers;
@@ -107,8 +108,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
             if (Contrains == null)
                 return true;
 
-            return inData.TypeTrain != Contrains.TypeTrain &&
-                   inData.Event != Contrains.Event;
+            return Contrains.CheckContrains(inData);
         }
 
 

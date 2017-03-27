@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using CommunicationDevices.DataProviders;
 
+
+
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
@@ -8,7 +10,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     {
         #region prop
 
-        public UniversalInputType Contrains { get; }
+        public Contrains Contrains { get; }
 
         #endregion
 
@@ -22,7 +24,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             var contr = contrains.Split(';');
             if (contr.Any())
             {
-                Contrains = new UniversalInputType();
+                Contrains = new Contrains();
                 foreach (var s in contr)
                 {
                     switch (s)
@@ -35,10 +37,6 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                             Contrains.Event = s;
                             break;
 
-                        case "ПРИБ + ПРИГ.":
-                           // Contrains.Command=  ;
-                            break;
-
                         case "ПРИГ.":
                             Contrains.TypeTrain = TypeTrain.Suburb;
                             break;
@@ -47,12 +45,28 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                             Contrains.TypeTrain = TypeTrain.LongDistance;
                             break;
 
+                        case "ПРИБ.+ПРИГ.":
+                            Contrains.ArrivalAndSuburb = true;
+                            break;
+
+                        case "ПРИБ.+ДАЛЬН.":
+                            Contrains.ArrivalAndLongDistance = true;
+                            break;
+
+                        case "ОТПР.+ПРИГ.":
+                            Contrains.DepartureAndSuburb = true;
+                            break;
+
+                        case "ОТПР.+ДАЛЬН.":
+                            Contrains.DepartureAndLongDistance = true;
+                            break;
+
                         case "МеньшеТекВремени":
-                            Contrains.Command = Command.Clear;
+                            Contrains.LowCurrentTime = true;
                             break;
 
                         case "БольшеТекВремени":
-                            Contrains.Command = Command.Restart;
+                            Contrains.HightCurrentTime = true;
                             break;
 
                         default:
