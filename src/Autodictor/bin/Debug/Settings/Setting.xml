@@ -29,10 +29,10 @@
 	   </Settings>
 	 </DeviceSp>
 	 
-	 <DeviceSp Id="22" Name="Vidor" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1">
 	      <ExchangeRules>
 		     <Rule Format = "ascii">
-			    <Request>
+			    <Request maxLenght = "250">
 				    STX{address:X2}{Nbyte:X2}
 					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
 					%000011460144%10$18$00$60$t2ПУТЬ №{numberOfPath} <!-- Вывод Пути -->

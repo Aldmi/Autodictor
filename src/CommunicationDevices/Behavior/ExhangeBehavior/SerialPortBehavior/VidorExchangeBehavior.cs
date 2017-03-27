@@ -13,7 +13,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
     /// <summary>
     /// ПОВЕДЕНИЕ ОБМЕНА ДАННЫМИ ТАБЛО "ВИДОР" ПО ПОСЛЕД. ПОРТУ
     /// </summary>
-    public class VidorExchangeBehavior : BaseExhangeSpBehavior
+    public sealed class VidorExchangeBehavior : BaseExhangeSpBehavior
     {
         #region ctor
 

@@ -13,6 +13,7 @@ using Communication.Settings;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
+using CommunicationDevices.Behavior.ExchangeRules;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
@@ -176,7 +177,7 @@ namespace CommunicationDevices.Model
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
-                List<XmlExchangeRule> exhangeRules = null;
+                List<XmlExchangeRule> xmlExchangeRules = null;
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -210,7 +211,7 @@ namespace CommunicationDevices.Model
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("ExchangeRules"))
                 {
-                    exhangeRules = xmlDeviceSp.SpecialDictionary["ExchangeRules"] as List<XmlExchangeRule>;
+                    xmlExchangeRules = xmlDeviceSp.SpecialDictionary["ExchangeRules"] as List<XmlExchangeRule>;
                 }
 
 
@@ -344,12 +345,14 @@ namespace CommunicationDevices.Model
 
 
                     default:
-                        //ErrorString = $" Устройсвто с именем {xmlDeviceSp.Name} не найденно";
-                        //Log.log.Error(ErrorString);
-                        //throw new Exception(ErrorString);
+                        // правила обмена обязательный параметр
+                        if (xmlExchangeRules == null || !xmlExchangeRules.Any())
+                        {
+                            MessageBox.Show($"Не указанны кол-во строк у многострочного табло {xmlDeviceSp.Id}");
+                            return;
+                        }
 
 
-                        //-----------------------------------------------------------------------------------------
 
                         //-----------------------
                         //var rules = new ExchangeRules(xmlDeviceSp.ExchangeRules);
@@ -358,37 +361,62 @@ namespace CommunicationDevices.Model
                         //ExchangeBehavior4Rule перебирает правила обмена и из каждого правила создает провайдер данных ForRuleDataProvider. 
                         //-----------------------
 
+                        //Создание списка правил обмена.
+                        List<BaseExchangeRule> excangeRules= new List<BaseExchangeRule>();
+                        foreach (var xmlExchangeRule in xmlExchangeRules)
+                        {
+                            //Запрос---------------------
+                            RequestRule request = null;
+                            if ((!string.IsNullOrEmpty(xmlExchangeRule.RequestBody)))
+                            {
+                                request = new RequestRule { MaxLenght = xmlExchangeRule.RequestMaxLenght, Body = xmlExchangeRule.RequestBody };
+                            }
+                            else
+                            {
+                                MessageBox.Show($"В правилах обмена для {xmlDeviceSp.Name} не верно заданна секция Request");
+                                return;
+                            }
 
-                        //maxCountFaildRespowne = 3;
-                        //behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
+                            //Ответ----------------------
+                            ResponseRule response = null;
+                            if ((xmlExchangeRule.ResponseMaxLenght > 0) || (!string.IsNullOrEmpty(xmlExchangeRule.ResponseBody)))
+                            {
+                                response = new ResponseRule() { MaxLenght = xmlExchangeRule.ResponseMaxLenght, Body = xmlExchangeRule.RequestBody, Time = xmlExchangeRule.TimeResponse};
+                            }
 
-                        ////-----------------------
-                        ////var rules = new ExchangeRules(xmlDeviceSp.ExchangeRules);
-                        ////behavior = new ExchangeBehavior4Rule(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, rules);
+                            //Повтор--------------------
+                            RepeatRule repeat = null;
+                            if (xmlExchangeRule.RepeatCount.HasValue)
+                            {
+                                repeat = new RepeatRule { Count = xmlExchangeRule.RepeatCount.Value, DeltaX = xmlExchangeRule.RepeatDeltaX, DeltaY = xmlExchangeRule.RepeatDeltaY };
+                            }
 
-                        ////ExchangeBehavior4Rule перебирает правила обмена и из каждого правила создает провайдер данных ForRuleDataProvider. 
-                        ////-----------------------
+                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format));
+                        }
 
-                        //Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
-                        ////создание поведения привязка табло к пути.
-                        //if (binding.BindingType == BindingType.ToPath)
-                        //{
-                        //    var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
-                        //    Binding2PathBehaviors.Add(bindingBeh);
-                        //    bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
-                        //}
+                        maxCountFaildRespowne = 3;
+                        behavior = new ByRulesExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, excangeRules);
+                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
-                        ////создание поведения привязка табло к главному расписанию
-                        //if (binding.BindingType == BindingType.ToGeneral)
-                        //    ;
+                        //создание поведения привязка табло к пути.
+                        if (binding.BindingType == BindingType.ToPath)
+                        {
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                            Binding2PathBehaviors.Add(bindingBeh);
+                            bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
+                        }
 
-                        ////создание поведения привязка табло к системе отправление/прибытие поездов
-                        //if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                        //    ;
+                        //создание поведения привязка табло к главному расписанию
+                        if (binding.BindingType == BindingType.ToGeneral)
+                            ;
 
-                        ////добавим все функции циклического опроса
-                        //Devices.Last().AddCycleFunc();
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
+                            ;
+
+                        //добавим все функции циклического опроса
+                        Devices.Last().AddCycleFunc();
                         break;
                 }
             }

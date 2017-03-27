@@ -93,6 +93,8 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
+    <Compile Include="Behavior\ExchangeRules\BaseExchangeRule.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesExchangeSpBehavior.cs" />
     <Compile Include="DataProviders\ILineByLineDrawingTableDataProvider.cs" />
     <Compile Include="Behavior\ExhangeBehavior\PcBehavior\ArivDepartExhangePcBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\PcBehavior\BaseExhangePcBehavior.cs" />
