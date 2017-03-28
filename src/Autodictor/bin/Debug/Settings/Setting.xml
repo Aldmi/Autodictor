@@ -30,7 +30,6 @@
 		     <Rule Format = "ascii">
 			    <Request maxLenght = "250">
 				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
 					%000011460144%10$18$00$60$t2ПУТЬ №{PathNumber} <!-- Вывод Пути -->
 					%42001192016016<!-- Вывод гор.линии -->
 					%000011460314%10$18$00$60$t3{Stations}<!-- Вывод станций -->

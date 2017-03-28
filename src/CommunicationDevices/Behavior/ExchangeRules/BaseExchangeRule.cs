@@ -57,7 +57,7 @@ namespace CommunicationDevices.Behavior.ExchangeRules
                 int parseVal;
                 foreach (var s in subStr)
                 {
-                    var replaseStr = s + "}";
+                    var replaseStr = (s.Contains("{")) ?  (s + "}") : s;
                     if (replaseStr.Contains(nameof(uit.AddressDevice)))
                     {
                         if (replaseStr.Contains(":")) //если указзанн формат числа
