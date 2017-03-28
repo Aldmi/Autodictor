@@ -10,7 +10,6 @@
 	<CountPortion>2</CountPortion>
   </LogSetting>
 
-  
   <SerialPorts>
 	<Serial>
       <Port>3</Port>
@@ -23,7 +22,6 @@
     </Serial>
   </SerialPorts>
 
-  
   <DevicesWithSP> 
 	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1">
 	      <ExchangeRules>
@@ -31,14 +29,13 @@
 			    <Request maxLenght = "250">
 				    STX{AddressDevice:X2}{Nbyte:X2}
 					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011460144%10$18$00$60$t2ПУТЬ №{PathNumber} <!-- Вывод Пути -->
+					%000011460144%10$18$00$60$t2ПУТЬ №{numberOfPath} <!-- Вывод Пути -->
 					%42001192016016<!-- Вывод гор.линии -->
-					%000011460314%10$18$00$60$t3{Stations}<!-- Вывод станций -->
-					%001521920314%10$18$00$60$t3{Time:t}<!-- Вывод времени -->
-					%000011920464%10$18$00$60$t3{Note}<!-- Вывод примечание -->
+					%000011460314%10$18$00$60$t3{stations}<!-- Вывод станций -->
+					%001521920314%10$18$00$60$t3{time}<!-- Вывод времени -->
+					%000011920464%10$18$00$60$t3{note}<!-- Вывод примечание -->
 					{CRCXor:X2}ETX
 		        </Request >
-
 				
 			    <Response maxLenght = "8" TimeRespone="1000">
 				    STX0200FDETX
@@ -46,6 +43,10 @@
 		     </Rule>
 		  </ExchangeRules>
 	 </DeviceSp>
+	 
+	 
+
+
 	 
 	 
 <!-- 	 <DeviceSp Id="2" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/> -->

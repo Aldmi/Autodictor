@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.Behavior.ExchangeRules;
 using CommunicationDevices.DataProviders;
-
+using CommunicationDevices.DataProviders.BuRuleDataProvider;
 
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
@@ -48,15 +48,18 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
-            //Вывод на путевое табло
-            //var writeProvider = new PanelVidorWriteDataProvider { InputData = Data4CycleFunc[0] };
-            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            //await Task.Delay(1000, ct);  //задержка для задания периода опроса.    
+            foreach (var exchangeRule in ExchangeRules)
+            {
+               var writeProvider = new ByRuleWriteDataProvider { InputData = Data4CycleFunc[0], RequestRule = exchangeRule.RequestRule, ResponseRule = exchangeRule.ResponseRule };
+               DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+               LastSendData = writeProvider.InputData;
+               await Task.Delay(exchangeRule.ResponseRule.Time, ct);  //задержка для задания периода опроса.    
 
-            //if (writeProvider.IsOutDataValid)
-            //{
-            //    // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
-            //}
+               if (writeProvider.IsOutDataValid)
+               {
+                    // Log.log.Trace("");
+               }
+            }
         }
 
         #endregion
