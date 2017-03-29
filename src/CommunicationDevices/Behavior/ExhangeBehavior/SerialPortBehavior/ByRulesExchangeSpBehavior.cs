@@ -50,7 +50,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         {
             foreach (var exchangeRule in ExchangeRules)
             {
-               var writeProvider = new ByRuleWriteDataProvider { InputData = Data4CycleFunc[0], RequestRule = exchangeRule.RequestRule, ResponseRule = exchangeRule.ResponseRule };
+               var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = Data4CycleFunc[0] };
                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
                LastSendData = writeProvider.InputData;
                await Task.Delay(exchangeRule.ResponseRule.Time, ct);  //задержка для задания периода опроса.    
