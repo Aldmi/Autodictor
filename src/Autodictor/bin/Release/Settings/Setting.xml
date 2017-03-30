@@ -10,6 +10,7 @@
 	<CountPortion>2</CountPortion>
   </LogSetting>
 
+  
   <SerialPorts>
 	<Serial>
       <Port>3</Port>
@@ -22,21 +23,35 @@
     </Serial>
   </SerialPorts>
 
-  <DevicesWithSP>
-	 <DeviceSp Id="1" Name="VidorTableStr2" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 4 строки, выводится информация по 2-ум поездам." Binding="ToPath:3,4" Contrains="ПРИБ." CountRow="2">	 
-	   <Settings>
-	      <PathPermission Enable= "False"/>
-	   </Settings>
+  
+  <DevicesWithSP> 
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1">
+	      <ExchangeRules>
+		     <Rule Format = "Windows-1251">
+			    <Request maxLenght = "254">
+				    STX{AddressDevice:X2}{Nbyte:X2}
+					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
+					%000011460144%10$18$00$60$t2ПУТЬ №{PathNumber}<!-- Вывод Пути -->
+					%42001192016016<!-- Вывод гор.линии -->
+					%000011460314%10$18$00$60$t3{Stations}<!-- Вывод станций -->
+					%000011920464%10$18$00$60$t3{Note}<!-- Вывод примечание -->
+					{CRCXor:X2}ETX
+		        </Request >
+			
+			    <Response maxLenght = "8" TimeRespone="1000">
+				    STX0200FDETX
+		        </Response >	  
+		     </Rule>
+		  </ExchangeRules>
 	 </DeviceSp>
 	 
-	 	 <DeviceSp Id="22" Name="Vidor" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" Contrains="ПРИБ."/>
 	 
 <!-- 	 <DeviceSp Id="2" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/> -->
   </DevicesWithSP>
 
   <DevicesWithPC>
 	 <!-- <DevicePc Id="100" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToPath:1,2,3,4,5" Contrains="ПРИБ." Paging=""/> -->
-	 <DevicePc Id="101" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;БольшеТекВремени" Paging="7,5"/>
+	 <DevicePc Id="101" Name="PcTable" Address="http://localhost:8001/Service" TimeRespone="800" Description="Панель на пути тест" Binding="ToGeneral:ОкноРасписания" Contrains="ПРИБ.;БольшеТекВремени" Paging="7,5"/>
   </DevicesWithPC>
    
   <DevicesWithTcpIp>
@@ -50,9 +65,10 @@
 <!-- Paging="7,12" -->
 <!-- Paging="5,10" - Разбиение на страницы по 5 элементов на каждой, перебирать страницы раз в 10сек. -->
 
-<!-- Contrains="ПРИБ.;ПРИГ." - Не выводить прибывающий пригородный поезд. -->
+<!-- Contrains="ПРИБ.;ПРИГ." - Не выводить все прибывающие и все пригородные поезда. -->
 <!--Варианты (ПРИГ./ДАЛЬН.) 
              (ПРИБ./ОТПР.) 
+			 (ПРИБ.+ПРИГ./ПРИБ.+ДАЛЬН./ОТПР.+ПРИГ./ОТПР.+ДАЛЬН.)
              ("МеньшеТекВремени/БольшеТекВремени") -->
 			 
 <!-- Binding="ToGeneral:ГлавноеОкно" -->

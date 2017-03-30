@@ -50,6 +50,13 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         {
             foreach (var exchangeRule in ExchangeRules)
             {
+                //DEBUG----------------------------------------
+                //Data4CycleFunc[0].PathNumber = "4";
+                //Data4CycleFunc[0].Stations = "Москва-Питер";
+                //Data4CycleFunc[0].Note = "Кроме:Нахабино,Марино";
+                //DEBUG--------------------------------------
+
+
                var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = Data4CycleFunc[0] };
                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
                LastSendData = writeProvider.InputData;

@@ -5,6 +5,9 @@
 
         #region prop
 
+        public string ViewSetting { get; set; }
+        public int? TableSize { get; set; }         //устанавливается если  ViewSetting == Table
+
         public string Format { get; set; }
 
         public int? RequestMaxLenght { get; set; }

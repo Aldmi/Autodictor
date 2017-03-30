@@ -25,22 +25,33 @@
   <DevicesWithSP> 
 	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1">
 	      <ExchangeRules>
-		     <Rule Format = "ascii">
-			    <Request maxLenght = "250">
+
+			   <Rule Format = "ascii" condition= "rowNumber <= Table.Lenght">
+			     <Request maxLenght = "250">
 				    STX{AddressDevice:X2}{Nbyte:X2}
 					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011460144%10$18$00$60$t2ПУТЬ №{numberOfPath} <!-- Вывод Пути -->
-					%42001192016016<!-- Вывод гор.линии -->
-					%000011460314%10$18$00$60$t3{stations}<!-- Вывод станций -->
-					%001521920314%10$18$00$60$t3{time}<!-- Вывод времени -->
-					%000011920464%10$18$00$60$t3{note}<!-- Вывод примечание -->
+                     %00002047{(rowNumber*11):D3}4
 					{CRCXor:X2}ETX
-		        </Request >
+		         </Request >
 				
-			    <Response maxLenght = "8" TimeRespone="1000">
+			     <Response maxLenght = "8" TimeRespone="1000">
 				    STX0200FDETX
-		        </Response >	  
-		     </Rule>
+		         </Response >	  
+		      </Rule>
+			 
+			 
+			  <Rule Format = "ascii"  condition= "rowNumber > Table.Lenght">
+			      <Request maxLenght = "250">
+				    STX{AddressDevice:X2}{Nbyte:X2}
+					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- строка очистки -->
+					%00002047{(rowNumber*11):D3}4
+		          </Request >
+				
+			      <Response maxLenght = "8" TimeRespone="1000">
+				    STX0200FDETX
+		          </Response>	  
+		       </Rule>
+	
 		  </ExchangeRules>
 	 </DeviceSp>
 	 

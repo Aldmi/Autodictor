@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using CommunicationDevices.Behavior.ExchangeRules;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
 
@@ -77,15 +79,39 @@ namespace CommunicationDevices.Settings
                 {
                     var exchangeRules = new List<XmlExchangeRule>();
 
-                    var ruleElements = el.Element("ExchangeRules")?.Elements("Rule");
+                    var tableElement= el.Element("ExchangeRules")?.Element("Table");
+
+                    string viewSetting= String.Empty;
+                    int viewSettingTableSize = 0;
+
+                    IEnumerable<XElement> ruleElements;
+                    if (tableElement != null)
+                    {
+                        ruleElements = tableElement.Elements("Rule");
+
+                        viewSetting = "Table";
+                        var tableSize = (string)tableElement.Attribute("Size");
+                        if (tableSize != null)
+                        {
+                            int.TryParse(tableSize, out viewSettingTableSize);
+                        }
+
+                    }
+                    else
+                    {
+                        ruleElements = el.Element("ExchangeRules")?.Elements("Rule");
+                    }
+
+
+              
 
                     if (ruleElements != null)
                     {
-                        foreach (var ruleElem in el.Element("ExchangeRules").Elements("Rule"))
+                        foreach (var ruleElem in ruleElements)
                         {
                             if (ruleElem != null)
                             {
-                                var exchRule = new XmlExchangeRule();
+                                var exchRule = new XmlExchangeRule {TableSize = viewSettingTableSize, ViewSetting = viewSetting};
 
                                 exchRule.Format = (string) ruleElem.Attribute("Format");
 
@@ -160,6 +186,7 @@ namespace CommunicationDevices.Settings
                                 exchangeRules.Add(exchRule);
                             }
                         }
+
                         spSett.SpecialDictionary.Add("ExchangeRules", exchangeRules);
                     }
                 }
