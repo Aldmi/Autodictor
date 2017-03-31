@@ -4,12 +4,13 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using CommunicationDevices.DataProviders;
 
 
 namespace CommunicationDevices.Behavior.ExchangeRules
 {
-    public class BaseExchangeRules
+    public class MainRule
     {
         public List<BaseExchangeRule> ExchangeRules { get; set; }
         public ViewType ViewType { get; set; }
@@ -20,7 +21,8 @@ namespace CommunicationDevices.Behavior.ExchangeRules
     public class ViewType
     {
         public string Type { get; set; }
-        public int TableSise { get; set; } 
+
+        public int? TableSize { get; set; }          //выставляется если Type == Table
     }
 
 
@@ -41,19 +43,38 @@ namespace CommunicationDevices.Behavior.ExchangeRules
 
 
 
-
         #region ctor
 
-        public BaseExchangeRule(RequestRule requestRule, ResponseRule responseRule, RepeatRule repeatRule, string format)
+        public BaseExchangeRule(RequestRule requestRule, ResponseRule responseRule, RepeatRule repeatRule, string format, string condition)
         {
             RequestRule = requestRule;
             ResponseRule = responseRule;
             RepeatRule = repeatRule;
             Format = format;
+            Condition = condition;
         }
 
         #endregion
 
+
+
+
+        public bool IsEnableTableRule(int rowNumber, int tableLenght)
+        {
+            switch (Condition)
+            {
+                case "rowNumber LowOrEqual Table.Lenght": return rowNumber <= tableLenght;
+
+                case "rowNumber Low Table.Lenght": return rowNumber < tableLenght;
+
+                case "rowNumber Hight Table.Lenght": return rowNumber > tableLenght;
+
+                case "rowNumber HightOrEqual Table.Lenght": return rowNumber >= tableLenght;
+
+                default:
+                    return false;
+            }
+        }
     }
 
 
@@ -67,7 +88,7 @@ namespace CommunicationDevices.Behavior.ExchangeRules
 
         #region Method
 
-        public virtual string GetFillBody(UniversalInputType uit)
+        public virtual string GetFillBody(UniversalInputType uit, byte? currentRow)
         {
             if (Body.Contains("}"))                                                           //если указанны переменные подстановки
             {
@@ -76,7 +97,7 @@ namespace CommunicationDevices.Behavior.ExchangeRules
                 int parseVal;
                 foreach (var s in subStr)
                 {
-                    var replaseStr = (s.Contains("{")) ?  (s + "}") : s;
+                    var replaseStr = (s.Contains("{")) ? (s + "}") : s;
                     if (replaseStr.Contains(nameof(uit.AddressDevice)))
                     {
                         if (replaseStr.Contains(":")) //если указзанн формат числа
@@ -225,6 +246,20 @@ namespace CommunicationDevices.Behavior.ExchangeRules
                     }
 
 
+
+
+                    if (replaseStr.Contains("rowNumber"))
+                    {
+                        if (currentRow.HasValue)
+                        {
+                            var formatStr = CalculateMathematicFormat(replaseStr, currentRow.Value);
+                            resStr.Append(formatStr);
+                            continue;
+                        }
+                    }
+
+
+
                     //Добавим в неизменном виде спецификаторы байтовой информации.
                     resStr.Append(replaseStr);
                 }
@@ -235,6 +270,51 @@ namespace CommunicationDevices.Behavior.ExchangeRules
             }
 
             return Body;
+        }
+
+
+
+        public static string CalculateMathematicFormat(string str, int rowNumber)
+        {
+            string signPattern = "([\\+\\-\\/\\*])";
+            Regex regex = new Regex("(.*)\\{\\((\\w+" + signPattern + "(\\d+)|(\\d+)" + signPattern + "\\w+)\\)\\:(\\w+)\\}(.*)");
+            Match match = regex.Match(str);
+            if (!match.Success)
+            {
+                return str;
+            }
+            GroupCollection groups = match.Groups;
+
+            var gr1 = groups[0];
+            var gr2 = groups[1];
+            var gr3 = groups[2];
+            var gr4 = groups[3];
+            var gr5 = groups[5];
+            var gr6 = groups[6];
+
+            bool directOrder = (groups[3].Length > 0);
+            int operatorIndex = directOrder ? 3 : 6;
+            int numberIndex = directOrder ? 4 : 5;
+            int number = int.Parse(groups[numberIndex].Value);
+            string nOperator = groups[operatorIndex].Value;
+            int firstNumber = directOrder ? rowNumber : number;
+            int secondNumber = directOrder ? number : rowNumber;
+            int resultNumber = Calculate(firstNumber, secondNumber, nOperator);
+            string format = groups[7].Value;
+            string packedNumber = resultNumber.ToString(format);
+            return groups[1].Value + packedNumber + groups[8].Value;
+        }
+
+        private static int Calculate(int a, int b, string nOperator)
+        {
+            switch (nOperator)
+            {
+                case "+": return a + b;
+                case "-": return a - b;
+                case "*": return a * b;
+                case "/": return a / b;
+                default: return 0;
+            }
         }
 
         #endregion

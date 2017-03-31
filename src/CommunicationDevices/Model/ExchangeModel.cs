@@ -20,6 +20,7 @@ using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
+using CommunicationDevices.DataProviders.BuRuleDataProvider;
 using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
@@ -352,15 +353,6 @@ namespace CommunicationDevices.Model
                             return;
                         }
 
-
-
-                        //-----------------------
-                        //var rules = new ExchangeRules(xmlDeviceSp.ExchangeRules);
-                        //behavior = new ExchangeBehavior4Rule(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, rules);
-
-                        //ExchangeBehavior4Rule перебирает правила обмена и из каждого правила создает провайдер данных ForRuleDataProvider. 
-                        //-----------------------
-
                         //Создание списка правил обмена.
                         List<BaseExchangeRule> excangeRules= new List<BaseExchangeRule>();
                         foreach (var xmlExchangeRule in xmlExchangeRules)
@@ -391,12 +383,37 @@ namespace CommunicationDevices.Model
                                 repeat = new RepeatRule { Count = xmlExchangeRule.RepeatCount.Value, DeltaX = xmlExchangeRule.RepeatDeltaX, DeltaY = xmlExchangeRule.RepeatDeltaY };
                             }
 
-                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format));
+                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format, xmlExchangeRule.Condition));
                         }
 
+                        //Создание главного правила обмена
+                        var mainRules = new MainRule
+                        {
+                            ExchangeRules = excangeRules,
+                            ViewType =
+                                new ViewType
+                                {
+                                    Type = xmlExchangeRules.FirstOrDefault()?.ViewType,
+                                    TableSize = xmlExchangeRules.FirstOrDefault()?.TableSize
+                                }
+                        };
 
                         maxCountFaildRespowne = 3;
-                        behavior = new ByRulesExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, excangeRules);
+                        switch (mainRules.ViewType.Type)
+                        {
+                            case "":
+                                behavior = new ByRulesExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, excangeRules);
+                                break;
+
+                            case "Table":
+                                behavior =new ByRulesTableExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber),xmlDeviceSp.TimeRespone, maxCountFaildRespowne, mainRules);
+                                break;
+
+                            default:
+                                MessageBox.Show($"Тип отображения {mainRules.ViewType.Type} не поддерживается");
+                                continue;
+                        }
+
                         Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
@@ -404,7 +421,7 @@ namespace CommunicationDevices.Model
                         {
                             var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
-                            bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
+                           // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
 
                         //создание поведения привязка табло к главному расписанию

@@ -71,8 +71,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
-                    ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        // Отрисовка строк
-                    ForTableViewDataProvider.InputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };          // Обнуление строк
+                    ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        
+                    ForTableViewDataProvider.InputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
                     LastSendData = ForTableViewDataProvider.InputData;

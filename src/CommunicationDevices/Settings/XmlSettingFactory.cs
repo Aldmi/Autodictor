@@ -111,9 +111,10 @@ namespace CommunicationDevices.Settings
                         {
                             if (ruleElem != null)
                             {
-                                var exchRule = new XmlExchangeRule {TableSize = viewSettingTableSize, ViewSetting = viewSetting};
+                                var exchRule = new XmlExchangeRule {TableSize = viewSettingTableSize, ViewType = viewSetting};
 
                                 exchRule.Format = (string) ruleElem.Attribute("Format");
+                                exchRule.Condition = ruleElem.Attribute("Condition") == null ? null : (string)ruleElem.Attribute("Condition");
 
                                 //REPEAT-------------------------
                                 var repeat = ruleElem.Element("Repeat");

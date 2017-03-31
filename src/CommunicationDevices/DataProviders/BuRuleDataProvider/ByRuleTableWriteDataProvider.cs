@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using Communication.Annotations;
-using Communication.Interfaces;
 using CommunicationDevices.Behavior.ExchangeRules;
-
 
 namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 {
-    public class ByRuleWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
+    public class ByRuleTableWriteDataProvider : ILineByLineDrawingTableDataProvider
     {
-
         #region Prop
+
+        public byte CurrentRow { get; set; }
 
         public int CountGetDataByte { get; }
         public int CountSetDataByte { get; }
@@ -36,9 +34,10 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
 
 
+
         #region ctor
 
-        public ByRuleWriteDataProvider(BaseExchangeRule baseExchangeRule)
+        public ByRuleTableWriteDataProvider(BaseExchangeRule baseExchangeRule)
         {
             RequestRule = baseExchangeRule.RequestRule;
             ResponseRule = baseExchangeRule.ResponseRule;
@@ -57,7 +56,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         {
             try
             {
-                var requestFillBody = RequestRule.GetFillBody(InputData, null);
+                var requestFillBody = RequestRule.GetFillBody(InputData, CurrentRow); // ??? передавать CurrentRow
                 string matchString = null;
 
                 var requestFillBodyWithoutConstantCharacters = requestFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
@@ -65,7 +64,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
                 //ВЫЧИСЛЯЕМ NByte---------------------------------------------------------------------------
                 int lenght = 0;
-               
+
                 if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Success)            //вычислили длинну строгки между Nbyte и CRC
                 {
                     matchString = Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Groups[2].Value;
@@ -75,7 +74,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                 if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Success)                     //вычислили длинну строки от Nbyte до конца строки
                 {
                     matchString = Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Groups[1].Value;
-                    lenght = matchString.Length;                   
+                    lenght = matchString.Length;
                 }
 
 
@@ -86,7 +85,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                     var removeCount = lenght - RequestRule.MaxLenght.Value;
                     limetedStr = matchString.Remove(RequestRule.MaxLenght.Value, removeCount);
                     lenght = limetedStr.Length;
-                    requestFillBodyWithoutConstantCharacters =requestFillBodyWithoutConstantCharacters.Replace(matchString, limetedStr);   
+                    requestFillBodyWithoutConstantCharacters = requestFillBodyWithoutConstantCharacters.Replace(matchString, limetedStr);
                 }
 
 
@@ -110,7 +109,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                 }
 
                 //ВЫЧИСЛЯЕМ CRC---------------------------------------------------------------------------
-                var resultStr = resStr.ToString();  
+                var resultStr = resStr.ToString();
                 matchString = Regex.Match(resultStr, "(.*){CRC(.*)}").Groups[1].Value;
 
                 byte[] xorBytes;
@@ -125,7 +124,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                     xorBytes = Encoding.GetEncoding(Format).GetBytes(matchString);
                 }
 
-                
+
                 //вычислить CRC по правилам XOR
                 if (resultStr.Contains("CRCXor"))
                 {
@@ -201,5 +200,6 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         }
 
         #endregion
+
     }
 }

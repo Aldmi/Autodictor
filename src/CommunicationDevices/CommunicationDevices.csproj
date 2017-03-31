@@ -95,6 +95,8 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
     <Compile Include="Behavior\ExchangeRules\BaseExchangeRule.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesExchangeSpBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesTableExchangeSpBehavior.cs" />
+    <Compile Include="DataProviders\BuRuleDataProvider\ByRuleTableWriteDataProvider.cs" />
     <Compile Include="DataProviders\BuRuleDataProvider\ByRuleWriteDataProvider.cs" />
     <Compile Include="DataProviders\ILineByLineDrawingTableDataProvider.cs" />
     <Compile Include="Behavior\ExhangeBehavior\PcBehavior\ArivDepartExhangePcBehavior.cs" />

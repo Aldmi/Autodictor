@@ -1,14 +1,15 @@
-﻿namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
+﻿
+namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
     public class XmlExchangeRule
     {
-
         #region prop
 
-        public string ViewSetting { get; set; }
+        public string ViewType { get; set; }
         public int? TableSize { get; set; }         //устанавливается если  ViewSetting == Table
 
         public string Format { get; set; }
+        public string Condition { get; set; }
 
         public int? RequestMaxLenght { get; set; }
         public string RequestBody { get; set; }
@@ -23,17 +24,5 @@
 
         #endregion
 
-
-
-
-
-        #region ctor
-
-        public XmlExchangeRule()
-        {
-            
-        }
-
-       #endregion
     }
 }

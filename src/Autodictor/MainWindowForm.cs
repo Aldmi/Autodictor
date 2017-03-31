@@ -523,7 +523,7 @@ namespace MainExample
                 int TryCounter = 50;
                 while (--TryCounter > 0)
                 {
-                    string Key = Record.Время.ToString("dd.MM  HH:mm:ss");
+                    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
                     string[] SubKeys = Key.Split(':');
                     if (SubKeys[0].Length == 1)
                         Key = "0" + Key;
@@ -576,7 +576,7 @@ namespace MainExample
                             int ПопыткиВставитьСообщение = 5;
                             while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                string Key = statRecord.Время.ToString("dd.MM  HH:mm:ss");
+                                string Key = statRecord.Время.ToString("yy.MM.dd  HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
@@ -615,7 +615,7 @@ namespace MainExample
                             int ПопыткиВставитьСообщение = 5;
                             while (ПопыткиВставитьСообщение-- > 0)
                             {
-                                string Key = statRecord.Время.ToString("dd.MM  HH:mm:ss");
+                                string Key = statRecord.Время.ToString("yy.MM.dd  HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key = "0" + Key;
@@ -656,10 +656,10 @@ namespace MainExample
 
                     string ВремяОтправления = "";
                     string ВремяПрибытия = "";
-                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("HH:mm:ss");
-                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("yy.MM.dd  HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("yy.MM.dd  HH:mm:ss");
 
-                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
+                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        Данные.Value.НазваниеПоезда,
@@ -672,10 +672,10 @@ namespace MainExample
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x04)
                     {
-                        ListViewItem lvi2 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
+                        ListViewItem lvi2 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяПрибытия.ToString("dd.MM  HH:mm:ss"),
+                                                                       Данные.Value.ВремяПрибытия.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НазваниеПоезда });
                         lvi2.Tag = Данные.Value.ID;
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -684,11 +684,11 @@ namespace MainExample
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x14)
                     {
-                        ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
+                        ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяПрибытия.ToString("dd.MM  HH:mm:ss"),
-                                                                       Данные.Value.ВремяОтправления.ToString("dd.MM  HH:mm:ss"),
+                                                                       Данные.Value.ВремяПрибытия.ToString("yy.MM.dd  HH:mm:ss"),
+                                                                       Данные.Value.ВремяОтправления.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НазваниеПоезда });
                         lvi3.Tag = Данные.Value.ID;
                         lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -697,10 +697,10 @@ namespace MainExample
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x10)
                     {
-                        ListViewItem lvi4 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
+                        ListViewItem lvi4 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяОтправления.ToString("dd.MM  HH:mm:ss"),
+                                                                       Данные.Value.ВремяОтправления.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НазваниеПоезда });
                         lvi4.Tag = Данные.Value.ID;
                         lvi4.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -723,7 +723,7 @@ namespace MainExample
             {
                 if (НомерСтроки >= lVСтатическиеСообщения.Items.Count)
                 {
-                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("dd.MM  HH:mm:ss"),
+                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НазваниеКомпозиции });
                     lvi1.Tag = НомерСтроки;
                     lvi1.Checked = Данные.Value.Активность;
@@ -731,8 +731,8 @@ namespace MainExample
                 }
                 else
                 {
-                    if (lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text != Данные.Value.Время.ToString("dd.MM  HH:mm:ss"))
-                        lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text = Данные.Value.Время.ToString("dd.MM  HH:mm:ss");
+                    if (lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text != Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"))
+                        lVСтатическиеСообщения.Items[НомерСтроки].SubItems[0].Text = Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss");
                     if (lVСтатическиеСообщения.Items[НомерСтроки].SubItems[1].Text != Данные.Value.НазваниеКомпозиции)
                         lVСтатическиеСообщения.Items[НомерСтроки].SubItems[1].Text = Данные.Value.НазваниеКомпозиции;
                 }
@@ -967,7 +967,7 @@ namespace MainExample
                     string Ключ;
                     while (КоличествоПопыток++ < 10)
                     {
-                        Ключ = событие.Время.ToString("dd.MM  HH:mm:ss");
+                        Ключ = событие.Время.ToString("yy.MM.dd  HH:mm:ss");
                         string[] parts = Ключ.Split(':');
                         if (parts[0].Length == 1) Ключ = "0" + Ключ;
 
@@ -1027,7 +1027,7 @@ namespace MainExample
                                     string Ключ;
                                     while (КоличествоПопыток++ < 10)
                                     {
-                                        Ключ = событие.Время.ToString("dd.MM  HH:mm:ss");
+                                        Ключ = событие.Время.ToString("yy.MM.dd  HH:mm:ss");
                                         string[] parts = Ключ.Split(':');
                                         if (parts[0].Length == 1) Ключ = "0" + Ключ;
 
@@ -1202,7 +1202,7 @@ namespace MainExample
                                         string Ключ;
                                         while (КоличествоПопыток++ < 10)
                                         {
-                                            Ключ = событие.Время.ToString("dd.MM  HH:mm:ss");
+                                            Ключ = событие.Время.ToString("yy.MM.dd  HH:mm:ss");
                                             string[] parts = Ключ.Split(':');
                                             if (parts[0].Length == 1) Ключ = "0" + Ключ;
 
@@ -2515,7 +2515,7 @@ namespace MainExample
                 int tryCounter = 50;
                 while (--tryCounter > 0)
                 {
-                    string keyNew = Данные.Время.ToString("dd.MM  HH:mm:ss");
+                    string keyNew = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
                     string[] SubKeys = keyNew.Split(':');
                     if (SubKeys[0].Length == 1)
                         keyNew = "0" + keyNew;
