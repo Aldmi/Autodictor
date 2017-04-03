@@ -61,6 +61,10 @@ namespace CommunicationDevices.Behavior.ExchangeRules
 
         public bool IsEnableTableRule(int rowNumber, int tableLenght)
         {
+            if (string.IsNullOrEmpty(Condition))
+                return true;
+
+
             switch (Condition)
             {
                 case "rowNumber LowOrEqual Table.Lenght": return rowNumber <= tableLenght;

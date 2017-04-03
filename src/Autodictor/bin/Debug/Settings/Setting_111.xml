@@ -28,13 +28,12 @@
 	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1,2,3,4">
 	      <ExchangeRules>  
 		    <Table Size= "3">
-		       <Rule Format = "Windows-1251">
+		       <Rule Format = "Windows-1251"  Condition= "rowNumber LowOrEqual Table.Lenght">
 			      <Request maxLenght = "254">
 				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%00002047{(rowNumber*11):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+                    %00002047{(rowNumber*11):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
 					%00048165{(rowNumber*11):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
-					%00171207{(rowNumber*11):D3}4%10$00$60$t3$12{Time:t}<!-- Вывод Времени -->
+					%00171207{(rowNumber*11):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
 					%00231252{(rowNumber*11):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
 					{CRCXor:X2}ETX
 		          </Request >
@@ -43,6 +42,21 @@
 				    STX0200FDETX
 		          </Response >	  
 		       </Rule>
+			 
+		        <Rule Format = "Windows-1251" Condition= "rowNumber Hight Table.Lenght">
+			      <Request>
+				    STX{AddressDevice:X2}{Nbyte:X2}
+                    %00002047{(rowNumber*11):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+					%00048165{(rowNumber*11):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+					%00171207{(rowNumber*11):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+					%00231252{(rowNumber*11):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+					{CRCXor:X2}ETX
+		          </Request >
+			
+			      <Response maxLenght = "8" TimeRespone="500">
+				    STX0200FDETX
+		          </Response >	  
+		        </Rule>	 
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>

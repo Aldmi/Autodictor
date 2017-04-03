@@ -656,8 +656,8 @@ namespace MainExample
 
                     string ВремяОтправления = "";
                     string ВремяПрибытия = "";
-                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("yy.MM.dd  HH:mm:ss");
-                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("yy.MM.dd  HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("HH:mm:ss");
+                    if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm:ss");
 
                     ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
@@ -2525,7 +2525,7 @@ namespace MainExample
                         SoundRecords.Remove(Key);           //удалим старую запись
                         SoundRecordsOld.Remove(Key);
                         SoundRecords.Add(keyNew, Данные);   //Добавим запись под новым ключем
-                        SoundRecordsOld.Add(keyNew, Данные);
+                        SoundRecordsOld.Add(keyNew, СтарыеДанные);
 
                         break;
                     }
@@ -2541,7 +2541,7 @@ namespace MainExample
 
 
 
-            // SoundRecords[Key] = Данные;
+            //SoundRecords[Key] = Данные;
 
             //string time = Данные.Время.ToString("HH:mm:ss");
             //string[] TimeParts = time.Split(':');
