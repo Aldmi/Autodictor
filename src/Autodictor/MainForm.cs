@@ -222,6 +222,25 @@ namespace MainExample
         }
 
 
+        private async void коммуникацияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CommunicationForm.MyCommunicationForm != null)                                     //Открытие окна повторно, при открытом первом экземпляре.
+            {
+                CommunicationForm.MyCommunicationForm.Show();
+                CommunicationForm.MyCommunicationForm.WindowState = FormWindowState.Normal;
+            }
+            else                                                                   //Открытие окна
+            {
+                CommunicationForm boardForm = new CommunicationForm(ExchangeModel.MasterSerialPorts, ExchangeModel.ReOpenMasterSerialPorts);
+                boardForm.MdiParent = this;
+                boardForm.Show();
+            }
+
+
+            await ExchangeModel.ReOpenMasterSerialPorts(3);
+        }
+
+
 
         protected override void OnClosed(EventArgs e)
         {
@@ -385,5 +404,7 @@ namespace MainExample
         {
             toolClockLabel.Text = DateTime.Now.ToString("dd.MM  HH:mm:ss");
         }
+
+
     }
 }

@@ -83,6 +83,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Core.3.1.0\lib\net45\System.Reactive.Core.dll</HintPath>
@@ -95,6 +96,7 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +111,12 @@
     </Compile>
     <Compile Include="BoardForm.Designer.cs">
       <DependentUpon>BoardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommunicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommunicationForm.Designer.cs">
+      <DependentUpon>CommunicationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="Infrastructure\StructCompare.cs" />
@@ -243,6 +251,9 @@
     <EmbeddedResource Include="BoardForm.resx">
       <DependentUpon>BoardForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CommunicationForm.resx">
+      <DependentUpon>CommunicationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OperativeSheduleForm.resx">
       <DependentUpon>OperativeSheduleForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -376,6 +387,10 @@
     <ProjectReference Include="..\CommunicationDevices\CommunicationDevices.csproj">
       <Project>{6a763286-f0a3-4218-85d1-dd8eb40dcff3}</Project>
       <Name>CommunicationDevices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{DEA394E0-F62E-459B-98CF-3EC8DA2A90A3}</Project>
+      <Name>Communication</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{87b6f9ef-6a0d-4daf-9df0-718036b1c8e4}</Project>

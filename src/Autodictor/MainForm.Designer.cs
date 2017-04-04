@@ -74,8 +74,9 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolClockLabel = new System.Windows.Forms.ToolStripLabel();
-            this.timer_Clock = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.timer_Clock = new System.Windows.Forms.Timer(this.components);
+            this.коммуникацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -204,7 +205,8 @@
             // таблоToolStripMenuItem
             // 
             this.таблоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Boards});
+            this.Boards,
+            this.коммуникацияToolStripMenuItem});
             this.таблоToolStripMenuItem.Name = "таблоToolStripMenuItem";
             this.таблоToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.таблоToolStripMenuItem.Text = "Устройства";
@@ -212,7 +214,7 @@
             // Boards
             // 
             this.Boards.Name = "Boards";
-            this.Boards.Size = new System.Drawing.Size(108, 22);
+            this.Boards.Size = new System.Drawing.Size(158, 22);
             this.Boards.Text = "Табло";
             this.Boards.Click += new System.EventHandler(this.Boards_Click);
             // 
@@ -310,7 +312,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(82, 27);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(82, 35);
             this.toolStripDropDownButton1.Text = "Вид окон";
             // 
             // toolStripMenuItem1
@@ -332,7 +334,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
             // 
             // tSLСостояниеСвязиСЦИС
             // 
@@ -342,7 +344,7 @@
             this.tSLСостояниеСвязиСЦИС.Image = ((System.Drawing.Image)(resources.GetObject("tSLСостояниеСвязиСЦИС.Image")));
             this.tSLСостояниеСвязиСЦИС.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSLСостояниеСвязиСЦИС.Name = "tSLСостояниеСвязиСЦИС";
-            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 27);
+            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 35);
             this.tSLСостояниеСвязиСЦИС.Text = "ЦИС НЕ на связи";
             // 
             // tSBОбновитьСписок
@@ -352,7 +354,7 @@
             this.tSBОбновитьСписок.Image = ((System.Drawing.Image)(resources.GetObject("tSBОбновитьСписок.Image")));
             this.tSBОбновитьСписок.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBОбновитьСписок.Name = "tSBОбновитьСписок";
-            this.tSBОбновитьСписок.Size = new System.Drawing.Size(144, 27);
+            this.tSBОбновитьСписок.Size = new System.Drawing.Size(144, 35);
             this.tSBОбновитьСписок.Text = "ОБНОВИТЬ СПИСОК";
             // 
             // tSBВоспроизвести
@@ -362,7 +364,7 @@
             this.tSBВоспроизвести.Image = ((System.Drawing.Image)(resources.GetObject("tSBВоспроизвести.Image")));
             this.tSBВоспроизвести.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBВоспроизвести.Name = "tSBВоспроизвести";
-            this.tSBВоспроизвести.Size = new System.Drawing.Size(130, 27);
+            this.tSBВоспроизвести.Size = new System.Drawing.Size(130, 35);
             this.tSBВоспроизвести.Text = "ВОСПРОИЗВЕСТИ";
             // 
             // tSBВключить
@@ -373,7 +375,7 @@
             this.tSBВключить.Image = ((System.Drawing.Image)(resources.GetObject("tSBВключить.Image")));
             this.tSBВключить.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBВключить.Name = "tSBВключить";
-            this.tSBВключить.Size = new System.Drawing.Size(88, 27);
+            this.tSBВключить.Size = new System.Drawing.Size(88, 35);
             this.tSBВключить.Text = "ВКЛЮЧИТЬ";
             // 
             // tSDDBРаботаПоДням
@@ -393,7 +395,7 @@
             this.tSDDBРаботаПоДням.Image = ((System.Drawing.Image)(resources.GetObject("tSDDBРаботаПоДням.Image")));
             this.tSDDBРаботаПоДням.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSDDBРаботаПоДням.Name = "tSDDBРаботаПоДням";
-            this.tSDDBРаботаПоДням.Size = new System.Drawing.Size(188, 27);
+            this.tSDDBРаботаПоДням.Size = new System.Drawing.Size(188, 35);
             this.tSDDBРаботаПоДням.Text = "РАБОТА ПО КАЛЕНДАРЮ";
             // 
             // TSMIПоПонедельнику
@@ -461,7 +463,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(217, 27);
+            this.toolStripButton1.Size = new System.Drawing.Size(217, 35);
             this.toolStripButton1.Text = "ОЧЕРЕДЬ ВОСПРОИЗВЕДЕНИЯ";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -470,7 +472,7 @@
             this.toolStripSeparator2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.toolStripSeparator2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
             // 
             // toolClockLabel
             // 
@@ -482,16 +484,23 @@
             this.toolClockLabel.Size = new System.Drawing.Size(131, 35);
             this.toolClockLabel.Text = "00:00:00";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
+            // 
             // timer_Clock
             // 
             this.timer_Clock.Enabled = true;
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
             // 
-            // toolStripSeparator3
+            // коммуникацияToolStripMenuItem
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
+            this.коммуникацияToolStripMenuItem.Name = "коммуникацияToolStripMenuItem";
+            this.коммуникацияToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.коммуникацияToolStripMenuItem.Text = "Коммуникация";
+            this.коммуникацияToolStripMenuItem.Click += new System.EventHandler(this.коммуникацияToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -566,6 +575,7 @@
         private System.Windows.Forms.ToolStripLabel toolClockLabel;
         private System.Windows.Forms.Timer timer_Clock;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem коммуникацияToolStripMenuItem;
     }
 }
 

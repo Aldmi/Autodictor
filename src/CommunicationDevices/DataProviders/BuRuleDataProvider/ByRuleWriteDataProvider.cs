@@ -24,7 +24,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         public UniversalInputType InputData { get; set; }
         public byte OutputData { get; }
 
-        public bool IsOutDataValid { get; }
+        public bool IsOutDataValid { get; private set; }
 
         public RequestRule RequestRule { get; set; }
         public ResponseRule ResponseRule { get; set; }
@@ -167,8 +167,49 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
         public bool SetDataByte(byte[] data)
         {
-            var responseFillBody = ResponseRule.GetFillBody(InputData, null);
+            if (data == null || data.Length != CountSetDataByte)
+            {
+                IsOutDataValid = false;
+                return false;
+            }
 
+
+            var responseFillBody = ResponseRule.GetFillBody(InputData, null);
+            string matchString = null;
+
+            var requestFillBodyWithoutConstantCharacters = responseFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
+            var resultStr = requestFillBodyWithoutConstantCharacters;
+
+            //Преобразовываем КОНЕЧНУЮ строку в массив байт
+            List<byte> resultBuffer;
+            if (Format == "HEX")
+            {
+                resultBuffer = new List<byte>(); //DEBUG
+                                                 //Распарсить строку в масив байт как она есть. 0203АА96 ...
+            }
+            else
+            {
+                resultBuffer = Encoding.GetEncoding(Format).GetBytes(resultStr).ToList();
+            }
+
+            //ВСТАВКА КОНСТАНТНЫХ СИМВОЛОВ--------------------------------------------------------------------------
+            if (Regex.Match(responseFillBody, "^STX").Success)
+                resultBuffer.Insert(0, 0x02); //STX
+
+            if (Regex.Match(responseFillBody, "ETX").Success)
+                resultBuffer.Add(0x03);       //ETX
+
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] != resultBuffer[i])
+                {
+                    IsOutDataValid = false;
+                    return false;
+                }
+            }
+
+            IsOutDataValid = true;
             return true;
         }
 

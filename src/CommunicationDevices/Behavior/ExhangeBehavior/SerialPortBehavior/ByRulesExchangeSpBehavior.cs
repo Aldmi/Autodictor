@@ -80,10 +80,14 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         protected override List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            //LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            //var writeProvider = new PanelVidorWriteDataProvider { InputData = LastSendData };
-            //DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-            //await Task.Delay(1000, ct);  //задержка для задания периода опроса.  
+            var inData= LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
+            foreach (var exchangeRule in ExchangeRules)
+            {
+                var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = inData };
+                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+                LastSendData = writeProvider.InputData;
+                await Task.Delay(exchangeRule.ResponseRule.Time, ct);  //задержка для задания периода опроса.
+            }
         }
 
         #endregion

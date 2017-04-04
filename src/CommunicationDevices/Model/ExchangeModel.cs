@@ -59,6 +59,7 @@ namespace CommunicationDevices.Model
         public CisClient CisClient { get; private set; }
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
+
         public List<Device> Devices { get; set; } = new List<Device>();
 
         public ICollection<IBinding2PathBehavior> Binding2PathBehaviors { get; set; } = new List<IBinding2PathBehavior>();
@@ -107,6 +108,8 @@ namespace CommunicationDevices.Model
 
 
 
+        #region Methode
+
         public void StartCisClient()
         {
             CisClient?.Start();
@@ -117,6 +120,20 @@ namespace CommunicationDevices.Model
         {
             CisClient?.Stop();
         }
+
+
+        public async Task ReOpenMasterSerialPorts(params byte[] numberPorts)
+        {
+            if (numberPorts == null || !numberPorts.Any())
+                return;
+
+            var serialPorts = MasterSerialPorts.Where(sp => numberPorts.Contains(sp.PortNumber)).ToList();
+            if (serialPorts.Any())
+            {
+                var result = await Task.WhenAll(serialPorts.Select(sp => sp.CycleReConnect()));
+            }
+        }
+
 
 
         public async void LoadSetting()
@@ -373,7 +390,7 @@ namespace CommunicationDevices.Model
                             ResponseRule response = null;
                             if ((xmlExchangeRule.ResponseMaxLenght > 0) || (!string.IsNullOrEmpty(xmlExchangeRule.ResponseBody)))
                             {
-                                response = new ResponseRule() { MaxLenght = xmlExchangeRule.ResponseMaxLenght, Body = xmlExchangeRule.RequestBody, Time = xmlExchangeRule.TimeResponse};
+                                response = new ResponseRule() { MaxLenght = xmlExchangeRule.ResponseMaxLenght, Body = xmlExchangeRule.ResponseBody, Time = xmlExchangeRule.TimeResponse};
                             }
 
                             //Повтор--------------------
@@ -421,7 +438,7 @@ namespace CommunicationDevices.Model
                         {
                             var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
-                           // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
+                            // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
 
                         //создание поведения привязка табло к главному расписанию
@@ -647,6 +664,8 @@ namespace CommunicationDevices.Model
                 devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
             }
         }
+
+        #endregion
 
 
 

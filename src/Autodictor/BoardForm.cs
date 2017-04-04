@@ -24,7 +24,7 @@ namespace MainExample
 {
     public partial class BoardForm : Form
     {
-        static public BoardForm MyBoardForm = null;
+        public static BoardForm MyBoardForm = null;
         private readonly IEnumerable<Device> _devises;
 
 
@@ -185,10 +185,6 @@ namespace MainExample
                     default:
                        break;
                 }
-
-
-
-               // _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);
             }
         }
 

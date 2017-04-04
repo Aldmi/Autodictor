@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using Communication.Annotations;
 using CommunicationDevices.Behavior.ExchangeRules;
 
+
 namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 {
     public class ByRuleTableWriteDataProvider : ILineByLineDrawingTableDataProvider
