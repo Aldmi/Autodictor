@@ -258,13 +258,13 @@ namespace MainExample
             
             //==========================================
 
-            if (FilesFolder.Contains(track))
+            if (FilesFolder != null && FilesFolder.Contains(track))
                 return Path + @"Wav\Sounds\" + track + ".wav";
 
-            if (TrainNumbersFolder.Contains(track))
+            if (TrainNumbersFolder != null && TrainNumbersFolder.Contains(track))
                 return Path + @"Wav\Number of trains\" + track + ".wav";
 
-            if (СписокСтатическихСообщений.Contains(track))
+            if (СписокСтатическихСообщений != null && СписокСтатическихСообщений.Contains(track))
                 return Path + @"Wav\Static message\" + track + ".wav";
 
             foreach (var Sound in StaticSoundForm.StaticSoundRecords)

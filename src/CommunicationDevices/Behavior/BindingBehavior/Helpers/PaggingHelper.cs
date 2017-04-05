@@ -70,9 +70,9 @@ namespace CommunicationDevices.Behavior.BindingBehavior.Helpers
 
 
             //DEBUG----------------------------
-            string str = "страница= " + pagingList.CurrentPage + "   Размер" + pagingList.List.Count + "  ";
-            pagingList.List.ForEach(t => str += (t.NumberOfTrain + "; "));
-            Debug.WriteLine(str);
+            //string str = "страница= " + pagingList.CurrentPage + "   Размер" + pagingList.List.Count + "  ";
+            //pagingList.List.ForEach(t => str += (t.NumberOfTrain + "; "));
+            //Debug.WriteLine(str);
             //----------------------------
 
             if (++_currentPage > numberOfPage)
