@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
-
+using NickBuhro.Translit;
 
 
 namespace MainExample
@@ -385,6 +386,34 @@ namespace MainExample
             }
 
             return false;
+        }
+
+
+        private void textBox_Message_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+           var templateStr= this.textBox_Message.Text;
+           if (string.IsNullOrEmpty(templateStr))
+             return;
+
+            var parseStr = templateStr.Split('|');
+            List<string> translateList = new List<string>();
+            var variables = this.comboBox_Messages.Items;
+            foreach (var s in parseStr)
+            {
+                if (variables.Contains(s))
+                {
+                    translateList.Add(s);                                            //Добавить без перевода
+                    continue;
+                }
+
+                var latin = Transliteration.CyrillicToLatin(s, Language.Russian);    //Добавить с переводом
+                translateList.Add(latin);
+            }
+
+
+
+            TranslateForm окно = new TranslateForm(translateList);
+            окно.ShowDialog();
         }
     }
 }

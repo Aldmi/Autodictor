@@ -67,6 +67,7 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.DirectX.AudioVideoPlayback, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.AudioVideoPlayback.dll</HintPath>
@@ -74,6 +75,10 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="NAudio">
       <HintPath>bin\Debug\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NickBuhro.Translit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NickBuhro.Translit.1.0.0\lib\net45\NickBuhro.Translit.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.3.11\lib\net45\NLog.dll</HintPath>
@@ -165,6 +170,12 @@
     </Compile>
     <Compile Include="DynamicSoundForm.Designer.cs">
       <DependentUpon>DynamicSoundForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TranslateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TranslateForm.Designer.cs">
+      <DependentUpon>TranslateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="КарточкаСтатическогоЗвуковогоСообщения.cs">
       <SubType>Form</SubType>
@@ -287,6 +298,9 @@
     </Compile>
     <EmbeddedResource Include="DynamicSoundForm.resx">
       <DependentUpon>DynamicSoundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TranslateForm.resx">
+      <DependentUpon>TranslateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="КарточкаСтатическогоЗвуковогоСообщения.resx">
       <DependentUpon>КарточкаСтатическогоЗвуковогоСообщения.cs</DependentUpon>

@@ -71,7 +71,7 @@
             this.listView1.Margin = new System.Windows.Forms.Padding(2);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1164, 265);
+            this.listView1.Size = new System.Drawing.Size(1292, 259);
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -106,7 +106,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(8, 309);
+            this.label2.Location = new System.Drawing.Point(8, 303);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 20);
             this.label2.TabIndex = 11;
@@ -116,7 +116,7 @@
             // 
             this.textBox_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_Name.Location = new System.Drawing.Point(50, 303);
+            this.textBox_Name.Location = new System.Drawing.Point(50, 297);
             this.textBox_Name.Name = "textBox_Name";
             this.textBox_Name.Size = new System.Drawing.Size(228, 29);
             this.textBox_Name.TabIndex = 12;
@@ -126,18 +126,19 @@
             this.textBox_Message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_Message.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_Message.Location = new System.Drawing.Point(114, 347);
+            this.textBox_Message.Location = new System.Drawing.Point(114, 341);
             this.textBox_Message.Name = "textBox_Message";
             this.textBox_Message.ReadOnly = true;
-            this.textBox_Message.Size = new System.Drawing.Size(1061, 29);
+            this.textBox_Message.Size = new System.Drawing.Size(1189, 29);
             this.textBox_Message.TabIndex = 14;
+            this.textBox_Message.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBox_Message_MouseDoubleClick);
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(8, 354);
+            this.label3.Location = new System.Drawing.Point(8, 348);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 20);
             this.label3.TabIndex = 13;
@@ -147,7 +148,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(15, 404);
+            this.button1.Location = new System.Drawing.Point(15, 398);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(162, 34);
             this.button1.TabIndex = 17;
@@ -159,7 +160,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(193, 404);
+            this.button2.Location = new System.Drawing.Point(193, 398);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(162, 34);
             this.button2.TabIndex = 18;
@@ -171,7 +172,7 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(377, 404);
+            this.button3.Location = new System.Drawing.Point(377, 398);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(162, 34);
             this.button3.TabIndex = 19;
@@ -183,7 +184,7 @@
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(559, 404);
+            this.button4.Location = new System.Drawing.Point(559, 398);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(162, 34);
             this.button4.TabIndex = 20;
@@ -195,7 +196,7 @@
             // 
             this.button_insert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_insert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_insert.Location = new System.Drawing.Point(878, 301);
+            this.button_insert.Location = new System.Drawing.Point(1006, 295);
             this.button_insert.Name = "button_insert";
             this.button_insert.Size = new System.Drawing.Size(109, 34);
             this.button_insert.TabIndex = 21;
@@ -210,16 +211,16 @@
             this.comboBox_Messages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Messages.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox_Messages.FormattingEnabled = true;
-            this.comboBox_Messages.Location = new System.Drawing.Point(284, 302);
+            this.comboBox_Messages.Location = new System.Drawing.Point(284, 296);
             this.comboBox_Messages.Name = "comboBox_Messages";
-            this.comboBox_Messages.Size = new System.Drawing.Size(588, 32);
+            this.comboBox_Messages.Size = new System.Drawing.Size(716, 32);
             this.comboBox_Messages.TabIndex = 22;
             // 
             // button_left
             // 
             this.button_left.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_left.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_left.Location = new System.Drawing.Point(993, 301);
+            this.button_left.Location = new System.Drawing.Point(1121, 295);
             this.button_left.Name = "button_left";
             this.button_left.Size = new System.Drawing.Size(39, 34);
             this.button_left.TabIndex = 23;
@@ -231,7 +232,7 @@
             // 
             this.button_right.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_right.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_right.Location = new System.Drawing.Point(1035, 301);
+            this.button_right.Location = new System.Drawing.Point(1163, 295);
             this.button_right.Name = "button_right";
             this.button_right.Size = new System.Drawing.Size(38, 34);
             this.button_right.TabIndex = 24;
@@ -243,7 +244,7 @@
             // 
             this.button_delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_delete.Location = new System.Drawing.Point(1076, 301);
+            this.button_delete.Location = new System.Drawing.Point(1204, 295);
             this.button_delete.Name = "button_delete";
             this.button_delete.Size = new System.Drawing.Size(99, 34);
             this.button_delete.TabIndex = 25;
@@ -257,7 +258,7 @@
             this.groupBox1.Controls.Add(this.Player_Label);
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(916, 383);
+            this.groupBox1.Location = new System.Drawing.Point(1044, 377);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(259, 55);
             this.groupBox1.TabIndex = 26;
@@ -295,7 +296,7 @@
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(741, 404);
+            this.button5.Location = new System.Drawing.Point(741, 398);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(162, 34);
             this.button5.TabIndex = 27;
@@ -307,7 +308,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1187, 453);
+            this.ClientSize = new System.Drawing.Size(1315, 447);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button_delete);
