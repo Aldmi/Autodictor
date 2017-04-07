@@ -128,6 +128,9 @@ namespace MainExample
 
         private uint _tickCounter = 0;
 
+        private ToolStripMenuItem[] СписокПолейПути;
+
+
         // Конструктор
         public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors)
         {
@@ -148,6 +151,8 @@ namespace MainExample
             MainForm.Воспроизвести.Click += new System.EventHandler(this.btnВоспроизвести_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
             MainForm.ОбновитьСписок.Click += new System.EventHandler(this.btnОбновитьСписок_Click);
+
+            СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь14ToolStripMenuItem, путь15ToolStripMenuItem, путь16ToolStripMenuItem, путь17ToolStripMenuItem, путь18ToolStripMenuItem, путь19ToolStripMenuItem, путь20ToolStripMenuItem, путь21ToolStripMenuItem, путь22ToolStripMenuItem, путь23ToolStripMenuItem, путь24ToolStripMenuItem, путь25ToolStripMenuItem };
 
 
 
@@ -1758,8 +1763,6 @@ namespace MainExample
         }
 
 
-
-
         // Обработка двойного нажатия на сообщение (вызов формы сообщения)
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -1900,15 +1903,28 @@ namespace MainExample
                                         КлючВыбранныйМеню = Key;
 
 
-                                        ToolStripMenuItem[] СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь0ToolStripMenuItem };
-                                        for (int i = 0; i <= 14; i++)
-                                            СписокПолейПути[i].Checked = false;
+                                        for (int i = 0; i < СписокПолейПути.Length - 1; i++)
+                                        {
+                                            if (i < Program.НомераПутей.Count)
+                                            {
+                                                СписокПолейПути[i + 1].Text = Program.НомераПутей[i];
+                                                СписокПолейПути[i + 1].Visible = true;
+                                            }
+                                            else
+                                            {
+                                                СписокПолейПути[i + 1].Visible = false;
+                                            }
+                                        }
+
+                                        foreach (ToolStripMenuItem t in СписокПолейПути)
+                                            t.Checked = false;
 
                                         int НомерПути = Program.НомераПутей.IndexOf(Данные.НомерПути) + 1;
-                                        if (НомерПути >= 1 && НомерПути <= 14)
+                                        if (НомерПути >= 1 && НомерПути < СписокПолейПути.Length)
                                             СписокПолейПути[НомерПути].Checked = true;
                                         else
                                             СписокПолейПути[0].Checked = true;
+
 
                                         ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
                                         for (int i = 0; i < СписокНумерацииВагонов.Length; i++)
@@ -1992,6 +2008,7 @@ namespace MainExample
                 //                contextMenuStrip1.Items.Add(list.Name);
             }
         }
+
 
         public static void ВоспроизвестиШаблонОповещения(string ТипСообщения, SoundRecord Record, string Шаблон)
         {
@@ -2158,11 +2175,13 @@ namespace MainExample
             Program.ЗаписьЛога(ТипСообщения, "Формирование звукового сообщения: " + ФормируемоеСообщение + ". Повтор " + Record.КоличествоПовторений.ToString() + " раз.");
         }
 
+
         private void listView5_Enter(object sender, EventArgs e)
         {
             if (this.ContextMenuStrip != null)
                 this.ContextMenuStrip = null;
         }
+
 
         private void воспроизвестиToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2198,6 +2217,7 @@ namespace MainExample
             }
         }
 
+
         private void включитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -2226,6 +2246,7 @@ namespace MainExample
             }
         }
 
+
         private void путь1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
@@ -2237,23 +2258,20 @@ namespace MainExample
                     SoundRecord Данные = SoundRecords[КлючВыбранныйМеню];
                     SoundRecord НеИзмененныеДанные = Данные;
 
-                    ToolStripMenuItem[] СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь0ToolStripMenuItem };
-                    string[] СтроковыйСписокПолейПути = new string[] { "путь0ToolStripMenuItem", "путь1ToolStripMenuItem", "путь2ToolStripMenuItem", "путь3ToolStripMenuItem", "путь4ToolStripMenuItem", "путь5ToolStripMenuItem", "путь6ToolStripMenuItem", "путь7ToolStripMenuItem", "путь8ToolStripMenuItem", "путь9ToolStripMenuItem", "путь10ToolStripMenuItem", "путь11ToolStripMenuItem", "путь12ToolStripMenuItem", "путь13ToolStripMenuItem", "путь14ToolStripMenuItem" };
-                    if (СтроковыйСписокПолейПути.Contains(tsmi.Name))
-                        for (int i = 0; i < СтроковыйСписокПолейПути.Length; i++)
-                            if (СтроковыйСписокПолейПути[i] == tsmi.Name)
-                            {
-                                string СтарыйНомерПути = Данные.НомерПути;
-                                Данные.НомерПути = i == 0 ? "" : Program.НомераПутей[i - 1];
-                                if (СтарыйНомерПути != Данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + Данные.НомерПути + "; ");
+                    for (int i = 0; i < СписокПолейПути.Length; i++)
+                        if (СписокПолейПути[i].Name == tsmi.Name)
+                        {
+                            string СтарыйНомерПути = Данные.НомерПути;
+                            Данные.НомерПути = i == 0 ? "" : Program.НомераПутей[i - 1];
+                            if (СтарыйНомерПути != Данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + Данные.НомерПути + "; ");
 
-                                Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-                                byte номерПути = Program.ПолучитьНомерПути(Данные.НомерПути);
-                                Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
+                            Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+                            byte номерПути = Program.ПолучитьНомерПути(Данные.НомерПути);
+                            Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
 
-                                SoundRecords[КлючВыбранныйМеню] = Данные;
-                                return;
-                            }
+                            SoundRecords[КлючВыбранныйМеню] = Данные;
+                            return;
+                        }
 
 
                     ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
@@ -2298,7 +2316,6 @@ namespace MainExample
                     }
 
 
-
                     if (Табло_отображениеПутиToolStripMenuItem.DropDownItems.Contains(tsmi))
                     {
                         int индексВарианта = Табло_отображениеПутиToolStripMenuItem.DropDownItems.IndexOf(tsmi);
@@ -2309,7 +2326,6 @@ namespace MainExample
                             return;
                         }
                     }
-
 
 
                     ОбновитьСостояниеЗаписейТаблицы();

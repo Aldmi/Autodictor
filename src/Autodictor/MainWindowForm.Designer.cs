@@ -22,6 +22,7 @@
 
         #region Windows Form Designer generated code
 
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -81,6 +82,18 @@
             this.путь12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.путь13ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.путь14ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь15ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь16ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь17ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь18ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь19ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь20ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь21ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь22ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь23ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь24ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.путь25ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.нумерацияПоездаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.отсутсвуетToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сГоловыСоставаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -466,7 +479,18 @@
             this.путь11ToolStripMenuItem,
             this.путь12ToolStripMenuItem,
             this.путь13ToolStripMenuItem,
-            this.путь14ToolStripMenuItem});
+            this.путь14ToolStripMenuItem,
+            this.путь15ToolStripMenuItem,
+            this.путь16ToolStripMenuItem,
+            this.путь17ToolStripMenuItem,
+            this.путь18ToolStripMenuItem,
+            this.путь19ToolStripMenuItem,
+            this.путь20ToolStripMenuItem,
+            this.путь21ToolStripMenuItem,
+            this.путь22ToolStripMenuItem,
+            this.путь23ToolStripMenuItem,
+            this.путь24ToolStripMenuItem,
+            this.путь25ToolStripMenuItem});
             this.номерПутиToolStripMenuItem1.Name = "номерПутиToolStripMenuItem1";
             this.номерПутиToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
             this.номерПутиToolStripMenuItem1.Text = "Номер пути";
@@ -574,6 +598,84 @@
             this.путь14ToolStripMenuItem.Name = "путь14ToolStripMenuItem";
             this.путь14ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.путь14ToolStripMenuItem.Text = "Путь 14";
+            this.путь14ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь15ToolStripMenuItem
+            // 
+            this.путь15ToolStripMenuItem.Name = "путь15ToolStripMenuItem";
+            this.путь15ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь15ToolStripMenuItem.Text = "Путь 15";
+            this.путь15ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь16ToolStripMenuItem
+            // 
+            this.путь16ToolStripMenuItem.Name = "путь16ToolStripMenuItem";
+            this.путь16ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь16ToolStripMenuItem.Text = "Путь 16";
+            this.путь16ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь17ToolStripMenuItem
+            // 
+            this.путь17ToolStripMenuItem.Name = "путь17ToolStripMenuItem";
+            this.путь17ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь17ToolStripMenuItem.Text = "Путь 17";
+            this.путь17ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь18ToolStripMenuItem
+            // 
+            this.путь18ToolStripMenuItem.Name = "путь18ToolStripMenuItem";
+            this.путь18ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь18ToolStripMenuItem.Text = "Путь 18";
+            this.путь18ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь19ToolStripMenuItem
+            // 
+            this.путь19ToolStripMenuItem.Name = "путь19ToolStripMenuItem";
+            this.путь19ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь19ToolStripMenuItem.Text = "Путь 19";
+            this.путь19ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь20ToolStripMenuItem
+            // 
+            this.путь20ToolStripMenuItem.Name = "путь20ToolStripMenuItem";
+            this.путь20ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь20ToolStripMenuItem.Text = "Путь 20";
+            this.путь20ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь21ToolStripMenuItem
+            // 
+            this.путь21ToolStripMenuItem.Name = "путь21ToolStripMenuItem";
+            this.путь21ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь21ToolStripMenuItem.Text = "Путь 21";
+            this.путь21ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь22ToolStripMenuItem
+            // 
+            this.путь22ToolStripMenuItem.Name = "путь22ToolStripMenuItem";
+            this.путь22ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь22ToolStripMenuItem.Text = "Путь 22";
+            this.путь22ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь23ToolStripMenuItem
+            // 
+            this.путь23ToolStripMenuItem.Name = "путь23ToolStripMenuItem";
+            this.путь23ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь23ToolStripMenuItem.Text = "Путь 23";
+            this.путь23ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь24ToolStripMenuItem
+            // 
+            this.путь24ToolStripMenuItem.Name = "путь24ToolStripMenuItem";
+            this.путь24ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь24ToolStripMenuItem.Text = "Путь 24";
+            this.путь24ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // путь25ToolStripMenuItem
+            // 
+            this.путь25ToolStripMenuItem.Name = "путь25ToolStripMenuItem";
+            this.путь25ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.путь25ToolStripMenuItem.Text = "Путь 25";
+            this.путь25ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // нумерацияПоездаToolStripMenuItem1
             // 
@@ -817,6 +919,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader29;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem номерПутиToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem путь0ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem путь1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem путь2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem путь3ToolStripMenuItem;
@@ -830,7 +933,19 @@
         private System.Windows.Forms.ToolStripMenuItem путь11ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem путь12ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem путь13ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem путь0ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь14ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь15ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь16ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь17ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь18ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь19ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь20ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь21ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь22ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь23ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь24ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem путь25ToolStripMenuItem;
+
         private System.Windows.Forms.ToolStripMenuItem нумерацияПоездаToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem отсутсвуетToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сГоловыСоставаToolStripMenuItem;
@@ -843,7 +958,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem воспроизвестиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem включитьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem путь14ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem ТаблоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Табло_отображениеПутиToolStripMenuItem;
