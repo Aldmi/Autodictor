@@ -10,6 +10,8 @@ using Library.Logs;
 
 namespace MainExample
 {
+    public enum NotificationLanguage {Ru, Eng };
+
     static class Program
     {
         static Mutex m_mutex;

@@ -642,4 +642,3 @@ D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Autodictor\obj\Release
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Autodictor\obj\Release\Автодиктор.exe
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Autodictor\obj\Release\Автодиктор.pdb
-C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config
