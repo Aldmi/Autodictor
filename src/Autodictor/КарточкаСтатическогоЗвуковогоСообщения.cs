@@ -4,8 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
-
+using MainExample.Entites;
 
 
 namespace MainExample
@@ -113,8 +112,9 @@ namespace MainExample
             {
                 if (Sound.Name == cB_Messages.Text)
                 {
+                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Sound.Name, Язык = NotificationLanguage.Ru };
+                    MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(воспроизводимоеСообщение);
                     Program.ЗаписьЛога("Действие оператора", "Воспроизведение звукового сообщения: " + Sound.Name);
-                    MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(Sound.Name);
                     break;
                 }
             }

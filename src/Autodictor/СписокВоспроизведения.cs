@@ -30,7 +30,7 @@ namespace MainExample
                 {
                     for (int i = 0; i < MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Count(); i++)
                     {
-                        var Данные = MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.ElementAt(i);
+                        var Данные = MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.ElementAt(i).ИмяВоспроизводимогоФайла;
 
                         ListViewItem lvi1 = new ListViewItem(new string[] { Данные });
                         this.lVСписокФайлов.Items.Add(lvi1);
@@ -57,8 +57,13 @@ namespace MainExample
                 while (lVСписокФайлов.SelectedItems.Count > 0)
                 {
                     string НазваниеФайла = lVСписокФайлов.SelectedItems[0].Text;
-                    if (MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Contains(НазваниеФайла))
-                        MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Remove(НазваниеФайла);
+
+                   var воспроизводимоеСообщение =MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.FirstOrDefault(s => s.ИмяВоспроизводимогоФайла.Contains(НазваниеФайла));
+                   if(воспроизводимоеСообщение != null)
+                     MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Remove(воспроизводимоеСообщение);
+
+                    //if (MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Contains(НазваниеФайла))
+                    //    MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Remove(НазваниеФайла);
 
                     lVСписокФайлов.Items.Remove(lVСписокФайлов.SelectedItems[0]);
                 }

@@ -19,6 +19,7 @@ namespace MainExample
         public static List<string> FilesFolder = null;
         public static List<string> TrainNumbersFolder = null;
         public static List<string> СписокСтатическихСообщений = null;
+        public static List<string> СписокДинамическихСообщений = null;
         public static List<string> НомераПутей = new List<string>();
         public static List<string> НомераПоездов = new List<string>();
 
@@ -78,6 +79,11 @@ namespace MainExample
                 СписокСтатическихСообщений = new List<string>();
                 foreach (FileInfo file in dir.GetFiles("*.wav"))
                     СписокСтатическихСообщений.Add(Path.GetFileNameWithoutExtension(file.FullName));
+
+                dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Dynamic message\");                  //DEBUG
+                СписокДинамическихСообщений = new List<string>();
+                foreach (FileInfo file in dir.GetFiles("*.wav"))
+                    СписокДинамическихСообщений.Add(Path.GetFileNameWithoutExtension(file.FullName));
             }
             catch (Exception ex) { };
 
@@ -120,9 +126,18 @@ namespace MainExample
         }
 
        
-        public static string GetFileName(string track)
+        public static string GetFileName(string track, NotificationLanguage lang = NotificationLanguage.Ru)
         {
+            string langPostfix = String.Empty;
+            switch (lang)
+            {
+                case NotificationLanguage.Eng:
+                    langPostfix = "_" + NotificationLanguage.Eng;
+                    break;
+            }
+            track += langPostfix;
             string Path = Application.StartupPath + @"\";
+         
 
             if (track == "00 минут") return Path + @"Wav\Dynamic message\00 минут.wav";
             if (track == "01 минута") return Path + @"Wav\Dynamic message\01 минута.wav";
@@ -268,6 +283,9 @@ namespace MainExample
 
             if (СписокСтатическихСообщений != null && СписокСтатическихСообщений.Contains(track))
                 return Path + @"Wav\Static message\" + track + ".wav";
+
+            if (СписокДинамическихСообщений != null && СписокДинамическихСообщений.Contains(track))       //DEBUG - вместо кода выше.
+                return Path + @"Wav\Dynamic message\" + track + ".wav";
 
             foreach (var Sound in StaticSoundForm.StaticSoundRecords)
                 if (Sound.Name == track)
