@@ -550,7 +550,8 @@ namespace CommunicationDevices.Model
                     default:
                         ErrorString = $" Устройсвто с именем {xmlDevicePc.Name} не найденно";
                         Log.log.Error(ErrorString);
-                        throw new Exception(ErrorString);
+                        break;
+                        //throw new Exception(ErrorString);
                 }
             }
 
@@ -645,7 +646,8 @@ namespace CommunicationDevices.Model
                     default:
                         ErrorString = $" Устройсвто с именем {xmlDeviceTcpIp.Name} не найденно";
                         Log.log.Error(ErrorString);
-                        throw new Exception(ErrorString);
+                        break;
+                        //throw new Exception(ErrorString);
                 }
             }
 

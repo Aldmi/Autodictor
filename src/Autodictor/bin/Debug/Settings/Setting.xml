@@ -54,7 +54,7 @@
   </DevicesWithPC>
    
   <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/>
+	 <DeviceTcpIp Id="200" Name="VidorTableStr2" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/>
   </DevicesWithTcpIp>
 </Root>
 

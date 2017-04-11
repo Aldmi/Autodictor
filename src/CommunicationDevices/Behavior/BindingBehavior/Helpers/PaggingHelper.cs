@@ -69,12 +69,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.Helpers
             PagingListSend.OnNext(pagingList);
 
 
-            //DEBUG----------------------------
-            //string str = "страница= " + pagingList.CurrentPage + "   Размер" + pagingList.List.Count + "  ";
-            //pagingList.List.ForEach(t => str += (t.NumberOfTrain + "; "));
-            //Debug.WriteLine(str);
-            //----------------------------
-
             if (++_currentPage > numberOfPage)
                 _currentPage = 0;
         }

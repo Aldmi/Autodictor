@@ -243,16 +243,6 @@ namespace Communication.SerialPort
                 byte[] writeBuffer = dataProvider.GetDataByte();
                 if (writeBuffer != null && writeBuffer.Any())
                 {
-                    //DEBUG
-                    //    a[0] == 0x02 &&
-                    //data[1] == 0x30 &&
-                    //data[2] == 0x32 &&
-                    //data[3] == 0x30 &&
-                    //data[4] == 0x30 &&
-                    //data[5] == 0x46 &&
-                    //data[6] == 0x44 &&
-                    //data[7] == 0x03)
-
                     dataProvider.SetDataByte(new byte[] { 0x02, 0x30, 0x32, 0x30, 0x30, 0x46, 0x44, 0x03 });
 
                     var readBuff = await RequestAndRespawnInstantlyAsync(writeBuffer, dataProvider.CountSetDataByte, timeRespoune, ct);

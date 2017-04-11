@@ -91,7 +91,7 @@ namespace CommunicationDevices.DataProviders.InformSvyzDataProvider
         /// </summary>
         public byte[] GetDataByte()
         {
-            var testStr = "qwerty";//DEBUG  OEM866: 113, 119, 101, 114, 116, 121
+            var testStr = "qwerty";
 
             var encoding = Encoding.GetEncoding(866);
             var messageBuf = encoding.GetBytes(testStr);      
