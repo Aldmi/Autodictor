@@ -25,7 +25,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
         public ILineByLineDrawingTableDataProvider ForTableViewDataProvider { get; set; }
 
         public bool IsSyncTime { get; set; }
-        public int PeriodTimer { get; set; }                              //Период опроса в мСек.
+        public int InternalPeriodTimer { get; set; }                              //Период опроса в мСек.
 
         #endregion
 
@@ -34,13 +34,13 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
         #region ctor
 
-        public VidorTableLineByLineExchangeTcpIpBehavior(string connectionString, List<string> internalAddress, byte maxCountFaildRespowne, int timeRespown, byte countRow, bool isSyncTime, int periodTimer)
+        public VidorTableLineByLineExchangeTcpIpBehavior(string connectionString, List<string> internalAddress, byte maxCountFaildRespowne, int timeRespown, byte countRow, bool isSyncTime, int internalPeriodTimer)
             : base(connectionString, maxCountFaildRespowne, timeRespown, 12000)
         {
             _countRow = countRow;
             InternalAddressCollection = internalAddress;
             IsSyncTime = isSyncTime;
-            PeriodTimer = periodTimer;
+            InternalPeriodTimer = internalPeriodTimer;
 
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
         }
@@ -80,7 +80,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                             DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(ForTableViewDataProvider);
                             LastSendData = ForTableViewDataProvider.InputData;
 
-                            await Task.Delay(500);
+                            await Task.Delay(500, Cts.Token);
                         }
 
                         //Запрос синхронизации времени
@@ -91,7 +91,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                             DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(ForTableViewDataProvider);
                         }
 
-                        await Task.Delay(PeriodTimer);
+                        await Task.Delay(InternalPeriodTimer, Cts.Token);
                     }
                 }
             }

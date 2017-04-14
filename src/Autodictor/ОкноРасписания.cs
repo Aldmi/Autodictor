@@ -226,7 +226,9 @@ namespace MainExample
                             Size len = TextRenderer.MeasureText(РасписаниеЭлектричек.ElementAt(i).Value.Примечание, drawFont);
                             if (len.Width >= 197)
                             {
-                                if (++МассивСмещенийСтрок[j + КоличествоСтрокДляПоездовДальнегоСледования] < 10);
+                                if (++МассивСмещенийСтрок[j + КоличествоСтрокДляПоездовДальнегоСледования] < 10)
+                                {
+                                }
                                 else
                                 {
                                     g.FillRectangle(drawBrushBlue, new Rectangle(450, 175 + j * 18, 197, 18));

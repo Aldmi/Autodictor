@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using CommunicationDevices.Behavior.ExchangeRules;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
 
@@ -246,6 +245,134 @@ namespace CommunicationDevices.Settings
                 {
                     tcpIpSett.SpecialDictionary.Add("CountRow", new XmlCountRowSetting(countRow));
                 }
+
+                if (el.Element("Settings") != null)
+                {
+                    var pathPermissionElem = el.Element("Settings")?.Element("PathPermission");
+                    if (pathPermissionElem != null)
+                    {
+                        var pathPermissionEnable = (string)pathPermissionElem.Attribute("Enable");
+                        tcpIpSett.SpecialDictionary.Add("PathPermission", new XmlPathPermissionSetting(pathPermissionEnable));
+                    }
+                }
+
+                if (el.Element("ExchangeRules") != null)
+                {
+                    var exchangeRules = new List<XmlExchangeRule>();
+
+                    var tableElement = el.Element("ExchangeRules")?.Element("Table");
+
+                    string viewSetting = String.Empty;
+                    int viewSettingTableSize = 0;
+
+                    IEnumerable<XElement> ruleElements;
+                    if (tableElement != null)
+                    {
+                        ruleElements = tableElement.Elements("Rule");
+
+                        viewSetting = "Table";
+                        var tableSize = (string)tableElement.Attribute("Size");
+                        if (tableSize != null)
+                        {
+                            int.TryParse(tableSize, out viewSettingTableSize);
+                        }
+                    }
+                    else
+                    {
+                        ruleElements = el.Element("ExchangeRules")?.Elements("Rule");
+                    }
+
+
+
+
+                    if (ruleElements != null)
+                    {
+                        foreach (var ruleElem in ruleElements)
+                        {
+                            if (ruleElem != null)
+                            {
+                                var exchRule = new XmlExchangeRule { TableSize = viewSettingTableSize, ViewType = viewSetting };
+
+                                exchRule.Format = (string)ruleElem.Attribute("Format");
+                                exchRule.Condition = ruleElem.Attribute("Condition") == null ? null : (string)ruleElem.Attribute("Condition");
+
+                                //REPEAT-------------------------
+                                var repeat = ruleElem.Element("Repeat");
+                                if (repeat != null)
+                                {
+                                    var count = (string)repeat.Attribute("Count");
+                                    if (count != null)
+                                    {
+                                        int countint;
+                                        if (int.TryParse(count, out countint))
+                                        {
+                                            exchRule.RepeatCount = countint;
+                                        }
+                                    }
+
+                                    var deltaX = repeat.Element("DeltaX");
+                                    if (deltaX != null)
+                                    {
+                                        int deltaXint;
+                                        if (int.TryParse(deltaX.Value, out deltaXint))
+                                        {
+                                            exchRule.RepeatDeltaX = deltaXint;
+                                        }
+                                    }
+
+                                    var deltaY = repeat.Element("DeltaY");
+                                    if (deltaY != null)
+                                    {
+                                        int deltaYint;
+                                        if (int.TryParse(deltaY.Value, out deltaYint))
+                                        {
+                                            exchRule.RepeatDeltaX = deltaYint;
+                                        }
+                                    }
+                                }
+
+                                //REQUEST-------------------------
+                                var request = ruleElem.Element("Request");
+                                if (request != null)
+                                {
+                                    int maxLenght;
+                                    if (int.TryParse((string)request.Attribute("maxLenght"), out maxLenght))
+                                    {
+                                        exchRule.RequestMaxLenght = maxLenght;
+                                    }
+
+                                    exchRule.RequestBody = request.Value.Replace("\t", String.Empty).Replace("\n", String.Empty).Trim();
+                                }
+
+
+                                //RESPONSE-------------------------
+                                var response = ruleElem.Element("Response");
+                                if (response != null)
+                                {
+                                    int maxLenght;
+                                    if (int.TryParse((string)response.Attribute("maxLenght"), out maxLenght))
+                                    {
+                                        exchRule.ResponseMaxLenght = maxLenght;
+                                    }
+
+                                    int timeResp;
+                                    if (int.TryParse((string)response.Attribute("TimeRespone"), out timeResp))
+                                    {
+                                        exchRule.TimeResponse = timeResp;
+                                    }
+
+                                    exchRule.ResponseBody = response.Value.Replace("\t", String.Empty).Replace("\n", String.Empty).Trim();
+                                }
+
+                                exchangeRules.Add(exchRule);
+                            }
+                        }
+
+                        tcpIpSett.SpecialDictionary.Add("ExchangeRules", exchangeRules);
+                    }
+                }
+
+
 
                 listTcpIpSett.Add(tcpIpSett);
             }

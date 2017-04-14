@@ -50,6 +50,14 @@
       <HintPath>..\packages\NLog.4.3.11\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sprache, Version=1.10.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sprache.1.10.0.37\lib\net40\Sprache.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sprache.Calc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sprache.Calc.1.0.0\lib\net40\Sprache.Calc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
@@ -93,9 +101,10 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
-    <Compile Include="Behavior\ExchangeRules\BaseExchangeRule.cs" />
+    <Compile Include="Rules\ExchangeRules\BaseExchangeRule.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesExchangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesTableExchangeSpBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\TcpIpBehavior\ByRulesTableExchangeTcpIpBehavior.cs" />
     <Compile Include="DataProviders\BuRuleDataProvider\ByRuleTableWriteDataProvider.cs" />
     <Compile Include="DataProviders\BuRuleDataProvider\ByRuleWriteDataProvider.cs" />
     <Compile Include="DataProviders\ILineByLineDrawingTableDataProvider.cs" />

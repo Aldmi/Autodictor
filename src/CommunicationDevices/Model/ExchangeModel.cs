@@ -13,7 +13,6 @@ using Communication.Settings;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
-using CommunicationDevices.Behavior.ExchangeRules;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
@@ -24,11 +23,11 @@ using CommunicationDevices.DataProviders.BuRuleDataProvider;
 using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
+using CommunicationDevices.Rules.ExchangeRules;
 using CommunicationDevices.Settings;
 using CommunicationDevices.Settings.XmlCisSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
-
 using Library.Logs;
 using Library.Xml;
 using WCFAvtodictor2PcTableContract.DataContract;
@@ -184,7 +183,8 @@ namespace CommunicationDevices.Model
             }
 
 
-            //СОЗДАНИЕ УСТРОЙСТВ С ПОСЛЕДОВАТЕЛЬНЫМ ПОРТОМ------------------------------------------------------------------------------------------------
+            #region СОЗДАНИЕ УСТРОЙСТВ С ПОСЛЕДОВАТЕЛЬНЫМ ПОРТОМ
+     
             foreach (var xmlDeviceSp in xmlDeviceSpSettings)
             {
                 IExhangeBehavior behavior;
@@ -366,7 +366,7 @@ namespace CommunicationDevices.Model
                         // правила обмена обязательный параметр
                         if (xmlExchangeRules == null || !xmlExchangeRules.Any())
                         {
-                            MessageBox.Show($"Не указанны кол-во строк у многострочного табло {xmlDeviceSp.Id}");
+                            MessageBox.Show($"Не указанно правило обмена для устройсва: {xmlDeviceSp.Id}");
                             return;
                         }
 
@@ -455,9 +455,12 @@ namespace CommunicationDevices.Model
                 }
             }
 
+            #endregion
 
 
-            //СОЗДАНИЕ УСТРОЙСТВ С PC ------------------------------------------------------------------------------------------------
+
+            #region СОЗДАНИЕ УСТРОЙСТВ С PC
+
             foreach (var xmlDevicePc in xmlDevicePcSettings)
             {
                 IExhangeBehavior behavior;
@@ -555,12 +558,15 @@ namespace CommunicationDevices.Model
                 }
             }
 
+            #endregion
 
 
 
-            //СОЗДАНИЕ УСТРОЙСТВ С TcpIp ------------------------------------------------------------------------------------------------
+            #region СОЗДАНИЕ УСТРОЙСТВ С TcpIp
+
             foreach (var xmlDeviceTcpIp in xmlDeviceTcpIpSettings)
             {
+                IExhangeBehavior behavior;
                 byte maxCountFaildRespowne;
 
                 XmlBindingSetting binding = null;
@@ -568,6 +574,7 @@ namespace CommunicationDevices.Model
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
+                List<XmlExchangeRule> xmlExchangeRules = null;
 
                 if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -599,6 +606,11 @@ namespace CommunicationDevices.Model
                     PathPermission = pathPermission?.Enable ?? true
                 };
 
+                if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("ExchangeRules"))
+                {
+                    xmlExchangeRules = xmlDeviceTcpIp.SpecialDictionary["ExchangeRules"] as List<XmlExchangeRule>;
+                }
+
                 //привязка обязательный параметр
                 if (binding == null)
                 {
@@ -619,12 +631,12 @@ namespace CommunicationDevices.Model
                             return;
                         }
 
-                        var behTable8 = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, countRow.CountRow, true, 1000)
+                        behavior = new VidorTableLineByLineExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, countRow.CountRow, true, 1000)
                         {
                             ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
 
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behTable8, binding.BindingType, setting));
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
@@ -644,12 +656,100 @@ namespace CommunicationDevices.Model
 
 
                     default:
-                        ErrorString = $" Устройсвто с именем {xmlDeviceTcpIp.Name} не найденно";
-                        Log.log.Error(ErrorString);
+                        // правила обмена обязательный параметр
+                        if (xmlExchangeRules == null || !xmlExchangeRules.Any())
+                        {
+                            MessageBox.Show($"Не верно заданно правило обмена для устройства: {xmlDeviceTcpIp.Id}");
+                            return;
+                        }
+
+                        //Создание списка правил обмена.
+                        List<BaseExchangeRule> excangeRules = new List<BaseExchangeRule>();
+                        foreach (var xmlExchangeRule in xmlExchangeRules)
+                        {
+                            //Запрос---------------------
+                            RequestRule request = null;
+                            if ((!string.IsNullOrEmpty(xmlExchangeRule.RequestBody)))
+                            {
+                                request = new RequestRule { MaxLenght = xmlExchangeRule.RequestMaxLenght, Body = xmlExchangeRule.RequestBody };
+                            }
+                            else
+                            {
+                                MessageBox.Show($"В правилах обмена для {xmlDeviceTcpIp.Name} не верно заданна секция Request");
+                                return;
+                            }
+
+                            //Ответ----------------------
+                            ResponseRule response = null;
+                            if ((xmlExchangeRule.ResponseMaxLenght > 0) || (!string.IsNullOrEmpty(xmlExchangeRule.ResponseBody)))
+                            {
+                                response = new ResponseRule() { MaxLenght = xmlExchangeRule.ResponseMaxLenght, Body = xmlExchangeRule.ResponseBody, Time = xmlExchangeRule.TimeResponse };
+                            }
+
+                            //Повтор--------------------
+                            RepeatRule repeat = null;
+                            if (xmlExchangeRule.RepeatCount.HasValue)
+                            {
+                                repeat = new RepeatRule { Count = xmlExchangeRule.RepeatCount.Value, DeltaX = xmlExchangeRule.RepeatDeltaX, DeltaY = xmlExchangeRule.RepeatDeltaY };
+                            }
+
+                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format, xmlExchangeRule.Condition));
+                        }
+
+                        //Создание главного правила обмена
+                        var mainRule = new MainRule
+                        {
+                            ExchangeRules = excangeRules,
+                            ViewType =
+                                new ViewType
+                                {
+                                    Type = xmlExchangeRules.FirstOrDefault()?.ViewType,
+                                    TableSize = xmlExchangeRules.FirstOrDefault()?.TableSize
+                                }
+                        };
+
+                        maxCountFaildRespowne = 3;
+                        switch (mainRule.ViewType.Type)
+                        {
+                            case "":
+                                behavior = null;//new ByRulesTableExchangeTcpIpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, excangeRules);
+                                break;
+
+                            case "Table":
+                                behavior = new ByRulesTableExchangeTcpIpBehavior(xmlDeviceTcpIp.Address, xmlDeviceTcpIp.DeviceAdress, maxCountFaildRespowne, xmlDeviceTcpIp.TimeRespone, mainRule, 1000);
+                                break;
+
+                            default:
+                                MessageBox.Show($"Тип отображения {mainRule.ViewType.Type} не поддерживается");
+                                continue;
+                        }
+
+                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, binding.BindingType, setting));
+
+
+                        //создание поведения привязка табло к пути.
+                        if (binding.BindingType == BindingType.ToPath)
+                        {
+                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                            Binding2PathBehaviors.Add(bindingBeh);
+                            // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
+                        }
+
+                        //создание поведения привязка табло к главному расписанию
+                        if (binding.BindingType == BindingType.ToGeneral)
+                            ;
+
+                        //создание поведения привязка табло к системе отправление/прибытие поездов
+                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
+                            ;
+
+                        //добавим все функции циклического опроса
+                        Devices.Last().AddCycleFunc();
                         break;
-                        //throw new Exception(ErrorString);
                 }
             }
+
+            #endregion
 
 
             //ЗАПУТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ

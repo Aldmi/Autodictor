@@ -78,7 +78,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
         #region ctor
 
-        public BaseExhangeTcpIpBehavior(string connectionString, byte maxCountFaildRespowne, int timeRespown, double taimerPeriod)
+        protected BaseExhangeTcpIpBehavior(string connectionString, byte maxCountFaildRespowne, int timeRespown, double taimerPeriod)
         {
             string ip = null;
             var strArr = connectionString.Split(':');

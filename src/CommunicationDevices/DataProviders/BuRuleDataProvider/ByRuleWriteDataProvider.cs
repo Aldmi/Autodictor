@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Communication.Annotations;
 using Communication.Interfaces;
-using CommunicationDevices.Behavior.ExchangeRules;
+using CommunicationDevices.Rules.ExchangeRules;
 
 
 namespace CommunicationDevices.DataProviders.BuRuleDataProvider

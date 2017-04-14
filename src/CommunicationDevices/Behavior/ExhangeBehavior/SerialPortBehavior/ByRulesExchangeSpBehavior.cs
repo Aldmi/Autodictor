@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
-using CommunicationDevices.Behavior.ExchangeRules;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
+using CommunicationDevices.Rules.ExchangeRules;
 
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior

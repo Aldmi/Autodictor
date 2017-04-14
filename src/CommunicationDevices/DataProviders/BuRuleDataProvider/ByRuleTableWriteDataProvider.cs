@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using Communication.Annotations;
-using CommunicationDevices.Behavior.ExchangeRules;
+using CommunicationDevices.Rules.ExchangeRules;
 
 
 namespace CommunicationDevices.DataProviders.BuRuleDataProvider

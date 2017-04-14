@@ -378,6 +378,8 @@ C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Library.dll
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\MoreLinq.dll
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.dll
+C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.Calc.dll
+C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.dll
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.dll
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.dll
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.dll
@@ -395,6 +397,8 @@ C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.xml
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.xml
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\MoreLinq.xml
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.xml
+C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.pdb
+C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.xml
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.xml
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.xml
 C:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.xml

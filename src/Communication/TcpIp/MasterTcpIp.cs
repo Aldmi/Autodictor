@@ -175,7 +175,7 @@ namespace Communication.TcpIp
                 }
                 catch (IOException)
                 {
-                     ReConnect();
+                    ReConnect();
 
                     return false;
                 }

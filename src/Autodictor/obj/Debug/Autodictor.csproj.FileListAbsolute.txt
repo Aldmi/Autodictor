@@ -66,3 +66,7 @@ C:\Git\Autodictor\src\Autodictor\obj\Debug\MainExample.ФормаЗаписиС�
 C:\Git\Autodictor\src\Autodictor\obj\Debug\Autodictor.csproj.GenerateResource.Cache
 C:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.exe
 C:\Git\Autodictor\src\Autodictor\obj\Debug\Автодиктор.pdb
+C:\Git\Autodictor\src\Autodictor\bin\Debug\Sprache.Calc.dll
+C:\Git\Autodictor\src\Autodictor\bin\Debug\Sprache.dll
+C:\Git\Autodictor\src\Autodictor\bin\Debug\Sprache.pdb
+C:\Git\Autodictor\src\Autodictor\bin\Debug\Sprache.xml
