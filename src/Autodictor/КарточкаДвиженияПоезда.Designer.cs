@@ -37,6 +37,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rTB_Сообщение = new System.Windows.Forms.RichTextBox();
+            this.btnВоспроизвестиВыбранныйШаблон = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cB_НомерПути = new System.Windows.Forms.ComboBox();
             this.btn_Подтвердить = new System.Windows.Forms.Button();
@@ -65,7 +66,6 @@
             this.btnПовторения = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cBОтменен = new System.Windows.Forms.CheckBox();
-            this.btnВоспроизвестиВыбранныйШаблон = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnЗадержкаОтправления = new System.Windows.Forms.Button();
             this.btnЗадержкаПрибытия = new System.Windows.Forms.Button();
@@ -74,6 +74,7 @@
             this.cBПрибытиеЗадерживается = new System.Windows.Forms.CheckBox();
             this.cBПоездОтменен = new System.Windows.Forms.CheckBox();
             this.gBНастройкиПоезда = new System.Windows.Forms.GroupBox();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -150,7 +151,8 @@
             this.lVШаблоны.CheckBoxes = true;
             this.lVШаблоны.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader3});
             this.lVШаблоны.FullRowSelect = true;
             this.lVШаблоны.GridLines = true;
             this.lVШаблоны.Location = new System.Drawing.Point(13, 29);
@@ -170,7 +172,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Шаблон";
-            this.columnHeader2.Width = 600;
+            this.columnHeader2.Width = 400;
             // 
             // rTB_Сообщение
             // 
@@ -179,6 +181,17 @@
             this.rTB_Сообщение.Size = new System.Drawing.Size(429, 85);
             this.rTB_Сообщение.TabIndex = 0;
             this.rTB_Сообщение.Text = "";
+            // 
+            // btnВоспроизвестиВыбранныйШаблон
+            // 
+            this.btnВоспроизвестиВыбранныйШаблон.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnВоспроизвестиВыбранныйШаблон.Location = new System.Drawing.Point(447, 164);
+            this.btnВоспроизвестиВыбранныйШаблон.Name = "btnВоспроизвестиВыбранныйШаблон";
+            this.btnВоспроизвестиВыбранныйШаблон.Size = new System.Drawing.Size(174, 85);
+            this.btnВоспроизвестиВыбранныйШаблон.TabIndex = 46;
+            this.btnВоспроизвестиВыбранныйШаблон.Text = "ВОСПРОИЗВЕСТИ ВЫБРАННЫЙ ШАБЛОН";
+            this.btnВоспроизвестиВыбранныйШаблон.UseVisualStyleBackColor = true;
+            this.btnВоспроизвестиВыбранныйШаблон.Click += new System.EventHandler(this.btnВоспроизвестиВыбранныйШаблон_Click);
             // 
             // label1
             // 
@@ -506,17 +519,6 @@
             this.cBОтменен.UseVisualStyleBackColor = true;
             this.cBОтменен.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // btnВоспроизвестиВыбранныйШаблон
-            // 
-            this.btnВоспроизвестиВыбранныйШаблон.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnВоспроизвестиВыбранныйШаблон.Location = new System.Drawing.Point(447, 164);
-            this.btnВоспроизвестиВыбранныйШаблон.Name = "btnВоспроизвестиВыбранныйШаблон";
-            this.btnВоспроизвестиВыбранныйШаблон.Size = new System.Drawing.Size(174, 85);
-            this.btnВоспроизвестиВыбранныйШаблон.TabIndex = 46;
-            this.btnВоспроизвестиВыбранныйШаблон.Text = "ВОСПРОИЗВЕСТИ ВЫБРАННЫЙ ШАБЛОН";
-            this.btnВоспроизвестиВыбранныйШаблон.UseVisualStyleBackColor = true;
-            this.btnВоспроизвестиВыбранныйШаблон.Click += new System.EventHandler(this.btnВоспроизвестиВыбранныйШаблон_Click);
-            // 
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.NavajoWhite;
@@ -622,6 +624,11 @@
             this.gBНастройкиПоезда.TabStop = false;
             this.gBНастройкиПоезда.Text = "Настроки поезда";
             // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Языки";
+            this.columnHeader3.Width = 120;
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -704,5 +711,6 @@
         private System.Windows.Forms.CheckBox cBОтправлениеЗадерживается;
         private System.Windows.Forms.CheckBox cBПрибытиеЗадерживается;
         private System.Windows.Forms.CheckBox cBПоездОтменен;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }

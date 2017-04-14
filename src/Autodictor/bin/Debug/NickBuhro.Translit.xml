@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NickBuhro.Translit</name>
+    </assembly>
+    <members>
+        <member name="T:NickBuhro.Translit.Language">
+            <summary>
+            Slavik language with cyrillic alphabet.
+            </summary>
+        </member>
+        <member name="F:NickBuhro.Translit.Language.Unknown">
+            <summary>
+            Unknown language. Most common rules will be used for transliteration.
+            </summary>
+        </member>
+        <member name="F:NickBuhro.Translit.Language.Russian">
+            <summary>
+            Russain language.
+            </summary>
+        </member>
+        <member name="F:NickBuhro.Translit.Language.Belorussian">
+            <summary>
+            Belorussian language.
+            </summary>
+        </member>
+        <member name="F:NickBuhro.Translit.Language.Ukrainian">
+            <summary>
+            Ukranian language.
+            </summary>
+        </member>
+        <member name="F:NickBuhro.Translit.Language.Bulgarian">
+            <summary>
+            Bulgarian language.
+            </summary>
+        </member>
+        <member name="F:NickBuhro.Translit.Language.Macedonian">
+            <summary>
+            Macedonian language.
+            </summary>
+        </member>
+        <member name="T:NickBuhro.Translit.Transliteration">
+            <summary>
+             Cyrillic-latin transliteration (support only slavik languages) by GOST 7.79-2000 (ISO 9).
+            </summary>
+        </member>
+        <member name="M:NickBuhro.Translit.Transliteration.CyrillicToLatin(System.String,NickBuhro.Translit.Language)">
+            <summary>
+            Transliterate cyrillyc string to latin.
+            </summary>
+            <param name="cyrillicSource">Source string.</param>
+            <param name="language">Specify it to determine correct transliteration rules 
+            (it can be a little bit defferent for languages).</param>
+            <returns>Transliterated string.</returns>
+        </member>
+        <member name="M:NickBuhro.Translit.Transliteration.LatinToCyrillyc(System.String,NickBuhro.Translit.Language)">
+            <summary>
+            Transliterate latin string to cyrillyc.
+            </summary>
+            <param name="latinSource">Source string.</param>
+            <param name="language">Specify it to determine correct transliteration rules 
+            (it can be a little bit defferent for languages).</param>
+            <returns>Cyrillyc string.</returns>
+        </member>
+        <member name="M:NickBuhro.Translit.Implementation.CyrillicToLatinConverter.#ctor(System.String,NickBuhro.Translit.Language)">
+            <summary>
+            Create an instance of algorithm.
+            </summary>
+        </member>
+        <member name="M:NickBuhro.Translit.Implementation.CyrillicToLatinConverter.Convert">
+            <summary>
+            Should be invoked only once.
+            </summary>
+        </member>
+        <member name="M:NickBuhro.Translit.Implementation.LatinToCyrillicConverter.#ctor(System.String,NickBuhro.Translit.Language)">
+            <summary>
+            Create an instance of algorithm.
+            </summary>
+        </member>
+        <member name="M:NickBuhro.Translit.Implementation.LatinToCyrillicConverter.Convert">
+            <summary>
+            Detransliterate source. Should be invoked only once.
+            </summary>
+            <returns>Detransliterated cyrillic string.</returns>
+        </member>
+    </members>
+</doc>

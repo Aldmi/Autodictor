@@ -104,7 +104,11 @@ namespace MainExample
                 else
                     ВремяАктивации = this.Record.ВремяОтправления.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
 
-                ListViewItem lvi = new ListViewItem(new string[] { ВремяАктивации.ToString("HH:mm"), ФормируемоеСообщение.НазваниеШаблона });
+                string языки= String.Empty;
+                ФормируемоеСообщение.ЯзыкиОповещения.ForEach(lang => языки += lang.ToString() + ", ");
+                языки= языки.Remove(языки.Length - 2, 2);
+
+                ListViewItem lvi = new ListViewItem(new string[] { ВремяАктивации.ToString("HH:mm"), ФормируемоеСообщение.НазваниеШаблона, языки });
                 lvi.Checked = ФормируемоеСообщение.Активность;
                 lvi.Tag = i;
                 this.lVШаблоны.Items.Add(lvi);
