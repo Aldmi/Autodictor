@@ -1635,7 +1635,7 @@ namespace MainExample
                     break;
 
                 case TableRecordStatus.Очистка:
-                    command = Command.Clear;
+                    command = Command.Delete;
                     break;
 
                 case TableRecordStatus.Обновление:
@@ -1669,7 +1669,7 @@ namespace MainExample
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
-                    Time = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                    Time =  ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),  //(data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,

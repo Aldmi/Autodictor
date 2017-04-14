@@ -34,7 +34,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         {
             ExchangeRules = exchangeRules;
             //добавляем циклические функции
-            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue } });  //данные для 1-ой циклической функции
+            Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { Event = "  ", NumberOfTrain = "  ", PathNumber = "  ", Stations = "  ", Time = DateTime.MinValue, TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
             ListCycleFuncs = new List<Func<MasterSerialPort, CancellationToken, Task>> { CycleExcangeService };                      // 1 циклическая функция
         }
 
@@ -48,24 +48,42 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
+            var inData = Data4CycleFunc[0];
             foreach (var exchangeRule in ExchangeRules)
             {
-                //DEBUG----------------------------------------
-                //Data4CycleFunc[0].PathNumber = "4";
-                //Data4CycleFunc[0].Stations = "Москва-Питер";
-                //Data4CycleFunc[0].Note = "Кроме:Нахабино,Марино";
-                //DEBUG--------------------------------------
+                if (inData?.TableData != null)
+                {
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
 
+                    //вывод пустой строки если в таблице нет данных
+                    var emptyMessage = new UniversalInputType
+                    {
+                        Event = "  ",
+                        NumberOfTrain = "  ",
+                        PathNumber = "  ",
+                        Stations = "  ",
+                        Time = DateTime.MinValue,
+                        Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                    };
 
-               var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = Data4CycleFunc[0] };
-               DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-               LastSendData = writeProvider.InputData;
-               await Task.Delay(exchangeRule.ResponseRule.Time, ct);  //задержка для задания периода опроса.    
+                    var viewData = timeSamplingMessage ?? emptyMessage;
+                    viewData.AddressDevice = inData.AddressDevice;
 
-               if (writeProvider.IsOutDataValid)
-               {
-                    // Log.log.Trace("");
-               }
+                    //Вывод на путевое табло
+                    var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = viewData };
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+
+                    LastSendData = writeProvider.InputData;
+
+                    if (writeProvider.IsOutDataValid)
+                    {
+                        // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                    }
+
+                    await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
+                }
             }
         }
 
@@ -80,13 +98,42 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         protected override List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData= LastSendData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
+            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
             foreach (var exchangeRule in ExchangeRules)
             {
-                var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = inData };
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-                LastSendData = writeProvider.InputData;
-                await Task.Delay(exchangeRule.ResponseRule.Time, ct);  //задержка для задания периода опроса.
+                if (inData?.TableData != null)
+                {
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
+
+                    //вывод пустой строки если в таблице нет данных
+                    var emptyMessage = new UniversalInputType
+                    {
+                        Event = "  ",
+                        NumberOfTrain = "  ",
+                        PathNumber = "  ",
+                        Stations = "  ",
+                        Time = DateTime.MinValue,
+                        Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                    };
+
+                    var viewData = timeSamplingMessage ?? emptyMessage;
+                    viewData.AddressDevice = inData.AddressDevice;
+
+                    //Вывод на путевое табло
+                    var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = viewData };
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+
+                    LastSendData = writeProvider.InputData;
+
+                    if (writeProvider.IsOutDataValid)
+                    {
+                        // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                    }
+
+                    await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
+                }
             }
         }
 

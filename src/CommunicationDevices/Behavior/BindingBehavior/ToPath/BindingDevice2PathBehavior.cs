@@ -54,12 +54,15 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
         public void SendMessage4Path(UniversalInputType inData, string numberOfTrain, Func<UniversalInputType, bool> checkContrains)
         {
-            //проверка ограничения
-            if (!checkContrains(inData))
-                return;
+            //проверка ограничения.
+            if (inData.Command != Command.Delete)
+            {
+                if (!checkContrains(inData))
+                    return;
+            }
 
             //привязка на несколько путей
-            if (!CollectionPathNumber.Any() || CollectionPathNumber.Count() > 1)
+            if (CollectionPathNumber.Any())
             {
                 switch (inData.Command)
                 { 
@@ -69,8 +72,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                         break;
 
                     //УДАЛИТЬ ИЗ ТАБЛ.
-                    case Command.Clear:
-                        var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => p.PathNumber == inData.PathNumber.ToString() && (p.NumberOfTrain == numberOfTrain));
+                    case Command.Delete:
+                        var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => (p.Id == inData.Id) && (p.NumberOfTrain == numberOfTrain));
                         if (removeItem != null)
                         {
                             _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
@@ -78,7 +81,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                         break;
 
                     // ОБНОВИТЬ В ТАБЛ.
-                    case Command.Update: //TODO:  Пробелма в поиске записи по условию: p.PathNumber == inData.PathNumber.ToString(). Т.к. номер пути может быть сброшенн.
+                    case Command.Update:
                         var updateItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => (p.Id == inData.Id) && (p.NumberOfTrain == numberOfTrain));
                         if (updateItem != null)
                         {
@@ -86,16 +89,16 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                             _device.ExhBehavior.GetData4CycleFunc[0].TableData[indexUpdateItem] = inData;
                         }
                         break;
-                        
                 }
             }
-            else
-            {
-                //привязка на указанные пути
-                _device.AddCycleFuncData(0, inData);
-            }
+            //else
+            //{
+            //    //привязка на указанные пути
+            //    _device.AddCycleFuncData(0, inData);
+            //}
 
-            _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос (выставили запрос сразу на выполнение)
+            // Отправили однократный запрос (выставили запрос сразу на выполнение)
+            _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); 
         }
 
 

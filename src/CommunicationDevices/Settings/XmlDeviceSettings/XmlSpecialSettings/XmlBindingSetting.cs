@@ -9,13 +9,6 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     //ToPath: Все - привязка ко всем путям
     //ToGeneral - привязка к главному табло с расписанием
     //ToArrivalAndDeparture - привязка к табло отправление / прибытие поездов
-    //public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture }
-
-
-    //ToPath: 1,2 - привязка к пути с перечислением номеров путей
-    //ToPath: Все - привязка ко всем путям
-    //ToGeneral - привязка к главному табло с расписанием
-    //ToArrivalAndDeparture - привязка к табло отправление / прибытие поездов
     public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture }
 
     public class XmlBindingSetting
