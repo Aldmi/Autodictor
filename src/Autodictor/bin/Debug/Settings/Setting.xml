@@ -21,11 +21,28 @@
 	  <DtrEnable>True</DtrEnable> 
 	  <RtsEnable>True</RtsEnable> 
     </Serial>
+	
+	<Serial>
+      <Port>4</Port>
+	  <BaudRate>57600</BaudRate>
+	  <DataBits>8</DataBits>
+	  <StopBits>1</StopBits>
+	  <Parity>None</Parity>  
+	  <DtrEnable>False</DtrEnable> 
+	  <RtsEnable>False</RtsEnable> 
+    </Serial>
   </SerialPorts>
+
+  
+
+
+	
 
 
   <DevicesWithSP> 
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" CountRow="3"/> -->
+
+	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/>
 
 	 <DeviceSp Id="2" Name="Vidor" Port="3" Address="2" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1" Contrains="БольшеТекВремени"/>
   </DevicesWithSP>

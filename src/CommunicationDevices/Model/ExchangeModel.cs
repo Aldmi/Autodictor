@@ -16,6 +16,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.ChannelManagement;
 using CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
@@ -59,7 +60,9 @@ namespace CommunicationDevices.Model
 
         public List<MasterSerialPort> MasterSerialPorts { get; set; } = new List<MasterSerialPort>();
 
-        public List<Device> Devices { get; set; } = new List<Device>();
+        public List<Device> DeviceTables { get; set; } = new List<Device>();
+        public Device DeviceSoundChannelManagement { get; set; } 
+        
 
         public ICollection<IBinding2PathBehavior> Binding2PathBehaviors { get; set; } = new List<IBinding2PathBehavior>();
         public ICollection<IBinding2GeneralSchedule> Binding2GeneralSchedules { get; set; } = new List<IBinding2GeneralSchedule>();
@@ -172,7 +175,7 @@ namespace CommunicationDevices.Model
 
             //СОЗДАНИЕ КЛИЕНТА ЦИС---------------------------------------------------------------------------------------------------------
             NameRailwayStation = xmlCisSetting.Name;
-            CisClient = new CisClient(new EndpointAddress(xmlCisSetting.EndpointAddress), Devices);
+            CisClient = new CisClient(new EndpointAddress(xmlCisSetting.EndpointAddress), DeviceTables);
 
 
 
@@ -245,12 +248,12 @@ namespace CommunicationDevices.Model
                     case "DispSys":
                         maxCountFaildRespowne = 3;
                         behavior = new DisplSysExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                       //Вывод номера пути в пустом сообщении
                         }
@@ -264,19 +267,19 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
 
 
                     case "Vidor":
                         maxCountFaildRespowne = 3;
                         behavior = new VidorExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
@@ -290,7 +293,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
 
 
@@ -308,11 +311,11 @@ namespace CommunicationDevices.Model
                         {
                             ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTable8, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
@@ -323,7 +326,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
 
 
@@ -341,11 +344,11 @@ namespace CommunicationDevices.Model
                         {
                             ForTableViewDataProvider = new PanelVidorTable2StrWriteDataProvider()
                         };
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behTableMin2, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
 
 
                         //создание поведения привязка табло к главному расписанию
@@ -357,9 +360,19 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
 
+
+                    case "ChannelManagement":
+                        maxCountFaildRespowne = 3;
+                        behavior = new ChannelManagementExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
+                        DeviceSoundChannelManagement=  new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, null);
+
+
+                        //добавим все функции циклического опроса
+                       // DeviceTables.Last().AddCycleFunc();
+                        break;
 
 
                     default:
@@ -431,12 +444,12 @@ namespace CommunicationDevices.Model
                                 continue;
                         }
 
-                        Devices.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
@@ -450,12 +463,13 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
                 }
             }
 
             #endregion
+
 
 
 
@@ -522,23 +536,23 @@ namespace CommunicationDevices.Model
                         }
 
                         behavior = new ArivDepartExhangePcBehavior(xmlDevicePc.Address, maxCountFaildRespowne);
-                        Devices.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDevicePc.Id, xmlDevicePc.Address, xmlDevicePc.Name, xmlDevicePc.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
-                            Devices.Last().AddCycleFunc(); //добавим все функции циклического опроса
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
+                            DeviceTables.Last().AddCycleFunc(); //добавим все функции циклического опроса
                         }
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
                         {
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
                             //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
                             if (!Binding2GeneralSchedules.Last().IsPaging)
                             {
-                                Devices.Last().AddCycleFunc();//добавим все функции циклического опроса
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
                             }
                         }
 
@@ -559,6 +573,7 @@ namespace CommunicationDevices.Model
             }
 
             #endregion
+
 
 
 
@@ -636,22 +651,22 @@ namespace CommunicationDevices.Model
                             ForTableViewDataProvider = new PanelVidorTable1StrWriteDataProvider()
                         };
 
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, binding.BindingType, setting));
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(Devices.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
 
 
@@ -724,13 +739,13 @@ namespace CommunicationDevices.Model
                                 continue;
                         }
 
-                        Devices.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, binding.BindingType, setting));
+                        DeviceTables.Add(new Device(xmlDeviceTcpIp.Id, xmlDeviceTcpIp.Address, xmlDeviceTcpIp.Name, xmlDeviceTcpIp.Description, behavior, binding.BindingType, setting));
 
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(Devices.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
                             Binding2PathBehaviors.Add(bindingBeh);
                             // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
@@ -744,7 +759,7 @@ namespace CommunicationDevices.Model
                             ;
 
                         //добавим все функции циклического опроса
-                        Devices.Last().AddCycleFunc();
+                        DeviceTables.Last().AddCycleFunc();
                         break;
                 }
             }
@@ -752,19 +767,31 @@ namespace CommunicationDevices.Model
             #endregion
 
 
+
+
             //ЗАПУТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ
             //Защита от повторного открытия одного и тогоже порта разными ус-вами.   
-            var serialPortDev = Devices.Where(d => d.ExhBehavior is BaseExhangeSpBehavior).ToList();
+            var serialPortDev = DeviceTables.Where(d => d.ExhBehavior is BaseExhangeSpBehavior).ToList();
             foreach (var devSp in serialPortDev.GroupBy(d => d.ExhBehavior.NumberPort).Select(g => g.First()))
             {
                 devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
             }
 
-            var otherDev = Devices.Except(serialPortDev).ToList();
+            if (DeviceSoundChannelManagement != null)
+            {
+                //Если ус-во настройки каналов звука подключенно на неиспользумый другими ус-вами порт, то запустим порт на обмен данными.
+                var findDevSp = serialPortDev.FirstOrDefault(spDev => spDev.ExhBehavior.NumberPort == DeviceSoundChannelManagement.ExhBehavior.NumberPort);
+                if (findDevSp == null)
+                    DeviceSoundChannelManagement.ExhBehavior.CycleReConnect(BackGroundTasks);
+            }
+
+
+            var otherDev = DeviceTables.Except(serialPortDev).ToList();
             foreach (var devSp in otherDev)
             {
                 devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
             }
+
         }
 
         #endregion

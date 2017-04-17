@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using CommunicationDevices.DataProviders;
+using CommunicationDevices.Devices;
 using NickBuhro.Translit;
 
 
@@ -19,6 +21,7 @@ namespace MainExample
 
     public partial class DynamicSoundForm : Form
     {
+        private readonly Device _deviceSoundChannelManagement;
         public static List<DynamicSoundRecord> DynamicSoundRecords = new List<DynamicSoundRecord>();
         private static int ID = 0;
 
@@ -28,9 +31,11 @@ namespace MainExample
         private float ОбщаяДлительностьЗвучания = 0;
         private int ИндексВыделенойПодстроки = -1;
 
-        public DynamicSoundForm()
+        public DynamicSoundForm(Device deviceSoundChannelManagement)
         {
             InitializeComponent();
+
+            _deviceSoundChannelManagement = deviceSoundChannelManagement;
 
             this.comboBox_Messages.Items.Add("НОМЕР ПОЕЗДА");
             this.comboBox_Messages.Items.Add("СТ.ОТПРАВЛЕНИЯ");
@@ -355,6 +360,11 @@ namespace MainExample
 
         private bool НачатьВоспроизведениеФайла()
         {
+            //DEBUG--------------------------------------------------------
+            var emptyUit= new UniversalInputType();
+            _deviceSoundChannelManagement.AddOneTimeSendData(emptyUit);
+            //DEBUG--------------------------------------------------------
+
             PlayList = textBox_Message.Text.Split('|');
 
             ТекущаяПозицияЗвучания = 0;

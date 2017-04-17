@@ -33,7 +33,7 @@ namespace CommunicationDevices.Devices
 
         #region ctor
 
-        public Device(int id, string address, string name, string description, IExhangeBehavior behavior, BindingType bindingType, DeviceSetting setiing)
+        public Device(int id, string address, string name, string description, IExhangeBehavior behavior, BindingType bindingType, DeviceSetting setting)
         {
             Id = id;
             Address = address;
@@ -42,7 +42,7 @@ namespace CommunicationDevices.Devices
             ExhBehavior = behavior;
             BindingType = bindingType;
 
-            Setting= setiing;
+            Setting= setting;
         }
 
         #endregion

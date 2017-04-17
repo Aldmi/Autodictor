@@ -101,6 +101,8 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\IBinding2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
+    <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementWriteDataProvider.cs" />
     <Compile Include="Rules\ExchangeRules\BaseExchangeRule.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesExchangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesTableExchangeSpBehavior.cs" />

@@ -10,6 +10,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
+using CommunicationDevices.Devices;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Infrastructure;
@@ -112,6 +113,7 @@ namespace MainExample
         public CisClient CisClient { get; }
         public static IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
         public static IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
+        public Device SoundChanelManagment { get; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
 
@@ -132,7 +134,7 @@ namespace MainExample
 
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, Device soundChanelManagment)
         {
             if (myMainForm != null)
                 return;
@@ -147,6 +149,7 @@ namespace MainExample
 
             Binding2PathBehaviors = binding2PathBehaviors;
             Binding2GeneralScheduleBehaviors = binding2GeneralScheduleBehaviors;
+            SoundChanelManagment = soundChanelManagment;
 
             MainForm.Воспроизвести.Click += new System.EventHandler(this.btnВоспроизвести_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
@@ -1486,6 +1489,8 @@ namespace MainExample
                     MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
 
 
+            Debug.WriteLine(status.ToString());//DEBUG
+
             if (status != SoundFileStatus.Playing)
             {
                 if (ВремяЗадержкиМеждуСообщениями > 0)
@@ -1513,7 +1518,25 @@ namespace MainExample
 
                     if (Player.PlayFile(названиеФайла) == true)
                         MainForm.Воспроизвести.Text = "Остановить";
+
+                    Debug.WriteLine(ОчередьВоспроизводимыхЗвуковыхСообщений.Count +"   "+ status.ToString());//DEBUG
                 }
+            }
+            else      
+            {
+                //Отправка посылок подтверждающих воспроизведение файла.
+
+
+                //TODO: Добавить отсчет периода отсыла поверх TimeRespone, будет задваться в окне настроек вместе с галочками
+                {
+                    if (SoundChanelManagment != null)
+                    {
+                        var emptyUit = new UniversalInputType();
+                        SoundChanelManagment.AddOneTimeSendData(emptyUit);//период отсыла регулируется TimeRespone.
+                    }
+                }
+
+
             }
         }
 

@@ -68,10 +68,6 @@ namespace MainExample
             ExchangeModel.LoadSetting();
             ExchangeModel.StartCisClient();
 
-            // ExchangeModel.Binding2GeneralSchedules.
-
-            var t = TrainTable.TrainTableRecords;
-
             DispouseCisClientIsConnectRx = ExchangeModel.CisClient.IsConnectChange.Subscribe(isConnect =>
             {
                 //TODO: вызывать через Invoke
@@ -91,12 +87,6 @@ namespace MainExample
         }
 
 
-        private void fileExit_Click(object sender, EventArgs e)
-        {
-            CancelEventArgs cancel = new CancelEventArgs(false);
-            Application.Exit(cancel);
-        }
-
         private void buttonExample_Click(object sender, EventArgs e)
         {
             if (MainWindowForm.myMainForm != null)
@@ -106,7 +96,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules)
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules, ExchangeModel.DeviceSoundChannelManagement)
                 {
                     MdiParent = this
                 };
@@ -149,7 +139,7 @@ namespace MainExample
 
         private void arrayDataSourceExample_Click(object sender, EventArgs e)
         {
-            DynamicSoundForm form = new DynamicSoundForm();
+            DynamicSoundForm form = new DynamicSoundForm(ExchangeModel.DeviceSoundChannelManagement);
             form.MdiParent = this;
             form.Show();
         }
@@ -215,7 +205,7 @@ namespace MainExample
             }
             else                                                                   //Открытие окна
             {
-                BoardForm boardForm = new BoardForm(ExchangeModel.Devices);
+                BoardForm boardForm = new BoardForm(ExchangeModel.DeviceTables);
                 boardForm.MdiParent = this;
                 boardForm.Show();
             }

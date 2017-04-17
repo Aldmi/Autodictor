@@ -40,7 +40,7 @@ namespace CommunicationDevices.Settings
                                    (string)el.Attribute("Description"));
 
                 var bind = (string)el.Attribute("Binding");
-                if (bind != null)
+                //if (bind != null)
                 {
                     spSett.SpecialDictionary.Add("Binding", new XmlBindingSetting(bind));
                 }
