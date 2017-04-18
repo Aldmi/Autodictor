@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
+using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.ChannelManagementDataProvider;
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.ChannelManagement
@@ -32,19 +33,20 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.Chann
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
             var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;  //хранит адресс устройства.
-
-            var chanelSwitches= new List<bool> {true, true , true, false, false};           //TODO: передавать настроки каналов.
-            var writeProvider = new ChannelManagementWriteDataProvider(chanelSwitches) {InputData = inData}; 
-            DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-
-           // LastSendData = writeProvider.InputData;
-
-            if (writeProvider.IsOutDataValid)
+            if (inData != null)
             {
-                // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
-            }
+                var writeProvider = new ChannelManagementWriteDataProvider(inData.SoundChanels) {InputData = inData};
+                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
 
-            //await Task.Delay(600, ct);  //задержка для задания периода опроса. 
+                // LastSendData = writeProvider.InputData;
+
+                if (writeProvider.IsOutDataValid)
+                {
+                    // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                }
+
+                //await Task.Delay(600, ct);  //задержка для задания периода опроса. 
+            }
         }
 
         #endregion

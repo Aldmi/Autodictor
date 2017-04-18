@@ -511,7 +511,7 @@ namespace MainExample
                                         НовыйШаблон.НазваниеШаблона = ШаблонОповещения[3 * i + 0];
                                         НовыйШаблон.Шаблон = Шаблон;
                                         НовыйШаблон.ПривязкаКВремени = ПривязкаВремени;
-                                        НовыйШаблон.ЯзыкиОповещения= new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng };  //TODO:Брать из ШаблонОповещения полученого из TrainTable.
+                                        НовыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng };  //TODO:Брать из ШаблонОповещения полученого из TrainTable.
 
                                         Record.СписокФормируемыхСообщений.Add(НовыйШаблон);
                                     }
@@ -942,7 +942,7 @@ namespace MainExample
                                 if (РазрешениеРаботы == true)
                                 {
                                     Program.ЗаписьЛога("Автоматическое воспроизведение звукового сообщения", Сообщение.НазваниеКомпозиции);
-                                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Sound.Name, Язык = NotificationLanguage.Ru};
+                                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Sound.Name, Язык = NotificationLanguage.Ru };
                                     MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(воспроизводимоеСообщение);
                                 }
                                 break;
@@ -1066,7 +1066,7 @@ namespace MainExample
                                         СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                                         {
                                             Шаблон = ФормируемоеСообщение,
-                                            ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru}, //TODO: вычислять языки оповещения 
+                                            ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru }, //TODO: вычислять языки оповещения 
                                             НазваниеШаблона = "Авария"
                                         };
                                         MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение сообщения о внештатной ситуации", Данные, шаблонФормируемогоСообщения);
@@ -1465,7 +1465,7 @@ namespace MainExample
             }
         }
 
-
+        private int _countSoundChanelManagmentPacket = 0;
 
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
         private void ОбработкаЗвуковогоПотка()
@@ -1519,22 +1519,22 @@ namespace MainExample
                     if (Player.PlayFile(названиеФайла) == true)
                         MainForm.Воспроизвести.Text = "Остановить";
 
-                    Debug.WriteLine(ОчередьВоспроизводимыхЗвуковыхСообщений.Count +"   "+ status.ToString());//DEBUG
+                    Debug.WriteLine(ОчередьВоспроизводимыхЗвуковыхСообщений.Count + "   " + status.ToString());//DEBUG
                 }
             }
-            else      
+            else
             {
                 //Отправка посылок подтверждающих воспроизведение файла.
-
-
-                //TODO: Добавить отсчет периода отсыла поверх TimeRespone, будет задваться в окне настроек вместе с галочками
+                if (SoundChanelManagment != null)
                 {
-                    if (SoundChanelManagment != null)
+                    if (++_countSoundChanelManagmentPacket >= (Program.Настройки.КаналыПериодОтправкиПакетов * 10))
                     {
-                        var emptyUit = new UniversalInputType();
-                        SoundChanelManagment.AddOneTimeSendData(emptyUit);//период отсыла регулируется TimeRespone.
+                        _countSoundChanelManagmentPacket = 0;
+                        var emptyUit = new UniversalInputType {SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList()};
+                        SoundChanelManagment.AddOneTimeSendData(emptyUit); //период отсыла регулируется TimeRespone.
                     }
                 }
+
 
 
             }
@@ -1692,7 +1692,7 @@ namespace MainExample
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
-                    Time =  ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),  //(data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
+                    Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),  //(data.СостояниеОтображения != TableRecordStatus.Очистка) ? ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления) : DateTime.MinValue,
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
@@ -2085,9 +2085,9 @@ namespace MainExample
                             if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
                             if (Program.НомераПутей.Contains(Record.НомерПути))
                             {
-                                Text =НазваниеФайловПутей[Program.НомераПутей.IndexOf(Record.НомерПути) + 1 + ВидНомерацииПути * 25];
+                                Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(Record.НомерПути) + 1 + ВидНомерацииПути * 25];
                                 logMessage += Text + " ";
-                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение {ИмяВоспроизводимогоФайла = Text, Язык = язык});
+                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Text, Язык = язык });
                                 continue;
                             }
                             break;
@@ -2118,7 +2118,7 @@ namespace MainExample
                             logMessage += "Время прибытия: ";
                             Text = Record.ВремяПрибытия.ToString("HH:mm");
                             logMessage += Text + " ";
-                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = ФайлыЧасов[Record.ВремяПрибытия.Hour], Язык = язык }); 
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = ФайлыЧасов[Record.ВремяПрибытия.Hour], Язык = язык });
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ВремяПрибытия.Minute], Язык = язык });
                             continue;
 
@@ -2127,7 +2127,7 @@ namespace MainExample
                             logMessage += "Стоянка: ";
                             Text = Record.ВремяСтоянки.ToString() + " минут";
                             logMessage += Text + " ";
-                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ВремяСтоянки % 60], Язык = язык }); 
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ВремяСтоянки % 60], Язык = язык });
                             continue;
 
 
@@ -2159,7 +2159,7 @@ namespace MainExample
                                 {
                                     logMessage += "Электропоезд движется со всеми остановками ";
                                     if (Program.FilesFolder.Contains("СоВсемиОстановками"))
-                                        воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = "СоВсемиОстановками", Язык = язык }); 
+                                        воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = "СоВсемиОстановками", Язык = язык });
                                 }
                                 else if (Record.Примечание.Contains("С остановк"))
                                 {
@@ -2197,7 +2197,7 @@ namespace MainExample
 
                         default:
                             logMessage += шаблон + " ";
-                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = шаблон, Язык = язык }); 
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = шаблон, Язык = язык });
                             break;
                     }
                 }

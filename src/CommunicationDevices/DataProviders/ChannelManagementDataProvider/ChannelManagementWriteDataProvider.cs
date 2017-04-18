@@ -41,10 +41,13 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
 
         public byte[] GetDataByte()
         {
-           byte[] bytesArrray= new byte[] {0x0A, 0x0B, 0X0C};
+            List<byte> bufer = new List<byte>();
+            foreach (var inData in InputData.SoundChanels)
+            {
+                bufer.Add((byte)(inData ? 0x01 : 0x00));
+            }
 
-
-            return bytesArrray;
+            return bufer.ToArray();
         }
 
 

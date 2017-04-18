@@ -27,17 +27,36 @@ namespace MainExample
         public DateTime ВремяАвтообновленияРасписания;
 
         public Color[] НастройкиЦветов;
+
+        public bool[] КаналыДальнегоСлед;
+        public bool[] КаналыПригорода;
+        public bool[] КаналыПлатформ;
+        public bool[] КаналыКасс;
+
+        public float КаналыПериодОтправкиПакетов;
     };
 
     public partial class ОкноНастроек : Form
     {
-        private Panel[] Панели;
+        private Panel[] _панели;
+
+        private CheckBox[] _каналыДальнегоСлед;
+        private CheckBox[] _каналыПригорода;
+        private CheckBox[] _каналыПлатформ;
+        private CheckBox[] _каналыКасс;
+
 
         public ОкноНастроек()
         {
             InitializeComponent();
 
-            Панели = new Panel[] { pCol1, pCol2, pCol3, pCol4, pCol5, pCol6, pCol7, pCol8, pCol9, pCol10, pCol11, pCol12, pCol13, pCol14 };
+            _панели = new Panel[] { pCol1, pCol2, pCol3, pCol4, pCol5, pCol6, pCol7, pCol8, pCol9, pCol10, pCol11, pCol12, pCol13, pCol14 };
+
+            _каналыДальнегоСлед= new CheckBox[] {chBox1_LongDist, chBox2_LongDist, chBox3_LongDist, chBox4_LongDist, chBox5_LongDist, chBox6_LongDist, chBox7_LongDist, chBox8_LongDist, chBox9_LongDist, chBox10_LongDist, chBox11_LongDist, chBox12_LongDist, chBox13_LongDist, chBox14_LongDist, chBox15_LongDist, chBox16_LongDist, chBox17_LongDist, chBox18_LongDist, chBox19_LongDist, chBox20_LongDist};
+            _каналыПригорода = new CheckBox[] { chBox1_Suburb, chBox2_Suburb, chBox3_Suburb, chBox4_Suburb, chBox5_Suburb, chBox6_Suburb, chBox7_Suburb, chBox8_Suburb, chBox9_Suburb, chBox10_Suburb, chBox11_Suburb, chBox12_Suburb, chBox13_Suburb, chBox14_Suburb, chBox15_Suburb, chBox16_Suburb, chBox17_Suburb, chBox18_Suburb, chBox19_Suburb, chBox20_Suburb };
+            _каналыПлатформ = new CheckBox[] { chBox1_Platform, chBox2_Platform, chBox3_Platform, chBox4_Platform, chBox5_Platform, chBox6_Platform, chBox7_Platform, chBox8_Platform, chBox9_Platform, chBox10_Platform, chBox11_Platform, chBox12_Platform, chBox13_Platform, chBox14_Platform, chBox15_Platform, chBox16_Platform, chBox17_Platform, chBox18_Platform, chBox19_Platform, chBox20_Platform };
+            _каналыКасс = new CheckBox[] { chBox1_Cashbox, chBox2_Cashbox, chBox3_Cashbox, chBox4_Cashbox, chBox5_Cashbox, chBox6_Cashbox, chBox7_Cashbox, chBox8_Cashbox, chBox9_Cashbox, chBox10_Cashbox, chBox11_Cashbox, chBox12_Cashbox, chBox13_Cashbox, chBox14_Cashbox, chBox15_Cashbox, chBox16_Cashbox, chBox17_Cashbox, chBox18_Cashbox, chBox19_Cashbox, chBox20_Cashbox };
+
 
             ОтобразитьНастройкиВОкне();
 
@@ -74,7 +93,21 @@ namespace MainExample
             dTP_Автообновление.Value = Program.Настройки.ВремяАвтообновленияРасписания;
 
             for (int i = 0; i < 14; i++)
-                Панели[i].BackColor = Program.Настройки.НастройкиЦветов[i];
+                _панели[i].BackColor = Program.Настройки.НастройкиЦветов[i];
+
+            for (int i = 0; i < Program.Настройки.КаналыДальнегоСлед.Length; i++)
+                _каналыДальнегоСлед[i].Checked = Program.Настройки.КаналыДальнегоСлед[i];
+
+            for (int i = 0; i < Program.Настройки.КаналыПригорода.Length; i++)
+                _каналыПригорода[i].Checked = Program.Настройки.КаналыПригорода[i];
+
+            for (int i = 0; i < Program.Настройки.КаналыПлатформ.Length; i++)
+                _каналыПлатформ[i].Checked = Program.Настройки.КаналыПлатформ[i];
+
+            for (int i = 0; i < Program.Настройки.КаналыКасс.Length; i++)
+                _каналыКасс[i].Checked = Program.Настройки.КаналыКасс[i];
+
+            tBКаналыПериодОтправкиПакетов.Text = Program.Настройки.КаналыПериодОтправкиПакетов.ToString("0.0");
         }
 
         private void СчитатьНастройкиИзОкнаВФайл()
@@ -101,6 +134,23 @@ namespace MainExample
             Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок = cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Checked;
             Program.Настройки.РазрешениеАвтообновленияРасписания = cbРазрешитьАвтоОбновлениеРасписания.Checked;
             Program.Настройки.ВремяАвтообновленияРасписания = dTP_Автообновление.Value;
+
+
+            for (int i = 0; i < Program.Настройки.КаналыДальнегоСлед.Length; i++)
+                Program.Настройки.КаналыДальнегоСлед[i]= _каналыДальнегоСлед[i].Checked;
+
+            for (int i = 0; i < Program.Настройки.КаналыПригорода.Length; i++)
+                Program.Настройки.КаналыПригорода[i] = _каналыПригорода[i].Checked;
+
+            for (int i = 0; i < Program.Настройки.КаналыПлатформ.Length; i++)
+                Program.Настройки.КаналыПлатформ[i] = _каналыПлатформ[i].Checked;
+
+            for (int i = 0; i < Program.Настройки.КаналыКасс.Length; i++)
+                Program.Настройки.КаналыКасс[i] = _каналыКасс[i].Checked;
+
+
+            if (float.TryParse(tBКаналыПериодОтправкиПакетов.Text.Replace('.', ','), out НастройкаВремени))
+                Program.Настройки.КаналыПериодОтправкиПакетов = НастройкаВремени;
         }
 
         public static void ЗагрузитьНастройки()
@@ -201,6 +251,47 @@ namespace MainExample
                                     if (DateTime.TryParse(Settings[1],out переменнаяDateTime))
                                         Program.Настройки.ВремяАвтообновленияРасписания = переменнаяDateTime;
                                     break;
+
+                                case "НастройкиКаналовДальнегоСлед":
+                                    string[] настройкиКаналов = Settings[1].Split(',');
+                                    Program.Настройки.КаналыДальнегоСлед= new bool[настройкиКаналов.Length];
+                                    for (int i = 0; i < Program.Настройки.КаналыДальнегоСлед.Length; i++)
+                                    {
+                                        Program.Настройки.КаналыДальнегоСлед[i] = bool.Parse(настройкиКаналов[i]);
+                                    }
+                                    break;
+
+                                case "НастройкиКаналовПригород":
+                                    настройкиКаналов = Settings[1].Split(',');
+                                    Program.Настройки.КаналыПригорода = new bool[настройкиКаналов.Length];
+                                    for (int i = 0; i < Program.Настройки.КаналыПригорода.Length; i++)
+                                    {
+                                        Program.Настройки.КаналыПригорода[i] = bool.Parse(настройкиКаналов[i]);
+                                    }
+                                    break;
+
+                                case "НастройкиКаналовПлатформ":
+                                    настройкиКаналов = Settings[1].Split(',');
+                                    Program.Настройки.КаналыПлатформ = new bool[настройкиКаналов.Length];
+                                    for (int i = 0; i < Program.Настройки.КаналыПлатформ.Length; i++)
+                                    {
+                                        Program.Настройки.КаналыПлатформ[i] = bool.Parse(настройкиКаналов[i]);
+                                    }
+                                    break;
+
+                                case "НастройкиКаналовКасс":
+                                    настройкиКаналов = Settings[1].Split(',');
+                                    Program.Настройки.КаналыКасс = new bool[настройкиКаналов.Length];
+                                    for (int i = 0; i < Program.Настройки.КаналыКасс.Length; i++)
+                                    {
+                                        Program.Настройки.КаналыКасс[i] = bool.Parse(настройкиКаналов[i]);
+                                    }
+                                    break;
+
+                                case "КаналыПериодОтправкиПакетов":
+                                    if (float.TryParse(Settings[1], out ПеременнаяFloat))
+                                        Program.Настройки.КаналыПериодОтправкиПакетов = ПеременнаяFloat;
+                                    break;
                             }
                         }
                     }
@@ -248,10 +339,41 @@ namespace MainExample
                         ЦветовыеНастройки += ColorTranslator.ToHtml(Program.Настройки.НастройкиЦветов[i]) + ",";
                     if (ЦветовыеНастройки[ЦветовыеНастройки.Length - 1] == ',')
                         ЦветовыеНастройки = ЦветовыеНастройки.Remove(ЦветовыеНастройки.Length - 1, 1);
-                    DumpFile.WriteLine("ЦветовыеНастройки:" + ЦветовыеНастройки);
+                    DumpFile.WriteLine("ЦветовыеНастройки=" + ЦветовыеНастройки);
+
+
+                    string настройкиКаналов = Program.Настройки.КаналыДальнегоСлед.Aggregate("", (current, t) => current + (t + ","));
+                    if (настройкиКаналов[настройкиКаналов.Length - 1] == ',')
+                        настройкиКаналов = настройкиКаналов.Remove(настройкиКаналов.Length - 1, 1);
+
+                    DumpFile.WriteLine("НастройкиКаналовДальнегоСлед=" + настройкиКаналов);
+
+
+                    настройкиКаналов = Program.Настройки.КаналыПригорода.Aggregate("", (current, t) => current + (t + ","));
+                    if (настройкиКаналов[настройкиКаналов.Length - 1] == ',')
+                        настройкиКаналов = настройкиКаналов.Remove(настройкиКаналов.Length - 1, 1);
+
+                    DumpFile.WriteLine("НастройкиКаналовПригород=" + настройкиКаналов);
+
+
+                    настройкиКаналов = Program.Настройки.КаналыПлатформ.Aggregate("", (current, t) => current + (t + ","));
+                    if (настройкиКаналов[настройкиКаналов.Length - 1] == ',')
+                        настройкиКаналов = настройкиКаналов.Remove(настройкиКаналов.Length - 1, 1);
+
+                    DumpFile.WriteLine("НастройкиКаналовПлатформ=" + настройкиКаналов);
+
+
+                    настройкиКаналов = Program.Настройки.КаналыКасс.Aggregate("", (current, t) => current + (t + ","));
+                    if (настройкиКаналов[настройкиКаналов.Length - 1] == ',')
+                        настройкиКаналов = настройкиКаналов.Remove(настройкиКаналов.Length - 1, 1);
+
+                    DumpFile.WriteLine("НастройкиКаналовКасс=" + настройкиКаналов);
+
+
+                    DumpFile.WriteLine("КаналыПериодОтправкиПакетов=" + Program.Настройки.КаналыПериодОтправкиПакетов.ToString("0.0"));
+
 
                     DumpFile.Close();
-
                 }
             }
             catch (Exception ex)

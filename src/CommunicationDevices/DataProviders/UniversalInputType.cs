@@ -27,12 +27,11 @@ namespace CommunicationDevices.DataProviders
         public DateTime Time { get; set; }                           //Время
         public string Message { get; set; }                          //Сообщение
 
-
         public Command Command { get; set; }                         //Команда (если указанна команда, то приоритет отдается выполнению команды.)
 
         public List<UniversalInputType> TableData { get; set; }     //Данные для табличного представления
 
-
+        public List<bool> SoundChanels { get; set; }                //Настройка звуковых каналов (по каким каналам передавать данное сообщение)
 
 
         public void Initialize(UniversalInputType initializeData)
@@ -50,6 +49,11 @@ namespace CommunicationDevices.DataProviders
             if (initializeData.TableData != null && initializeData.TableData.Any())
             {
                 TableData = new List<UniversalInputType>(initializeData.TableData);
+            }
+
+            if (initializeData.SoundChanels != null && initializeData.SoundChanels.Any())
+            {
+                SoundChanels = new List<bool>(initializeData.SoundChanels);
             }
         }
 

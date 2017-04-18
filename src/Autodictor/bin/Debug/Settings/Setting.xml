@@ -24,7 +24,7 @@
 	
 	<Serial>
       <Port>4</Port>
-	  <BaudRate>57600</BaudRate>
+	  <BaudRate>9600</BaudRate>
 	  <DataBits>8</DataBits>
 	  <StopBits>1</StopBits>
 	  <Parity>None</Parity>  
