@@ -4,7 +4,7 @@ using CommunicationDevices.DataProviders;
 
 namespace CommunicationDevices.Settings
 {
-    public class Contrains
+    public class Conditions
     {
         public TypeTrain TypeTrain { get; set; }                     //Пригород или дальнего следования
 
@@ -66,7 +66,7 @@ namespace CommunicationDevices.Settings
             return inData.TypeTrain != TypeTrain &&
                    inData.Event != Event &&
                    timeFilter &&
-                   arrivalAndSuburbFilter &&
+                   arrivalAndSuburbFilter && 
                    arrivalAndLongDistanceFilter &&
                    departureAndSuburbFilter &&
                    departureAndLongDistanceFilter;

@@ -55,21 +55,20 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData;
-                var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
-
-                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < countRow; i++)
-                {           
-                    var currentRow = (byte)(i + 1);
-                    var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
-
+                {
                     //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
                     foreach (var exchangeRule in MainRule.ExchangeRules)
                     {
-                        if (!exchangeRule.IsEnableTableRule(currentRow, timeSampling.Count))   
-                            continue;
+                        //фильтрация по ближайшему времени к текущему времени.
+                        var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
+                        var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+
+                        timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+
+                        var currentRow = (byte)(i + 1);
+                        var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+
 
                         var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                         {
@@ -107,21 +106,22 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
-                //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData;
-                var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
-
-                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < countRow; i++)
                 {
-                    var currentRow = (byte)(i + 1);
-                    var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
-
                     //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
                     foreach (var exchangeRule in MainRule.ExchangeRules)
                     {
-                        if (!exchangeRule.IsEnableTableRule(currentRow, timeSampling.Count))
-                            continue;
+                        //фильтрация по ближайшему времени к текущему времени.
+                        var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
+                        var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+
+                        timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+
+                        var currentRow = (byte)(i + 1);
+                        var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+
+                        //if (!exchangeRule.IsEnableTableRule(currentRow, timeSampling.Count))   
+                        //    continue;
 
                         var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                         {

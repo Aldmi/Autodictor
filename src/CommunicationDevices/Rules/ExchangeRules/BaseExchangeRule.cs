@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using CommunicationDevices.DataProviders;
+using CommunicationDevices.Settings;
 
 
 namespace CommunicationDevices.Rules.ExchangeRules
@@ -30,7 +31,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
         #region prop
 
         public string Format { get; set; }
-        public string Condition { get; set; }
+        public Conditions Resolution { get; set; }
 
         public RequestRule RequestRule { get; set; }
         public ResponseRule ResponseRule { get; set; }
@@ -43,13 +44,13 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
         #region ctor
 
-        public BaseExchangeRule(RequestRule requestRule, ResponseRule responseRule, RepeatRule repeatRule, string format, string condition)
+        public BaseExchangeRule(RequestRule requestRule, ResponseRule responseRule, RepeatRule repeatRule, string format, Conditions resolution)
         {
             RequestRule = requestRule;
             ResponseRule = responseRule;
             RepeatRule = repeatRule;
             Format = format;
-            Condition = condition;
+            Resolution = resolution;
         }
 
         #endregion
@@ -57,27 +58,24 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
 
 
-        public bool IsEnableTableRule(int rowNumber, int tableLenght)
+
+        #region Methode
+
+        /// <summary>
+        /// Проверка условий разрешения выполнения правила.
+        /// </summary>
+        public bool CheckResolution(UniversalInputType inData)
         {
-            if (string.IsNullOrEmpty(Condition))
+            if (Resolution == null)
                 return true;
 
-
-            switch (Condition)
-            {
-                case "rowNumber LowOrEqual Table.Lenght": return rowNumber <= tableLenght;
-
-                case "rowNumber Low Table.Lenght": return rowNumber < tableLenght;
-
-                case "rowNumber Hight Table.Lenght": return rowNumber > tableLenght;
-
-                case "rowNumber HightOrEqual Table.Lenght": return rowNumber >= tableLenght;
-
-                default:
-                    return false;
-            }
+            return !Resolution.CheckContrains(inData);  //инверсия ограничения 
         }
+
+        #endregion
+
     }
+
 
 
 

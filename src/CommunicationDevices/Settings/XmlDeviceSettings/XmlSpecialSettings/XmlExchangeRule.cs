@@ -9,7 +9,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
         public int? TableSize { get; set; }         //устанавливается если  ViewSetting == Table
 
         public string Format { get; set; }
-        public string Condition { get; set; }
+        public XmlConditionsSetting Conditions { get; set; }
 
         public int? RequestMaxLenght { get; set; }
         public string RequestBody { get; set; }

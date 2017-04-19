@@ -6,11 +6,11 @@ using CommunicationDevices.DataProviders;
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public class XmlContrainsSetting
+    public class XmlConditionsSetting
     {
         #region prop
 
-        public Contrains Contrains { get; }
+        public Conditions Conditions { get; }
 
         #endregion
 
@@ -19,58 +19,58 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
         #region ctor
 
-        public XmlContrainsSetting(string contrains)
+        public XmlConditionsSetting(string contrains)
         {
             var contr = contrains.Split(';');
             if (contr.Any())
             {
-                Contrains = new Contrains();
+                Conditions = new Conditions();
                 foreach (var s in contr)
                 {
                     switch (s)
                     {
                         case "ПРИБ.":
-                            Contrains.Event = s;
+                            Conditions.Event = s;
                             break;
 
                         case "ОТПР.":
-                            Contrains.Event = s;
+                            Conditions.Event = s;
                             break;
 
                         case "ПРИГ.":
-                            Contrains.TypeTrain = TypeTrain.Suburb;
+                            Conditions.TypeTrain = TypeTrain.Suburb;
                             break;
 
                         case "ДАЛЬН.":
-                            Contrains.TypeTrain = TypeTrain.LongDistance;
+                            Conditions.TypeTrain = TypeTrain.LongDistance;
                             break;
 
                         case "ПРИБ.+ПРИГ.":
-                            Contrains.ArrivalAndSuburb = true;
+                            Conditions.ArrivalAndSuburb = true;
                             break;
 
                         case "ПРИБ.+ДАЛЬН.":
-                            Contrains.ArrivalAndLongDistance = true;
+                            Conditions.ArrivalAndLongDistance = true;
                             break;
 
                         case "ОТПР.+ПРИГ.":
-                            Contrains.DepartureAndSuburb = true;
+                            Conditions.DepartureAndSuburb = true;
                             break;
 
                         case "ОТПР.+ДАЛЬН.":
-                            Contrains.DepartureAndLongDistance = true;
+                            Conditions.DepartureAndLongDistance = true;
                             break;
 
                         case "МеньшеТекВремени":
-                            Contrains.LowCurrentTime = true;
+                            Conditions.LowCurrentTime = true;
                             break;
 
                         case "БольшеТекВремени":
-                            Contrains.HightCurrentTime = true;
+                            Conditions.HightCurrentTime = true;
                             break;
 
                         default:
-                            Contrains = null;
+                            Conditions = null;
                             return;
                     }
                 }

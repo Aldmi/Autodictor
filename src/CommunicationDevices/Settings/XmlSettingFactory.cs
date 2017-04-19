@@ -48,7 +48,7 @@ namespace CommunicationDevices.Settings
                 var contrains = (string)el.Attribute("Contrains");
                 if (contrains != null)
                 {
-                    spSett.SpecialDictionary.Add("Contrains", new XmlContrainsSetting(contrains));
+                    spSett.SpecialDictionary.Add("Contrains", new XmlConditionsSetting(contrains));
                 }
 
                 var paging = (string)el.Attribute("Paging");
@@ -113,7 +113,7 @@ namespace CommunicationDevices.Settings
                                 var exchRule = new XmlExchangeRule {TableSize = viewSettingTableSize, ViewType = viewSetting};
 
                                 exchRule.Format = (string) ruleElem.Attribute("Format");
-                                exchRule.Condition = ruleElem.Attribute("Condition") == null ? null : (string)ruleElem.Attribute("Condition");
+                                exchRule.Conditions = ruleElem.Attribute("Resolution") == null ? null : new XmlConditionsSetting((string)ruleElem.Attribute("Resolution"));
 
                                 //REPEAT-------------------------
                                 var repeat = ruleElem.Element("Repeat");
@@ -231,7 +231,7 @@ namespace CommunicationDevices.Settings
                 var contrains = (string)el.Attribute("Contrains");
                 if (contrains != null)
                 {
-                    tcpIpSett.SpecialDictionary.Add("Contrains", new XmlContrainsSetting(contrains));
+                    tcpIpSett.SpecialDictionary.Add("Contrains", new XmlConditionsSetting(contrains));
                 }
 
                 var paging = (string)el.Attribute("Paging");
@@ -294,7 +294,7 @@ namespace CommunicationDevices.Settings
                                 var exchRule = new XmlExchangeRule { TableSize = viewSettingTableSize, ViewType = viewSetting };
 
                                 exchRule.Format = (string)ruleElem.Attribute("Format");
-                                exchRule.Condition = ruleElem.Attribute("Condition") == null ? null : (string)ruleElem.Attribute("Condition");
+                                exchRule.Conditions = ruleElem.Attribute("Resolution") == null ? null : new XmlConditionsSetting((string)ruleElem.Attribute("Resolution"));
 
                                 //REPEAT-------------------------
                                 var repeat = ruleElem.Element("Repeat");
@@ -411,10 +411,10 @@ namespace CommunicationDevices.Settings
                     pcSett.SpecialDictionary.Add("Binding", new XmlBindingSetting(bind));
                 }
 
-                var contrains = (string)el.Attribute("Contrains");
+                var contrains = (string)el.Attribute("Conditions");
                 if (contrains != null)
                 {
-                    pcSett.SpecialDictionary.Add("Contrains", new XmlContrainsSetting(contrains));
+                    pcSett.SpecialDictionary.Add("Conditions", new XmlConditionsSetting(contrains));
                 }
 
                 var paging = (string)el.Attribute("Paging");

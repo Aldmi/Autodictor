@@ -194,7 +194,7 @@ namespace CommunicationDevices.Model
                 byte maxCountFaildRespowne;
 
                 XmlBindingSetting binding = null;
-                XmlContrainsSetting contrains = null;
+                XmlConditionsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
@@ -207,7 +207,7 @@ namespace CommunicationDevices.Model
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("Contrains"))
                 {
-                    contrains = xmlDeviceSp.SpecialDictionary["Contrains"] as XmlContrainsSetting;
+                    contrains = xmlDeviceSp.SpecialDictionary["Contrains"] as XmlConditionsSetting;
                 }
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("Paging"))
@@ -253,7 +253,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                       //Вывод номера пути в пустом сообщении
                         }
@@ -279,7 +279,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
                             Binding2PathBehaviors.Add(bindingBeh);
                             bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
@@ -315,7 +315,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions));
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
@@ -348,7 +348,7 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions));
 
 
                         //создание поведения привязка табло к главному расписанию
@@ -368,10 +368,6 @@ namespace CommunicationDevices.Model
                         maxCountFaildRespowne = 3;
                         behavior = new ChannelManagementExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
                         DeviceSoundChannelManagement=  new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, null);
-
-
-                        //добавим все функции циклического опроса
-                       // DeviceTables.Last().AddCycleFunc();
                         break;
 
 
@@ -413,7 +409,7 @@ namespace CommunicationDevices.Model
                                 repeat = new RepeatRule { Count = xmlExchangeRule.RepeatCount.Value, DeltaX = xmlExchangeRule.RepeatDeltaX, DeltaY = xmlExchangeRule.RepeatDeltaY };
                             }
 
-                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format, xmlExchangeRule.Condition));
+                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format, xmlExchangeRule?.Conditions?.Conditions));
                         }
 
                         //Создание главного правила обмена
@@ -432,11 +428,11 @@ namespace CommunicationDevices.Model
                         switch (mainRules.ViewType.Type)
                         {
                             case "":
-                                behavior = new ByRulesExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, excangeRules);
+                                behavior= new ByRulesExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, excangeRules);
                                 break;
 
                             case "Table":
-                                behavior =new ByRulesTableExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber),xmlDeviceSp.TimeRespone, maxCountFaildRespowne, mainRules);
+                                behavior= new ByRulesTableExchangeSpBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber),xmlDeviceSp.TimeRespone, maxCountFaildRespowne, mainRules);
                                 break;
 
                             default:
@@ -449,7 +445,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
                             Binding2PathBehaviors.Add(bindingBeh);
                             // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }
@@ -481,7 +477,7 @@ namespace CommunicationDevices.Model
                 byte maxCountFaildRespowne;
 
                 XmlBindingSetting binding = null;
-                XmlContrainsSetting contrains = null;
+                XmlConditionsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
@@ -493,7 +489,7 @@ namespace CommunicationDevices.Model
 
                 if (xmlDevicePc.SpecialDictionary.ContainsKey("Contrains"))
                 {
-                    contrains = xmlDevicePc.SpecialDictionary["Contrains"] as XmlContrainsSetting;
+                    contrains = xmlDevicePc.SpecialDictionary["Contrains"] as XmlConditionsSetting;
                 }
 
                 if (xmlDevicePc.SpecialDictionary.ContainsKey("Paging"))
@@ -541,14 +537,14 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions));
                             DeviceTables.Last().AddCycleFunc(); //добавим все функции циклического опроса
                         }
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
                         {
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging.CountPage, paging.TimePaging));
                             //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
                             if (!Binding2GeneralSchedules.Last().IsPaging)
                             {
@@ -585,7 +581,7 @@ namespace CommunicationDevices.Model
                 byte maxCountFaildRespowne;
 
                 XmlBindingSetting binding = null;
-                XmlContrainsSetting contrains = null;
+                XmlConditionsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
@@ -598,7 +594,7 @@ namespace CommunicationDevices.Model
 
                 if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Contrains"))
                 {
-                    contrains = xmlDeviceTcpIp.SpecialDictionary["Contrains"] as XmlContrainsSetting;
+                    contrains = xmlDeviceTcpIp.SpecialDictionary["Contrains"] as XmlConditionsSetting;
                 }
 
                 if (xmlDeviceTcpIp.SpecialDictionary.ContainsKey("Paging"))
@@ -655,11 +651,11 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains));
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions));
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Contrains, paging.CountPage, paging.TimePaging));
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging.CountPage, paging.TimePaging));
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)
@@ -708,7 +704,7 @@ namespace CommunicationDevices.Model
                                 repeat = new RepeatRule { Count = xmlExchangeRule.RepeatCount.Value, DeltaX = xmlExchangeRule.RepeatDeltaX, DeltaY = xmlExchangeRule.RepeatDeltaY };
                             }
 
-                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format, xmlExchangeRule.Condition));
+                            excangeRules.Add(new BaseExchangeRule(request, response, repeat, xmlExchangeRule.Format, xmlExchangeRule?.Conditions?.Conditions));
                         }
 
                         //Создание главного правила обмена
@@ -745,7 +741,7 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Contrains);
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
                             Binding2PathBehaviors.Add(bindingBeh);
                             // bindingBeh.InitializeDevicePathInfo();                      //Вывод номера пути в пустом сообщении
                         }

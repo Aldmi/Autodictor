@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
@@ -56,24 +57,22 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                 //Вывод на табличное табло построчной информации
                 if (inData?.TableData != null)
                 {
-                    //фильтрация по ближайшему времени к текущему времени.
-                    var filteredData = inData.TableData;
-                    var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
-
                     //Отправляем информацию для всех устройств, подключенных к данному TCP конвертору.
                     foreach (var internalAddr in InternalAddressCollection)
                     {
-                        timeSampling.ForEach(t => t.AddressDevice = internalAddr);
                         for (byte i = 0; i < countRow; i++)
                         {
-                            var currentRow = (byte)(i + 1);
-                            var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = internalAddr};
-
                             //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
                             foreach (var exchangeRule in MainRule.ExchangeRules)
                             {
-                                if (!exchangeRule.IsEnableTableRule(currentRow, timeSampling.Count))
-                                    continue;
+                                //фильтрация по ближайшему времени к текущему времени.
+                                var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
+                                var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+
+                                timeSampling.ForEach(t => t.AddressDevice = internalAddr);
+
+                                var currentRow = (byte)(i + 1);
+                                var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = internalAddr };
 
                                 var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                                 {

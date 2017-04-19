@@ -19,7 +19,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
     {
         private readonly Device _device;
         public IEnumerable<byte> CollectionPathNumber { get; }
-        public Contrains Contrains { get; }
+        public Conditions Conditions { get; }
         public string GetDeviceName => _device.Name;
         public int GetDeviceId => _device.Id;
         public string GetDeviceAddress => _device.Address;
@@ -28,11 +28,11 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, Contrains contrains)
+        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, Conditions conditions)
         {
             _device = device;
             CollectionPathNumber = pathNumbers;
-            Contrains = contrains;
+            Conditions = conditions;
         }
 
 
@@ -108,10 +108,10 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
         /// </summary>
         public bool CheckContrains(UniversalInputType inData)
         {
-            if (Contrains == null)
+            if (Conditions == null)
                 return true;
 
-            return Contrains.CheckContrains(inData);
+            return Conditions.CheckContrains(inData);
         }
 
 

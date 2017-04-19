@@ -132,13 +132,13 @@
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\Contrains.cs" />
+    <Compile Include="Settings\Conditions.cs" />
     <Compile Include="Settings\XmlCisSettings\XmlCisSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlExchangeRule.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPathPermissionSetting.cs" />
     <Compile Include="Settings\XmlSettingFactory.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlBindingSetting.cs" />
-    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlContrainsSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlConditionsSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlCountRowSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPagingSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlPcSetting.cs" />

@@ -28,7 +28,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 
         public bool IsPaging { get; }
         public SourceLoad SourceLoad { get; set; }
-        public Contrains Contrains { get; }
+        public Conditions Conditions { get; }
         public PaggingHelper PagingHelper { get; set; }
         public IDisposable DispousePagingListSendRx { get; set; }
 
@@ -42,9 +42,9 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
 
         #region ctor
 
-        public BindingDevice2GeneralShBehavior(Device device, SourceLoad source, Contrains contrains, int countPage, int timePaging)
+        public BindingDevice2GeneralShBehavior(Device device, SourceLoad source, Conditions conditions, int countPage, int timePaging)
         {
-            Contrains = contrains;
+            Conditions = conditions;
             _device = device;
             SourceLoad = source;
 
@@ -102,10 +102,10 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         /// </summary>
         public bool CheckContrains(UniversalInputType inData)
         {
-            if (Contrains == null)
+            if (Conditions == null)
                 return true;
 
-            return Contrains.CheckContrains(inData);
+            return Conditions.CheckContrains(inData);
         }
 
 

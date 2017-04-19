@@ -54,11 +54,11 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 if (inData?.TableData != null)
                 {
                     //фильтрация по ближайшему времени к текущему времени.
-                    var filteredData = inData.TableData;
-                    var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
+                    var filteredData = inData.TableData.Where(data=> exchangeRule.CheckResolution(data)).ToList();
+                    var timeSamplingData = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
 
                     //вывод пустой строки если в таблице нет данных
-                    var emptyMessage = new UniversalInputType
+                    var emptyDate = new UniversalInputType
                     {
                         Event = "  ",
                         NumberOfTrain = "  ",
@@ -68,7 +68,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                         Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
                     };
 
-                    var viewData = timeSamplingMessage ?? emptyMessage;
+                    var viewData = timeSamplingData ?? emptyDate;
                     viewData.AddressDevice = inData.AddressDevice;
 
                     //Вывод на путевое табло
@@ -104,7 +104,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 if (inData?.TableData != null)
                 {
                     //фильтрация по ближайшему времени к текущему времени.
-                    var filteredData = inData.TableData;
+                    var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
                     var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
 
                     //вывод пустой строки если в таблице нет данных
