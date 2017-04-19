@@ -61,13 +61,14 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                     foreach (var exchangeRule in MainRule.ExchangeRules)
                     {
                         //фильтрация по ближайшему времени к текущему времени.
-                        var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
+                        var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data));
                         var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                        var orderSampling =  timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
-                        timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                        orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
 
                         var currentRow = (byte)(i + 1);
-                        var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+                        var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
 
 
                         var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
@@ -103,6 +104,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             var countRow = MainRule.ViewType.TableSize.Value;
             var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
 
+
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
@@ -114,11 +116,12 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                         //фильтрация по ближайшему времени к текущему времени.
                         var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
                         var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                        var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
-                        timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                        orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
 
                         var currentRow = (byte)(i + 1);
-                        var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+                        var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
 
                         //if (!exchangeRule.IsEnableTableRule(currentRow, timeSampling.Count))   
                         //    continue;

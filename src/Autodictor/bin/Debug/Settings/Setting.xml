@@ -42,15 +42,14 @@
 
 	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Contrains="БольшеТекВремени" Binding="ToPath:1">
 	      <ExchangeRules>    
-		       <Rule Format = "Windows-1251" Resolution="ПРИБ.">
+		    <Table Size= "3">
+		       <Rule Format = "Windows-1251">
 			      <Request maxLenght = "254">
 				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011460144%10$18$00$60$t2ПУТЬ №{PathNumber}<!-- Вывод Пути -->
-					%42001192016016<!-- Вывод гор.линии -->
-					%000011460314%10$18$00$60$t3{Stations}<!-- Вывод станций -->
-					%001521920314%10$18$00$60$t3{Time}<!-- Вывод времени -->
-					%000011920464%10$18$00$60$t3{Note}<!-- Вывод примечание -->
+                    %00002047{(rowNumber*11):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+					%00048165{(rowNumber*11):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+					%00171207{(rowNumber*11):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+					%00231252{(rowNumber*11):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
 					{CRCXor:X2}ETX
 		          </Request >
 
@@ -58,18 +57,7 @@
 				    STX0200FDETX
 		          </Response >	  
 		       </Rule>
-			   
-			   <Rule Format = "Windows-1251" Resolution="ОТПР.">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					{CRCXor:X2}ETX
-		          </Request >
-
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
+             </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
 

@@ -58,12 +58,12 @@ namespace CommunicationDevices.DataProviders
         }
 
 
-        public static List<UniversalInputType> GetFilteringByDateTimeTable(int outElement, IList<UniversalInputType> table)
+        public static List<UniversalInputType> GetFilteringByDateTimeTable(int outElement, IEnumerable<UniversalInputType> table)
         {
             if (outElement <= 0)
                 return null;
 
-            if (table.Count < outElement)
+            if (table.Count() < outElement)
                 return null;
 
 

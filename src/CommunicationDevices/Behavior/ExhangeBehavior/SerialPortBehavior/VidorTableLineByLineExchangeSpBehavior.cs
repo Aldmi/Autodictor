@@ -67,12 +67,13 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 //фильтрация по ближайшему времени к текущему времени.
                 var filteredData = inData.TableData;
                 var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
+                var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
-                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
                     ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        
-                    ForTableViewDataProvider.InputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+                    ForTableViewDataProvider.InputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
                     LastSendData = ForTableViewDataProvider.InputData;
@@ -108,16 +109,17 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
-            {        
+            {
+                //фильтрация по ближайшему времени к текущему времени.
                 var filteredData = inData.TableData;
-                 //фильтрация по ближайшему времени к текущему времени.
                 var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
+                var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
-                timeSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
                 for (byte i = 0; i < _countRow; i++)
                 {
                     ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        // Отрисовка строк
-                    ForTableViewDataProvider.InputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };          // Обнуление строк
+                    ForTableViewDataProvider.InputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };          // Обнуление строк
 
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
                     LastSendData = ForTableViewDataProvider.InputData;
