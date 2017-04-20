@@ -40,7 +40,7 @@
   <DevicesWithSP> 
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" CountRow="3"/> -->
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Contrains="БольшеТекВремени" Binding="ToPath:1">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Contrains="ПРИГ.+ПУТЬ:1,2,3" Binding="ToPath:1,2,3,4,5,6,7,8,9">
 	      <ExchangeRules>    
 		    <Table Size= "3">
 		       <Rule Format = "Windows-1251">
@@ -68,9 +68,9 @@
   </DevicesWithSP>
   
   
-    <DevicesWithTcpIp>
+<!-- <DevicesWithTcpIp>
 	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToPath:1,2,3,4" Contrains="ПРИБ." CountRow="8"/>
-  </DevicesWithTcpIp>
+  </DevicesWithTcpIp> -->
 
 </Root>
 

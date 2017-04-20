@@ -90,7 +90,7 @@ namespace CommunicationDevices.DataProviders.VidorDataProvider
 
                 //% 001521920314 - 3 координты, Х1 = 152,  X2 = 192, Y = 031, формат = 4(горизонт.перемещ)
                 //% 10$18$00$60$t315: 10 - текст, $18$00$60$t315: 10                                    [ВРЕМЯ]
-                if (InputData.TypeTrain == TypeTrain.Suburb)
+                if (InputData.TypeTrain == TypeTrain.Suburb || InputData.TypeTrain == TypeTrain.None)
                 {
                     // %01 - задание формата вывода ПУТИ
                     // 001 - Х1

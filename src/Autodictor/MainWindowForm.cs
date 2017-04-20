@@ -1380,9 +1380,17 @@ namespace MainExample
                             //ПОМЕНЯЛИ ПУТЬ
                             if (номерПути != номерПутиOld)
                             {
-                                //вывод на новое табло
-                                данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                                SendOnPathTable(данные);
+                                ////вывод на новое табло
+                                //данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                                //SendOnPathTable(данные);
+
+                                ////очистили старый путь, если он не "0";
+                                //if (номерПутиOld > 0)
+                                //{
+                                //    данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
+                                //    SendOnPathTable(данныеOld);
+                                //}
+
 
                                 //очистили старый путь, если он не "0";
                                 if (номерПутиOld > 0)
@@ -1390,6 +1398,10 @@ namespace MainExample
                                     данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
                                     SendOnPathTable(данныеOld);
                                 }
+
+                                //вывод на новое табло
+                                данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                                SendOnPathTable(данные);
                             }
                             else
                             {
@@ -1637,7 +1649,7 @@ namespace MainExample
             }
 
             TypeTrain typeTrain;
-            if (data.ТипПоезда == ТипПоезда.НеОпределен)
+            if (data.ТипПоезда == ТипПоезда.НеОпределен || data.ТипПоезда == ТипПоезда.Ласточка)
             {
                 typeTrain = TypeTrain.None;
             }

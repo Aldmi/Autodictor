@@ -68,11 +68,12 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                                 //фильтрация по ближайшему времени к текущему времени.
                                 var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
                                 var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                                var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
-                                timeSampling.ForEach(t => t.AddressDevice = internalAddr);
+                                orderSampling.ForEach(t => t.AddressDevice = internalAddr);
 
                                 var currentRow = (byte)(i + 1);
-                                var inputData = (i < timeSampling.Count) ? timeSampling[i] : new UniversalInputType { AddressDevice = internalAddr };
+                                var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = internalAddr };
 
                                 var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                                 {

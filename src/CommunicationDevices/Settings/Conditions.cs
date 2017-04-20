@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CommunicationDevices.DataProviders;
 
 
@@ -6,6 +8,8 @@ namespace CommunicationDevices.Settings
 {
     public class Conditions
     {
+        #region prop
+
         public TypeTrain TypeTrain { get; set; }                     //Пригород или дальнего следования
 
         public string Event { get; set; }                            //Событие (отправление/прибытие)
@@ -19,6 +23,17 @@ namespace CommunicationDevices.Settings
 
         public bool ArrivalAndLongDistance { get; set; }             //Дальнего след. прибывающий
         public bool DepartureAndLongDistance { get; set; }           //Дальнего след.  отбывающий
+
+
+        public IEnumerable<string> SuburbPaths { get; set; }         //Пути для пригородного поыезда
+        public IEnumerable<string> LongDistancePaths { get; set; }   //Пути для поезда дальнего след.
+        public IEnumerable<string> ArrivalPaths { get; set; }        //Пути для прибывающего поезда
+        public IEnumerable<string> DeparturePaths { get; set; }      //Пути для отправляющегося поезда
+
+        #endregion
+
+
+
 
 
 
@@ -62,6 +77,30 @@ namespace CommunicationDevices.Settings
                 departureAndLongDistanceFilter = !((inData.Event == "ОТПР.") && (inData.TypeTrain == TypeTrain.LongDistance));
             }
 
+            var suburbPathsFilter = true;
+            if (SuburbPaths != null && SuburbPaths.Any())
+            {
+               suburbPathsFilter = !((inData.TypeTrain == TypeTrain.Suburb) && SuburbPaths.Contains(inData.PathNumber));
+            }
+
+            var longDistancePathsFilter = true;
+            if (LongDistancePaths != null && LongDistancePaths.Any())
+            {
+                longDistancePathsFilter = !((inData.TypeTrain == TypeTrain.LongDistance) && LongDistancePaths.Contains(inData.PathNumber));
+            }
+
+            var arrivalPathsFilter = true;
+            if (ArrivalPaths != null && ArrivalPaths.Any())
+            {
+                arrivalPathsFilter = !((inData.Event == "ПРИБ.") && ArrivalPaths.Contains(inData.PathNumber));
+            }
+
+            var departurePathsFilter = true;
+            if (DeparturePaths != null && DeparturePaths.Any())
+            {
+                departurePathsFilter = !((inData.Event == "ОТПР.") && DeparturePaths.Contains(inData.PathNumber));
+            }
+
 
             return inData.TypeTrain != TypeTrain &&
                    inData.Event != Event &&
@@ -69,7 +108,11 @@ namespace CommunicationDevices.Settings
                    arrivalAndSuburbFilter && 
                    arrivalAndLongDistanceFilter &&
                    departureAndSuburbFilter &&
-                   departureAndLongDistanceFilter;
+                   departureAndLongDistanceFilter &&
+                   suburbPathsFilter &&
+                   longDistancePathsFilter &&
+                   arrivalPathsFilter &&
+                   departurePathsFilter;
         }
 
     }
