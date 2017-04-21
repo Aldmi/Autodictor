@@ -57,20 +57,30 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             {
                 for (byte i = 0; i < countRow; i++)
                 {
-                    //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
-                    foreach (var exchangeRule in MainRule.ExchangeRules)
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                    var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
+
+                    orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+
+                    var currentRow = (byte)(i + 1);
+                    var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+
+
+                    //------------------
+                    //Выбрать правила для отрисовки
+                    var selectedRules = MainRule.ExchangeRules.Where(rule => rule.CheckResolution(inputData)).ToList();
+                    //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                    //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                    if (selectedRules.Any(d => d.Resolution != null))
                     {
-                        //фильтрация по ближайшему времени к текущему времени.
-                        var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data));
-                        var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
-                        var orderSampling =  timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
+                        selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
+                    }
 
-                        orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
-
-                        var currentRow = (byte)(i + 1);
-                        var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
-
-
+                    //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
+                    foreach (var exchangeRule in selectedRules)
+                    {
                         var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                         {
                             InputData = inputData,
@@ -110,22 +120,28 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             {
                 for (byte i = 0; i < countRow; i++)
                 {
-                    //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
-                    foreach (var exchangeRule in MainRule.ExchangeRules)
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                    var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
+
+                    orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+
+                    var currentRow = (byte)(i + 1);
+                    var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
+
+                    //Выбрать правила для отрисовки
+                    var selectedRules = MainRule.ExchangeRules.Where(rule => rule.CheckResolution(inputData)).ToList();
+                    //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                    //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                    if (selectedRules.Any(d => d.Resolution != null))
                     {
-                        //фильтрация по ближайшему времени к текущему времени.
-                        var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
-                        var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
-                        var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
+                        selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
+                    }
 
-                        orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
-
-                        var currentRow = (byte)(i + 1);
-                        var inputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };
-
-                        //if (!exchangeRule.IsEnableTableRule(currentRow, timeSampling.Count))   
-                        //    continue;
-
+                    //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
+                    foreach (var exchangeRule in selectedRules)
+                    {
                         var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                         {
                             InputData = inputData,

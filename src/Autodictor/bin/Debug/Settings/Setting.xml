@@ -38,18 +38,17 @@
 
 
   <DevicesWithSP> 
-<!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4" CountRow="3"/> -->
+<!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Contrains="ПРИГ.+ПУТЬ:1,2,3" Binding="ToPath:1,2,3,4,5,6,7,8,9">
+
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5">
 	      <ExchangeRules>    
 		    <Table Size= "3">
-		       <Rule Format = "Windows-1251">
+			 <Rule Format = "Windows-1251">
 			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-                    %00002047{(rowNumber*11):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
-					%00048165{(rowNumber*11):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
-					%00171207{(rowNumber*11):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
-					%00231252{(rowNumber*11):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+			       STX{AddressDevice:X2}{Nbyte:X2}
+                    %00002047{(rowNumber*1):D3}4%10$00$60$t3$12{NumberOfTrain}
+                    ПРИБ.
 					{CRCXor:X2}ETX
 		          </Request >
 
@@ -62,9 +61,9 @@
 	 </DeviceSp>
 
 
-<!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/> -->
+	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/>
 
-<!-- 	 <DeviceSp Id="2" Name="Vidor" Port="3" Address="2" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1" Contrains="БольшеТекВремени"/> -->
+<!-- 	 <DeviceSp Id="2" Name="Vidor" Port="3" Address="2" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5"/> -->
   </DevicesWithSP>
   
   
@@ -84,6 +83,10 @@
 <!--Варианты (ПРИГ./ДАЛЬН.) 
              (ПРИБ./ОТПР.) 
 			 (ПРИБ.+ПРИГ./ПРИБ.+ДАЛЬН./ОТПР.+ПРИГ./ОТПР.+ДАЛЬН.)
+			 (ПРИГ.+ПУТЬ:1,2,3)
+			 (ДАЛЬН.+ПУТЬ:1,2,3)
+			 (ПРИБ.+ПУТЬ:1,2,3)
+			 (ОТПР.+ПУТЬ:1,2,3)
              ("МеньшеТекВремени/БольшеТекВремени") -->
 			 
 <!-- Binding="ToGeneral:ГлавноеОкно" -->

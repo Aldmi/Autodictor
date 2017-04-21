@@ -69,3 +69,13 @@ D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Communication\bin\Rele
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Communication\obj\Release\Communication.csprojResolveAssemblyReference.cache
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Communication\obj\Release\Communication.dll
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\Communication\obj\Release\Communication.pdb
+C:\Git\Autodictor\src\Communication\bin\Release\NLog.config
+C:\Git\Autodictor\src\Communication\bin\Release\Communication.dll
+C:\Git\Autodictor\src\Communication\bin\Release\Communication.pdb
+C:\Git\Autodictor\src\Communication\bin\Release\Library.dll
+C:\Git\Autodictor\src\Communication\bin\Release\NLog.dll
+C:\Git\Autodictor\src\Communication\bin\Release\Library.pdb
+C:\Git\Autodictor\src\Communication\bin\Release\NLog.xml
+C:\Git\Autodictor\src\Communication\obj\Release\Communication.csprojResolveAssemblyReference.cache
+C:\Git\Autodictor\src\Communication\obj\Release\Communication.dll
+C:\Git\Autodictor\src\Communication\obj\Release\Communication.pdb

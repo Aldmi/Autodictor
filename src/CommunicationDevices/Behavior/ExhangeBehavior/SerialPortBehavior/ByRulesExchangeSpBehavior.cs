@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
@@ -49,28 +50,38 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         private async Task CycleExcangeService(MasterSerialPort port, CancellationToken ct)
         {
             var inData = Data4CycleFunc[0];
-            foreach (var exchangeRule in ExchangeRules)
+            if (inData?.TableData != null)
             {
-                if (inData?.TableData != null)
+                //фильтрация по ближайшему времени к текущему времени.
+                var filteredData = inData.TableData;
+                var timeSamplingData = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
+
+                //вывод пустой строки если в таблице нет данных
+                var emptyDate = new UniversalInputType
                 {
-                    //фильтрация по ближайшему времени к текущему времени.
-                    var filteredData = inData.TableData.Where(data=> exchangeRule.CheckResolution(data)).ToList();
-                    var timeSamplingData = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
+                    Event = "  ",
+                    NumberOfTrain = "  ",
+                    PathNumber = "  ",
+                    Stations = "  ",
+                    Time = DateTime.MinValue,
+                    Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                };
 
-                    //вывод пустой строки если в таблице нет данных
-                    var emptyDate = new UniversalInputType
-                    {
-                        Event = "  ",
-                        NumberOfTrain = "  ",
-                        PathNumber = "  ",
-                        Stations = "  ",
-                        Time = DateTime.MinValue,
-                        Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
-                    };
+                var viewData = timeSamplingData ?? emptyDate;
+                viewData.AddressDevice = inData.AddressDevice;
 
-                    var viewData = timeSamplingData ?? emptyDate;
-                    viewData.AddressDevice = inData.AddressDevice;
+                //Выбрать правила для отрисовки
+                var selectedRules = ExchangeRules.Where(rule => rule.CheckResolution(viewData)).ToList();
+          
+                //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                if (selectedRules.Any(d => d.Resolution != null))
+                {
+                    selectedRules= selectedRules.Where(rule => rule.Resolution != null).ToList();
+                }
 
+                foreach (var exchangeRule in selectedRules)
+                {
                     //Вывод на путевое табло
                     var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = viewData };
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
@@ -99,28 +110,38 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
             var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            foreach (var exchangeRule in ExchangeRules)
+            if (inData?.TableData != null)
             {
-                if (inData?.TableData != null)
+                //фильтрация по ближайшему времени к текущему времени.
+                var filteredData = inData.TableData;
+                var timeSamplingData = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
+
+                //вывод пустой строки если в таблице нет данных
+                var emptyDate = new UniversalInputType
                 {
-                    //фильтрация по ближайшему времени к текущему времени.
-                    var filteredData = inData.TableData.Where(data => exchangeRule.CheckResolution(data)).ToList();
-                    var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
+                    Event = "  ",
+                    NumberOfTrain = "  ",
+                    PathNumber = "  ",
+                    Stations = "  ",
+                    Time = DateTime.MinValue,
+                    Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                };
 
-                    //вывод пустой строки если в таблице нет данных
-                    var emptyMessage = new UniversalInputType
-                    {
-                        Event = "  ",
-                        NumberOfTrain = "  ",
-                        PathNumber = "  ",
-                        Stations = "  ",
-                        Time = DateTime.MinValue,
-                        Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
-                    };
+                var viewData = timeSamplingData ?? emptyDate;
+                viewData.AddressDevice = inData.AddressDevice;
 
-                    var viewData = timeSamplingMessage ?? emptyMessage;
-                    viewData.AddressDevice = inData.AddressDevice;
+                //Выбрать правила для отрисовки
+                var selectedRules = ExchangeRules.Where(rule => rule.CheckResolution(viewData)).ToList();
 
+                //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                if (selectedRules.Any(d => d.Resolution != null))
+                {
+                    selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
+                }
+
+                foreach (var exchangeRule in selectedRules)
+                {
                     //Вывод на путевое табло
                     var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = viewData };
                     DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);

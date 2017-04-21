@@ -115,6 +115,98 @@ namespace CommunicationDevices.Settings
                    departurePathsFilter;
         }
 
+
+
+
+        /// <summary>
+        /// Проверка разрешения.
+        /// </summary>
+        public bool CheckResolutions(UniversalInputType inData)
+        {
+            var typeTrainFilter = true;
+            if (TypeTrain != TypeTrain.None)
+            {
+                typeTrainFilter = (inData.TypeTrain == TypeTrain);
+            }
+
+            var eventFilter = true;
+            if (!string.IsNullOrEmpty(Event))
+            {
+                eventFilter = (inData.Event == Event);
+            }
+
+            var timeFilter = true;
+            if (LowCurrentTime)    //"МеньшеТекВремени"
+            {
+                timeFilter = inData.Time < DateTime.Now;
+            }
+            if (HightCurrentTime)  //"БольшеТекВремени"
+            {
+                timeFilter = inData.Time > DateTime.Now;
+            }
+
+            var arrivalAndSuburbFilter = true;
+            if (ArrivalAndSuburb)
+            {
+                arrivalAndSuburbFilter = (inData.Event == "ПРИБ.") && (inData.TypeTrain == TypeTrain.Suburb);
+            }
+
+            var arrivalAndLongDistanceFilter = true;
+            if (ArrivalAndLongDistance)
+            {
+                arrivalAndLongDistanceFilter = (inData.Event == "ПРИБ.") && (inData.TypeTrain == TypeTrain.LongDistance);
+            }
+
+            var departureAndSuburbFilter = true;
+            if (DepartureAndSuburb)
+            {
+                departureAndSuburbFilter = (inData.Event == "ОТПР.") && (inData.TypeTrain == TypeTrain.Suburb);
+            }
+
+            var departureAndLongDistanceFilter = true;
+            if (DepartureAndLongDistance)
+            {
+                departureAndLongDistanceFilter = (inData.Event == "ОТПР.") && (inData.TypeTrain == TypeTrain.LongDistance);
+            }
+
+            var suburbPathsFilter = true;
+            if (SuburbPaths != null && SuburbPaths.Any())
+            {
+                suburbPathsFilter = (inData.TypeTrain == TypeTrain.Suburb) && SuburbPaths.Contains(inData.PathNumber);
+            }
+
+            var longDistancePathsFilter = true;
+            if (LongDistancePaths != null && LongDistancePaths.Any())
+            {
+                longDistancePathsFilter = (inData.TypeTrain == TypeTrain.LongDistance) && LongDistancePaths.Contains(inData.PathNumber);
+            }
+
+            var arrivalPathsFilter = true;
+            if (ArrivalPaths != null && ArrivalPaths.Any())
+            {
+                arrivalPathsFilter = (inData.Event == "ПРИБ.") && ArrivalPaths.Contains(inData.PathNumber);
+            }
+
+            var departurePathsFilter = true;
+            if (DeparturePaths != null && DeparturePaths.Any())
+            {
+                departurePathsFilter = (inData.Event == "ОТПР.") && DeparturePaths.Contains(inData.PathNumber);
+            }
+
+
+            return typeTrainFilter &&
+                   eventFilter &&
+                   timeFilter &&
+                   arrivalAndSuburbFilter &&
+                   arrivalAndLongDistanceFilter &&
+                   departureAndSuburbFilter &&
+                   departureAndLongDistanceFilter &&
+                   suburbPathsFilter &&
+                   longDistancePathsFilter &&
+                   arrivalPathsFilter &&
+                   departurePathsFilter;
+        }
+
     }
 
 }
