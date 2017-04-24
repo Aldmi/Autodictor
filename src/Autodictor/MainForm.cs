@@ -68,6 +68,8 @@ namespace MainExample
             ExchangeModel.LoadSetting();
             ExchangeModel.StartCisClient();
 
+            ExchangeModel.InitializeDeviceSoundChannelManagement();
+
             DispouseCisClientIsConnectRx = ExchangeModel.CisClient.IsConnectChange.Subscribe(isConnect =>
             {
                 //TODO: вызывать через Invoke

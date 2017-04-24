@@ -1477,9 +1477,10 @@ namespace MainExample
             }
         }
 
-        private int _countSoundChanelManagmentPacket = 0;
 
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
+        private bool _isEmptyOldОчередьВоспроизводимыхЗвуковыхСообщений;
+        private bool _isEmptyRaiseОчередьВоспроизводимыхЗвуковыхСообщений;
         private void ОбработкаЗвуковогоПотка()
         {
             int СекундаТекущегоВремени = DateTime.Now.Second;
@@ -1490,8 +1491,6 @@ namespace MainExample
             }
 
 
-
-
             ОбновитьСостояниеЗаписейТаблицы();
 
             SoundFileStatus status = Player.GetFileStatus();
@@ -1500,17 +1499,32 @@ namespace MainExample
                 if ((status != SoundFileStatus.Playing) && (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any()))
                     MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
 
+          
+            if (ОчередьВоспроизводимыхЗвуковыхСообщений.Any() && !_isEmptyOldОчередьВоспроизводимыхЗвуковыхСообщений)
+            {
+                СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
+            }
 
-            Debug.WriteLine(status.ToString());//DEBUG
+            if (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any() && _isEmptyOldОчередьВоспроизводимыхЗвуковыхСообщений)
+            {
+                _isEmptyRaiseОчередьВоспроизводимыхЗвуковыхСообщений = true;
+            }
+            if (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any() && _isEmptyRaiseОчередьВоспроизводимыхЗвуковыхСообщений && (status != SoundFileStatus.Playing))
+            {
+                _isEmptyRaiseОчередьВоспроизводимыхЗвуковыхСообщений = false;
+                СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+            }
+
+            _isEmptyOldОчередьВоспроизводимыхЗвуковыхСообщений = ОчередьВоспроизводимыхЗвуковыхСообщений.Any();
+
 
             if (status != SoundFileStatus.Playing)
             {
                 if (ВремяЗадержкиМеждуСообщениями > 0)
                 {
                     ВремяЗадержкиМеждуСообщениями--;
-                    return;
                 }
-
+                else
                 if (ОчередьВоспроизводимыхЗвуковыхСообщений.Any())
                 {
                     var воспроизводимоеСообщение = ОчередьВоспроизводимыхЗвуковыхСообщений[0];
@@ -1530,27 +1544,48 @@ namespace MainExample
 
                     if (Player.PlayFile(названиеФайла) == true)
                         MainForm.Воспроизвести.Text = "Остановить";
-
-                    Debug.WriteLine(ОчередьВоспроизводимыхЗвуковыхСообщений.Count + "   " + status.ToString());//DEBUG
                 }
             }
             else
             {
-                //Отправка посылок подтверждающих воспроизведение файла.
-                if (SoundChanelManagment != null)
-                {
-                    if (++_countSoundChanelManagmentPacket >= (Program.Настройки.КаналыПериодОтправкиПакетов * 10))
-                    {
-                        _countSoundChanelManagmentPacket = 0;
-                        var emptyUit = new UniversalInputType {SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList()};
-                        SoundChanelManagment.AddOneTimeSendData(emptyUit); //период отсыла регулируется TimeRespone.
-                    }
-                }
-
-
-
+                //СобытиеПроцессПроигрыванияФайлаОчередиЗвуковыхСообщений();
             }
         }
+
+
+        private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
+        {
+            Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
+
+            if (SoundChanelManagment != null)
+            {
+                var soundChUit = new UniversalInputType { SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList(), ViewBag = new Dictionary<string, dynamic>()};
+                soundChUit.ViewBag["SoundChanelManagmentEventPlaying"] = "StartPlaying";
+
+                SoundChanelManagment.AddOneTimeSendData(soundChUit); //период отсыла регулируется TimeRespone.
+            }
+        }
+
+
+        private void СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений()
+        {
+            Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ");//DEBUG
+
+            if (SoundChanelManagment != null)
+            {
+                var soundChUit = new UniversalInputType { SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList(), ViewBag = new Dictionary<string, dynamic>() };
+                soundChUit.ViewBag["SoundChanelManagmentEventPlaying"] = "StopPlaying";
+
+                SoundChanelManagment.AddOneTimeSendData(soundChUit); //период отсыла регулируется TimeRespone.
+            }
+        }
+
+
+        private void СобытиеПроцессПроигрыванияФайлаОчередиЗвуковыхСообщений()
+        {
+            Debug.WriteLine("ПРОЦЕСС ПРОИГРЫВАНИЯ");//DEBUG
+        }
+
 
 
         // Воспроизведение выбраной в таблице записи

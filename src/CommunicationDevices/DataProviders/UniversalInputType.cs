@@ -34,6 +34,14 @@ namespace CommunicationDevices.DataProviders
         public List<bool> SoundChanels { get; set; }                //Настройка звуковых каналов (по каким каналам передавать данное сообщение)
 
 
+        public Dictionary<string, dynamic> ViewBag { get; set; }
+
+
+
+
+
+
+
         public void Initialize(UniversalInputType initializeData)
         {
             AddressDevice = initializeData.AddressDevice;

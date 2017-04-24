@@ -790,7 +790,29 @@ namespace CommunicationDevices.Model
 
         }
 
+
+
+        public void InitializeDeviceSoundChannelManagement()
+        {
+            if (DeviceSoundChannelManagement == null)
+                return;
+
+            //Команда инициализации 1
+            var soundChUit = new UniversalInputType { ViewBag = new Dictionary<string, dynamic>() };
+            soundChUit.ViewBag["SoundChanelManagmentEventPlaying"] = "InitSoundChanelDevice_step1";
+            DeviceSoundChannelManagement.AddOneTimeSendData(soundChUit);
+
+            //Команда инициализации 2
+            soundChUit.ViewBag["SoundChanelManagmentEventPlaying"] = "InitSoundChanelDevice_step2";
+            DeviceSoundChannelManagement.AddOneTimeSendData(soundChUit);
+        }
+
+
         #endregion
+
+
+
+
 
 
 
