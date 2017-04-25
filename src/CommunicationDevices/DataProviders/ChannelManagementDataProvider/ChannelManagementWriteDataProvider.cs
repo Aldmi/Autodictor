@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Communication.Annotations;
@@ -69,28 +70,22 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
 
 
                 case "StartPlaying":
-                    //var chanelFlags = InputData.SoundChanels.ToArray();
-                    //List<bool> configChFlags= new List<bool>();
-                    //for (int i = 0, j = 0; i < 24; i++)
-                    //{
-                    //    if (i == 7 || i == 15 || i == 23)              //0x80,0x80,0x80 - старший бит выставленн в 3-ех битах
-                    //    {
-                    //        configChFlags.Add(true);
-                    //        continue;
-                    //    }
+                    var chanelFlags = InputData.SoundChanels.ToArray();
+                    bool[] fullArr = new bool[24];
 
-                    //    if(j < chanelFlags.Length)
-                    //      configChFlags.Add(chanelFlags[j++]);
-                    //}
+                    Array.Copy(chanelFlags, 0, fullArr, 0, 7);
+                    fullArr[7] = true;
+                    Array.Copy(chanelFlags, 7, fullArr, 8, 7);
+                    fullArr[15] = true;
+                    Array.Copy(chanelFlags, 14, fullArr, 16, 6);
+                    fullArr[23] = true;
 
-                    //BitArray bitArray = new BitArray(configChFlags.ToArray());
-
+                    BitArray bitArray = new BitArray(fullArr);
                     command = new byte[4];
                     command[0] = 0x57;
-                    command[1] = 0xFF;
-                    command[2] = 0x80;
-                    command[3] = 0x80;
-                    //bitArray.CopyTo(command, 1);
+                    bitArray.CopyTo(command, 1);
+
+                    //Debug.WriteLine("command[0]" + command[0].ToString("X") + "  " + "command[1]" + command[1].ToString("X") + "  " + "command[2]" + command[2].ToString("X") + "  " + "command[3]" + command[3].ToString("X"));
                     break;
 
 

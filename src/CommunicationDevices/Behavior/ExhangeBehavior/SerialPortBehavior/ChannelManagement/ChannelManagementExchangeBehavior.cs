@@ -38,14 +38,10 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.Chann
                 var writeProvider = new ChannelManagementWriteDataProvider(inData.SoundChanels) {InputData = inData};
                 DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
 
-                // LastSendData = writeProvider.InputData;
-
                 if (writeProvider.IsOutDataValid)
                 {
                     // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
                 }
-
-                //await Task.Delay(600, ct);  //задержка для задания периода опроса. 
             }
         }
 
