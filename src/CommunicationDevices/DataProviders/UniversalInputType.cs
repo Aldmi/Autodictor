@@ -7,7 +7,17 @@ using MoreLinq;
 
 namespace CommunicationDevices.DataProviders
 {
-    public enum TypeTrain {None, Suburb, LongDistance }
+    public enum TypeTrain
+    {
+        None,                    //НеОпределен
+        Passenger,               //Пассажирский
+        Suburban,                //Пригородный
+        Corporate,               //Фирменный
+        Express,                 //Скорый
+        HighSpeed,               //Скоростной
+        Swallow,                 //Ласточка
+        Rex,                     //РЭКС
+    }
 
     public enum Command { None, View, Update, Delete, Clear, Restart }
 

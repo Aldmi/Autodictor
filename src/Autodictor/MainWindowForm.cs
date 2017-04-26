@@ -1324,7 +1324,13 @@ namespace MainExample
                             var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
                             {
                                 Event = (string.IsNullOrEmpty(t.ArrivalTime)) ? "ОТПР." : "ПРИБ.",
-                                TypeTrain = (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburb : TypeTrain.LongDistance,
+                                TypeTrain = (t.ТипПоезда == ТипПоезда.Пассажирский) ? TypeTrain.Passenger :
+                                            (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburban :
+                                            (t.ТипПоезда == ТипПоезда.Фирменный) ? TypeTrain.Corporate :
+                                            (t.ТипПоезда == ТипПоезда.Скорый) ? TypeTrain.Express :
+                                            (t.ТипПоезда == ТипПоезда.Скоростной) ? TypeTrain.HighSpeed :
+                                            (t.ТипПоезда == ТипПоезда.Ласточка) ? TypeTrain.Swallow :
+                                            (t.ТипПоезда == ТипПоезда.РЭКС) ? TypeTrain.Rex : TypeTrain.None,    
                                 Note = t.Примечание, //C остановками: ...
                                 PathNumber = t.TrainPathNumber,
                                 NumberOfTrain = t.Num,
@@ -1380,18 +1386,6 @@ namespace MainExample
                             //ПОМЕНЯЛИ ПУТЬ
                             if (номерПути != номерПутиOld)
                             {
-                                ////вывод на новое табло
-                                //данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                                //SendOnPathTable(данные);
-
-                                ////очистили старый путь, если он не "0";
-                                //if (номерПутиOld > 0)
-                                //{
-                                //    данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
-                                //    SendOnPathTable(данныеOld);
-                                //}
-
-
                                 //очистили старый путь, если он не "0";
                                 if (номерПутиOld > 0)
                                 {
@@ -1465,8 +1459,6 @@ namespace MainExample
                         }
                     }
 
-
-
                     SoundRecords[key] = данные;
                     SoundRecordsOld[key] = данные;
                 }
@@ -1499,7 +1491,7 @@ namespace MainExample
                 if ((status != SoundFileStatus.Playing) && (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any()))
                     MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
 
-          
+
             if (ОчередьВоспроизводимыхЗвуковыхСообщений.Any() && !_isEmptyOldОчередьВоспроизводимыхЗвуковыхСообщений)
             {
                 СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
@@ -1559,7 +1551,7 @@ namespace MainExample
 
             if (SoundChanelManagment != null)
             {
-                var soundChUit = new UniversalInputType { SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList(), ViewBag = new Dictionary<string, dynamic>()};
+                var soundChUit = new UniversalInputType { SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList(), ViewBag = new Dictionary<string, dynamic>() };
                 soundChUit.ViewBag["SoundChanelManagmentEventPlaying"] = "StartPlaying";
 
                 SoundChanelManagment.AddOneTimeSendData(soundChUit); //период отсыла регулируется TimeRespone.
@@ -1684,17 +1676,39 @@ namespace MainExample
             }
 
             TypeTrain typeTrain;
-            if (data.ТипПоезда == ТипПоезда.НеОпределен || data.ТипПоезда == ТипПоезда.Ласточка)
+            switch (data.ТипПоезда)
             {
-                typeTrain = TypeTrain.None;
-            }
-            else if ((data.ТипПоезда == ТипПоезда.Пассажирский) || (data.ТипПоезда == ТипПоезда.Скоростной) || (data.ТипПоезда == ТипПоезда.Скорый) || (data.ТипПоезда == ТипПоезда.Фирменный))
-            {
-                typeTrain = TypeTrain.LongDistance;
-            }
-            else
-            {
-                typeTrain = TypeTrain.Suburb;
+                case ТипПоезда.Пассажирский:
+                    typeTrain = TypeTrain.Passenger;
+                    break;
+
+                case ТипПоезда.Пригородный:
+                    typeTrain = TypeTrain.Suburban;
+                    break;
+
+                case ТипПоезда.Фирменный:
+                    typeTrain = TypeTrain.Corporate;
+                    break;
+
+                case ТипПоезда.Скорый:
+                    typeTrain = TypeTrain.Express;
+                    break;
+
+                case ТипПоезда.Скоростной:
+                    typeTrain = TypeTrain.HighSpeed;
+                    break;
+
+                case ТипПоезда.Ласточка:
+                    typeTrain = TypeTrain.Swallow;
+                    break;
+
+                case ТипПоезда.РЭКС:
+                    typeTrain = TypeTrain.Rex;
+                    break;
+
+                default:
+                    typeTrain = TypeTrain.None;
+                    break;
             }
 
             var command = Command.None;
@@ -1730,10 +1744,10 @@ namespace MainExample
             }
 
 
-            UniversalInputType outData;
+            UniversalInputType mapData;
             if (isShow)
             {
-                outData = new UniversalInputType
+                mapData = new UniversalInputType
                 {
                     Id = data.ID,
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
@@ -1748,7 +1762,7 @@ namespace MainExample
             }
             else
             {
-                outData = new UniversalInputType
+                mapData = new UniversalInputType
                 {
                     Id = data.ID,
                     NumberOfTrain = data.НомерПоезда,
@@ -1762,7 +1776,7 @@ namespace MainExample
                 };
             }
 
-            return outData;
+            return mapData;
         }
 
 
