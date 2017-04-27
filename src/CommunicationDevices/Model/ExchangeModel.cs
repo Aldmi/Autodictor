@@ -319,7 +319,15 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            ;
+                        {
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                            break;
+                        }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)
@@ -353,7 +361,15 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            ;
+                        {
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                            break;
+                        }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)
@@ -452,7 +468,15 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            ;
+                        {
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                            break;
+                        }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)
@@ -655,7 +679,15 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging.CountPage, paging.TimePaging));
+                        {
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                            break;
+                        }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)
@@ -748,7 +780,15 @@ namespace CommunicationDevices.Model
 
                         //создание поведения привязка табло к главному расписанию
                         if (binding.BindingType == BindingType.ToGeneral)
-                            ;
+                        {
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                            break;
+                        }
 
                         //создание поведения привязка табло к системе отправление/прибытие поездов
                         if (binding.BindingType == BindingType.ToArrivalAndDeparture)

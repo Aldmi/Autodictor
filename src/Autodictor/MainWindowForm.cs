@@ -1339,6 +1339,8 @@ namespace MainExample
                                 DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания()
                             }).ToList();
 
+                            table.ForEach(t=> t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+
                             var inData = new UniversalInputType { TableData = table };
                             foreach (var beh in binding2Shedule)
                             {
@@ -1355,6 +1357,7 @@ namespace MainExample
                             foreach (var beh in binding2MainWindow)
                             {
                                 var table = SoundRecords.Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains);
                             }

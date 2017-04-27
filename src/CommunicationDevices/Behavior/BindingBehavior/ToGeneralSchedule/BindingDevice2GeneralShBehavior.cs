@@ -72,7 +72,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
             };
 
             _device.ExhBehavior.AddOneTimeSendData(inData);
-
         }
 
 
@@ -88,7 +87,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
             {
                 inData.TableData = filteredTable;
                 inData.Note = String.Empty;
-                _device.ExhBehavior.AddOneTimeSendData(inData);
                 _device.ExhBehavior.GetData4CycleFunc[0].Initialize(inData);
             }
         }
