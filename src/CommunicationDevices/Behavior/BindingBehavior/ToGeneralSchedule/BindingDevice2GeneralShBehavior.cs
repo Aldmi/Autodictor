@@ -87,7 +87,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
             {
                 inData.TableData = filteredTable;
                 inData.Note = String.Empty;
-                _device.ExhBehavior.GetData4CycleFunc[0].Initialize(inData);
+                _device.AddCycleFuncData(0, inData);
             }
         }
 
