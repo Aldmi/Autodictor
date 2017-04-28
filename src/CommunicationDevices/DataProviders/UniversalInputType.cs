@@ -37,12 +37,13 @@ namespace CommunicationDevices.DataProviders
         public DateTime Time { get; set; }                           //Время
         public string Message { get; set; }                          //Сообщение
 
+        public byte EmergencySituation { get; set; }                 //Нешатная ситуация (бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления)
+
         public Command Command { get; set; }                         //Команда (если указанна команда, то приоритет отдается выполнению команды.)
 
-        public List<UniversalInputType> TableData { get; set; }     //Данные для табличного представления
+        public List<UniversalInputType> TableData { get; set; }      //Данные для табличного представления
 
-        public List<bool> SoundChanels { get; set; }                //Настройка звуковых каналов (по каким каналам передавать данное сообщение)
-
+        public List<bool> SoundChanels { get; set; }                 //Настройка звуковых каналов (по каким каналам передавать данное сообщение)
 
         public Dictionary<string, dynamic> ViewBag { get; set; }
 
@@ -63,7 +64,10 @@ namespace CommunicationDevices.DataProviders
             Note= initializeData.Note;
             Time = initializeData.Time;
             Message = initializeData.Message;
-  
+            EmergencySituation = initializeData.EmergencySituation;
+            Command = initializeData.Command;
+
+
             if (initializeData.TableData != null && initializeData.TableData.Any())
             {
                 TableData = new List<UniversalInputType>(initializeData.TableData);
@@ -72,6 +76,11 @@ namespace CommunicationDevices.DataProviders
             if (initializeData.SoundChanels != null && initializeData.SoundChanels.Any())
             {
                 SoundChanels = new List<bool>(initializeData.SoundChanels);
+            }
+
+            if (initializeData.ViewBag != null && initializeData.ViewBag.Any())
+            {
+                ViewBag= new Dictionary<string, dynamic>(initializeData.ViewBag);
             }
         }
 

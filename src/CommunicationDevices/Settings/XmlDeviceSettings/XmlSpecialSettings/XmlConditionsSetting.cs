@@ -191,7 +191,6 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                             break;
 
 
-
                         case "МеньшеТекВремени":
                             Conditions.LowCurrentTime = true;
                             break;
@@ -199,6 +198,22 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                         case "БольшеТекВремени":
                             Conditions.HightCurrentTime = true;
                             break;
+
+
+
+                        case "Отменен_БлокВремОгр":
+                            Conditions.EmergencySituationCanceled = true;
+                            break;
+
+                        case "ЗадержкаПрибытия_БлокВремОгр":
+                            Conditions.EmergencySituationDelayArrival = true;
+                            break;
+
+                        case "ЗадержкаОтправления_БлокВремОгр":
+                            Conditions.EmergencySituationDelayDepart = true;
+                            break;
+
+
 
                         default:
                             Conditions = null;

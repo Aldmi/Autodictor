@@ -41,7 +41,7 @@
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания."  Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;БольшеТекВремени">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания."  Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИБ.;БольшеТекВремени">
 	      <ExchangeRules>    
 		    <Table Size= "3">
 			 <Rule Format = "Windows-1251">
@@ -61,7 +61,6 @@
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
-
 
 <!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/> -->
 
@@ -121,7 +120,10 @@
              (ПРИБ./ОТПР.) 
 			 (ПРИБ.+ПУТЬ:1,2,3)
 			 (ОТПР.+ПУТЬ:1,2,3)
-             ("МеньшеТекВремени/БольшеТекВремени") -->
+             ("Отменен_БлокВремОгр/ЗадержкаПрибытия_БлокВремОгр/ЗадержкаОтправления_БлокВремОгр") - Если указанно ограничение "МеньшеТекВремени" или "БольшеТекВремени" и поезд отмененн/задерживается, то временные огранчиения не учитываются
+			 ("МеньшеТекВремени/БольшеТекВремени")
+
+			 -->
 
 			 
 <!-- Binding="ToGeneral:ГлавноеОкно" -->

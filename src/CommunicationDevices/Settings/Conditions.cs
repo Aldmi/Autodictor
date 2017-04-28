@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using CommunicationDevices.DataProviders;
 
 
@@ -49,6 +50,11 @@ namespace CommunicationDevices.Settings
         public IEnumerable<string> ArrivalPaths { get; set; } //Пути для прибывающего поезда
         public IEnumerable<string> DeparturePaths { get; set; } //Пути для отправляющегося поезда
 
+
+        public bool EmergencySituationCanceled { get; set; }           //Нешатная ситуация отменен
+        public bool EmergencySituationDelayArrival { get; set; }       //Нешатная ситуация отменен, задержка прибытия
+        public bool EmergencySituationDelayDepart { get; set; }        //Нешатная ситуация отменен, задержка отправления
+
         #endregion
 
 
@@ -75,15 +81,34 @@ namespace CommunicationDevices.Settings
             }
 
 
+            var emergencySituationCanceledFilter = true;
+            if (EmergencySituationCanceled)
+            {
+                emergencySituationCanceledFilter = (inData.EmergencySituation & 0x01) == 0x00;
+            }
+            var emergencySituationDelayArrivalFilter = true;
+            if (EmergencySituationDelayArrival)
+            {
+                emergencySituationDelayArrivalFilter = (inData.EmergencySituation & 0x02) == 0x00;
+            }
+            var emergencySituationDelayDepartFilter = true;
+            if (EmergencySituationDelayDepart)
+            {
+                emergencySituationDelayDepartFilter = (inData.EmergencySituation & 0x04) == 0x00;
+            }
+
 
             var timeFilter = true;
-            if (LowCurrentTime) //"МеньшеТекВремени"
+            if (emergencySituationCanceledFilter && emergencySituationDelayArrivalFilter && emergencySituationDelayDepartFilter)
             {
-                timeFilter = inData.Time < DateTime.Now;
-            }
-            if (HightCurrentTime) //"БольшеТекВремени"
-            {
-                timeFilter = inData.Time > DateTime.Now;
+                if (LowCurrentTime) //"МеньшеТекВремени"
+                {
+                    timeFilter = inData.Time < DateTime.Now;
+                }
+                if (HightCurrentTime) //"БольшеТекВремени"
+                {
+                    timeFilter = inData.Time > DateTime.Now;
+                }
             }
 
 
@@ -291,6 +316,23 @@ namespace CommunicationDevices.Settings
             }
 
 
+            var emergencySituationCanceledFilter = true;
+            if (EmergencySituationCanceled)
+            {
+                emergencySituationCanceledFilter = (inData.EmergencySituation & 0x01) != 0x00;
+            }
+            var emergencySituationDelayArrivalFilter = true;
+            if (EmergencySituationDelayArrival)
+            {
+                emergencySituationDelayArrivalFilter = (inData.EmergencySituation & 0x02) != 0x00;
+            }
+            var emergencySituationDelayDepartFilter = true;
+            if (EmergencySituationDelayDepart)
+            {
+                emergencySituationDelayDepartFilter = (inData.EmergencySituation & 0x04) != 0x00;
+            }
+
+
             var timeFilter = true;
             if (LowCurrentTime) //"МеньшеТекВремени"
             {
@@ -453,11 +495,12 @@ namespace CommunicationDevices.Settings
             }
 
 
-            var temp = !TypeTrain.Contains(inData.TypeTrain); //DEBUG
-
             return typeTrainFilter &&
                    eventFilter &&
                    timeFilter &&
+                   emergencySituationCanceledFilter &&
+                   emergencySituationDelayArrivalFilter &&
+                   emergencySituationDelayDepartFilter &&
                    passengerArrivalfilter &&
                    passengerDepartFilter &&
                    passengerPathsFilter &&
