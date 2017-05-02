@@ -13,6 +13,7 @@ using Communication.Settings;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
+using CommunicationDevices.Behavior.BindingBehavior.ToStatic;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
@@ -66,6 +67,7 @@ namespace CommunicationDevices.Model
 
         public ICollection<IBinding2PathBehavior> Binding2PathBehaviors { get; set; } = new List<IBinding2PathBehavior>();
         public ICollection<IBinding2GeneralSchedule> Binding2GeneralSchedules { get; set; } = new List<IBinding2GeneralSchedule>();
+        public ICollection<IBinding2StaticFormBehavior> Binding2StaticFormBehaviors { get; set; } = new List<IBinding2StaticFormBehavior>();
 
 
         private string _errorString;
@@ -478,9 +480,11 @@ namespace CommunicationDevices.Model
                             break;
                         }
 
-                        //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                            ;
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
+                            
+
 
                         //добавим все функции циклического опроса
                         DeviceTables.Last().AddCycleFunc();

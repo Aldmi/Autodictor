@@ -214,7 +214,7 @@ namespace MainExample
         }
 
 
-        private async void коммуникацияToolStripMenuItem_Click(object sender, EventArgs e)
+        private  void коммуникацияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CommunicationForm.MyCommunicationForm != null)                                     //Открытие окна повторно, при открытом первом экземпляре.
             {
@@ -227,9 +227,6 @@ namespace MainExample
                 boardForm.MdiParent = this;
                 boardForm.Show();
             }
-
-
-            await ExchangeModel.ReOpenMasterSerialPorts(3);
         }
 
 
@@ -352,11 +349,14 @@ namespace MainExample
             MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийПоДнюНедели = true;
         }
 
+
+
         private void настройкиToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ОкноНастроек окно = new ОкноНастроек();
             окно.ShowDialog();
         }
+
 
         private void добавитьВнештатныйПоездToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -386,11 +386,15 @@ namespace MainExample
             }
         }
 
+
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             СписокВоспроизведения список = new СписокВоспроизведения();
             список.ShowDialog();
         }
+
+
 
         private void timer_Clock_Tick(object sender, EventArgs e)
         {
@@ -398,5 +402,20 @@ namespace MainExample
         }
 
 
+
+        private void статическаяИнформацияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (StaticDisplayForm.MyStaticDisplayForm != null)                                     //Открытие окна повторно, при открытом первом экземпляре.
+            {
+                StaticDisplayForm.MyStaticDisplayForm.Show();
+                StaticDisplayForm.MyStaticDisplayForm.WindowState = FormWindowState.Normal;
+            }
+            else                                                                   //Открытие окна
+            {
+                StaticDisplayForm staticDisplayForm = new StaticDisplayForm(ExchangeModel.Binding2StaticFormBehaviors);
+                //staticDisplayForm.MdiParent = this;
+                staticDisplayForm.Show();
+            }
+        }
     }
 }

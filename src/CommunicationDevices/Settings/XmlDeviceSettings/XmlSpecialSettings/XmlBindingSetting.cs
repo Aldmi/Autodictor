@@ -9,7 +9,8 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     //ToPath: Все - привязка ко всем путям
     //ToGeneral - привязка к главному табло с расписанием
     //ToArrivalAndDeparture - привязка к табло отправление / прибытие поездов
-    public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture }
+    //ToStatic - привязка к форме отправки статической информации.
+    public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture, ToStatic }
 
     public class XmlBindingSetting
     {
@@ -57,6 +58,11 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                 BindingType = BindingType.ToPath;
                 var pathNumbers = new string(binding.SkipWhile(c => c != ':').Skip(1).ToArray()).Split(',');
                 PathNumbers = (pathNumbers.First() == string.Empty) ? new List<byte>() : pathNumbers.Select(byte.Parse).ToList();
+            }
+            else
+            if (binding.ToLower().Contains("tostatic:"))
+            {
+                BindingType = BindingType.ToStatic;
             }
 
         }

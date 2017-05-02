@@ -360,11 +360,6 @@ namespace MainExample
 
         private bool НачатьВоспроизведениеФайла()
         {
-            //DEBUG--------------------------------------------------------
-            var emptyUit= new UniversalInputType();
-            _deviceSoundChannelManagement.AddOneTimeSendData(emptyUit);
-            //DEBUG--------------------------------------------------------
-
             PlayList = textBox_Message.Text.Split('|');
 
             ТекущаяПозицияЗвучания = 0;

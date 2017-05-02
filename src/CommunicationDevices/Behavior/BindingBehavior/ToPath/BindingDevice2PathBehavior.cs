@@ -91,11 +91,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                         break;
                 }
             }
-            //else
-            //{
-            //    //привязка на указанные пути
-            //    _device.AddCycleFuncData(0, inData);
-            //}
 
             // Отправили однократный запрос (выставили запрос сразу на выполнение)
             _device.AddOneTimeSendData(_device.ExhBehavior.GetData4CycleFunc[0]); 
