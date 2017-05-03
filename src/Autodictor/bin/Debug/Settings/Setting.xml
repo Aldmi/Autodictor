@@ -61,6 +61,29 @@
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
+	 
+	 
+	 	 <DeviceSp Id="44" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания."  Binding="ToStatic:">
+	      <ExchangeRules>    
+		    <Table Size= "3">
+			 <Rule Format = "Windows-1251">
+			      <Request maxLenght = "254">
+			       STX{AddressDevice:X2}{Nbyte:X2}
+                   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+                   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+				   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+                   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+				   {CRCXor:X2}ETX
+		          </Request >
+
+			      <Response maxLenght = "8" TimeRespone="500">
+				    STX0200FDETX
+		          </Response >	  
+		       </Rule>
+             </Table>
+		  </ExchangeRules>
+	 </DeviceSp>
+	 
 
 <!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/> -->
 
@@ -68,10 +91,10 @@
   </DevicesWithSP>
   
   
-<!-- <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ." CountRow="8" Paging="3,10"/>
+<DevicesWithTcpIp>
+	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:" CountRow="8"/>
   </DevicesWithTcpIp>
- -->
+
 </Root>
 
 

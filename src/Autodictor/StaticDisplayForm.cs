@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,17 @@ namespace MainExample
     public partial class StaticDisplayForm : Form
     {
         public static StaticDisplayForm MyStaticDisplayForm = null;
+        private readonly ICollection<IBinding2StaticFormBehavior> _binding2StaticFormBehaviors;
+        private int _currentSelectIndex = -1;
 
-        private ICollection<IBinding2StaticFormBehavior> _binding2StaticFormBehaviors;
 
+
+
+        #region prop
+
+        public Dictionary<byte, List<string[]>> Tables { get; set; } = new Dictionary<byte, List<string[]>>();
+
+        #endregion
 
 
 
@@ -36,7 +45,7 @@ namespace MainExample
         
             InitializeComponent();
 
-            dataGridView1.CellClick += dataGridView1_CellClick;
+            dgv_main.CellClick += dataGridView1_CellClick;
         }
 
 
@@ -55,9 +64,10 @@ namespace MainExample
 
         protected override void OnLoad(EventArgs e)
         {
-            //загрузка названий устройств со статической привязкой
+          
             if (_binding2StaticFormBehaviors != null)
             {
+                //загрузка спсика устройств со статической привязкой--------------------------------------------
                 foreach (var binding2StaticFormBehavior in _binding2StaticFormBehaviors)
                 {
                     string[] row =
@@ -66,11 +76,29 @@ namespace MainExample
                         binding2StaticFormBehavior.GetDeviceName
                     };
                     var listViewItem = new ListViewItem(row);
-                    lv_Devices.Items.Add(listViewItem);
+                    lv_select.Items.Add(listViewItem);
+                }
+
+
+                //инициализация таблиц.
+                for (byte i = 0; i < _binding2StaticFormBehaviors.Count; i++)
+                {
+                    List<string[]> table = new List<string[]>();
+
+                    string[] array;
+                    if (File.Exists(""))     //DEBUG иммитация загруженных данных
+                    {
+                        array = new[] { (100 + i).ToString(), ("NAme" + i) };
+                        table.Add(array);
+                    }
+                    else
+                    {
+                        array = new string[dgv_main.ColumnCount];
+                        table.Add(array);
+                    }
+                    Tables[i] = table;
                 }
             }
-
-            //TODO: загружать из файла сохраненные строки.
         }
 
 
@@ -81,17 +109,53 @@ namespace MainExample
         /// </summary>
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //var dataGridViewColumn = dataGridView1.Columns["Action"];
-            //if (dataGridViewColumn != null && e.ColumnIndex == dataGridViewColumn.Index && e.RowIndex >= 0)
-            //{
-            //    dataGridView1.Rows.RemoveAt(e.RowIndex);
-            //}
-
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+            for (int i = 0; i < dgv_main.RowCount; i++)
             {
-                dataGridView1.Rows[i].HeaderCell.Value = (i+1).ToString();
+                dgv_main.Rows[i].HeaderCell.Value = (i+1).ToString();
             }
         }
+
+
+
+        /// <summary>
+        /// Выбор таблицы для ус-ва
+        /// </summary>
+        private void lv_select_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lv_select.SelectedItems.Count == 0)
+                return;
+
+            var selectIndex = lv_select.SelectedIndices[0];
+            if (!Tables.ContainsKey((byte)selectIndex))
+                return;
+
+            //сохраним данные текущей таблице------------------------
+            if (_currentSelectIndex >= 0)
+            {
+                var currentTable1 = Tables[(byte)_currentSelectIndex];
+                currentTable1.Clear();
+                for (int i = 0; i < dgv_main.Rows.Count - 1; i++)
+                {
+                    List<string> rowVal = new List<string>();
+                    for (int j = 0; j < dgv_main.Columns.Count; j++)
+                    {
+                        rowVal.Add(dgv_main[j, i].FormattedValue as string);
+                    }
+
+                    currentTable1.Add(rowVal.ToArray());
+                }
+            }
+            _currentSelectIndex = selectIndex;
+
+            //отобразим новую таблицу-----------------------------------
+            dgv_main.Rows.Clear();
+            var currentTable = Tables[(byte)selectIndex];
+            foreach (object[] row in currentTable)
+            {
+                dgv_main.Rows.Add(row);
+            }
+        }
+
 
 
 
@@ -100,39 +164,45 @@ namespace MainExample
             if (_binding2StaticFormBehaviors == null || !_binding2StaticFormBehaviors.Any())
                 return;
 
+            if(_currentSelectIndex < 0)
+                return;
 
             var resultUit= new UniversalInputType {TableData = new List<UniversalInputType>()};
 
-            //формирование таблицу отправки
-            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+            //формирование таблицу отправки------------------------------
+            var currentTable = Tables[(byte)_currentSelectIndex];
+            foreach (var row in currentTable)
             {
-                var uit= new UniversalInputType();
+                var uit = new UniversalInputType();
 
-                var numberOfTrain = dataGridView1.Rows[i].Cells["cl_NumbOfTrain"]?.EditedFormattedValue.ToString().Trim();
-                var numberOfPath = dataGridView1.Rows[i].Cells["cl_numberOfPath"]?.EditedFormattedValue.ToString().Trim();
-                var stations = dataGridView1.Rows[i].Cells["cl_Stations"]?.EditedFormattedValue.ToString().Trim();
-                var time = dataGridView1.Rows[i].Cells["cl_time"]?.EditedFormattedValue.ToString().Trim();
-                var note = dataGridView1.Rows[i].Cells["cl_note"]?.EditedFormattedValue.ToString().Trim();
+                var numberOfTrain = row[0]?.Trim();
+                var numberOfPath = row[1]?.Trim();
+                var stations = row[2]?.Trim();
+                var time = row[3]?.Trim();
+                var note = row[4]?.Trim();
 
                 uit.NumberOfTrain = numberOfTrain;
                 uit.PathNumber = numberOfPath;
                 uit.Stations = stations;
                 uit.Note = note;
-                DateTime outTimeVal;               
-                if(!DateTime.TryParse(time, out outTimeVal))
+                DateTime outTimeVal;
+                if (!DateTime.TryParse(time, out outTimeVal))
                     continue;
                 uit.Time = outTimeVal;
 
-                uit.Message =  $"ПОЕЗД:{uit.NumberOfTrain}, ПУТЬ:{uit.PathNumber}, СОБЫТИЕ:{uit.Event}, СТАНЦИИ:{uit.Stations}, ВРЕМЯ:{uit.Time.ToShortTimeString()}";
+                uit.Message = $"ПОЕЗД:{uit.NumberOfTrain}, ПУТЬ:{uit.PathNumber}, СОБЫТИЕ:{uit.Event}, СТАНЦИИ:{uit.Stations}, ВРЕМЯ:{uit.Time.ToShortTimeString()}";
                 resultUit.TableData.Add(uit);
             }
 
-            //отправляем таблицу все ус-вам.
-            foreach (var binding2StaticFormBehavior in _binding2StaticFormBehaviors)
-            {
-                binding2StaticFormBehavior.SendMessage(resultUit);
-            }
+
+            //отправляем таблицу все ус-вам.-----------------------------
+            var currentbehavior = _binding2StaticFormBehaviors.ElementAt(_currentSelectIndex);
+            currentbehavior.SendMessage(resultUit);     
         }
+
+
+
+
 
 
 
@@ -143,7 +213,6 @@ namespace MainExample
 
             base.OnClosing(e);
         }
-
 
     }
 }

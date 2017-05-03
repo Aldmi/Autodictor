@@ -290,9 +290,9 @@ namespace CommunicationDevices.Model
                         if (binding.BindingType == BindingType.ToGeneral)
                             ;
 
-                        //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                            ;
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
 
                         //добавим все функции циклического опроса
                         DeviceTables.Last().AddCycleFunc();
@@ -331,9 +331,9 @@ namespace CommunicationDevices.Model
                             break;
                         }
 
-                        //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                            ;
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
 
                         //добавим все функции циклического опроса
                         DeviceTables.Last().AddCycleFunc();
@@ -373,9 +373,9 @@ namespace CommunicationDevices.Model
                             break;
                         }
 
-                        //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                            ;
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
 
                         //добавим все функции циклического опроса
                         DeviceTables.Last().AddCycleFunc();
@@ -693,9 +693,9 @@ namespace CommunicationDevices.Model
                             break;
                         }
 
-                        //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                            ;
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
 
                         //добавим все функции циклического опроса
                         DeviceTables.Last().AddCycleFunc();
@@ -794,9 +794,9 @@ namespace CommunicationDevices.Model
                             break;
                         }
 
-                        //создание поведения привязка табло к системе отправление/прибытие поездов
-                        if (binding.BindingType == BindingType.ToArrivalAndDeparture)
-                            ;
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
 
                         //добавим все функции циклического опроса
                         DeviceTables.Last().AddCycleFunc();
