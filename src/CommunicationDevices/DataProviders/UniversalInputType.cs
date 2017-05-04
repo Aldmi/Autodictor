@@ -19,7 +19,10 @@ namespace CommunicationDevices.DataProviders
         Rex,                     //РЭКС
     }
 
+    public enum VagonDirection { None, FromTheHead, FromTheTail }
+
     public enum Command { None, View, Update, Delete, Clear, Restart }
+
 
     public class UniversalInputType
     {
@@ -35,6 +38,7 @@ namespace CommunicationDevices.DataProviders
         public string Note { get; set; }                             //Примечание.
         public string DaysFollowing { get; set; }                    //Дни следования
         public DateTime Time { get; set; }                           //Время
+        public VagonDirection VagonDirection { get; set; }           //Нумерация вагона (с головы, с хвоста)
         public string Message { get; set; }                          //Сообщение
 
         public byte EmergencySituation { get; set; }                 //Нешатная ситуация (бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления)
@@ -66,6 +70,7 @@ namespace CommunicationDevices.DataProviders
             Message = initializeData.Message;
             EmergencySituation = initializeData.EmergencySituation;
             Command = initializeData.Command;
+            VagonDirection = initializeData.VagonDirection;
 
 
             if (initializeData.TableData != null && initializeData.TableData.Any())

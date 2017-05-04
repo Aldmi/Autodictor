@@ -234,6 +234,7 @@ namespace MainExample
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
+
         private void btn_Подтвердить_Click(object sender, EventArgs e)
         {
             bool ПерваяСтанция = true;
@@ -367,6 +368,7 @@ namespace MainExample
             }
         }
 
+
         private void rB_ПоСтанциям_CheckedChanged(object sender, EventArgs e)
         {
             if ((rB_ПоСтанциям.Checked == true) || (rB_КромеСтанций.Checked == true) || (rB_СоВсемиОстановками.Checked == true))
@@ -381,6 +383,7 @@ namespace MainExample
             }
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
+
 
         private void btnПовторения_Click(object sender, EventArgs e)
         {
@@ -402,6 +405,7 @@ namespace MainExample
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
+
         private void cBПрибытие_CheckedChanged(object sender, EventArgs e)
         {
             dTP_Прибытие.Enabled = cBПрибытие.Checked;
@@ -409,12 +413,14 @@ namespace MainExample
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
+
         private void cBОтправление_CheckedChanged(object sender, EventArgs e)
         {
             dTP_ВремяОтправления.Enabled = cBОтправление.Checked;
             btn_ИзменитьВремяОтправления.Enabled = cBОтправление.Checked;
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
+
 
         private void lVШаблоны_SelectedIndexChanged(object sender, EventArgs e)
         {

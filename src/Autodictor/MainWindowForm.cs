@@ -2196,6 +2196,12 @@ namespace MainExample
                             {
                                 Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(Record.НомерПути) + 1 + ВидНомерацииПути * 25];
                                 logMessage += Text + " ";
+
+                                //---------------- TODO: Добавить если будет новый шаблон
+                               // NotificationLanguage язык2 = шаблон.ToLower().Contains("eng") ? NotificationLanguage.Eng : NotificationLanguage.Ru;                          
+                               //---------------
+
+
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Text, Язык = язык });
                                 continue;
                             }

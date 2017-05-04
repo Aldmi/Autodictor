@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using Castle.Core.Internal;
 using Communication.SerialPort;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
@@ -55,6 +58,11 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             //Вывод на табличное табло построчной информации
             if (inData?.TableData != null)
             {
+                //DEBUG---------------------------------------
+                CreateXmlRequest(inData?.TableData);
+                //DEBUG---------------------------------------
+
+
                 for (byte i = 0; i < countRow; i++)
                 {
                     //фильтрация по ближайшему времени к текущему времени.
@@ -98,7 +106,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         }
 
         #endregion
-
 
 
 
@@ -159,5 +166,116 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         }
 
         #endregion
+
+
+
+        private void CreateXmlRequest(IEnumerable<UniversalInputType> tables)
+        {
+            if (tables == null || !tables.Any())
+                return;
+
+            var xDoc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"), new XElement("tlist"));
+            //-----------------------------DEBUG
+            foreach (var uit in tables)
+            {
+                string trainType = String.Empty;
+                string typeName = String.Empty;
+                string typeNameShort = String.Empty;
+                switch (uit.TypeTrain)
+                {
+                    case TypeTrain.None:
+                        trainType = String.Empty;
+                        typeName = String.Empty;
+                        break;
+
+                    case TypeTrain.Suburban:
+                        trainType = "0";
+                        typeName = "Пригородный";
+                        typeNameShort = "приг";
+                        break;
+
+                    case TypeTrain.Express:
+                        trainType = "1";
+                        typeName = "Экспресс";
+                        typeNameShort = "экспресс";
+                        break;
+
+                    case TypeTrain.HighSpeed:
+                        trainType = "2";
+                        typeName = "Скорый";
+                        typeNameShort = "скор";
+                        break;
+
+                    case TypeTrain.Corporate:
+                        trainType = "3";
+                        typeName = "Фирменный";
+                        typeNameShort = "фирм";
+                        break;
+
+                    case TypeTrain.Passenger:
+                        trainType = "4";
+                        typeName = "Пассажирский";
+                        typeNameShort = "пасс";
+                        break;
+
+                    case TypeTrain.Swallow:
+                        trainType = "5";
+                        typeName = "Скоростной";
+                        typeNameShort = "скоростной";
+                        break;
+
+                    case TypeTrain.Rex:
+                        trainType = "5";
+                        typeName = "Скоростной";
+                        typeNameShort = "скоростной";
+                        break;
+                }
+
+                string startSt;
+                string endSt;
+                var stations = uit.Stations.Split('-').Select(s => s.Trim()).ToList();
+                if (stations.Count == 2)
+                {
+                   startSt = stations[0];
+                   endSt = stations[1];
+                }
+                else
+                {
+                    startSt = (uit.Event == "ОТПР.") ? stations[0] : " ";
+                    endSt = (uit.Event == "ПРИБ.") ? stations[0] : " ";
+                }
+
+                var time = uit.Time.ToString("s");
+
+
+                xDoc.Root?.Add(
+                    new XElement("t",
+                    new XElement("TrainNumber", uit.NumberOfTrain),
+                    new XElement("TrainType", trainType),
+                    new XElement("StartStation", startSt),
+                    new XElement("EndStation", endSt),
+                    new XElement("RecDateTime", time),
+                    new XElement("SndDateTime", time),
+                    new XElement("EvRecTime", time),
+                    new XElement("EvSndTime", time),
+                    new XElement("TrackNumber", uit.PathNumber),
+                    new XElement("Direction", (uit.Event == "ПРИБ.") ? 0 : 1),
+                    new XElement("EvTrackNumber", uit.PathNumber),
+                    new XElement("State", 0),
+                    new XElement("VagonDirection", (byte)uit.VagonDirection),
+                    new XElement("Enabled", (uit.EmergencySituation & 0x01) == 0x01 ? 0 : 1),
+
+                    new XElement("tt",
+                    new XElement("TypeName", typeName),
+                    new XElement("TypeAlias", typeNameShort))
+                    ));
+            }
+
+
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDoc.info";
+            xDoc.Save(path);
+        }
+
+
     }
 }

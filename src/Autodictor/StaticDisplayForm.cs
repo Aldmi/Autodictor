@@ -20,6 +20,7 @@ namespace MainExample
         public static StaticDisplayForm MyStaticDisplayForm = null;
         private readonly ICollection<IBinding2StaticFormBehavior> _binding2StaticFormBehaviors;
         private int _currentSelectIndex = -1;
+        private bool _currentTableChanged;
 
 
 
@@ -144,6 +145,17 @@ namespace MainExample
 
                     currentTable1.Add(rowVal.ToArray());
                 }
+
+                //сохранение на диск
+                if (_currentTableChanged)
+                {
+                    if (File.Exists("")) 
+                    {
+                        //TODO: добавить сохранение на диск, при смене выделенного ус-ва в списке устройств.
+                        var currentbehavior = _binding2StaticFormBehaviors.ElementAt(_currentSelectIndex);
+                        string path = Application.StartupPath  + @"\StaticTableDisplay\" + currentbehavior.GetDeviceName + @"_" + currentbehavior.GetDeviceId + ".info";
+                    }
+                }
             }
             _currentSelectIndex = selectIndex;
 
@@ -202,7 +214,13 @@ namespace MainExample
 
 
 
-
+        private void dgv_main_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_currentSelectIndex >= 0)
+            {
+                _currentTableChanged = true;
+            }
+        }
 
 
 
@@ -213,6 +231,7 @@ namespace MainExample
 
             base.OnClosing(e);
         }
+
 
     }
 }

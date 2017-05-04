@@ -79,6 +79,7 @@ namespace MainExample
             this.dgv_main.Name = "dgv_main";
             this.dgv_main.Size = new System.Drawing.Size(1074, 599);
             this.dgv_main.TabIndex = 0;
+            this.dgv_main.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_main_CellEndEdit);
             // 
             // cl_NumbOfTrain
             // 
