@@ -175,7 +175,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 return;
 
             var xDoc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"), new XElement("tlist"));
-            //-----------------------------DEBUG
             foreach (var uit in tables)
             {
                 string trainType = String.Empty;

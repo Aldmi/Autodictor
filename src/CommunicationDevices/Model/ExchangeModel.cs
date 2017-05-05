@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoMapper;
 using Castle.Windsor;
+using Communication.Interfaces;
 using Communication.SerialPort;
 using Communication.Settings;
 using CommunicationDevices.Behavior;
@@ -15,6 +16,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.BindingBehavior.ToStatic;
 using CommunicationDevices.Behavior.ExhangeBehavior;
+using CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.ChannelManagement;
@@ -23,6 +25,7 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
 using CommunicationDevices.DataProviders.VidorDataProvider;
+using CommunicationDevices.DataProviders.XmlDataProvider;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
 using CommunicationDevices.Rules.ExchangeRules;
@@ -147,6 +150,7 @@ namespace CommunicationDevices.Model
             List<XmlSpSetting> xmlDeviceSpSettings;
             List<XmlPcSetting> xmlDevicePcSettings;
             List<XmlTcpIpSetting> xmlDeviceTcpIpSettings;
+            List<XmlHttpSetting> xmlDeviceHttpSettings;
             XmlCisSetting xmlCisSetting;
 
             try
@@ -159,6 +163,7 @@ namespace CommunicationDevices.Model
                 xmlDeviceSpSettings = XmlSettingFactory.CreateXmlSpSetting(xmlFile);
                 xmlDevicePcSettings = XmlSettingFactory.CreateXmlPcSetting(xmlFile);
                 xmlDeviceTcpIpSettings = XmlSettingFactory.CreateXmlTcpIpSetting(xmlFile);
+                xmlDeviceHttpSettings= XmlSettingFactory.CreateXmlHttpSetting(xmlFile);
                 xmlCisSetting = XmlCisSetting.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
@@ -805,6 +810,112 @@ namespace CommunicationDevices.Model
             }
 
             #endregion
+
+
+
+
+            #region СОЗДАНИЕ УСТРОЙСТВ С HTTP
+
+            foreach (var xmlDeviceHttp in xmlDeviceHttpSettings)
+            {
+                IExhangeBehavior behavior;
+                byte maxCountFaildRespowne;
+
+                XmlBindingSetting binding = null;
+                XmlConditionsSetting contrains = null;
+                XmlPagingSetting paging = null;
+                XmlPathPermissionSetting pathPermission = null;
+                XmlSendingTypeSetting sendingType = null;
+
+                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("Binding"))
+                {
+                    binding = xmlDeviceHttp.SpecialDictionary["Binding"] as XmlBindingSetting;
+                }
+
+                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("Contrains"))
+                {
+                    contrains = xmlDeviceHttp.SpecialDictionary["Contrains"] as XmlConditionsSetting;
+                }
+
+                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("Paging"))
+                {
+                    paging = xmlDeviceHttp.SpecialDictionary["Paging"] as XmlPagingSetting;
+                }
+
+                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("SendingType"))
+                {
+                    sendingType = xmlDeviceHttp.SpecialDictionary["SendingType"] as XmlSendingTypeSetting;
+                }
+
+                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("PathPermission"))
+                {
+                    pathPermission = xmlDeviceHttp.SpecialDictionary["PathPermission"] as XmlPathPermissionSetting;
+                }
+
+                var setting = new DeviceSetting
+                {
+                    PathPermission = pathPermission?.Enable ?? true
+                };
+
+                //привязка обязательный параметр
+                if (binding == null)
+                {
+                    MessageBox.Show($"Не указанны настройки привязки у ус-ва {xmlDeviceHttp.Id}");
+                    return;
+                }
+
+                switch (xmlDeviceHttp.Name)
+                {
+                    case "HttpTable":
+                        maxCountFaildRespowne = 3;
+
+                        // создание провайдера по формату XML "Tlist"
+                        if (sendingType?.XmlType != null && sendingType.XmlType.Value == XmlType.XmlTlist)
+                        {
+                            IExchangeDataProvider<UniversalInputType, byte> provider = new XmlTlistWriteDataProvider();
+                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 5000, provider);
+                            DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, behavior, binding.BindingType, setting));
+                        }
+
+
+                        //создание поведения привязка табло к пути.
+                        if (binding.BindingType == BindingType.ToPath)
+                        {
+                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions));
+                            DeviceTables.Last().AddCycleFunc(); //добавим все функции циклического опроса
+                        }
+
+                        //создание поведения привязка табло к главному расписанию
+                        if (binding.BindingType == BindingType.ToGeneral)
+                        {
+                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2GeneralSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                        }
+
+                        //создание поведения привязка табло к форме статических сообщений
+                        if (binding.BindingType == BindingType.ToStatic)
+                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
+
+                        break;
+
+
+
+
+
+                    default:
+                        ErrorString = $" Устройсвто с именем {xmlDeviceHttp.Name} не найденно";
+                        Log.log.Error(ErrorString);
+                        break;
+
+                }
+            }
+
+            #endregion
+
 
 
 

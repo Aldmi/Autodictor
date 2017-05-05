@@ -85,7 +85,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                             //Определим какие из правил отрисовывают данную строку (вывод информации или пустой строки).
                             foreach (var exchangeRule in selectedRules)
                             {
-
                                 var forTableViewDataProvide = new ByRuleTableWriteDataProvider(exchangeRule)
                                 {
                                     InputData = inputData,

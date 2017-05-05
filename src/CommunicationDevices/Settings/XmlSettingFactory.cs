@@ -435,6 +435,68 @@ namespace CommunicationDevices.Settings
             return listPcSett;
         }
 
+
+
+
+
+        /// <summary>
+        /// Создание списка настроек для устройств подключенных по Http
+        /// </summary>
+        public static List<XmlHttpSetting> CreateXmlHttpSetting(XElement xml)
+        {
+            var devHttp = xml?.Element("DevicesWithHttp")?.Elements("DeviceHttp").ToList();
+            var listHttpSett = new List<XmlHttpSetting>();
+
+
+            if (devHttp == null || !devHttp.Any())
+                return listHttpSett;
+
+
+            foreach (var el in devHttp)
+            {
+                var httpSett = new XmlHttpSetting(
+                                   (string)el.Attribute("Id"),
+                                   (string)el.Attribute("Name"),
+                                   (string)el.Attribute("Address"),
+                                   (string)el.Attribute("TimeRespone"),
+                                   (string)el.Attribute("Description"));
+
+                var bind = (string)el.Attribute("Binding");
+                if (bind != null)
+                {
+                    httpSett.SpecialDictionary.Add("Binding", new XmlBindingSetting(bind));
+                }
+
+                var contrains = (string)el.Attribute("Conditions");
+                if (contrains != null)
+                {
+                    httpSett.SpecialDictionary.Add("Conditions", new XmlConditionsSetting(contrains));
+                }
+
+                var paging = (string)el.Attribute("Paging");
+                if (paging != null)
+                {
+                    httpSett.SpecialDictionary.Add("Paging", new XmlPagingSetting(paging));
+                }
+
+                var countRow = (string)el.Attribute("CountRow");
+                if (countRow != null)
+                {
+                    httpSett.SpecialDictionary.Add("CountRow", new XmlCountRowSetting(countRow));
+                }
+
+                var sendingType = (string)el.Attribute("SendingType");
+                if (sendingType != null)
+                {
+                    httpSett.SpecialDictionary.Add("SendingType", new XmlSendingTypeSetting(sendingType));
+                }
+
+                listHttpSett.Add(httpSett);
+            }
+
+            return listHttpSett;
+        }
+
         #endregion
 
     }

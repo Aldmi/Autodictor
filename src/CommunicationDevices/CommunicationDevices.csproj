@@ -104,8 +104,11 @@
     <Compile Include="Behavior\BindingBehavior\ToPath\IBinding2PathBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToStatic\Binding2StaticFormBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToStatic\IBinding2StaticFormBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\BaseExhangeHttpBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\XmlExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementWriteDataProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\XmlTlistWriteDataProvider.cs" />
     <Compile Include="Rules\ExchangeRules\BaseExchangeRule.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesExchangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesTableExchangeSpBehavior.cs" />
@@ -139,6 +142,8 @@
     <Compile Include="Settings\XmlCisSettings\XmlCisSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlExchangeRule.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPathPermissionSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlHttpSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlSendingTypeSetting.cs" />
     <Compile Include="Settings\XmlSettingFactory.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlBindingSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlConditionsSetting.cs" />
