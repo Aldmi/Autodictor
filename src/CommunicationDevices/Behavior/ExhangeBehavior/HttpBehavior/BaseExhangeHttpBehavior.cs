@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Communication.Annotations;
+using Communication.Http;
 using Communication.TcpIp;
 using CommunicationDevices.DataProviders;
 using Timer = System.Timers.Timer;
@@ -27,10 +28,13 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
         #region prop
 
+        public ClientHttp ClientHttp { get; set; }
+
+
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }
         public int NumberPort { get; }
 
-        public bool IsOpen => true;          //???
+        public bool IsOpen => ClientHttp.IsConnect;
 
         private bool _isConnect;
         public bool IsConnect
@@ -77,18 +81,18 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
         #region ctor
 
-        protected BaseExhangeHttpBehavior(string connectionString, byte maxCountFaildRespowne, int timeRespown, double taimerPeriod)
+        protected BaseExhangeHttpBehavior(string connectionString, string methode, string contentType, byte maxCountFaildRespowne, int timeRespowne, double taimerPeriod)
         {
-            string ip = null;
-            var strArr = connectionString.Split(':');
-            if (strArr.Length == 2)
-            {
-                ip = strArr[0];
-                NumberPort = int.Parse(strArr[1]);
-            }
+            //string ip = null;
+            //var strArr = connectionString.Split(':');
+            //if (strArr.Length == 2)
+            //{
+            //    ip = strArr[0];
+            //    NumberPort = int.Parse(strArr[1]);
+            //}
 
-            //MasterTcpIp = new MasterTcpIp(ip, NumberPort, timeRespown, maxCountFaildRespowne);
-            //MasterTcpIp.PropertyChanged += MasterTcpIp_PropertyChanged;
+            ClientHttp = new ClientHttp(connectionString, methode, contentType, timeRespowne, maxCountFaildRespowne);
+            ClientHttp.PropertyChanged += MasterHttp_PropertyChanged;
 
             _timer = new Timer(taimerPeriod);
             _timer.Elapsed += OnTimedEvent;
@@ -111,11 +115,30 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
 
+
+        #region EventHandler
+
+        private void MasterHttp_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var maesteHttp = sender as ClientHttp;
+            if (maesteHttp != null)
+            {
+                if (e.PropertyName == "IsConnect")
+                    IsConnect = maesteHttp.IsConnect;
+            }
+        }
+
+        #endregion
+
+
+
+
         #region Methode
 
         public void CycleReConnect(ICollection<Task> backGroundTasks = null)
         {
-            //
+            var task = ClientHttp.ReConnect();       //выполняется фоновая задача, пока не подключится к серверу.
+            backGroundTasks?.Add(task);
         }
 
 
@@ -162,7 +185,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
         public void Dispose()
         {
             _timer?.Dispose();
-            //MasterTcpIp.PropertyChanged -= MasterTcpIp_PropertyChanged;
+            //MasterTcpIp.PropertyChanged -= MasterHttp_PropertyChanged;
             //MasterTcpIp.Dispose();
         }
 

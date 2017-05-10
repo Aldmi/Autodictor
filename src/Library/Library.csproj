@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convertion\NumericConvertion.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Library\BlockClick.cs" />
     <Compile Include="Async\AsyncHelp.cs" />
     <Compile Include="Library\CRC16.cs" />

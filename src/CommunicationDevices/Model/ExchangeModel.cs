@@ -873,7 +873,7 @@ namespace CommunicationDevices.Model
                         if (sendingType?.XmlType != null && sendingType.XmlType.Value == XmlType.XmlTlist)
                         {
                             IExchangeDataProvider<UniversalInputType, byte> provider = new XmlTlistWriteDataProvider();
-                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 5000, provider);
+                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, "POST", "text/xml; encoding='utf-8'", maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);
                             DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, behavior, binding.BindingType, setting));
                         }
 

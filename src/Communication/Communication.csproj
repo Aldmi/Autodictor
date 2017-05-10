@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http\ClientHttp.cs" />
     <Compile Include="Interfaces\IExchangeDataProvider.cs" />
     <Compile Include="Interfaces\IExchangeDataProviderBase.cs" />
     <Compile Include="SerialPort\MasterSerialPort.cs" />

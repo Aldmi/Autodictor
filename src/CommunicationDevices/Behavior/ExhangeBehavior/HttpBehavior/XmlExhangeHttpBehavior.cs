@@ -17,12 +17,10 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
 
-
-
         #region ctor
 
-        public XmlExhangeHttpBehavior(string connectionString, byte maxCountFaildRespowne, int timeRespown, double taimerPeriod, IExchangeDataProvider<UniversalInputType, byte> xmlExcangeDataProvider)
-            : base(connectionString, maxCountFaildRespowne, timeRespown, taimerPeriod)
+        public XmlExhangeHttpBehavior(string connectionString, string methode, string contentType, byte maxCountFaildRespowne, int timeRespowne, double taimerPeriod, IExchangeDataProvider<UniversalInputType, byte> xmlExcangeDataProvider)
+            : base(connectionString, methode, contentType, maxCountFaildRespowne, timeRespowne, taimerPeriod)
         {
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
             XmlExcangeDataProvider = xmlExcangeDataProvider;
@@ -32,24 +30,22 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
 
+
+
+
         private bool _sendLock;
-        public override void AddOneTimeSendData(UniversalInputType inData)
+        public override async void AddOneTimeSendData(UniversalInputType inData)
         {
             if (_sendLock)
                 return;
 
             _sendLock = true;
-
-
             if (inData?.TableData != null)
             {
-
                 XmlExcangeDataProvider.InputData = inData;
-                //DataExchangeSuccess = //await MasterTcpIp.RequestAndRespoune(forTableViewDataProvide);
+                DataExchangeSuccess = await ClientHttp.RequestAndRespoune(XmlExcangeDataProvider);
                 LastSendData = XmlExcangeDataProvider.InputData;
             }
-
-
             _sendLock = false;
         }
     }
