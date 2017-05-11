@@ -75,7 +75,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://www.google.com"  SendingType="Xml_tlist"  TimeRespone="2000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно"/>
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://www.google.com"  SendingType="Xml_tlist"  TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно"/>
 </DevicesWithHttp>
 
 </Root>

@@ -53,7 +53,12 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
         public bool SetDataByte(byte[] data)
         {
-            return true;
+            if (data != null && data.Length == 2)
+            {
+                return (data[0] == 0xAA) && (data[1] == 0xBB);
+            }
+
+            return false;
         }
 
 

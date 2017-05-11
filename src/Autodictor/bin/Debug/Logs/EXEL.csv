@@ -1,6 +1,10 @@
-10T15:34:23;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
-10T15:34:23;"ERROR  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" УСПЕШНО ПОЛУЧЕНН";Fatal
-10T15:35:03;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
-10T15:35:03;"ERROR  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" УСПЕШНО ПОЛУЧЕНН";Fatal
-10T15:35:13;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
-10T15:35:13;"ERROR  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" УСПЕШНО ПОЛУЧЕНН";Fatal
+time;message;level
+11T10:56:36;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+11T10:56:56;"OK  (SendData)   Message= Отправка запроса.... на ""http://www.google.com""";Fatal
+11T10:56:56;OK  (SendData)   Message= запись байт в поток....;Fatal
+11T10:56:56;ERROR  (RequestAndRespoune) Exception,  Message= Неизвестное Исключение: Произошла одна или несколько ошибок..   Внутренне исключение: Удаленный сервер возвратил ошибку: (413) Request Entity Too Large.;Fatal
+11T10:56:56;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+11T10:57:26;"OK  (SendData)   Message= Отправка запроса.... на ""http://www.google.com""";Fatal
+11T10:57:26;OK  (SendData)   Message= запись байт в поток....;Fatal
+11T10:57:26;ERROR  (RequestAndRespoune) Exception,  Message= Неизвестное Исключение: Произошла одна или несколько ошибок..   Внутренне исключение: Удаленный сервер возвратил ошибку: (413) Request Entity Too Large.;Fatal
+11T10:57:26;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
