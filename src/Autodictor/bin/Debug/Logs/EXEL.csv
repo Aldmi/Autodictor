@@ -440,3 +440,9 @@ time;message;level
 12T13:48:25;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
 12T13:52:17;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
 12T13:54:59;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:35:37;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:35:43;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:36:11;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:36:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:38:03;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:38:29;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal

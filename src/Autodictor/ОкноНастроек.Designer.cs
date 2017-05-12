@@ -257,6 +257,20 @@
             this.chBox2_LongDist = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.chBox1_LongDist = new System.Windows.Forms.CheckBox();
+            this.cBПассажирскийПоездEng = new System.Windows.Forms.CheckBox();
+            this.label106 = new System.Windows.Forms.Label();
+            this.label107 = new System.Windows.Forms.Label();
+            this.cBСкорыйПоездEng = new System.Windows.Forms.CheckBox();
+            this.label108 = new System.Windows.Forms.Label();
+            this.cBСкоростнойПоездEng = new System.Windows.Forms.CheckBox();
+            this.label109 = new System.Windows.Forms.Label();
+            this.cBПригЭлектропоездEng = new System.Windows.Forms.CheckBox();
+            this.label110 = new System.Windows.Forms.Label();
+            this.cBФирменныйEng = new System.Windows.Forms.CheckBox();
+            this.label111 = new System.Windows.Forms.Label();
+            this.cBЛасточкаEng = new System.Windows.Forms.CheckBox();
+            this.label112 = new System.Windows.Forms.Label();
+            this.cBРЭКСEng = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -272,6 +286,20 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label112);
+            this.groupBox1.Controls.Add(this.cBРЭКСEng);
+            this.groupBox1.Controls.Add(this.label111);
+            this.groupBox1.Controls.Add(this.cBЛасточкаEng);
+            this.groupBox1.Controls.Add(this.label110);
+            this.groupBox1.Controls.Add(this.cBФирменныйEng);
+            this.groupBox1.Controls.Add(this.label109);
+            this.groupBox1.Controls.Add(this.cBПригЭлектропоездEng);
+            this.groupBox1.Controls.Add(this.label108);
+            this.groupBox1.Controls.Add(this.cBСкоростнойПоездEng);
+            this.groupBox1.Controls.Add(this.label107);
+            this.groupBox1.Controls.Add(this.cBСкорыйПоездEng);
+            this.groupBox1.Controls.Add(this.label106);
+            this.groupBox1.Controls.Add(this.cBПассажирскийПоездEng);
             this.groupBox1.Controls.Add(this.cBРЭКС);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.cBЛасточка);
@@ -2649,6 +2677,139 @@
             this.chBox1_LongDist.TabIndex = 20;
             this.chBox1_LongDist.UseVisualStyleBackColor = true;
             // 
+            // cBПассажирскийПоездEng
+            // 
+            this.cBПассажирскийПоездEng.AutoSize = true;
+            this.cBПассажирскийПоездEng.Location = new System.Drawing.Point(345, 137);
+            this.cBПассажирскийПоездEng.Name = "cBПассажирскийПоездEng";
+            this.cBПассажирскийПоездEng.Size = new System.Drawing.Size(15, 14);
+            this.cBПассажирскийПоездEng.TabIndex = 15;
+            this.cBПассажирскийПоездEng.UseVisualStyleBackColor = true;
+            // 
+            // label106
+            // 
+            this.label106.AutoSize = true;
+            this.label106.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label106.Location = new System.Drawing.Point(298, 133);
+            this.label106.Name = "label106";
+            this.label106.Size = new System.Drawing.Size(41, 20);
+            this.label106.TabIndex = 16;
+            this.label106.Text = "Eng";
+            // 
+            // label107
+            // 
+            this.label107.AutoSize = true;
+            this.label107.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label107.Location = new System.Drawing.Point(298, 156);
+            this.label107.Name = "label107";
+            this.label107.Size = new System.Drawing.Size(41, 20);
+            this.label107.TabIndex = 18;
+            this.label107.Text = "Eng";
+            // 
+            // cBСкорыйПоездEng
+            // 
+            this.cBСкорыйПоездEng.AutoSize = true;
+            this.cBСкорыйПоездEng.Location = new System.Drawing.Point(345, 160);
+            this.cBСкорыйПоездEng.Name = "cBСкорыйПоездEng";
+            this.cBСкорыйПоездEng.Size = new System.Drawing.Size(15, 14);
+            this.cBСкорыйПоездEng.TabIndex = 17;
+            this.cBСкорыйПоездEng.UseVisualStyleBackColor = true;
+            // 
+            // label108
+            // 
+            this.label108.AutoSize = true;
+            this.label108.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label108.Location = new System.Drawing.Point(298, 179);
+            this.label108.Name = "label108";
+            this.label108.Size = new System.Drawing.Size(41, 20);
+            this.label108.TabIndex = 20;
+            this.label108.Text = "Eng";
+            // 
+            // cBСкоростнойПоездEng
+            // 
+            this.cBСкоростнойПоездEng.AutoSize = true;
+            this.cBСкоростнойПоездEng.Location = new System.Drawing.Point(345, 183);
+            this.cBСкоростнойПоездEng.Name = "cBСкоростнойПоездEng";
+            this.cBСкоростнойПоездEng.Size = new System.Drawing.Size(15, 14);
+            this.cBСкоростнойПоездEng.TabIndex = 19;
+            this.cBСкоростнойПоездEng.UseVisualStyleBackColor = true;
+            // 
+            // label109
+            // 
+            this.label109.AutoSize = true;
+            this.label109.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label109.Location = new System.Drawing.Point(298, 201);
+            this.label109.Name = "label109";
+            this.label109.Size = new System.Drawing.Size(41, 20);
+            this.label109.TabIndex = 22;
+            this.label109.Text = "Eng";
+            // 
+            // cBПригЭлектропоездEng
+            // 
+            this.cBПригЭлектропоездEng.AutoSize = true;
+            this.cBПригЭлектропоездEng.Location = new System.Drawing.Point(345, 205);
+            this.cBПригЭлектропоездEng.Name = "cBПригЭлектропоездEng";
+            this.cBПригЭлектропоездEng.Size = new System.Drawing.Size(15, 14);
+            this.cBПригЭлектропоездEng.TabIndex = 21;
+            this.cBПригЭлектропоездEng.UseVisualStyleBackColor = true;
+            // 
+            // label110
+            // 
+            this.label110.AutoSize = true;
+            this.label110.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label110.Location = new System.Drawing.Point(298, 224);
+            this.label110.Name = "label110";
+            this.label110.Size = new System.Drawing.Size(41, 20);
+            this.label110.TabIndex = 24;
+            this.label110.Text = "Eng";
+            // 
+            // cBФирменныйEng
+            // 
+            this.cBФирменныйEng.AutoSize = true;
+            this.cBФирменныйEng.Location = new System.Drawing.Point(345, 228);
+            this.cBФирменныйEng.Name = "cBФирменныйEng";
+            this.cBФирменныйEng.Size = new System.Drawing.Size(15, 14);
+            this.cBФирменныйEng.TabIndex = 23;
+            this.cBФирменныйEng.UseVisualStyleBackColor = true;
+            // 
+            // label111
+            // 
+            this.label111.AutoSize = true;
+            this.label111.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label111.Location = new System.Drawing.Point(298, 247);
+            this.label111.Name = "label111";
+            this.label111.Size = new System.Drawing.Size(41, 20);
+            this.label111.TabIndex = 26;
+            this.label111.Text = "Eng";
+            // 
+            // cBЛасточкаEng
+            // 
+            this.cBЛасточкаEng.AutoSize = true;
+            this.cBЛасточкаEng.Location = new System.Drawing.Point(345, 251);
+            this.cBЛасточкаEng.Name = "cBЛасточкаEng";
+            this.cBЛасточкаEng.Size = new System.Drawing.Size(15, 14);
+            this.cBЛасточкаEng.TabIndex = 25;
+            this.cBЛасточкаEng.UseVisualStyleBackColor = true;
+            // 
+            // label112
+            // 
+            this.label112.AutoSize = true;
+            this.label112.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label112.Location = new System.Drawing.Point(298, 270);
+            this.label112.Name = "label112";
+            this.label112.Size = new System.Drawing.Size(41, 20);
+            this.label112.TabIndex = 28;
+            this.label112.Text = "Eng";
+            // 
+            // cBРЭКСEng
+            // 
+            this.cBРЭКСEng.AutoSize = true;
+            this.cBРЭКСEng.Location = new System.Drawing.Point(345, 274);
+            this.cBРЭКСEng.Name = "cBРЭКСEng";
+            this.cBРЭКСEng.Size = new System.Drawing.Size(15, 14);
+            this.cBРЭКСEng.TabIndex = 27;
+            this.cBРЭКСEng.UseVisualStyleBackColor = true;
+            // 
             // ОкноНастроек
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -2921,5 +3082,19 @@
         private System.Windows.Forms.CheckBox chBox2_Platform;
         private System.Windows.Forms.Label label104;
         private System.Windows.Forms.CheckBox chBox1_Platform;
+        private System.Windows.Forms.Label label112;
+        private System.Windows.Forms.CheckBox cBРЭКСEng;
+        private System.Windows.Forms.Label label111;
+        private System.Windows.Forms.CheckBox cBЛасточкаEng;
+        private System.Windows.Forms.Label label110;
+        private System.Windows.Forms.CheckBox cBФирменныйEng;
+        private System.Windows.Forms.Label label109;
+        private System.Windows.Forms.CheckBox cBПригЭлектропоездEng;
+        private System.Windows.Forms.Label label108;
+        private System.Windows.Forms.CheckBox cBСкоростнойПоездEng;
+        private System.Windows.Forms.Label label107;
+        private System.Windows.Forms.CheckBox cBСкорыйПоездEng;
+        private System.Windows.Forms.Label label106;
+        private System.Windows.Forms.CheckBox cBПассажирскийПоездEng;
     }
 }

@@ -22,6 +22,15 @@ namespace MainExample
         public bool АвтФормСообщНаФирменный;
         public bool АвтФормСообщНаЛасточку;
         public bool АвтФормСообщНаРЭКС;
+
+        public bool EngСообщНаПассажирскийПоезд;
+        public bool EngСообщНаСкорыйПоезд;
+        public bool EngСообщНаСкоростнойПоезд;
+        public bool EngСообщНаПригородныйЭлектропоезд;
+        public bool EngСообщНаФирменный;
+        public bool EngСообщНаЛасточку;
+        public bool EngСообщНаРЭКС;
+
         public bool РазрешениеДобавленияЗаблокированныхПоездовВСписок;
         public bool РазрешениеАвтообновленияРасписания;
         public DateTime ВремяАвтообновленияРасписания;
@@ -35,6 +44,7 @@ namespace MainExample
 
         public float КаналыПериодОтправкиПакетов;
     };
+
 
     public partial class ОкноНастроек : Form
     {
@@ -81,6 +91,7 @@ namespace MainExample
             tBИнтОповещОбОтменеПоезда.Text = Program.Настройки.ИнтервалМеждуОповещениемОбОтменеПоезда.ToString("0.0");
             tBИнтОповещОЗадержкеПрибытия.Text = Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеПрибытияПоезда.ToString("0.0");
             tBИнтОповещОЗадержкеОтправления.Text = Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда.ToString("0.0");
+
             cBПассажирскийПоезд.Checked = Program.Настройки.АвтФормСообщНаПассажирскийПоезд;
             cBСкорыйПоезд.Checked = Program.Настройки.АвтФормСообщНаСкорыйПоезд;
             cBСкоростнойПоезд.Checked = Program.Настройки.АвтФормСообщНаСкоростнойПоезд;
@@ -88,6 +99,15 @@ namespace MainExample
             cBФирменный.Checked = Program.Настройки.АвтФормСообщНаФирменный;
             cBЛасточка.Checked = Program.Настройки.АвтФормСообщНаЛасточку;
             cBРЭКС.Checked = Program.Настройки.АвтФормСообщНаРЭКС;
+
+            cBПассажирскийПоездEng.Checked = Program.Настройки.EngСообщНаПассажирскийПоезд;
+            cBСкорыйПоездEng.Checked = Program.Настройки.EngСообщНаСкорыйПоезд;
+            cBСкоростнойПоездEng.Checked = Program.Настройки.EngСообщНаСкоростнойПоезд;
+            cBПригЭлектропоездEng.Checked = Program.Настройки.EngСообщНаПригородныйЭлектропоезд;
+            cBФирменныйEng.Checked = Program.Настройки.EngСообщНаФирменный;
+            cBЛасточкаEng.Checked = Program.Настройки.EngСообщНаЛасточку;
+            cBРЭКСEng.Checked = Program.Настройки.EngСообщНаРЭКС;
+
             cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Checked = Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок;
             cbРазрешитьАвтоОбновлениеРасписания.Checked = Program.Настройки.РазрешениеАвтообновленияРасписания;
             dTP_Автообновление.Value = Program.Настройки.ВремяАвтообновленияРасписания;
@@ -131,10 +151,18 @@ namespace MainExample
             Program.Настройки.АвтФормСообщНаФирменный = cBФирменный.Checked;
             Program.Настройки.АвтФормСообщНаЛасточку = cBЛасточка.Checked;
             Program.Настройки.АвтФормСообщНаРЭКС = cBРЭКС.Checked;
+
+            Program.Настройки.EngСообщНаПассажирскийПоезд = cBПассажирскийПоездEng.Checked;
+            Program.Настройки.EngСообщНаСкорыйПоезд = cBСкорыйПоездEng.Checked;
+            Program.Настройки.EngСообщНаСкоростнойПоезд = cBСкоростнойПоездEng.Checked;
+            Program.Настройки.EngСообщНаПригородныйЭлектропоезд = cBПригЭлектропоездEng.Checked;
+            Program.Настройки.EngСообщНаФирменный = cBФирменныйEng.Checked;
+            Program.Настройки.EngСообщНаЛасточку = cBЛасточкаEng.Checked;
+            Program.Настройки.EngСообщНаРЭКС = cBРЭКСEng.Checked;
+
             Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок = cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Checked;
             Program.Настройки.РазрешениеАвтообновленияРасписания = cbРазрешитьАвтоОбновлениеРасписания.Checked;
             Program.Настройки.ВремяАвтообновленияРасписания = dTP_Автообновление.Value;
-
 
             for (int i = 0; i < Program.Настройки.КаналыДальнегоСлед.Length; i++)
                 Program.Настройки.КаналыДальнегоСлед[i]= _каналыДальнегоСлед[i].Checked;
@@ -230,6 +258,44 @@ namespace MainExample
                                         Program.Настройки.АвтФормСообщНаРЭКС = ПеременнаяBool;
                                     break;
 
+
+                                case "EngСообщНаПассажирскийПоезд":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаПассажирскийПоезд = ПеременнаяBool;
+                                    break;
+
+                                case "EngСообщНаСкорыйПоезд":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаСкорыйПоезд = ПеременнаяBool;
+                                    break;
+
+                                case "EngСообщНаСкоростнойПоезд":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаСкоростнойПоезд = ПеременнаяBool;
+                                    break;
+
+                                case "EngСообщНаПригородныйЭлектропоезд":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаПригородныйЭлектропоезд = ПеременнаяBool;
+                                    break;
+
+                                case "EngСообщНаФирменный":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаФирменный = ПеременнаяBool;
+                                    break;
+
+                                case "EngСообщНаЛасточку":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаЛасточку = ПеременнаяBool;
+                                    break;
+
+                                case "EngСообщНаРЭКС":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.EngСообщНаРЭКС = ПеременнаяBool;
+                                    break;
+
+
+
                                 case "РазрешениеДобавленияЗаблокированныхПоездовВСписок":
                                     if (bool.TryParse(Settings[1], out ПеременнаяBool))
                                         Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок = ПеременнаяBool;
@@ -312,6 +378,7 @@ namespace MainExample
                 Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда = 1;
         }
 
+
         public static void СохранитьНастройки()
         {
             try
@@ -322,6 +389,7 @@ namespace MainExample
                     DumpFile.WriteLine("ИнтервалМеждуОповещениемОбОтменеПоезда=" + Program.Настройки.ИнтервалМеждуОповещениемОбОтменеПоезда.ToString("0.0"));
                     DumpFile.WriteLine("ИнтервалМеждуОповещениемОЗадержкеПрибытияПоезда=" + Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеПрибытияПоезда.ToString("0.0"));
                     DumpFile.WriteLine("ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда=" + Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда.ToString("0.0"));
+
                     DumpFile.WriteLine("АвтФормСообщНаПассажирскийПоезд=" + Program.Настройки.АвтФормСообщНаПассажирскийПоезд.ToString());
                     DumpFile.WriteLine("АвтФормСообщНаСкорыйПоезд=" + Program.Настройки.АвтФормСообщНаСкорыйПоезд.ToString());
                     DumpFile.WriteLine("АвтФормСообщНаСкоростнойПоезд=" + Program.Настройки.АвтФормСообщНаСкоростнойПоезд.ToString());
@@ -329,6 +397,15 @@ namespace MainExample
                     DumpFile.WriteLine("АвтФормСообщНаФирменный=" + Program.Настройки.АвтФормСообщНаФирменный.ToString());
                     DumpFile.WriteLine("АвтФормСообщНаЛасточку=" + Program.Настройки.АвтФормСообщНаЛасточку.ToString());
                     DumpFile.WriteLine("АвтФормСообщНаРЭКС=" + Program.Настройки.АвтФормСообщНаРЭКС.ToString());
+
+                    DumpFile.WriteLine("EngСообщНаПассажирскийПоезд=" + Program.Настройки.EngСообщНаПассажирскийПоезд.ToString());
+                    DumpFile.WriteLine("EngСообщНаСкорыйПоезд=" + Program.Настройки.EngСообщНаСкорыйПоезд.ToString());
+                    DumpFile.WriteLine("EngСообщНаСкоростнойПоезд=" + Program.Настройки.EngСообщНаСкоростнойПоезд.ToString());
+                    DumpFile.WriteLine("EngСообщНаПригородныйЭлектропоезд=" + Program.Настройки.EngСообщНаПригородныйЭлектропоезд.ToString());
+                    DumpFile.WriteLine("EngСообщНаФирменный=" + Program.Настройки.EngСообщНаФирменный.ToString());
+                    DumpFile.WriteLine("EngСообщНаЛасточку=" + Program.Настройки.EngСообщНаЛасточку.ToString());
+                    DumpFile.WriteLine("EngСообщНаРЭКС=" + Program.Настройки.EngСообщНаРЭКС.ToString());
+
                     DumpFile.WriteLine("РазрешениеДобавленияЗаблокированныхПоездовВСписок=" + Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок.ToString());
                     DumpFile.WriteLine("РазрешениеАвтообновленияРасписания=" + Program.Настройки.РазрешениеАвтообновленияРасписания.ToString());
                     DumpFile.WriteLine("ВремяАвтообновленияРасписания=" + Program.Настройки.ВремяАвтообновленияРасписания.ToString("t"));
