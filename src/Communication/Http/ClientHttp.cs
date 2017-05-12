@@ -171,7 +171,8 @@ namespace Communication.Http
             IsRunDataExchange = true;
             try
             {
-                var sendResult = await SendData(dataProvider);
+                //DEBUG-------------------
+                bool? sendResult = null;//await SendData(dataProvider);
                 if(sendResult == null)
                     return false;
 

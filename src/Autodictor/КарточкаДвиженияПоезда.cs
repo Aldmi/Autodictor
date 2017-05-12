@@ -733,7 +733,7 @@ namespace MainExample
                 СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                 {
                     Шаблон = ФормируемоеСообщение,
-                    ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru }, //TODO: вычислять языки оповещения 
+                    ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
                     НазваниеШаблона = "Авария"
                 };
 

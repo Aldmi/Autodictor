@@ -467,10 +467,10 @@ namespace CommunicationDevices.Settings
                     httpSett.SpecialDictionary.Add("Binding", new XmlBindingSetting(bind));
                 }
 
-                var contrains = (string)el.Attribute("Conditions");
+                var contrains = (string)el.Attribute("Contrains");
                 if (contrains != null)
                 {
-                    httpSett.SpecialDictionary.Add("Conditions", new XmlConditionsSetting(contrains));
+                    httpSett.SpecialDictionary.Add("Contrains", new XmlConditionsSetting(contrains));
                 }
 
                 var paging = (string)el.Attribute("Paging");

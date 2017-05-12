@@ -164,6 +164,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
                     ));
             }
 
+
+
             //DEBUG------------------------
             string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDoc.info";
             xDoc.Save(path);
