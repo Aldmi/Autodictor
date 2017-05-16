@@ -30,6 +30,8 @@ namespace MainExample
         public string СтанцияНазначения;
         public DateTime Время;
         public DateTime ВремяПрибытия;
+        public string Дополнение;                            //свободная переменная для ввода 
+        public bool ИспользоватьДополнение;
         public uint ВремяСтоянки;
         public DateTime ВремяОтправления;
         public string ДниСледования;
@@ -38,7 +40,7 @@ namespace MainExample
         public byte НумерацияПоезда;
         public string НомерПути;
         public ТипПоезда ТипПоезда;
-        public string Примечание;
+        public string Примечание;                             //С остановками....
         public string Описание;
         public SoundRecordStatus Состояние;
         public SoundRecordType ТипСообщения;
@@ -327,7 +329,8 @@ namespace MainExample
 
                 Record.НомерПоезда = Config.Num;
                 Record.НазваниеПоезда = Config.Name;
-
+                Record.Дополнение = Config.Addition;
+                Record.ИспользоватьДополнение = !string.IsNullOrEmpty(Record.Дополнение);
                 Record.СтанцияОтправления = "";
                 Record.СтанцияНазначения = "";
                 Record.ДниСледования = Config.Days;
@@ -1590,7 +1593,7 @@ namespace MainExample
 
         private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
         {
-            Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
+            //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
 
             if (SoundChanelManagment != null)
             {
@@ -1618,7 +1621,7 @@ namespace MainExample
 
         private void СобытиеПроцессПроигрыванияФайлаОчередиЗвуковыхСообщений()
         {
-            Debug.WriteLine("ПРОЦЕСС ПРОИГРЫВАНИЯ");//DEBUG
+           // Debug.WriteLine("ПРОЦЕСС ПРОИГРЫВАНИЯ");//DEBUG
         }
 
 
@@ -2211,14 +2214,7 @@ namespace MainExample
                             {
                                 Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(Record.НомерПути) + 1 + ВидНомерацииПути * 25];
                                 logMessage += Text + " ";
-
-                                //---------------- TODO: Добавить если будет новый шаблон
-                               // NotificationLanguage язык2 = шаблон.ToLower().Contains("eng") ? NotificationLanguage.Eng : NotificationLanguage.Ru;                          
-                               //---------------
-
-
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Text, Язык = язык });
-                                continue;
                             }
                             break;
 
@@ -2234,6 +2230,20 @@ namespace MainExample
                             Text = Record.НомерПоезда;
                             logMessage += Text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Text, Язык = язык });
+                            break;
+
+
+                        case "ДОПОЛНЕНИЕ":
+                            if (Record.ИспользоватьДополнение)
+                            {
+                                Text = Record.Дополнение;
+                                logMessage += Text + " ";
+                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                                {
+                                    ИмяВоспроизводимогоФайла = Text,
+                                    Язык = язык
+                                });
+                            }
                             break;
 
 

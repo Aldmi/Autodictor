@@ -82,6 +82,8 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnУдалитьШаблон = new System.Windows.Forms.Button();
             this.btnДобавитьШаблон = new System.Windows.Forms.Button();
+            this.tb_Дополнение = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -90,7 +92,7 @@
             // 
             // btn_Принять
             // 
-            this.btn_Принять.Location = new System.Drawing.Point(319, 697);
+            this.btn_Принять.Location = new System.Drawing.Point(319, 756);
             this.btn_Принять.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Принять.Name = "btn_Принять";
             this.btn_Принять.Size = new System.Drawing.Size(123, 35);
@@ -101,7 +103,7 @@
             // 
             // btn_Отменить
             // 
-            this.btn_Отменить.Location = new System.Drawing.Point(448, 697);
+            this.btn_Отменить.Location = new System.Drawing.Point(448, 756);
             this.btn_Отменить.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Отменить.Name = "btn_Отменить";
             this.btn_Отменить.Size = new System.Drawing.Size(123, 35);
@@ -122,7 +124,7 @@
             this.gBНаправление.Controls.Add(this.rBТранзит);
             this.gBНаправление.Controls.Add(this.rBОтправление);
             this.gBНаправление.Controls.Add(this.rBПрибытие);
-            this.gBНаправление.Location = new System.Drawing.Point(14, 52);
+            this.gBНаправление.Location = new System.Drawing.Point(14, 111);
             this.gBНаправление.Margin = new System.Windows.Forms.Padding(5);
             this.gBНаправление.Name = "gBНаправление";
             this.gBНаправление.Padding = new System.Windows.Forms.Padding(5);
@@ -272,7 +274,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 220);
+            this.label3.Location = new System.Drawing.Point(28, 279);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(174, 20);
             this.label3.TabIndex = 45;
@@ -282,7 +284,7 @@
             // 
             this.cBПутьПоУмолчанию.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBПутьПоУмолчанию.FormattingEnabled = true;
-            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(219, 217);
+            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(219, 276);
             this.cBПутьПоУмолчанию.Name = "cBПутьПоУмолчанию";
             this.cBПутьПоУмолчанию.Size = new System.Drawing.Size(341, 28);
             this.cBПутьПоУмолчанию.TabIndex = 46;
@@ -295,7 +297,7 @@
             "Не объявлять",
             "С головы состава",
             "С хвоста состава"});
-            this.cBОтсчетВагонов.Location = new System.Drawing.Point(219, 257);
+            this.cBОтсчетВагонов.Location = new System.Drawing.Point(219, 316);
             this.cBОтсчетВагонов.Name = "cBОтсчетВагонов";
             this.cBОтсчетВагонов.Size = new System.Drawing.Size(341, 28);
             this.cBОтсчетВагонов.TabIndex = 48;
@@ -303,7 +305,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 260);
+            this.label4.Location = new System.Drawing.Point(28, 319);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(175, 20);
             this.label4.TabIndex = 47;
@@ -318,16 +320,16 @@
             this.gBОстановки.Controls.Add(this.rBБезОстановок);
             this.gBОстановки.Controls.Add(this.rBСоВсемиОстановками);
             this.gBОстановки.Controls.Add(this.rBНеОповещать);
-            this.gBОстановки.Location = new System.Drawing.Point(581, 18);
+            this.gBОстановки.Location = new System.Drawing.Point(581, 11);
             this.gBОстановки.Name = "gBОстановки";
-            this.gBОстановки.Size = new System.Drawing.Size(585, 278);
+            this.gBОстановки.Size = new System.Drawing.Size(585, 333);
             this.gBОстановки.TabIndex = 49;
             this.gBОстановки.TabStop = false;
             this.gBОстановки.Text = "Остановки";
             // 
             // btnРедактировать
             // 
-            this.btnРедактировать.Location = new System.Drawing.Point(15, 217);
+            this.btnРедактировать.Location = new System.Drawing.Point(15, 278);
             this.btnРедактировать.Name = "btnРедактировать";
             this.btnРедактировать.Size = new System.Drawing.Size(186, 45);
             this.btnРедактировать.TabIndex = 50;
@@ -344,7 +346,7 @@
             this.lVСписокСтанций.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lVСписокСтанций.Location = new System.Drawing.Point(213, 34);
             this.lVСписокСтанций.Name = "lVСписокСтанций";
-            this.lVСписокСтанций.Size = new System.Drawing.Size(366, 228);
+            this.lVСписокСтанций.Size = new System.Drawing.Size(366, 293);
             this.lVСписокСтанций.TabIndex = 49;
             this.lVСписокСтанций.UseCompatibleStateImageBehavior = false;
             this.lVСписокСтанций.View = System.Windows.Forms.View.Details;
@@ -424,7 +426,7 @@
             this.gBДниСледования.Controls.Add(this.rBВремяДействияПо);
             this.gBДниСледования.Controls.Add(this.rBВремяДействияС);
             this.gBДниСледования.Controls.Add(this.label5);
-            this.gBДниСледования.Location = new System.Drawing.Point(14, 302);
+            this.gBДниСледования.Location = new System.Drawing.Point(14, 361);
             this.gBДниСледования.Name = "gBДниСледования";
             this.gBДниСледования.Size = new System.Drawing.Size(378, 375);
             this.gBДниСледования.TabIndex = 50;
@@ -560,7 +562,7 @@
             this.cBБлокировка.AutoSize = true;
             this.cBБлокировка.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBБлокировка.ForeColor = System.Drawing.Color.OrangeRed;
-            this.cBБлокировка.Location = new System.Drawing.Point(20, 696);
+            this.cBБлокировка.Location = new System.Drawing.Point(20, 755);
             this.cBБлокировка.Name = "cBБлокировка";
             this.cBБлокировка.Size = new System.Drawing.Size(275, 33);
             this.cBБлокировка.TabIndex = 51;
@@ -577,7 +579,7 @@
             this.gBШаблонОповещения.Controls.Add(this.lVШаблоныОповещения);
             this.gBШаблонОповещения.Controls.Add(this.btnУдалитьШаблон);
             this.gBШаблонОповещения.Controls.Add(this.btnДобавитьШаблон);
-            this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 302);
+            this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 361);
             this.gBШаблонОповещения.Name = "gBШаблонОповещения";
             this.gBШаблонОповещения.Size = new System.Drawing.Size(768, 375);
             this.gBШаблонОповещения.TabIndex = 52;
@@ -675,11 +677,29 @@
             this.btnДобавитьШаблон.UseVisualStyleBackColor = true;
             this.btnДобавитьШаблон.Click += new System.EventHandler(this.btnДобавитьШаблон_Click);
             // 
+            // tb_Дополнение
+            // 
+            this.tb_Дополнение.Location = new System.Drawing.Point(131, 64);
+            this.tb_Дополнение.Name = "tb_Дополнение";
+            this.tb_Дополнение.Size = new System.Drawing.Size(429, 26);
+            this.tb_Дополнение.TabIndex = 54;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 65);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 20);
+            this.label8.TabIndex = 53;
+            this.label8.Text = "Дополнение";
+            // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 738);
+            this.ClientSize = new System.Drawing.Size(1182, 806);
+            this.Controls.Add(this.tb_Дополнение);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.gBШаблонОповещения);
             this.Controls.Add(this.cBБлокировка);
             this.Controls.Add(this.gBДниСледования);
@@ -768,5 +788,7 @@
         private System.Windows.Forms.ComboBox cBВремяОповещения;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tb_Дополнение;
+        private System.Windows.Forms.Label label8;
     }
 }

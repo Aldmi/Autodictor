@@ -62,6 +62,7 @@ namespace MainExample
 
             this.Text = "Расписание движения для поезда: " + РасписаниеПоезда.Num + " - " + РасписаниеПоезда.Name;
             tBНомерПоезда.Text = РасписаниеПоезда.Num;
+            tb_Дополнение.Text = РасписаниеПоезда.Addition;
 
             string[] Станции = РасписаниеПоезда.Name.Split('-');
             if (Станции.Length == 2)
@@ -179,9 +180,12 @@ namespace MainExample
             }
         }
 
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             РасписаниеПоезда.Num = tBНомерПоезда.Text;
+            РасписаниеПоезда.Addition = tb_Дополнение.Text;
 
             if (cBОткуда.Text != "")
                 РасписаниеПоезда.Name = cBОткуда.Text + " - " + cBКуда.Text;
@@ -274,10 +278,14 @@ namespace MainExample
             DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
+
+
         private void button2_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
         }
+
+
 
         public string ПолучитьШаблоныОповещения()
         {

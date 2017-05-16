@@ -38,6 +38,7 @@ namespace MainExample
             _deviceSoundChannelManagement = deviceSoundChannelManagement;
 
             this.comboBox_Messages.Items.Add("НОМЕР ПОЕЗДА");
+            this.comboBox_Messages.Items.Add("ДОПОЛНЕНИЕ");
             this.comboBox_Messages.Items.Add("СТ.ОТПРАВЛЕНИЯ");
             this.comboBox_Messages.Items.Add("СТ.ПРИБЫТИЯ");
             this.comboBox_Messages.Items.Add("НА НОМЕР ПУТЬ");

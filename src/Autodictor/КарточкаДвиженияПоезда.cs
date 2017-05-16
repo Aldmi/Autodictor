@@ -48,6 +48,10 @@ namespace MainExample
                 case 2: rB_Нумерация_СХвоста.Checked = true; break;
             }
 
+
+            tb_Дополнение.Text = Record.Дополнение;
+            cb_Дополнение.Checked = Record.ИспользоватьДополнение;
+
             ОбновитьТекстВОкне();
 
             string Text = "Карточка ";
@@ -274,6 +278,9 @@ namespace MainExample
             Record.СтанцияОтправления = cBОткуда.Text;
             Record.СтанцияНазначения = cBКуда.Text;
 
+            Record.Дополнение = tb_Дополнение.Text;
+            Record.ИспользоватьДополнение = cb_Дополнение.Checked;
+
             Record.НазваниеПоезда = Record.СтанцияОтправления == "" ? Record.СтанцияНазначения : Record.СтанцияОтправления + " - " + Record.СтанцияНазначения;
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -496,6 +503,13 @@ namespace MainExample
                     case "НОМЕР ПОЕЗДА":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.НомерПоезда;
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTb.AppendText(Text + " ");
+                        break;
+
+                    case "ДОПОЛНЕНИЕ":
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
+                        Text = Record.Дополнение;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;

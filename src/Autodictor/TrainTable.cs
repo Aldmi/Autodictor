@@ -25,11 +25,6 @@ namespace MainExample
     };
     
 
-
-
-
-
-
     public struct TrainTableRecord
     {
         public int ID;                    //Id
@@ -47,6 +42,7 @@ namespace MainExample
         public string Примечание;
         public DateTime ВремяНачалаДействияРасписания;
         public DateTime ВремяОкончанияДействияРасписания;
+        public string Addition;           //Дополнение
     };
 
 
@@ -58,7 +54,7 @@ namespace MainExample
         
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
         private static int ID = 0;
-        static public TrainTable myMainForm = null;
+        public static TrainTable myMainForm = null;
 
 
         public TrainTable(CisClient cisClient)
@@ -176,6 +172,7 @@ namespace MainExample
             TrainTableRecord Данные;
             Данные.ID = ++ID;
             Данные.Num = "";
+            Данные.Addition = "";
             Данные.Name = "";
             Данные.ArrivalTime = "00:00";
             Данные.StopTime = "00:00";
@@ -189,44 +186,9 @@ namespace MainExample
             Данные.Примечание = "";
             Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
             Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+            Данные.Addition = "";
 
-            /*
-            Данные.ID = ++ID;
-            Данные.Num = tB_Номер.Text;
-            Данные.Name = tB_Название.Text;
-            Данные.ArrivalTime = cB_Прибытие.Checked ? dTP_Прибытие.Value.Hour.ToString("00") + ":" + dTP_Прибытие.Value.Minute.ToString("00") : "";
-            int ВремяОстановки = (dTP_Отправление.Value.Hour * 60 + dTP_Отправление.Value.Minute) - (dTP_Прибытие.Value.Hour * 60 + dTP_Прибытие.Value.Minute);
-            if (ВремяОстановки < 0) ВремяОстановки += 24 * 60;
-            Данные.StopTime = cB_Прибытие.Checked && cB_Отправление.Checked ? ВремяОстановки.ToString() : "";
-            Данные.DepartureTime = cB_Отправление.Checked ? dTP_Отправление.Value.Hour.ToString("00") + ":" + dTP_Отправление.Value.Minute.ToString("00") : "";
-            Данные.Days = "";
-            Данные.Active = true;
-            Данные.SoundTemplates = "::::::::::::::";
-
-
-            if (rB_Нумерация_СГоловы.Checked == true)
-                Данные.TrainPathDirection = 0x01;
-            else if (rB_Нумерация_СХвоста.Checked == true)
-                Данные.TrainPathDirection = 0x02;
-            else
-                Данные.TrainPathDirection = 0x00;
-
-            if (rBОтображениеОтсутствует.Checked == true)
-                Данные.ShowInPanels = 0x00;
-            else if (rBОтображениеДальнегоСледования.Checked == true)
-                Данные.ShowInPanels = 0x01;
-            else
-                Данные.ShowInPanels = 0x02;
-
-            if ((cB_НомерПути.SelectedIndex < 0) || (cB_НомерПути.SelectedIndex > 14))
-                Данные.TrainPathNumber = 0;
-            else
-                Данные.TrainPathNumber = (byte)cB_НомерПути.SelectedIndex;
-
-            Данные.Примечание = tBПримечание.Text;
-            */
             TrainTableRecords.Add(Данные);
-
             ОбновитьДанныеВСписке();
         }
 
@@ -254,10 +216,14 @@ namespace MainExample
             }
         }
 
+
+
         private void btn_Сохранить_Click(object sender, EventArgs e)
         {
             СохранитьСписок();
         }
+
+
 
         public static void ЗагрузитьСписок()
         {
@@ -271,7 +237,7 @@ namespace MainExample
                     while ((line = file.ReadLine()) != null)
                     {
                         string[] Settings = line.Split(';');
-                        if ((Settings.Length == 13) || (Settings.Length == 15))
+                        if ((Settings.Length == 13) || (Settings.Length == 15) || (Settings.Length == 16))
                         {
                             TrainTableRecord Данные;
 
@@ -305,16 +271,24 @@ namespace MainExample
 
                             DateTime НачалоДействия = new DateTime(1900, 1, 1);
                             DateTime КонецДействия = new DateTime(2100, 1, 1);
-                            if (Settings.Length == 15)
+                            if (Settings.Length >= 15)
                             {
                                 DateTime.TryParse(Settings[13], out НачалоДействия);
                                 DateTime.TryParse(Settings[14], out КонецДействия);
                             }
-
                             Данные.ВремяНачалаДействияРасписания = НачалоДействия;
                             Данные.ВремяОкончанияДействияРасписания = КонецДействия;
-                            TrainTableRecords.Add(Данные);
 
+
+                            var addition = "";
+                            if (Settings.Length == 16)
+                            {
+                                addition = Settings[15];
+                            }
+                            Данные.Addition = addition;
+
+
+                            TrainTableRecords.Add(Данные);
                             Program.НомераПоездов.Add(Данные.Num);
 
                             if (Данные.ID > ID)
@@ -352,7 +326,8 @@ namespace MainExample
                             TrainTableRecords[i].ТипПоезда.ToString() + ";" +
                             TrainTableRecords[i].Примечание + ";" +
                             TrainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                            TrainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss");
+                            TrainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                            TrainTableRecords[i].Addition;
 
                         DumpFile.WriteLine(line);
                     }
@@ -365,6 +340,9 @@ namespace MainExample
                 Console.WriteLine(e.Message);
             }
         }
+
+
+
 
         private void btn_ШаблонОповещения_Click(object sender, EventArgs e)
         {
@@ -399,6 +377,9 @@ namespace MainExample
                 }
             }
         }
+
+
+
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -534,6 +515,8 @@ namespace MainExample
 
                     Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
                     Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+
+                    Данные.Addition = "";
 
                     TrainTableRecords.Add(Данные);
 

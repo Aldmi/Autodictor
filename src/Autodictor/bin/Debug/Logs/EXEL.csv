@@ -446,3 +446,30 @@ time;message;level
 12T16:36:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
 12T16:38:03;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
 12T16:38:29;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+12T16:44:36;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+15T11:37:43;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+15T14:44:36;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+15T15:10:36;15:10:36;Fatal
+15T16:10:37;16:10:37;Fatal
+16T11:01:10;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T11:01:54;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T11:05:30;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T11:07:23;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T11:09:57;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T11:10:37;11:10:37;Fatal
+16T11:52:54;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T12:11:27;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T12:32:51;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T12:34:53;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T12:46:49;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T13:23:52;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T13:26:20;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T13:30:08;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T13:47:25;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T13:53:28;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T15:25:27;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T15:34:38;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T15:36:30;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T16:01:39;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T16:03:57;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+16T16:08:26;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
