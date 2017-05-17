@@ -34,6 +34,7 @@ namespace CommunicationDevices.DataProviders
         public string NumberOfTrain { get; set; }                    //Номер поезда
         public string PathNumber { get; set; }                       //Номер пути
         public string Event { get; set; }                            //Событие (отправление/прибытие)
+        public string Addition { get; set; }                         //Дополнение (свободная строка)
         public string Stations { get; set; }                         //Станции Отправления-Назначения.
         public string Note { get; set; }                             //Примечание.
         public string DaysFollowing { get; set; }                    //Дни следования
@@ -64,6 +65,7 @@ namespace CommunicationDevices.DataProviders
             NumberOfTrain = initializeData.NumberOfTrain;
             PathNumber = initializeData.PathNumber;
             Event = initializeData.Event;
+            Addition = initializeData.Addition;
             Stations = initializeData.Stations;
             Note= initializeData.Note;
             Time = initializeData.Time;

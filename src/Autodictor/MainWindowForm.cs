@@ -1804,6 +1804,7 @@ namespace MainExample
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
+                    Addition = (data.ИспользоватьДополнение) ? data.Дополнение : string.Empty,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };
@@ -1820,6 +1821,7 @@ namespace MainExample
                     Stations = data.НазваниеПоезда,
                     Note = data.Примечание,
                     TypeTrain = typeTrain,
+                    Addition = (data.ИспользоватьДополнение) ? data.Дополнение : string.Empty,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };

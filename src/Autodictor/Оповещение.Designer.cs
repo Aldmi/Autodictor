@@ -84,6 +84,13 @@
             this.btnДобавитьШаблон = new System.Windows.Forms.Button();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tb_КолвоПовторовRu = new System.Windows.Forms.TextBox();
+            this.tb_КолвоПовторовEng = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -92,7 +99,7 @@
             // 
             // btn_Принять
             // 
-            this.btn_Принять.Location = new System.Drawing.Point(319, 756);
+            this.btn_Принять.Location = new System.Drawing.Point(319, 791);
             this.btn_Принять.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Принять.Name = "btn_Принять";
             this.btn_Принять.Size = new System.Drawing.Size(123, 35);
@@ -103,7 +110,7 @@
             // 
             // btn_Отменить
             // 
-            this.btn_Отменить.Location = new System.Drawing.Point(448, 756);
+            this.btn_Отменить.Location = new System.Drawing.Point(448, 791);
             this.btn_Отменить.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Отменить.Name = "btn_Отменить";
             this.btn_Отменить.Size = new System.Drawing.Size(123, 35);
@@ -428,7 +435,7 @@
             this.gBДниСледования.Controls.Add(this.label5);
             this.gBДниСледования.Location = new System.Drawing.Point(14, 361);
             this.gBДниСледования.Name = "gBДниСледования";
-            this.gBДниСледования.Size = new System.Drawing.Size(378, 375);
+            this.gBДниСледования.Size = new System.Drawing.Size(378, 423);
             this.gBДниСледования.TabIndex = 50;
             this.gBДниСледования.TabStop = false;
             this.gBДниСледования.Text = "Дни следования";
@@ -439,7 +446,7 @@
             this.tBОписаниеДнейСледования.Multiline = true;
             this.tBОписаниеДнейСледования.Name = "tBОписаниеДнейСледования";
             this.tBОписаниеДнейСледования.ReadOnly = true;
-            this.tBОписаниеДнейСледования.Size = new System.Drawing.Size(349, 118);
+            this.tBОписаниеДнейСледования.Size = new System.Drawing.Size(349, 166);
             this.tBОписаниеДнейСледования.TabIndex = 59;
             // 
             // btnДниСледования
@@ -562,7 +569,7 @@
             this.cBБлокировка.AutoSize = true;
             this.cBБлокировка.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBБлокировка.ForeColor = System.Drawing.Color.OrangeRed;
-            this.cBБлокировка.Location = new System.Drawing.Point(20, 755);
+            this.cBБлокировка.Location = new System.Drawing.Point(20, 790);
             this.cBБлокировка.Name = "cBБлокировка";
             this.cBБлокировка.Size = new System.Drawing.Size(275, 33);
             this.cBБлокировка.TabIndex = 51;
@@ -572,6 +579,11 @@
             // 
             // gBШаблонОповещения
             // 
+            this.gBШаблонОповещения.Controls.Add(this.tb_КолвоПовторовEng);
+            this.gBШаблонОповещения.Controls.Add(this.label11);
+            this.gBШаблонОповещения.Controls.Add(this.tb_КолвоПовторовRu);
+            this.gBШаблонОповещения.Controls.Add(this.label10);
+            this.gBШаблонОповещения.Controls.Add(this.label9);
             this.gBШаблонОповещения.Controls.Add(this.label7);
             this.gBШаблонОповещения.Controls.Add(this.cBВремяОповещения);
             this.gBШаблонОповещения.Controls.Add(this.tBВремяОповещения);
@@ -581,7 +593,7 @@
             this.gBШаблонОповещения.Controls.Add(this.btnДобавитьШаблон);
             this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 361);
             this.gBШаблонОповещения.Name = "gBШаблонОповещения";
-            this.gBШаблонОповещения.Size = new System.Drawing.Size(768, 375);
+            this.gBШаблонОповещения.Size = new System.Drawing.Size(892, 422);
             this.gBШаблонОповещения.TabIndex = 52;
             this.gBШаблонОповещения.TabStop = false;
             this.gBШаблонОповещения.Text = "Шаблоны оповещения";
@@ -602,16 +614,16 @@
             this.cBВремяОповещения.Items.AddRange(new object[] {
             "Прибытие",
             "Отправление"});
-            this.cBВремяОповещения.Location = new System.Drawing.Point(479, 56);
+            this.cBВремяОповещения.Location = new System.Drawing.Point(479, 54);
             this.cBВремяОповещения.Name = "cBВремяОповещения";
-            this.cBВремяОповещения.Size = new System.Drawing.Size(283, 28);
+            this.cBВремяОповещения.Size = new System.Drawing.Size(404, 28);
             this.cBВремяОповещения.TabIndex = 57;
             // 
             // tBВремяОповещения
             // 
             this.tBВремяОповещения.Location = new System.Drawing.Point(204, 56);
             this.tBВремяОповещения.Name = "tBВремяОповещения";
-            this.tBВремяОповещения.Size = new System.Drawing.Size(176, 26);
+            this.tBВремяОповещения.Size = new System.Drawing.Size(211, 26);
             this.tBВремяОповещения.TabIndex = 55;
             // 
             // cBШаблонОповещения
@@ -620,7 +632,7 @@
             this.cBШаблонОповещения.FormattingEnabled = true;
             this.cBШаблонОповещения.Location = new System.Drawing.Point(6, 23);
             this.cBШаблонОповещения.Name = "cBШаблонОповещения";
-            this.cBШаблонОповещения.Size = new System.Drawing.Size(756, 28);
+            this.cBШаблонОповещения.Size = new System.Drawing.Size(877, 28);
             this.cBШаблонОповещения.TabIndex = 53;
             // 
             // lVШаблоныОповещения
@@ -628,14 +640,16 @@
             this.lVШаблоныОповещения.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader4,
+            this.columnHeader6});
             this.lVШаблоныОповещения.FullRowSelect = true;
             this.lVШаблоныОповещения.GridLines = true;
             this.lVШаблоныОповещения.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lVШаблоныОповещения.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lVШаблоныОповещения.Location = new System.Drawing.Point(117, 91);
+            this.lVШаблоныОповещения.Location = new System.Drawing.Point(117, 118);
             this.lVШаблоныОповещения.Name = "lVШаблоныОповещения";
-            this.lVШаблоныОповещения.Size = new System.Drawing.Size(645, 278);
+            this.lVШаблоныОповещения.Size = new System.Drawing.Size(766, 299);
             this.lVШаблоныОповещения.TabIndex = 51;
             this.lVШаблоныОповещения.UseCompatibleStateImageBehavior = false;
             this.lVШаблоныОповещения.View = System.Windows.Forms.View.Details;
@@ -648,7 +662,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Время оповещения";
-            this.columnHeader3.Width = 175;
+            this.columnHeader3.Width = 177;
             // 
             // columnHeader5
             // 
@@ -657,7 +671,7 @@
             // 
             // btnУдалитьШаблон
             // 
-            this.btnУдалитьШаблон.Location = new System.Drawing.Point(6, 140);
+            this.btnУдалитьШаблон.Location = new System.Drawing.Point(6, 167);
             this.btnУдалитьШаблон.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnУдалитьШаблон.Name = "btnУдалитьШаблон";
             this.btnУдалитьШаблон.Size = new System.Drawing.Size(105, 35);
@@ -668,7 +682,7 @@
             // 
             // btnДобавитьШаблон
             // 
-            this.btnДобавитьШаблон.Location = new System.Drawing.Point(6, 95);
+            this.btnДобавитьШаблон.Location = new System.Drawing.Point(6, 122);
             this.btnДобавитьШаблон.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnДобавитьШаблон.Name = "btnДобавитьШаблон";
             this.btnДобавитьШаблон.Size = new System.Drawing.Size(105, 35);
@@ -693,11 +707,60 @@
             this.label8.TabIndex = 53;
             this.label8.Text = "Дополнение";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(199, 93);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 20);
+            this.label9.TabIndex = 58;
+            this.label9.Text = "Ru";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 93);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(152, 20);
+            this.label10.TabIndex = 59;
+            this.label10.Text = "Кол-во повторов";
+            // 
+            // tb_КолвоПовторовRu
+            // 
+            this.tb_КолвоПовторовRu.Location = new System.Drawing.Point(233, 87);
+            this.tb_КолвоПовторовRu.Name = "tb_КолвоПовторовRu";
+            this.tb_КолвоПовторовRu.Size = new System.Drawing.Size(50, 26);
+            this.tb_КолвоПовторовRu.TabIndex = 60;
+            // 
+            // tb_КолвоПовторовEng
+            // 
+            this.tb_КолвоПовторовEng.Location = new System.Drawing.Point(365, 87);
+            this.tb_КолвоПовторовEng.Name = "tb_КолвоПовторовEng";
+            this.tb_КолвоПовторовEng.Size = new System.Drawing.Size(50, 26);
+            this.tb_КолвоПовторовEng.TabIndex = 62;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(322, 93);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 20);
+            this.label11.TabIndex = 61;
+            this.label11.Text = "Eng";
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Ru";
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Eng";
+            // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 806);
+            this.ClientSize = new System.Drawing.Size(1297, 834);
             this.Controls.Add(this.tb_Дополнение);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.gBШаблонОповещения);
@@ -790,5 +853,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tb_Дополнение;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tb_КолвоПовторовEng;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tb_КолвоПовторовRu;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }

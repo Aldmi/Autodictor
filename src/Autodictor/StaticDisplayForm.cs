@@ -18,7 +18,7 @@ namespace MainExample
     public partial class StaticDisplayForm : Form
     {
         public static StaticDisplayForm MyStaticDisplayForm = null;
-        private readonly ICollection<IBinding2StaticFormBehavior> _binding2StaticFormBehaviors;
+        private readonly IList<IBinding2StaticFormBehavior> _binding2StaticFormBehaviors;
         private int _currentSelectIndex = -1;
         private bool _currentTableChanged;
 
@@ -43,7 +43,7 @@ namespace MainExample
             if (MyStaticDisplayForm != null)
                 return;
             MyStaticDisplayForm = this;
-        
+
             InitializeComponent();
 
             dgv_main.CellClick += dataGridView1_CellClick;
@@ -52,7 +52,7 @@ namespace MainExample
 
         public StaticDisplayForm(ICollection<IBinding2StaticFormBehavior> binding2StaticFormBehaviors) : this()
         {
-            this._binding2StaticFormBehaviors = binding2StaticFormBehaviors;
+            this._binding2StaticFormBehaviors = binding2StaticFormBehaviors.ToList();
         }
 
 
@@ -65,7 +65,6 @@ namespace MainExample
 
         protected override void OnLoad(EventArgs e)
         {
-          
             if (_binding2StaticFormBehaviors != null)
             {
                 //загрузка спсика устройств со статической привязкой--------------------------------------------
@@ -81,27 +80,94 @@ namespace MainExample
                 }
 
 
-                //инициализация таблиц.
+                //инициализация таблиц.---------------------------------------------------------------------------
                 for (byte i = 0; i < _binding2StaticFormBehaviors.Count; i++)
                 {
-                    List<string[]> table = new List<string[]>();
-
-                    string[] array;
-                    if (File.Exists(""))     //DEBUG иммитация загруженных данных
-                    {
-                        array = new[] { (100 + i).ToString(), ("NAme" + i) };
-                        table.Add(array);
-                    }
-                    else
-                    {
-                        array = new string[dgv_main.ColumnCount];
-                        table.Add(array);
-                    }
-                    Tables[i] = table;
+                    Tables[i] = LoadTableFromFile(GetIndividualFileName(i));
                 }
             }
         }
 
+
+        private string GetIndividualFileName(int bindingId)
+        {
+            if (bindingId < 0 || bindingId >= _binding2StaticFormBehaviors.Count)
+                return null;
+
+            var fileName = _binding2StaticFormBehaviors[bindingId].GetDeviceName + "_" + _binding2StaticFormBehaviors[bindingId].GetDeviceId;
+            return fileName + @".info";
+        }
+
+
+
+        private List<string[]> LoadTableFromFile(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+
+            var table = new List<string[]>();
+            string[] array;
+
+            string path = Application.StartupPath + @"\StaticTableDisplay" + @"\" + fileName;
+            if (File.Exists(path))
+            {
+                try
+                {
+                    using (StreamReader file = new StreamReader(path))
+                    {
+                        string line;
+                        while ((line = file.ReadLine()) != null)
+                        {
+                            array = line.Split(';');
+                            table.Add(array);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка чтения файла {path}  ОШИБКА: {ex.Message}");
+                }
+            }
+            else
+            {
+                array = new string[dgv_main.ColumnCount];
+                table.Add(array);
+            }
+
+            return table;
+        }
+
+
+
+        private void SaveTableToFile(List<string[]> table, string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return;
+
+            string path = Application.StartupPath + @"\StaticTableDisplay" + @"\" + fileName;
+            try
+            {
+                using (StreamWriter dumpFile = new StreamWriter(path))            //если файла нет, он будет создан
+                {
+                    foreach (string[] row in table)
+                    {
+                        StringBuilder line= new StringBuilder();
+                        for (int j = 0; j < row.Length; j++)
+                        {
+                            var spliter = (j < row.Length - 1) ? ";" : string.Empty;
+                            line.Append(row[j] + spliter);
+                        }
+                        dumpFile.WriteLine(line.ToString());
+                    }
+
+                    dumpFile.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка записи файла {path}  ОШИБКА: {ex.Message}");
+            }
+        }
 
 
 
@@ -112,7 +178,7 @@ namespace MainExample
         {
             for (int i = 0; i < dgv_main.RowCount; i++)
             {
-                dgv_main.Rows[i].HeaderCell.Value = (i+1).ToString();
+                dgv_main.Rows[i].HeaderCell.Value = (i + 1).ToString();
             }
         }
 
@@ -146,15 +212,11 @@ namespace MainExample
                     currentTable1.Add(rowVal.ToArray());
                 }
 
-                //сохранение на диск
+                //сохранение на диск-----------------------------------
                 if (_currentTableChanged)
                 {
-                    if (File.Exists("")) 
-                    {
-                        //TODO: добавить сохранение на диск, при смене выделенного ус-ва в списке устройств.
-                        var currentbehavior = _binding2StaticFormBehaviors.ElementAt(_currentSelectIndex);
-                        string path = Application.StartupPath  + @"\StaticTableDisplay\" + currentbehavior.GetDeviceName + @"_" + currentbehavior.GetDeviceId + ".info";
-                    }
+                    SaveTableToFile(currentTable1, GetIndividualFileName(_currentSelectIndex));
+                    _currentTableChanged = false;
                 }
             }
             _currentSelectIndex = selectIndex;
@@ -170,16 +232,15 @@ namespace MainExample
 
 
 
-
         private void btn_Show_Click(object sender, EventArgs e)
         {
             if (_binding2StaticFormBehaviors == null || !_binding2StaticFormBehaviors.Any())
                 return;
 
-            if(_currentSelectIndex < 0)
+            if (_currentSelectIndex < 0)
                 return;
 
-            var resultUit= new UniversalInputType {TableData = new List<UniversalInputType>()};
+            var resultUit = new UniversalInputType { TableData = new List<UniversalInputType>() };
 
             //формирование таблицу отправки------------------------------
             var currentTable = Tables[(byte)_currentSelectIndex];
@@ -209,7 +270,7 @@ namespace MainExample
 
             //отправляем таблицу все ус-вам.-----------------------------
             var currentbehavior = _binding2StaticFormBehaviors.ElementAt(_currentSelectIndex);
-            currentbehavior.SendMessage(resultUit);     
+            currentbehavior.SendMessage(resultUit);
         }
 
 
@@ -226,12 +287,16 @@ namespace MainExample
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            if (_currentTableChanged)
+            {
+                lv_select_SelectedIndexChanged(null, EventArgs.Empty);
+                _currentTableChanged = false;
+            }
+
             if (MyStaticDisplayForm == this)
                 MyStaticDisplayForm = null;
 
             base.OnClosing(e);
         }
-
-
     }
 }

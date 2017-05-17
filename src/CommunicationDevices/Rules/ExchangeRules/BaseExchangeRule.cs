@@ -183,6 +183,14 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
+                    if (replaseStr.Contains(nameof(uit.Addition)))
+                    {
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.Addition), "0"), uit.Addition);
+                        resStr.Append(formatStr);
+                        continue;
+                    }
+
+
                     if (replaseStr.Contains(nameof(uit.Stations)))
                     {
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.Stations), "0"), string.IsNullOrEmpty(uit.Stations) ? " " : uit.Stations);

@@ -309,7 +309,6 @@ namespace MainExample
             {
                 using (StreamWriter DumpFile = new StreamWriter("TableRecords.ini"))
                 {
-
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
                         string line = (i + 1).ToString() + ";" +
