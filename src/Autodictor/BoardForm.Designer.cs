@@ -44,6 +44,8 @@ namespace MainExample
             this.RxTxCol = new System.Windows.Forms.DataGridViewImageColumn();
             this.Str2SendCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Action = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ClearAction = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.RestartAction = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBoards)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,7 +73,9 @@ namespace MainExample
             this.IsConnectImageCol,
             this.RxTxCol,
             this.Str2SendCol,
-            this.Action});
+            this.Action,
+            this.ClearAction,
+            this.RestartAction});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -82,10 +86,11 @@ namespace MainExample
             this.dataGridViewBoards.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewBoards.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewBoards.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewBoards.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridViewBoards.Name = "dataGridViewBoards";
             this.dataGridViewBoards.RowHeadersWidth = 4;
             this.dataGridViewBoards.RowTemplate.Height = 54;
-            this.dataGridViewBoards.Size = new System.Drawing.Size(1376, 721);
+            this.dataGridViewBoards.Size = new System.Drawing.Size(1401, 586);
             this.dataGridViewBoards.TabIndex = 2;
             // 
             // IdCol
@@ -163,12 +168,30 @@ namespace MainExample
             this.Action.UseColumnTextForButtonValue = true;
             this.Action.Width = 120;
             // 
+            // ClearAction
+            // 
+            this.ClearAction.HeaderText = "Очистка";
+            this.ClearAction.Name = "ClearAction";
+            this.ClearAction.ReadOnly = true;
+            this.ClearAction.Text = "Очистка";
+            this.ClearAction.UseColumnTextForButtonValue = true;
+            this.ClearAction.Width = 120;
+            // 
+            // RestartAction
+            // 
+            this.RestartAction.HeaderText = "Перезагрузка";
+            this.RestartAction.Name = "RestartAction";
+            this.RestartAction.Text = "Перезагрузка";
+            this.RestartAction.UseColumnTextForButtonValue = true;
+            this.RestartAction.Width = 120;
+            // 
             // BoardForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1376, 721);
+            this.ClientSize = new System.Drawing.Size(1401, 586);
             this.Controls.Add(this.dataGridViewBoards);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "BoardForm";
             this.Text = "ТАБЛО";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBoards)).EndInit();
@@ -188,5 +211,7 @@ namespace MainExample
         private DataGridViewImageColumn RxTxCol;
         private DataGridViewTextBoxColumn Str2SendCol;
         private DataGridViewButtonColumn Action;
+        private DataGridViewButtonColumn ClearAction;
+        private DataGridViewButtonColumn RestartAction;
     }
 }

@@ -27,8 +27,8 @@ namespace CommunicationDevices.DataProviders
     public class UniversalInputType
     {
         public int Id { get; set; }
-
         public string AddressDevice { get; set; }                    //Адресс устройсва
+        public bool IsActive { get; set; }                           //Флаг активности записи ("Отменен без объявления")
 
         public TypeTrain TypeTrain { get; set; }                     //Пригород или дальнего следования
         public string NumberOfTrain { get; set; }                    //Номер поезда
@@ -50,17 +50,19 @@ namespace CommunicationDevices.DataProviders
 
         public List<bool> SoundChanels { get; set; }                 //Настройка звуковых каналов (по каким каналам передавать данное сообщение)
 
-        public Dictionary<string, dynamic> ViewBag { get; set; }
+        public Dictionary<string, dynamic> ViewBag { get; set; }     //Не типизированный контейнер для передачи любых данных
 
 
 
 
 
 
+        #region Methode
 
         public void Initialize(UniversalInputType initializeData)
         {
             AddressDevice = initializeData.AddressDevice;
+            IsActive = initializeData.IsActive;
             TypeTrain = initializeData.TypeTrain;
             NumberOfTrain = initializeData.NumberOfTrain;
             PathNumber = initializeData.PathNumber;
@@ -113,5 +115,7 @@ namespace CommunicationDevices.DataProviders
 
             return filtredCollection;
         }
+
+        #endregion
     }
 }

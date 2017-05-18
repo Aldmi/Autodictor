@@ -116,8 +116,49 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
             var countRow = MainRule.ViewType.TableSize.Value;
             var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
 
+            //отправка одиночной команды-----------------------------------------------------------------------
+            if (inData != null && inData.Command != Command.None)
+            {
+                var commandDate = new UniversalInputType
+                {
+                    Command = inData.Command,
+                    Event = "  ",
+                    NumberOfTrain = "  ",
+                    PathNumber = "  ",
+                    Stations = "  ",
+                    Time = DateTime.MinValue,
+                    Message = inData.Command + ".....................",
+                    AddressDevice = inData.AddressDevice
+                };
 
-            //Вывод на табличное табло построчной информации
+                //Выбрать правила для отрисовки
+                var selectedRules = MainRule.ExchangeRules.Where(rule => rule.CheckResolution(commandDate)).ToList();
+
+                //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                if (selectedRules.Any(d => d.Resolution != null))
+                {
+                    selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
+                }
+
+                foreach (var exchangeRule in selectedRules)
+                {
+                    var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = commandDate };
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+
+                    LastSendData = writeProvider.InputData;
+                    if (writeProvider.IsOutDataValid)
+                    {
+                        // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                    }
+
+                    await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
+                }
+                return;
+            }
+
+
+            //Вывод на табличное табло построчной информации------------------------------------------------------
             if (inData?.TableData != null)
             {
                 for (byte i = 0; i < countRow; i++)

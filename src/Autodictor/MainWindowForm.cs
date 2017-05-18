@@ -1797,6 +1797,7 @@ namespace MainExample
                 mapData = new UniversalInputType
                 {
                     Id = data.ID,
+                    IsActive = data.Активность,
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
@@ -1814,6 +1815,7 @@ namespace MainExample
                 mapData = new UniversalInputType
                 {
                     Id = data.ID,
+                    IsActive = data.Активность,
                     NumberOfTrain = data.НомерПоезда,
                     PathNumber = номерПути,
                     Event = actStr,

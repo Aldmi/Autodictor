@@ -14,6 +14,8 @@ namespace CommunicationDevices.Settings
         public List<TypeTrain> TypeTrain { get; set; } //типы поездов, ОДИНОЧНЫЕ БЕЗ +
         public string Event { get; set; } //Событие (отправление/прибытие), ОДИНОЧНЫЕ БЕЗ +
 
+        public Command Command { get; set; }                //команда Очистка, Перезагрузка
+
         public bool LowCurrentTime { get; set; } // Больше Тек. времени
         public bool HightCurrentTime { get; set; } // Меньше Тек. времени
 
@@ -60,8 +62,7 @@ namespace CommunicationDevices.Settings
 
 
 
-
-
+        #region Methode
 
         /// <summary>
         /// Проверка ограничения привязки.
@@ -297,7 +298,6 @@ namespace CommunicationDevices.Settings
 
 
 
-
         /// <summary>
         /// Проверка разрешения.
         /// </summary>
@@ -313,6 +313,13 @@ namespace CommunicationDevices.Settings
             if (!string.IsNullOrEmpty(Event))
             {
                 eventFilter = (inData.Event == Event);
+            }
+
+
+            var commandFilter = true;
+            if (Command != Command.None)
+            {
+                commandFilter = (Command == inData.Command);
             }
 
 
@@ -497,6 +504,7 @@ namespace CommunicationDevices.Settings
 
             return typeTrainFilter &&
                    eventFilter &&
+                   commandFilter &&
                    timeFilter &&
                    emergencySituationCanceledFilter &&
                    emergencySituationDelayArrivalFilter &&
@@ -526,6 +534,8 @@ namespace CommunicationDevices.Settings
                    departurePathsFilter;
 
         }
+
+        #endregion
     }
 
 }

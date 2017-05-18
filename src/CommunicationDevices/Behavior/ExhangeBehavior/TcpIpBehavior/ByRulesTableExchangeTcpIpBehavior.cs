@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,7 +55,59 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
                 var countRow = MainRule.ViewType.TableSize.Value;
 
-                //Вывод на табличное табло построчной информации
+                //отправка одиночной команды-----------------------------------------------------------------------
+                if (inData != null && inData.Command != Command.None)
+                {
+                    //Отправляем информацию для всех устройств, подключенных к данному TCP конвертору.
+                    foreach (var internalAddr in InternalAddressCollection)
+                    {
+                        var commandDate = new UniversalInputType
+                        {
+                            Command = inData.Command,
+                            Event = "  ",
+                            NumberOfTrain = "  ",
+                            PathNumber = "  ",
+                            Stations = "  ",
+                            Time = DateTime.MinValue,
+                            Message = inData.Command + ".....................",
+                            AddressDevice = internalAddr
+                        };
+
+                        //Выбрать правила для отрисовки
+                        var selectedRules= MainRule.ExchangeRules.Where(rule => rule.CheckResolution(commandDate)).ToList();
+
+                        //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                        //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                        if (selectedRules.Any(d => d.Resolution != null))
+                        {
+                            selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
+                        }
+
+                        foreach (var exchangeRule in selectedRules)
+                        {
+                            var writeProvider = new ByRuleWriteDataProvider(exchangeRule) {InputData = commandDate};
+                            DataExchangeSuccess = await MasterTcpIp.RequestAndRespoune(writeProvider);
+
+                            LastSendData = writeProvider.InputData;
+                            if (writeProvider.IsOutDataValid)
+                            {
+                                // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                            }
+
+                            await Task.Delay(1000, Cts.Token); //задержка для задания периода опроса. 
+                        }
+
+                        await Task.Delay(InternalPeriodTimer);          //задержка отпроса след. устройства.
+                    }
+                    return;
+                }
+
+
+
+
+
+
+                //Вывод на табличное табло построчной информации----------------------------------------------------------------
                 if (inData?.TableData != null)
                 {
                     //Отправляем информацию для всех устройств, подключенных к данному TCP конвертору.

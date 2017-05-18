@@ -41,24 +41,48 @@
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания."   Binding="ToGeneral:ГлавноеОкно">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания."  Binding="ToGeneral:ГлавноеОкно">
 	      <ExchangeRules>    
 		    <Table Size= "3">
-			 <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-			       STX{AddressDevice:X2}{Nbyte:X2}
-                   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
-                   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
-				   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
-                   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
-				   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
-				   {CRCXor:X2}ETX
-		          </Request >
+				   <Rule Format = "Windows-1251">
+					  <Request maxLenght = "254">
+						   STX{AddressDevice:X2}{Nbyte:X2}
+						   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+						   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
+						   {CRCXor:X2}ETX
+					  </Request >
 
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
+					  <Response maxLenght = "8" TimeRespone="500">
+						STX0200FDETX
+					  </Response >	  
+				   </Rule>
+
+					 <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
+					  <Request maxLenght = "254">
+							STX{AddressDevice:X2}{Nbyte:X2}
+							CLEAR-------------------------
+							{CRCXor:X2}ETX
+					  </Request >
+
+					  <Response maxLenght = "8" TimeRespone="1000">
+						STX0200FDETX
+					  </Response >	  
+				   </Rule>
+
+					 <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
+					  <Request maxLenght = "254">
+							STX{AddressDevice:X2}{Nbyte:X2}
+							RESET-------------------------
+							{CRCXor:X2}ETX
+					  </Request >
+
+					  <Response maxLenght = "8" TimeRespone="1000">
+						STX0200FDETX
+					  </Response >	  
+				   </Rule>						   
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
@@ -77,9 +101,9 @@
 
 
 
-<DevicesWithHttp>
+<!-- <DevicesWithHttp>
 	 <DeviceHttp Id="300" Name="HttpTable" Address="http://www.google.com"  SendingType="Xml_tlist"  TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени"/>
-</DevicesWithHttp>
+</DevicesWithHttp> -->
 
 </Root>
 

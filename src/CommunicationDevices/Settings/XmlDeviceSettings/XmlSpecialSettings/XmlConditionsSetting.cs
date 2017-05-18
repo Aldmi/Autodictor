@@ -215,6 +215,16 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
 
 
+                        case "КомандаОчистки":
+                            Conditions.Command = Command.Clear;
+                            break;
+
+                        case "КомандаПерезагрузки":
+                            Conditions.Command = Command.Restart;
+                            break;
+
+
+
                         default:
                             Conditions = null;
                             return;

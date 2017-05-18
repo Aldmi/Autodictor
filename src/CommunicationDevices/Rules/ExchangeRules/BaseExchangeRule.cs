@@ -69,8 +69,6 @@ namespace CommunicationDevices.Rules.ExchangeRules
             if (Resolution == null)
                 return true;
 
-            var temp= Resolution.CheckResolutions(inData);  //DEBUG
-
             return Resolution.CheckResolutions(inData);  //инверсия ограничения 
         }
 

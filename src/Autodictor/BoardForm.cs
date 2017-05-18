@@ -106,14 +106,21 @@ namespace MainExample
             var dataGridViewColumn = dataGridViewBoards.Columns["Action"];
             if (dataGridViewColumn != null && e.ColumnIndex == dataGridViewColumn.Index && e.RowIndex >= 0)
             {
-                var sendStr = (string)dataGridViewBoards[e.ColumnIndex - 1, e.RowIndex].FormattedValue;
-                var type= (string)dataGridViewBoards[e.ColumnIndex - 6, e.RowIndex].FormattedValue;
+                var sendStr = (string) dataGridViewBoards[e.ColumnIndex - 1, e.RowIndex].FormattedValue;
+                var type = (string) dataGridViewBoards[e.ColumnIndex - 6, e.RowIndex].FormattedValue;
 
-                var inData = new UniversalInputType { Message = sendStr };
+                var inData = new UniversalInputType {Message = sendStr};
+
+                //DEBUG---------------------------------------------------
+                inData.TableData = new List<UniversalInputType>();
+                inData.Command = Command.Clear;
+                _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+                return;
+                //DEBUG----------------------------------------------------
 
                 switch (type)
                 {
-                    case "Путевое":                        //TODO: парсить Message для заполненния полей inData.
+                    case "Путевое": //TODO: парсить Message для заполненния полей inData.
 
                         inData.NumberOfTrain = "666";
                         inData.PathNumber = "2";
@@ -121,7 +128,7 @@ namespace MainExample
                         inData.Time = new DateTime(2016, 11, 30, 15, 10, 00);
                         inData.Stations = "табло временно не работает";
                         inData.Note = "с остановками:  Химки, Ласточка, Строгино  ";
-                        inData.TypeTrain= TypeTrain.Suburban;
+                        inData.TypeTrain = TypeTrain.Suburban;
 
 
                         if (string.IsNullOrEmpty(sendStr) || string.IsNullOrWhiteSpace(sendStr))
@@ -137,14 +144,14 @@ namespace MainExample
                             _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
                             _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
                         }
-                        else if (sendStr.ToLower() == "test")                                  //Шаблон отправки ПРИГОРОД
+                        else if (sendStr.ToLower() == "test") //Шаблон отправки ПРИГОРОД
                         {
                             inData.TypeTrain = TypeTrain.Suburban;
 
                             _devises.ToList()[e.RowIndex].AddCycleFuncData(0, inData);
                             _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
                         }
-                        else if (sendStr.ToLower() == "testLong")                               //Шаблон отправки ДАЛЬНИЕ
+                        else if (sendStr.ToLower() == "testLong") //Шаблон отправки ДАЛЬНИЕ
                         {
 
                             inData.TypeTrain = TypeTrain.Express;
@@ -157,36 +164,73 @@ namespace MainExample
                             {
                                 if (_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData != null)
                                 {
-                                    _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);                             // Изменили данные для циклического опроса
-                                    _devises.ToList()[e.RowIndex].AddOneTimeSendData(_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос
+                                    _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);
+                                        // Изменили данные для циклического опроса
+                                    _devises.ToList()[e.RowIndex].AddOneTimeSendData(
+                                            _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]);
+                                        // Отправили однократный запрос
                                 }
                             }
                             else if (sendStr.ToLower() == "removerow")
                             {
-                                var delRow = _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.LastOrDefault();
+                                var delRow =
+                                    _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData
+                                        .LastOrDefault();
                                 if (delRow != null)
                                 {
-                                    _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Remove(delRow);                          // Изменили данные для циклического опроса
-                                    _devises.ToList()[e.RowIndex].AddOneTimeSendData(_devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]); // Отправили однократный запрос
+                                    _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0].TableData.Remove(
+                                        delRow); // Изменили данные для циклического опроса
+                                    _devises.ToList()[e.RowIndex].AddOneTimeSendData(
+                                            _devises.ToList()[e.RowIndex].ExhBehavior.GetData4CycleFunc[0]);
+                                        // Отправили однократный запрос
                                 }
                             }
                         }
 
-                        inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}, ПРИМЕЧАНИЕ:{inData.Note}";
+                        inData.Message =
+                            $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}, ПРИМЕЧАНИЕ:{inData.Note}";
                         break;
 
 
                     case "Основное":
                         break;
 
-                    case "Прибытие/Отправление":
+                    case "Статическое":
                         break;
 
                     default:
-                       break;
+                        break;
                 }
             }
+
+
+            //КОМАНДА ОЧИСТКИ---------------------------------------
+            dataGridViewColumn = dataGridViewBoards.Columns["ClearAction"];
+            if (dataGridViewColumn != null && e.ColumnIndex == dataGridViewColumn.Index && e.RowIndex >= 0)
+            {
+                var inData = new UniversalInputType
+                {
+                    TableData = new List<UniversalInputType>(),
+                    Command = Command.Clear
+                };
+                _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+                return;
+            }
+
+            //КОМАНДА ПЕРЕЗАГРУЗКИ---------------------------------------
+            dataGridViewColumn = dataGridViewBoards.Columns["RestartAction"];
+            if (dataGridViewColumn != null && e.ColumnIndex == dataGridViewColumn.Index && e.RowIndex >= 0)
+            {
+                var inData = new UniversalInputType
+                {
+                    TableData = new List<UniversalInputType>(),
+                    Command = Command.Restart
+                };
+                _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
+                return;
+            }
         }
+
 
 
         private void FillBoardsDataGrid(IEnumerable<Device> dev)
@@ -206,6 +250,10 @@ namespace MainExample
 
                     case BindingType.ToArrivalAndDeparture:
                         bindType = "Прибытие/Отправление";
+                        break;
+
+                    case BindingType.ToStatic:
+                        bindType = "Статическое";
                         break;
 
                     default:

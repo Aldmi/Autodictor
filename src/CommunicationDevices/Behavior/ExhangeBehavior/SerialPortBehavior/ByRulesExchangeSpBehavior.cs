@@ -59,13 +59,15 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 //вывод пустой строки если в таблице нет данных
                 var emptyDate = new UniversalInputType
                 {
+                    Command = inData.Command,
                     Event = "  ",
                     NumberOfTrain = "  ",
                     PathNumber = "  ",
                     Stations = "  ",
                     Time = DateTime.MinValue,
-                    Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                    Message = inData.Command != Command.None ? inData.Command.ToString() + "....................." : $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
                 };
+
 
                 var viewData = timeSamplingData ?? emptyDate;
                 viewData.AddressDevice = inData.AddressDevice;
@@ -119,12 +121,13 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 //вывод пустой строки если в таблице нет данных
                 var emptyDate = new UniversalInputType
                 {
+                    Command = inData.Command,
                     Event = "  ",
                     NumberOfTrain = "  ",
                     PathNumber = "  ",
                     Stations = "  ",
                     Time = DateTime.MinValue,
-                    Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                    Message =  inData.Command!= Command.None ? inData.Command.ToString() + "....................." : $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
                 };
 
                 var viewData = timeSamplingData ?? emptyDate;

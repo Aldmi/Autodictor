@@ -100,6 +100,9 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         /// </summary>
         public bool CheckContrains(UniversalInputType inData)
         {
+            if (!inData.IsActive)
+                return false;
+
             if (Conditions == null)
                 return true;
 
