@@ -40,6 +40,9 @@ namespace MainExample
             cB_НомерПути.SelectedIndex = Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1;
             dTP_Прибытие.Value = this.Record.ВремяПрибытия;
             dTP_ВремяОтправления.Value = this.Record.ВремяОтправления;
+            dTP_Задержка.Value = (this.Record.ВремяЗадержки == null) ? DateTime.Parse("00:00") : this.Record.ВремяЗадержки.Value;
+
+            dTP_ОжидаемоеВремя.Value = this.Record.Время;       
 
             switch (this.Record.НумерацияПоезда)
             {
@@ -129,6 +132,7 @@ namespace MainExample
         }
 
 
+
         private void ОбновитьТекстВОкне()
         {
             if (Record.ТипСообщения == SoundRecordType.Обычное)
@@ -196,6 +200,25 @@ namespace MainExample
             }
 
 
+            if (cBОтправлениеЗадерживается.Checked || cBПрибытиеЗадерживается.Checked)
+            {
+
+                dTP_Задержка.Enabled = true;
+                btn_ИзменитьВремяЗадержки.Enabled = true;
+            }
+            else
+            {
+                dTP_Задержка.Enabled = false;
+                btn_ИзменитьВремяЗадержки.Enabled = false;
+            }
+
+
+            var время = (cBПрибытие.Checked) ? Record.ВремяПрибытия : Record.ВремяОтправления;
+            if (Record.ВремяЗадержки != null)
+                Record.ОжидаемоеВремя = время.AddHours(Record.ВремяЗадержки.Value.Hour).AddMinutes(Record.ВремяЗадержки.Value.Minute);
+            dTP_ОжидаемоеВремя.Value = Record.ОжидаемоеВремя;
+
+
             //Обновить список табло
             comboBox_displayTable.Items.Clear();
             comboBox_displayTable.SelectedIndex = -1;
@@ -215,6 +238,7 @@ namespace MainExample
         }
 
 
+
         private void cB_НомерПути_SelectedIndexChanged(object sender, EventArgs e)
         {
             int НомерПути = cB_НомерПути.SelectedIndex;
@@ -223,6 +247,7 @@ namespace MainExample
             ОбновитьТекстВОкне();
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
+
 
 
         private void rB_Нумерация_CheckedChanged(object sender, EventArgs e)
@@ -237,6 +262,7 @@ namespace MainExample
             ОбновитьТекстВОкне();
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
+
 
 
         private void btn_Подтвердить_Click(object sender, EventArgs e)
@@ -286,10 +312,7 @@ namespace MainExample
             DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
-        private void btn_ЗадатьВремя_Click(object sender, EventArgs e)
-        {
-            //Record.Время = dTP_Время.Value;
-        }
+
 
         private void btn_ИзменитьВремяПрибытия_Click(object sender, EventArgs e)
         {
@@ -299,6 +322,8 @@ namespace MainExample
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
+
+
         private void btn_ИзменитьВремяОтправления_Click(object sender, EventArgs e)
         {
             Record.ВремяОтправления = dTP_ВремяОтправления.Value;
@@ -307,16 +332,35 @@ namespace MainExample
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
+
+        private void btn_ИзменитьВремяЗадержки_Click(object sender, EventArgs e)
+        {
+            //не стоят обе галочки приб. и отпр.
+            if(!(cBПрибытие.Checked || cBОтправление.Checked))
+                return;
+
+            Record.ВремяЗадержки = dTP_Задержка.Value;
+            ОбновитьТекстВОкне();
+            ОбновитьСостояниеТаблицыШаблонов();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+
+
         public SoundRecord ПолучитьИзмененнуюКарточку()
         {
             return Record;
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
         }
+
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -376,6 +420,7 @@ namespace MainExample
         }
 
 
+
         private void rB_ПоСтанциям_CheckedChanged(object sender, EventArgs e)
         {
             if ((rB_ПоСтанциям.Checked == true) || (rB_КромеСтанций.Checked == true) || (rB_СоВсемиОстановками.Checked == true))
@@ -390,6 +435,7 @@ namespace MainExample
             }
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
+
 
 
         private void btnПовторения_Click(object sender, EventArgs e)
@@ -413,6 +459,7 @@ namespace MainExample
         }
 
 
+
         private void cBПрибытие_CheckedChanged(object sender, EventArgs e)
         {
             dTP_Прибытие.Enabled = cBПрибытие.Checked;
@@ -421,12 +468,14 @@ namespace MainExample
         }
 
 
+
         private void cBОтправление_CheckedChanged(object sender, EventArgs e)
         {
             dTP_ВремяОтправления.Enabled = cBОтправление.Checked;
             btn_ИзменитьВремяОтправления.Enabled = cBОтправление.Checked;
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
+
 
 
         private void lVШаблоны_SelectedIndexChanged(object sender, EventArgs e)
@@ -545,6 +594,22 @@ namespace MainExample
                         rTb.AppendText(Text + " ");
                         break;
 
+                    case "ВРЕМЯ ЗАДЕРЖКИ":
+                        rTb.Text += "Время задержки: ";
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
+                        Text = (Record.ВремяЗадержки == null) ? "00:00" : this.Record.ВремяЗадержки.Value.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTb.AppendText(Text + " ");
+                        break;
+
+                    case "ОЖИДАЕМОЕ ВРЕМЯ":
+                        rTb.Text += "Ожидаемое время: ";
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
+                        Text = Record.ОжидаемоеВремя.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTb.AppendText(Text + " ");
+                        break;
+
 
                     case "НУМЕРАЦИЯ СОСТАВА":
                         if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
@@ -620,6 +685,8 @@ namespace MainExample
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }
 
+
+
         private void btnВоспроизвестиВыбранныйШаблон_Click(object sender, EventArgs e)
         {
             ListView.SelectedIndexCollection sic = this.lVШаблоны.SelectedIndices;
@@ -640,6 +707,8 @@ namespace MainExample
 
             ОбновитьСостояниеТаблицыШаблонов();
         }
+
+
 
         private void ОбновитьСостояниеТаблицыШаблонов()
         {
@@ -697,10 +766,14 @@ namespace MainExample
             }
         }
 
+
+
         private void КарточкаДвиженияПоезда_Load(object sender, EventArgs e)
         {
             РазрешениеИзменений = true;
         }
+
+
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -708,6 +781,8 @@ namespace MainExample
             СделаныИзменения = true;
             gBНастройкиПоезда.Enabled = Record.Активность;
         }
+
+
 
         private void btnОтменаПоезда_Click(object sender, EventArgs e)
         {
@@ -755,6 +830,8 @@ namespace MainExample
             }
         }
 
+
+
         private void cBПоездОтменен_CheckedChanged(object sender, EventArgs e)
         {
             Record.БитыНештатныхСитуаций &= (byte)0xF8;
@@ -789,6 +866,9 @@ namespace MainExample
                         cBПрибытиеЗадерживается.Checked = false;
                     break;
             }
+
+            ОбновитьТекстВОкне();
         }
+
     }
 }

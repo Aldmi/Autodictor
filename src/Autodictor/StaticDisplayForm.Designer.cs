@@ -80,6 +80,7 @@ namespace MainExample
             this.dgv_main.Size = new System.Drawing.Size(1074, 599);
             this.dgv_main.TabIndex = 0;
             this.dgv_main.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_main_CellEndEdit);
+            this.dgv_main.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgv_main_UserDeletingRow);
             // 
             // cl_NumbOfTrain
             // 
@@ -163,7 +164,7 @@ namespace MainExample
             this.Controls.Add(this.lv_select);
             this.Controls.Add(this.btn_Show);
             this.Controls.Add(this.dgv_main);
-            //this.Name = "StaticDisplayForm";
+           // this.Name = "StaticDisplayForm";
             this.Text = "Отображение статической информации";
             ((System.ComponentModel.ISupportInitialize)(this.dgv_main)).EndInit();
             this.ResumeLayout(false);

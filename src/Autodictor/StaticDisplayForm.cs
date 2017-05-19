@@ -284,6 +284,11 @@ namespace MainExample
         }
 
 
+        private void dgv_main_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            dgv_main_CellEndEdit(null, null);
+        }
+
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -298,5 +303,8 @@ namespace MainExample
 
             base.OnClosing(e);
         }
+
+
+
     }
 }
