@@ -129,6 +129,7 @@ namespace MainExample
             if ((this.Record.БитыНештатныхСитуаций & 0x01) != 0x00) cBПоездОтменен.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x02) != 0x00) cBПрибытиеЗадерживается.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x04) != 0x00) cBОтправлениеЗадерживается.Checked = true;
+            else if ((this.Record.БитыНештатныхСитуаций & 0x08) != 0x00) cBОтправлениеПоГотовности.Checked = true;
         }
 
 
@@ -805,6 +806,10 @@ namespace MainExample
                 case "btnЗадержкаОтправления":
                     ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеОтправленияПоезда[ТипПоезда];
                     break;
+
+                case "btnОтправлениеПоГотовности":
+                    ФормируемоеСообщение = Program.ШаблонОповещенияООтправлениеПоГотовностиПоезда[ТипПоезда];
+                    break;
             }
 
             bool НаличиеШаблона = false;
@@ -834,7 +839,7 @@ namespace MainExample
 
         private void cBПоездОтменен_CheckedChanged(object sender, EventArgs e)
         {
-            Record.БитыНештатныхСитуаций &= (byte)0xF8;
+            Record.БитыНештатныхСитуаций &= (byte)0xF0;
 
             if ((sender as CheckBox).Checked == true)
             switch ((sender as CheckBox).Name)
@@ -846,7 +851,9 @@ namespace MainExample
                         cBПрибытиеЗадерживается.Checked = false;
                     if (cBОтправлениеЗадерживается.Checked == true)
                         cBОтправлениеЗадерживается.Checked = false;
-                    break;
+                    if (cBОтправлениеПоГотовности.Checked == true)
+                        cBОтправлениеПоГотовности.Checked = false;
+                     break;
 
                 case "cBПрибытиеЗадерживается":
                      Record.БитыНештатныхСитуаций |= 0x02;
@@ -864,8 +871,21 @@ namespace MainExample
                         cBПоездОтменен.Checked = false;
                     if (cBПрибытиеЗадерживается.Checked == true)
                         cBПрибытиеЗадерживается.Checked = false;
+                    if (cBОтправлениеПоГотовности.Checked == true)
+                        cBОтправлениеПоГотовности.Checked = false;
                     break;
-            }
+
+                case "cBОтправлениеПоГотовности":
+                    Record.БитыНештатныхСитуаций |= 0x08;
+
+                    if (cBПоездОтменен.Checked == true)
+                        cBПоездОтменен.Checked = false;
+                    if (cBПрибытиеЗадерживается.Checked == true)
+                        cBПрибытиеЗадерживается.Checked = false;
+                    if (cBОтправлениеЗадерживается.Checked == true)
+                        cBОтправлениеЗадерживается.Checked = false;
+                    break;
+                }
 
             ОбновитьТекстВОкне();
         }

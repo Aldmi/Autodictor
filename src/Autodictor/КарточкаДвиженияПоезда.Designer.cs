@@ -73,6 +73,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cBОтменен = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnОтправлениеПоГотовности = new System.Windows.Forms.Button();
+            this.cBОтправлениеПоГотовности = new System.Windows.Forms.CheckBox();
             this.btnЗадержкаОтправления = new System.Windows.Forms.Button();
             this.btnЗадержкаПрибытия = new System.Windows.Forms.Button();
             this.btnОтменаПоезда = new System.Windows.Forms.Button();
@@ -149,7 +151,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(11, 442);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(631, 270);
+            this.groupBox2.Size = new System.Drawing.Size(631, 253);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Шаблоны оповещения";
@@ -594,6 +596,8 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.NavajoWhite;
+            this.groupBox3.Controls.Add(this.btnОтправлениеПоГотовности);
+            this.groupBox3.Controls.Add(this.cBОтправлениеПоГотовности);
             this.groupBox3.Controls.Add(this.btnЗадержкаОтправления);
             this.groupBox3.Controls.Add(this.btnЗадержкаПрибытия);
             this.groupBox3.Controls.Add(this.btnОтменаПоезда);
@@ -601,17 +605,39 @@
             this.groupBox3.Controls.Add(this.cBПрибытиеЗадерживается);
             this.groupBox3.Controls.Add(this.cBПоездОтменен);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox3.Location = new System.Drawing.Point(14, 724);
+            this.groupBox3.Location = new System.Drawing.Point(14, 705);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(629, 101);
+            this.groupBox3.Size = new System.Drawing.Size(629, 119);
             this.groupBox3.TabIndex = 47;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Нештатные ситуации";
             // 
+            // btnОтправлениеПоГотовности
+            // 
+            this.btnОтправлениеПоГотовности.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnОтправлениеПоГотовности.Location = new System.Drawing.Point(479, 90);
+            this.btnОтправлениеПоГотовности.Name = "btnОтправлениеПоГотовности";
+            this.btnОтправлениеПоГотовности.Size = new System.Drawing.Size(144, 24);
+            this.btnОтправлениеПоГотовности.TabIndex = 53;
+            this.btnОтправлениеПоГотовности.Text = "ВОСПРОИЗВЕСТИ";
+            this.btnОтправлениеПоГотовности.UseVisualStyleBackColor = true;
+            this.btnОтправлениеПоГотовности.Click += new System.EventHandler(this.btnОтменаПоезда_Click);
+            // 
+            // cBОтправлениеПоГотовности
+            // 
+            this.cBОтправлениеПоГотовности.AutoSize = true;
+            this.cBОтправлениеПоГотовности.Location = new System.Drawing.Point(11, 90);
+            this.cBОтправлениеПоГотовности.Name = "cBОтправлениеПоГотовности";
+            this.cBОтправлениеПоГотовности.Size = new System.Drawing.Size(363, 24);
+            this.cBОтправлениеПоГотовности.TabIndex = 52;
+            this.cBОтправлениеПоГотовности.Text = "Сообщение \"Отправление по готовности ...\"";
+            this.cBОтправлениеПоГотовности.UseVisualStyleBackColor = true;
+            this.cBОтправлениеПоГотовности.CheckedChanged += new System.EventHandler(this.cBПоездОтменен_CheckedChanged);
+            // 
             // btnЗадержкаОтправления
             // 
             this.btnЗадержкаОтправления.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnЗадержкаОтправления.Location = new System.Drawing.Point(479, 70);
+            this.btnЗадержкаОтправления.Location = new System.Drawing.Point(479, 64);
             this.btnЗадержкаОтправления.Name = "btnЗадержкаОтправления";
             this.btnЗадержкаОтправления.Size = new System.Drawing.Size(144, 24);
             this.btnЗадержкаОтправления.TabIndex = 51;
@@ -622,7 +648,7 @@
             // btnЗадержкаПрибытия
             // 
             this.btnЗадержкаПрибытия.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnЗадержкаПрибытия.Location = new System.Drawing.Point(479, 43);
+            this.btnЗадержкаПрибытия.Location = new System.Drawing.Point(479, 39);
             this.btnЗадержкаПрибытия.Name = "btnЗадержкаПрибытия";
             this.btnЗадержкаПрибытия.Size = new System.Drawing.Size(144, 24);
             this.btnЗадержкаПрибытия.TabIndex = 50;
@@ -633,7 +659,7 @@
             // btnОтменаПоезда
             // 
             this.btnОтменаПоезда.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnОтменаПоезда.Location = new System.Drawing.Point(479, 16);
+            this.btnОтменаПоезда.Location = new System.Drawing.Point(479, 14);
             this.btnОтменаПоезда.Name = "btnОтменаПоезда";
             this.btnОтменаПоезда.Size = new System.Drawing.Size(144, 24);
             this.btnОтменаПоезда.TabIndex = 49;
@@ -644,7 +670,7 @@
             // cBОтправлениеЗадерживается
             // 
             this.cBОтправлениеЗадерживается.AutoSize = true;
-            this.cBОтправлениеЗадерживается.Location = new System.Drawing.Point(11, 70);
+            this.cBОтправлениеЗадерживается.Location = new System.Drawing.Point(11, 68);
             this.cBОтправлениеЗадерживается.Name = "cBОтправлениеЗадерживается";
             this.cBОтправлениеЗадерживается.Size = new System.Drawing.Size(432, 24);
             this.cBОтправлениеЗадерживается.TabIndex = 2;
@@ -655,7 +681,7 @@
             // cBПрибытиеЗадерживается
             // 
             this.cBПрибытиеЗадерживается.AutoSize = true;
-            this.cBПрибытиеЗадерживается.Location = new System.Drawing.Point(11, 47);
+            this.cBПрибытиеЗадерживается.Location = new System.Drawing.Point(11, 46);
             this.cBПрибытиеЗадерживается.Name = "cBПрибытиеЗадерживается";
             this.cBПрибытиеЗадерживается.Size = new System.Drawing.Size(406, 24);
             this.cBПрибытиеЗадерживается.TabIndex = 1;
@@ -666,7 +692,7 @@
             // cBПоездОтменен
             // 
             this.cBПоездОтменен.AutoSize = true;
-            this.cBПоездОтменен.Location = new System.Drawing.Point(11, 25);
+            this.cBПоездОтменен.Location = new System.Drawing.Point(11, 24);
             this.cBПоездОтменен.Name = "cBПоездОтменен";
             this.cBПоездОтменен.Size = new System.Drawing.Size(265, 24);
             this.cBПоездОтменен.TabIndex = 0;
@@ -694,7 +720,7 @@
             this.gBНастройкиПоезда.Controls.Add(this.groupBox1);
             this.gBНастройкиПоезда.Location = new System.Drawing.Point(1, 1);
             this.gBНастройкиПоезда.Name = "gBНастройкиПоезда";
-            this.gBНастройкиПоезда.Size = new System.Drawing.Size(652, 713);
+            this.gBНастройкиПоезда.Size = new System.Drawing.Size(652, 699);
             this.gBНастройкиПоезда.TabIndex = 48;
             this.gBНастройкиПоезда.TabStop = false;
             this.gBНастройкиПоезда.Text = "Настроки поезда";
@@ -819,5 +845,7 @@
         private System.Windows.Forms.CheckBox cBОтправление;
         private System.Windows.Forms.CheckBox cBПрибытие;
         private System.Windows.Forms.Button btn_ИзменитьВремяЗадержки;
+        private System.Windows.Forms.Button btnОтправлениеПоГотовности;
+        private System.Windows.Forms.CheckBox cBОтправлениеПоГотовности;
     }
 }

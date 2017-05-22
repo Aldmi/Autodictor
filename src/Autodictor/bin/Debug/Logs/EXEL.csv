@@ -510,3 +510,6 @@ time;message;level
 17T16:21:12;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
 17T16:22:08;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
 17T16:22:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://www.google.com"" ПОЛУЧЕНН !!!";Fatal
+22T14:10:45;14:10:45;Fatal
+22T15:10:19;15:10:19;Fatal
+22T15:10:59;15:10:59;Fatal

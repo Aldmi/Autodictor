@@ -44,7 +44,7 @@ namespace CommunicationDevices.DataProviders
         public VagonDirection VagonDirection { get; set; }           //Нумерация вагона (с головы, с хвоста)
         public string Message { get; set; }                          //Сообщение
 
-        public byte EmergencySituation { get; set; }                 //Нешатная ситуация (бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления)
+        public byte EmergencySituation { get; set; }                 //Нешатная ситуация (бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления, бит 3 - отправление по готовности)
 
         public Command Command { get; set; }                         //Команда (если указанна команда, то приоритет отдается выполнению команды.)
 
