@@ -213,6 +213,43 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
+                    if (replaseStr.Contains(nameof(uit.DelayTime)))
+                    {
+                        if (uit.DelayTime == null)
+                            continue;
+
+                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        {
+                            var dateFormat = s.Split(':')[1]; //без закр. скобки
+                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), (uit.DelayTime == DateTime.MinValue) ? " " : uit.DelayTime.Value.ToString(dateFormat));
+                            resStr.Append(formatStr);
+                        }
+                        else
+                        {
+                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), (uit.DelayTime == DateTime.MinValue) ? " " : uit.DelayTime.Value.ToString(CultureInfo.InvariantCulture));
+                            resStr.Append(formatStr);
+                        }
+                        continue;
+                    }
+
+
+                    if (replaseStr.Contains(nameof(uit.ExpectedTime)))
+                    {
+                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        {
+                            var dateFormat = s.Split(':')[1]; //без закр. скобки
+                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.ExpectedTime), "0"), (uit.ExpectedTime == DateTime.MinValue) ? " " : uit.ExpectedTime.ToString(dateFormat));
+                            resStr.Append(formatStr);
+                        }
+                        else
+                        {
+                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.ExpectedTime), "0"), (uit.ExpectedTime == DateTime.MinValue) ? " " : uit.ExpectedTime.ToString(CultureInfo.InvariantCulture));
+                            resStr.Append(formatStr);
+                        }
+                        continue;
+                    }
+
+
                     if (replaseStr.Contains(nameof(uit.Time)))
                     {
                         if (replaseStr.Contains(":")) //если указзанн формат времени
@@ -267,8 +304,6 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     //Добавим в неизменном виде спецификаторы байтовой информации.
                     resStr.Append(replaseStr);
                 }
-
-                var testStr = resStr.ToString();                 //DEBUG
 
                 return resStr.ToString();
             }

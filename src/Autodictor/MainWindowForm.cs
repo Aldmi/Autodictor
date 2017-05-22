@@ -31,7 +31,7 @@ namespace MainExample
         public DateTime Время;
         public DateTime ВремяПрибытия;
         public DateTime ВремяОтправления;
-        public DateTime? ВремяЗадержки;                            //время задержки в мин. относительно времени прибытия или отправелния
+        public DateTime? ВремяЗадержки;                      //время задержки в мин. относительно времени прибытия или отправелния
         public DateTime ОжидаемоеВремя;                      //вычисляется ВремяПрибытия или ВремяОтправления + ВремяЗадержки
         public string Дополнение;                            //свободная переменная для ввода 
         public bool ИспользоватьДополнение;
@@ -1814,6 +1814,8 @@ namespace MainExample
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
                     Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),
+                    DelayTime = data.ВремяЗадержки,
+                    ExpectedTime = data.ОжидаемоеВремя,
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
@@ -1832,6 +1834,8 @@ namespace MainExample
                     PathNumber = номерПути,
                     Event = actStr,
                     Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),
+                    DelayTime = data.ВремяЗадержки,
+                    ExpectedTime = data.ОжидаемоеВремя,
                     Stations = data.НазваниеПоезда,
                     Note = data.Примечание,
                     TypeTrain = typeTrain,
