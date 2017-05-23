@@ -20,6 +20,7 @@ namespace MainExample
     public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Обновление, Очистка };
     public enum SoundRecordType { Обычное = 0, ДвижениеПоезда, ДвижениеПоездаНеПодтвержденное, Предупредительное, Важное };
     public enum PathPermissionType { ИзФайлаНастроек = 0, Отображать, НеОтображать };
+    public enum Priority { Hight = 0, Midlle, Low};
 
     public struct SoundRecord
     {
@@ -71,12 +72,15 @@ namespace MainExample
 
     public struct СостояниеФормируемогоСообщенияИШаблон
     {
+        public int Id;                            // порядковый номер шаблона
+        public int SoundRecordId;                 // строка расписания к которой принадлежит данный шаблон
         public bool Активность;
+        public Priority Приоритет;
         public bool Воспроизведен;
+        public int ПривязкаКВремени;              // 0 - приб. 1- отпр
         public int ВремяСмещения;
         public string НазваниеШаблона;
         public string Шаблон;
-        public int ПривязкаКВремени;
         public List<NotificationLanguage> ЯзыкиОповещения;
     };
 
@@ -517,7 +521,10 @@ namespace MainExample
                                     {
                                         СостояниеФормируемогоСообщенияИШаблон НовыйШаблон;
 
+                                        НовыйШаблон.Id = i;
+                                        НовыйШаблон.SoundRecordId = Record.ID;
                                         НовыйШаблон.Активность = АктивностьШаблоновДанногоПоезда;
+                                        НовыйШаблон.Приоритет= Priority.Midlle;
                                         НовыйШаблон.Воспроизведен = false;
                                         НовыйШаблон.ВремяСмещения = ВремяСмещения;
                                         НовыйШаблон.НазваниеШаблона = ШаблонОповещения[3 * i + 0];
@@ -952,7 +959,14 @@ namespace MainExample
                                 if (РазрешениеРаботы == true)
                                 {
                                     Program.ЗаписьЛога("Автоматическое воспроизведение звукового сообщения", Сообщение.НазваниеКомпозиции);
-                                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Sound.Name, Язык = NotificationLanguage.Ru };
+                                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение
+                                    {
+                                        ParentId = null,
+                                        RootId = Сообщение.ID,
+                                        ИмяВоспроизводимогоФайла = Sound.Name,
+                                        Язык = NotificationLanguage.Ru,
+                                        ТипСообщения = SoundType.Статическое
+                                    };
                                     MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(воспроизводимоеСообщение);
                                 }
                                 break;
@@ -964,7 +978,7 @@ namespace MainExample
                     СтатическиеЗвуковыеСообщения[Key] = Сообщение;
 
 
-                //==================================================================================
+                //Добавление события ===================================================================
                 if (DateTime.Now < Сообщение.Время.AddSeconds(20) && DateTime.Now > Сообщение.Время.AddMinutes(-30))
                 {
                     var statSound = StaticSoundForm.StaticSoundRecords.FirstOrDefault(sound => sound.Name == Сообщение.НазваниеКомпозиции);
@@ -1082,6 +1096,8 @@ namespace MainExample
                                     {
                                         СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                                         {
+                                            SoundRecordId = Данные.ID,
+                                            Приоритет = Priority.Hight,
                                             Шаблон = ФормируемоеСообщение,
                                             ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
                                             НазваниеШаблона = "Авария"
