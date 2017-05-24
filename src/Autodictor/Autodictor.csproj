@@ -140,6 +140,7 @@
     <Compile Include="RegulatorySheduleForm.Designer.cs">
       <DependentUpon>RegulatorySheduleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\QueueSoundService.cs" />
     <Compile Include="SoundConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
