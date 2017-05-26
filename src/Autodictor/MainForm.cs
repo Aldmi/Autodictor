@@ -12,6 +12,7 @@ using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
+using MainExample.Entites;
 using MainExample.Extension;
 
 
@@ -391,7 +392,7 @@ namespace MainExample
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             СписокВоспроизведения список = new СписокВоспроизведения();
-            список.ShowDialog();
+            список.Show();
         }
 
 
@@ -415,6 +416,43 @@ namespace MainExample
                 StaticDisplayForm staticDisplayForm = new StaticDisplayForm(ExchangeModel.Binding2StaticFormBehaviors);
                 //staticDisplayForm.MdiParent = this;
                 staticDisplayForm.Show();
+            }
+        }
+
+
+        //DEBUG- ДОБАВЛЕНИЕ САТИЧЕСКОГО СООБШЕНИЯ В ОЧЕРЕДЬ----------------------------------------------------------------------------
+        private int index = 0;
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            var Sound = StaticSoundForm.StaticSoundRecords[index];
+            if (index++ > StaticSoundForm.StaticSoundRecords.Count)
+                index = 0;
+
+            var воспроизводимоеСообщение = new ВоспроизводимоеСообщение
+                {
+                    ParentId = null,
+                    RootId = Sound.ID,
+                    ИмяВоспроизводимогоФайла = Sound.Name,
+                    Язык = NotificationLanguage.Ru,
+                    ОчередьШаблона = null
+                };
+             MainWindowForm.QueueSound.AddItem(воспроизводимоеСообщение);
+        }
+
+
+        private int indexTemplate = 0;
+        //DEBUG- ДОБАВЛЕНИЕ ДИНАМИЧЕСКОГО СООБШЕНИЯ В ОЧЕРЕДЬ
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            var template = MainWindowForm.SoundRecords.Values.ToList()[indexTemplate];
+            if (indexTemplate++ > MainWindowForm.SoundRecords.Values.Count)
+                indexTemplate = 0;
+
+            if (template.СписокФормируемыхСообщений.Any())
+            {
+                var ФормируемоеСообщение = template.СписокФормируемыхСообщений[0];
+                ФормируемоеСообщение.Воспроизведен = true;
+                MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", template, ФормируемоеСообщение);
             }
         }
     }

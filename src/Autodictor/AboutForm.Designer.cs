@@ -93,9 +93,9 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label6.Location = new System.Drawing.Point(205, 113);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(110, 24);
+            this.label6.Size = new System.Drawing.Size(206, 24);
             this.label6.TabIndex = 5;
-            this.label6.Text = "Версия: 2.0";
+            this.label6.Text = "Версия от:  26.05.2017";
             // 
             // AboutForm
             // 

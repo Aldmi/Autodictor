@@ -14,7 +14,6 @@ using WCFCis2AvtodictorContract.Contract;
 using WCFCis2AvtodictorContract.DataContract;
 
 
-
 namespace CommunicationDevices.ClientWCF
 {
     /// <summary>

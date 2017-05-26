@@ -97,8 +97,6 @@
   
 <DevicesWithTcpIp>
 	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:" CountRow="8"/>
-	 <DeviceTcpIp Id="201" Name="VidorTableStr1" Address="192.168.178.101:8001"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:" CountRow="8"/>
-	 <DeviceTcpIp Id="202" Name="VidorTableStr1" Address="192.168.178.101:8002"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:" CountRow="8"/>
 </DevicesWithTcpIp>
 
 

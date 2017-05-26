@@ -3,9 +3,14 @@
   &lt;Assembly Path="C:\Git\Autodictor\src\packages\Upn_Components_Dependencies.1.0.0\lib\NLog.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Git\Autodictor\src\packages\Upn_Components_Dependencies.1.0.0\lib\Sedc.Deployment.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Git\Autodictor\src\packages\Upn_Components_Dependencies.1.0.0\lib\Sedc.Upn.CA.SedcImaging.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Git\Autodictor\src\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndex/@EntryValue">0</s:Int64>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark0/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark0/Coords/@EntryValue">(Doc Ln 83 Col 18)</s:String>
 	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark0/FileId/@EntryValue">6A763286-F0A3-4218-85D1-DD8EB40DCFF3/d:DataProviders/d:BuRuleDataProvider/f:ByRuleWriteDataProvider.cs</s:String>
-	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark0/Owner/@EntryValue">NumberedBookmarkManager</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark0/Owner/@EntryValue">NumberedBookmarkManager</s:String>
+	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark7/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark7/Coords/@EntryValue">(Doc Ln 137 Col 99)</s:String>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark7/FileId/@EntryValue">C93BB634-DE26-421B-9388-DBC08A777798/f:СписокВоспроизведения.cs</s:String>
+	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark7/Owner/@EntryValue">NumberedBookmarkManager</s:String></wpf:ResourceDictionary>
