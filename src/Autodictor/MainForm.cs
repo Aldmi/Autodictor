@@ -87,23 +87,28 @@ namespace MainExample
                 //    СвязьСЦис.Text = "ЦИС НЕ на связи";
                 //}
             });
+
+
+            btnMainWindowShow_Click(null, EventArgs.Empty);
         }
 
 
-        private void buttonExample_Click(object sender, EventArgs e)
+        private void btnMainWindowShow_Click(object sender, EventArgs e)
         {
             if (MainWindowForm.myMainForm != null)
             {
                 MainWindowForm.myMainForm.Show();
-                MainWindowForm.myMainForm.WindowState = FormWindowState.Normal;
+                MainWindowForm.myMainForm.WindowState = FormWindowState.Maximized;
             }
             else
             {
                 MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules, ExchangeModel.DeviceSoundChannelManagement)
                 {
-                    MdiParent = this
+                    MdiParent = this,
+                    WindowState = FormWindowState.Maximized
                 };
                 mainform.Show();
+                mainform.btnОбновитьСписок_Click(null, EventArgs.Empty);
             }
         }
 

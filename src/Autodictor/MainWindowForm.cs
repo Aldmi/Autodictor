@@ -91,8 +91,8 @@ namespace MainExample
         public string Описание;
         public byte НомерСписка;            // 0 - Динамические сообщения, 1 - статические звуковые сообщения
         public string Ключ;
-        public byte СостояниеСтроки;        // 0 - Выключена, 1 - движение поезда, 2 - статическое сообщение, 3 - аварийное сообщение, 4 - воспроизведение
-        public string ШаблонИлиСообщение;   //текст стат. сообщения, или номер шаблона в динам. сообщении
+        public byte СостояниеСтроки;        // 0 - Выключена, 1 - движение поезда (динамика), 2 - статическое сообщение, 3 - аварийное сообщение, 4 - воспроизведение, 5 - воспроизведЕН
+        public string ШаблонИлиСообщение;   //текст стат. сообщения, или номер шаблона в динам. сообщении (для Субтитров)
     };
 
 
@@ -208,6 +208,8 @@ namespace MainExample
                 }
             });
 
+            QueueSound.StartQueue();
+
             MainForm.Включить.BackColor = Color.Orange;
             Program.ЗаписьЛога("Системное сообщение", "Программный комплекс включен");
         }
@@ -284,7 +286,7 @@ namespace MainExample
 
 
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
-        private void btnОбновитьСписок_Click(object sender, EventArgs e)
+        public void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
             ОбновитьСписокЗвуковыхСообщений(sender, e);
             ОбновитьСписокЗвуковыхСообщенийВТаблице();
@@ -1588,11 +1590,11 @@ namespace MainExample
             ОбновитьСостояниеЗаписейТаблицы();
 
 
-            SoundFileStatus status = Player.GetFileStatus();
+            //SoundFileStatus status = Player.GetFileStatus();
 
-            if (MainForm.Воспроизвести.Text == "Остановить")
-                if ((status != SoundFileStatus.Playing) && (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any()))
-                    MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
+            //if (MainForm.Воспроизвести.Text == "Остановить")
+            //    if ((status != SoundFileStatus.Playing) && (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any()))
+            //        MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
 
             QueueSound.Invoke();
         }
@@ -2521,7 +2523,7 @@ namespace MainExample
                 }
 
                 //Пауза между языками
-                if (формируемоеСообщение.ЯзыкиОповещения.Count > 1)
+                if ((формируемоеСообщение.ЯзыкиОповещения.Count > 1) && язык == NotificationLanguage.Ru)
                 {
                     воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                     {

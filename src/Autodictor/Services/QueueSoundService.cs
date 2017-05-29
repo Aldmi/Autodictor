@@ -43,6 +43,29 @@ namespace MainExample.Services
         private List<ВоспроизводимоеСообщение> ElementsOnTemplatePlaying { get; set; }
         public IEnumerable<ВоспроизводимоеСообщение> GetElementsOnTemplatePlaying => ElementsOnTemplatePlaying;
 
+
+        public IEnumerable<ВоспроизводимоеСообщение> GetElementsWithFirstElem
+        {
+            get
+            {
+                var result= new List<ВоспроизводимоеСообщение>();
+                if (IsStaticSoundPlaying)
+                {
+                    result.Add(CurrentSoundMessagePlaying);
+                    result.AddRange(GetElements);
+                }
+                else
+                {
+                    result.AddRange(GetElements);
+                }
+
+                return result;
+            }
+        }
+
+
+        public bool IsWorking { get; private set; }
+
         #endregion
 
 
@@ -52,7 +75,8 @@ namespace MainExample.Services
 
         public Subject<StatusPlaying> QueueChangeRx { get; } = new Subject<StatusPlaying>();             //Событие определния начала/конца проигрывания ОЧЕРЕДИ
         public Subject<StatusPlaying> SoundMessageChangeRx { get; } = new Subject<StatusPlaying>();      //Событие определния начала/конца проигрывания ФАЙЛА
-        public Subject<StatusPlaying> TemplateChangeRx { get; } = new Subject<StatusPlaying>();          //Событие определния начала/конца проигрывания ФАЙЛА
+        public Subject<StatusPlaying> TemplateChangeRx { get; } = new Subject<StatusPlaying>();          //Событие определния начала/конца проигрывания динамического ШАБЛОНА
+        public Subject<StatusPlaying> StaticChangeRx { get; } = new Subject<StatusPlaying>();            //Событие определния начала/конца проигрывания  статического ФАЙЛА
 
         #endregion
 
@@ -60,6 +84,20 @@ namespace MainExample.Services
 
 
         #region Methode
+
+        public void StartQueue()
+        {
+            IsWorking = true;
+        }
+
+
+        public void StopQueue()
+        {
+            IsWorking = false;
+        }
+
+
+
 
         /// <summary>
         /// Добавить элемент в очередь
@@ -83,9 +121,15 @@ namespace MainExample.Services
 
 
 
+        /// <summary>
+        /// Очистить очередь
+        /// </summary>
         public void Clear()
         {
             Queue.Clear();
+            ElementsOnTemplatePlaying.Clear();
+            CurrentTemplatePlaying = null;
+            CurrentSoundMessagePlaying = null;
         }
 
 
@@ -98,6 +142,9 @@ namespace MainExample.Services
         private bool _isEmptyRaiseQueue;
         public void Invoke()
         {
+            if(!IsWorking)
+                return;
+
             try
             {
                 SoundFileStatus status = Player.GetFileStatus();
@@ -181,7 +228,7 @@ namespace MainExample.Services
                         if (CurrentSoundMessagePlaying.ВремяПаузы.HasValue)                         //воспроизводимое сообщение - это ПАУЗА
                         {
                             _pauseTime = CurrentSoundMessagePlaying.ВремяПаузы.Value;
-                            CurrentSoundMessagePlaying = null;//???
+                            //CurrentSoundMessagePlaying = null;//???
                             return;
                         }
 
@@ -232,6 +279,11 @@ namespace MainExample.Services
         private void EventStartPlayingSoundMessage(ВоспроизводимоеСообщение soundMessage)
         {
             SoundMessageChangeRx.OnNext(StatusPlaying.Start);
+
+            if(IsStaticSoundPlaying)
+                EventStartPlayingStatic(soundMessage);
+
+
            // Debug.WriteLine($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
@@ -243,6 +295,10 @@ namespace MainExample.Services
         private void EventEndPlayingSoundMessage(ВоспроизводимоеСообщение soundMessage)
         {
             SoundMessageChangeRx.OnNext(StatusPlaying.Stop);
+
+            if (IsStaticSoundPlaying)
+                EventEndPlayingStatic(soundMessage);
+
             //Debug.WriteLine($"конец проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
@@ -261,10 +317,11 @@ namespace MainExample.Services
                 {
                     CurrentTemplatePlaying = template;
                     TemplateChangeRx.OnNext(StatusPlaying.Start);
-                    //Debug.WriteLine($"НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                    Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
                 }
             }
         }
+
 
 
         /// <summary>
@@ -280,16 +337,35 @@ namespace MainExample.Services
                 {
                     CurrentTemplatePlaying = null;
                     TemplateChangeRx.OnNext(StatusPlaying.Start);
-                    //Debug.WriteLine($"КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                    Debug.WriteLine($"--------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
                 }
             }
 
             CurrentTemplatePlaying = null;
         }
 
+
+        /// <summary>
+        /// Событие НАЧАЛА проигрывания статического файла.
+        /// </summary>
+        private void EventStartPlayingStatic(ВоспроизводимоеСообщение soundMessage)
+        {
+            StaticChangeRx.OnNext(StatusPlaying.Start);
+             Debug.WriteLine($"^^^^^^^^^^^СТАТИКА НАЧАЛО {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+        }
+
+
+
+        /// <summary>
+        /// Событие КОНЦА проигрывания статического файла.
+        /// </summary>
+        private void EventEndPlayingStatic(ВоспроизводимоеСообщение soundMessage)
+        {
+            StaticChangeRx.OnNext(StatusPlaying.Stop);
+            Debug.WriteLine($"^^^^^^^^^^^СТАТИКА КОНЕЦ: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+        }
+
         #endregion
-
-
 
 
 

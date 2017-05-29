@@ -88,6 +88,7 @@ namespace MainExample
         //TODO: Exceptions при геннерации списка.
         public static SoundFileStatus GetFileStatus()
         {
+            var t = 5 + 5;
             SoundFileStatus fileStatus = SoundFileStatus.Error;
 
             try

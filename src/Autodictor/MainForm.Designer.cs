@@ -123,7 +123,7 @@
             this.mainWindow.Size = new System.Drawing.Size(304, 22);
             this.mainWindow.Text = "&Основное окно";
             this.mainWindow.ToolTipText = "Окно, содержащее текущий список программы";
-            this.mainWindow.Click += new System.EventHandler(this.buttonExample_Click);
+            this.mainWindow.Click += new System.EventHandler(this.btnMainWindowShow_Click);
             // 
             // trainMessages
             // 

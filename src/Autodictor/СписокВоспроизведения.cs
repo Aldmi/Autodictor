@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MainExample.Extension;
-using MainExample.Services;
+
 
 
 namespace MainExample
@@ -64,7 +60,7 @@ namespace MainExample
         private bool _oldIsStaticSoundPlaying;
         private void Timer_Tick(object sender, EventArgs e)
         {
-            var currentCount = MainWindowForm.QueueSound.IsStaticSoundPlaying ? (MainWindowForm.QueueSound.Count + 1) : MainWindowForm.QueueSound.Count;
+            var currentCount = MainWindowForm.QueueSound.GetElementsWithFirstElem.Count();
             if (currentCount != _oldCountElemQueue)
             {
                 _oldCountElemQueue = currentCount;
@@ -82,7 +78,7 @@ namespace MainExample
                 if (currentCountElem != _oldCountElemFiles)
                 {
                     _oldCountElemFiles = currentCountElem;
-                    //Сработка при изменении кол-ва элементов в очереди проигрывания шаблона
+                    //Сработка при изменении кол-ва файлов в очереди проигрывания шаблона
                     ОбновитьСодержимоеСпискаФайлов();
                 }   
             }
@@ -97,6 +93,33 @@ namespace MainExample
 
 
 
+        private void btn_StartStopQueue_Click(object sender, EventArgs e)
+        {
+            if (MainWindowForm.QueueSound.IsWorking)
+            {
+                MainWindowForm.QueueSound.StopQueue();
+                btn_StartStopQueue.Text = "Старт";
+            }
+            else
+            {
+                MainWindowForm.QueueSound.StartQueue();
+                btn_StartStopQueue.Text = "Стоп";
+            }
+        }
+
+
+
+        private void btn_СlearQueue_Click(object sender, EventArgs e)
+        {
+            var resultDialog= MessageBox.Show(this, @"Точно очистить?", @"Удаление...", MessageBoxButtons.OKCancel );
+            if (resultDialog == DialogResult.OK)
+            {
+                MainWindowForm.QueueSound.Clear();
+            }        
+        }
+
+
+
 
         #region Methode
 
@@ -107,14 +130,7 @@ namespace MainExample
                 lVСписокЭлементов.Items.Clear();
                 try
                 {
-                    //проигрывается статика. Добавим первый элемент.
-                    if (MainWindowForm.QueueSound.IsStaticSoundPlaying)
-                    {
-                        ListViewItem lvi1 =new ListViewItem(new string[]{MainWindowForm.QueueSound.CurrentSoundMessagePlaying.ИмяВоспроизводимогоФайла});
-                        this.lVСписокЭлементов.Items.Add(lvi1);
-                    }
-
-                    foreach (var elem in MainWindowForm.QueueSound.GetElements)
+                    foreach (var elem in MainWindowForm.QueueSound.GetElementsWithFirstElem)
                     {
                         ListViewItem lvi1 = new ListViewItem(new string[] {elem.ИмяВоспроизводимогоФайла});
                         this.lVСписокЭлементов.Items.Add(lvi1);
@@ -163,7 +179,7 @@ namespace MainExample
 
         public void ВизуализироватьСписокЭлементов(ListView lv)
         {
-            var listElem = MainWindowForm.QueueSound.GetElements.ToList();
+            var listElem = MainWindowForm.QueueSound.GetElementsWithFirstElem.ToList();
             lVСписокЭлементов.InvokeIfNeeded(() =>
             {
                 try
@@ -176,18 +192,10 @@ namespace MainExample
                             continue;
                         }
 
-                        if (MainWindowForm.QueueSound.Count < lv.Items.Count) // первое сообшение статика (уже удаленно из очереди)
-                        {
-                            lv.Items[item].ForeColor = listElem[item - 1].ОчередьШаблона == null
-                                ? Color.Brown
-                                : Color.DodgerBlue;
-                        }
-                        else
-                        {
-                            lv.Items[item].ForeColor = listElem[item].ОчередьШаблона == null
-                                ? Color.Brown
-                                : Color.DodgerBlue;
-                        }
+                        lv.Items[item].ForeColor = listElem[item].ОчередьШаблона == null
+                            ? Color.Brown
+                            : Color.DodgerBlue;
+
                     }
                 }
                 catch (Exception ex)
@@ -198,6 +206,9 @@ namespace MainExample
 
         }
 
+
         #endregion
+
+
     }
 }
