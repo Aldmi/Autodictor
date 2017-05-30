@@ -210,10 +210,10 @@
             this.lVПрибытие.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lVПрибытие.FullRowSelect = true;
             this.lVПрибытие.GridLines = true;
-            this.lVПрибытие.Location = new System.Drawing.Point(2, 2);
+            this.lVПрибытие.Location = new System.Drawing.Point(696, 2);
             this.lVПрибытие.Margin = new System.Windows.Forms.Padding(2);
             this.lVПрибытие.Name = "lVПрибытие";
-            this.lVПрибытие.Size = new System.Drawing.Size(690, 248);
+            this.lVПрибытие.Size = new System.Drawing.Size(696, 248);
             this.lVПрибытие.TabIndex = 17;
             this.lVПрибытие.UseCompatibleStateImageBehavior = false;
             this.lVПрибытие.View = System.Windows.Forms.View.Details;
@@ -262,10 +262,11 @@
             this.lVТранзит.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lVТранзит.FullRowSelect = true;
             this.lVТранзит.GridLines = true;
-            this.lVТранзит.Location = new System.Drawing.Point(696, 2);
+            this.lVТранзит.Location = new System.Drawing.Point(2, 2);
             this.lVТранзит.Margin = new System.Windows.Forms.Padding(2);
             this.lVТранзит.Name = "lVТранзит";
-            this.lVТранзит.Size = new System.Drawing.Size(696, 248);
+            this.tableLayoutPanel1.SetRowSpan(this.lVТранзит, 2);
+            this.lVТранзит.Size = new System.Drawing.Size(690, 527);
             this.lVТранзит.TabIndex = 18;
             this.lVТранзит.UseCompatibleStateImageBehavior = false;
             this.lVТранзит.View = System.Windows.Forms.View.Details;
@@ -364,10 +365,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.81923F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.18077F));
-            this.tableLayoutPanel1.Controls.Add(this.lVСтатическиеСообщения, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lVПрибытие, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lVОтправление, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lVТранзит, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lVПрибытие, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lVТранзит, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -383,14 +383,13 @@
             this.lVСтатическиеСообщения.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader24,
             this.columnHeader29});
-            this.lVСтатическиеСообщения.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lVСтатическиеСообщения.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lVСтатическиеСообщения.FullRowSelect = true;
             this.lVСтатическиеСообщения.GridLines = true;
             this.lVСтатическиеСообщения.Location = new System.Drawing.Point(2, 254);
             this.lVСтатическиеСообщения.Margin = new System.Windows.Forms.Padding(2);
             this.lVСтатическиеСообщения.Name = "lVСтатическиеСообщения";
-            this.lVСтатическиеСообщения.Size = new System.Drawing.Size(690, 275);
+            this.lVСтатическиеСообщения.Size = new System.Drawing.Size(690, 87);
             this.lVСтатическиеСообщения.TabIndex = 20;
             this.lVСтатическиеСообщения.UseCompatibleStateImageBehavior = false;
             this.lVСтатическиеСообщения.View = System.Windows.Forms.View.Details;
