@@ -38,7 +38,7 @@ namespace MainExample.Services
         public void AddItem(TaskSound taskSound)
         {
             int количествоПопыток = 0;
-            while (количествоПопыток++ < 10)
+            while (количествоПопыток++ < 60)
             {
                 var key = taskSound.Время.ToString("yy.MM.dd  HH:mm:ss");
                 string[] parts = key.Split(':');
@@ -50,7 +50,7 @@ namespace MainExample.Services
                     break;
                 }
 
-                taskSound.Время.AddSeconds(10);
+                taskSound.Время= taskSound.Время.AddSeconds(1);
             }
         }
 

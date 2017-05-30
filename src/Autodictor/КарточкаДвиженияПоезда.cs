@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace MainExample
@@ -157,12 +158,15 @@ namespace MainExample
                 if ((this.Record.ТипПоезда == ТипПоезда.Пригородный) || (this.Record.ТипПоезда == ТипПоезда.Ласточка) || (this.Record.ТипПоезда == ТипПоезда.РЭКС))
                 {
                     string Примечание = this.Record.Примечание;
+                    var списокСтанцийParse = Примечание.Substring(Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st=>st.Trim()).ToList();
+       
+        
                     if (Примечание.Contains("С остановк"))
                     {
                         rB_ПоСтанциям.Checked = true;
                         foreach (var Станция in Program.Станции)
                         {
-                            if (Примечание.Contains(Станция))
+                            if (списокСтанцийParse.Contains(Станция))
                                 lB_ПоСтанциям.Items.Add(Станция);
                         }
 
@@ -183,7 +187,7 @@ namespace MainExample
                         rB_КромеСтанций.Checked = true;
                         foreach (var Станция in Program.Станции)
                         {
-                            if (Примечание.Contains(Станция))
+                            if (списокСтанцийParse.Contains(Станция))
                                 lB_ПоСтанциям.Items.Add(Станция);
                         }
 
@@ -826,6 +830,7 @@ namespace MainExample
             {
                 СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                 {
+                    Id = -1,
                     Приоритет = Priority.Hight, 
                     SoundRecordId = Record.ID,
                     Шаблон = ФормируемоеСообщение,
@@ -833,7 +838,7 @@ namespace MainExample
                     НазваниеШаблона = "Авария"
                 };
 
-                MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, шаблонФормируемогоСообщения);
+                MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора нештатная ситуация", Record, шаблонФормируемогоСообщения);
             }
         }
 

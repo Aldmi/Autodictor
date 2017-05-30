@@ -65,6 +65,10 @@
             this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lVСобытия = new System.Windows.Forms.ListView();
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.rtb_subtaitles = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.номерПутиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.путь0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +97,6 @@
             this.путь23ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.путь24ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.путь25ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-
             this.нумерацияПоездаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.отсутсвуетToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сГоловыСоставаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,10 +115,6 @@
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.воспроизвестиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.включитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rtb_subtaitles = new System.Windows.Forms.RichTextBox();
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lVСобытия = new System.Windows.Forms.ListView();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -181,13 +180,13 @@
             // 
             this.columnHeader7.Text = "ПРИБ.";
             this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader7.Width = 160;
+            this.columnHeader7.Width = 100;
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "ОТПР.";
             this.columnHeader1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader1.Width = 160;
+            this.columnHeader1.Width = 100;
             // 
             // columnHeader8
             // 
@@ -449,6 +448,49 @@
             this.splitContainer2.Size = new System.Drawing.Size(1394, 114);
             this.splitContainer2.SplitterDistance = 691;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // lVСобытия
+            // 
+            this.lVСобытия.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader13,
+            this.columnHeader26});
+            this.lVСобытия.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lVСобытия.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lVСобытия.FullRowSelect = true;
+            this.lVСобытия.GridLines = true;
+            this.lVСобытия.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lVСобытия.Location = new System.Drawing.Point(0, 0);
+            this.lVСобытия.Name = "lVСобытия";
+            this.lVСобытия.Size = new System.Drawing.Size(691, 114);
+            this.lVСобытия.TabIndex = 1;
+            this.lVСобытия.UseCompatibleStateImageBehavior = false;
+            this.lVСобытия.View = System.Windows.Forms.View.Details;
+            this.lVСобытия.Enter += new System.EventHandler(this.listView5_Enter);
+            this.lVСобытия.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lVСобытия_MouseDoubleClick);
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Время";
+            this.columnHeader13.Width = 180;
+            // 
+            // columnHeader26
+            // 
+            this.columnHeader26.Text = "Событие";
+            this.columnHeader26.Width = 1500;
+            // 
+            // rtb_subtaitles
+            // 
+            this.rtb_subtaitles.AutoWordSelection = true;
+            this.rtb_subtaitles.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.rtb_subtaitles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtb_subtaitles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtb_subtaitles.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtb_subtaitles.Location = new System.Drawing.Point(0, 0);
+            this.rtb_subtaitles.Name = "rtb_subtaitles";
+            this.rtb_subtaitles.ReadOnly = true;
+            this.rtb_subtaitles.Size = new System.Drawing.Size(699, 114);
+            this.rtb_subtaitles.TabIndex = 0;
+            this.rtb_subtaitles.Text = "";
             // 
             // contextMenuStrip1
             // 
@@ -810,49 +852,6 @@
             this.включитьToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.включитьToolStripMenuItem.Text = "Включить";
             this.включитьToolStripMenuItem.Click += new System.EventHandler(this.включитьToolStripMenuItem_Click);
-            // 
-            // rtb_subtaitles
-            // 
-            this.rtb_subtaitles.AutoWordSelection = true;
-            this.rtb_subtaitles.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.rtb_subtaitles.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtb_subtaitles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtb_subtaitles.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rtb_subtaitles.Location = new System.Drawing.Point(0, 0);
-            this.rtb_subtaitles.Name = "rtb_subtaitles";
-            this.rtb_subtaitles.ReadOnly = true;
-            this.rtb_subtaitles.Size = new System.Drawing.Size(699, 114);
-            this.rtb_subtaitles.TabIndex = 0;
-            this.rtb_subtaitles.Text = "";
-            // 
-            // columnHeader13
-            // 
-            this.columnHeader13.Text = "Время";
-            this.columnHeader13.Width = 160;
-            // 
-            // columnHeader26
-            // 
-            this.columnHeader26.Text = "Событие";
-            this.columnHeader26.Width = 1500;
-            // 
-            // lVСобытия
-            // 
-            this.lVСобытия.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader13,
-            this.columnHeader26});
-            this.lVСобытия.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lVСобытия.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lVСобытия.FullRowSelect = true;
-            this.lVСобытия.GridLines = true;
-            this.lVСобытия.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lVСобытия.Location = new System.Drawing.Point(0, 0);
-            this.lVСобытия.Name = "lVСобытия";
-            this.lVСобытия.Size = new System.Drawing.Size(691, 114);
-            this.lVСобытия.TabIndex = 1;
-            this.lVСобытия.UseCompatibleStateImageBehavior = false;
-            this.lVСобытия.View = System.Windows.Forms.View.Details;
-            this.lVСобытия.Enter += new System.EventHandler(this.listView5_Enter);
-            this.lVСобытия.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lVСобытия_MouseDoubleClick);
             // 
             // MainWindowForm
             // 

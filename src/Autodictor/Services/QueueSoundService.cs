@@ -231,14 +231,14 @@ namespace MainExample.Services
                                     (CurrentSoundMessagePlaying.ParentId != item.ParentId &&
                                      CurrentSoundMessagePlaying.RootId != item.RootId))
                                 {
-                                    EventStartPlayingTemplate(item);
+                                    EventStartPlayingTemplate(peekItem);  //item
                                 }
                                 CurrentSoundMessagePlaying = item;
                             }
                             else
                             {
                                 Queue.Dequeue();
-                                EventEndPlayingTemplate(CurrentSoundMessagePlaying);
+                                EventEndPlayingTemplate(peekItem);  //CurrentSoundMessagePlaying
                                 CurrentSoundMessagePlaying = null;
                                 ElementsOnTemplatePlaying = null;
                             }
@@ -336,6 +336,22 @@ namespace MainExample.Services
         /// </summary>
         private void EventStartPlayingTemplate(ВоспроизводимоеСообщение soundMessage)
         {
+            //шаблон АВАРИЯ
+            if (soundMessage.ParentId == null)
+            {
+                СостояниеФормируемогоСообщенияИШаблон шаблон = new СостояниеФормируемогоСообщенияИШаблон();
+                шаблон.Id = -1;
+                шаблон.SoundRecordId = soundMessage.RootId;
+                шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
+                шаблон.Приоритет = soundMessage.Приоритет;
+
+                CurrentTemplatePlaying = шаблон;
+                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон });
+                Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                return;
+            }
+
+            //шаблон ДИНАМИКИ
             var soundRecord = MainWindowForm.SoundRecords.FirstOrDefault(rec => rec.Value.ID == soundMessage.RootId).Value;
             if (soundRecord.СписокФормируемыхСообщений != null && soundRecord.СписокФормируемыхСообщений.Any())
             {
