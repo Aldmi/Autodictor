@@ -149,6 +149,7 @@
       <DependentUpon>RegulatorySheduleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\QueueSoundService.cs" />
+    <Compile Include="Services\TaskManagerService.cs" />
     <Compile Include="SoundConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>

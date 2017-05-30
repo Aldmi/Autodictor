@@ -14,6 +14,21 @@ namespace MainExample.Services
     public enum StatusPlaying { Start, Playing, Stop }
 
 
+    public class StaticChangeValue
+    {
+        public StatusPlaying StatusPlaying { get; set; }
+        public ВоспроизводимоеСообщение SoundMessage { get; set; }
+    }
+
+
+    public class TemplateChangeValue
+    {
+        public StatusPlaying StatusPlaying { get; set; }
+        public СостояниеФормируемогоСообщенияИШаблон Template { get; set; }
+    }
+
+
+
     public class QueueSoundService : IDisposable
     {
         #region Field
@@ -48,6 +63,9 @@ namespace MainExample.Services
         {
             get
             {
+                if(CurrentSoundMessagePlaying == null)
+                    return new List<ВоспроизводимоеСообщение>();
+
                 var result= new List<ВоспроизводимоеСообщение>();
                 if (IsStaticSoundPlaying)
                 {
@@ -75,8 +93,8 @@ namespace MainExample.Services
 
         public Subject<StatusPlaying> QueueChangeRx { get; } = new Subject<StatusPlaying>();             //Событие определния начала/конца проигрывания ОЧЕРЕДИ
         public Subject<StatusPlaying> SoundMessageChangeRx { get; } = new Subject<StatusPlaying>();      //Событие определния начала/конца проигрывания ФАЙЛА
-        public Subject<StatusPlaying> TemplateChangeRx { get; } = new Subject<StatusPlaying>();          //Событие определния начала/конца проигрывания динамического ШАБЛОНА
-        public Subject<StatusPlaying> StaticChangeRx { get; } = new Subject<StatusPlaying>();            //Событие определния начала/конца проигрывания  статического ФАЙЛА
+        public Subject<TemplateChangeValue> TemplateChangeRx { get; } = new Subject<TemplateChangeValue>();          //Событие определния начала/конца проигрывания динамического ШАБЛОНА
+        public Subject<StaticChangeValue> StaticChangeRx { get; } = new Subject<StaticChangeValue>();            //Событие определния начала/конца проигрывания  статического ФАЙЛА
 
         #endregion
 
@@ -132,6 +150,15 @@ namespace MainExample.Services
             CurrentSoundMessagePlaying = null;
         }
 
+
+
+        public ВоспроизводимоеСообщение FindItem(int rootId, int? parentId)
+        {
+            if (GetElementsWithFirstElem == null || !GetElementsWithFirstElem.Any())
+                return null;
+
+            return GetElementsWithFirstElem.FirstOrDefault(elem => elem.RootId == rootId && elem.ParentId == parentId);
+        }
 
 
 
@@ -316,7 +343,7 @@ namespace MainExample.Services
                 if (!string.IsNullOrEmpty(template.НазваниеШаблона))
                 {
                     CurrentTemplatePlaying = template;
-                    TemplateChangeRx.OnNext(StatusPlaying.Start);
+                    TemplateChangeRx.OnNext(new TemplateChangeValue {StatusPlaying = StatusPlaying.Start, Template =  template});
                     Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
                 }
             }
@@ -336,7 +363,7 @@ namespace MainExample.Services
                 if (!string.IsNullOrEmpty(template.НазваниеШаблона))
                 {
                     CurrentTemplatePlaying = null;
-                    TemplateChangeRx.OnNext(StatusPlaying.Start);
+                    TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = template });
                     Debug.WriteLine($"--------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
                 }
             }
@@ -350,7 +377,7 @@ namespace MainExample.Services
         /// </summary>
         private void EventStartPlayingStatic(ВоспроизводимоеСообщение soundMessage)
         {
-            StaticChangeRx.OnNext(StatusPlaying.Start);
+             StaticChangeRx.OnNext(new StaticChangeValue {StatusPlaying = StatusPlaying.Start, SoundMessage = soundMessage});
              Debug.WriteLine($"^^^^^^^^^^^СТАТИКА НАЧАЛО {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
@@ -361,7 +388,7 @@ namespace MainExample.Services
         /// </summary>
         private void EventEndPlayingStatic(ВоспроизводимоеСообщение soundMessage)
         {
-            StaticChangeRx.OnNext(StatusPlaying.Stop);
+            StaticChangeRx.OnNext(new StaticChangeValue { StatusPlaying = StatusPlaying.Stop, SoundMessage = soundMessage });
             Debug.WriteLine($"^^^^^^^^^^^СТАТИКА КОНЕЦ: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
