@@ -112,8 +112,16 @@ namespace MainExample
             {
                 if (Sound.Name == cB_Messages.Text)
                 {
-                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = Sound.Name, Язык = NotificationLanguage.Ru };
-                    MainWindowForm.ОчередьВоспроизводимыхЗвуковыхСообщений.Add(воспроизводимоеСообщение);
+                    var воспроизводимоеСообщение = new ВоспроизводимоеСообщение
+                    {
+                        ParentId = null,
+                        RootId = Sound.ID,
+                        ИмяВоспроизводимогоФайла = Sound.Name,
+                        Приоритет = Priority.Low,
+                        Язык = NotificationLanguage.Ru,
+                        ОчередьШаблона = null
+                    };
+                    MainWindowForm.QueueSound.AddItem(воспроизводимоеСообщение);
                     Program.ЗаписьЛога("Действие оператора", "Воспроизведение звукового сообщения: " + Sound.Name);
                     break;
                 }

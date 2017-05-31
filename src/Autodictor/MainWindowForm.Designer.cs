@@ -732,7 +732,7 @@
             // 
             this.воспроизвестиToolStripMenuItem.Name = "воспроизвестиToolStripMenuItem";
             this.воспроизвестиToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.воспроизвестиToolStripMenuItem.Text = "Воспроизвести";
+            this.воспроизвестиToolStripMenuItem.Text = "Пауза";
             this.воспроизвестиToolStripMenuItem.Click += new System.EventHandler(this.воспроизвестиToolStripMenuItem_Click);
             // 
             // включитьToolStripMenuItem

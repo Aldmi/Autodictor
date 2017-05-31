@@ -114,7 +114,6 @@ namespace MainExample
 
         public static MainWindowForm myMainForm = null;
 
-        public static List<ВоспроизводимоеСообщение> ОчередьВоспроизводимыхЗвуковыхСообщений = new List<ВоспроизводимоеСообщение>(); //УБРАТЬ!!!!
         public static QueueSoundService QueueSound = new QueueSoundService();
 
         private int VisibleMode = 0;
@@ -164,9 +163,11 @@ namespace MainExample
             Binding2GeneralScheduleBehaviors = binding2GeneralScheduleBehaviors;
             SoundChanelManagment = soundChanelManagment;
 
-            MainForm.Воспроизвести.Click += new System.EventHandler(this.btnВоспроизвести_Click);
+            MainForm.Пауза.Click += new System.EventHandler(this.btnПауза_Click);
+            MainForm.Остановить.Click += new System.EventHandler(this.btnОстановить_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
             MainForm.ОбновитьСписок.Click += new System.EventHandler(this.btnОбновитьСписок_Click);
+      
 
             СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь14ToolStripMenuItem, путь15ToolStripMenuItem, путь16ToolStripMenuItem, путь17ToolStripMenuItem, путь18ToolStripMenuItem, путь19ToolStripMenuItem, путь20ToolStripMenuItem, путь21ToolStripMenuItem, путь22ToolStripMenuItem, путь23ToolStripMenuItem, путь24ToolStripMenuItem, путь25ToolStripMenuItem };
 
@@ -796,7 +797,7 @@ namespace MainExample
                         ListViewItem lvi2 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяПрибытия.ToString("yy.MM.dd  HH:mm:ss"),
+                                                                       ВремяПрибытия,
                                                                        Данные.Value.НазваниеПоезда });
                         lvi2.Tag = Данные.Value.ID;
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -808,8 +809,8 @@ namespace MainExample
                         ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяПрибытия.ToString("yy.MM.dd  HH:mm:ss"),
-                                                                       Данные.Value.ВремяОтправления.ToString("yy.MM.dd  HH:mm:ss"),
+                                                                       ВремяПрибытия,
+                                                                       ВремяОтправления,
                                                                        Данные.Value.НазваниеПоезда });
                         lvi3.Tag = Данные.Value.ID;
                         lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -821,7 +822,7 @@ namespace MainExample
                         ListViewItem lvi4 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
-                                                                       Данные.Value.ВремяОтправления.ToString("yy.MM.dd  HH:mm:ss"),
+                                                                       ВремяОтправления,
                                                                        Данные.Value.НазваниеПоезда });
                         lvi4.Tag = Данные.Value.ID;
                         lvi4.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
@@ -1702,17 +1703,45 @@ namespace MainExample
                 ОпределитьКомпозициюДляЗапуска();
             }
 
+            SoundFileStatus status = Player.GetFileStatus();
+            if (status == SoundFileStatus.Paused)
+            {
+                MainForm.Пауза.Text = "Старт";
+                MainForm.Пауза.Enabled = true;
+                MainForm.Пауза.BackColor = Color.White;
+
+                MainForm.Остановить.Enabled = false;
+                MainForm.Остановить.BackColor = Color.White;
+            }
+            else if (status == SoundFileStatus.Error)
+            {
+                MainForm.Пауза.Text = "...";
+                MainForm.Пауза.Enabled = false;
+                MainForm.Пауза.BackColor = Color.White;
+
+                MainForm.Остановить.Enabled = false;
+                MainForm.Остановить.BackColor = Color.White;
+            }
+            else if (status == SoundFileStatus.Playing)
+            {
+                MainForm.Пауза.Text = "Пауза";
+                MainForm.Пауза.Enabled = true;
+                MainForm.Пауза.BackColor = Color.DarkOrange;
+
+
+                MainForm.Остановить.Enabled = true;
+                MainForm.Остановить.BackColor = Color.Brown;
+            }
+
             ОбновитьСостояниеЗаписейТаблицы();
-
-
-            //SoundFileStatus status = Player.GetFileStatus();
-
-            //if (MainForm.Воспроизвести.Text == "Остановить")
-            //    if ((status != SoundFileStatus.Playing) && (!ОчередьВоспроизводимыхЗвуковыхСообщений.Any()))
-            //        MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
 
             QueueSound.Invoke();
         }
+
+
+
+
+
 
 
         private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
@@ -1743,24 +1772,39 @@ namespace MainExample
         }
 
 
-        private void СобытиеПроцессПроигрыванияФайлаОчередиЗвуковыхСообщений()
+
+        // Воспроизведение выбраной в таблице записи
+        private void btnПауза_Click(object sender, EventArgs e)
         {
-            // Debug.WriteLine("ПРОЦЕСС ПРОИГРЫВАНИЯ");//DEBUG
+            SoundFileStatus status = Player.GetFileStatus();
+            switch (status)
+            {
+                case SoundFileStatus.Paused:
+                case SoundFileStatus.Stop:
+                    QueueSound.PlayPlayer();
+                    break;
+
+                case SoundFileStatus.Playing:
+                    QueueSound.PausePlayer();
+                    break;
+            }
         }
 
 
 
         // Воспроизведение выбраной в таблице записи
-        private void btnВоспроизвести_Click(object sender, EventArgs e)
+        private void btnОстановить_Click(object sender, EventArgs e)
         {
-            if (MainForm.Воспроизвести.Text == "Остановить")
+            SoundFileStatus status = Player.GetFileStatus();
+            switch (status)
             {
-                ОчередьВоспроизводимыхЗвуковыхСообщений.Clear();
-                Player.PlayFile(string.Empty);
-                MainForm.Воспроизвести.Text = "Воспроизвести выбранную запись";
-                return;
+                case SoundFileStatus.Playing:
+                    QueueSound.Erase();
+                    break;
             }
         }
+
+
 
         // Обработка закрытия основной формы
         private void MainWindowForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1768,6 +1812,7 @@ namespace MainExample
             if (myMainForm == this)
                 myMainForm = null;
         }
+
 
 
         // Блокировка/разблокировка сообщения при нажатии на CheckBox

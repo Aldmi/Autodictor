@@ -52,6 +52,44 @@ namespace MainExample
             return false;
         }
 
+
+
+        public static void Pause()
+        {
+            if (track_to_play == null)
+               return;
+            
+            try
+            {
+                track_to_play.Pause();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+
+        public static void Play()
+        {
+            if (track_to_play == null)
+                return;
+
+            try
+            {
+                track_to_play.Play();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+
         public static float GetDuration()
         {
             try
@@ -68,6 +106,7 @@ namespace MainExample
             return 0f;
         }
 
+
         public static int GetCurrentPosition()
         {
             try
@@ -83,6 +122,7 @@ namespace MainExample
 
             return 0;
         }
+
 
 
         //TODO: Exceptions при геннерации списка.
@@ -115,6 +155,8 @@ namespace MainExample
 
             return fileStatus;
         }
+
+
 
         public static int GetVolume()
         {

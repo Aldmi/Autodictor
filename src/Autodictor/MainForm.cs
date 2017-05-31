@@ -28,7 +28,8 @@ namespace MainExample
 
         static public MainForm mainForm = null;
         static public ToolStripButton СвязьСЦис = null;
-        static public ToolStripButton Воспроизвести = null;
+        static public ToolStripButton Пауза = null;
+        static public ToolStripButton Остановить = null;
         static public ToolStripButton Включить = null;
         static public ToolStripButton ОбновитьСписок = null;
 
@@ -54,7 +55,8 @@ namespace MainExample
             СвязьСЦис = tSLСостояниеСвязиСЦИС;
             СвязьСЦис.BackColor = Color.Orange;
 
-            Воспроизвести = tSBВоспроизвести;
+            Пауза = tSBПауза;
+            Остановить = tSBОстановить;
             Включить = tSBВключить;
             ОбновитьСписок = tSBОбновитьСписок;
 

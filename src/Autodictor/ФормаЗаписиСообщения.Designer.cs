@@ -71,7 +71,7 @@
             this.btnВоспроизвести.Name = "btnВоспроизвести";
             this.btnВоспроизвести.Size = new System.Drawing.Size(149, 35);
             this.btnВоспроизвести.TabIndex = 2;
-            this.btnВоспроизвести.Text = "Воспроизвести";
+            this.btnВоспроизвести.Text = "Пауза";
             this.btnВоспроизвести.UseVisualStyleBackColor = true;
             this.btnВоспроизвести.Click += new System.EventHandler(this.button3_Click);
             // 

@@ -144,8 +144,8 @@ namespace MainExample.Services
         /// </summary>
         public void Clear()
         {
-            Queue.Clear();
-            ElementsOnTemplatePlaying.Clear();
+            Queue?.Clear();
+            ElementsOnTemplatePlaying?.Clear();
             CurrentTemplatePlaying = null;
             CurrentSoundMessagePlaying = null;
         }
@@ -158,6 +158,30 @@ namespace MainExample.Services
                 return null;
 
             return GetElementsWithFirstElem.FirstOrDefault(elem => elem.RootId == rootId && elem.ParentId == parentId);
+        }
+
+
+
+        public void PausePlayer()
+        {
+            StopQueue();
+            Player.Pause();
+        }
+
+
+
+        public void PlayPlayer()
+        {
+            StartQueue();
+            Player.Play();
+        }
+
+
+
+        public void Erase()
+        {
+          Clear();
+          Player.PlayFile(string.Empty);
         }
 
 
