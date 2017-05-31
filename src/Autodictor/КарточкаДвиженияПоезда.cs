@@ -377,7 +377,7 @@ namespace MainExample
 
             if (списокСтанций.ShowDialog() == DialogResult.OK)
             {
-                System.Collections.Generic.List<string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
+                List<string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
                 lB_ПоСтанциям.Items.Clear();
                 foreach (var res in РезультирующиеСтанции)
                     lB_ПоСтанциям.Items.Add(res);

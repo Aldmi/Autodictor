@@ -106,8 +106,6 @@ namespace MainExample
 
         public static SortedDictionary<string, СтатическоеСообщение> СтатическиеЗвуковыеСообщения = new SortedDictionary<string, СтатическоеСообщение>();
 
-        public static SortedDictionary<string, ОписаниеСобытия> СписокБлижайшихСобытий = new SortedDictionary<string, ОписаниеСобытия>();
-
         public TaskManagerService TaskManager = new TaskManagerService();
 
 
@@ -1031,7 +1029,6 @@ namespace MainExample
         {
             bool СообщениеИзменено;
 
-            СписокБлижайшихСобытий.Clear();
             TaskManager.Clear();
 
             #region Определить композицию для запуска статических сообщений
@@ -2541,6 +2538,8 @@ namespace MainExample
                             if ((Record.ТипПоезда == ТипПоезда.Пригородный) || (Record.ТипПоезда == ТипПоезда.Ласточка) ||
                                 (Record.ТипПоезда == ТипПоезда.РЭКС))
                             {
+                                var списокСтанцийParse = Record.Примечание.Substring(Record.Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st => st.Trim()).ToList();
+
                                 if (Record.Примечание.Contains("Со всеми остановками"))
                                 {
                                     logMessage += "Электропоезд движется со всеми остановками ";
@@ -2560,7 +2559,7 @@ namespace MainExample
                                 {
                                     logMessage += "Электропоезд движется с остановками на станциях: ";
                                     foreach (var Станция in Program.Станции)
-                                        if (Record.Примечание.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция))
                                             logMessage += Станция + " ";
 
                                     if (Program.FilesFolder.Contains("СОстановками"))
@@ -2576,7 +2575,7 @@ namespace MainExample
                                     }
 
                                     foreach (var Станция in Program.Станции)
-                                        if (Record.Примечание.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция))
                                             if (Program.FilesFolder.Contains(Станция))
                                             {
                                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
@@ -2593,7 +2592,7 @@ namespace MainExample
                                 {
                                     logMessage += "Электропоезд движется с остановками кроме станций: ";
                                     foreach (var Станция in Program.Станции)
-                                        if (Record.Примечание.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция))
                                             logMessage += Станция + " ";
 
                                     if (Program.FilesFolder.Contains("СОстановкамиКроме"))
@@ -2609,7 +2608,7 @@ namespace MainExample
                                     }
 
                                     foreach (var Станция in Program.Станции)
-                                        if (Record.Примечание.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция))
                                             if (Program.FilesFolder.Contains(Станция))
                                             {
                                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
@@ -2935,12 +2934,12 @@ namespace MainExample
             try
             {
                 string Key = lVСобытия.SelectedItems[0].SubItems[0].Text;
-                if (СписокБлижайшихСобытий.ContainsKey(Key))
+                if (TaskManager.Tasks.ContainsKey(Key))
                 {
-                    ОписаниеСобытия ДанныеСтроки = СписокБлижайшихСобытий[Key];
-                    if (ДанныеСтроки.НомерСписка == 1)
+                    var данныеСтроки = TaskManager.Tasks[Key];
+                    if (данныеСтроки.НомерСписка == 1)
                     {
-                        Key = ДанныеСтроки.Ключ;
+                        Key = данныеСтроки.Ключ;
                         if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key))
                         {
                             СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
@@ -2994,7 +2993,7 @@ namespace MainExample
                     }
                     else // Динамические сообщения
                     {
-                        Key = ДанныеСтроки.Ключ;
+                        Key = данныеСтроки.Ключ;
                         if (SoundRecords.Keys.Contains(Key) == true)
                         {
                             SoundRecord Данные = SoundRecords[Key];
@@ -3003,7 +3002,7 @@ namespace MainExample
                             {
                                 SoundRecord СтарыеДанные = Данные;
                                 Данные = Карточка.ПолучитьИзмененнуюКарточку();
-                                Данные = ИзменениеДанныхВКарточке(СтарыеДанные, Данные, Key);
+                                ИзменениеДанныхВКарточке(СтарыеДанные, Данные, Key);
                                 ОбновитьСостояниеЗаписейТаблицы();
                             }
                         }
@@ -3017,6 +3016,7 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
+
 
 
         private SoundRecord ИзменениеДанныхВКарточке(SoundRecord СтарыеДанные, SoundRecord Данные, string Key)

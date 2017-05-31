@@ -40,19 +40,6 @@
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.lVПрибытие = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lVТранзит = new System.Windows.Forms.ListView();
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lVОтправление = new System.Windows.Forms.ListView();
             this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -115,6 +102,19 @@
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.воспроизвестиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.включитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lVТранзит = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lVПрибытие = new System.Windows.Forms.ListView();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -198,116 +198,6 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // lVПрибытие
-            // 
-            this.lVПрибытие.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader12,
-            this.columnHeader11});
-            this.lVПрибытие.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lVПрибытие.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lVПрибытие.FullRowSelect = true;
-            this.lVПрибытие.GridLines = true;
-            this.lVПрибытие.Location = new System.Drawing.Point(696, 2);
-            this.lVПрибытие.Margin = new System.Windows.Forms.Padding(2);
-            this.lVПрибытие.Name = "lVПрибытие";
-            this.lVПрибытие.Size = new System.Drawing.Size(696, 248);
-            this.lVПрибытие.TabIndex = 17;
-            this.lVПрибытие.UseCompatibleStateImageBehavior = false;
-            this.lVПрибытие.View = System.Windows.Forms.View.Details;
-            this.lVПрибытие.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
-            this.lVПрибытие.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lVПрибытие_MouseUp);
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Время";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader3.Width = 3;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Поезд";
-            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader9.Width = 80;
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "Путь";
-            this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader10.Width = 71;
-            // 
-            // columnHeader12
-            // 
-            this.columnHeader12.Text = "ПРИБ.";
-            this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader12.Width = 90;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "Маршрут";
-            this.columnHeader11.Width = 1000;
-            // 
-            // lVТранзит
-            // 
-            this.lVТранзит.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader17});
-            this.lVТранзит.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lVТранзит.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lVТранзит.FullRowSelect = true;
-            this.lVТранзит.GridLines = true;
-            this.lVТранзит.Location = new System.Drawing.Point(2, 2);
-            this.lVТранзит.Margin = new System.Windows.Forms.Padding(2);
-            this.lVТранзит.Name = "lVТранзит";
-            this.tableLayoutPanel1.SetRowSpan(this.lVТранзит, 2);
-            this.lVТранзит.Size = new System.Drawing.Size(690, 527);
-            this.lVТранзит.TabIndex = 18;
-            this.lVТранзит.UseCompatibleStateImageBehavior = false;
-            this.lVТранзит.View = System.Windows.Forms.View.Details;
-            this.lVТранзит.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
-            this.lVТранзит.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lVПрибытие_MouseUp);
-            // 
-            // columnHeader14
-            // 
-            this.columnHeader14.Text = "Время";
-            this.columnHeader14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader14.Width = 2;
-            // 
-            // columnHeader15
-            // 
-            this.columnHeader15.Text = "Поезд";
-            this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader15.Width = 80;
-            // 
-            // columnHeader16
-            // 
-            this.columnHeader16.Text = "Путь";
-            this.columnHeader16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader16.Width = 71;
-            // 
-            // columnHeader18
-            // 
-            this.columnHeader18.Text = "ПРИБ.";
-            this.columnHeader18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader18.Width = 90;
-            // 
-            // columnHeader19
-            // 
-            this.columnHeader19.Text = "ОТПР.";
-            this.columnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader19.Width = 90;
-            // 
-            // columnHeader17
-            // 
-            this.columnHeader17.Text = "Маршрут";
-            this.columnHeader17.Width = 1000;
-            // 
             // lVОтправление
             // 
             this.lVОтправление.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -365,9 +255,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.81923F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.18077F));
-            this.tableLayoutPanel1.Controls.Add(this.lVОтправление, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lVПрибытие, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lVПрибытие, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.lVТранзит, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lVОтправление, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -852,6 +742,114 @@
             this.включитьToolStripMenuItem.Text = "Включить";
             this.включитьToolStripMenuItem.Click += new System.EventHandler(this.включитьToolStripMenuItem_Click);
             // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Время";
+            this.columnHeader14.Width = 2;
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "Поезд";
+            this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader15.Width = 80;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "Путь";
+            this.columnHeader16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader16.Width = 71;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "ПРИБ.";
+            this.columnHeader18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader18.Width = 90;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "ОТПР.";
+            this.columnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader19.Width = 90;
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.Text = "Маршрут";
+            this.columnHeader17.Width = 1000;
+            // 
+            // lVТранзит
+            // 
+            this.lVТранзит.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader17});
+            this.lVТранзит.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lVТранзит.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lVТранзит.FullRowSelect = true;
+            this.lVТранзит.GridLines = true;
+            this.lVТранзит.Location = new System.Drawing.Point(2, 2);
+            this.lVТранзит.Margin = new System.Windows.Forms.Padding(2);
+            this.lVТранзит.Name = "lVТранзит";
+            this.tableLayoutPanel1.SetRowSpan(this.lVТранзит, 2);
+            this.lVТранзит.Size = new System.Drawing.Size(690, 527);
+            this.lVТранзит.TabIndex = 18;
+            this.lVТранзит.UseCompatibleStateImageBehavior = false;
+            this.lVТранзит.View = System.Windows.Forms.View.Details;
+            this.lVТранзит.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.lVТранзит.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lVПрибытие_MouseUp);
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Время";
+            this.columnHeader3.Width = 3;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Поезд";
+            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader9.Width = 80;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Путь";
+            this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader10.Width = 71;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "ПРИБ.";
+            this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader12.Width = 90;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Маршрут";
+            this.columnHeader11.Width = 1000;
+            // 
+            // lVПрибытие
+            // 
+            this.lVПрибытие.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader12,
+            this.columnHeader11});
+            this.lVПрибытие.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lVПрибытие.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lVПрибытие.FullRowSelect = true;
+            this.lVПрибытие.GridLines = true;
+            this.lVПрибытие.Location = new System.Drawing.Point(696, 2);
+            this.lVПрибытие.Margin = new System.Windows.Forms.Padding(2);
+            this.lVПрибытие.Name = "lVПрибытие";
+            this.lVПрибытие.Size = new System.Drawing.Size(696, 248);
+            this.lVПрибытие.TabIndex = 17;
+            this.lVПрибытие.UseCompatibleStateImageBehavior = false;
+            this.lVПрибытие.View = System.Windows.Forms.View.Details;
+            this.lVПрибытие.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.lVПрибытие.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lVПрибытие_MouseUp);
+            // 
             // MainWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -890,19 +888,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ListView lVПрибытие;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ListView lVТранзит;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
-        private System.Windows.Forms.ColumnHeader columnHeader18;
-        private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.ColumnHeader columnHeader17;
         private System.Windows.Forms.ListView lVОтправление;
         private System.Windows.Forms.ColumnHeader columnHeader20;
         private System.Windows.Forms.ColumnHeader columnHeader21;
@@ -966,5 +951,18 @@
         private System.Windows.Forms.ListView lVСобытия;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader26;
+        private System.Windows.Forms.ListView lVПрибытие;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ListView lVТранзит;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
+        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
+        private System.Windows.Forms.ColumnHeader columnHeader17;
     }
 }
