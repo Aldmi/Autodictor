@@ -788,7 +788,7 @@ namespace MainExample
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
                                                                        Данные.Value.Примечание,
-                                                                       Данные.Value.Дополнение});
+                                                                       Данные.Value.ИспользоватьДополнение ?  "ВКЛ.  " + Данные.Value.Дополнение :  "выкл.  " + Данные.Value.Дополнение});
                     lvi1.Tag = Данные.Value.ID;
                     lvi1.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                     this.listView1.Items.Add(lvi1);
@@ -2124,18 +2124,18 @@ namespace MainExample
                                 {
                                     case "listView1":
                                         if (listView.Items[item].SubItems[7].Text != Данные.Дополнение)
-                                            listView.Items[item].SubItems[7].Text = Данные.Дополнение;
+                                            listView.Items[item].SubItems[7].Text = Данные.ИспользоватьДополнение ? "ВКЛ.  " + Данные.Дополнение : "выкл.  " + Данные.Дополнение;
                                         break;
 
                                     case "lVПрибытие":
                                     case "lVОтправление":
                                         if (listView.Items[item].SubItems[5].Text != Данные.НазваниеПоезда)
-                                            listView.Items[item].SubItems[5].Text = Данные.НазваниеПоезда;
+                                            listView.Items[item].SubItems[5].Text = Данные.ИспользоватьДополнение ? "ВКЛ.  " + Данные.Дополнение : "выкл.  " + Данные.Дополнение;
                                         break;
 
                                     case "lVТранзит":
                                         if (listView.Items[item].SubItems[6].Text != Данные.НазваниеПоезда)
-                                            listView.Items[item].SubItems[6].Text = Данные.НазваниеПоезда;
+                                            listView.Items[item].SubItems[6].Text = Данные.ИспользоватьДополнение ? "ВКЛ.  " + Данные.Дополнение : "выкл.  " + Данные.Дополнение;
                                         break;
                                 }
 
