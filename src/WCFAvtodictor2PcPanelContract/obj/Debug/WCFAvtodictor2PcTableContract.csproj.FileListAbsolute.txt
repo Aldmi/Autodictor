@@ -50,3 +50,4 @@ C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTa
 C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Debug\WCFAvtodictor2PcTableContract.pdb
 C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.dll
 C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.pdb
+C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Debug\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache

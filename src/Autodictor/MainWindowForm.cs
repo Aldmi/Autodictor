@@ -787,7 +787,8 @@ namespace MainExample
                                                                        Данные.Value.НазваниеПоезда,
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
-                                                                       Данные.Value.Примечание});
+                                                                       Данные.Value.Примечание,
+                                                                       Данные.Value.Дополнение});
                     lvi1.Tag = Данные.Value.ID;
                     lvi1.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                     this.listView1.Items.Add(lvi1);
@@ -798,7 +799,8 @@ namespace MainExample
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        ВремяПрибытия,
-                                                                       Данные.Value.НазваниеПоезда });
+                                                                       Данные.Value.НазваниеПоезда,
+                                                                       Данные.Value.Дополнение});
                         lvi2.Tag = Данные.Value.ID;
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVПрибытие.Items.Add(lvi2);
@@ -811,7 +813,8 @@ namespace MainExample
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
-                                                                       Данные.Value.НазваниеПоезда });
+                                                                       Данные.Value.НазваниеПоезда,
+                                                                       Данные.Value.Дополнение});
                         lvi3.Tag = Данные.Value.ID;
                         lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVТранзит.Items.Add(lvi3);
@@ -823,7 +826,8 @@ namespace MainExample
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        ВремяОтправления,
-                                                                       Данные.Value.НазваниеПоезда });
+                                                                       Данные.Value.НазваниеПоезда,
+                                                                       Данные.Value.Дополнение});
                         lvi4.Tag = Данные.Value.ID;
                         lvi4.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVОтправление.Items.Add(lvi4);
@@ -1815,18 +1819,6 @@ namespace MainExample
 
 
 
-        // Блокировка/разблокировка сообщения при нажатии на CheckBox
-        private void listView1_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (ОбновлениеСписка)
-                return;
-
-            if ((sender as ListView).PointToClient(Cursor.Position).X > 22)
-                e.NewValue = e.CurrentValue;
-        }
-
-
-
         //Отправка сообшений на табло
         private void SendOnPathTable(SoundRecord data)
         {
@@ -2124,6 +2116,29 @@ namespace MainExample
                                             listView.Items[item].SubItems[5].Text = Данные.НазваниеПоезда;
                                         break;
                                 }
+
+
+
+                                //Изменение ДОПОЛНЕНИЯ
+                                switch (listView.Name)
+                                {
+                                    case "listView1":
+                                        if (listView.Items[item].SubItems[7].Text != Данные.Дополнение)
+                                            listView.Items[item].SubItems[7].Text = Данные.Дополнение;
+                                        break;
+
+                                    case "lVПрибытие":
+                                    case "lVОтправление":
+                                        if (listView.Items[item].SubItems[5].Text != Данные.НазваниеПоезда)
+                                            listView.Items[item].SubItems[5].Text = Данные.НазваниеПоезда;
+                                        break;
+
+                                    case "lVТранзит":
+                                        if (listView.Items[item].SubItems[6].Text != Данные.НазваниеПоезда)
+                                            listView.Items[item].SubItems[6].Text = Данные.НазваниеПоезда;
+                                        break;
+                                }
+
 
                                 //Обновить Время ПРИБ
                                 if ((Данные.БитыАктивностиПолей & 0x04) != 0x00)
