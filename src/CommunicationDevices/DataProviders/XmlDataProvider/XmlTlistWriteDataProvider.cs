@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -33,26 +34,48 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
         public byte[] GetDataByte()
         {
-          var xmlRequest = CreateXmlRequest(InputData?.TableData);
-          if (xmlRequest != null)
-          {
-              try
-              {
-                  var bytes = System.Text.Encoding.ASCII.GetBytes(xmlRequest.ToString());  //TODO: верная ли кодировка преобразования?
-                  return bytes;
-              }
-              catch (Exception ex)
-              {
-                    //исключение конвертации
-              }
-           }
+            throw new NotImplementedException();
+        }
+
+
+
+        public Stream GetStream()
+        {
+            try
+            {
+                var xmlRequest = CreateXmlRequest(InputData?.TableData);
+                if (xmlRequest != null)
+                {
+                    var xmlVersion = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+                    var resultXmlDoc = xmlVersion + xmlRequest;
+                    return GenerateStreamFromString(resultXmlDoc);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
             return null;
         }
 
 
+
+        public Stream GenerateStreamFromString(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+
+
         public bool SetDataByte(byte[] data)
         {
+            //TODO: преобразовать массив байт обратно в строку и проверить ответ
             if (data != null && data.Length == 2)
             {
                 return (data[0] == 0xAA) && (data[1] == 0xBB);

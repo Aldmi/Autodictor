@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Communication.Annotations;
@@ -117,6 +118,11 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
             return bufer;
         }
 
+
+        public Stream GetStream()
+        {
+            throw new NotImplementedException();
+        }
 
 
         public bool SetDataByte(byte[] data)

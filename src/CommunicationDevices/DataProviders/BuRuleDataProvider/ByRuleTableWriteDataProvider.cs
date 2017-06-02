@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -32,10 +33,6 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
         #endregion
 
-
-
-
-
         #region ctor
 
         public ByRuleTableWriteDataProvider(BaseExchangeRule baseExchangeRule)
@@ -49,10 +46,6 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
         #endregion
 
-
-
-
-
         public byte[] GetDataByte()
         {
             try
@@ -60,21 +53,26 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                 var requestFillBody = RequestRule.GetFillBody(InputData, CurrentRow); // ??? передавать CurrentRow
                 string matchString = null;
 
-                var requestFillBodyWithoutConstantCharacters = requestFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
+                var requestFillBodyWithoutConstantCharacters =
+                    requestFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
 
 
                 //ВЫЧИСЛЯЕМ NByte---------------------------------------------------------------------------
                 int lenght = 0;
 
-                if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Success)            //вычислили длинну строгки между Nbyte и CRC
+                if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Success)
+                    //вычислили длинну строгки между Nbyte и CRC
                 {
-                    matchString = Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Groups[2].Value;
+                    matchString =
+                        Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Groups[2]
+                            .Value;
                     lenght = matchString.Length;
                 }
-                else
-                if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Success)                     //вычислили длинну строки от Nbyte до конца строки
+                else if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Success)
+                    //вычислили длинну строки от Nbyte до конца строки
                 {
-                    matchString = Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Groups[1].Value;
+                    matchString =
+                        Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Groups[1].Value;
                     lenght = matchString.Length;
                 }
 
@@ -86,10 +84,9 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                     var removeCount = lenght - RequestRule.MaxLenght.Value;
                     limetedStr = matchString.Remove(RequestRule.MaxLenght.Value, removeCount);
                     lenght = limetedStr.Length;
-                    requestFillBodyWithoutConstantCharacters = requestFillBodyWithoutConstantCharacters.Replace(matchString, limetedStr);
+                    requestFillBodyWithoutConstantCharacters =
+                        requestFillBodyWithoutConstantCharacters.Replace(matchString, limetedStr);
                 }
-
-
 
 
                 //ЗАПОНЯЕМ ВСЕ СЕКЦИИ ДО CRC
@@ -152,7 +149,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                     resultBuffer.Insert(0, 0x02); //STX
 
                 if (Regex.Match(requestFillBody, "ETX").Success)
-                    resultBuffer.Add(0x03);       //ETX
+                    resultBuffer.Add(0x03); //ETX
 
                 return resultBuffer.ToArray();
             }
@@ -162,7 +159,10 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
             }
         }
 
-
+        public Stream GetStream()
+        {
+            throw new NotImplementedException();
+        }
 
 
         public bool SetDataByte(byte[] data)
@@ -171,6 +171,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
             return true;
         }
+
 
 
 
@@ -187,8 +188,6 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
             return xor;
         }
 
-
-
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -200,7 +199,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion
 
+        #endregion
     }
 }

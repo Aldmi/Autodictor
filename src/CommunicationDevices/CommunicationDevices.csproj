@@ -121,7 +121,6 @@
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\VidorTableLineByLineExchangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\VidorExchangeBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\DisplSysExchangeBehavior.cs" />
-    <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\InformSvyazExchangeBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\IExhangeBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\BaseExhangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\TcpIpBehavior\BaseExhangeTcpIpBehavior.cs" />
@@ -131,7 +130,6 @@
     <Compile Include="Devices\DeviceSetting.cs" />
     <Compile Include="DI\WindsorConfig.cs" />
     <Compile Include="DataProviders\DisplaySysDataProvider\PanelDispSysWriteDataProvider.cs" />
-    <Compile Include="DataProviders\InformSvyzDataProvider\PanelInformSvyazWriteDataProvider.cs" />
     <Compile Include="DataProviders\UniversalInputType.cs" />
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorTable2StrWriteDataProvider.cs" />
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorTable1StrWriteDataProvider.cs" />

@@ -788,7 +788,7 @@ namespace MainExample
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
                                                                        Данные.Value.Примечание,
-                                                                       Данные.Value.ИспользоватьДополнение ?  "ВКЛ.  " + Данные.Value.Дополнение :  "выкл.  " + Данные.Value.Дополнение});
+                                                                       Данные.Value.ИспользоватьДополнение ? Данные.Value.Дополнение : String.Empty});
                     lvi1.Tag = Данные.Value.ID;
                     lvi1.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                     this.listView1.Items.Add(lvi1);
@@ -800,7 +800,7 @@ namespace MainExample
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        ВремяПрибытия,
                                                                        Данные.Value.НазваниеПоезда,
-                                                                       Данные.Value.Дополнение});
+                                                                       Данные.Value.ИспользоватьДополнение ? Данные.Value.Дополнение : String.Empty});
                         lvi2.Tag = Данные.Value.ID;
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVПрибытие.Items.Add(lvi2);
@@ -814,7 +814,7 @@ namespace MainExample
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
                                                                        Данные.Value.НазваниеПоезда,
-                                                                       Данные.Value.Дополнение});
+                                                                       Данные.Value.ИспользоватьДополнение ? Данные.Value.Дополнение : String.Empty});
                         lvi3.Tag = Данные.Value.ID;
                         lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVТранзит.Items.Add(lvi3);
@@ -1707,39 +1707,37 @@ namespace MainExample
                 ОпределитьКомпозициюДляЗапуска();
             }
 
-            SoundFileStatus status = Player.GetFileStatus();
-            if (status == SoundFileStatus.Paused)
-            {
-                MainForm.Пауза.Text = "Старт";
-                MainForm.Пауза.Enabled = true;
-                MainForm.Пауза.BackColor = Color.White;
-
-                MainForm.Остановить.Enabled = false;
-                MainForm.Остановить.BackColor = Color.White;
-            }
-            else if (status == SoundFileStatus.Error)
-            {
-                MainForm.Пауза.Text = "...";
-                MainForm.Пауза.Enabled = false;
-                MainForm.Пауза.BackColor = Color.White;
-
-                MainForm.Остановить.Enabled = false;
-                MainForm.Остановить.BackColor = Color.White;
-            }
-            else if (status == SoundFileStatus.Playing)
-            {
-                MainForm.Пауза.Text = "Пауза";
-                MainForm.Пауза.Enabled = true;
-                MainForm.Пауза.BackColor = Color.DarkOrange;
-
-
-                MainForm.Остановить.Enabled = true;
-                MainForm.Остановить.BackColor = Color.Brown;
-            }
-
             ОбновитьСостояниеЗаписейТаблицы();
-
             QueueSound.Invoke();
+
+            SoundFileStatus status = Player.GetFileStatus();
+            switch (status)
+            {
+                case SoundFileStatus.Stop:
+                case SoundFileStatus.Paused:
+                    MainForm.Пауза.Text = "Старт";
+                    MainForm.Пауза.Enabled = true;
+                    MainForm.Пауза.BackColor = Color.White;
+                    MainForm.Остановить.Enabled = false;
+                    MainForm.Остановить.BackColor = Color.White;
+                    break;
+
+                case SoundFileStatus.Error:
+                    MainForm.Пауза.Text = "...";
+                    MainForm.Пауза.Enabled = false;
+                    MainForm.Пауза.BackColor = Color.White;
+                    MainForm.Остановить.Enabled = false;
+                    MainForm.Остановить.BackColor = Color.White;
+                    break;
+
+                case SoundFileStatus.Playing:
+                    MainForm.Пауза.Text = "Пауза";
+                    MainForm.Пауза.Enabled = true;
+                    MainForm.Пауза.BackColor = Color.DarkOrange;
+                    MainForm.Остановить.Enabled = true;
+                    MainForm.Остановить.BackColor = Color.Brown;
+                    break;
+            }
         }
 
 
@@ -2124,18 +2122,18 @@ namespace MainExample
                                 {
                                     case "listView1":
                                         if (listView.Items[item].SubItems[7].Text != Данные.Дополнение)
-                                            listView.Items[item].SubItems[7].Text = Данные.ИспользоватьДополнение ? "ВКЛ.  " + Данные.Дополнение : "выкл.  " + Данные.Дополнение;
+                                            listView.Items[item].SubItems[7].Text = Данные.ИспользоватьДополнение ? Данные.Дополнение : String.Empty;
                                         break;
 
                                     case "lVПрибытие":
                                     case "lVОтправление":
                                         if (listView.Items[item].SubItems[5].Text != Данные.НазваниеПоезда)
-                                            listView.Items[item].SubItems[5].Text = Данные.ИспользоватьДополнение ? "ВКЛ.  " + Данные.Дополнение : "выкл.  " + Данные.Дополнение;
+                                            listView.Items[item].SubItems[5].Text = Данные.ИспользоватьДополнение ? Данные.Дополнение : String.Empty;
                                         break;
 
                                     case "lVТранзит":
                                         if (listView.Items[item].SubItems[6].Text != Данные.НазваниеПоезда)
-                                            listView.Items[item].SubItems[6].Text = Данные.ИспользоватьДополнение ? "ВКЛ.  " + Данные.Дополнение : "выкл.  " + Данные.Дополнение;
+                                            listView.Items[item].SubItems[6].Text = Данные.ИспользоватьДополнение ? Данные.Дополнение : String.Empty;
                                         break;
                                 }
 

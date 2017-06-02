@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using Communication.Interfaces;
 using CommunicationDevices.DataProviders;
 
@@ -13,6 +14,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
         public IExchangeDataProvider<UniversalInputType, byte> XmlExcangeDataProvider { get; set; }
 
         #endregion
+
 
 
 

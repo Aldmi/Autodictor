@@ -115,7 +115,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
 
-
         #region EventHandler
 
         private void MasterHttp_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -175,7 +174,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
         #endregion
-
 
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -265,6 +266,13 @@ namespace CommunicationDevices.DataProviders.DisplaySysDataProvider
             {
                 return null;
             }
+        }
+
+
+
+        public Stream GetStream()
+        {
+            throw new NotImplementedException();
         }
 
 

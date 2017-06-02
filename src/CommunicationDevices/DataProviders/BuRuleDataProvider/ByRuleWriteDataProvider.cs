@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
@@ -162,6 +163,11 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
             }
         }
 
+
+        public Stream GetStream()
+        {
+            throw new NotImplementedException();
+        }
 
 
 
