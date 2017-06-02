@@ -68,7 +68,7 @@ namespace CommunicationDevices.Settings
                     var pathPermissionElem = el.Element("Settings")?.Element("PathPermission");
                     if (pathPermissionElem != null)
                     {
-                        var pathPermissionEnable= (string)pathPermissionElem.Attribute("Enable");
+                        var pathPermissionEnable = (string)pathPermissionElem.Attribute("Enable");
                         spSett.SpecialDictionary.Add("PathPermission", new XmlPathPermissionSetting(pathPermissionEnable));
                     }
                 }
@@ -78,9 +78,9 @@ namespace CommunicationDevices.Settings
                 {
                     var exchangeRules = new List<XmlExchangeRule>();
 
-                    var tableElement= el.Element("ExchangeRules")?.Element("Table");
+                    var tableElement = el.Element("ExchangeRules")?.Element("Table");
 
-                    string viewSetting= String.Empty;
+                    string viewSetting = String.Empty;
                     int viewSettingTableSize = 0;
 
                     IEnumerable<XElement> ruleElements;
@@ -102,7 +102,7 @@ namespace CommunicationDevices.Settings
                     }
 
 
-              
+
 
                     if (ruleElements != null)
                     {
@@ -110,16 +110,16 @@ namespace CommunicationDevices.Settings
                         {
                             if (ruleElem != null)
                             {
-                                var exchRule = new XmlExchangeRule {TableSize = viewSettingTableSize, ViewType = viewSetting};
+                                var exchRule = new XmlExchangeRule { TableSize = viewSettingTableSize, ViewType = viewSetting };
 
-                                exchRule.Format = (string) ruleElem.Attribute("Format");
+                                exchRule.Format = (string)ruleElem.Attribute("Format");
                                 exchRule.Conditions = ruleElem.Attribute("Resolution") == null ? null : new XmlConditionsSetting((string)ruleElem.Attribute("Resolution"));
 
                                 //REPEAT-------------------------
                                 var repeat = ruleElem.Element("Repeat");
                                 if (repeat != null)
                                 {
-                                    var count= (string)repeat.Attribute("Count");
+                                    var count = (string)repeat.Attribute("Count");
                                     if (count != null)
                                     {
                                         int countint;
@@ -155,11 +155,11 @@ namespace CommunicationDevices.Settings
                                 if (request != null)
                                 {
                                     int maxLenght;
-                                    if (int.TryParse((string) request.Attribute("maxLenght"), out maxLenght))
+                                    if (int.TryParse((string)request.Attribute("maxLenght"), out maxLenght))
                                     {
                                         exchRule.RequestMaxLenght = maxLenght;
                                     }
-                                     
+
                                     exchRule.RequestBody = request.Value.Replace("\t", String.Empty).Replace("\n", String.Empty).Trim();
                                 }
 
@@ -485,10 +485,28 @@ namespace CommunicationDevices.Settings
                     httpSett.SpecialDictionary.Add("CountRow", new XmlCountRowSetting(countRow));
                 }
 
-                var sendingType = (string)el.Attribute("SendingType");
-                if (sendingType != null)
+                var providerType = (string)el.Attribute("ProviderType");
+                if (providerType != null)
                 {
-                    httpSett.SpecialDictionary.Add("SendingType", new XmlSendingTypeSetting(sendingType));
+                    httpSett.SpecialDictionary.Add("ProviderType", new XmlProviderTypeSetting(providerType));
+                }
+
+
+                var headers = (string)el.Attribute("Headers");
+                if (headers != null)
+                {
+                    var pair = headers.Split('+');
+                    foreach (var p in pair)
+                    {
+                        if (!p.Contains(":"))
+                            continue;
+
+                        var keyValue = p.Split(':');
+                        if (keyValue.Length == 2)
+                        {
+                            httpSett.Headers.Add(keyValue[0].Trim(), keyValue[1].Trim());
+                        }
+                    }
                 }
 
                 listHttpSett.Add(httpSett);

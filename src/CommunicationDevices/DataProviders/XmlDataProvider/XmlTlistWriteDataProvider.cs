@@ -76,9 +76,9 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
         public bool SetDataByte(byte[] data)
         {
             //TODO: преобразовать массив байт обратно в строку и проверить ответ
-            if (data != null && data.Length == 2)
+            if (data != null && data.Length == 15)
             {
-                return (data[0] == 0xAA) && (data[1] == 0xBB);
+                return (data[0] == 78) && (data[1] == 85);
             }
 
             return false;

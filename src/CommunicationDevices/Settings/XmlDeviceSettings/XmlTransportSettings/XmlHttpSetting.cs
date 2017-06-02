@@ -14,7 +14,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
         public string Address { get; }
         public ushort TimeRespone { get; }
         public string Description { get; }
-
+        public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
 
         public Dictionary<string, object> SpecialDictionary { get; set; } = new Dictionary<string, object>();
 

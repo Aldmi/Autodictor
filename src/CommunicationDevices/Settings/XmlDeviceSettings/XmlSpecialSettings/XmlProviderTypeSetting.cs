@@ -6,7 +6,7 @@
     
 
 
-    public class XmlSendingTypeSetting
+    public class XmlProviderTypeSetting
     {
         #region prop
 
@@ -20,14 +20,14 @@
 
         #region ctor
 
-        public XmlSendingTypeSetting(string sendingType)
+        public XmlProviderTypeSetting(string providerType)
         {
-            if (string.IsNullOrEmpty(sendingType))
+            if (string.IsNullOrEmpty(providerType))
             {
                 XmlType = null;
             }
             else
-            if (sendingType.ToLower().Contains("xml_tlist"))
+            if (providerType.ToLower().Contains("xml_tlist"))
             {
                 XmlType= XmlSpecialSettings.XmlType.XmlTlist;            
             }

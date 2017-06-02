@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -20,14 +24,20 @@ using Library.Logs;
 
 namespace Communication.Http
 {
+    public class MyHttpResponse
+    {
+        public HttpResponseHeaders Headers { get; set; }
+        public string Body { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
+    }
+
+
+
     public class ClientHttp : INotifyPropertyChanged, IDisposable
     {
         #region fields
 
         private const int GetRequestStreamTimeout = 2000;
-
-        private HttpWebResponse _httpWebResponse;
-
 
         private string _statusString;
         private bool _isConnect;
@@ -45,19 +55,15 @@ namespace Communication.Http
 
         #region ctor
 
-        public ClientHttp(string url, string methode, string contentType, int timeRespoune, byte numberTryingTakeData)
+        public ClientHttp(string url, Dictionary<string, string> headers, int timeRespoune, byte numberTryingTakeData)
         {
             Url = url;
-            Method = methode;
-            ContentType = contentType;
             _timeRespoune = timeRespoune;
             _numberTryingTakeData = numberTryingTakeData;
-
-            Headers = new Dictionary<string, string>();
+            Headers = headers;
         }
 
         #endregion
-
 
 
 
@@ -67,9 +73,6 @@ namespace Communication.Http
         public string Url { get; set; }
         public string Method { get; set; }            //GET;POST;
         public string ContentType { get; set; }
-
-
-
         public Dictionary<string, string> Headers { get; set; }
 
         public string StatusString
@@ -123,6 +126,7 @@ namespace Communication.Http
         }
 
 
+
         private async Task ConnectHttp()
         {
             while (!IsConnect)
@@ -151,7 +155,7 @@ namespace Communication.Http
                 catch (Exception ex)
                 {
                     IsConnect = false;
-                    StatusString = $"Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"";
+                    StatusString = $"Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"   \"{ex.InnerException?.Message}\"";
                     Log.log.Fatal($"ERROR  (ConnectHttp)   Message= {StatusString}"); //DEBUG_LOG
                     Dispose();
                 }
@@ -168,21 +172,19 @@ namespace Communication.Http
             if (dataProvider == null)
                 return false;
 
+            bool isValidOutDate;
             IsRunDataExchange = true;
             try
             {
-                //DEBUG-------------------
-                bool? sendResult = null;//await SendData(dataProvider);
-                if(sendResult == null)
-                    return false;
-
-                if (sendResult.Value)
+                var response = await SendData(dataProvider);
+                var responseBody =  TakeData(response);
+                if (responseBody != null)
                 {
-                    var data = await TakeData(dataProvider.CountSetDataByte, CancellationToken.None);
-                    dataProvider.SetDataByte(data);
+                    var bytes = Encoding.UTF8.GetBytes(responseBody);
+                     isValidOutDate= dataProvider.SetDataByte(bytes);
                     _countTryingTakeData = 0;
                 }
-                else //не смогли отрпавить данные.
+                else //не смогли получить ответ ОК от сервера.
                 {
                     Log.log.Fatal($"ERROR  (ReConnect)   Message= Данные не отправелнны"); //DEBUG_LOG
                     if (++_countTryingTakeData > _numberTryingTakeData)
@@ -191,7 +193,7 @@ namespace Communication.Http
                     return false;
                 }
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 StatusString = "операция  прерванна";
 
@@ -215,8 +217,10 @@ namespace Communication.Http
                 Log.log.Fatal($"ERROR  (RequestAndRespoune) WebException,  Message= {StatusString}"); //DEBUG_LOG
                 if (++_countTryingTakeData > _numberTryingTakeData)
                     ReConnect();
+
+                return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StatusString = $"Неизвестное Исключение: {ex.Message}.   Внутренне исключение: {ex.InnerException?.Message ?? "" }";
                 Log.log.Fatal($"ERROR  (RequestAndRespoune) Exception,  Message= {StatusString}"); //DEBUG_LOG
@@ -224,80 +228,126 @@ namespace Communication.Http
                 return false;
             }
             IsRunDataExchange = false;
-            return true;
+            return isValidOutDate;
         }
 
 
 
 
-        public async Task<bool?> SendData(IExchangeDataProviderBase dataProvider)
+        public async Task<MyHttpResponse> SendData(IExchangeDataProviderBase dataProvider)
         {
-            byte[] buffer = dataProvider.GetDataByte();
-
-            if (buffer == null)
+            Stream stream = dataProvider.GetStream();
+            if (stream == null)
                 return null;
 
-
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(Url);
-            httpWebRequest.Method = Method;
-            httpWebRequest.ContentLength = buffer.Length;
-            httpWebRequest.ContentType = ContentType;
-            httpWebRequest.KeepAlive = true;
-
-            StatusString = $"Отправка запроса.... на \"{Url}\"";
-            Log.log.Fatal($"OK  (SendData)   Message= {StatusString}"); //DEBUG_LOG
-
-            //Получить поток запроса
-            using (var requestStream = await httpWebRequest.GetRequestStreamAsync().WithTimeout(GetRequestStreamTimeout))   //блокирующий вызов
+            if (Headers.ContainsKey("Methode") && Headers.ContainsKey("Content-Type"))
             {
-                if (requestStream == null)
+                //ОБМЕН ДАННЫМИ POST multipart
+                if (Headers["Methode"] == "POST" && Headers["Content-Type"] == "multipart/form-data")
                 {
-                    Log.log.Fatal($"ERROR  (SendData)   Message= поток запроса по \"{Url}\" НЕ ПОЛУЧЕНН"); //DEBUG_LOG
-                    return false;
+                    var boundary = DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture);
+                    return await SendMultipartHttp(Url, stream, boundary);
+                }
+            }
+
+            return null;
+        }
+
+
+
+
+        /// <summary>
+        /// Отправка потока через HttpClient POST Multipart.
+        /// </summary>
+        public async Task<MyHttpResponse> SendMultipartHttp(string uri, Stream stream, string boundary)
+        {
+            string mimeName = String.Empty;
+            string mimeFileName = String.Empty;
+            if (Headers.ContainsKey("Content-Type"))
+            {
+                if (Regex.Match(Headers["Content-Disposition"], "name=\"[^\"]*\"").Success)
+                {
+                    var mathStr = Regex.Match(Headers["Content-Disposition"], "name=\"[^\"]*\"").Groups[0].Value;
+                    mimeName = mathStr.Substring(mathStr.IndexOf("=", StringComparison.Ordinal) + 1);
                 }
 
-                //Записать буффер в поток
-                await requestStream.WriteAsync(buffer, 0, buffer.Length);
-                StatusString = "запись байт в поток....";
-                Log.log.Fatal($"OK  (SendData)   Message= {StatusString}"); //DEBUG_LOG
-                requestStream.Close();
-
-                //Отправка данных и ожидание ответа
-                _httpWebResponse = null;
-                _httpWebResponse = (HttpWebResponse)await httpWebRequest.GetResponseAsync().WithTimeout(_timeRespoune);
-                Log.log.Fatal($"OK  (SendData)   Message= запрос успешно отправленн"); //DEBUG_LOG
-                return true;
+                if (Regex.Match(Headers["Content-Disposition"], "filename=\"[^\"]*\"").Success)
+                {
+                    var mathStr = Regex.Match(Headers["Content-Disposition"], "filename=\"[^\"]*\"").Groups[0].Value;
+                    mimeFileName = mathStr.Substring(mathStr.IndexOf("=", StringComparison.Ordinal) + 1);
+                }
             }
-        }
-
-
-
-        public async Task<byte[]> TakeData(int nbytes, CancellationToken ct)
-        {
-            if (_httpWebResponse == null)
-                return null;
 
             try
             {
-                if (_httpWebResponse.StatusCode == HttpStatusCode.OK)
+                using (var client = new HttpClient())
                 {
-                    //if (_httpWebResponse.ContentLength != nbytes)
-                    //    return null;
-
-                    StatusString = "Ответ получен !!!";
-                    Log.log.Fatal($"OK  (TakeData)   Message= {StatusString}"); //DEBUG_LOG
-                    return new byte[] { 0xAA, 0xBB }; //псевдовалидные данные для DataProvider
-                    //using (var responeStream = new StreamReader(_httpWebResponse.GetResponseStream(), Encoding.UTF8))
-                    //{
-                    //    var bData = await responeStream.ReadToEndAsync(); //TODO:преобразовать в массив байт и вернуть
-                    //    return new byte[] { 0xAA, 0xBB };
-                    //}
+                    SetHeaders4HttpClient(client);
+                    using (var content = new MultipartFormDataContent(boundary))
+                    {
+                        content.Add(new StreamContent(stream), mimeName, mimeFileName);
+                        using (var respone = await client.PostAsync(uri, content).WithTimeout(GetRequestStreamTimeout))
+                        {
+                            var outputBody = await respone.Content.ReadAsStringAsync();
+                            return new MyHttpResponse{Body = outputBody, StatusCode = respone.StatusCode, Headers = respone.Headers};
+                        }
+                    }
                 }
             }
-            finally
+            catch (TimeoutException)
             {
-                _httpWebResponse?.Close();
-                _httpWebResponse?.Dispose();
+                throw;
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+
+        private void SetHeaders4HttpClient(HttpClient client)
+        {
+            foreach (var header in Headers)
+            {
+                switch (header.Key)
+                {
+                    case "User-Agent":
+                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        break;
+
+                    case "Accept":
+                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        break;
+
+                    case "Host":
+                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        break;
+
+                    case "Connection":
+                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        break;
+
+                    case "Authorization":
+                        client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                        break;
+                }
+            }
+        }
+
+
+
+        public string TakeData(MyHttpResponse httpResponse)
+        {
+            if (httpResponse?.StatusCode == HttpStatusCode.OK)
+            {
+                var outputBody = httpResponse.Body;
+                StatusString = $"Ответ получен: {outputBody}";
+                return outputBody;
             }
 
             return null;
@@ -329,9 +379,7 @@ namespace Communication.Http
 
         public void Dispose()
         {
-            _httpWebResponse?.Close();
-            _httpWebResponse?.Dispose();
-            _httpWebResponse = null;
+
         }
 
         #endregion

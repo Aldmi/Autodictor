@@ -81,17 +81,9 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
         #region ctor
 
-        protected BaseExhangeHttpBehavior(string connectionString, string methode, string contentType, byte maxCountFaildRespowne, int timeRespowne, double taimerPeriod)
+        protected BaseExhangeHttpBehavior(string connectionString, Dictionary<string, string> headers, byte maxCountFaildRespowne, int timeRespowne, double taimerPeriod)
         {
-            //string ip = null;
-            //var strArr = connectionString.Split(':');
-            //if (strArr.Length == 2)
-            //{
-            //    ip = strArr[0];
-            //    NumberPort = int.Parse(strArr[1]);
-            //}
-
-            ClientHttp = new ClientHttp(connectionString, methode, contentType, timeRespowne, maxCountFaildRespowne);
+            ClientHttp = new ClientHttp(connectionString, headers, timeRespowne, maxCountFaildRespowne);
             ClientHttp.PropertyChanged += MasterHttp_PropertyChanged;
 
             _timer = new Timer(taimerPeriod);

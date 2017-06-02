@@ -101,9 +101,16 @@
 
 
 
-<!-- <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://www.google.com"  SendingType="Xml_tlist"  TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени"/>
-</DevicesWithHttp> -->
+<DevicesWithHttp>
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://google.com" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени" ProviderType="Xml_tlist"  
+	              Headers='Methode:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+</DevicesWithHttp>
 
 </Root>
 
@@ -161,3 +168,13 @@
 			 
 <!-- Binding="ToGeneral:ГлавноеОкно" -->
 <!--Варианты (ГлавноеОкно/ОкноРасписания)-->
+
+
+
+<!-- 	              Headers='Methode:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Content-Type: multipart/form-data +
+						   Host: cms.indigointeractive.ru +
+						   Connection: Keep-Alive +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"' -->

@@ -825,7 +825,7 @@ namespace CommunicationDevices.Model
                 XmlConditionsSetting contrains = null;
                 XmlPagingSetting paging = null;
                 XmlPathPermissionSetting pathPermission = null;
-                XmlSendingTypeSetting sendingType = null;
+                XmlProviderTypeSetting providerType = null;
 
                 if (xmlDeviceHttp.SpecialDictionary.ContainsKey("Binding"))
                 {
@@ -842,9 +842,9 @@ namespace CommunicationDevices.Model
                     paging = xmlDeviceHttp.SpecialDictionary["Paging"] as XmlPagingSetting;
                 }
 
-                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("SendingType"))
+                if (xmlDeviceHttp.SpecialDictionary.ContainsKey("ProviderType"))
                 {
-                    sendingType = xmlDeviceHttp.SpecialDictionary["SendingType"] as XmlSendingTypeSetting;
+                    providerType = xmlDeviceHttp.SpecialDictionary["ProviderType"] as XmlProviderTypeSetting;
                 }
 
                 if (xmlDeviceHttp.SpecialDictionary.ContainsKey("PathPermission"))
@@ -864,16 +864,24 @@ namespace CommunicationDevices.Model
                     return;
                 }
 
+                //заголовок обязательный параметр
+                if (!xmlDeviceHttp.Headers.Any())
+                {
+                    MessageBox.Show($"Не указан заголовок HTTP протокола {xmlDeviceHttp.Id}");
+                    return;
+                }
+
+
                 switch (xmlDeviceHttp.Name)
                 {
                     case "HttpTable":
                         maxCountFaildRespowne = 3;
 
                         // создание провайдера по формату XML "Tlist"
-                        if (sendingType?.XmlType != null && sendingType.XmlType.Value == XmlType.XmlTlist)
+                        if (providerType?.XmlType != null && providerType.XmlType.Value == XmlType.XmlTlist)
                         {
                             IExchangeDataProvider<UniversalInputType, byte> provider = new XmlTlistWriteDataProvider();
-                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, "POST", "text/xml; encoding='utf-8'", maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);
+                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);
                             DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, behavior, binding.BindingType, setting));
                         }
 

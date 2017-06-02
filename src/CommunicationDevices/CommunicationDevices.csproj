@@ -141,7 +141,7 @@
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlExchangeRule.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlPathPermissionSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlTransportSettings\XmlHttpSetting.cs" />
-    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlSendingTypeSetting.cs" />
+    <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlProviderTypeSetting.cs" />
     <Compile Include="Settings\XmlSettingFactory.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlBindingSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlConditionsSetting.cs" />
