@@ -1305,7 +1305,7 @@ namespace MainExample
                                                   {
                                                       Id = нештатноеСообщение.Id,
                                                       SoundRecordId = Данные.ID,
-                                                      Приоритет = Priority.Hight,
+                                                      Приоритет = Priority.Midlle,
                                                       Шаблон = нештатноеСообщение.Шаблон,
                                                       ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
                                                       НазваниеШаблона = нештатноеСообщение.НазваниеШаблона,

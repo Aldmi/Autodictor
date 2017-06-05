@@ -134,7 +134,7 @@ namespace MainExample.Services
             {
                 StopQueue();
                 Queue.Enqueue(item);
-                Queue = new Queue<ВоспроизводимоеСообщение>(Queue.OrderByDescending(elem=>elem.Приоритет));  //ThenByDescending(s=>s.) упорядочевать доплнительно по времени добавления
+                Queue = new Queue<ВоспроизводимоеСообщение>(Queue.OrderByDescending(elem=>elem.Приоритет));  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
                 StartQueue();
             }
         }
