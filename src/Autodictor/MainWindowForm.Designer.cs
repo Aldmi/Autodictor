@@ -55,12 +55,14 @@
             this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lVПрибытие = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Дополнение = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lVСтатическиеСообщения = new System.Windows.Forms.ListView();
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -116,8 +118,9 @@
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.воспроизвестиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.включитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Дополнение = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripMenuItem_Автомат = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Active_Да = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Active_Нет = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -352,6 +355,13 @@
             this.columnHeader17.Text = "Маршрут";
             this.columnHeader17.Width = 1000;
             // 
+            // columnHeader30
+            // 
+            this.columnHeader30.DisplayIndex = 5;
+            this.columnHeader30.Text = "Дополнение";
+            this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader30.Width = 150;
+            // 
             // lVПрибытие
             // 
             this.lVПрибытие.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -403,6 +413,13 @@
             this.columnHeader11.DisplayIndex = 5;
             this.columnHeader11.Text = "Маршрут";
             this.columnHeader11.Width = 1000;
+            // 
+            // Дополнение
+            // 
+            this.Дополнение.DisplayIndex = 4;
+            this.Дополнение.Text = "Дополнение";
+            this.Дополнение.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Дополнение.Width = 150;
             // 
             // lVСтатическиеСообщения
             // 
@@ -524,10 +541,11 @@
             this.нумерацияПоездаToolStripMenuItem1,
             this.количествоПовторовToolStripMenuItem1,
             this.шаблоныОповещенияToolStripMenuItem1,
+            this.toolStripMenuItem_Автомат,
             this.toolStripSeparator1,
             this.ТаблоToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 120);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(202, 164);
             // 
             // номерПутиToolStripMenuItem1
             // 
@@ -788,21 +806,21 @@
             // повтор1ToolStripMenuItem
             // 
             this.повтор1ToolStripMenuItem.Name = "повтор1ToolStripMenuItem";
-            this.повтор1ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.повтор1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.повтор1ToolStripMenuItem.Text = "1 Повтор";
             this.повтор1ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // повтор2ToolStripMenuItem
             // 
             this.повтор2ToolStripMenuItem.Name = "повтор2ToolStripMenuItem";
-            this.повтор2ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.повтор2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.повтор2ToolStripMenuItem.Text = "2 Повтора";
             this.повтор2ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // повтор3ToolStripMenuItem
             // 
             this.повтор3ToolStripMenuItem.Name = "повтор3ToolStripMenuItem";
-            this.повтор3ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.повтор3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.повтор3ToolStripMenuItem.Text = "3 Повтора";
             this.повтор3ToolStripMenuItem.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
@@ -878,19 +896,28 @@
             this.включитьToolStripMenuItem.Text = "Включить";
             this.включитьToolStripMenuItem.Click += new System.EventHandler(this.включитьToolStripMenuItem_Click);
             // 
-            // Дополнение
+            // toolStripMenuItem_Автомат
             // 
-            this.Дополнение.DisplayIndex = 4;
-            this.Дополнение.Text = "Дополнение";
-            this.Дополнение.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Дополнение.Width = 150;
+            this.toolStripMenuItem_Автомат.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_Active_Да,
+            this.toolStripMenuItem_Active_Нет});
+            this.toolStripMenuItem_Автомат.Name = "toolStripMenuItem_Автомат";
+            this.toolStripMenuItem_Автомат.Size = new System.Drawing.Size(201, 22);
+            this.toolStripMenuItem_Автомат.Text = "Автомат";
             // 
-            // columnHeader30
+            // toolStripMenuItem_Active_Да
             // 
-            this.columnHeader30.DisplayIndex = 5;
-            this.columnHeader30.Text = "Дополнение";
-            this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader30.Width = 150;
+            this.toolStripMenuItem_Active_Да.Name = "toolStripMenuItem_Active_Да";
+            this.toolStripMenuItem_Active_Да.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem_Active_Да.Text = "Да";
+            this.toolStripMenuItem_Active_Да.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem_Active_Нет
+            // 
+            this.toolStripMenuItem_Active_Нет.Name = "toolStripMenuItem_Active_Нет";
+            this.toolStripMenuItem_Active_Нет.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem_Active_Нет.Text = "Нет";
+            this.toolStripMenuItem_Active_Нет.Click += new System.EventHandler(this.путь1ToolStripMenuItem_Click);
             // 
             // MainWindowForm
             // 
@@ -1009,5 +1036,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader28;
         private System.Windows.Forms.ColumnHeader columnHeader30;
         private System.Windows.Forms.ColumnHeader Дополнение;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Автомат;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Active_Да;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Active_Нет;
     }
 }

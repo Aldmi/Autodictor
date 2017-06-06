@@ -2699,3 +2699,98 @@ time;message;level
 06T14:50:15;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
 06T14:50:25;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
 06T14:50:25;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T14:52:52;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T15:57:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T15:57:32;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:57:42;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:57:52;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:58:02;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:58:02;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T15:58:12;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:58:22;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:58:32;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:58:42;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:58:42;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T15:58:52;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:59:02;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:59:12;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:59:22;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:59:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T15:59:32;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:59:42;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T15:59:52;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:00:02;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:00:02;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:00:12;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:00:22;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:00:32;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:00:42;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:00:42;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:00:52;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:01:02;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:01:12;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:01:22;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:01:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:01:32;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:01:42;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:01:52;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:02:02;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:02:02;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:02:12;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:02:22;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:02:32;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:02:42;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:02:42;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:02:52;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:07:41;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:07:51;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:08:01;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:08:11;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:08:21;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:08:21;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:08:54;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:09:02;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:15:12;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:25:00;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:25:11;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:25:20;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:25:30;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:25:40;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:25:40;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:25:50;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:26:00;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:26:10;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:26:20;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:26:20;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:26:30;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:26:40;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:26:50;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:27:00;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:27:00;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:27:10;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:27:20;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:27:32;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:27:41;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:27:51;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:28:17;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:28:27;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:28:36;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:28:46;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:28:56;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:28:57;"OK  (ConnectHttp)   Message= поток запроса по ""http://google.com"" ПОЛУЧЕНН !!!";Fatal
+06T16:29:06;ERROR  (ReConnect)   Message= Данные не отправелнны;Fatal
+06T16:30:25;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:35:34;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:37:03;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:41:30;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:41:50;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:47:37;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:50:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:51:26;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:54:42;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:56:58;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:57:29;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T16:58:50;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T17:11:41;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T17:21:29;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+06T17:22:39;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal

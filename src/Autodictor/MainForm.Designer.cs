@@ -64,6 +64,7 @@
             this.tSLСостояниеСвязиСЦИС = new System.Windows.Forms.ToolStripButton();
             this.tSBОбновитьСписок = new System.Windows.Forms.ToolStripButton();
             this.tSBПауза = new System.Windows.Forms.ToolStripButton();
+            this.tSBОстановить = new System.Windows.Forms.ToolStripButton();
             this.tSBВключить = new System.Windows.Forms.ToolStripButton();
             this.tSDDBРаботаПоДням = new System.Windows.Forms.ToolStripDropDownButton();
             this.TSMIПоПонедельнику = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,10 +79,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolClockLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.timer_Clock = new System.Windows.Forms.Timer(this.components);
-            this.tSBОстановить = new System.Windows.Forms.ToolStripButton();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -324,9 +322,7 @@
             this.toolStripButton1,
             this.toolStripSeparator2,
             this.toolClockLabel,
-            this.toolStripSeparator3,
-            this.toolStripButton2,
-            this.toolStripButton3});
+            this.toolStripSeparator3});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
             this.tSCommands.Size = new System.Drawing.Size(1241, 38);
@@ -397,6 +393,16 @@
             this.tSBПауза.Name = "tSBПауза";
             this.tSBПауза.Size = new System.Drawing.Size(56, 35);
             this.tSBПауза.Text = "ПАУЗА";
+            // 
+            // tSBОстановить
+            // 
+            this.tSBОстановить.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tSBОстановить.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tSBОстановить.Image = ((System.Drawing.Image)(resources.GetObject("tSBОстановить.Image")));
+            this.tSBОстановить.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBОстановить.Name = "tSBОстановить";
+            this.tSBОстановить.Size = new System.Drawing.Size(89, 35);
+            this.tSBОстановить.Text = "Остановить";
             // 
             // tSBВключить
             // 
@@ -520,41 +526,11 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(107, 19);
-            this.toolStripButton2.Text = "Добавить статику";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(120, 19);
-            this.toolStripButton3.Text = "Добавить динамику";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
-            // 
             // timer_Clock
             // 
             this.timer_Clock.Enabled = true;
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
-            // 
-            // tSBОстановить
-            // 
-            this.tSBОстановить.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tSBОстановить.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tSBОстановить.Image = ((System.Drawing.Image)(resources.GetObject("tSBОстановить.Image")));
-            this.tSBОстановить.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tSBОстановить.Name = "tSBОстановить";
-            this.tSBОстановить.Size = new System.Drawing.Size(89, 35);
-            this.tSBОстановить.Text = "Остановить";
             // 
             // MainForm
             // 
@@ -632,8 +608,6 @@
         private System.Windows.Forms.ToolStripMenuItem коммуникацияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отображениеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem статическаяИнформацияToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
         public System.Windows.Forms.ToolStripButton tSBОстановить;
     }
 }

@@ -225,7 +225,6 @@ namespace MainExample
 
 
 
-
         private void StaticChangeRxEventHandler(StaticChangeValue staticChangeValue)
         {
             for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count(); i++)
@@ -249,6 +248,7 @@ namespace MainExample
                 }
             }
         }
+
 
 
         private void TemplateChangeRxEventHandler(TemplateChangeValue templateChangeValue)
@@ -1496,11 +1496,10 @@ namespace MainExample
             }
             #endregion
 
-
             lVСобытия_ОбновитьСостояниеТаблицы();
-
             ОтобразитьСубтитры();
         }
+
 
 
         // Определение информации для вывода на табло
@@ -1728,6 +1727,7 @@ namespace MainExample
 
             #endregion
         }
+
 
 
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
@@ -2076,15 +2076,14 @@ namespace MainExample
         }
 
 
+
         // Обработка двойного нажатия на сообщение (вызов формы сообщения)
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListView listView = sender as ListView;
-
             try
             {
                 ListView.SelectedIndexCollection sic = listView.SelectedIndices;
-
 
                 foreach (int item in sic)
                 {
@@ -2219,6 +2218,7 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
+
 
 
         private void ЗаполнениеСпискаНештатныхСитуаций(SoundRecord старыеДанные, SoundRecord данные, string key)
@@ -2371,6 +2371,17 @@ namespace MainExample
                                         }
 
 
+                                        if (Данные.Автомат)
+                                        {
+                                            toolStripMenuItem_Active_Да.Checked = true;
+                                            toolStripMenuItem_Active_Нет.Checked = false;
+                                        }
+                                        else
+                                        {
+                                            toolStripMenuItem_Active_Да.Checked = false;
+                                            toolStripMenuItem_Active_Нет.Checked = true;
+                                        }
+
 
                                         шаблоныОповещенияToolStripMenuItem1.DropDownItems.Clear();
                                         for (int i = 0; i < Данные.СписокФормируемыхСообщений.Count(); i++)
@@ -2422,8 +2433,6 @@ namespace MainExample
                         }
                     }
                 }
-
-                //                contextMenuStrip1.Items.Add(list.Name);
             }
         }
 
@@ -2913,7 +2922,6 @@ namespace MainExample
                 if (SoundRecords.Keys.Contains(КлючВыбранныйМеню) == true)
                 {
                     SoundRecord Данные = SoundRecords[КлючВыбранныйМеню];
-                    SoundRecord НеИзмененныеДанные = Данные;
 
                     for (int i = 0; i < СписокПолейПути.Length; i++)
                         if (СписокПолейПути[i].Name == tsmi.Name)
@@ -2979,6 +2987,18 @@ namespace MainExample
                         if (индексВарианта >= 0)
                         {
                             Данные.РазрешениеНаОтображениеПути = (PathPermissionType)индексВарианта;
+                            SoundRecords[КлючВыбранныйМеню] = Данные;
+                            return;
+                        }
+                    }
+
+
+                    if (toolStripMenuItem_Автомат.DropDownItems.Contains(tsmi))
+                    {
+                        int индексВарианта = toolStripMenuItem_Автомат.DropDownItems.IndexOf(tsmi);
+                        if (индексВарианта >= 0)
+                        {
+                            Данные.Автомат = (индексВарианта == 0);
                             SoundRecords[КлючВыбранныйМеню] = Данные;
                             return;
                         }
