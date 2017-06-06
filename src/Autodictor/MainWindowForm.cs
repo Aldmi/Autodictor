@@ -36,15 +36,16 @@ namespace MainExample
         public DateTime? ВремяЗадержки;                      //время задержки в мин. относительно времени прибытия или отправелния
         public DateTime ОжидаемоеВремя;                      //вычисляется ВремяПрибытия или ВремяОтправления + ВремяЗадержки
         public string Дополнение;                            //свободная переменная для ввода 
-        public bool ИспользоватьДополнение;
+        public Dictionary<string, bool> ИспользоватьДополнение; //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
         public uint ВремяСтоянки;
         public string ДниСледования;
         public bool Активность;
+        public bool Автомат;                                 // true - поезд обрабатывается в автомате.
         public string ШаблонВоспроизведенияСообщений;
         public byte НумерацияПоезда;
         public string НомерПути;
         public ТипПоезда ТипПоезда;
-        public string Примечание;                             //С остановками....
+        public string Примечание;                              //С остановками....
         public string Описание;
         public SoundRecordStatus Состояние;
         public SoundRecordType ТипСообщения;
@@ -447,11 +448,14 @@ namespace MainExample
                 Record.НомерПоезда = Config.Num;
                 Record.НазваниеПоезда = Config.Name;
                 Record.Дополнение = Config.Addition;
-                Record.ИспользоватьДополнение = !string.IsNullOrEmpty(Record.Дополнение);
+                Record.ИспользоватьДополнение = new Dictionary<string, bool>{
+                    ["звук"] = !string.IsNullOrEmpty(Record.Дополнение),
+                    ["табло"] = !string.IsNullOrEmpty(Record.Дополнение)};      
                 Record.СтанцияОтправления = "";
                 Record.СтанцияНазначения = "";
                 Record.ДниСледования = Config.Days;
                 Record.Активность = Config.Active;
+                Record.Автомат = true;
                 Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
                 Record.НомерПути = Config.TrainPathNumber;
                 Record.НумерацияПоезда = Config.TrainPathDirection;
@@ -809,7 +813,7 @@ namespace MainExample
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
                                                                        Данные.Value.Примечание,
-                                                                       Данные.Value.ИспользоватьДополнение ? Данные.Value.Дополнение : String.Empty});
+                                                                       Данные.Value.ИспользоватьДополнение["звук"] ? Данные.Value.Дополнение : String.Empty});
                     lvi1.Tag = Данные.Value.ID;
                     lvi1.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                     this.listView1.Items.Add(lvi1);
@@ -821,7 +825,7 @@ namespace MainExample
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        ВремяПрибытия,
                                                                        Данные.Value.НазваниеПоезда,
-                                                                       Данные.Value.ИспользоватьДополнение ? Данные.Value.Дополнение : String.Empty});
+                                                                       Данные.Value.ИспользоватьДополнение["звук"] ? Данные.Value.Дополнение : String.Empty});
                         lvi2.Tag = Данные.Value.ID;
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVПрибытие.Items.Add(lvi2);
@@ -835,7 +839,7 @@ namespace MainExample
                                                                        ВремяПрибытия,
                                                                        ВремяОтправления,
                                                                        Данные.Value.НазваниеПоезда,
-                                                                       Данные.Value.ИспользоватьДополнение ? Данные.Value.Дополнение : String.Empty});
+                                                                       Данные.Value.ИспользоватьДополнение["звук"] ? Данные.Value.Дополнение : String.Empty});
                         lvi3.Tag = Данные.Value.ID;
                         lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVТранзит.Items.Add(lvi3);
@@ -1168,10 +1172,14 @@ namespace MainExample
                 var Данные = SoundRecords.ElementAt(i).Value;
                 ВнесеныИзменения = false;
 
+                if (!Данные.Автомат)
+                    continue;
+
                 while (true)
                 {
                     if (Данные.Активность == true)
                     {
+                      
                         // Проверка на нештатные ситуации
                         if ((Данные.БитыНештатныхСитуаций & 0x0F) != 0x00)
                         {
@@ -1189,84 +1197,13 @@ namespace MainExample
                                 ВнесеныИзменения = true;
                             }
 
-
-                            //DateTime ВременноеВремяСобытия = (Данные.БитыАктивностиПолей & 0x04) != 0x00 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
-                            //string ФормируемоеСообщение = "";
-
-                            ////Сформируем список нештатных сообщений--------------------------------------
-                            //var startDate = ВременноеВремяСобытия.AddMinutes(-30);
-                            //var endDate = ВременноеВремяСобытия.AddMinutes(0);
-                            //List<СостояниеФормируемогоСообщенияИШаблон> текущийСписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
-                            //if ((DateTime.Now > startDate) && (DateTime.Now < endDate))
-                            //{
-                            //    int ТипПоезда = (int)Данные.ТипПоезда;
-                            //    int indexШаблона = 1000;              //нештатные сообшения индексируются от 1000
-                            //    for (var date = startDate; date < endDate; date += new TimeSpan(0, 0, (int) (Program.Настройки.ИнтервалМеждуОповещениемОбОтменеПоезда * 60.0)))
-                            //    {
-                            //        СостояниеФормируемогоСообщенияИШаблон НовыйШаблон;
-                            //        НовыйШаблон.Id = indexШаблона++;
-                            //        НовыйШаблон.SoundRecordId = Данные.ID;
-                            //        НовыйШаблон.Активность = Данные.Активность;
-                            //        НовыйШаблон.Приоритет = Priority.Hight;
-                            //        НовыйШаблон.Воспроизведен = false;
-                            //        НовыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
-                            //        НовыйШаблон.ВремяСмещения = (ВременноеВремяСобытия - date).Minutes * -1;
-                            //        НовыйШаблон.НазваниеШаблона = String.Empty;
-                            //        НовыйШаблон.Шаблон = String.Empty;
-                            //        НовыйШаблон.ПривязкаКВремени = ((Данные.БитыАктивностиПолей & 0x04) != 0x00) ? 0 : 1;
-                            //        НовыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage>{NotificationLanguage.Ru, NotificationLanguage.Eng};
-
-                            //        if ((Данные.БитыНештатныхСитуаций & 0x01) != 0x00)
-                            //        {
-                            //            НовыйШаблон.НазваниеШаблона = "Авария:Отмена";
-                            //            ФормируемоеСообщение = Program.ШаблонОповещенияОбОтменеПоезда[ТипПоезда];
-                            //        }
-                            //        else if ((Данные.БитыНештатныхСитуаций & 0x02) != 0x00)
-                            //        {
-                            //            НовыйШаблон.НазваниеШаблона = "Авария:ЗадержкаПрибытия";
-                            //            ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеПрибытияПоезда[ТипПоезда];
-                            //        }
-                            //        else if ((Данные.БитыНештатныхСитуаций & 0x04) != 0x00)
-                            //        {
-                            //            НовыйШаблон.НазваниеШаблона = "Авария:ЗадержкаОтправления";
-                            //            ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеОтправленияПоезда[ТипПоезда];
-                            //        }
-                            //        else if ((Данные.БитыНештатныхСитуаций & 0x08) != 0x00)
-                            //        {
-                            //            НовыйШаблон.НазваниеШаблона = "Авария:ОтправлениеПоГотов.";
-                            //            ФормируемоеСообщение = Program.ШаблонОповещенияООтправлениеПоГотовностиПоезда[ТипПоезда];
-                            //        }
-
-                            //        if (ФормируемоеСообщение != "")
-                            //        {
-                            //            foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
-                            //                if (Item.Name == ФормируемоеСообщение)
-                            //                {
-                            //                    НовыйШаблон.Шаблон = Item.Message;
-                            //                    break;
-                            //                }
-                            //        }
-
-                            //        //Debug.WriteLine(date.ToString($"Id= {НовыйШаблон.Id}   SoundRecordId= {НовыйШаблон.SoundRecordId}   ВремяСмещения= {НовыйШаблон.ВремяСмещения}"));
-                            //        текущийСписокНештатныхСообщений.Add(НовыйШаблон);
-                            //    }
-
-                            //    //if ((Данные.СписокНештатныхСообщений.FirstOrDefault().НазваниеШаблона != текущийСписокНештатныхСообщений.FirstOrDefault().НазваниеШаблона))
-                            //    //{
-                            //    //    //Данные.СостояниеКарточки = 0;
-                            //    //    Данные.СписокНештатныхСообщений = текущийСписокНештатныхСообщений;
-                            //    //    ВнесеныИзменения = true;
-                            //    //}
-                            //}
-
-
                             //НЕШТАТНОЕ СОБЫТИЕ========================================================================
                             for (int j = 0; j < Данные.СписокНештатныхСообщений.Count; j++)
                             {
                                 var нештатноеСообщение = Данные.СписокНештатныхСообщений[j];
                                 if (нештатноеСообщение.Активность == true)
                                 {
-                                    DateTime времяСобытия = нештатноеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия: Данные.ВремяОтправления;
+                                    DateTime времяСобытия = нештатноеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
                                     времяСобытия = времяСобытия.AddMinutes(нештатноеСообщение.ВремяСмещения);
 
                                     if (DateTime.Now < времяСобытия)
@@ -1312,8 +1249,8 @@ namespace MainExample
                                                   };
                                                   MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение сообщения о внештатной ситуации", Данные, шаблонФормируемогоСообщения);
                                                 }
+                                              }
                                         }
-                                  }
 
                                     if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(нештатноеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(5)))      //убрать через 5 мин. после воспроизведения
                                     {
@@ -1354,7 +1291,6 @@ namespace MainExample
                         }
                         else
                         {
-                            Данные.ТаймерПовторения = 0;
                             Данные.СписокНештатныхСообщений.Clear();
                         }
 
@@ -1594,7 +1530,7 @@ namespace MainExample
                         return DateTime.MinValue;
                     };
 
-                    //Отправить расписание из окна РАСПИАНИЕ
+                    //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
@@ -1635,7 +1571,7 @@ namespace MainExample
                         {
                             foreach (var beh in binding2MainWindow)
                             {
-                                var table = SoundRecords.Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                var table = SoundRecords.Where(rec=> rec.Value.Автомат).Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
                                 table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains);
@@ -1658,9 +1594,10 @@ namespace MainExample
                     var данные = SoundRecords.ElementAt(i).Value;
                     var данныеOld = SoundRecordsOld.ElementAt(i).Value;
 
+                    if(!данные.Автомат)
+                        continue;
+
                     var _checked = данные.Состояние != SoundRecordStatus.Выключена;
-
-
                     if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                     {
                         //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
@@ -2039,7 +1976,7 @@ namespace MainExample
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
-                    Addition = (data.ИспользоватьДополнение) ? data.Дополнение : string.Empty,
+                    Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };
@@ -2059,7 +1996,7 @@ namespace MainExample
                     Stations = data.НазваниеПоезда,
                     Note = data.Примечание,
                     TypeTrain = typeTrain,
-                    Addition = (data.ИспользоватьДополнение) ? data.Дополнение : string.Empty,
+                    Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };
@@ -2202,18 +2139,18 @@ namespace MainExample
                                 {
                                     case "listView1":
                                         if (listView.Items[item].SubItems[7].Text != Данные.Дополнение)
-                                            listView.Items[item].SubItems[7].Text = Данные.ИспользоватьДополнение ? Данные.Дополнение : String.Empty;
+                                            listView.Items[item].SubItems[7].Text = Данные.ИспользоватьДополнение["звук"] ? Данные.Дополнение : String.Empty;
                                         break;
 
                                     case "lVПрибытие":
                                     case "lVОтправление":
                                         if (listView.Items[item].SubItems[5].Text != Данные.НазваниеПоезда)
-                                            listView.Items[item].SubItems[5].Text = Данные.ИспользоватьДополнение ? Данные.Дополнение : String.Empty;
+                                            listView.Items[item].SubItems[5].Text = Данные.ИспользоватьДополнение["звук"] ? Данные.Дополнение : String.Empty;
                                         break;
 
                                     case "lVТранзит":
                                         if (listView.Items[item].SubItems[6].Text != Данные.НазваниеПоезда)
-                                            listView.Items[item].SubItems[6].Text = Данные.ИспользоватьДополнение ? Данные.Дополнение : String.Empty;
+                                            listView.Items[item].SubItems[6].Text = Данные.ИспользоватьДополнение["звук"] ? Данные.Дополнение : String.Empty;
                                         break;
                                 }
 
@@ -2294,7 +2231,7 @@ namespace MainExample
 
             //Сформируем список нештатных сообщений--------------------------------------
             var startDate = ВременноеВремяСобытия.AddMinutes(-30);
-            var endDate = ВременноеВремяСобытия.AddMinutes(0);
+            var endDate = ВременноеВремяСобытия.AddHours(27 - DateTime.Now.Hour); //часы до конца суток  +3 часа
             List<СостояниеФормируемогоСообщенияИШаблон> текущийСписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
 
 
@@ -2309,7 +2246,7 @@ namespace MainExample
                 НовыйШаблон.Приоритет = Priority.Midlle;
                 НовыйШаблон.Воспроизведен = false;
                 НовыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
-                НовыйШаблон.ВремяСмещения = (ВременноеВремяСобытия - date).Minutes * -1;
+                НовыйШаблон.ВремяСмещения =   (((ВременноеВремяСобытия - date).Hours * 60)  + (ВременноеВремяСобытия - date).Minutes) * -1;
                 НовыйШаблон.НазваниеШаблона = String.Empty;
                 НовыйШаблон.Шаблон = String.Empty;
                 НовыйШаблон.ПривязкаКВремени = ((данные.БитыАктивностиПолей & 0x04) != 0x00) ? 0 : 1;
@@ -2350,8 +2287,7 @@ namespace MainExample
             }
    
             данные.СписокНештатныхСообщений = текущийСписокНештатныхСообщений;
-            ИзменениеДанныхВКарточке(старыеДанные, данные, key);
-            
+            ИзменениеДанныхВКарточке(старыеДанные, данные, key);     
         }
 
 
@@ -2590,7 +2526,7 @@ namespace MainExample
 
 
                         case "ДОПОЛНЕНИЕ":
-                            if (Record.ИспользоватьДополнение)
+                            if (Record.ИспользоватьДополнение["звук"])
                             {
                                 Text = Record.Дополнение;
                                 logMessage += Text + " ";

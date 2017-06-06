@@ -131,11 +131,9 @@ namespace MainExample.Services
                 Queue.Enqueue(item);
             }
             else
-            {
-                StopQueue();
+            {   
                 Queue.Enqueue(item);
                 Queue = new Queue<ВоспроизводимоеСообщение>(Queue.OrderByDescending(elem=>elem.Приоритет));  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
-                StartQueue();
             }
         }
 
@@ -410,6 +408,7 @@ namespace MainExample.Services
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон });
                 Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                CurrentTemplatePlaying = null;
                 return;
             }
 

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+
 
 namespace MainExample
 {
@@ -54,7 +53,8 @@ namespace MainExample
 
 
             tb_Дополнение.Text = Record.Дополнение;
-            cb_Дополнение.Checked = Record.ИспользоватьДополнение;
+            cb_Дополнение_Звук.Checked = Record.ИспользоватьДополнение["звук"];
+            cb_Дополнение_Табло.Checked = Record.ИспользоватьДополнение["табло"];
 
             ОбновитьТекстВОкне();
 
@@ -131,6 +131,17 @@ namespace MainExample
             else if ((this.Record.БитыНештатныхСитуаций & 0x02) != 0x00) cBПрибытиеЗадерживается.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x04) != 0x00) cBОтправлениеЗадерживается.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x08) != 0x00) cBОтправлениеПоГотовности.Checked = true;
+
+            if (this.Record.Автомат)
+            {
+                btn_Автомат.Text = "АВТОМАТ";
+                btn_Автомат.BackColor = Color.Aquamarine;
+            }
+            else
+            {
+                btn_Автомат.Text = "РУЧНОЙ";
+                btn_Автомат.BackColor = Color.DarkBlue;
+            }
         }
 
 
@@ -310,11 +321,12 @@ namespace MainExample
             Record.СтанцияНазначения = cBКуда.Text;
 
             Record.Дополнение = tb_Дополнение.Text;
-            Record.ИспользоватьДополнение = cb_Дополнение.Checked;
+            Record.ИспользоватьДополнение["звук"] = cb_Дополнение_Звук.Checked;
+            Record.ИспользоватьДополнение["табло"] = cb_Дополнение_Табло.Checked;
 
             Record.НазваниеПоезда = Record.СтанцияОтправления == "" ? Record.СтанцияНазначения : Record.СтанцияОтправления + " - " + Record.СтанцияНазначения;
 
-            DialogResult = System.Windows.Forms.DialogResult.OK;
+            DialogResult = DialogResult.OK;
         }
 
 
@@ -897,5 +909,23 @@ namespace MainExample
             ОбновитьТекстВОкне();
         }
 
+
+
+
+        private void btn_Автомат_Click(object sender, EventArgs e)
+        {
+            if (this.Record.Автомат)
+            {
+                this.Record.Автомат = false;
+                btn_Автомат.Text = "РУЧНОЙ";
+                btn_Автомат.BackColor = Color.Blue;
+            }
+            else
+            {
+                this.Record.Автомат = true;
+                btn_Автомат.Text = "АВТОМАТ";
+                btn_Автомат.BackColor = Color.Aquamarine;
+            }
+        }
     }
 }

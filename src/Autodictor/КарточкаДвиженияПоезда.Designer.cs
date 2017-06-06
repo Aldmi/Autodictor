@@ -82,9 +82,11 @@
             this.cBПрибытиеЗадерживается = new System.Windows.Forms.CheckBox();
             this.cBПоездОтменен = new System.Windows.Forms.CheckBox();
             this.gBНастройкиПоезда = new System.Windows.Forms.GroupBox();
-            this.cb_Дополнение = new System.Windows.Forms.CheckBox();
+            this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.cb_Дополнение_Табло = new System.Windows.Forms.CheckBox();
+            this.btn_Автомат = new System.Windows.Forms.Button();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -565,7 +567,7 @@
             this.btnПовторения.Location = new System.Drawing.Point(177, 413);
             this.btnПовторения.Margin = new System.Windows.Forms.Padding(2);
             this.btnПовторения.Name = "btnПовторения";
-            this.btnПовторения.Size = new System.Drawing.Size(135, 29);
+            this.btnПовторения.Size = new System.Drawing.Size(112, 29);
             this.btnПовторения.TabIndex = 19;
             this.btnПовторения.Text = "1 ПОВТОР";
             this.btnПовторения.UseVisualStyleBackColor = true;
@@ -702,7 +704,9 @@
             // 
             // gBНастройкиПоезда
             // 
-            this.gBНастройкиПоезда.Controls.Add(this.cb_Дополнение);
+            this.gBНастройкиПоезда.Controls.Add(this.btn_Автомат);
+            this.gBНастройкиПоезда.Controls.Add(this.cb_Дополнение_Табло);
+            this.gBНастройкиПоезда.Controls.Add(this.cb_Дополнение_Звук);
             this.gBНастройкиПоезда.Controls.Add(this.tb_Дополнение);
             this.gBНастройкиПоезда.Controls.Add(this.label4);
             this.gBНастройкиПоезда.Controls.Add(this.cBНомерПоезда);
@@ -725,23 +729,23 @@
             this.gBНастройкиПоезда.TabStop = false;
             this.gBНастройкиПоезда.Text = "Настроки поезда";
             // 
-            // cb_Дополнение
+            // cb_Дополнение_Звук
             // 
-            this.cb_Дополнение.AutoSize = true;
-            this.cb_Дополнение.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_Дополнение.Location = new System.Drawing.Point(578, 56);
-            this.cb_Дополнение.Name = "cb_Дополнение";
-            this.cb_Дополнение.Size = new System.Drawing.Size(57, 25);
-            this.cb_Дополнение.TabIndex = 15;
-            this.cb_Дополнение.Text = "Вкл.";
-            this.cb_Дополнение.UseVisualStyleBackColor = true;
+            this.cb_Дополнение_Звук.AutoSize = true;
+            this.cb_Дополнение_Звук.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_Дополнение_Звук.Location = new System.Drawing.Point(593, 56);
+            this.cb_Дополнение_Звук.Name = "cb_Дополнение_Звук";
+            this.cb_Дополнение_Звук.Size = new System.Drawing.Size(49, 25);
+            this.cb_Дополнение_Звук.TabIndex = 15;
+            this.cb_Дополнение_Звук.Text = "Зв.";
+            this.cb_Дополнение_Звук.UseVisualStyleBackColor = true;
             // 
             // tb_Дополнение
             // 
             this.tb_Дополнение.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.tb_Дополнение.Location = new System.Drawing.Point(120, 56);
             this.tb_Дополнение.Name = "tb_Дополнение";
-            this.tb_Дополнение.Size = new System.Drawing.Size(454, 29);
+            this.tb_Дополнение.Size = new System.Drawing.Size(415, 29);
             this.tb_Дополнение.TabIndex = 47;
             // 
             // label4
@@ -753,6 +757,29 @@
             this.label4.Size = new System.Drawing.Size(102, 21);
             this.label4.TabIndex = 46;
             this.label4.Text = "Дополнение:";
+            // 
+            // cb_Дополнение_Табло
+            // 
+            this.cb_Дополнение_Табло.AutoSize = true;
+            this.cb_Дополнение_Табло.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_Дополнение_Табло.Location = new System.Drawing.Point(542, 56);
+            this.cb_Дополнение_Табло.Name = "cb_Дополнение_Табло";
+            this.cb_Дополнение_Табло.Size = new System.Drawing.Size(49, 25);
+            this.cb_Дополнение_Табло.TabIndex = 48;
+            this.cb_Дополнение_Табло.Text = "Тб.";
+            this.cb_Дополнение_Табло.UseVisualStyleBackColor = true;
+            // 
+            // btn_Автомат
+            // 
+            this.btn_Автомат.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Автомат.Location = new System.Drawing.Point(339, 413);
+            this.btn_Автомат.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Автомат.Name = "btn_Автомат";
+            this.btn_Автомат.Size = new System.Drawing.Size(291, 37);
+            this.btn_Автомат.TabIndex = 49;
+            this.btn_Автомат.Text = "АВТОМАТ";
+            this.btn_Автомат.UseVisualStyleBackColor = true;
+            this.btn_Автомат.Click += new System.EventHandler(this.btn_Автомат_Click);
             // 
             // КарточкаДвиженияПоезда
             // 
@@ -835,7 +862,7 @@
         private System.Windows.Forms.CheckBox cBПрибытиеЗадерживается;
         private System.Windows.Forms.CheckBox cBПоездОтменен;
         private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.CheckBox cb_Дополнение;
+        private System.Windows.Forms.CheckBox cb_Дополнение_Звук;
         private System.Windows.Forms.TextBox tb_Дополнение;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label8;
@@ -847,5 +874,7 @@
         private System.Windows.Forms.Button btn_ИзменитьВремяЗадержки;
         private System.Windows.Forms.Button btnОтправлениеПоГотовности;
         private System.Windows.Forms.CheckBox cBОтправлениеПоГотовности;
+        private System.Windows.Forms.CheckBox cb_Дополнение_Табло;
+        private System.Windows.Forms.Button btn_Автомат;
     }
 }
