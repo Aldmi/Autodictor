@@ -15,7 +15,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
     {
         bool IsPaging { get; }
         SourceLoad SourceLoad { get; set; }
-        void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains);
+        void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains, int? countDataTake = null);
+        int? GetCountDataTake();
         bool CheckContrains(UniversalInputType inData);
 
         DeviceSetting GetDeviceSetting { get; }

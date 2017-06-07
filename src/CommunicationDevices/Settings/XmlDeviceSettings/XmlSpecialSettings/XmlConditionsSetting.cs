@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Castle.Components.DictionaryAdapter;
@@ -90,6 +91,14 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                     if (!string.IsNullOrEmpty(matchString))
                     {
                         Conditions.DeparturePaths = new List<string>(matchString.Split(','));
+                        continue;
+                    }
+
+                    matchString = Regex.Match(s, "ЛимитСтрокТаблицы\\:(.*)").Groups[1].Value;
+                    if (!string.IsNullOrEmpty(matchString))
+                    {
+                        int limitRow;
+                        Conditions.LimitNumberRows = (int?)(int.TryParse(matchString, out limitRow) ? (ValueType) limitRow : null);
                         continue;
                     }
 

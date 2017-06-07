@@ -127,6 +127,7 @@ namespace MainExample
             cBПоездОтменен.Checked = false;
             cBПрибытиеЗадерживается.Checked = false;
             cBОтправлениеЗадерживается.Checked = false;
+            cBОтправлениеПоГотовности.Checked = false;
             if ((this.Record.БитыНештатныхСитуаций & 0x01) != 0x00) cBПоездОтменен.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x02) != 0x00) cBПрибытиеЗадерживается.Checked = true;
             else if ((this.Record.БитыНештатныхСитуаций & 0x04) != 0x00) cBОтправлениеЗадерживается.Checked = true;
@@ -218,7 +219,6 @@ namespace MainExample
 
             if (cBОтправлениеЗадерживается.Checked || cBПрибытиеЗадерживается.Checked)
             {
-
                 dTP_Задержка.Enabled = true;
                 btn_ИзменитьВремяЗадержки.Enabled = true;
             }
@@ -842,8 +842,8 @@ namespace MainExample
             {
                 СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                 {
-                    Id = -1,
-                    Приоритет = Priority.Hight, 
+                    Id = 2000,
+                    Приоритет = Priority.Midlle, 
                     SoundRecordId = Record.ID,
                     Шаблон = ФормируемоеСообщение,
                     ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
@@ -858,55 +858,56 @@ namespace MainExample
 
         private void cBПоездОтменен_CheckedChanged(object sender, EventArgs e)
         {
-            Record.БитыНештатныхСитуаций &= (byte)0xF0;
-
-            if ((sender as CheckBox).Checked == true)
-            switch ((sender as CheckBox).Name)
+            try
             {
-                case "cBПоездОтменен":
-                    Record.БитыНештатныхСитуаций |= 0x01;
+                Record.БитыНештатныхСитуаций &= (byte)0x00;
+                if ((sender as CheckBox).Checked == true)
+                {
+                    switch ((sender as CheckBox).Name)
+                    {
+                        case "cBПоездОтменен":
+                            Record.БитыНештатныхСитуаций |= 0x01;
+                            if (cBПрибытиеЗадерживается.Checked)
+                                cBПрибытиеЗадерживается.Checked = false;
+                            if (cBОтправлениеЗадерживается.Checked)
+                                cBОтправлениеЗадерживается.Checked = false;
+                            if (cBОтправлениеПоГотовности.Checked)
+                                cBОтправлениеПоГотовности.Checked = false;
+                            break;
 
-                    if (cBПрибытиеЗадерживается.Checked == true)
-                        cBПрибытиеЗадерживается.Checked = false;
-                    if (cBОтправлениеЗадерживается.Checked == true)
-                        cBОтправлениеЗадерживается.Checked = false;
-                    if (cBОтправлениеПоГотовности.Checked == true)
-                        cBОтправлениеПоГотовности.Checked = false;
-                     break;
+                        case "cBПрибытиеЗадерживается":
+                            Record.БитыНештатныхСитуаций |= 0x02;
+                            if (cBПоездОтменен.Checked)
+                                cBПоездОтменен.Checked = false;
+                            if (cBОтправлениеЗадерживается.Checked)
+                                cBОтправлениеЗадерживается.Checked = false;
+                            if (cBОтправлениеПоГотовности.Checked)
+                                cBОтправлениеПоГотовности.Checked = false;
+                            break;
 
-                case "cBПрибытиеЗадерживается":
-                     Record.БитыНештатныхСитуаций |= 0x02;
+                        case "cBОтправлениеЗадерживается":
+                            Record.БитыНештатныхСитуаций |= 0x04;
+                            cBПоездОтменен.Checked = false;
+                            cBПрибытиеЗадерживается.Checked = false;
+                            cBОтправлениеПоГотовности.Checked = false;
+                            break;
 
-                    if (cBПоездОтменен.Checked == true)
-                        cBПоездОтменен.Checked = false;
-                    if (cBОтправлениеЗадерживается.Checked == true)
-                        cBОтправлениеЗадерживается.Checked = false;
-                    break;
-
-                case "cBОтправлениеЗадерживается":
-                    Record.БитыНештатныхСитуаций |= 0x04;
-
-                    if (cBПоездОтменен.Checked == true)
-                        cBПоездОтменен.Checked = false;
-                    if (cBПрибытиеЗадерживается.Checked == true)
-                        cBПрибытиеЗадерживается.Checked = false;
-                    if (cBОтправлениеПоГотовности.Checked == true)
-                        cBОтправлениеПоГотовности.Checked = false;
-                    break;
-
-                case "cBОтправлениеПоГотовности":
-                    Record.БитыНештатныхСитуаций |= 0x08;
-
-                    if (cBПоездОтменен.Checked == true)
-                        cBПоездОтменен.Checked = false;
-                    if (cBПрибытиеЗадерживается.Checked == true)
-                        cBПрибытиеЗадерживается.Checked = false;
-                    if (cBОтправлениеЗадерживается.Checked == true)
-                        cBОтправлениеЗадерживается.Checked = false;
-                    break;
+                        case "cBОтправлениеПоГотовности":
+                            Record.БитыНештатныхСитуаций |= 0x08;
+                            cBПоездОтменен.Checked = false;
+                            cBПрибытиеЗадерживается.Checked = false;
+                            cBОтправлениеЗадерживается.Checked = false;
+                            break;
+                    }
+                    ОбновитьТекстВОкне();
                 }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
 
-            ОбновитьТекстВОкне();
+
         }
 
 

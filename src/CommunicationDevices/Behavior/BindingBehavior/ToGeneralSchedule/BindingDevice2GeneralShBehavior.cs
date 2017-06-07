@@ -75,10 +75,15 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         }
 
 
-        public void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains)
+        public void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains, int? countDataTake = null)
         {
-            var filteredTable = inData.TableData.Where(checkContrains).ToList();
+            var query = inData.TableData.Where(checkContrains);
+            if (countDataTake != null && countDataTake > 0)
+            {
+                query = query.Take(countDataTake.Value);
+            }
 
+            var filteredTable = query.ToList();
             if (IsPaging)
             {
                 PagingHelper.PagingBuffer = filteredTable;
@@ -107,6 +112,15 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
                 return true;
 
             return Conditions.CheckContrains(inData);
+        }
+
+
+        /// <summary>
+        /// Вернуть сколко первых элементов таблицы нужно взять
+        /// </summary>
+        public int? GetCountDataTake()
+        {
+            return Conditions.LimitNumberRows;
         }
 
 

@@ -57,6 +57,8 @@ namespace CommunicationDevices.Settings
         public bool EmergencySituationDelayArrival { get; set; }       //Нешатная ситуация отменен, задержка прибытия
         public bool EmergencySituationDelayDepart { get; set; }        //Нешатная ситуация отменен, задержка отправления
 
+        public int? LimitNumberRows { get; set; }                     //Ограничение кол-ва строк
+
         #endregion
 
 

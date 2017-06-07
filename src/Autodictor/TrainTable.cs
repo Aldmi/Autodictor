@@ -42,7 +42,9 @@ namespace MainExample
         public string Примечание;
         public DateTime ВремяНачалаДействияРасписания;
         public DateTime ВремяОкончанияДействияРасписания;
-        public string Addition;           //Дополнение
+        public string Addition;                                   //Дополнение
+        public Dictionary<string, bool> ИспользоватьДополнение;   //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
+        public bool Автомат;                                      // true - поезд обрабатывается в автомате.
     };
 
 
@@ -187,6 +189,12 @@ namespace MainExample
             Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
             Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
             Данные.Addition = "";
+            Данные.ИспользоватьДополнение = new Dictionary<string, bool>
+            {
+                ["звук"] = false,
+                ["табло"] = false
+            };
+            Данные.Автомат = true;
 
             TrainTableRecords.Add(Данные);
             ОбновитьДанныеВСписке();
@@ -237,7 +245,7 @@ namespace MainExample
                     while ((line = file.ReadLine()) != null)
                     {
                         string[] Settings = line.Split(';');
-                        if ((Settings.Length == 13) || (Settings.Length == 15) || (Settings.Length == 16))
+                        if ((Settings.Length == 13) || (Settings.Length == 15) || (Settings.Length >= 16))
                         {
                             TrainTableRecord Данные;
 
@@ -252,6 +260,12 @@ namespace MainExample
                             Данные.SoundTemplates = Settings[8];
                             Данные.TrainPathDirection = byte.Parse(Settings[9]);
                             Данные.TrainPathNumber = Settings[10];
+                            Данные.ИспользоватьДополнение = new Dictionary<string, bool>()
+                            {
+                                ["звук"] = false,
+                                ["табло"] = false
+                            };
+                            Данные.Автомат = true;
 
                             ТипПоезда типПоезда = ТипПоезда.НеОпределен;
                             try
@@ -281,11 +295,26 @@ namespace MainExample
 
 
                             var addition = "";
-                            if (Settings.Length == 16)
+                            if (Settings.Length >= 16)
                             {
                                 addition = Settings[15];
                             }
                             Данные.Addition = addition;
+
+   
+                            if (Settings.Length >= 18)
+                            {
+                                Данные.ИспользоватьДополнение["табло"] = Settings[16] == "1";
+                                Данные.ИспользоватьДополнение["звук"] = Settings[17] == "1";
+                            }
+
+
+                          
+                            if (Settings.Length >= 19)
+                            {
+                                Данные.Автомат = (string.IsNullOrEmpty(Settings[18]) || Settings[18] == "1"); // по умолчанию true
+                            }
+
 
 
                             TrainTableRecords.Add(Данные);
@@ -326,7 +355,10 @@ namespace MainExample
                             TrainTableRecords[i].Примечание + ";" +
                             TrainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
                             TrainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                            TrainTableRecords[i].Addition;
+                            TrainTableRecords[i].Addition + ";" +
+                            (TrainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
+                            (TrainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
+                            (TrainTableRecords[i].Автомат ? "1" : "0");
 
                         DumpFile.WriteLine(line);
                     }
@@ -517,7 +549,7 @@ namespace MainExample
 
                     Данные.Addition = "";
 
-                    TrainTableRecords.Add(Данные);
+                    //TrainTableRecords.Add(Данные);
 
                     if (Данные.ID > ID)
                         ID = Данные.ID;

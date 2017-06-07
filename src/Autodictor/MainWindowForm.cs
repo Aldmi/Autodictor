@@ -101,6 +101,9 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
+        private const int ВремяЗадержкиВоспроизведенныхСобытий = 2;  //мин
+
+
         private bool РазрешениеРаботы = false;
 
         public static SortedDictionary<string, SoundRecord> SoundRecords = new SortedDictionary<string, SoundRecord>();
@@ -225,6 +228,7 @@ namespace MainExample
 
 
 
+
         private void StaticChangeRxEventHandler(StaticChangeValue staticChangeValue)
         {
             for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count(); i++)
@@ -248,7 +252,6 @@ namespace MainExample
                 }
             }
         }
-
 
 
         private void TemplateChangeRxEventHandler(TemplateChangeValue templateChangeValue)
@@ -449,13 +452,14 @@ namespace MainExample
                 Record.НазваниеПоезда = Config.Name;
                 Record.Дополнение = Config.Addition;
                 Record.ИспользоватьДополнение = new Dictionary<string, bool>{
-                    ["звук"] = !string.IsNullOrEmpty(Record.Дополнение),
-                    ["табло"] = !string.IsNullOrEmpty(Record.Дополнение)};      
+                    ["звук"] = Config.ИспользоватьДополнение["звук"],
+                    ["табло"] = Config.ИспользоватьДополнение["табло"]
+                };      
                 Record.СтанцияОтправления = "";
                 Record.СтанцияНазначения = "";
                 Record.ДниСледования = Config.Days;
                 Record.Активность = Config.Active;
-                Record.Автомат = true;
+                Record.Автомат = Config.Автомат;
                 Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
                 Record.НомерПути = Config.TrainPathNumber;
                 Record.НумерацияПоезда = Config.TrainPathDirection;
@@ -1122,7 +1126,7 @@ namespace MainExample
 
                 //Добавление события ===================================================================
                 if (DateTime.Now > Сообщение.Время.AddMinutes(-30) &&
-                    !(Сообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > Сообщение.Время.AddMinutes(5))) //убрать через 5 мин. после воспроизведения
+                    !(Сообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > Сообщение.Время.AddMinutes(ВремяЗадержкиВоспроизведенныхСобытий))) //убрать через 5 мин. после воспроизведения
                 {
                     byte состояниеСтроки = 0;
                     switch (Сообщение.СостояниеВоспроизведения)
@@ -1252,7 +1256,7 @@ namespace MainExample
                                               }
                                         }
 
-                                    if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(нештатноеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(5)))      //убрать через 5 мин. после воспроизведения
+                                    if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(нештатноеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(ВремяЗадержкиВоспроизведенныхСобытий)))      //убрать через 5 мин. после воспроизведения
                                     {
                                         byte состояниеСтроки = 0;
                                         switch (нештатноеСообщение.СостояниеВоспроизведения)
@@ -1307,7 +1311,7 @@ namespace MainExample
                             break;
                         }
 
-                        // Проверка на приближения времени оповещения (за 30 минут) и завершения выполнения (после 3 минут)
+                        // Проверка на приближения времени оповещения (за 30 минут)
                         DateTime СамоеРаннееВремя = DateTime.Now, СамоеПозднееВремя = DateTime.Now;
                         for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
                         {
@@ -1417,7 +1421,7 @@ namespace MainExample
                                     //Динамическое сообщение попадет в список если ФормируемоеСообщение еще не воспроезведенно  и не прошло 1мин с момента попадания в список.
                                     //==================================================================================
                                     if (DateTime.Now > времяСобытия.AddMinutes(-30) &&
-                                        !(ФормируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(5))) //убрать через 5 мин. после воспроизведения
+                                        !(ФормируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(ВремяЗадержкиВоспроизведенныхСобытий))) //убрать через 5 мин. после воспроизведения
                                     {
                                         byte состояниеСтроки = 0;
                                         switch (ФормируемоеСообщение.СостояниеВоспроизведения)
@@ -1496,10 +1500,11 @@ namespace MainExample
             }
             #endregion
 
+
             lVСобытия_ОбновитьСостояниеТаблицы();
+
             ОтобразитьСубтитры();
         }
-
 
 
         // Определение информации для вывода на табло
@@ -1558,7 +1563,7 @@ namespace MainExample
                             var inData = new UniversalInputType { TableData = table };
                             foreach (var beh in binding2Shedule)
                             {
-                                beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                                beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
                     }
@@ -1573,7 +1578,7 @@ namespace MainExample
                                 var table = SoundRecords.Where(rec=> rec.Value.Автомат).Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
                                 table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
-                                beh.InitializePagingBuffer(inData, beh.CheckContrains);
+                                beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
                     }
@@ -1727,7 +1732,6 @@ namespace MainExample
 
             #endregion
         }
-
 
 
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
@@ -2076,11 +2080,11 @@ namespace MainExample
         }
 
 
-
         // Обработка двойного нажатия на сообщение (вызов формы сообщения)
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListView listView = sender as ListView;
+
             try
             {
                 ListView.SelectedIndexCollection sic = listView.SelectedIndices;
@@ -2218,7 +2222,6 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
-
 
 
         private void ЗаполнениеСпискаНештатныхСитуаций(SoundRecord старыеДанные, SoundRecord данные, string key)
@@ -2371,17 +2374,6 @@ namespace MainExample
                                         }
 
 
-                                        if (Данные.Автомат)
-                                        {
-                                            toolStripMenuItem_Active_Да.Checked = true;
-                                            toolStripMenuItem_Active_Нет.Checked = false;
-                                        }
-                                        else
-                                        {
-                                            toolStripMenuItem_Active_Да.Checked = false;
-                                            toolStripMenuItem_Active_Нет.Checked = true;
-                                        }
-
 
                                         шаблоныОповещенияToolStripMenuItem1.DropDownItems.Clear();
                                         for (int i = 0; i < Данные.СписокФормируемыхСообщений.Count(); i++)
@@ -2433,6 +2425,8 @@ namespace MainExample
                         }
                     }
                 }
+
+                //                contextMenuStrip1.Items.Add(list.Name);
             }
         }
 
@@ -2922,6 +2916,7 @@ namespace MainExample
                 if (SoundRecords.Keys.Contains(КлючВыбранныйМеню) == true)
                 {
                     SoundRecord Данные = SoundRecords[КлючВыбранныйМеню];
+                    SoundRecord НеИзмененныеДанные = Данные;
 
                     for (int i = 0; i < СписокПолейПути.Length; i++)
                         if (СписокПолейПути[i].Name == tsmi.Name)
@@ -2987,18 +2982,6 @@ namespace MainExample
                         if (индексВарианта >= 0)
                         {
                             Данные.РазрешениеНаОтображениеПути = (PathPermissionType)индексВарианта;
-                            SoundRecords[КлючВыбранныйМеню] = Данные;
-                            return;
-                        }
-                    }
-
-
-                    if (toolStripMenuItem_Автомат.DropDownItems.Contains(tsmi))
-                    {
-                        int индексВарианта = toolStripMenuItem_Автомат.DropDownItems.IndexOf(tsmi);
-                        if (индексВарианта >= 0)
-                        {
-                            Данные.Автомат = (индексВарианта == 0);
                             SoundRecords[КлючВыбранныйМеню] = Данные;
                             return;
                         }

@@ -72,6 +72,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cBБлокировка = new System.Windows.Forms.CheckBox();
             this.gBШаблонОповещения = new System.Windows.Forms.GroupBox();
+            this.tb_КолвоПовторовEng = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tb_КолвоПовторовRu = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cBВремяОповещения = new System.Windows.Forms.ComboBox();
             this.tBВремяОповещения = new System.Windows.Forms.TextBox();
@@ -80,21 +85,22 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnУдалитьШаблон = new System.Windows.Forms.Button();
             this.btnДобавитьШаблон = new System.Windows.Forms.Button();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tb_КолвоПовторовRu = new System.Windows.Forms.TextBox();
-            this.tb_КолвоПовторовEng = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cb_Дополнение_Табло = new System.Windows.Forms.CheckBox();
+            this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
+            this.gbРежимРаботы = new System.Windows.Forms.GroupBox();
+            this.rB_РежРабАвтомат = new System.Windows.Forms.RadioButton();
+            this.rB_РежРабРучной = new System.Windows.Forms.RadioButton();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
             this.gBШаблонОповещения.SuspendLayout();
+            this.gbРежимРаботы.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Принять
@@ -329,14 +335,14 @@
             this.gBОстановки.Controls.Add(this.rBНеОповещать);
             this.gBОстановки.Location = new System.Drawing.Point(581, 11);
             this.gBОстановки.Name = "gBОстановки";
-            this.gBОстановки.Size = new System.Drawing.Size(585, 333);
+            this.gBОстановки.Size = new System.Drawing.Size(585, 293);
             this.gBОстановки.TabIndex = 49;
             this.gBОстановки.TabStop = false;
             this.gBОстановки.Text = "Остановки";
             // 
             // btnРедактировать
             // 
-            this.btnРедактировать.Location = new System.Drawing.Point(15, 278);
+            this.btnРедактировать.Location = new System.Drawing.Point(15, 239);
             this.btnРедактировать.Name = "btnРедактировать";
             this.btnРедактировать.Size = new System.Drawing.Size(186, 45);
             this.btnРедактировать.TabIndex = 50;
@@ -351,9 +357,9 @@
             this.lVСписокСтанций.FullRowSelect = true;
             this.lVСписокСтанций.GridLines = true;
             this.lVСписокСтанций.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lVСписокСтанций.Location = new System.Drawing.Point(213, 34);
+            this.lVСписокСтанций.Location = new System.Drawing.Point(213, 14);
             this.lVСписокСтанций.Name = "lVСписокСтанций";
-            this.lVСписокСтанций.Size = new System.Drawing.Size(366, 293);
+            this.lVСписокСтанций.Size = new System.Drawing.Size(366, 270);
             this.lVСписокСтанций.TabIndex = 49;
             this.lVСписокСтанций.UseCompatibleStateImageBehavior = false;
             this.lVСписокСтанций.View = System.Windows.Forms.View.Details;
@@ -598,6 +604,47 @@
             this.gBШаблонОповещения.TabStop = false;
             this.gBШаблонОповещения.Text = "Шаблоны оповещения";
             // 
+            // tb_КолвоПовторовEng
+            // 
+            this.tb_КолвоПовторовEng.Location = new System.Drawing.Point(365, 87);
+            this.tb_КолвоПовторовEng.Name = "tb_КолвоПовторовEng";
+            this.tb_КолвоПовторовEng.Size = new System.Drawing.Size(50, 26);
+            this.tb_КолвоПовторовEng.TabIndex = 62;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(322, 93);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 20);
+            this.label11.TabIndex = 61;
+            this.label11.Text = "Eng";
+            // 
+            // tb_КолвоПовторовRu
+            // 
+            this.tb_КолвоПовторовRu.Location = new System.Drawing.Point(233, 87);
+            this.tb_КолвоПовторовRu.Name = "tb_КолвоПовторовRu";
+            this.tb_КолвоПовторовRu.Size = new System.Drawing.Size(50, 26);
+            this.tb_КолвоПовторовRu.TabIndex = 60;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 93);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(152, 20);
+            this.label10.TabIndex = 59;
+            this.label10.Text = "Кол-во повторов";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(199, 93);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 20);
+            this.label9.TabIndex = 58;
+            this.label9.Text = "Ru";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -669,6 +716,14 @@
             this.columnHeader5.Text = "Время";
             this.columnHeader5.Width = 125;
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Ru";
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Eng";
+            // 
             // btnУдалитьШаблон
             // 
             this.btnУдалитьШаблон.Location = new System.Drawing.Point(6, 167);
@@ -695,7 +750,7 @@
             // 
             this.tb_Дополнение.Location = new System.Drawing.Point(131, 64);
             this.tb_Дополнение.Name = "tb_Дополнение";
-            this.tb_Дополнение.Size = new System.Drawing.Size(429, 26);
+            this.tb_Дополнение.Size = new System.Drawing.Size(323, 26);
             this.tb_Дополнение.TabIndex = 54;
             // 
             // label8
@@ -707,60 +762,70 @@
             this.label8.TabIndex = 53;
             this.label8.Text = "Дополнение";
             // 
-            // label9
+            // cb_Дополнение_Табло
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(199, 93);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(32, 20);
-            this.label9.TabIndex = 58;
-            this.label9.Text = "Ru";
+            this.cb_Дополнение_Табло.AutoSize = true;
+            this.cb_Дополнение_Табло.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_Дополнение_Табло.Location = new System.Drawing.Point(459, 68);
+            this.cb_Дополнение_Табло.Name = "cb_Дополнение_Табло";
+            this.cb_Дополнение_Табло.Size = new System.Drawing.Size(49, 25);
+            this.cb_Дополнение_Табло.TabIndex = 56;
+            this.cb_Дополнение_Табло.Text = "Тб.";
+            this.cb_Дополнение_Табло.UseVisualStyleBackColor = true;
             // 
-            // label10
+            // cb_Дополнение_Звук
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 93);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(152, 20);
-            this.label10.TabIndex = 59;
-            this.label10.Text = "Кол-во повторов";
+            this.cb_Дополнение_Звук.AutoSize = true;
+            this.cb_Дополнение_Звук.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_Дополнение_Звук.Location = new System.Drawing.Point(510, 68);
+            this.cb_Дополнение_Звук.Name = "cb_Дополнение_Звук";
+            this.cb_Дополнение_Звук.Size = new System.Drawing.Size(49, 25);
+            this.cb_Дополнение_Звук.TabIndex = 55;
+            this.cb_Дополнение_Звук.Text = "Зв.";
+            this.cb_Дополнение_Звук.UseVisualStyleBackColor = true;
             // 
-            // tb_КолвоПовторовRu
+            // gbРежимРаботы
             // 
-            this.tb_КолвоПовторовRu.Location = new System.Drawing.Point(233, 87);
-            this.tb_КолвоПовторовRu.Name = "tb_КолвоПовторовRu";
-            this.tb_КолвоПовторовRu.Size = new System.Drawing.Size(50, 26);
-            this.tb_КолвоПовторовRu.TabIndex = 60;
+            this.gbРежимРаботы.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.gbРежимРаботы.Controls.Add(this.rB_РежРабРучной);
+            this.gbРежимРаботы.Controls.Add(this.rB_РежРабАвтомат);
+            this.gbРежимРаботы.Location = new System.Drawing.Point(581, 306);
+            this.gbРежимРаботы.Name = "gbРежимРаботы";
+            this.gbРежимРаботы.Size = new System.Drawing.Size(270, 59);
+            this.gbРежимРаботы.TabIndex = 57;
+            this.gbРежимРаботы.TabStop = false;
+            this.gbРежимРаботы.Text = "Режим работы";
             // 
-            // tb_КолвоПовторовEng
+            // rB_РежРабАвтомат
             // 
-            this.tb_КолвоПовторовEng.Location = new System.Drawing.Point(365, 87);
-            this.tb_КолвоПовторовEng.Name = "tb_КолвоПовторовEng";
-            this.tb_КолвоПовторовEng.Size = new System.Drawing.Size(50, 26);
-            this.tb_КолвоПовторовEng.TabIndex = 62;
+            this.rB_РежРабАвтомат.AutoSize = true;
+            this.rB_РежРабАвтомат.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rB_РежРабАвтомат.Location = new System.Drawing.Point(21, 25);
+            this.rB_РежРабАвтомат.Name = "rB_РежРабАвтомат";
+            this.rB_РежРабАвтомат.Size = new System.Drawing.Size(103, 24);
+            this.rB_РежРабАвтомат.TabIndex = 60;
+            this.rB_РежРабАвтомат.Text = "АВТОМАТ";
+            this.rB_РежРабАвтомат.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // rB_РежРабРучной
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(322, 93);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 20);
-            this.label11.TabIndex = 61;
-            this.label11.Text = "Eng";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Ru";
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Eng";
+            this.rB_РежРабРучной.AutoSize = true;
+            this.rB_РежРабРучной.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rB_РежРабРучной.Location = new System.Drawing.Point(155, 25);
+            this.rB_РежРабРучной.Name = "rB_РежРабРучной";
+            this.rB_РежРабРучной.Size = new System.Drawing.Size(94, 24);
+            this.rB_РежРабРучной.TabIndex = 61;
+            this.rB_РежРабРучной.Text = "РУЧНОЙ";
+            this.rB_РежРабРучной.UseVisualStyleBackColor = true;
             // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1297, 834);
+            this.Controls.Add(this.gbРежимРаботы);
+            this.Controls.Add(this.cb_Дополнение_Табло);
+            this.Controls.Add(this.cb_Дополнение_Звук);
             this.Controls.Add(this.tb_Дополнение);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.gBШаблонОповещения);
@@ -791,6 +856,8 @@
             this.gBДниСледования.PerformLayout();
             this.gBШаблонОповещения.ResumeLayout(false);
             this.gBШаблонОповещения.PerformLayout();
+            this.gbРежимРаботы.ResumeLayout(false);
+            this.gbРежимРаботы.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -860,5 +927,10 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.CheckBox cb_Дополнение_Табло;
+        private System.Windows.Forms.CheckBox cb_Дополнение_Звук;
+        private System.Windows.Forms.GroupBox gbРежимРаботы;
+        private System.Windows.Forms.RadioButton rB_РежРабРучной;
+        private System.Windows.Forms.RadioButton rB_РежРабАвтомат;
     }
 }
