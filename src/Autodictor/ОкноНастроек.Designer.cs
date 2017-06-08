@@ -60,6 +60,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tBИнтОповещООтпрПоГотов = new System.Windows.Forms.TextBox();
+            this.label113 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.dTP_Автообновление = new System.Windows.Forms.DateTimePicker();
             this.cbРазрешитьАвтоОбновлениеРасписания = new System.Windows.Forms.CheckBox();
@@ -271,8 +273,9 @@
             this.chBox2_LongDist = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.chBox1_LongDist = new System.Windows.Forms.CheckBox();
-            this.tBИнтОповещООтпрПоГотов = new System.Windows.Forms.TextBox();
-            this.label113 = new System.Windows.Forms.Label();
+            this.pCol16 = new System.Windows.Forms.Panel();
+            this.pCol15 = new System.Windows.Forms.Panel();
+            this.label114 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -623,10 +626,27 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Location = new System.Drawing.Point(417, 22);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(488, 509);
+            this.groupBox2.Size = new System.Drawing.Size(488, 527);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Общие настройки";
+            // 
+            // tBИнтОповещООтпрПоГотов
+            // 
+            this.tBИнтОповещООтпрПоГотов.Location = new System.Drawing.Point(429, 124);
+            this.tBИнтОповещООтпрПоГотов.Name = "tBИнтОповещООтпрПоГотов";
+            this.tBИнтОповещООтпрПоГотов.Size = new System.Drawing.Size(53, 26);
+            this.tBИнтОповещООтпрПоГотов.TabIndex = 21;
+            this.tBИнтОповещООтпрПоГотов.Text = "3";
+            // 
+            // label113
+            // 
+            this.label113.AutoSize = true;
+            this.label113.Location = new System.Drawing.Point(8, 127);
+            this.label113.Name = "label113";
+            this.label113.Size = new System.Drawing.Size(389, 20);
+            this.label113.TabIndex = 20;
+            this.label113.Text = "Интервал оповещения о отпр. по готовности, мин";
             // 
             // label24
             // 
@@ -754,7 +774,7 @@
             // btnЗагрузить
             // 
             this.btnЗагрузить.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnЗагрузить.Location = new System.Drawing.Point(1150, 537);
+            this.btnЗагрузить.Location = new System.Drawing.Point(1150, 557);
             this.btnЗагрузить.Name = "btnЗагрузить";
             this.btnЗагрузить.Size = new System.Drawing.Size(131, 32);
             this.btnЗагрузить.TabIndex = 2;
@@ -765,7 +785,7 @@
             // btnСохранить
             // 
             this.btnСохранить.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnСохранить.Location = new System.Drawing.Point(1294, 537);
+            this.btnСохранить.Location = new System.Drawing.Point(1294, 557);
             this.btnСохранить.Name = "btnСохранить";
             this.btnСохранить.Size = new System.Drawing.Size(131, 32);
             this.btnСохранить.TabIndex = 3;
@@ -775,6 +795,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.pCol16);
+            this.groupBox3.Controls.Add(this.pCol15);
+            this.groupBox3.Controls.Add(this.label114);
             this.groupBox3.Controls.Add(this.pCol14);
             this.groupBox3.Controls.Add(this.pCol13);
             this.groupBox3.Controls.Add(this.pCol12);
@@ -800,7 +823,7 @@
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Location = new System.Drawing.Point(12, 313);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(400, 218);
+            this.groupBox3.Size = new System.Drawing.Size(400, 236);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Цветовые настройки";
@@ -1038,9 +1061,9 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.tBРегуляторГромкости);
-            this.groupBox4.Location = new System.Drawing.Point(938, 446);
+            this.groupBox4.Location = new System.Drawing.Point(911, 446);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(488, 85);
+            this.groupBox4.Size = new System.Drawing.Size(515, 103);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Герулятор громкости";
@@ -1051,7 +1074,7 @@
             this.tBРегуляторГромкости.Maximum = 0;
             this.tBРегуляторГромкости.Minimum = -10000;
             this.tBРегуляторГромкости.Name = "tBРегуляторГромкости";
-            this.tBРегуляторГромкости.Size = new System.Drawing.Size(475, 45);
+            this.tBРегуляторГромкости.Size = new System.Drawing.Size(503, 45);
             this.tBРегуляторГромкости.TabIndex = 0;
             this.tBРегуляторГромкости.Scroll += new System.EventHandler(this.tBРегуляторГромкости_Scroll);
             // 
@@ -2814,28 +2837,41 @@
             this.chBox1_LongDist.TabIndex = 20;
             this.chBox1_LongDist.UseVisualStyleBackColor = true;
             // 
-            // tBИнтОповещООтпрПоГотов
+            // pCol16
             // 
-            this.tBИнтОповещООтпрПоГотов.Location = new System.Drawing.Point(429, 124);
-            this.tBИнтОповещООтпрПоГотов.Name = "tBИнтОповещООтпрПоГотов";
-            this.tBИнтОповещООтпрПоГотов.Size = new System.Drawing.Size(53, 26);
-            this.tBИнтОповещООтпрПоГотов.TabIndex = 21;
-            this.tBИнтОповещООтпрПоГотов.Text = "3";
+            this.pCol16.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pCol16.Location = new System.Drawing.Point(352, 207);
+            this.pCol16.Name = "pCol16";
+            this.pCol16.Size = new System.Drawing.Size(36, 19);
+            this.pCol16.TabIndex = 30;
+            this.pCol16.Tag = "15";
+            this.pCol16.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
             // 
-            // label113
+            // pCol15
             // 
-            this.label113.AutoSize = true;
-            this.label113.Location = new System.Drawing.Point(8, 127);
-            this.label113.Name = "label113";
-            this.label113.Size = new System.Drawing.Size(389, 20);
-            this.label113.TabIndex = 20;
-            this.label113.Text = "Интервал оповещения о отпр. по готовности, мин";
+            this.pCol15.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pCol15.Location = new System.Drawing.Point(302, 207);
+            this.pCol15.Name = "pCol15";
+            this.pCol15.Size = new System.Drawing.Size(36, 19);
+            this.pCol15.TabIndex = 29;
+            this.pCol15.Tag = "14";
+            this.pCol15.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
+            // 
+            // label114
+            // 
+            this.label114.AutoSize = true;
+            this.label114.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label114.Location = new System.Drawing.Point(5, 206);
+            this.label114.Name = "label114";
+            this.label114.Size = new System.Drawing.Size(68, 20);
+            this.label114.TabIndex = 28;
+            this.label114.Text = "Ручной";
             // 
             // ОкноНастроек
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1438, 582);
+            this.ClientSize = new System.Drawing.Size(1438, 594);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -3119,5 +3155,8 @@
         private System.Windows.Forms.CheckBox cBПассажирскийПоездEng;
         private System.Windows.Forms.TextBox tBИнтОповещООтпрПоГотов;
         private System.Windows.Forms.Label label113;
+        private System.Windows.Forms.Panel pCol16;
+        private System.Windows.Forms.Panel pCol15;
+        private System.Windows.Forms.Label label114;
     }
 }

@@ -33,6 +33,9 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
         #endregion
 
+
+
+
         #region ctor
 
         public ByRuleTableWriteDataProvider(BaseExchangeRule baseExchangeRule)
@@ -45,6 +48,9 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         }
 
         #endregion
+
+
+
 
         public byte[] GetDataByte()
         {

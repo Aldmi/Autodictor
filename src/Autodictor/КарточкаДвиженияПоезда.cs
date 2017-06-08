@@ -141,7 +141,7 @@ namespace MainExample
             else
             {
                 btn_Автомат.Text = "РУЧНОЙ";
-                btn_Автомат.BackColor = Color.DarkBlue;
+                btn_Автомат.BackColor = Color.DarkSlateBlue;
             }
         }
 
@@ -919,7 +919,7 @@ namespace MainExample
             {
                 this.Record.Автомат = false;
                 btn_Автомат.Text = "РУЧНОЙ";
-                btn_Автомат.BackColor = Color.Blue;
+                btn_Автомат.BackColor = Color.DarkSlateBlue;
             }
             else
             {

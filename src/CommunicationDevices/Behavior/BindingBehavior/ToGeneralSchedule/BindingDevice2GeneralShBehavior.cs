@@ -120,7 +120,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         /// </summary>
         public int? GetCountDataTake()
         {
-            return Conditions.LimitNumberRows;
+            return Conditions?.LimitNumberRows;
         }
 
 
