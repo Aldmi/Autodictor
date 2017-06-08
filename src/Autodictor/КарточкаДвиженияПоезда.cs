@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MainExample.Services;
 
 
 namespace MainExample
@@ -11,14 +12,17 @@ namespace MainExample
     public partial class КарточкаДвиженияПоезда : Form
     {
         private SoundRecord Record;
+        private readonly string _key;
+
         public bool ПрименитьКоВсемСообщениям = true;
         private bool СделаныИзменения = false;
         private bool РазрешениеИзменений = false;
 
 
-        public КарточкаДвиженияПоезда(SoundRecord Record)
+        public КарточкаДвиженияПоезда(SoundRecord Record, string key)
         {
             this.Record = Record;
+            _key = key;
             InitializeComponent();
             cBОтменен.Checked = !Record.Активность;
 
@@ -711,12 +715,13 @@ namespace MainExample
             foreach (int item in sic)
             {
                 int НомерШаблона = (int)this.lVШаблоны.Items[item].Tag;
-
                 if (НомерШаблона < Record.СписокФормируемыхСообщений.Count())
                 {
                     var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[НомерШаблона];
                     ФормируемоеСообщение.Воспроизведен = true;
+                    ФормируемоеСообщение.СостояниеВоспроизведения = SoundRecordStatus.ВоспроизведениеРучное;
                     Record.СписокФормируемыхСообщений[item] = ФормируемоеСообщение;
+
                     MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, ФормируемоеСообщение);
                     break;
                 }

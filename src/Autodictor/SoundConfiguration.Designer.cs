@@ -95,7 +95,7 @@
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Воспроизведение сообщений";
+            this.columnHeader3.Text = "ВоспроизведениеАвтомат сообщений";
             this.columnHeader3.Width = 1657;
             // 
             // groupBox1

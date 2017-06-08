@@ -71,8 +71,6 @@ namespace Communication.Http
         #region prop
 
         public string Url { get; set; }
-        public string Method { get; set; }            //GET;POST;
-        public string ContentType { get; set; }
         public Dictionary<string, string> Headers { get; set; }
 
         public string StatusString
@@ -240,13 +238,13 @@ namespace Communication.Http
             if (stream == null)
                 return null;
 
-            if (Headers.ContainsKey("Methode") && Headers.ContainsKey("Content-Type"))
+            if (Headers.ContainsKey("Method") && Headers.ContainsKey("Content-Type"))
             {
                 //ОБМЕН ДАННЫМИ POST multipart
-                if (Headers["Methode"] == "POST" && Headers["Content-Type"] == "multipart/form-data")
+                if (Headers["Method"] == "POST" && Headers["Content-Type"] == "multipart/form-data")
                 {
                     var boundary = DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture);
-                    return await SendMultipartHttp(Url, stream, boundary);
+                    return await SendPostMultipartHttp(Url, stream, boundary);
                 }
             }
 
@@ -259,7 +257,7 @@ namespace Communication.Http
         /// <summary>
         /// Отправка потока через HttpClient POST Multipart.
         /// </summary>
-        public async Task<MyHttpResponse> SendMultipartHttp(string uri, Stream stream, string boundary)
+        public async Task<MyHttpResponse> SendPostMultipartHttp(string uri, Stream stream, string boundary)
         {
             string mimeName = String.Empty;
             string mimeFileName = String.Empty;
