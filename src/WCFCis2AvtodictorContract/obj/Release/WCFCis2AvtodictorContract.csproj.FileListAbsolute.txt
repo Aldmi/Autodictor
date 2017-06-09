@@ -6,3 +6,7 @@ D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFCis2AvtodictorContr
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorContract.pdb
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.dll
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.pdb
+C:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorContract.dll
+C:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorContract.pdb
+C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.dll
+C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.pdb
