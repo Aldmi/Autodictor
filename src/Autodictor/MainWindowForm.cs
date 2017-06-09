@@ -2039,6 +2039,8 @@ namespace MainExample
                     break;
             }
 
+            var номерПоезда = (actStr == "СТОЯНКА") ? (data.НомерПоезда + "/" + data.НомерПоезда2) : data.НомерПоезда;
+
 
             UniversalInputType mapData;
             if (isShow)
@@ -2047,7 +2049,7 @@ namespace MainExample
                 {
                     Id = data.ID,
                     IsActive = data.Активность,
-                    NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НомерПоезда : "   ",
+                    NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? номерПоезда : "   ",
                     PathNumber = номерПути,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
                     Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),
@@ -2067,7 +2069,7 @@ namespace MainExample
                 {
                     Id = data.ID,
                     IsActive = data.Активность,
-                    NumberOfTrain = data.НомерПоезда,
+                    NumberOfTrain = номерПоезда,
                     PathNumber = номерПути,
                     Event = actStr,
                     Time = ((actStr == "ПРИБ.") ? data.ВремяПрибытия : data.ВремяОтправления),
@@ -2604,6 +2606,20 @@ namespace MainExample
                             break;
 
 
+                        case "НОМЕР ПОЕЗДА ТРАНЗИТ ОТПР":
+                            Text = string.IsNullOrEmpty(Record.НомерПоезда2) ? Record.НомерПоезда : Record.НомерПоезда2;
+                            logMessage += Text + " ";
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                            {
+                                ИмяВоспроизводимогоФайла = Text,
+                                Язык = язык,
+                                ParentId = формируемоеСообщение.Id,
+                                RootId = формируемоеСообщение.SoundRecordId,
+                                Приоритет = формируемоеСообщение.Приоритет
+                            });
+                            break;
+
+
                         case "ДОПОЛНЕНИЕ":
                             if (Record.ИспользоватьДополнение["звук"])
                             {
@@ -2724,7 +2740,7 @@ namespace MainExample
 
                         case "ОЖИДАЕМОЕ ВРЕМЯ":
                             logMessage += "Ожидаемое время: ";
-                            Text = Record.ВремяОтправления.ToString("HH:mm");
+                            Text = Record.ОжидаемоеВремя.ToString("HH:mm");
                             logMessage += Text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
@@ -2737,6 +2753,32 @@ namespace MainExample
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
                                 ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ОжидаемоеВремя.Minute],
+                                Язык = язык,
+                                ParentId = формируемоеСообщение.Id,
+                                RootId = формируемоеСообщение.SoundRecordId,
+                                Приоритет = формируемоеСообщение.Приоритет
+                            });
+                            continue;
+
+
+                        case "ВРЕМЯ СЛЕДОВАНИЯ":
+                            if(!Record.ВремяСледования.HasValue)
+                                continue;
+
+                            logMessage += "Время следования: ";
+                            Text = Record.ВремяСледования.Value.ToString("HH:mm");
+                            logMessage += Text + " ";
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                            {
+                                ИмяВоспроизводимогоФайла = ФайлыЧасов[Record.ВремяСледования.Value.Hour],
+                                Язык = язык,
+                                ParentId = формируемоеСообщение.Id,
+                                RootId = формируемоеСообщение.SoundRecordId,
+                                Приоритет = формируемоеСообщение.Приоритет
+                            });
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                            {
+                                ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ВремяСледования.Value.Minute],
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
                                 RootId = формируемоеСообщение.SoundRecordId,

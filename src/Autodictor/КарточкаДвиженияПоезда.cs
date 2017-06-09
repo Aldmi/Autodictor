@@ -46,7 +46,11 @@ namespace MainExample
             dTP_ВремяОтправления.Value = this.Record.ВремяОтправления;
             dTP_Задержка.Value = (this.Record.ВремяЗадержки == null) ? DateTime.Parse("00:00") : this.Record.ВремяЗадержки.Value;
 
-            dTP_ОжидаемоеВремя.Value = this.Record.Время;       
+            dTP_ОжидаемоеВремя.Value = this.Record.Время;
+
+            dTP_ВремяВПути.Value = (this.Record.ВремяСледования.HasValue) ? this.Record.ВремяСледования.Value : DateTime.Parse("00:00");
+
+
 
             switch (this.Record.НумерацияПоезда)
             {
@@ -76,9 +80,13 @@ namespace MainExample
             Text += Record.НомерПоезда + ": " + Record.СтанцияОтправления + " - " + Record.СтанцияНазначения;
             this.Text = Text;
 
-            foreach (var НомерПоезда in Program.НомераПоездов)
-                cBНомерПоезда.Items.Add(НомерПоезда);
+            foreach (var номерПоезда in Program.НомераПоездов)
+            {
+                cBНомерПоезда.Items.Add(номерПоезда);
+                cBНомерПоезда2.Items.Add(номерПоезда);
+            }
             cBНомерПоезда.Text = Record.НомерПоезда;
+            cBНомерПоезда2.Text = Record.НомерПоезда2;
 
             foreach (var Станция in Program.Станции)
             {
@@ -361,6 +369,15 @@ namespace MainExample
                 return;
 
             Record.ВремяЗадержки = dTP_Задержка.Value;
+            ОбновитьТекстВОкне();
+            ОбновитьСостояниеТаблицыШаблонов();
+            if (РазрешениеИзменений == true) СделаныИзменения = true;
+        }
+
+
+        private void btn_ИзменитьВремяВПути_Click(object sender, EventArgs e)
+        {
+            Record.ВремяСледования = dTP_ВремяВПути.Value;
             ОбновитьТекстВОкне();
             ОбновитьСостояниеТаблицыШаблонов();
             if (РазрешениеИзменений == true) СделаныИзменения = true;
@@ -933,5 +950,7 @@ namespace MainExample
                 btn_Автомат.BackColor = Color.Aquamarine;
             }
         }
+
+
     }
 }
