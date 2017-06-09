@@ -97,7 +97,7 @@
             this.rB_РежРабРучной = new System.Windows.Forms.RadioButton();
             this.rB_РежРабАвтомат = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tBНомерПоездаДоп = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.dTPСледования = new System.Windows.Forms.DateTimePicker();
             this.tb_ДниСледованияAlias = new System.Windows.Forms.TextBox();
@@ -117,7 +117,7 @@
             this.btn_Принять.TabIndex = 33;
             this.btn_Принять.Text = "Принять";
             this.btn_Принять.UseVisualStyleBackColor = true;
-            this.btn_Принять.Click += new System.EventHandler(this.button1_Click);
+            this.btn_Принять.Click += new System.EventHandler(this.btnПрименить_Click);
             // 
             // btn_Отменить
             // 
@@ -835,12 +835,12 @@
             this.label12.TabIndex = 58;
             this.label12.Text = "/";
             // 
-            // textBox1
+            // tBНомерПоездаДоп
             // 
-            this.textBox1.Location = new System.Drawing.Point(193, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(74, 26);
-            this.textBox1.TabIndex = 59;
+            this.tBНомерПоездаДоп.Location = new System.Drawing.Point(193, 18);
+            this.tBНомерПоездаДоп.Name = "tBНомерПоездаДоп";
+            this.tBНомерПоездаДоп.Size = new System.Drawing.Size(74, 26);
+            this.tBНомерПоездаДоп.TabIndex = 59;
             // 
             // label13
             // 
@@ -863,7 +863,7 @@
             // 
             // tb_ДниСледованияAlias
             // 
-            this.tb_ДниСледованияAlias.Location = new System.Drawing.Point(18, 393);
+            this.tb_ДниСледованияAlias.Location = new System.Drawing.Point(18, 391);
             this.tb_ДниСледованияAlias.Multiline = true;
             this.tb_ДниСледованияAlias.Name = "tb_ДниСледованияAlias";
             this.tb_ДниСледованияAlias.Size = new System.Drawing.Size(349, 26);
@@ -874,7 +874,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1297, 834);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tBНомерПоездаДоп);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.gbРежимРаботы);
             this.Controls.Add(this.cb_Дополнение_Табло);
@@ -986,7 +986,7 @@
         private System.Windows.Forms.RadioButton rB_РежРабРучной;
         private System.Windows.Forms.RadioButton rB_РежРабАвтомат;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tBНомерПоездаДоп;
         private System.Windows.Forms.DateTimePicker dTPСледования;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox tb_ДниСледованияAlias;

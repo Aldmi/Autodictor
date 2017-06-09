@@ -9,12 +9,14 @@ namespace MainExample
 {
     public partial class Оповещение : Form
     {
-
         public TrainTableRecord РасписаниеПоезда;
 
-        public Оповещение(TrainTableRecord РасписаниеПоезда)
+
+
+
+        public Оповещение(TrainTableRecord расписаниеПоезда)
         {
-            this.РасписаниеПоезда = РасписаниеПоезда;
+            this.РасписаниеПоезда = расписаниеПоезда;
 
             InitializeComponent();
 
@@ -36,51 +38,53 @@ namespace MainExample
             rBВремяДействияПо.Checked = false;
             rBВремяДействияСПо.Checked = false;
             rBВремяДействияПостоянно.Checked = false;
-            if ((РасписаниеПоезда.ВремяНачалаДействияРасписания <= new DateTime(1901, 1, 1)) && (РасписаниеПоезда.ВремяОкончанияДействияРасписания >= new DateTime(2099, 1, 1)))
+            if ((расписаниеПоезда.ВремяНачалаДействияРасписания <= new DateTime(1901, 1, 1)) && (расписаниеПоезда.ВремяОкончанияДействияРасписания >= new DateTime(2099, 1, 1)))
                 rBВремяДействияПостоянно.Checked = true;
-            else if ((РасписаниеПоезда.ВремяНачалаДействияРасписания > new DateTime(1901, 1, 1)) && (РасписаниеПоезда.ВремяОкончанияДействияРасписания < new DateTime(2099, 1, 1)))
+            else if ((расписаниеПоезда.ВремяНачалаДействияРасписания > new DateTime(1901, 1, 1)) && (расписаниеПоезда.ВремяОкончанияДействияРасписания < new DateTime(2099, 1, 1)))
             {
-                dTPВремяДействияС2.Value = РасписаниеПоезда.ВремяНачалаДействияРасписания;
-                dTPВремяДействияПо2.Value = РасписаниеПоезда.ВремяОкончанияДействияРасписания;
+                dTPВремяДействияС2.Value = расписаниеПоезда.ВремяНачалаДействияРасписания;
+                dTPВремяДействияПо2.Value = расписаниеПоезда.ВремяОкончанияДействияРасписания;
                 rBВремяДействияСПо.Checked = true;
             }
-            else if ((РасписаниеПоезда.ВремяНачалаДействияРасписания > new DateTime(1901, 1, 1)) && (РасписаниеПоезда.ВремяОкончанияДействияРасписания >= new DateTime(2099, 1, 1)))
+            else if ((расписаниеПоезда.ВремяНачалаДействияРасписания > new DateTime(1901, 1, 1)) && (расписаниеПоезда.ВремяОкончанияДействияРасписания >= new DateTime(2099, 1, 1)))
             {
-                dTPВремяДействияС.Value = РасписаниеПоезда.ВремяНачалаДействияРасписания;
+                dTPВремяДействияС.Value = расписаниеПоезда.ВремяНачалаДействияРасписания;
                 rBВремяДействияС.Checked = true;
             }
-            else if ((РасписаниеПоезда.ВремяНачалаДействияРасписания <= new DateTime(1901, 1, 1)) && (РасписаниеПоезда.ВремяОкончанияДействияРасписания < new DateTime(2099, 1, 1)))
+            else if ((расписаниеПоезда.ВремяНачалаДействияРасписания <= new DateTime(1901, 1, 1)) && (расписаниеПоезда.ВремяОкончанияДействияРасписания < new DateTime(2099, 1, 1)))
             {
-                dTPВремяДействияПо.Value = РасписаниеПоезда.ВремяОкончанияДействияРасписания;
+                dTPВремяДействияПо.Value = расписаниеПоезда.ВремяОкончанияДействияРасписания;
                 rBВремяДействияПо.Checked = true;
             }
 
             ПланРасписанияПоезда ТекущийПланРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(this.РасписаниеПоезда.Days);
             Расписание расписание = new Расписание(ТекущийПланРасписанияПоезда);
             tBОписаниеДнейСледования.Text = расписание.ПолучитьПланРасписанияПоезда().ПолучитьСтрокуОписанияРасписания();
+            tb_ДниСледованияAlias.Text = расписаниеПоезда.DaysAlias;
 
 
-            this.Text = "Расписание движения для поезда: " + РасписаниеПоезда.Num + " - " + РасписаниеПоезда.Name;
-            tBНомерПоезда.Text = РасписаниеПоезда.Num;
+            this.Text = "Расписание движения для поезда: " + расписаниеПоезда.Num + " - " + расписаниеПоезда.Name;
+            tBНомерПоезда.Text = расписаниеПоезда.Num;
+            tBНомерПоездаДоп.Text = расписаниеПоезда.Num2;
 
-            tb_Дополнение.Text = РасписаниеПоезда.Addition;
-            cb_Дополнение_Табло.Checked = РасписаниеПоезда.ИспользоватьДополнение["табло"];
-            cb_Дополнение_Звук.Checked = РасписаниеПоезда.ИспользоватьДополнение["звук"];
+            tb_Дополнение.Text = расписаниеПоезда.Addition;
+            cb_Дополнение_Табло.Checked = расписаниеПоезда.ИспользоватьДополнение["табло"];
+            cb_Дополнение_Звук.Checked = расписаниеПоезда.ИспользоватьДополнение["звук"];
 
-            rB_РежРабАвтомат.Checked = РасписаниеПоезда.Автомат;
-            rB_РежРабРучной.Checked = !РасписаниеПоезда.Автомат;
+            rB_РежРабАвтомат.Checked = расписаниеПоезда.Автомат;
+            rB_РежРабРучной.Checked = !расписаниеПоезда.Автомат;
 
 
 
-            string[] Станции = РасписаниеПоезда.Name.Split('-');
+            string[] Станции = расписаниеПоезда.Name.Split('-');
             if (Станции.Length == 2)
             {
                 cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
                 cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
             }
-            else if (Станции.Length == 1 && РасписаниеПоезда.Name != "")
+            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
             {
-                cBКуда.Text = РасписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
+                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
             }
 
 
@@ -89,7 +93,7 @@ namespace MainExample
             foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
                 cBШаблонОповещения.Items.Add(Item.Name);
 
-            string[] ШаблонОповещения = РасписаниеПоезда.SoundTemplates.Split(':');
+            string[] ШаблонОповещения = расписаниеПоезда.SoundTemplates.Split(':');
             int ТипОповещенияПути = 0;
             if ((ШаблонОповещения.Length % 3) == 0)
             {
@@ -110,6 +114,7 @@ namespace MainExample
 
             string ВремяПрибытия = this.РасписаниеПоезда.ArrivalTime;
             string ВремяОтправления = this.РасписаниеПоезда.DepartureTime;
+            string ВремяВПути = this.РасписаниеПоезда.FollowingTime;
 
             rBПрибытие.Checked = false;
             rBОтправление.Checked = false;
@@ -144,8 +149,20 @@ namespace MainExample
                     dTPПрибытие.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
             }
 
-            cBБлокировка.Checked = !РасписаниеПоезда.Active;
-            cBКатегория.SelectedIndex = (int)РасписаниеПоезда.ТипПоезда;
+            if (!string.IsNullOrEmpty(ВремяВПути))
+            {
+                string[] SubStrings = ВремяВПути.Split(':');
+                if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
+                    dTPСледования.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+            }
+            else
+            {
+                dTPСледования.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            }
+
+
+            cBБлокировка.Checked = !расписаниеПоезда.Active;
+            cBКатегория.SelectedIndex = (int)расписаниеПоезда.ТипПоезда;
 
 
 
@@ -156,27 +173,27 @@ namespace MainExample
             rBСОстановкамиНа.Checked = false;
             rBСОстановкамиКроме.Checked = false;
 
-            if (РасписаниеПоезда.Примечание.Contains("Со всеми остановками"))
+            if (расписаниеПоезда.Примечание.Contains("Со всеми остановками"))
             {
                 rBСоВсемиОстановками.Checked = true;
             }
-            else if (РасписаниеПоезда.Примечание.Contains("Без остановок"))
+            else if (расписаниеПоезда.Примечание.Contains("Без остановок"))
             {
                 rBБезОстановок.Checked = true;
             }
-            else if (РасписаниеПоезда.Примечание.Contains("С остановками: "))
+            else if (расписаниеПоезда.Примечание.Contains("С остановками: "))
             {
                 rBСОстановкамиНа.Checked = true;
-                string Примечание = РасписаниеПоезда.Примечание.Replace("С остановками: ", "");
+                string Примечание = расписаниеПоезда.Примечание.Replace("С остановками: ", "");
                 string[] СписокСтанций = Примечание.Split(',');
                 foreach (var Станция in СписокСтанций)
                     if (Program.Станции.Contains(Станция))
                         lVСписокСтанций.Items.Add(Станция);
             }
-            else if (РасписаниеПоезда.Примечание.Contains("Кроме: "))
+            else if (расписаниеПоезда.Примечание.Contains("Кроме: "))
             {
                 rBСОстановкамиКроме.Checked = true;
-                string Примечание = РасписаниеПоезда.Примечание.Replace("Кроме: ", "");
+                string Примечание = расписаниеПоезда.Примечание.Replace("Кроме: ", "");
                 string[] СписокСтанций = Примечание.Split(',');
                 foreach (var Станция in СписокСтанций)
                     if (Program.Станции.Contains(Станция))
@@ -190,9 +207,10 @@ namespace MainExample
 
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnПрименить_Click(object sender, EventArgs e)
         {
             РасписаниеПоезда.Num = tBНомерПоезда.Text;
+            РасписаниеПоезда.Num2 = tBНомерПоездаДоп.Text;
 
             РасписаниеПоезда.Addition = tb_Дополнение.Text;
             РасписаниеПоезда.ИспользоватьДополнение["табло"]= cb_Дополнение_Табло.Checked;
@@ -228,7 +246,6 @@ namespace MainExample
             }
 
             РасписаниеПоезда.Active = !cBБлокировка.Checked;
-            //РасписаниеПоезда.Days = ...; Уже установлены при выборе дней, либо не изменены изначально
             РасписаниеПоезда.SoundTemplates = ПолучитьШаблоныОповещения();
             РасписаниеПоезда.TrainPathNumber = cBПутьПоУмолчанию.Text;
             РасписаниеПоезда.TrainPathDirection = (byte)cBОтсчетВагонов.SelectedIndex;
@@ -253,6 +270,8 @@ namespace MainExample
                 РасписаниеПоезда.StopTime = (dTPПрибытие.Value - dTPОтправление.Value).TotalMinutes.ToString("0");
                 РасписаниеПоезда.DepartureTime = dTPПрибытие.Value.ToString("HH:mm");
             }
+
+            РасписаниеПоезда.FollowingTime = dTPСледования.Value.ToString("HH:mm");
 
 
             if (rBНеОповещать.Checked)
@@ -287,6 +306,8 @@ namespace MainExample
                     if (РасписаниеПоезда.Примечание[РасписаниеПоезда.Примечание.Length - 1] == ',')
                         РасписаниеПоезда.Примечание = РасписаниеПоезда.Примечание.Remove(РасписаниеПоезда.Примечание.Length - 1);
             }
+
+            РасписаниеПоезда.DaysAlias = tb_ДниСледованияAlias.Text;
 
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -324,14 +345,17 @@ namespace MainExample
             if (rBПрибытие.Checked)
             {
                 dTPПрибытие.Visible = false;
+                tBНомерПоездаДоп.Visible = false;
             }
             else if (rBОтправление.Checked)
             {
                 dTPПрибытие.Visible = false;
+                tBНомерПоездаДоп.Visible = false;
             }
             else
             {
                 dTPПрибытие.Visible = true;
+                tBНомерПоездаДоп.Visible = true;
             }
         }
 

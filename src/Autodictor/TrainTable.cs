@@ -29,11 +29,14 @@ namespace MainExample
     {
         public int ID;                    //Id
         public string Num;                //Номер поезда
+        public string Num2;               //Номер поезда 2 для транзита
         public string Name;               //Название
         public string ArrivalTime;        //прибытие
         public string StopTime;           //стоянка
         public string DepartureTime;      //отправление
+        public string FollowingTime;      //время следования (время в пути)
         public string Days;               //дни следования
+        public string DaysAlias;          //дни следования (строка заполняется в ручную)
         public bool Active;               //активность, отмека галочкой
         public string SoundTemplates;     //
         public byte TrainPathDirection;
@@ -174,12 +177,15 @@ namespace MainExample
             TrainTableRecord Данные;
             Данные.ID = ++ID;
             Данные.Num = "";
+            Данные.Num2 = "";
             Данные.Addition = "";
             Данные.Name = "";
             Данные.ArrivalTime = "00:00";
             Данные.StopTime = "00:00";
             Данные.DepartureTime = "00:00";
+            Данные.FollowingTime = "00:00";
             Данные.Days = "";
+            Данные.DaysAlias = "";
             Данные.Active = true;
             Данные.SoundTemplates = "";
             Данные.TrainPathDirection = 0x01;
@@ -307,18 +313,29 @@ namespace MainExample
                                 Данные.ИспользоватьДополнение["табло"] = Settings[16] == "1";
                                 Данные.ИспользоватьДополнение["звук"] = Settings[17] == "1";
                             }
-
-
-                          
+         
                             if (Settings.Length >= 19)
                             {
                                 Данные.Автомат = (string.IsNullOrEmpty(Settings[18]) || Settings[18] == "1"); // по умолчанию true
                             }
 
 
+                            Данные.Num2 = String.Empty;
+                            Данные.FollowingTime = String.Empty;
+                            Данные.DaysAlias = String.Empty;
+                            if (Settings.Length >= 22)
+                            {
+                                Данные.Num2 = Settings[19];
+                                Данные.FollowingTime = Settings[20];
+                                Данные.DaysAlias = Settings[21];
+                            }
+
+
 
                             TrainTableRecords.Add(Данные);
                             Program.НомераПоездов.Add(Данные.Num);
+                            if(!string.IsNullOrEmpty(Данные.Num2))
+                               Program.НомераПоездов.Add(Данные.Num2);
 
                             if (Данные.ID > ID)
                                 ID = Данные.ID;
@@ -358,7 +375,11 @@ namespace MainExample
                             TrainTableRecords[i].Addition + ";" +
                             (TrainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
                             (TrainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
-                            (TrainTableRecords[i].Автомат ? "1" : "0");
+                            (TrainTableRecords[i].Автомат ? "1" : "0") + ";" +
+
+                            TrainTableRecords[i].Num2 + ";" +
+                            TrainTableRecords[i].FollowingTime + ";" +
+                            TrainTableRecords[i].DaysAlias;
 
                         DumpFile.WriteLine(line);
                     }

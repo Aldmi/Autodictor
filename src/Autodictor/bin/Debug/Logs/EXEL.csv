@@ -2935,3 +2935,20 @@ time;message;level
 08T17:07:36;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
 08T17:29:03;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
 08T17:35:22;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T11:59:09;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:01:16;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:05:43;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:07:12;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:08:48;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:09:17;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:10:11;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:10:51;12:10:51;Fatal
+09T12:43:59;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:44:58;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:47:40;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:54:31;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:54:59;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:56:41;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T12:57:16;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T13:02:10;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+09T13:03:53;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal

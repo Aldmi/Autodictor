@@ -17,7 +17,7 @@ using MainExample.Services;
 
 namespace MainExample
 {
-    public enum SoundRecordStatus { Выключена = 0, ОжиданиеВоспроизведения, ВоспроизведениеАвтомат, ВоспроизведениеРучное, Воспроизведена, ДобавленВОчередь };
+    public enum SoundRecordStatus { Выключена = 0, ОжиданиеВоспроизведения, ВоспроизведениеАвтомат, ВоспроизведениеРучное, Воспроизведена, ДобавленВОчередьАвтомат, ДобавленВОчередьРучное };
     public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Обновление, Очистка };
     public enum SoundRecordType { Обычное = 0, ДвижениеПоезда, ДвижениеПоездаНеПодтвержденное, Предупредительное, Важное };
     public enum PathPermissionType { ИзФайлаНастроек = 0, Отображать, НеОтображать };
@@ -27,6 +27,7 @@ namespace MainExample
     {
         public int ID;
         public string НомерПоезда;
+        public string НомерПоезда2;
         public string НазваниеПоезда;
         public string СтанцияОтправления;
         public string СтанцияНазначения;
@@ -35,10 +36,12 @@ namespace MainExample
         public DateTime ВремяОтправления;
         public DateTime? ВремяЗадержки;                      //время задержки в мин. относительно времени прибытия или отправелния
         public DateTime ОжидаемоеВремя;                      //вычисляется ВремяПрибытия или ВремяОтправления + ВремяЗадержки
+        public DateTime? ВремяСледования;                     //время в пути
         public string Дополнение;                            //свободная переменная для ввода 
         public Dictionary<string, bool> ИспользоватьДополнение; //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
         public uint ВремяСтоянки;
         public string ДниСледования;
+        public string ДниСледованияAlias;                    // дни следования записанные в ручную
         public bool Активность;
         public bool Автомат;                                 // true - поезд обрабатывается в автомате.
         public string ШаблонВоспроизведенияСообщений;
@@ -291,7 +294,7 @@ namespace MainExample
                         switch (templateChangeValue.StatusPlaying)
                         {
                             case StatusPlaying.Start:
-                                template.СостояниеВоспроизведения = SoundRecordStatus.ВоспроизведениеАвтомат;
+                                template.СостояниеВоспроизведения = (template.СостояниеВоспроизведения == SoundRecordStatus.ДобавленВОчередьРучное) ? SoundRecordStatus.ВоспроизведениеРучное : SoundRecordStatus.ВоспроизведениеАвтомат;
                                 break;
 
                             case StatusPlaying.Stop:
@@ -449,6 +452,7 @@ namespace MainExample
 
 
                 Record.НомерПоезда = Config.Num;
+                Record.НомерПоезда2 = Config.Num2;
                 Record.НазваниеПоезда = Config.Name;
                 Record.Дополнение = Config.Addition;
                 Record.ИспользоватьДополнение = new Dictionary<string, bool>
@@ -459,6 +463,7 @@ namespace MainExample
                 Record.СтанцияОтправления = "";
                 Record.СтанцияНазначения = "";
                 Record.ДниСледования = Config.Days;
+                Record.ДниСледованияAlias = Config.DaysAlias;
                 Record.Активность = Config.Active;
                 Record.Автомат = Config.Автомат;
                 Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
@@ -531,6 +536,7 @@ namespace MainExample
                 Record.ВремяПрибытия = DateTime.Now;
                 Record.ВремяОтправления = DateTime.Now;
                 Record.ОжидаемоеВремя = DateTime.Now;
+                Record.ВремяСледования = null;
                 Record.ВремяЗадержки = null;
 
                 byte НомерСписка = 0x00;
@@ -580,6 +586,17 @@ namespace MainExample
                 Record.ВремяСтоянки = (uint)ВремяСтоянки;
                 Record.БитыАктивностиПолей = НомерСписка;
                 Record.БитыАктивностиПолей |= 0x03;
+
+
+                if (!string.IsNullOrEmpty(Config.FollowingTime))
+                {
+                    string[] SubStrings = Config.FollowingTime.Split(':');
+                    if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
+                    {
+                        Record.ВремяСледования = new DateTime(день.Year, день.Month, день.Day, Часы, Минуты, 0);
+                    }
+                }
+
 
                 Record.ID = ID++;
 
@@ -1103,7 +1120,7 @@ namespace MainExample
                 else if (Сообщение.СостояниеВоспроизведения == SoundRecordStatus.ОжиданиеВоспроизведения)
                 {
                     СообщениеИзменено = true;
-                    Сообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередь;
+                    Сообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьАвтомат;
                     if (Сообщение.Активность == true)
                         foreach (var Sound in StaticSoundForm.StaticSoundRecords)
                         {
@@ -1144,7 +1161,7 @@ namespace MainExample
                             состояниеСтроки = 0;
                             break;
 
-                        case SoundRecordStatus.ДобавленВОчередь:
+                        case SoundRecordStatus.ДобавленВОчередьАвтомат:
                         case SoundRecordStatus.ОжиданиеВоспроизведения:
                             состояниеСтроки = 2;
                             break;
@@ -1182,6 +1199,7 @@ namespace MainExample
             for (int i = 0; i < SoundRecords.Count; i++)
             {
                 var Данные = SoundRecords.ElementAt(i).Value;
+                var key= SoundRecords.ElementAt(i).Key;
                 ВнесеныИзменения = false;
 
                 while (true)
@@ -1253,7 +1271,7 @@ namespace MainExample
                                                 (ТекущееВремя.Second == времяСобытия.Second))
                                             {
                                                 нештатноеСообщение.СостояниеВоспроизведения =
-                                                    SoundRecordStatus.ДобавленВОчередь;
+                                                    SoundRecordStatus.ДобавленВОчередьАвтомат;
                                                 Данные.СписокНештатныхСообщений[j] = нештатноеСообщение;
                                                 ВнесеныИзменения = true;
 
@@ -1296,7 +1314,7 @@ namespace MainExample
                                                     состояниеСтроки = 0;
                                                     break;
 
-                                                case SoundRecordStatus.ДобавленВОчередь:
+                                                case SoundRecordStatus.ДобавленВОчередьАвтомат:
                                                 case SoundRecordStatus.ОжиданиеВоспроизведения:
                                                     состояниеСтроки = 3;
                                                     break;
@@ -1310,9 +1328,7 @@ namespace MainExample
                                             {
                                                 НомерСписка = 0,
                                                 СостояниеСтроки = состояниеСтроки,
-                                                Описание =
-                                                    Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " +
-                                                    Данные.ОписаниеСостоянияКарточки,
+                                                Описание = Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + Данные.ОписаниеСостоянияКарточки,
                                                 Время = времяСобытия,
                                                 Ключ = SoundRecords.ElementAt(i).Key,
                                                 ParentId = нештатноеСообщение.Id,
@@ -1343,6 +1359,10 @@ namespace MainExample
 
                             break;
                         }
+
+
+                        ОбработкаРучногоВоспроизведенияШаблона(ref Данные, key);
+
 
                         // Проверка на приближения времени оповещения (за 30 минут)
                         DateTime СамоеРаннееВремя = DateTime.Now, СамоеПозднееВремя = DateTime.Now;
@@ -1421,14 +1441,14 @@ namespace MainExample
                             for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
                             {
                                 var ФормируемоеСообщение = Данные.СписокФормируемыхСообщений[j];
+                                DateTime времяСобытия = ФормируемоеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
+                                времяСобытия = времяСобытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+
                                 if (ФормируемоеСообщение.Активность == true)
                                 {
                                     КоличествоВключенныхГалочек++;
                                     if (ФормируемоеСообщение.Воспроизведен == false)
                                     {
-                                        DateTime времяСобытия = ФормируемоеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
-                                        времяСобытия = времяСобытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
-
                                         if (DateTime.Now < времяСобытия)
                                         {
                                             if (ФормируемоеСообщение.СостояниеВоспроизведения != SoundRecordStatus.ОжиданиеВоспроизведения)
@@ -1458,7 +1478,7 @@ namespace MainExample
                                             //СРАБОТКА-------------------------------
                                             if ((ТекущееВремя.Hour == времяСобытия.Hour) && (ТекущееВремя.Minute == времяСобытия.Minute) && (ТекущееВремя.Second == времяСобытия.Second))
                                             {
-                                                ФормируемоеСообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередь;
+                                                ФормируемоеСообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьАвтомат;
                                                 Данные.СписокФормируемыхСообщений[j] = ФормируемоеСообщение;
                                                 ВнесеныИзменения = true;
 
@@ -1470,8 +1490,7 @@ namespace MainExample
 
                                         //Динамическое сообщение попадет в список если ФормируемоеСообщение еще не воспроезведенно  и не прошло 1мин с момента попадания в список.
                                         //==================================================================================
-                                        if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(ФормируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(ВремяЗадержкиВоспроизведенныхСобытий)))
-                                        //убрать через 5 мин. после воспроизведения
+                                        if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(ФормируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddMinutes(ВремяЗадержкиВоспроизведенныхСобытий)))//убрать через 5 мин. после воспроизведения
                                         {
                                             byte состояниеСтроки = 0;
                                             switch (ФормируемоеСообщение.СостояниеВоспроизведения)
@@ -1481,7 +1500,7 @@ namespace MainExample
                                                     состояниеСтроки = 0;
                                                     break;
 
-                                                case SoundRecordStatus.ДобавленВОчередь:
+                                                case SoundRecordStatus.ДобавленВОчередьАвтомат:
                                                 case SoundRecordStatus.ОжиданиеВоспроизведения:
                                                     состояниеСтроки = 1;
                                                     break;
@@ -3284,6 +3303,49 @@ namespace MainExample
 
             return Данные;
         }
+
+
+        private void ОбработкаРучногоВоспроизведенияШаблона(ref SoundRecord Данные, string key)
+        {
+            foreach (var формируемоеСообщение in Данные.СписокФормируемыхСообщений)
+            {
+                DateTime времяСобытия = формируемоеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
+                времяСобытия = времяСобытия.AddMinutes(формируемоеСообщение.ВремяСмещения);
+
+                if (формируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.ДобавленВОчередьРучное || формируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.ВоспроизведениеРучное)
+                {
+                    if (QueueSound.FindItem(Данные.ID, формируемоеСообщение.Id) == null)
+                        continue;
+
+                    byte состояниеСтроки = 0;
+                    switch (формируемоеСообщение.СостояниеВоспроизведения)
+                    {
+                        case SoundRecordStatus.ДобавленВОчередьРучное:
+                            состояниеСтроки = 1;
+                            break;
+
+                        case SoundRecordStatus.ВоспроизведениеРучное:
+                            состояниеСтроки = 4;
+                            break;
+                    }
+
+                    TaskSound taskSound = new TaskSound
+                    {
+                        НомерСписка = 0,
+                        СостояниеСтроки = состояниеСтроки,
+                        Описание = Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + формируемоеСообщение.НазваниеШаблона,
+                        Время = времяСобытия,
+                        Ключ = key,
+                        ParentId = формируемоеСообщение.Id,
+                        ШаблонИлиСообщение = формируемоеСообщение.Шаблон
+                    };
+
+                    TaskManager.AddItem(taskSound);
+                }
+            }
+        }
+
+
 
 
         protected override void OnClosed(EventArgs e)
