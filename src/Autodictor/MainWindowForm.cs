@@ -431,18 +431,17 @@ namespace MainExample
             SoundRecordsOld.Clear();
             СтатическиеЗвуковыеСообщения.Clear();
 
-            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now, null);                                        // на тек. сутки
-            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 2)); // на след. сутки на 2 первых часа
+            int id = 0;
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now, null, ref id);                                        // на тек. сутки
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 2), ref id); // на след. сутки на 2 первых часа
 
             СозданиеСтатическихЗвуковыхФайлов();
         }
 
 
 
-        private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime день, Func<int, bool> ограничениеВремениПоЧасам)
+        private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime день, Func<int, bool> ограничениеВремениПоЧасам, ref int id)
         {
-            ID = 1;
-
             foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
             {
                 SoundRecord Record;
@@ -598,7 +597,7 @@ namespace MainExample
                 }
 
 
-                Record.ID = ID++;
+                Record.ID = id++;
 
                 byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
                 Record.НазванияТабло = Record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
@@ -1643,8 +1642,8 @@ namespace MainExample
                             }
                         }
                     }
-                    //Отправить расписание из ГЛАВНОГО окна
-                    else
+
+                    //Отправить расписание из ГЛАВНОГО окна  
                     if (binding2MainWindow.Any())
                     {
                         if (SoundRecords != null && SoundRecords.Any())

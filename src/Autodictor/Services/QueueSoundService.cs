@@ -131,9 +131,31 @@ namespace MainExample.Services
                 Queue.Enqueue(item);
             }
             else
-            {   
+            {
+                if (!Queue.Any())
+                {
+                    Queue.Enqueue(item);
+                    return;
+                }
+
+                //сохранили 1-ый элемент, и удаили его
+                var currentFirstItem = Queue.FirstOrDefault();
+                Queue.Dequeue();
+
+                //добавили новый элемент и отсортировали
                 Queue.Enqueue(item);
-                Queue = new Queue<ВоспроизводимоеСообщение>(Queue.OrderByDescending(elem=>elem.Приоритет));  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
+                var ordered = Queue.OrderByDescending(elem => elem.Приоритет).ToList();  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
+
+                //Очистили и заполнили заново очередь
+                Queue.Clear();
+                if (currentFirstItem != null)
+                {
+                    Queue.Enqueue(currentFirstItem);
+                }
+                foreach (var elem in ordered)
+                {
+                    Queue.Enqueue(elem);
+                }
             }
         }
 
