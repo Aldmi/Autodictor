@@ -441,7 +441,7 @@ namespace MainExample
                             Record.ДниСледования = Config.Days;
                             Record.Активность = Config.Active;
                             Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
-                            Record.НомерПути = Config.TrainPathNumber;
+                            Record.НомерПути = Config.TrainPathNumber[WeekDays.Постоянно];
                             Record.НумерацияПоезда = Config.TrainPathDirection;
                             Record.Примечание = Config.Примечание;
                             Record.ТипПоезда = Config.ТипПоезда;

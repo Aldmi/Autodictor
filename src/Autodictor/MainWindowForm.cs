@@ -466,7 +466,7 @@ namespace MainExample
                 Record.Активность = Config.Active;
                 Record.Автомат = Config.Автомат;
                 Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
-                Record.НомерПути = Config.TrainPathNumber;
+                Record.НомерПути = Config.TrainPathNumber[WeekDays.Постоянно];
                 Record.НумерацияПоезда = Config.TrainPathDirection;
                 Record.Примечание = Config.Примечание;
                 Record.ТипПоезда = Config.ТипПоезда;
@@ -1621,7 +1621,7 @@ namespace MainExample
                                             (t.ТипПоезда == ТипПоезда.Ласточка) ? TypeTrain.Swallow :
                                             (t.ТипПоезда == ТипПоезда.РЭКС) ? TypeTrain.Rex : TypeTrain.None,
                                 Note = t.Примечание, //C остановками: ...
-                                PathNumber = t.TrainPathNumber,
+                                PathNumber = t.TrainPathNumber[WeekDays.Постоянно],
                                 NumberOfTrain = t.Num,
                                 Stations = t.Name,
                                 Time = timePars(t.ArrivalTime, t.DepartureTime),

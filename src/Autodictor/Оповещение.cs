@@ -24,7 +24,10 @@ namespace MainExample
             foreach (var Путь in Program.НомераПутей)
                 cBПутьПоУмолчанию.Items.Add(Путь);
             cBПутьПоУмолчанию.SelectedIndex = 0;
-            cBПутьПоУмолчанию.Text = this.РасписаниеПоезда.TrainPathNumber;
+
+            cBПутьПоУмолчанию.Text = this.РасписаниеПоезда.TrainPathNumber[WeekDays.Постоянно];
+            InitializePathValues(расписаниеПоезда);
+
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
 
 
@@ -104,7 +107,7 @@ namespace MainExample
                         int.TryParse(ШаблонОповещения[3 * i + 2], out ТипОповещенияПути);
                         ТипОповещенияПути %= 2;
                         ListViewItem lvi = new ListViewItem(new string[] { ШаблонОповещения[3 * i + 0], ШаблонОповещения[3 * i + 1], Program.ТипыВремени[ТипОповещенияПути] });
-                        this.lVШаблоныОповещения.Items.Add(lvi);                        
+                        this.lVШаблоныОповещения.Items.Add(lvi);
                     }
                 }
             }
@@ -213,10 +216,10 @@ namespace MainExample
             РасписаниеПоезда.Num2 = tBНомерПоездаДоп.Text;
 
             РасписаниеПоезда.Addition = tb_Дополнение.Text;
-            РасписаниеПоезда.ИспользоватьДополнение["табло"]= cb_Дополнение_Табло.Checked;
-            РасписаниеПоезда.ИспользоватьДополнение["звук"]= cb_Дополнение_Звук.Checked;
+            РасписаниеПоезда.ИспользоватьДополнение["табло"] = cb_Дополнение_Табло.Checked;
+            РасписаниеПоезда.ИспользоватьДополнение["звук"] = cb_Дополнение_Звук.Checked;
 
-            РасписаниеПоезда.Автомат= rB_РежРабАвтомат.Checked;
+            РасписаниеПоезда.Автомат = rB_РежРабАвтомат.Checked;
 
 
             if (cBОткуда.Text != "")
@@ -247,7 +250,12 @@ namespace MainExample
 
             РасписаниеПоезда.Active = !cBБлокировка.Checked;
             РасписаниеПоезда.SoundTemplates = ПолучитьШаблоныОповещения();
-            РасписаниеПоезда.TrainPathNumber = cBПутьПоУмолчанию.Text;
+
+
+            //РасписаниеПоезда.TrainPathNumber[WeekDays.Постоянно] = cBПутьПоУмолчанию.Text;
+            SavePathValues(ref РасписаниеПоезда);
+
+
             РасписаниеПоезда.TrainPathDirection = (byte)cBОтсчетВагонов.SelectedIndex;
             РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
 
@@ -308,8 +316,6 @@ namespace MainExample
             }
 
             РасписаниеПоезда.DaysAlias = tb_ДниСледованияAlias.Text;
-
-
             DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
@@ -366,10 +372,10 @@ namespace MainExample
                 СписокВыбранныхСтанций += lVСписокСтанций.Items[i].Text + ",";
 
             СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций);
-            
+
             if (списокСтанций.ShowDialog() == DialogResult.OK)
             {
-                System.Collections.Generic.List <string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
+                System.Collections.Generic.List<string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
                 lVСписокСтанций.Items.Clear();
                 foreach (var res in РезультирующиеСтанции)
                     lVСписокСтанций.Items.Add(res);
@@ -443,7 +449,7 @@ namespace MainExample
                 foreach (var ВременнойИнтервал in Времена)
                     Result &= int.TryParse(ВременнойИнтервал, out TempInt);
 
-                if (Result == true) 
+                if (Result == true)
                 {
                     ListViewItem lvi = new ListViewItem(new string[] { cBШаблонОповещения.Text, tBВремяОповещения.Text, cBВремяОповещения.Text });
                     this.lVШаблоныОповещения.Items.Add(lvi);
@@ -462,5 +468,114 @@ namespace MainExample
                 lVШаблоныОповещения.Items.Remove(lVШаблоныОповещения.SelectedItems[0]);
             }
         }
+
+
+        private void rb_Постоянно_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            if (radioButton != null && radioButton.Checked)
+            {
+                РасписаниеПоезда.PathWeekDayes = false;
+                ChangePathValues(РасписаниеПоезда);
+            }
+        }
+
+
+
+        private void rb_ПоДнямНедели_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            if (radioButton != null && radioButton.Checked)
+            {
+                РасписаниеПоезда.PathWeekDayes = true;
+                ChangePathValues(РасписаниеПоезда);
+            }
+        }
+
+
+
+        private void InitializePathValues(TrainTableRecord rec)
+        {
+            if (!rec.PathWeekDayes)
+            {
+                dgv_ПутиПоДнямНедели.Enabled = false;
+                cBПутьПоУмолчанию.Enabled = true;
+                cBПутьПоУмолчанию.Text = rec.TrainPathNumber[WeekDays.Постоянно];
+                rb_Постоянно.Checked = true;
+            }
+            else
+            {
+                rb_ПоДнямНедели.Checked = true;
+                dgv_ПутиПоДнямНедели.Enabled = true;
+                cBПутьПоУмолчанию.Enabled = false;
+            }
+
+            DataGridViewComboBoxColumn cmb = (DataGridViewComboBoxColumn)dgv_ПутиПоДнямНедели.Columns[1];
+            foreach (var путь in Program.НомераПутей)
+            {
+                cmb.Items.Add(путь);
+            }
+
+            int rowNumber = 0;
+            foreach (var path in rec.TrainPathNumber)
+            {
+                if (path.Key == WeekDays.Постоянно)
+                    continue;
+
+                object[] row = { path.Key.ToString() };
+                dgv_ПутиПоДнямНедели.Rows.Add(row);
+
+                // Выставить значения путей 
+                dgv_ПутиПоДнямНедели.Rows[rowNumber].Cells["cmb_Путь"].Value = string.IsNullOrEmpty(path.Value) ? string.Empty : path.Value;
+                dgv_ПутиПоДнямНедели.Rows[rowNumber].Cells["cmb_Путь"].Tag = path.Key;
+                rowNumber++;
+            }
+
+        }
+
+
+        private void ChangePathValues(TrainTableRecord rec)
+        {
+            if (!rec.PathWeekDayes)
+            {
+                dgv_ПутиПоДнямНедели.Enabled = false;
+                cBПутьПоУмолчанию.Enabled = true;
+                rb_Постоянно.Checked = true;
+                cBПутьПоУмолчанию.Text = rec.TrainPathNumber[WeekDays.Постоянно];
+            }
+            else
+            {
+                if (dgv_ПутиПоДнямНедели.Rows.Count == 0)
+                    return;
+
+                rb_ПоДнямНедели.Checked = true;
+                dgv_ПутиПоДнямНедели.Enabled = true;
+                cBПутьПоУмолчанию.Enabled = false;
+
+                int rowNumber = 0;
+                foreach (var path in rec.TrainPathNumber)
+                {
+                    if (path.Key == WeekDays.Постоянно)
+                        continue;
+
+                    // Выставить значения путей
+                    dgv_ПутиПоДнямНедели.Rows[rowNumber].Cells["cmb_Путь"].Value = string.IsNullOrEmpty(path.Value) ? string.Empty : path.Value;
+                    rowNumber++;
+                }
+            }
+        }
+
+
+        private void SavePathValues(ref TrainTableRecord rec)
+        {
+            rec.TrainPathNumber[WeekDays.Постоянно] = cBПутьПоУмолчанию.Text;
+
+            for (int i = 0; i < dgv_ПутиПоДнямНедели.Rows.Count; i++)
+            {
+                var key = (WeekDays)dgv_ПутиПоДнямНедели.Rows[i].Cells["cmb_Путь"].Tag;
+                rec.TrainPathNumber[key] = (string)((dgv_ПутиПоДнямНедели.Rows[i].Cells["cmb_Путь"].Value == null) ? string.Empty : dgv_ПутиПоДнямНедели.Rows[i].Cells["cmb_Путь"].Value);
+            }
+        }
+
     }
 }

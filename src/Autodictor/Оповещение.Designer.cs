@@ -31,6 +31,8 @@
             this.btn_Принять = new System.Windows.Forms.Button();
             this.btn_Отменить = new System.Windows.Forms.Button();
             this.gBНаправление = new System.Windows.Forms.GroupBox();
+            this.dTPСледования = new System.Windows.Forms.DateTimePicker();
+            this.label13 = new System.Windows.Forms.Label();
             this.dTPПрибытие = new System.Windows.Forms.DateTimePicker();
             this.cBКуда = new System.Windows.Forms.ComboBox();
             this.dTPОтправление = new System.Windows.Forms.DateTimePicker();
@@ -44,7 +46,6 @@
             this.tBНомерПоезда = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cBКатегория = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.cBПутьПоУмолчанию = new System.Windows.Forms.ComboBox();
             this.cBОтсчетВагонов = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -58,6 +59,7 @@
             this.rBСоВсемиОстановками = new System.Windows.Forms.RadioButton();
             this.rBНеОповещать = new System.Windows.Forms.RadioButton();
             this.gBДниСледования = new System.Windows.Forms.GroupBox();
+            this.tb_ДниСледованияAlias = new System.Windows.Forms.TextBox();
             this.tBОписаниеДнейСледования = new System.Windows.Forms.TextBox();
             this.btnДниСледования = new System.Windows.Forms.Button();
             this.rBВремяДействияПостоянно = new System.Windows.Forms.RadioButton();
@@ -98,19 +100,24 @@
             this.rB_РежРабАвтомат = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
             this.tBНомерПоездаДоп = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.dTPСледования = new System.Windows.Forms.DateTimePicker();
-            this.tb_ДниСледованияAlias = new System.Windows.Forms.TextBox();
+            this.gb_ПутьПоУмолчанию = new System.Windows.Forms.GroupBox();
+            this.dgv_ПутиПоДнямНедели = new System.Windows.Forms.DataGridView();
+            this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
+            this.rb_Постоянно = new System.Windows.Forms.RadioButton();
+            this.col_key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
             this.gBШаблонОповещения.SuspendLayout();
             this.gbРежимРаботы.SuspendLayout();
+            this.gb_ПутьПоУмолчанию.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_ПутиПоДнямНедели)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_Принять
             // 
-            this.btn_Принять.Location = new System.Drawing.Point(319, 797);
+            this.btn_Принять.Location = new System.Drawing.Point(319, 743);
             this.btn_Принять.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Принять.Name = "btn_Принять";
             this.btn_Принять.Size = new System.Drawing.Size(123, 35);
@@ -121,7 +128,7 @@
             // 
             // btn_Отменить
             // 
-            this.btn_Отменить.Location = new System.Drawing.Point(448, 797);
+            this.btn_Отменить.Location = new System.Drawing.Point(448, 743);
             this.btn_Отменить.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Отменить.Name = "btn_Отменить";
             this.btn_Отменить.Size = new System.Drawing.Size(123, 35);
@@ -144,7 +151,7 @@
             this.gBНаправление.Controls.Add(this.rBТранзит);
             this.gBНаправление.Controls.Add(this.rBОтправление);
             this.gBНаправление.Controls.Add(this.rBПрибытие);
-            this.gBНаправление.Location = new System.Drawing.Point(14, 111);
+            this.gBНаправление.Location = new System.Drawing.Point(14, 101);
             this.gBНаправление.Margin = new System.Windows.Forms.Padding(5);
             this.gBНаправление.Name = "gBНаправление";
             this.gBНаправление.Padding = new System.Windows.Forms.Padding(5);
@@ -152,6 +159,25 @@
             this.gBНаправление.TabIndex = 35;
             this.gBНаправление.TabStop = false;
             this.gBНаправление.Text = "Направление";
+            // 
+            // dTPСледования
+            // 
+            this.dTPСледования.CustomFormat = "HH:mm";
+            this.dTPСледования.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dTPСледования.Location = new System.Drawing.Point(466, 120);
+            this.dTPСледования.Name = "dTPСледования";
+            this.dTPСледования.ShowUpDown = true;
+            this.dTPСледования.Size = new System.Drawing.Size(72, 26);
+            this.dTPСледования.TabIndex = 45;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(14, 122);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(170, 20);
+            this.label13.TabIndex = 44;
+            this.label13.Text = "Время следования";
             // 
             // dTPПрибытие
             // 
@@ -291,22 +317,13 @@
             this.cBКатегория.Size = new System.Drawing.Size(179, 28);
             this.cBКатегория.TabIndex = 44;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 279);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(174, 20);
-            this.label3.TabIndex = 45;
-            this.label3.Text = "Путь по умолчанию";
-            // 
             // cBПутьПоУмолчанию
             // 
             this.cBПутьПоУмолчанию.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBПутьПоУмолчанию.FormattingEnabled = true;
-            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(219, 276);
+            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(49, 31);
             this.cBПутьПоУмолчанию.Name = "cBПутьПоУмолчанию";
-            this.cBПутьПоУмолчанию.Size = new System.Drawing.Size(341, 28);
+            this.cBПутьПоУмолчанию.Size = new System.Drawing.Size(204, 28);
             this.cBПутьПоУмолчанию.TabIndex = 46;
             // 
             // cBОтсчетВагонов
@@ -317,7 +334,7 @@
             "Не объявлять",
             "С головы состава",
             "С хвоста состава"});
-            this.cBОтсчетВагонов.Location = new System.Drawing.Point(219, 316);
+            this.cBОтсчетВагонов.Location = new System.Drawing.Point(218, 265);
             this.cBОтсчетВагонов.Name = "cBОтсчетВагонов";
             this.cBОтсчетВагонов.Size = new System.Drawing.Size(341, 28);
             this.cBОтсчетВагонов.TabIndex = 48;
@@ -325,7 +342,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 319);
+            this.label4.Location = new System.Drawing.Point(27, 268);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(175, 20);
             this.label4.TabIndex = 47;
@@ -342,7 +359,7 @@
             this.gBОстановки.Controls.Add(this.rBНеОповещать);
             this.gBОстановки.Location = new System.Drawing.Point(581, 11);
             this.gBОстановки.Name = "gBОстановки";
-            this.gBОстановки.Size = new System.Drawing.Size(585, 293);
+            this.gBОстановки.Size = new System.Drawing.Size(533, 293);
             this.gBОстановки.TabIndex = 49;
             this.gBОстановки.TabStop = false;
             this.gBОстановки.Text = "Остановки";
@@ -366,7 +383,7 @@
             this.lVСписокСтанций.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lVСписокСтанций.Location = new System.Drawing.Point(213, 14);
             this.lVСписокСтанций.Name = "lVСписокСтанций";
-            this.lVСписокСтанций.Size = new System.Drawing.Size(366, 270);
+            this.lVСписокСтанций.Size = new System.Drawing.Size(308, 270);
             this.lVСписокСтанций.TabIndex = 49;
             this.lVСписокСтанций.UseCompatibleStateImageBehavior = false;
             this.lVСписокСтанций.View = System.Windows.Forms.View.Details;
@@ -447,12 +464,20 @@
             this.gBДниСледования.Controls.Add(this.rBВремяДействияПо);
             this.gBДниСледования.Controls.Add(this.rBВремяДействияС);
             this.gBДниСледования.Controls.Add(this.label5);
-            this.gBДниСледования.Location = new System.Drawing.Point(14, 361);
+            this.gBДниСледования.Location = new System.Drawing.Point(14, 307);
             this.gBДниСледования.Name = "gBДниСледования";
             this.gBДниСледования.Size = new System.Drawing.Size(378, 429);
             this.gBДниСледования.TabIndex = 50;
             this.gBДниСледования.TabStop = false;
             this.gBДниСледования.Text = "Дни следования";
+            // 
+            // tb_ДниСледованияAlias
+            // 
+            this.tb_ДниСледованияAlias.Location = new System.Drawing.Point(18, 391);
+            this.tb_ДниСледованияAlias.Multiline = true;
+            this.tb_ДниСледованияAlias.Name = "tb_ДниСледованияAlias";
+            this.tb_ДниСледованияAlias.Size = new System.Drawing.Size(349, 26);
+            this.tb_ДниСледованияAlias.TabIndex = 60;
             // 
             // tBОписаниеДнейСледования
             // 
@@ -583,7 +608,7 @@
             this.cBБлокировка.AutoSize = true;
             this.cBБлокировка.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBБлокировка.ForeColor = System.Drawing.Color.OrangeRed;
-            this.cBБлокировка.Location = new System.Drawing.Point(20, 796);
+            this.cBБлокировка.Location = new System.Drawing.Point(20, 742);
             this.cBБлокировка.Name = "cBБлокировка";
             this.cBБлокировка.Size = new System.Drawing.Size(275, 33);
             this.cBБлокировка.TabIndex = 51;
@@ -605,9 +630,9 @@
             this.gBШаблонОповещения.Controls.Add(this.lVШаблоныОповещения);
             this.gBШаблонОповещения.Controls.Add(this.btnУдалитьШаблон);
             this.gBШаблонОповещения.Controls.Add(this.btnДобавитьШаблон);
-            this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 361);
+            this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 307);
             this.gBШаблонОповещения.Name = "gBШаблонОповещения";
-            this.gBШаблонОповещения.Size = new System.Drawing.Size(892, 429);
+            this.gBШаблонОповещения.Size = new System.Drawing.Size(716, 429);
             this.gBШаблонОповещения.TabIndex = 52;
             this.gBШаблонОповещения.TabStop = false;
             this.gBШаблонОповещения.Text = "Шаблоны оповещения";
@@ -671,7 +696,7 @@
             "Отправление"});
             this.cBВремяОповещения.Location = new System.Drawing.Point(479, 54);
             this.cBВремяОповещения.Name = "cBВремяОповещения";
-            this.cBВремяОповещения.Size = new System.Drawing.Size(404, 28);
+            this.cBВремяОповещения.Size = new System.Drawing.Size(225, 28);
             this.cBВремяОповещения.TabIndex = 57;
             // 
             // tBВремяОповещения
@@ -687,7 +712,7 @@
             this.cBШаблонОповещения.FormattingEnabled = true;
             this.cBШаблонОповещения.Location = new System.Drawing.Point(6, 23);
             this.cBШаблонОповещения.Name = "cBШаблонОповещения";
-            this.cBШаблонОповещения.Size = new System.Drawing.Size(877, 28);
+            this.cBШаблонОповещения.Size = new System.Drawing.Size(698, 28);
             this.cBШаблонОповещения.TabIndex = 53;
             // 
             // lVШаблоныОповещения
@@ -704,7 +729,7 @@
             this.lVШаблоныОповещения.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.lVШаблоныОповещения.Location = new System.Drawing.Point(117, 118);
             this.lVШаблоныОповещения.Name = "lVШаблоныОповещения";
-            this.lVШаблоныОповещения.Size = new System.Drawing.Size(766, 305);
+            this.lVШаблоныОповещения.Size = new System.Drawing.Size(587, 305);
             this.lVШаблоныОповещения.TabIndex = 51;
             this.lVШаблоныОповещения.UseCompatibleStateImageBehavior = false;
             this.lVШаблоныОповещения.View = System.Windows.Forms.View.Details;
@@ -797,7 +822,7 @@
             this.gbРежимРаботы.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.gbРежимРаботы.Controls.Add(this.rB_РежРабРучной);
             this.gbРежимРаботы.Controls.Add(this.rB_РежРабАвтомат);
-            this.gbРежимРаботы.Location = new System.Drawing.Point(581, 306);
+            this.gbРежимРаботы.Location = new System.Drawing.Point(1120, 446);
             this.gbРежимРаботы.Name = "gbРежимРаботы";
             this.gbРежимРаботы.Size = new System.Drawing.Size(270, 59);
             this.gbРежимРаботы.TabIndex = 57;
@@ -842,38 +867,82 @@
             this.tBНомерПоездаДоп.Size = new System.Drawing.Size(74, 26);
             this.tBНомерПоездаДоп.TabIndex = 59;
             // 
-            // label13
+            // gb_ПутьПоУмолчанию
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(14, 122);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(170, 20);
-            this.label13.TabIndex = 44;
-            this.label13.Text = "Время следования";
+            this.gb_ПутьПоУмолчанию.Controls.Add(this.dgv_ПутиПоДнямНедели);
+            this.gb_ПутьПоУмолчанию.Controls.Add(this.rb_ПоДнямНедели);
+            this.gb_ПутьПоУмолчанию.Controls.Add(this.rb_Постоянно);
+            this.gb_ПутьПоУмолчанию.Controls.Add(this.cBПутьПоУмолчанию);
+            this.gb_ПутьПоУмолчанию.Location = new System.Drawing.Point(1120, 22);
+            this.gb_ПутьПоУмолчанию.Name = "gb_ПутьПоУмолчанию";
+            this.gb_ПутьПоУмолчанию.Size = new System.Drawing.Size(259, 282);
+            this.gb_ПутьПоУмолчанию.TabIndex = 60;
+            this.gb_ПутьПоУмолчанию.TabStop = false;
+            this.gb_ПутьПоУмолчанию.Text = "Путь по умолчанию";
             // 
-            // dTPСледования
+            // dgv_ПутиПоДнямНедели
             // 
-            this.dTPСледования.CustomFormat = "HH:mm";
-            this.dTPСледования.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTPСледования.Location = new System.Drawing.Point(466, 120);
-            this.dTPСледования.Name = "dTPСледования";
-            this.dTPСледования.ShowUpDown = true;
-            this.dTPСледования.Size = new System.Drawing.Size(72, 26);
-            this.dTPСледования.TabIndex = 45;
+            this.dgv_ПутиПоДнямНедели.AllowUserToAddRows = false;
+            this.dgv_ПутиПоДнямНедели.AllowUserToDeleteRows = false;
+            this.dgv_ПутиПоДнямНедели.AllowUserToResizeColumns = false;
+            this.dgv_ПутиПоДнямНедели.AllowUserToResizeRows = false;
+            this.dgv_ПутиПоДнямНедели.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_ПутиПоДнямНедели.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_key,
+            this.cmb_Путь});
+            this.dgv_ПутиПоДнямНедели.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.dgv_ПутиПоДнямНедели.Location = new System.Drawing.Point(49, 72);
+            this.dgv_ПутиПоДнямНедели.MultiSelect = false;
+            this.dgv_ПутиПоДнямНедели.Name = "dgv_ПутиПоДнямНедели";
+            this.dgv_ПутиПоДнямНедели.RowHeadersVisible = false;
+            this.dgv_ПутиПоДнямНедели.Size = new System.Drawing.Size(204, 191);
+            this.dgv_ПутиПоДнямНедели.TabIndex = 9;
             // 
-            // tb_ДниСледованияAlias
+            // rb_ПоДнямНедели
             // 
-            this.tb_ДниСледованияAlias.Location = new System.Drawing.Point(18, 391);
-            this.tb_ДниСледованияAlias.Multiline = true;
-            this.tb_ДниСледованияAlias.Name = "tb_ДниСледованияAlias";
-            this.tb_ДниСледованияAlias.Size = new System.Drawing.Size(349, 26);
-            this.tb_ДниСледованияAlias.TabIndex = 60;
+            this.rb_ПоДнямНедели.AutoSize = true;
+            this.rb_ПоДнямНедели.Location = new System.Drawing.Point(19, 72);
+            this.rb_ПоДнямНедели.Name = "rb_ПоДнямНедели";
+            this.rb_ПоДнямНедели.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.rb_ПоДнямНедели.Size = new System.Drawing.Size(14, 13);
+            this.rb_ПоДнямНедели.TabIndex = 8;
+            this.rb_ПоДнямНедели.TabStop = true;
+            this.rb_ПоДнямНедели.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.rb_ПоДнямНедели.UseVisualStyleBackColor = true;
+            this.rb_ПоДнямНедели.CheckedChanged += new System.EventHandler(this.rb_ПоДнямНедели_CheckedChanged);
+            // 
+            // rb_Постоянно
+            // 
+            this.rb_Постоянно.AutoSize = true;
+            this.rb_Постоянно.Location = new System.Drawing.Point(19, 31);
+            this.rb_Постоянно.Name = "rb_Постоянно";
+            this.rb_Постоянно.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.rb_Постоянно.Size = new System.Drawing.Size(14, 13);
+            this.rb_Постоянно.TabIndex = 1;
+            this.rb_Постоянно.TabStop = true;
+            this.rb_Постоянно.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.rb_Постоянно.UseVisualStyleBackColor = true;
+            this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
+            // 
+            // col_key
+            // 
+            this.col_key.HeaderText = "День";
+            this.col_key.Name = "col_key";
+            this.col_key.ReadOnly = true;
+            this.col_key.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.col_key.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cmb_Путь
+            // 
+            this.cmb_Путь.HeaderText = "Путь";
+            this.cmb_Путь.Name = "cmb_Путь";
             // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1297, 834);
+            this.ClientSize = new System.Drawing.Size(1395, 782);
+            this.Controls.Add(this.gb_ПутьПоУмолчанию);
             this.Controls.Add(this.tBНомерПоездаДоп);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.gbРежимРаботы);
@@ -887,8 +956,6 @@
             this.Controls.Add(this.gBОстановки);
             this.Controls.Add(this.cBОтсчетВагонов);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.cBПутьПоУмолчанию);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.cBКатегория);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tBНомерПоезда);
@@ -911,6 +978,9 @@
             this.gBШаблонОповещения.PerformLayout();
             this.gbРежимРаботы.ResumeLayout(false);
             this.gbРежимРаботы.PerformLayout();
+            this.gb_ПутьПоУмолчанию.ResumeLayout(false);
+            this.gb_ПутьПоУмолчанию.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_ПутиПоДнямНедели)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -933,7 +1003,6 @@
         private System.Windows.Forms.DateTimePicker dTPОтправление;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cBКатегория;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cBПутьПоУмолчанию;
         private System.Windows.Forms.ComboBox cBОтсчетВагонов;
         private System.Windows.Forms.Label label4;
@@ -990,5 +1059,11 @@
         private System.Windows.Forms.DateTimePicker dTPСледования;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox tb_ДниСледованияAlias;
+        private System.Windows.Forms.GroupBox gb_ПутьПоУмолчанию;
+        private System.Windows.Forms.DataGridView dgv_ПутиПоДнямНедели;
+        private System.Windows.Forms.RadioButton rb_ПоДнямНедели;
+        private System.Windows.Forms.RadioButton rb_Постоянно;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_key;
+        private System.Windows.Forms.DataGridViewComboBoxColumn cmb_Путь;
     }
 }

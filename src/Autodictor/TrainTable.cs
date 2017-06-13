@@ -23,7 +23,9 @@ namespace MainExample
         Ласточка = 6,
         РЭКС = 7
     };
-    
+
+    public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
+
 
     public struct TrainTableRecord
     {
@@ -40,7 +42,8 @@ namespace MainExample
         public bool Active;               //активность, отмека галочкой
         public string SoundTemplates;     //
         public byte TrainPathDirection;
-        public string TrainPathNumber;
+        public Dictionary<WeekDays, string> TrainPathNumber;      //Пути по дням недели или постоянно
+        public bool PathWeekDayes;                                //true- установленны пути по дням недели, false - путь установленн постоянно
         public ТипПоезда ТипПоезда;
         public string Примечание;
         public DateTime ВремяНачалаДействияРасписания;
@@ -190,7 +193,19 @@ namespace MainExample
             Данные.SoundTemplates = "";
             Данные.TrainPathDirection = 0x01;
             Данные.ТипПоезда = ТипПоезда.НеОпределен;
-            Данные.TrainPathNumber = "";
+            Данные.TrainPathNumber = new Dictionary<WeekDays, string>
+            {
+                [WeekDays.Постоянно] = String.Empty,
+                [WeekDays.Пн] = String.Empty,
+                [WeekDays.Вт] = String.Empty,
+                [WeekDays.Ср] = String.Empty,
+                [WeekDays.Ср] = String.Empty,
+                [WeekDays.Чт] = String.Empty,
+                [WeekDays.Пт] = String.Empty,
+                [WeekDays.Сб] = String.Empty,
+                [WeekDays.Вс] = String.Empty
+            };
+            Данные.PathWeekDayes = false;
             Данные.Примечание = "";
             Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
             Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
@@ -255,6 +270,7 @@ namespace MainExample
                         {
                             TrainTableRecord Данные;
 
+
                             Данные.ID = int.Parse(Settings[0]);
                             Данные.Num = Settings[1];
                             Данные.Name = Settings[2];
@@ -265,7 +281,19 @@ namespace MainExample
                             Данные.Active = Settings[7] == "1" ? true : false;
                             Данные.SoundTemplates = Settings[8];
                             Данные.TrainPathDirection = byte.Parse(Settings[9]);
-                            Данные.TrainPathNumber = Settings[10];
+                            Данные.TrainPathNumber = new Dictionary<WeekDays, string>
+                            {
+                                [WeekDays.Постоянно] = Settings[10],
+                                [WeekDays.Пн] = String.Empty,
+                                [WeekDays.Вт] = String.Empty,
+                                [WeekDays.Ср] = String.Empty,
+                                [WeekDays.Ср] = String.Empty,
+                                [WeekDays.Чт] = String.Empty,
+                                [WeekDays.Пт] = String.Empty,
+                                [WeekDays.Сб] = String.Empty,
+                                [WeekDays.Вс] = String.Empty
+                            };
+                            Данные.PathWeekDayes = false;
                             Данные.ИспользоватьДополнение = new Dictionary<string, bool>()
                             {
                                 ["звук"] = false,
@@ -286,8 +314,8 @@ namespace MainExample
                             if (Данные.TrainPathDirection > 2)
                                 Данные.TrainPathDirection = 0;
 
-                            if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
-                                Данные.TrainPathNumber = "";
+                            if (Program.НомераПутей.Contains(Данные.TrainPathNumber[WeekDays.Постоянно]) == false)
+                                Данные.TrainPathNumber[WeekDays.Постоянно] = "";
 
                             DateTime НачалоДействия = new DateTime(1900, 1, 1);
                             DateTime КонецДействия = new DateTime(2100, 1, 1);
@@ -367,7 +395,7 @@ namespace MainExample
                             (TrainTableRecords[i].Active ? "1" : "0") + ";" +
                             TrainTableRecords[i].SoundTemplates + ";" +
                             TrainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                            TrainTableRecords[i].TrainPathNumber.ToString() + ";" +
+                            TrainTableRecords[i].TrainPathNumber[WeekDays.Постоянно].ToString() + ";" +
                             TrainTableRecords[i].ТипПоезда.ToString() + ";" +
                             TrainTableRecords[i].Примечание + ";" +
                             TrainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
@@ -465,10 +493,83 @@ namespace MainExample
         }
 
 
-        private void LoadListFromCis()
+        private Dictionary<WeekDays, string> LoadPathFromFile(string str, out bool pathWeekDayes)
         {
-            var isOperShLoad = CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any();
-            var isRegShLoad = CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any();
+            Dictionary<WeekDays, string> pathDictionary = new Dictionary<WeekDays, string>
+            {
+                [WeekDays.Постоянно] = String.Empty,
+                [WeekDays.Пн] = String.Empty,
+                [WeekDays.Вт] = String.Empty,
+                [WeekDays.Ср] = String.Empty,
+                [WeekDays.Ср] = String.Empty,
+                [WeekDays.Чт] = String.Empty,
+                [WeekDays.Пт] = String.Empty,
+                [WeekDays.Сб] = String.Empty,
+                [WeekDays.Вс] = String.Empty
+            };
+            pathWeekDayes = false;
+
+
+
+            if (!string.IsNullOrEmpty(str) && str.Contains("|") && str.Contains(":"))
+            {
+                var pairs = str.Split('|');
+                if (pairs.Length == 9)
+                {
+                    foreach (var pair in pairs)
+                    {
+                        var keyVal= pair.Split(':');
+                        switch (keyVal[0])
+                        {
+                            case "Постоянно":
+                                pathDictionary[WeekDays.Постоянно] = keyVal[1];
+                                break;
+
+                            case "Пн":
+                                pathDictionary[WeekDays.Пн] = keyVal[1];
+                                break;
+
+                            case "Вт":
+                                pathDictionary[WeekDays.Вт] = keyVal[1];
+                                break;
+
+                            case "Ср":
+                                pathDictionary[WeekDays.Ср] = keyVal[1];
+                                break;
+
+                            case "Чт":
+                                pathDictionary[WeekDays.Чт] = keyVal[1];
+                                break;
+
+                            case "Пт":
+                                pathDictionary[WeekDays.Пт] = keyVal[1];
+                                break;
+
+                            case "Сб":
+                                pathDictionary[WeekDays.Сб] = keyVal[1];
+                                break;
+
+                            case "Вс":
+                                pathDictionary[WeekDays.Вс] = keyVal[1];
+                                break;
+
+                            case "ПутиПоДням":
+                                pathWeekDayes = (keyVal[1] == "1");
+                                break;
+                        }
+                    }
+                }   
+            }
+
+            return pathDictionary;
+        }
+
+
+
+        private  void LoadListFromCis()
+        {
+            //var isOperShLoad = CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any();
+            //var isRegShLoad = CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any();
 
             //if (!isRegShLoad && !isOperShLoad)
             //{
@@ -482,99 +583,99 @@ namespace MainExample
             //    return;
             //}
 
-            if (!isRegShLoad)
-            {
-                MessageBox.Show("РЕГУЛЯРНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
-                return;
-            }
+            //if (!isRegShLoad)
+            //{
+            //    MessageBox.Show("РЕГУЛЯРНОЕ РАСПИСАНИЕ ОТ СЕРВЕРА НЕ ПОЛУЧЕННО");
+            //    return;
+            //}
 
-            bool tryLoad;
-            if (CisClient.IsConnect)
-            {
-                tryLoad = true;
-            }
-            else
-            {
-                tryLoad = MessageBox.Show("Продолжить загрузку данных с ЦИС ", "ЦИС не на связи", MessageBoxButtons.YesNo) == DialogResult.Yes;
-            }
+            //bool tryLoad;
+            //if (CisClient.IsConnect)
+            //{
+            //    tryLoad = true;
+            //}
+            //else
+            //{
+            //    tryLoad = MessageBox.Show("Продолжить загрузку данных с ЦИС ", "ЦИС не на связи", MessageBoxButtons.YesNo) == DialogResult.Yes;
+            //}
 
-            if (tryLoad)
-            {
-                TrainTableRecords.Clear();
+            //if (tryLoad)
+            //{
+            //    TrainTableRecords.Clear();
 
-                //Заполним строки
-                foreach (var reg in CisClient.RegulatoryScheduleDatas)
-                {
-                    TrainTableRecord Данные;
+            //    //Заполним строки
+            //    foreach (var reg in CisClient.RegulatoryScheduleDatas)
+            //    {
+            //        TrainTableRecord Данные;
 
-                    Данные.ID = reg.Id;
-                    Данные.Num = reg.NumberOfTrain;
-                    Данные.Name = reg.RouteName;
-                    Данные.ArrivalTime = reg.ArrivalTime.ToShortTimeString();
-                    Данные.DepartureTime = reg.DepartureTime.ToShortTimeString();
-                    Данные.StopTime = "";  //вычисляется для транзитных
-                    Данные.Days = reg.DaysFollowingConverted;
-
-
-
-                    Данные.Active = true;
-                    Данные.SoundTemplates = "";
-                    Данные.TrainPathDirection = 1;                                   //заполняется из информации
-                    Данные.TrainPathNumber = "";                                     //заполняется из информации
-                    Данные.ТипПоезда = ТипПоезда.НеОпределен;                        //
-
-                    // "С остановками: Клин,Завидово,В.Новгород"
-                    // "Кроме: Кузьминка,Конаково"  
-                    // "Со всеми остановками"  
-                    // "Без остановок"
-                    // ""                        - не оповещать
+            //        Данные.ID = reg.Id;
+            //        Данные.Num = reg.NumberOfTrain;
+            //        Данные.Name = reg.RouteName;
+            //        Данные.ArrivalTime = reg.ArrivalTime.ToShortTimeString();
+            //        Данные.DepartureTime = reg.DepartureTime.ToShortTimeString();
+            //        Данные.StopTime = "";  //вычисляется для транзитных
+            //        Данные.Days = reg.DaysFollowingConverted;
 
 
-                    if (reg.ListOfStops != null && reg.ListOfStops.Any())
-                    {
-                        Данные.Примечание = "С остановками: ";
-                        foreach (var stopStat in reg.ListOfStops)
-                        {
-                            Данные.Примечание+= stopStat.Name + "," ;
-                        }
-                        Данные.Примечание= Данные.Примечание.Remove(Данные.Примечание.Length - 1);
-                        Данные.ТипПоезда = ТипПоезда.Пригородный;
-                    }
-                    else
-                    if (reg.ListWithoutStops != null && reg.ListWithoutStops.Any())
-                    {
-                        Данные.Примечание = "Кроме: ";
-                        foreach (var withoutStopStat in reg.ListWithoutStops)
-                        {
-                            Данные.Примечание+= withoutStopStat.Name + ",";
-                        }
-                        Данные.Примечание= Данные.Примечание.Remove(Данные.Примечание.Length - 1);
-                        Данные.ТипПоезда = ТипПоезда.Пригородный;
-                    }
-                    else
-                    {
-                        //не оповещать
-                        Данные.Примечание = "";
-                        Данные.ТипПоезда = ТипПоезда.Скорый;      //дальнего след.
-                    }
+
+            //        Данные.Active = true;
+            //        Данные.SoundTemplates = "";
+            //        Данные.TrainPathDirection = 1;                                   //заполняется из информации
+            //        Данные.TrainPathNumber = "";                                     //заполняется из информации
+            //        Данные.ТипПоезда = ТипПоезда.НеОпределен;                        //
+
+            //        // "С остановками: Клин,Завидово,В.Новгород"
+            //        // "Кроме: Кузьминка,Конаково"  
+            //        // "Со всеми остановками"  
+            //        // "Без остановок"
+            //        // ""                        - не оповещать
+
+
+            //        if (reg.ListOfStops != null && reg.ListOfStops.Any())
+            //        {
+            //            Данные.Примечание = "С остановками: ";
+            //            foreach (var stopStat in reg.ListOfStops)
+            //            {
+            //                Данные.Примечание+= stopStat.Name + "," ;
+            //            }
+            //            Данные.Примечание= Данные.Примечание.Remove(Данные.Примечание.Length - 1);
+            //            Данные.ТипПоезда = ТипПоезда.Пригородный;
+            //        }
+            //        else
+            //        if (reg.ListWithoutStops != null && reg.ListWithoutStops.Any())
+            //        {
+            //            Данные.Примечание = "Кроме: ";
+            //            foreach (var withoutStopStat in reg.ListWithoutStops)
+            //            {
+            //                Данные.Примечание+= withoutStopStat.Name + ",";
+            //            }
+            //            Данные.Примечание= Данные.Примечание.Remove(Данные.Примечание.Length - 1);
+            //            Данные.ТипПоезда = ТипПоезда.Пригородный;
+            //        }
+            //        else
+            //        {
+            //            //не оповещать
+            //            Данные.Примечание = "";
+            //            Данные.ТипПоезда = ТипПоезда.Скорый;      //дальнего след.
+            //        }
 
                                                          
                                                                                        
 
 
-                    if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
-                        Данные.TrainPathNumber = "";
+            //        if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
+            //            Данные.TrainPathNumber = "";
 
-                    Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
-                    Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+            //        Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
+            //        Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
 
-                    Данные.Addition = "";
+            //        Данные.Addition = "";
 
-                    //TrainTableRecords.Add(Данные);
+            //        //TrainTableRecords.Add(Данные);
 
-                    if (Данные.ID > ID)
-                        ID = Данные.ID;
-                }
+            //        if (Данные.ID > ID)
+            //            ID = Данные.ID;
+            //    }
 
 
 
@@ -623,8 +724,10 @@ namespace MainExample
                 //    if (Данные.ID > ID)
                 //        ID = Данные.ID;
                 //}
-            }
+            //}
         }
+
+
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
@@ -671,7 +774,6 @@ namespace MainExample
                     }
                 }
             }
-
         }
     }
 }
