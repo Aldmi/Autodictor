@@ -61,7 +61,7 @@ namespace MainExample
     {
         public CisClient CisClient { get; private set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
-        
+
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
         private static int ID = 0;
         public static TrainTable myMainForm = null;
@@ -324,13 +324,13 @@ namespace MainExample
                             }
                             Данные.Addition = addition;
 
-   
+
                             if (Settings.Length >= 18)
                             {
                                 Данные.ИспользоватьДополнение["табло"] = Settings[16] == "1";
                                 Данные.ИспользоватьДополнение["звук"] = Settings[17] == "1";
                             }
-         
+
                             if (Settings.Length >= 19)
                             {
                                 Данные.Автомат = (string.IsNullOrEmpty(Settings[18]) || Settings[18] == "1"); // по умолчанию true
@@ -351,8 +351,8 @@ namespace MainExample
 
                             TrainTableRecords.Add(Данные);
                             Program.НомераПоездов.Add(Данные.Num);
-                            if(!string.IsNullOrEmpty(Данные.Num2))
-                               Program.НомераПоездов.Add(Данные.Num2);
+                            if (!string.IsNullOrEmpty(Данные.Num2))
+                                Program.НомераПоездов.Add(Данные.Num2);
 
                             if (Данные.ID > ID)
                                 ID = Данные.ID;
@@ -507,39 +507,41 @@ namespace MainExample
                 {
                     foreach (var pair in pairs)
                     {
-                        var keyVal= pair.Split(':');
+                        var keyVal = pair.Split(':');
+
+                        var value = (keyVal[1] == "Не определен") ? string.Empty : keyVal[1];
                         switch (keyVal[0])
                         {
                             case "Постоянно":
-                                pathDictionary[WeekDays.Постоянно] = keyVal[1];
+                                pathDictionary[WeekDays.Постоянно] = value;
                                 break;
 
                             case "Пн":
-                                pathDictionary[WeekDays.Пн] = keyVal[1];
+                                pathDictionary[WeekDays.Пн] = value;
                                 break;
 
                             case "Вт":
-                                pathDictionary[WeekDays.Вт] = keyVal[1];
+                                pathDictionary[WeekDays.Вт] = value;
                                 break;
 
                             case "Ср":
-                                pathDictionary[WeekDays.Ср] = keyVal[1];
+                                pathDictionary[WeekDays.Ср] = value;
                                 break;
 
                             case "Чт":
-                                pathDictionary[WeekDays.Чт] = keyVal[1];
+                                pathDictionary[WeekDays.Чт] = value;
                                 break;
 
                             case "Пт":
-                                pathDictionary[WeekDays.Пт] = keyVal[1];
+                                pathDictionary[WeekDays.Пт] = value;
                                 break;
 
                             case "Сб":
-                                pathDictionary[WeekDays.Сб] = keyVal[1];
+                                pathDictionary[WeekDays.Сб] = value;
                                 break;
 
                             case "Вс":
-                                pathDictionary[WeekDays.Вс] = keyVal[1];
+                                pathDictionary[WeekDays.Вс] = value;
                                 break;
 
                             case "ПутиПоДням":
@@ -547,7 +549,7 @@ namespace MainExample
                                 break;
                         }
                     }
-                }   
+                }
             }
 
             return pathDictionary;
@@ -560,7 +562,8 @@ namespace MainExample
             StringBuilder strBuild = new StringBuilder();
             foreach (var keyVal in pathDictionary)
             {
-                strBuild.Append(keyVal.Key).Append(":").Append(keyVal.Value).Append("|");   
+                var value = (keyVal.Value == "Не определен") ? string.Empty : keyVal.Value;
+                strBuild.Append(keyVal.Key).Append(":").Append(value).Append("|");
             }
             strBuild.Append("ПутиПоДням").Append(":").Append(pathWeekDayes ? "1" : "0");
 
@@ -569,7 +572,7 @@ namespace MainExample
 
 
 
-        private  void LoadListFromCis()
+        private void LoadListFromCis()
         {
             //var isOperShLoad = CisClient.OperativeScheduleDatas != null && CisClient.OperativeScheduleDatas.Any();
             //var isRegShLoad = CisClient.RegulatoryScheduleDatas != null && CisClient.RegulatoryScheduleDatas.Any();
@@ -662,8 +665,8 @@ namespace MainExample
             //            Данные.ТипПоезда = ТипПоезда.Скорый;      //дальнего след.
             //        }
 
-                                                         
-                                                                                       
+
+
 
 
             //        if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
@@ -682,51 +685,51 @@ namespace MainExample
 
 
 
-                //foreach (var op in CisClient.OperativeScheduleDatas)
-                //{
-                //    TrainTableRecord Данные;
+            //foreach (var op in CisClient.OperativeScheduleDatas)
+            //{
+            //    TrainTableRecord Данные;
 
-                //    Данные.ID = op.Id;
-                //    Данные.Num = op.NumberOfTrain;
-                //    Данные.Name = op.RouteName;
-                //    Данные.ArrivalTime = op.ArrivalTime?.ToLongTimeString() ?? "Не указанно";
-
-
-                //    if (op.ArrivalTime.HasValue && op.DepartureTime.HasValue)
-                //    {
-                //        var stopTime = (op.ArrivalTime.Value.Subtract(op.DepartureTime.Value));
-                //        Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
-                //    }
-                //    else
-                //    {
-                //        Данные.StopTime = "---";
-                //    }
+            //    Данные.ID = op.Id;
+            //    Данные.Num = op.NumberOfTrain;
+            //    Данные.Name = op.RouteName;
+            //    Данные.ArrivalTime = op.ArrivalTime?.ToLongTimeString() ?? "Не указанно";
 
 
-                //    Данные.DepartureTime = op.DepartureTime?.ToLongTimeString() ?? "Не указанно";
-                //    Данные.Days = CisClient.RegulatoryScheduleDatas.FirstOrDefault(reg=> reg.NumberOfTrain == op.NumberOfTrain)?.DaysFollowing;                                              //заполняется из регулярного расписания
-                //    Данные.Active = false;
-                //    Данные.SoundTemplates = "";
-                //    Данные.TrainPathDirection = 1;                                   //заполняется из информации
-                //    Данные.TrainPathNumber = "";                                      //заполняется из информации
-                //    Данные.ТипПоезда = ТипПоезда.НеОпределен;
-                //    Данные.Примечание = "";
-
-                //    if (Данные.TrainPathDirection > 2)
-                //        Данные.TrainPathDirection = 0;
-
-                //    if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
-                //        Данные.TrainPathNumber = "";
+            //    if (op.ArrivalTime.HasValue && op.DepartureTime.HasValue)
+            //    {
+            //        var stopTime = (op.ArrivalTime.Value.Subtract(op.DepartureTime.Value));
+            //        Данные.StopTime = stopTime.TotalMilliseconds > 0 ? new DateTime(stopTime.Ticks).ToString("HH:mm:ss") : "---";
+            //    }
+            //    else
+            //    {
+            //        Данные.StopTime = "---";
+            //    }
 
 
-                //    Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
-                //    Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+            //    Данные.DepartureTime = op.DepartureTime?.ToLongTimeString() ?? "Не указанно";
+            //    Данные.Days = CisClient.RegulatoryScheduleDatas.FirstOrDefault(reg=> reg.NumberOfTrain == op.NumberOfTrain)?.DaysFollowing;                                              //заполняется из регулярного расписания
+            //    Данные.Active = false;
+            //    Данные.SoundTemplates = "";
+            //    Данные.TrainPathDirection = 1;                                   //заполняется из информации
+            //    Данные.TrainPathNumber = "";                                      //заполняется из информации
+            //    Данные.ТипПоезда = ТипПоезда.НеОпределен;
+            //    Данные.Примечание = "";
 
-                //    TrainTableRecords.Add(Данные);
+            //    if (Данные.TrainPathDirection > 2)
+            //        Данные.TrainPathDirection = 0;
 
-                //    if (Данные.ID > ID)
-                //        ID = Данные.ID;
-                //}
+            //    if (Program.НомераПутей.Contains(Данные.TrainPathNumber) == false)
+            //        Данные.TrainPathNumber = "";
+
+
+            //    Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
+            //    Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+
+            //    TrainTableRecords.Add(Данные);
+
+            //    if (Данные.ID > ID)
+            //        ID = Данные.ID;
+            //}
             //}
         }
 
