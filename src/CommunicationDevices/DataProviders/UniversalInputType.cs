@@ -20,7 +20,6 @@ namespace CommunicationDevices.DataProviders
     }
 
     public enum VagonDirection { None, FromTheHead, FromTheTail }
-
     public enum Command { None, View, Update, Delete, Clear, Restart }
 
 
@@ -33,12 +32,13 @@ namespace CommunicationDevices.DataProviders
         public TypeTrain TypeTrain { get; set; }                     //Пригород или дальнего следования
         public string NumberOfTrain { get; set; }                    //Номер поезда
         public string PathNumber { get; set; }                       //Номер пути
-        public string Event { get; set; }                            //Событие (отправление/прибытие)
+        public string Event { get; set; }                            //Событие (отправление/прибытие/Транзит)
         public string Addition { get; set; }                         //Дополнение (свободная строка)
         public string Stations { get; set; }                         //Станции Отправления-Назначения.
         public string Note { get; set; }                             //Примечание.
         public string DaysFollowing { get; set; }                    //Дни следования
         public DateTime Time { get; set; }                           //Время
+        public Dictionary<string, DateTime> TransitTime { get; set; } //Транзитное время ["приб"]/["отпр"]
         public DateTime? DelayTime { get; set; }                     //Время задержки (прибытия или отправления поезда)
         public DateTime ExpectedTime { get; set; }                   //Ожидаемое время (Время + Время задержки)
         public VagonDirection VagonDirection { get; set; }           //Нумерация вагона (с головы, с хвоста)
@@ -73,6 +73,7 @@ namespace CommunicationDevices.DataProviders
             Stations = initializeData.Stations;
             Note= initializeData.Note;
             Time = initializeData.Time;
+            TransitTime = initializeData.TransitTime;
             DelayTime = initializeData.DelayTime;
             ExpectedTime = initializeData.ExpectedTime;
             Message = initializeData.Message;

@@ -274,8 +274,13 @@ namespace MainExample
             }
             else
             {
-                РасписаниеПоезда.ArrivalTime = dTPОтправление.Value.ToString("HH:mm");
+                if (dTPОтправление.Value > dTPПрибытие.Value)
+                {
+                    dTPПрибытие.Value = dTPПрибытие.Value.AddDays(1);
+                }
                 РасписаниеПоезда.StopTime = (dTPПрибытие.Value - dTPОтправление.Value).TotalMinutes.ToString("0");
+
+                РасписаниеПоезда.ArrivalTime = dTPОтправление.Value.ToString("HH:mm");
                 РасписаниеПоезда.DepartureTime = dTPПрибытие.Value.ToString("HH:mm");
             }
 

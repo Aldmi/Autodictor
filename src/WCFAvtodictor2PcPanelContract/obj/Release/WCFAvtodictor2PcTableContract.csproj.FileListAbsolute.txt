@@ -12,3 +12,8 @@ C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2Pc
 C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.pdb
 C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll
 C:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.pdb
+C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.dll
+C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.pdb
+C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.csprojResolveAssemblyReference.cache
+C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll
+C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.pdb

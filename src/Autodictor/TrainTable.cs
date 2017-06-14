@@ -6,7 +6,9 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
+using System.Text;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.DataProviders;
 using MainExample.Extension;
 
 
@@ -270,7 +272,6 @@ namespace MainExample
                         {
                             TrainTableRecord Данные;
 
-
                             Данные.ID = int.Parse(Settings[0]);
                             Данные.Num = Settings[1];
                             Данные.Name = Settings[2];
@@ -281,19 +282,7 @@ namespace MainExample
                             Данные.Active = Settings[7] == "1" ? true : false;
                             Данные.SoundTemplates = Settings[8];
                             Данные.TrainPathDirection = byte.Parse(Settings[9]);
-                            Данные.TrainPathNumber = new Dictionary<WeekDays, string>
-                            {
-                                [WeekDays.Постоянно] = Settings[10],
-                                [WeekDays.Пн] = String.Empty,
-                                [WeekDays.Вт] = String.Empty,
-                                [WeekDays.Ср] = String.Empty,
-                                [WeekDays.Ср] = String.Empty,
-                                [WeekDays.Чт] = String.Empty,
-                                [WeekDays.Пт] = String.Empty,
-                                [WeekDays.Сб] = String.Empty,
-                                [WeekDays.Вс] = String.Empty
-                            };
-                            Данные.PathWeekDayes = false;
+                            Данные.TrainPathNumber = LoadPathFromFile(Settings[10], out Данные.PathWeekDayes);
                             Данные.ИспользоватьДополнение = new Dictionary<string, bool>()
                             {
                                 ["звук"] = false,
@@ -395,7 +384,7 @@ namespace MainExample
                             (TrainTableRecords[i].Active ? "1" : "0") + ";" +
                             TrainTableRecords[i].SoundTemplates + ";" +
                             TrainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                            TrainTableRecords[i].TrainPathNumber[WeekDays.Постоянно].ToString() + ";" +
+                            SavePath2File(TrainTableRecords[i].TrainPathNumber, TrainTableRecords[i].PathWeekDayes) + ";" +
                             TrainTableRecords[i].ТипПоезда.ToString() + ";" +
                             TrainTableRecords[i].Примечание + ";" +
                             TrainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
@@ -493,7 +482,7 @@ namespace MainExample
         }
 
 
-        private Dictionary<WeekDays, string> LoadPathFromFile(string str, out bool pathWeekDayes)
+        private static Dictionary<WeekDays, string> LoadPathFromFile(string str, out bool pathWeekDayes)
         {
             Dictionary<WeekDays, string> pathDictionary = new Dictionary<WeekDays, string>
             {
@@ -562,6 +551,20 @@ namespace MainExample
             }
 
             return pathDictionary;
+        }
+
+
+
+        private static string SavePath2File(Dictionary<WeekDays, string> pathDictionary, bool pathWeekDayes)
+        {
+            StringBuilder strBuild = new StringBuilder();
+            foreach (var keyVal in pathDictionary)
+            {
+                strBuild.Append(keyVal.Key).Append(":").Append(keyVal.Value).Append("|");   
+            }
+            strBuild.Append("ПутиПоДням").Append(":").Append(pathWeekDayes ? "1" : "0");
+
+            return strBuild.ToString();
         }
 
 

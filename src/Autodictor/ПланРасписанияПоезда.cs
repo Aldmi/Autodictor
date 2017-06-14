@@ -70,7 +70,9 @@ namespace MainExample
             this.НазваниеПоезда = НазваниеПоезда;
         }
 
-        public bool ПолучитьАктивностьДняДвижения(byte НомерМесяца, byte НомерДня)
+
+
+        public bool ПолучитьАктивностьДняДвижения(byte НомерМесяца, byte НомерДня, TrainTableRecord? record= null)
         {
             if ((НомерМесяца < 14) && (НомерДня < 31))
             {
@@ -89,17 +91,26 @@ namespace MainExample
                     case РежимРасписанияДвиженияПоезда.Отсутствует:
                         return false;
 
+
                     case РежимРасписанияДвиженияПоезда.Ежедневно:
                         return true;
 
+
                     case РежимРасписанияДвиженияПоезда.ПоЧетным:
+                        //if (ПроверкаТранзитныхПоездов(record))
+                        //{
+                        //    return true;
+                        //}
                         return (НомерДня % 2) == 1 ? true : false;
+
 
                     case РежимРасписанияДвиженияПоезда.ПоНечетным:
                         return (НомерДня % 2) == 0 ? true : false;
 
+
                     case РежимРасписанияДвиженияПоезда.Выборочно:
                         return (БитыРасписания[НомерМесяца] & (1 << НомерДня)) != 0 ? true : false;
+
 
                     case РежимРасписанияДвиженияПоезда.ПоДням:
                         byte ДеньНедели = (byte)(((byte)new DateTime(DateTime.Now.Year + НомерМесяца / 12, (НомерМесяца % 12) + 1, НомерДня + 1).DayOfWeek + 6) % 7);
@@ -119,6 +130,47 @@ namespace MainExample
 
             return false;
         }
+
+
+
+        private bool ПроверкаТранзитныхПоездов(TrainTableRecord? record = null)
+        {
+            if (record.HasValue)
+            {
+                var rec = record.Value;
+                if ((!string.IsNullOrEmpty(record.Value.ArrivalTime)) &&
+                    (!string.IsNullOrEmpty(record.Value.DepartureTime)))
+                {
+                    int Часы = 0;
+                    int Минуты = 0;
+                    DateTime времяПрибытия = new DateTime(2000, 1, 1, 0, 0, 0);
+                    DateTime времяОтправления = new DateTime(2000, 1, 1, 0, 0, 0);
+
+                    string[] SubStrings = rec.DepartureTime.Split(':');
+                    if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
+                    {
+                        времяОтправления = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+                    }
+
+                    SubStrings = rec.ArrivalTime.Split(':');
+                    if (int.TryParse(SubStrings[0], out Часы) && int.TryParse(SubStrings[1], out Минуты))
+                    {
+                        времяПрибытия = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Часы, Минуты, 0);
+                    }
+
+                    //прибывает в одних сутках отправляется в других
+                    if (времяОтправления < времяПрибытия)
+                    {
+
+                    }
+                }
+            }
+
+            return false;
+        }
+
+
+
 
         public void ЗадатьАктивностьДняДвижения(byte НомерМесяца, byte НомерДня, bool Активность)
         {

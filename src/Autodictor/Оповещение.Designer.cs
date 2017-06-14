@@ -102,10 +102,10 @@
             this.tBНомерПоездаДоп = new System.Windows.Forms.TextBox();
             this.gb_ПутьПоУмолчанию = new System.Windows.Forms.GroupBox();
             this.dgv_ПутиПоДнямНедели = new System.Windows.Forms.DataGridView();
-            this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
-            this.rb_Постоянно = new System.Windows.Forms.RadioButton();
             this.col_key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
+            this.rb_Постоянно = new System.Windows.Forms.RadioButton();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -321,7 +321,7 @@
             // 
             this.cBПутьПоУмолчанию.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBПутьПоУмолчанию.FormattingEnabled = true;
-            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(49, 31);
+            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(35, 31);
             this.cBПутьПоУмолчанию.Name = "cBПутьПоУмолчанию";
             this.cBПутьПоУмолчанию.Size = new System.Drawing.Size(204, 28);
             this.cBПутьПоУмолчанию.TabIndex = 46;
@@ -873,9 +873,9 @@
             this.gb_ПутьПоУмолчанию.Controls.Add(this.rb_ПоДнямНедели);
             this.gb_ПутьПоУмолчанию.Controls.Add(this.rb_Постоянно);
             this.gb_ПутьПоУмолчанию.Controls.Add(this.cBПутьПоУмолчанию);
-            this.gb_ПутьПоУмолчанию.Location = new System.Drawing.Point(1120, 22);
+            this.gb_ПутьПоУмолчанию.Location = new System.Drawing.Point(1120, 11);
             this.gb_ПутьПоУмолчанию.Name = "gb_ПутьПоУмолчанию";
-            this.gb_ПутьПоУмолчанию.Size = new System.Drawing.Size(259, 282);
+            this.gb_ПутьПоУмолчанию.Size = new System.Drawing.Size(249, 282);
             this.gb_ПутьПоУмолчанию.TabIndex = 60;
             this.gb_ПутьПоУмолчанию.TabStop = false;
             this.gb_ПутьПоУмолчанию.Text = "Путь по умолчанию";
@@ -891,38 +891,12 @@
             this.col_key,
             this.cmb_Путь});
             this.dgv_ПутиПоДнямНедели.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.dgv_ПутиПоДнямНедели.Location = new System.Drawing.Point(49, 72);
+            this.dgv_ПутиПоДнямНедели.Location = new System.Drawing.Point(35, 72);
             this.dgv_ПутиПоДнямНедели.MultiSelect = false;
             this.dgv_ПутиПоДнямНедели.Name = "dgv_ПутиПоДнямНедели";
             this.dgv_ПутиПоДнямНедели.RowHeadersVisible = false;
             this.dgv_ПутиПоДнямНедели.Size = new System.Drawing.Size(204, 191);
             this.dgv_ПутиПоДнямНедели.TabIndex = 9;
-            // 
-            // rb_ПоДнямНедели
-            // 
-            this.rb_ПоДнямНедели.AutoSize = true;
-            this.rb_ПоДнямНедели.Location = new System.Drawing.Point(19, 72);
-            this.rb_ПоДнямНедели.Name = "rb_ПоДнямНедели";
-            this.rb_ПоДнямНедели.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.rb_ПоДнямНедели.Size = new System.Drawing.Size(14, 13);
-            this.rb_ПоДнямНедели.TabIndex = 8;
-            this.rb_ПоДнямНедели.TabStop = true;
-            this.rb_ПоДнямНедели.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.rb_ПоДнямНедели.UseVisualStyleBackColor = true;
-            this.rb_ПоДнямНедели.CheckedChanged += new System.EventHandler(this.rb_ПоДнямНедели_CheckedChanged);
-            // 
-            // rb_Постоянно
-            // 
-            this.rb_Постоянно.AutoSize = true;
-            this.rb_Постоянно.Location = new System.Drawing.Point(19, 31);
-            this.rb_Постоянно.Name = "rb_Постоянно";
-            this.rb_Постоянно.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.rb_Постоянно.Size = new System.Drawing.Size(14, 13);
-            this.rb_Постоянно.TabIndex = 1;
-            this.rb_Постоянно.TabStop = true;
-            this.rb_Постоянно.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.rb_Постоянно.UseVisualStyleBackColor = true;
-            this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
             // 
             // col_key
             // 
@@ -936,6 +910,32 @@
             // 
             this.cmb_Путь.HeaderText = "Путь";
             this.cmb_Путь.Name = "cmb_Путь";
+            // 
+            // rb_ПоДнямНедели
+            // 
+            this.rb_ПоДнямНедели.AutoSize = true;
+            this.rb_ПоДнямНедели.Location = new System.Drawing.Point(13, 72);
+            this.rb_ПоДнямНедели.Name = "rb_ПоДнямНедели";
+            this.rb_ПоДнямНедели.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.rb_ПоДнямНедели.Size = new System.Drawing.Size(14, 13);
+            this.rb_ПоДнямНедели.TabIndex = 8;
+            this.rb_ПоДнямНедели.TabStop = true;
+            this.rb_ПоДнямНедели.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.rb_ПоДнямНедели.UseVisualStyleBackColor = true;
+            this.rb_ПоДнямНедели.CheckedChanged += new System.EventHandler(this.rb_ПоДнямНедели_CheckedChanged);
+            // 
+            // rb_Постоянно
+            // 
+            this.rb_Постоянно.AutoSize = true;
+            this.rb_Постоянно.Location = new System.Drawing.Point(12, 31);
+            this.rb_Постоянно.Name = "rb_Постоянно";
+            this.rb_Постоянно.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.rb_Постоянно.Size = new System.Drawing.Size(14, 13);
+            this.rb_Постоянно.TabIndex = 1;
+            this.rb_Постоянно.TabStop = true;
+            this.rb_Постоянно.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.rb_Постоянно.UseVisualStyleBackColor = true;
+            this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
             // 
             // Оповещение
             // 

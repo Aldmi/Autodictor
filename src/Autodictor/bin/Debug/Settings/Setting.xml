@@ -101,8 +101,8 @@
 
 
 
-<!-- <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" Contrains="БольшеТекВремени;ПРИБ.;ЛимитСтрокТаблицы:15" ProviderType="Xml_tlist"  
+<DevicesWithHttp>
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="Xml_tlist"  
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -110,7 +110,7 @@
 						   Content-Type: multipart/form-data +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   />
-</DevicesWithHttp> -->
+</DevicesWithHttp>
 
 </Root>
 
