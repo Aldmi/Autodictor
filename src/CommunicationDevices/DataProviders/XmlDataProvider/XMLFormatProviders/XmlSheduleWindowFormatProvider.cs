@@ -7,30 +7,32 @@ using System.Xml.Linq;
 namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 {
 
-//<? xml version="1.0" encoding="utf-8" standalone="yes"?>
-//<sheduleWindow>
-//  <t>
-//  <TrainNumber>6396</TrainNumber>
-//  <TrainType>0</TrainType>
-//  <StartStation>Крюково</StartStation>
-//  <EndStation> </EndStation>	
-//  <InDateTime>2017-06-08T13:17:00</InDateTime>                               //время прибытия
-//  <HereDateTime>15</HereDateTime>                                            //время стоянки
-//  <OutDateTime>2017-06-08T13:17:00</OutDateTime>                             //время отправки
-//	<DaysOfGoing></DaysOfGoing>                                                //дни след
-//  <DaysOfGoingAlias></DaysOfGoingAlias>                                      //дни след. записанные вручную в главном расписании
-//  <TrackNumber></TrackNumber>
-//  <Direction>1</Direction>
-//  <EvTrackNumber></EvTrackNumber>
-//  <State>0</State>
-//  <VagonDirection>0</VagonDirection>
-//  <Enabled>1</Enabled>
-//	<TypeName>Пригородный</TypeName>
-//	<TypeAlias>приг</TypeAlias>
-//	<Addition>Поле дополнения</Addition>
-//	<Note>Поле дополнения</Note>                                               // список остановок
-//  </t>
-//</sheduleWindow>
+    //<? xml version="1.0" encoding="utf-8" standalone="yes"?>
+    //<sheduleWindow>
+    //  <t>
+    //  <TrainNumber>6396</TrainNumber>
+    //  <TrainType>0</TrainType>
+    //  <StartStation>Крюково</StartStation>
+    //  <EndStation> </EndStation>	
+    //  <StartStationENG>Крюково</StartStationENG>
+    //  <EndStationENG> </EndStationENG>	
+    //  <InDateTime>2017-06-08T13:17:00</InDateTime>                               //время прибытия
+    //  <HereDateTime>15</HereDateTime>                                            //время стоянки
+    //  <OutDateTime>2017-06-08T13:17:00</OutDateTime>                             //время отправки
+    //	<DaysOfGoing></DaysOfGoing>                                                //дни след
+    //  <DaysOfGoingAlias></DaysOfGoingAlias>                                      //дни след. записанные вручную в главном расписании
+    //  <TrackNumber></TrackNumber>
+    //  <Direction>1</Direction>
+    //  <EvTrackNumber></EvTrackNumber>
+    //  <State>0</State>
+    //  <VagonDirection>0</VagonDirection>
+    //  <Enabled>1</Enabled>
+    //	<TypeName>Пригородный</TypeName>
+    //	<TypeAlias>приг</TypeAlias>
+    //	<Addition>Поле дополнения</Addition>
+    //	<Note>Поле дополнения</Note>                                               // список остановок
+    //  </t>
+    //</sheduleWindow>
 
 
     public class XmlSheduleWindowFormatProvider : IFormatProvider
@@ -140,6 +142,9 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("StartStation", startSt),
                     new XElement("EndStation", endSt),
 
+                    new XElement("StartStationENG", uit.StationDeparture.Value ?? string.Empty),
+                    new XElement("EndStationENG", uit.StationArrival.Value ?? string.Empty),
+
                     new XElement("InDateTime", timeArrival),                   //время приб
                     new XElement("HereDateTime", uit.StopTime),                //время стоянки
                     new XElement("OutDateTime", timeDepart),                   //время отпр
@@ -160,8 +165,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocSheduleWindow.info";
-            //xDoc.Save(path);
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocSheduleWindow.info";
+            xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

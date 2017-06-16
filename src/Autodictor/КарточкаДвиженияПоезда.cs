@@ -90,8 +90,8 @@ namespace MainExample
 
             foreach (var Станция in Program.Станции)
             {
-                cBОткуда.Items.Add(Станция);
-                cBКуда.Items.Add(Станция);
+                cBОткуда.Items.Add(Станция.Key);
+                cBКуда.Items.Add(Станция.Key);
             }
 
             cBОткуда.Text = Record.СтанцияОтправления;
@@ -190,8 +190,8 @@ namespace MainExample
                         rB_ПоСтанциям.Checked = true;
                         foreach (var Станция in Program.Станции)
                         {
-                            if (списокСтанцийParse.Contains(Станция))
-                                lB_ПоСтанциям.Items.Add(Станция);
+                            if (списокСтанцийParse.Contains(Станция.Key))
+                                lB_ПоСтанциям.Items.Add(Станция.Key);
                         }
 
                         lB_ПоСтанциям.Enabled = true;
@@ -201,7 +201,7 @@ namespace MainExample
                     {
                         rB_СоВсемиОстановками.Checked = true;
                         foreach (var Станция in Program.Станции)
-                            lB_ПоСтанциям.Items.Add(Станция);
+                            lB_ПоСтанциям.Items.Add(Станция.Key);
 
                         lB_ПоСтанциям.Enabled = true;
                         btnРедактировать.Enabled = true;
@@ -211,8 +211,8 @@ namespace MainExample
                         rB_КромеСтанций.Checked = true;
                         foreach (var Станция in Program.Станции)
                         {
-                            if (списокСтанцийParse.Contains(Станция))
-                                lB_ПоСтанциям.Items.Add(Станция);
+                            if (списокСтанцийParse.Contains(Станция.Key))
+                                lB_ПоСтанциям.Items.Add(Станция.Key);
                         }
 
                         lB_ПоСтанциям.Enabled = true;
@@ -309,7 +309,7 @@ namespace MainExample
             {
                 Примечание = "С остановками: ";
                 foreach (var Станция in Program.Станции)
-                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                     {
                         if (ПерваяСтанция == true)
                             ПерваяСтанция = false;
@@ -323,7 +323,7 @@ namespace MainExample
             {
                 Примечание = "Кроме: ";
                 foreach (var Станция in Program.Станции)
-                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                     {
                         if (ПерваяСтанция == true)
                             ПерваяСтанция = false;
@@ -454,7 +454,7 @@ namespace MainExample
                 {
                     Примечание = "С остановками: ";
                     foreach (var Станция in Program.Станции)
-                        if (lB_ПоСтанциям.Items.Contains(Станция))
+                        if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                         {
                             if (ПерваяСтанция == true)
                                 ПерваяСтанция = false;
@@ -468,7 +468,7 @@ namespace MainExample
                 {
                     Примечание = "Кроме: ";
                     foreach (var Станция in Program.Станции)
-                        if (lB_ПоСтанциям.Items.Contains(Станция))
+                        if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                         {
                             if (ПерваяСтанция == true)
                                 ПерваяСтанция = false;
@@ -699,7 +699,7 @@ namespace MainExample
                             {
                                 rTb.AppendText("Электропоезд движется с остановками на станциях: ");
                                 foreach (var Станция in Program.Станции)
-                                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                                     {
                                         rTb.AppendText(Станция + " ");
                                     }
@@ -708,7 +708,7 @@ namespace MainExample
                             {
                                 rTb.AppendText("Электропоезд движется с остановками кроме станций: ");
                                 foreach (var Станция in Program.Станции)
-                                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                                     {
                                         rTb.AppendText(Станция + " ");
                                     }

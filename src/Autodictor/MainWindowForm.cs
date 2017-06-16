@@ -509,14 +509,14 @@ namespace MainExample
 
 
 
-                string[] НазванияСтанций = Config.Name.Split('-');
-                if (НазванияСтанций.Length == 2)
-                {
-                    Record.СтанцияОтправления = НазванияСтанций[0].Trim();
-                    Record.СтанцияНазначения = НазванияСтанций[1].Trim();
-                }
-                else if (НазванияСтанций.Length == 1)
-                    Record.СтанцияНазначения = НазванияСтанций[0].Trim();
+                //string[] НазванияСтанций = Config.Name.Split('-');
+                //if (НазванияСтанций.Length == 2)
+                //{
+                //    Record.СтанцияОтправления = НазванияСтанций[0].Trim();
+                //    Record.СтанцияНазначения = НазванияСтанций[1].Trim();
+                //}
+                //else if (НазванияСтанций.Length == 1)
+                //    Record.СтанцияНазначения = НазванияСтанций[0].Trim();
 
                 int Часы = 0;
                 int Минуты = 0;
@@ -598,6 +598,24 @@ namespace MainExample
                     }
                 }
 
+
+                string[] НазванияСтанций = Config.Name.Split('-');
+                if (НазванияСтанций.Length == 2)
+                {
+                    Record.СтанцияОтправления = НазванияСтанций[0].Trim();
+                    Record.СтанцияНазначения = НазванияСтанций[1].Trim();
+                }
+                else if (НазванияСтанций.Length == 1)
+                {
+                    if ((Record.БитыАктивностиПолей & 0x04) != 0x00)
+                    {
+                        Record.СтанцияНазначения = НазванияСтанций[0].Trim();
+                    }
+                    else
+                    {
+                        Record.СтанцияОтправления = НазванияСтанций[0].Trim();
+                    }
+                }
 
                 Record.ID = id++;
 
@@ -1659,6 +1677,18 @@ namespace MainExample
                     };
 
 
+                    Func<string, KeyValuePair<string, string>> stationsPars = (station) =>       //index=0 отправл   index=1 прибытие
+                    {
+                        if (string.IsNullOrEmpty(station))
+                        {
+                            return new KeyValuePair<string, string>();
+                        }
+
+                       return new KeyValuePair<string, string>(station,
+                                                               Program.Станции.ContainsKey(station) ? Program.Станции[station] : String.Empty);
+                    };
+
+
                     //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
@@ -1681,6 +1711,8 @@ namespace MainExample
                                 VagonDirection = (VagonDirection)t.TrainPathDirection,
                                 NumberOfTrain = t.Num,
                                 Stations = t.Name,
+                                StationDeparture = stationsPars(t.StationDepart),
+                                StationArrival = stationsPars(t.StationArrival),
                                 Time = timePars(t.ArrivalTime, t.DepartureTime),
                                 TransitTime = transitTimePars(t.ArrivalTime, t.DepartureTime),
                                 DelayTime = null,
@@ -2037,7 +2069,7 @@ namespace MainExample
 
             string actStr = "   ";
 
-            var номерПоезда = (actStr == "СТОЯНКА") ? (data.НомерПоезда + "/" + data.НомерПоезда2) : data.НомерПоезда;
+            var номерПоезда = data.НомерПоезда;
             if ((data.БитыАктивностиПолей & 0x14) == 0x14)
             {
                 actStr = "СТОЯНКА";
@@ -2129,6 +2161,11 @@ namespace MainExample
             }
 
 
+            var stationDepartMyltiLang = new KeyValuePair<string, string>(data.СтанцияОтправления,
+                                         Program.Станции.ContainsKey(data.СтанцияОтправления) ? Program.Станции[data.СтанцияОтправления] : String.Empty);
+
+            var stationArrivalMyltiLang = new KeyValuePair<string, string>(data.СтанцияНазначения,
+                                         Program.Станции.ContainsKey(data.СтанцияНазначения) ? Program.Станции[data.СтанцияНазначения] : String.Empty);
 
 
             UniversalInputType mapData;
@@ -2147,6 +2184,8 @@ namespace MainExample
                     DelayTime = data.ВремяЗадержки,
                     ExpectedTime = data.ОжидаемоеВремя,
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
+                    StationDeparture = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationDepartMyltiLang : new KeyValuePair<string, string>(),
+                    StationArrival = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationArrivalMyltiLang : new KeyValuePair<string, string>(),
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
@@ -2169,6 +2208,8 @@ namespace MainExample
                     DelayTime = data.ВремяЗадержки,
                     ExpectedTime = data.ОжидаемоеВремя,
                     Stations = data.НазваниеПоезда,
+                    StationDeparture= stationDepartMyltiLang,
+                    StationArrival = stationArrivalMyltiLang,
                     Note = data.Примечание,
                     TypeTrain = typeTrain,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
@@ -2942,7 +2983,7 @@ namespace MainExample
                                 {
                                     logMessage += "Электропоезд движется с остановками на станциях: ";
                                     foreach (var Станция in Program.Станции)
-                                        if (списокСтанцийParse.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция.Key))
                                             logMessage += Станция + " ";
 
                                     if (Program.FilesFolder.Contains("СОстановками"))
@@ -2958,12 +2999,12 @@ namespace MainExample
                                     }
 
                                     foreach (var Станция in Program.Станции)
-                                        if (списокСтанцийParse.Contains(Станция))
-                                            if (Program.FilesFolder.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция.Key))
+                                            if (Program.FilesFolder.Contains(Станция.Key))
                                             {
                                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                                 {
-                                                    ИмяВоспроизводимогоФайла = Станция,
+                                                    ИмяВоспроизводимогоФайла = Станция.Key,
                                                     Язык = язык,
                                                     ParentId = формируемоеСообщение.Id,
                                                     RootId = формируемоеСообщение.SoundRecordId,
@@ -2975,7 +3016,7 @@ namespace MainExample
                                 {
                                     logMessage += "Электропоезд движется с остановками кроме станций: ";
                                     foreach (var Станция in Program.Станции)
-                                        if (списокСтанцийParse.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция.Key))
                                             logMessage += Станция + " ";
 
                                     if (Program.FilesFolder.Contains("СОстановкамиКроме"))
@@ -2991,12 +3032,12 @@ namespace MainExample
                                     }
 
                                     foreach (var Станция in Program.Станции)
-                                        if (списокСтанцийParse.Contains(Станция))
-                                            if (Program.FilesFolder.Contains(Станция))
+                                        if (списокСтанцийParse.Contains(Станция.Key))
+                                            if (Program.FilesFolder.Contains(Станция.Key))
                                             {
                                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                                 {
-                                                    ИмяВоспроизводимогоФайла = Станция,
+                                                    ИмяВоспроизводимогоФайла = Станция.Key,
                                                     Язык = язык,
                                                     ParentId = формируемоеСообщение.Id,
                                                     RootId = формируемоеСообщение.SoundRecordId,
@@ -3461,7 +3502,7 @@ namespace MainExample
             return Данные;
         }
 
-
+        
         private void ОбработкаРучногоВоспроизведенияШаблона(ref SoundRecord Данные, string key)
         {
             foreach (var формируемоеСообщение in Данные.СписокФормируемыхСообщений)

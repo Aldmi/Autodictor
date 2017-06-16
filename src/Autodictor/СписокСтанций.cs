@@ -18,10 +18,10 @@ namespace MainExample
             string[] ВыбранныеСтанции = СписокСтанций.Replace(" ", "").Split(',');
 
             foreach (var Станция in Program.Станции)
-                if (ВыбранныеСтанции.Contains(Станция))
-                    lVВыбранныеСтанции.Items.Add(Станция);
+                if (ВыбранныеСтанции.Contains(Станция.Key))
+                    lVВыбранныеСтанции.Items.Add(Станция.Key);
                 else
-                    lVОбщийСписок.Items.Add(Станция);
+                    lVОбщийСписок.Items.Add(Станция.Key);
         }
 
         private void btnВыбратьВсе_Click(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace MainExample
 
             lVВыбранныеСтанции.Items.Clear();
             foreach (var Станция in Program.Станции)
-                lVВыбранныеСтанции.Items.Add(Станция);
+                lVВыбранныеСтанции.Items.Add(Станция.Key);
         }
 
         private void btnУдалитьВсе_Click(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace MainExample
 
             lVОбщийСписок.Items.Clear();
             foreach (var Станция in Program.Станции)
-                lVОбщийСписок.Items.Add(Станция);
+                lVОбщийСписок.Items.Add(Станция.Key);
         }
 
         private void btnВыбратьВыделенные_Click(object sender, EventArgs e)
@@ -77,8 +77,8 @@ namespace MainExample
                 TempList.Add(lVВыбранныеСтанции.Items[i].SubItems[0].Text);
 
             foreach (var Станция in Program.Станции)
-                if (TempList.Contains(Станция))
-                    Result.Add(Станция);
+                if (TempList.Contains(Станция.Key))
+                    Result.Add(Станция.Key);
 
             return Result;
         }

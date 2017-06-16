@@ -24,7 +24,7 @@ namespace MainExample
         public static List<string> НомераПоездов = new List<string>();
 
         public static string ИнфСтрокаНаТабло = "";
-        public static List<string> Станции = new List<string>();
+        public static Dictionary<string, string> Станции = new Dictionary<string, string>();  //Key - название на RU, Value - название на ENG
 
         public static byte ПолучитьНомерПути(string НомерПути)
         {
@@ -166,7 +166,17 @@ namespace MainExample
                 {
                     string line;
                     while ((line = file.ReadLine()) != null)
-                        Станции.Add(line);
+                    {
+                        var str = line.Split(':');
+                        if (str.Length == 2)
+                        {
+                            Станции[str[0].Trim()]= str[1].Trim();           //RU,ENG название станции
+                        }
+                        else
+                        {
+                            Станции[str[0].Trim()] = String.Empty;
+                        }                      
+                    }
 
                     if (file != null)
                         file.Close();

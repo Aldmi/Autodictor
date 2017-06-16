@@ -34,7 +34,9 @@ namespace MainExample
         public int ID;                    //Id
         public string Num;                //Номер поезда
         public string Num2;               //Номер поезда 2 для транзита
-        public string Name;               //Название
+        public string Name;               //Название поезда
+        public string StationDepart;      //станция отправления
+        public string StationArrival;     //станция прибытия
         public string ArrivalTime;        //прибытие
         public string StopTime;           //стоянка
         public string DepartureTime;      //отправление
@@ -185,6 +187,8 @@ namespace MainExample
             Данные.Num2 = "";
             Данные.Addition = "";
             Данные.Name = "";
+            Данные.StationArrival = "";
+            Данные.StationDepart = "";
             Данные.ArrivalTime = "00:00";
             Данные.StopTime = "00:00";
             Данные.DepartureTime = "00:00";
@@ -348,6 +352,15 @@ namespace MainExample
                             }
 
 
+                            Данные.StationDepart = String.Empty;
+                            Данные.StationArrival = String.Empty;
+                            if (Settings.Length >= 23)
+                            {
+                                Данные.StationDepart = Settings[22];
+                                Данные.StationArrival = Settings[23];
+                            }
+
+
 
                             TrainTableRecords.Add(Данные);
                             Program.НомераПоездов.Add(Данные.Num);
@@ -396,7 +409,10 @@ namespace MainExample
 
                             TrainTableRecords[i].Num2 + ";" +
                             TrainTableRecords[i].FollowingTime + ";" +
-                            TrainTableRecords[i].DaysAlias;
+                            TrainTableRecords[i].DaysAlias + ";" +
+
+                            TrainTableRecords[i].StationDepart + ";" +
+                            TrainTableRecords[i].StationArrival;
 
                         DumpFile.WriteLine(line);
                     }

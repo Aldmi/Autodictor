@@ -583,7 +583,7 @@ namespace MainExample
                                 string Примечание = Record.Примечание.Replace("С остановками: ", "");
                                 string[] СписокСтанций = Примечание.Split(',');
                                 foreach (var Станция in СписокСтанций)
-                                    if (Program.Станции.Contains(Станция))
+                                    if (Program.Станции.Keys.Contains(Станция))
                                         lB_ПоСтанциям.Items.Add(Станция);
                             }
                             else if (Record.Примечание.Contains("Кроме: "))
@@ -592,7 +592,7 @@ namespace MainExample
                                 string Примечание = Record.Примечание.Replace("Кроме: ", "");
                                 string[] СписокСтанций = Примечание.Split(',');
                                 foreach (var Станция in СписокСтанций)
-                                    if (Program.Станции.Contains(Станция))
+                                    if (Program.Станции.Keys.Contains(Станция))
                                         lB_ПоСтанциям.Items.Add(Станция);
                             }
                             else

@@ -34,7 +34,9 @@ namespace CommunicationDevices.DataProviders
         public string PathNumber { get; set; }                       //Номер пути
         public string Event { get; set; }                            //Событие (отправление/прибытие/Транзит)
         public string Addition { get; set; }                         //Дополнение (свободная строка)
-        public string Stations { get; set; }                         //Станции Отправления-Назначения.
+        public string Stations { get; set; }                         // Станции Отправления-Прибытия. (название поезда)
+        public KeyValuePair<string, string> StationDeparture { get; set; }   //Станции отправления. Key - RU    Value- eng
+        public KeyValuePair<string, string> StationArrival { get; set; }     //Станции прибытия. Key - RU    Value- eng
         public string Note { get; set; }                             //Примечание.
         public string DaysFollowing { get; set; }                    //Дни следования
         public string DaysFollowingAlias { get; set; }               //Дни следования, заданные в строке в нужном формате
@@ -73,6 +75,8 @@ namespace CommunicationDevices.DataProviders
             Event = initializeData.Event;
             Addition = initializeData.Addition;
             Stations = initializeData.Stations;
+            StationArrival = initializeData.StationArrival;
+            StationDeparture = initializeData.StationDeparture;
             Note= initializeData.Note;
             DaysFollowing = initializeData.DaysFollowing;
             DaysFollowingAlias = initializeData.DaysFollowingAlias;

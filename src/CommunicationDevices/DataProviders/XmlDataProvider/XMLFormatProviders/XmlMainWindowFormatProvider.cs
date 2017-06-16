@@ -7,28 +7,30 @@ using System.Xml.Linq;
 namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 {
 
-//<? xml version="1.0" encoding="utf-8" standalone="yes"?>
-//<mainWindow>
-//  <t>
-//    <TrainNumber>6396</TrainNumber>
-//    <TrainType>0</TrainType>
-//    <StartStation>Крюково</StartStation>
-//    <EndStation> </EndStation>
-//    <RecDateTime></RecDateTime>
-//    <SndDateTime>2017-06-17T00:34:00</SndDateTime>
-//    <EvRecTime></EvRecTime>
-//    <EvSndTime>2017-06-17T00:34:00</EvSndTime>
-//    <TrackNumber></TrackNumber>
-//    <Direction>1</Direction>
-//    <EvTrackNumber></EvTrackNumber>
-//    <State>0</State>
-//    <VagonDirection>0</VagonDirection>
-//    <Enabled>1</Enabled>
-//	<TypeName>Пригородный</TypeName>
-//	<TypeAlias>приг</TypeAlias>
-//	<Addition>Поле дополнения</Addition>
-//  </t>
-//</mainWindow>
+    //<? xml version="1.0" encoding="utf-8" standalone="yes"?>
+    //<mainWindow>
+    //  <t>
+    //    <TrainNumber>6396</TrainNumber>
+    //    <TrainType>0</TrainType>
+    //    <StartStation>Крюково</StartStation>
+    //    <EndStation> </EndStation>
+    //    <StartStationENG>Крюково</StartStationENG>
+    //    <EndStationENG> </EndStationENG>	
+    //    <RecDateTime></RecDateTime>
+    //    <SndDateTime>2017-06-17T00:34:00</SndDateTime>
+    //    <EvRecTime></EvRecTime>
+    //    <EvSndTime>2017-06-17T00:34:00</EvSndTime>
+    //    <TrackNumber></TrackNumber>
+    //    <Direction>1</Direction>
+    //    <EvTrackNumber></EvTrackNumber>
+    //    <State>0</State>
+    //    <VagonDirection>0</VagonDirection>
+    //    <Enabled>1</Enabled>
+    //	<TypeName>Пригородный</TypeName>
+    //	<TypeAlias>приг</TypeAlias>
+    //	<Addition>Поле дополнения</Addition>
+    //  </t>
+    //</mainWindow>
 
 
 
@@ -138,6 +140,10 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("TrainType", trainType),
                         new XElement("StartStation", startSt),
                         new XElement("EndStation", endSt),
+
+                        new XElement("StartStationENG", uit.StationDeparture.Value),
+                        new XElement("EndStationENG", uit.StationArrival.Value),
+
                         new XElement("RecDateTime", timeArrival),                //время приб
                         new XElement("SndDateTime", timeDepart),                 //время отпр
                         new XElement("EvRecTime", timeArrival),
@@ -157,8 +163,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            //xDoc.Save(path);
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

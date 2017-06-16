@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 
@@ -33,8 +34,8 @@ namespace MainExample
 
             foreach (var Станция in Program.Станции)
             {
-                cBОткуда.Items.Add(Станция);
-                cBКуда.Items.Add(Станция);
+                cBОткуда.Items.Add(Станция.Key);
+                cBКуда.Items.Add(Станция.Key);
             }
 
             rBВремяДействияС.Checked = false;
@@ -190,7 +191,7 @@ namespace MainExample
                 string Примечание = расписаниеПоезда.Примечание.Replace("С остановками: ", "");
                 string[] СписокСтанций = Примечание.Split(',');
                 foreach (var Станция in СписокСтанций)
-                    if (Program.Станции.Contains(Станция))
+                    if (Program.Станции.Keys.Contains(Станция))
                         lVСписокСтанций.Items.Add(Станция);
             }
             else if (расписаниеПоезда.Примечание.Contains("Кроме: "))
@@ -199,7 +200,7 @@ namespace MainExample
                 string Примечание = расписаниеПоезда.Примечание.Replace("Кроме: ", "");
                 string[] СписокСтанций = Примечание.Split(',');
                 foreach (var Станция in СписокСтанций)
-                    if (Program.Станции.Contains(Станция))
+                    if (Program.Станции.Keys.Contains(Станция))
                         lVСписокСтанций.Items.Add(Станция);
             }
             else
@@ -226,6 +227,19 @@ namespace MainExample
                 РасписаниеПоезда.Name = cBОткуда.Text + " - " + cBКуда.Text;
             else
                 РасписаниеПоезда.Name = cBКуда.Text;
+
+
+            if (rBТранзит.Checked)
+            {
+                РасписаниеПоезда.StationDepart = cBОткуда.Text;
+                РасписаниеПоезда.StationArrival = cBКуда.Text;
+            }
+            else
+            if (rBОтправление.Checked)
+            {
+                РасписаниеПоезда.StationDepart = cBОткуда.Text;
+            }
+
 
             if (rBВремяДействияС.Checked == true)
             {
