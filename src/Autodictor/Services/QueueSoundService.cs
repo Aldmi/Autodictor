@@ -270,7 +270,7 @@ namespace MainExample.Services
                         {
                             if (peekItem.ОчередьШаблона.Any())
                             {
-                                ElementsOnTemplatePlaying = peekItem.ОчередьШаблона.ToList();//DEBUG
+                                ElementsOnTemplatePlaying = peekItem.ОчередьШаблона.ToList();
                                 var item = peekItem.ОчередьШаблона.Dequeue();
 
                                 if ((CurrentSoundMessagePlaying == null) ||

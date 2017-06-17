@@ -111,13 +111,6 @@ namespace MainExample
 
                 var inData = new UniversalInputType {Message = sendStr};
 
-                //DEBUG---------------------------------------------------
-                inData.TableData = new List<UniversalInputType>();
-                inData.Command = Command.Clear;
-                _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
-                return;
-                //DEBUG----------------------------------------------------
-
                 switch (type)
                 {
                     case "Путевое": //TODO: парсить Message для заполненния полей inData.

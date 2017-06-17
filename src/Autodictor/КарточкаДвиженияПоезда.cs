@@ -894,7 +894,7 @@ namespace MainExample
                 СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                 {
                     Id = 2000,
-                    Приоритет = Priority.Midlle, 
+                    Приоритет = Priority.Hight, 
                     SoundRecordId = Record.ID,
                     Шаблон = ФормируемоеСообщение,
                     ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
