@@ -41,7 +41,7 @@
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания."  Binding="ToPath:5">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:5">
 	      <ExchangeRules>    
 		    <Table Size= "3">
 				   <Rule Format = "Windows-1251">
@@ -102,7 +102,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЛимитСтрокТаблицы:15" ProviderType="Xml_tlist"  
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" ProviderType="xml_mainWindow"  
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -162,6 +162,8 @@
 			 (ОТПР.+ПУТЬ:1,2,3)
              ("Отменен_БлокВремОгр/ЗадержкаПрибытия_БлокВремОгр/ЗадержкаОтправления_БлокВремОгр") - Если указанно ограничение "МеньшеТекВремени" или "БольшеТекВремени" и поезд отмененн/задерживается, то временные огранчиения не учитываются
 			 ("МеньшеТекВремени/БольшеТекВремени")
+			 
+			 (ЛимитСтрокТаблицы:15)
 
 			 -->
 
@@ -178,3 +180,9 @@
 						   Host: cms.indigointeractive.ru +
 						   Connection: Keep-Alive +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"' -->
+
+<!--ProviderType= xml_tlist-->		
+<!--ProviderType= xml_mainWindow-->		
+<!--ProviderType= xml_sheduleWindow-->						   
+					   
+						   

@@ -354,9 +354,6 @@ namespace MainExample
 
 
 
-
-
-
         // Обработка нажатия кнопки блокировки/разрешения работы
         private void btnБлокировка_Click(object sender, EventArgs e)
         {
@@ -429,9 +426,8 @@ namespace MainExample
             СтатическиеЗвуковыеСообщения.Clear();
 
             int id = 0;
-            //СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(-1), hour => (hour >= 21 && hour <= 23), ref id); // на след. сутки на 2 первых часа
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now, null, ref id);                                        // на тек. сутки
-            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 2), ref id); // на след. сутки на 2 первых часа
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
 
             СозданиеСтатическихЗвуковыхФайлов();
         }
@@ -480,18 +476,8 @@ namespace MainExample
 
                 Record.ИменаФайлов = new string[0];
 
-                //DEBUG-------------
-                //if (Record.НомерПоезда == "7")
-                //{
-                //    //DateTime НачалоДействия = new DateTime(1900, 1, 1);
-                //    //DateTime КонецДействия = new DateTime(2100, 1, 1);
 
-                //}
-                //DEBUG-------------
-
-                var времяНачалаДействияРасписания = Config.ВремяНачалаДействияРасписания;
-                var времяОкончанияДействияРасписания = Config.ВремяОкончанияДействияРасписания;
-                ПланРасписанияПоезда планРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(Config.Days, времяНачалаДействияРасписания, времяОкончанияДействияРасписания);
+                ПланРасписанияПоезда планРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(Config.Days, Config.ВремяНачалаДействияРасписания, Config.ВремяОкончанияДействияРасписания);
                 if ((РаботаПоНомеруДняНедели == 7) || (планРасписанияПоезда.ПолучитьРежимРасписания() != РежимРасписанияДвиженияПоезда.ПоДням) || (Record.ТипПоезда == ТипПоезда.Пассажирский) || (Record.ТипПоезда == ТипПоезда.Скоростной) || (Record.ТипПоезда == ТипПоезда.Скорый))
                 {
                     var активностьНаДень = планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(день.Month - 1), (byte)(день.Day - 1), день);
@@ -501,28 +487,17 @@ namespace MainExample
                     if (ограничениеВремениПоЧасам != null)
                     {
                         DateTime времяПрибытия;
-                        DateTime времяОтправления;
-                        var arrivalTimeTryParse = DateTime.TryParse(Config.ArrivalTime, out времяПрибытия);
-                        var departureTimeTryParse = DateTime.TryParse(Config.DepartureTime, out времяОтправления);
-
-                        if (arrivalTimeTryParse && departureTimeTryParse) //ТРАНЗИТ ограничение по ПРИБ
+                        if (DateTime.TryParse(Config.ArrivalTime, out времяПрибытия))
                         {
                             if (!ограничениеВремениПоЧасам(времяПрибытия.Hour))
                                 continue;
                         }
-                        else
-                        {
-                            if (arrivalTimeTryParse)                       //ПРИБ ограничение по ПРИБ
-                            {
-                                if (!ограничениеВремениПоЧасам(времяПрибытия.Hour))
-                                    continue;
-                            }
 
-                            if (departureTimeTryParse)                      //ОТПР ограничение по ОТПР
-                            {
-                                if (!ограничениеВремениПоЧасам(времяОтправления.Hour))
-                                    continue;
-                            }
+                        DateTime времяОтправления;
+                        if (DateTime.TryParse(Config.DepartureTime, out времяОтправления))
+                        {
+                            if (!ограничениеВремениПоЧасам(времяОтправления.Hour))
+                                continue;
                         }
                     }
                 }
@@ -914,7 +889,7 @@ namespace MainExample
                         lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
                         this.lVПрибытие.Items.Add(lvi2);
                     }
-                    
+
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x14)
                     {
                         ListViewItem lvi3 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
@@ -1050,6 +1025,15 @@ namespace MainExample
                         if (SoundRecords.Keys.Contains(Key) == true)
                         {
                             SoundRecord Данные = SoundRecords[Key];
+
+                            //DEBUG-----------------------------
+                            if (Данные.НомерПоезда == "6768")
+                            {
+
+                            }
+                            //DEBUG-----------------------------
+
+
                             switch (Данные.СостояниеКарточки)
                             {
                                 default:
@@ -1430,10 +1414,16 @@ namespace MainExample
                         DateTime СамоеРаннееВремя = DateTime.Now, СамоеПозднееВремя = DateTime.Now;
                         for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
                         {
+                            //DEBUG-----------------------------
+                            if (Данные.НомерПоезда == "6768")
+                            {
+
+                            }
+                            //DEBUG-----------------------------
+
+
                             var ФормируемоеСообщение = Данные.СписокФормируемыхСообщений[j];
-                            DateTime ВремяСобытия = ФормируемоеСообщение.ПривязкаКВремени == 0
-                                ? Данные.ВремяПрибытия
-                                : Данные.ВремяОтправления;
+                            DateTime ВремяСобытия = ФормируемоеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
                             ВремяСобытия = ВремяСобытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
                             if (j == 0)
                             {
@@ -1657,7 +1647,6 @@ namespace MainExample
                     Func<string, string, DateTime> timePars = (arrival, depart) =>
                     {
                         DateTime outData;
-
                         if (DateTime.TryParse(arrival, out outData))
                             return outData;
 
@@ -1666,7 +1655,6 @@ namespace MainExample
 
                         return DateTime.MinValue;
                     };
-
 
                     Func<string, string, string> eventPars = (arrivalTime, departTime) =>
                     {
@@ -1692,11 +1680,10 @@ namespace MainExample
                     Func<string, string, Dictionary<string, DateTime>> transitTimePars = (arrivalTime, departTime) =>
                     {
                         var transitTime = new Dictionary<string, DateTime>();
-
                         if ((!string.IsNullOrEmpty(arrivalTime)) && (!string.IsNullOrEmpty(departTime)))
                         {
-                            transitTime["приб"] = timePars(arrivalTime, null);
-                            transitTime["отпр"] = timePars(null, departTime);
+                            transitTime["приб"] = timePars(arrivalTime, String.Empty);
+                            transitTime["отпр"] = timePars(departTime, String.Empty);
                         }
 
                         return transitTime;
@@ -1706,9 +1693,9 @@ namespace MainExample
                     //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
-                        int stopTime = 0;
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
+                            int stopTime = 0;
                             var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
                             {
                                 IsActive = t.Active,
@@ -1721,7 +1708,7 @@ namespace MainExample
                                             (t.ТипПоезда == ТипПоезда.Ласточка) ? TypeTrain.Swallow :
                                             (t.ТипПоезда == ТипПоезда.РЭКС) ? TypeTrain.Rex : TypeTrain.None,
                                 Note = t.Примечание, //C остановками: ...
-                                PathNumber =  ПолучитьНомерПутиПоДнямНедели(t),
+                                PathNumber = ПолучитьНомерПутиПоДнямНедели(t),
                                 VagonDirection = (VagonDirection)t.TrainPathDirection,
                                 NumberOfTrain = t.Num,
                                 Stations = t.Name,
@@ -1959,7 +1946,6 @@ namespace MainExample
             }
         }
 
-
         private void CheckAutoApdate()
         {
             if (!Program.Настройки.РазрешениеАвтообновленияРасписания)
@@ -1971,10 +1957,10 @@ namespace MainExample
 
             if ((DateTime.Now.Hour == hourAutoApdate) && (DateTime.Now.Minute == minuteAutoApdate) && (DateTime.Now.Second == secondAutoApdate))
             {
-                //Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 btnОбновитьСписок_Click(null, null);
             }
         }
+
 
 
         private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
@@ -2077,7 +2063,7 @@ namespace MainExample
 
         private static UniversalInputType MapSoundRecord2UniveralInputType(SoundRecord data, bool pathPermission, bool isShow)
         {
-            DateTime time= DateTime.MinValue;
+            DateTime time = DateTime.MinValue;
             Dictionary<string, DateTime> transitTimes = new Dictionary<string, DateTime>();
 
             string actStr = "   ";
@@ -2195,7 +2181,7 @@ namespace MainExample
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
-                    Command = command,  
+                    Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };
             }
@@ -2344,9 +2330,8 @@ namespace MainExample
                                         break;
                                 }
 
-
                                 //Изменение номера поезда
-                                switch (listView.Name)
+                                switch (listView.Name)        //TODO: Проверить на правильность!!!
                                 {
                                     case "listView1":
                                         if (listView.Items[item].SubItems[1].Text != Данные.НомерПоезда)

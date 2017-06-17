@@ -274,11 +274,12 @@ namespace MainExample
             }
             else
             {
-                if (dTPОтправление.Value > dTPПрибытие.Value)
+                var времяПрибытия = dTPПрибытие.Value;
+                if (dTPОтправление.Value > времяПрибытия)
                 {
-                    dTPПрибытие.Value = dTPПрибытие.Value.AddDays(1);
+                    времяПрибытия = времяПрибытия.AddDays(1);
                 }
-                РасписаниеПоезда.StopTime = (dTPПрибытие.Value - dTPОтправление.Value).TotalMinutes.ToString("0");
+                РасписаниеПоезда.StopTime = (времяПрибытия - dTPОтправление.Value).TotalMinutes.ToString("0");
 
                 РасписаниеПоезда.ArrivalTime = dTPОтправление.Value.ToString("HH:mm");
                 РасписаниеПоезда.DepartureTime = dTPПрибытие.Value.ToString("HH:mm");
