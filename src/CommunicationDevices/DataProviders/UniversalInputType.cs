@@ -37,10 +37,12 @@ namespace CommunicationDevices.DataProviders
         public string Stations { get; set; }                         //Станции Отправления-Назначения.
         public string Note { get; set; }                             //Примечание.
         public string DaysFollowing { get; set; }                    //Дни следования
+        public string DaysFollowingAlias { get; set; }               //Дни следования, заданные в строке в нужном формате
         public DateTime Time { get; set; }                           //Время
         public Dictionary<string, DateTime> TransitTime { get; set; } //Транзитное время ["приб"]/["отпр"]
         public DateTime? DelayTime { get; set; }                     //Время задержки (прибытия или отправления поезда)
         public DateTime ExpectedTime { get; set; }                   //Ожидаемое время (Время + Время задержки)
+        public int StopTime { get; set; }                            //время стоянки (мин)
         public VagonDirection VagonDirection { get; set; }           //Нумерация вагона (с головы, с хвоста)
         public string Message { get; set; }                          //Сообщение
 
@@ -72,10 +74,13 @@ namespace CommunicationDevices.DataProviders
             Addition = initializeData.Addition;
             Stations = initializeData.Stations;
             Note= initializeData.Note;
+            DaysFollowing = initializeData.DaysFollowing;
+            DaysFollowingAlias = initializeData.DaysFollowingAlias;
             Time = initializeData.Time;
             TransitTime = initializeData.TransitTime;
             DelayTime = initializeData.DelayTime;
             ExpectedTime = initializeData.ExpectedTime;
+            StopTime = initializeData.StopTime;
             Message = initializeData.Message;
             EmergencySituation = initializeData.EmergencySituation;
             Command = initializeData.Command;

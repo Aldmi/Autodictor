@@ -101,16 +101,16 @@
 
 
 
-<!-- <DevicesWithHttp> -->
-	 <!-- <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="Xml_tlist"   -->
-	              <!-- Headers='Method:POST +  -->
-				           <!-- User-Agent: Mozilla/3.0 (compatible; Indy Library) + -->
-						   <!-- Accept: text/html, */* + -->
-						   <!-- Connection: Keep-Alive + -->
-						   <!-- Content-Type: multipart/form-data + -->
-						   <!-- Content-Disposition: form-data; name="username"; filename="xDoc.xml"' -->
-						   <!-- /> -->
-<!-- </DevicesWithHttp> -->
+<DevicesWithHttp>
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" ProviderType="xml_mainWindow"  
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+</DevicesWithHttp>
 
 </Root>
 
@@ -180,3 +180,9 @@
 						   Host: cms.indigointeractive.ru +
 						   Connection: Keep-Alive +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"' -->
+
+<!--ProviderType= xml_tlist-->		
+<!--ProviderType= xml_mainWindow-->		
+<!--ProviderType= xml_sheduleWindow-->						   
+					   
+						   

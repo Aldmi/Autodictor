@@ -1706,6 +1706,7 @@ namespace MainExample
                     //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
+                        int stopTime = 0;
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
                             var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
@@ -1727,8 +1728,10 @@ namespace MainExample
                                 Time = timePars(t.ArrivalTime, t.DepartureTime),
                                 TransitTime = transitTimePars(t.ArrivalTime, t.DepartureTime),
                                 DelayTime = null,
+                                StopTime = int.TryParse(t.StopTime, out stopTime) ? stopTime : 0,
                                 ExpectedTime = timePars(t.ArrivalTime, t.DepartureTime),
                                 DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания(),
+                                DaysFollowingAlias = t.DaysAlias,
                                 Addition = t.Addition,
                                 Command = Command.None,
                                 EmergencySituation = 0x00

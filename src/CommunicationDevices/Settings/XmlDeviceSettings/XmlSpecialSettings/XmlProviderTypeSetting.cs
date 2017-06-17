@@ -1,7 +1,7 @@
 ﻿namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum XmlType {None, XmlTlist }
+    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow }
     
     
 
@@ -30,6 +30,16 @@
             if (providerType.ToLower().Contains("xml_tlist"))
             {
                 XmlType= XmlSpecialSettings.XmlType.XmlTlist;            
+            }
+            else
+            if (providerType.ToLower().Contains("xml_mainwindow"))
+            {
+                XmlType = XmlSpecialSettings.XmlType.XmlMainWindow;
+            }
+            else
+            if (providerType.ToLower().Contains("xml_shedulewindow"))
+            {
+                XmlType = XmlSpecialSettings.XmlType.XmlSheduleWindow;
             }
         }
 

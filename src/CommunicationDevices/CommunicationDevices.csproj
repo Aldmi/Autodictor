@@ -108,7 +108,11 @@
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\XmlExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementWriteDataProvider.cs" />
-    <Compile Include="DataProviders\XmlDataProvider\XmlTlistWriteDataProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\IFormatProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlSheduleWindowFormatProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlMainWindowFormatProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlTListFormatProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\StreamWriteDataProvider.cs" />
     <Compile Include="Rules\ExchangeRules\BaseExchangeRule.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesExchangeSpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ByRulesTableExchangeSpBehavior.cs" />

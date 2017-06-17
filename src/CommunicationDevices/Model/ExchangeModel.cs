@@ -26,6 +26,7 @@ using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
 using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.DataProviders.XmlDataProvider;
+using CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
 using CommunicationDevices.Rules.ExchangeRules;
@@ -877,10 +878,24 @@ namespace CommunicationDevices.Model
                     case "HttpTable":
                         maxCountFaildRespowne = 3;
 
-                        // создание провайдера по формату XML "Tlist"
-                        if (providerType?.XmlType != null && providerType.XmlType.Value == XmlType.XmlTlist)
+                        if (providerType?.XmlType != null)
                         {
-                            IExchangeDataProvider<UniversalInputType, byte> provider = new XmlTlistWriteDataProvider();
+                            IExchangeDataProvider<UniversalInputType, byte> provider = null;
+                            switch (providerType.XmlType.Value)
+                            {
+                                case XmlType.XmlTlist:
+                                    provider = new StreamWriteDataProvider(new XmlTListFormatProvider());
+                                    break;
+
+                                case XmlType.XmlMainWindow:
+                                    provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider());
+                                    break;
+
+                                case XmlType.XmlSheduleWindow:
+                                    provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider());
+                                    break;
+                            }
+
                             behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);
                             DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, behavior, binding.BindingType, setting));
                         }
