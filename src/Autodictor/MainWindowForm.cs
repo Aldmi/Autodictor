@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
@@ -1261,6 +1263,9 @@ namespace MainExample
                 {
                     if (Данные.Активность == true)
                     {
+                       if ((Данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                             Данные.СписокНештатныхСообщений.Clear();
+
                         // Проверка на нештатные ситуации
                         if ((Данные.БитыНештатныхСитуаций & 0x0F) != 0x00)
                         {
@@ -1384,10 +1389,9 @@ namespace MainExample
                             }
                             break;
                         }
-                        else
-                        {
-                            Данные.СписокНештатныхСообщений.Clear();
-                        }
+
+
+
 
                         // Проверка на наличие шаблонов оповещения
                         if (Данные.СписокФормируемыхСообщений.Count == 0)
@@ -2296,31 +2300,34 @@ namespace MainExample
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListView listView = sender as ListView;
-
             try
             {
                 ListView.SelectedIndexCollection sic = listView.SelectedIndices;
-
                 foreach (int item in sic)
                 {
                     if (item <= SoundRecords.Count)
                     {
-                        string Key = listView.Items[item].SubItems[0].Text;
-                        string actStr = "";
+                        string key = listView.Items[item].SubItems[0].Text;
+                        string keyOld = key;
 
-                        if (SoundRecords.Keys.Contains(Key) == true)
+                        if (SoundRecords.Keys.Contains(key) == true)
                         {
-                            SoundRecord Данные = SoundRecords[Key];
+                            SoundRecord Данные = SoundRecords[key];
 
-                            КарточкаДвиженияПоезда Карточка = new КарточкаДвиженияПоезда(Данные, Key);
+                            КарточкаДвиженияПоезда Карточка = new КарточкаДвиженияПоезда(Данные, key);
                             if (Карточка.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                             {
                                 SoundRecord СтарыеДанные = Данные;
                                 Данные = Карточка.ПолучитьИзмененнуюКарточку();
-                                Данные = ИзменениеДанныхВКарточке(СтарыеДанные, Данные, Key);
+                                Данные = ИзменениеДанныхВКарточке(СтарыеДанные, Данные, key);
 
+                                if (DateTime.ParseExact(key, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo()) != Данные.Время)
+                                {
+                                    key = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                                    listView.Items[item].SubItems[0].Text = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                                }
 
-                                //Изменение названия поезда
+                            //Изменение названия поезда
                                 switch (listView.Name)
                                 {
                                     case "listView1":
@@ -2364,7 +2371,7 @@ namespace MainExample
 
                                 if (Данные.БитыНештатныхСитуаций != СтарыеДанные.БитыНештатныхСитуаций)
                                 {
-                                    ЗаполнениеСпискаНештатныхСитуаций(СтарыеДанные, Данные, Key);
+                                    ЗаполнениеСпискаНештатныхСитуаций(Данные, key);
                                 }
 
 
@@ -2391,9 +2398,10 @@ namespace MainExample
 
 
                                 //Обновить Время ПРИБ
+                                var actStr = "";
                                 if ((Данные.БитыАктивностиПолей & 0x04) != 0x00)
                                 {
-                                    ЗаполнениеСпискаНештатныхСитуаций(СтарыеДанные, Данные, Key);
+                                    ЗаполнениеСпискаНештатныхСитуаций(Данные, key);
 
                                     actStr = Данные.ВремяПрибытия.ToString("HH:mm");
                                     switch (listView.Name)
@@ -2414,7 +2422,7 @@ namespace MainExample
                                 //Обновить Время ОТПР
                                 if ((Данные.БитыАктивностиПолей & 0x10) != 0x00)
                                 {
-                                    ЗаполнениеСпискаНештатныхСитуаций(СтарыеДанные, Данные, Key);
+                                    ЗаполнениеСпискаНештатныхСитуаций(Данные, key);
 
                                     actStr = Данные.ВремяОтправления.ToString("HH:mm");
                                     switch (listView.Name)
@@ -2437,7 +2445,7 @@ namespace MainExample
                                 }
 
 
-                                if (SoundRecords.ContainsKey(Key) == false)  // поменяли время приб. или отпр. т.е. изменили ключ записи. 
+                                if (SoundRecords.ContainsKey(keyOld) == false)  // поменяли время приб. или отпр. т.е. изменили ключ записи. Т.е. удалили запись под старым ключем.
                                 {
                                     ОбновитьСписокЗвуковыхСообщенийВТаблице(); //Перерисуем список на UI.
                                 }
@@ -2456,7 +2464,7 @@ namespace MainExample
         }
 
 
-        private void ЗаполнениеСпискаНештатныхСитуаций(SoundRecord старыеДанные, SoundRecord данные, string key)
+        private void ЗаполнениеСпискаНештатныхСитуаций(SoundRecord данные, string key)
         {
             if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
                 return;
@@ -2522,7 +2530,12 @@ namespace MainExample
             }
 
             данные.СписокНештатныхСообщений = текущийСписокНештатныхСообщений;
-            ИзменениеДанныхВКарточке(старыеДанные, данные, key);
+
+            //старыеДанные.ВремяПрибытия = данные.ВремяПрибытия;
+            //старыеДанные.ВремяОтправления = данные.ВремяОтправления;
+            //старыеДанные.Время = данные.Время;
+           // ИзменениеДанныхВКарточке(старыеДанные, данные, key);
+            SoundRecords[key] = данные;
         }
 
 
@@ -3448,11 +3461,6 @@ namespace MainExample
         private SoundRecord ИзменениеДанныхВКарточке(SoundRecord СтарыеДанные, SoundRecord Данные, string Key)
         {
             Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-
-            string НомерПоезда = Данные.НомерПоезда;
-            string НомерПути = Данные.НомерПути;
-            string[] НазванияТабло = Данные.НазванияТабло;
-
 
             //если Поменяли время--------------------------------------------------------
             if ((СтарыеДанные.ВремяПрибытия != Данные.ВремяПрибытия) ||
