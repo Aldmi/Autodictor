@@ -26,9 +26,10 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <State>0</State>
     //    <VagonDirection>0</VagonDirection>
     //    <Enabled>1</Enabled>
-    //	<TypeName>Пригородный</TypeName>
-    //	<TypeAlias>приг</TypeAlias>
-    //	<Addition>Поле дополнения</Addition>
+    //    <EmergencySituation> </EmergencySituation>    //Нешатная ситуация (бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления, бит 3 - отправление по готовности)
+    //	  <TypeName>Пригородный</TypeName>
+    //	  <TypeAlias>приг</TypeAlias>
+    //	  <Addition>Поле дополнения</Addition>
     //  </t>
     //</mainWindow>
 
@@ -154,6 +155,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("State", 0),
                         new XElement("VagonDirection", (byte)uit.VagonDirection),
                         new XElement("Enabled", (uit.EmergencySituation & 0x01) == 0x01 ? 0 : 1),
+                        new XElement("EmergencySituation", uit.EmergencySituation),
                         new XElement("TypeName", typeName),
                         new XElement("TypeAlias", typeNameShort),
                         new XElement("Addition", uit.Addition)
@@ -163,8 +165,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            //xDoc.Save(path);
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

@@ -2324,10 +2324,10 @@ namespace MainExample
                                 if (DateTime.ParseExact(key, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo()) != Данные.Время)
                                 {
                                     key = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
-                                    listView.Items[item].SubItems[0].Text = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                                    listView.Items[item].SubItems[0].Text = key;
                                 }
 
-                            //Изменение названия поезда
+                              //Изменение названия поезда
                                 switch (listView.Name)
                                 {
                                     case "listView1":

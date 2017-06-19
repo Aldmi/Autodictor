@@ -3145,3 +3145,10 @@ time;message;level
 19T13:39:06;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
 19T13:39:18;ERROR  (RequestAndRespoune) Exception,  Message= Неизвестное Исключение: Ссылка на объект не указывает на экземпляр объекта..   Внутренне исключение: ;Fatal
 19T13:39:18;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+19T13:48:34;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+19T14:28:01;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+19T14:31:00;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+19T14:31:21;ERROR  (RequestAndRespoune) Exception,  Message= Неизвестное Исключение: Ссылка на объект не указывает на экземпляр объекта..   Внутренне исключение: ;Fatal
+19T14:31:21;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+19T14:33:18;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+19T14:35:12;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
