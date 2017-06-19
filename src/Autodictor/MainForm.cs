@@ -372,10 +372,12 @@ namespace MainExample
             if (окно.ShowDialog() == DialogResult.OK)
             {
                 SoundRecord Record = окно.Record;
+                Record.ID = MainWindowForm.SoundRecords.Max(rec => rec.Value.ID) + 1;
+
                 int TryCounter = 50;
                 while (--TryCounter > 0)
                 {
-                    string Key = Record.Время.ToString("HH:mm:ss");
+                    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
                     string[] SubKeys = Key.Split(':');
                     if (SubKeys[0].Length == 1)
                         Key = "0" + Key;
@@ -383,13 +385,13 @@ namespace MainExample
                     if (MainWindowForm.SoundRecords.ContainsKey(Key) == false)
                     {
                         MainWindowForm.SoundRecords.Add(Key, Record);
+                        MainWindowForm.SoundRecordsOld.Add(Key, Record);
                         break;
                     }
 
                     Record.Время = Record.Время.AddSeconds(1);
                 }
 
-                MainWindowForm.SoundRecords.OrderBy(key => key.Value);
                 MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
             }
         }

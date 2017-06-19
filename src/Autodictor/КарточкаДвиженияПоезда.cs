@@ -42,6 +42,7 @@ namespace MainExample
                 cB_НомерПути.Items.Add(Путь);
 
             cB_НомерПути.SelectedIndex = Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1;
+
             dTP_Прибытие.Value = this.Record.ВремяПрибытия;
             dTP_ВремяОтправления.Value = this.Record.ВремяОтправления;
             dTP_Задержка.Value = (this.Record.ВремяЗадержки == null) ? DateTime.Parse("00:00") : this.Record.ВремяЗадержки.Value;

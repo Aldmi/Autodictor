@@ -23,22 +23,29 @@ namespace MainExample
 
             Record.ID = 0;
             Record.Активность = true;
+            Record.Автомат = true;
             Record.БитыАктивностиПолей = 0x00;
+            Record.БитыНештатныхСитуаций = 0x00;
+            Record.РазрешениеНаОтображениеПути = PathPermissionType.ИзФайлаНастроек;
             Record.Время = DateTime.Now;
             Record.ВремяОтправления = DateTime.Now;
             Record.ВремяПрибытия = DateTime.Now;
             Record.ВремяСтоянки = 10;
+            Record.ОжидаемоеВремя = DateTime.Now;
             Record.ДниСледования = "";
+            Record.ДниСледованияAlias = "";
             Record.ИменаФайлов = new string[0];
             Record.КоличествоПовторений = 1;
             Record.НазваниеПоезда = "";
             Record.НазванияТабло = new string[0];
             Record.НомерПоезда = "";
+            Record.НомерПоезда2 = "";
             Record.НомерПути = "1";
             Record.НумерацияПоезда = 0;
             Record.Описание = "";
             Record.Примечание = "";
-            Record.Состояние = SoundRecordStatus.Выключена;
+            Record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
+            Record.ТипСообщения = SoundRecordType.ДвижениеПоездаНеПодтвержденное;
             Record.СостояниеОтображения = TableRecordStatus.Выключена;
             Record.СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
             Record.СтанцияНазначения = "";
@@ -48,6 +55,14 @@ namespace MainExample
             Record.ШаблонВоспроизведенияСообщений = "";
             Record.СостояниеКарточки = 0;
             Record.ОписаниеСостоянияКарточки = "";
+            Record.Дополнение = "";
+            Record.ИменаФайлов = new string[0];
+            Record.СписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
+            Record.ИспользоватьДополнение = new Dictionary<string, bool>
+            {
+                ["звук"] = true,
+                ["табло"] = true
+            };
 
 
             foreach (var Данные in TrainTable.TrainTableRecords)
@@ -90,6 +105,7 @@ namespace MainExample
                 if (Record.ТипПоезда == ТипПоезда.Фирменный && Program.Настройки.АвтФормСообщНаФирменный) АктивностьШаблоновДанногоПоезда = true;
                 if (Record.ТипПоезда == ТипПоезда.РЭКС && Program.Настройки.АвтФормСообщНаРЭКС) АктивностьШаблоновДанногоПоезда = true;
 
+                int indexШаблона = 0;
                 for (int i = 0; i < ШаблонОповещения.Length / 3; i++)
                 {
                     bool НаличиеШаблона = false;
@@ -116,7 +132,7 @@ namespace MainExample
                                 {
                                     СостояниеФормируемогоСообщенияИШаблон НовыйШаблон;
 
-                                    НовыйШаблон.Id = i;
+                                    НовыйШаблон.Id = indexШаблона++;
                                     НовыйШаблон.SoundRecordId = Record.ID;
                                     НовыйШаблон.Активность = АктивностьШаблоновДанногоПоезда;
                                     НовыйШаблон.Приоритет = Priority.Midlle;
@@ -126,7 +142,7 @@ namespace MainExample
                                     НовыйШаблон.НазваниеШаблона = ШаблонОповещения[3 * i + 0];
                                     НовыйШаблон.Шаблон = Шаблон;
                                     НовыйШаблон.ПривязкаКВремени = ПривязкаВремени;
-                                    НовыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru };
+                                    НовыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng };
 
                                     Record.СписокФормируемыхСообщений.Add(НовыйШаблон);
                                 }
@@ -534,10 +550,7 @@ namespace MainExample
                             Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
                             Record.СостояниеОтображения = TableRecordStatus.Выключена;
 
-                            if ((НомерСписка & 0x04) != 0x00)
-                                Record.Время = Record.ВремяПрибытия;
-                            else
-                                Record.Время = Record.ВремяОтправления;
+                            Record.Время = (НомерСписка & 0x04) != 0x00 ? Record.ВремяПрибытия : Record.ВремяОтправления;
 
 
                             // Шаблоны оповещения

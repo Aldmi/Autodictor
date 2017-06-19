@@ -724,9 +724,9 @@ namespace MainExample
                         SoundRecordsOld.Add(Key, Record);
                         break;
                     }
-
                     Record.Время = Record.Время.AddSeconds(1);
                 }
+                MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
             }
         }
 
@@ -1681,15 +1681,14 @@ namespace MainExample
                     };
 
 
-                    Func<string, KeyValuePair<string, string>> stationsPars = (station) =>       //index=0 отправл   index=1 прибытие
+                    Func<string, KeyValuePair<string, string>> stationsPars = (station) => 
                     {
                         if (string.IsNullOrEmpty(station))
                         {
                             return new KeyValuePair<string, string>();
                         }
 
-                       return new KeyValuePair<string, string>(station,
-                                                               Program.Станции.ContainsKey(station) ? Program.Станции[station] : String.Empty);
+                       return new KeyValuePair<string, string>(station, Program.Станции.ContainsKey(station) ? Program.Станции[station] : String.Empty);
                     };
 
 
@@ -2163,7 +2162,6 @@ namespace MainExample
                     номерПути = "   ";
                     break;
             }
-
 
             var stationDepartMyltiLang = new KeyValuePair<string, string>(data.СтанцияОтправления,
                                          Program.Станции.ContainsKey(data.СтанцияОтправления) ? Program.Станции[data.СтанцияОтправления] : String.Empty);
@@ -3349,7 +3347,6 @@ namespace MainExample
                 else
                 if (subtaitles.НомерСписка == 0) //динамические звуковые сообщения
                 {
-                    //string.IsNullOrEmpty(rtb_subtaitles.Text) ||
                     if (subtaitles.ШаблонИлиСообщение != currentPlayingTemplate)
                     {
                         currentPlayingTemplate = subtaitles.ШаблонИлиСообщение;

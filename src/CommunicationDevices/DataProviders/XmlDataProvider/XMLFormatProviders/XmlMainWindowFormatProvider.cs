@@ -98,20 +98,6 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         break;
                 }
 
-                string startSt;
-                string endSt;
-                var stations = uit.Stations.Split('-').Select(s => s.Trim()).ToList();
-                if (stations.Count == 2)
-                {
-                    startSt = stations[0];
-                    endSt = stations[1];
-                }
-                else
-                {
-                    startSt = (uit.Event == "ОТПР.") ? stations[0] : " ";
-                    endSt = (uit.Event == "ПРИБ.") ? stations[0] : " ";
-                }
-
                 var timeArrival = string.Empty;
                 var timeDepart = string.Empty;
                 byte direction = 0;
@@ -139,8 +125,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("t",
                         new XElement("TrainNumber", uit.NumberOfTrain),
                         new XElement("TrainType", trainType),
-                        new XElement("StartStation", startSt),
-                        new XElement("EndStation", endSt),
+                        new XElement("StartStation", uit.StationDeparture.Key),
+                        new XElement("EndStation", uit.StationArrival.Key),
 
                         new XElement("StartStationENG", uit.StationDeparture.Value),
                         new XElement("EndStationENG", uit.StationArrival.Value),

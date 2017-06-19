@@ -86,7 +86,3 @@ C:\Users\Aldmi\Desktop\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2Avtodictor
 C:\Users\Aldmi\Desktop\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
 C:\Users\Aldmi\Desktop\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
 C:\Users\Aldmi\Desktop\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.dll
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Debug\WCFCis2AvtodictorContract.pdb
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.dll
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Debug\WCFCis2AvtodictorContract.pdb
