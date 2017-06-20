@@ -366,13 +366,14 @@ namespace MainExample
         }
 
 
+
         private void добавитьВнештатныйПоездToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ОкноДобавленияПоезда окно = new ОкноДобавленияПоезда();
+            var newRecId = MainWindowForm.SoundRecords.Max(rec => rec.Value.ID) + 1;
+            ОкноДобавленияПоезда окно = new ОкноДобавленияПоезда(newRecId);
             if (окно.ShowDialog() == DialogResult.OK)
             {
                 SoundRecord Record = окно.Record;
-                Record.ID = MainWindowForm.SoundRecords.Max(rec => rec.Value.ID) + 1;
 
                 int TryCounter = 50;
                 while (--TryCounter > 0)

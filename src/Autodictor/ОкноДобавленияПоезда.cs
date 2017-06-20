@@ -6,9 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
-
+using System.Windows.Input;
 
 
 namespace MainExample
@@ -16,10 +14,14 @@ namespace MainExample
     public partial class ОкноДобавленияПоезда : Form
     {
         public SoundRecord Record;
+        public int  RecordId { get; private set; }
 
-        public ОкноДобавленияПоезда()
+
+        public ОкноДобавленияПоезда(int recordId)
         {
             InitializeComponent();
+
+            RecordId = recordId;
 
             Record.ID = 0;
             Record.Активность = true;
@@ -86,8 +88,12 @@ namespace MainExample
                 cBШаблонОповещения.Items.Add(Item.Name);
         }
 
+
+
+
         private void btnДобавить_Click(object sender, EventArgs e)
         {
+            Record.ID = RecordId;
             Record.ШаблонВоспроизведенияСообщений = ПолучитьШаблоныОповещения();
 
             // Шаблоны оповещения
@@ -156,11 +162,15 @@ namespace MainExample
             Close();
         }
 
+
+
         private void btnОтмена_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+
 
         private void btnРедактировать_Click(object sender, EventArgs e)
         {
@@ -176,6 +186,8 @@ namespace MainExample
                 rBНеОповещать_CheckedChanged(null, null);
             }
         }
+
+
 
         private void btnДобавитьШаблон_Click(object sender, EventArgs e)
         {
@@ -202,11 +214,14 @@ namespace MainExample
             }
         }
 
+
         private void btnУдалитьШаблон_Click(object sender, EventArgs e)
         {
             while (lVШаблоныОповещения.SelectedItems.Count > 0)
                 lVШаблоныОповещения.Items.Remove(lVШаблоныОповещения.SelectedItems[0]);
         }
+
+
 
         private void rBПрибытие_CheckedChanged(object sender, EventArgs e)
         {
@@ -232,6 +247,7 @@ namespace MainExample
                 dTPВремя2.Enabled = true;
             }
         }
+
 
         private void ОтобразитьШаблонОповещенияВОкне(string ШаблонОповещения)
         {
@@ -371,20 +387,28 @@ namespace MainExample
             rTB_Сообщение.SelectionLength = 0;
         }
 
+
+
         private void cBНомерПоезда_SelectedIndexChanged(object sender, EventArgs e)
         {
             Record.НомерПоезда = cBНомерПоезда.Text;
         }
+
+
 
         private void cBОткуда_SelectedIndexChanged(object sender, EventArgs e)
         {
             Record.СтанцияОтправления = cBОткуда.Text;
         }
 
+
+
         private void cBКуда_SelectedIndexChanged(object sender, EventArgs e)
         {
             Record.СтанцияНазначения = cBКуда.Text;
         }
+
+
 
         private void cBКатегория_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -399,6 +423,7 @@ namespace MainExample
                 case "РЭКС": Record.ТипПоезда = ТипПоезда.РЭКС; break;
             }
         }
+
 
         private void rBНеОповещать_CheckedChanged(object sender, EventArgs e)
         {
@@ -435,6 +460,7 @@ namespace MainExample
                         Record.Примечание = Record.Примечание.Remove(Record.Примечание.Length - 1);
             }
         }
+
 
         private void cBПоездИзРасписания_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -620,6 +646,8 @@ namespace MainExample
             }
         }
 
+
+
         public string ПолучитьШаблоныОповещения()
         {
             string РезультирующийШаблонОповещения = "";
@@ -638,6 +666,8 @@ namespace MainExample
             return РезультирующийШаблонОповещения;
         }
 
+
+
         private void dTPВремя1_ValueChanged(object sender, EventArgs e)
         {
             Record.ВремяПрибытия = dTPВремя1.Value;
@@ -646,6 +676,8 @@ namespace MainExample
             else
                 Record.Время = Record.ВремяОтправления;
         }
+
+
 
         private void dTPВремя2_ValueChanged(object sender, EventArgs e)
         {
