@@ -59,8 +59,8 @@ namespace MainExample
 
             foreach (var Станция in Program.Станции)
             {
-                cBОткуда.Items.Add(Станция);
-                cBКуда.Items.Add(Станция);
+                cBОткуда.Items.Add(Станция.Key);
+                cBКуда.Items.Add(Станция.Key);
             }
 
             foreach (var НомерПоезда in Program.НомераПоездов)
@@ -321,18 +321,18 @@ namespace MainExample
                             {
                                 rTB_Сообщение.AppendText("Электропоезд движется с остановками на станциях: ");
                                 foreach (var Станция in Program.Станции)
-                                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                                     {
-                                        rTB_Сообщение.AppendText(Станция + " ");
+                                        rTB_Сообщение.AppendText(Станция.Key + " ");
                                     }
                             }
                             else if (rBСОстановкамиКроме.Checked == true)
                             {
                                 rTB_Сообщение.AppendText("Электропоезд движется с остановками кроме станций: ");
                                 foreach (var Станция in Program.Станции)
-                                    if (lB_ПоСтанциям.Items.Contains(Станция))
+                                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                                     {
-                                        rTB_Сообщение.AppendText(Станция + " ");
+                                        rTB_Сообщение.AppendText(Станция.Key + " ");
                                     }
                             }
                         }

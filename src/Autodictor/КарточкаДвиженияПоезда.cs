@@ -316,7 +316,7 @@ namespace MainExample
                         else
                             Примечание += ", ";
 
-                        Примечание += Станция;
+                        Примечание += Станция.Key;
                     }
             }
             else if (rB_КромеСтанций.Checked == true)
@@ -329,7 +329,7 @@ namespace MainExample
                             ПерваяСтанция = false;
                         else
                             Примечание += ", ";
-                        Примечание += Станция;
+                        Примечание += Станция.Key;
                     }
             }
             this.Record.Примечание = Примечание;
@@ -461,7 +461,7 @@ namespace MainExample
                             else
                                 Примечание += ", ";
 
-                            Примечание += Станция;
+                            Примечание += Станция.Key;
                         }
                 }
                 else if (rB_КромеСтанций.Checked == true)
@@ -474,7 +474,7 @@ namespace MainExample
                                 ПерваяСтанция = false;
                             else
                                 Примечание += ", ";
-                            Примечание += Станция;
+                            Примечание += Станция.Key;
                         }
                 }
 
@@ -701,7 +701,7 @@ namespace MainExample
                                 foreach (var Станция in Program.Станции)
                                     if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                                     {
-                                        rTb.AppendText(Станция + " ");
+                                        rTb.AppendText(Станция.Key + " ");
                                     }
                             }
                             else if (rB_КромеСтанций.Checked == true)
@@ -710,7 +710,7 @@ namespace MainExample
                                 foreach (var Станция in Program.Станции)
                                     if (lB_ПоСтанциям.Items.Contains(Станция.Key))
                                     {
-                                        rTb.AppendText(Станция + " ");
+                                        rTb.AppendText(Станция.Key + " ");
                                     }
                             }
                         }

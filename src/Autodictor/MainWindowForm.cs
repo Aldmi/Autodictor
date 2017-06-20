@@ -2984,7 +2984,7 @@ namespace MainExample
                                     logMessage += "Электропоезд движется с остановками на станциях: ";
                                     foreach (var Станция in Program.Станции)
                                         if (списокСтанцийParse.Contains(Станция.Key))
-                                            logMessage += Станция + " ";
+                                            logMessage += Станция.Key + " ";
 
                                     if (Program.FilesFolder.Contains("СОстановками"))
                                     {
@@ -3017,7 +3017,7 @@ namespace MainExample
                                     logMessage += "Электропоезд движется с остановками кроме станций: ";
                                     foreach (var Станция in Program.Станции)
                                         if (списокСтанцийParse.Contains(Станция.Key))
-                                            logMessage += Станция + " ";
+                                            logMessage += Станция.Key + " ";
 
                                     if (Program.FilesFolder.Contains("СОстановкамиКроме"))
                                     {

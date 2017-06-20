@@ -106,11 +106,25 @@ namespace CommunicationDevices.Settings
             {
                 if (LowCurrentTime) //"МеньшеТекВремени"
                 {
-                    timeFilter = inData.Time < DateTime.Now;
+                    if (inData.TransitTime.ContainsKey("отпр"))
+                    {
+                        timeFilter = inData.TransitTime["отпр"] < DateTime.Now;
+                    }
+                    else
+                    {
+                        timeFilter = inData.Time < DateTime.Now;
+                    }            
                 }
                 if (HightCurrentTime) //"БольшеТекВремени"
                 {
-                    timeFilter = inData.Time > DateTime.Now;
+                    if (inData.TransitTime.ContainsKey("отпр"))
+                    {
+                        timeFilter = inData.TransitTime["отпр"] > DateTime.Now;
+                    }
+                    else
+                    {
+                        timeFilter = inData.Time > DateTime.Now;
+                    }         
                 }
             }
 
