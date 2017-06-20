@@ -158,6 +158,15 @@ namespace MainExample
                 }
             }
 
+            //Если время меньше текущего, то поезд добавляется на след. сутки
+            if (Record.Время < DateTime.Now)
+            {
+                Record.Время= Record.Время.AddDays(1);
+                Record.ВремяПрибытия = Record.ВремяПрибытия.AddDays(1);
+                Record.ВремяОтправления = Record.ВремяОтправления.AddDays(1);
+            }
+
+
             DialogResult = DialogResult.OK;
             Close();
         }

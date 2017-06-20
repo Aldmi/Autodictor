@@ -20,6 +20,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <SndDateTime>2017-06-17T00:34:00</SndDateTime>
     //    <EvRecTime></EvRecTime>
     //    <EvSndTime>2017-06-17T00:34:00</EvSndTime>
+    //    <LateTime>12:20</LateTime>                                 //час:мин
     //    <TrackNumber></TrackNumber>
     //    <Direction>1</Direction>
     //    <EvTrackNumber></EvTrackNumber>
@@ -120,6 +121,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         break;
                 }
 
+                var lateTime = uit.DelayTime?.ToString("t") ?? string.Empty;
+
 
                 xDoc.Root?.Add(
                         new XElement("t",
@@ -135,6 +138,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("SndDateTime", timeDepart),                 //время отпр
                         new XElement("EvRecTime", timeArrival),
                         new XElement("EvSndTime", timeDepart),
+                        new XElement("LateTime", lateTime),                   //время задержки
                         new XElement("TrackNumber", uit.PathNumber),
                         new XElement("Direction", direction),
                         new XElement("EvTrackNumber", uit.PathNumber),
