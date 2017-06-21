@@ -20,12 +20,21 @@ namespace MainExample
 
     public partial class SoundConfiguration : Form
     {
+        public static SoundConfiguration thisForm = null;
+
         public static List<SoundConfigurationRecord> SoundConfigurationRecords = new List<SoundConfigurationRecord>();
         private static int ID = 0;
         public static int МинимальныйИнтервалМеждуОповещениемСекунд = 0;
 
+
+
         public SoundConfiguration()
         {
+            if (thisForm != null)
+                return;
+
+            thisForm = this;
+
             InitializeComponent();
 
             cB_Messages.Items.Clear();
@@ -37,6 +46,8 @@ namespace MainExample
 
             this.tB_ИнтервалМеждуОповещением.Text = МинимальныйИнтервалМеждуОповещениемСекунд.ToString();
         }
+
+
 
         private void ОбновитьДанныеВСписке()
         {
@@ -292,6 +303,14 @@ namespace MainExample
                     SoundConfigurationRecords[item] = Данные;
                 }
             }
+        }
+
+
+
+        private void SoundConfiguration_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (thisForm == this)
+                thisForm = null;
         }
     }
 }

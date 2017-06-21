@@ -129,30 +129,64 @@ namespace MainExample
             }
         }
 
+
+
         private void validationExample_Click(object sender, EventArgs e)
         {
-            SoundConfiguration soundConfiguration = new SoundConfiguration();
-            soundConfiguration.MdiParent = this;
-            soundConfiguration.Show();
+            if (SoundConfiguration.thisForm != null)
+            {
+                SoundConfiguration.thisForm.Show();
+                SoundConfiguration.thisForm.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                SoundConfiguration soundConfiguration = new SoundConfiguration();
+                soundConfiguration.MdiParent = this;
+                soundConfiguration.Show();
+            }
         }
+
+
 
         private void textBoxExample_Click(object sender, EventArgs e)
         {
         }
 
+
+
         private void dataSetExample_Click(object sender, EventArgs e)
         {
-            StaticSoundForm form = new StaticSoundForm();
-            form.MdiParent = this;
-            form.Show();
+
+            if (StaticSoundForm.thisForm != null)
+            {
+                StaticSoundForm.thisForm.Show();
+                StaticSoundForm.thisForm.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                StaticSoundForm form = new StaticSoundForm();
+                form.MdiParent = this;
+                form.Show();
+            }
         }
+
+
 
         private void arrayDataSourceExample_Click(object sender, EventArgs e)
         {
-            DynamicSoundForm form = new DynamicSoundForm(ExchangeModel.DeviceSoundChannelManagement);
-            form.MdiParent = this;
-            form.Show();
+            if (DynamicSoundForm.thisForm != null)
+            {
+                DynamicSoundForm.thisForm.Show();
+                DynamicSoundForm.thisForm.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                DynamicSoundForm form = new DynamicSoundForm();
+                form.MdiParent = this;
+                form.Show();
+            }
         }
+
 
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)

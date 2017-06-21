@@ -21,7 +21,8 @@ namespace MainExample
 
     public partial class DynamicSoundForm : Form
     {
-        private readonly Device _deviceSoundChannelManagement;
+        public static DynamicSoundForm thisForm = null;
+
         public static List<DynamicSoundRecord> DynamicSoundRecords = new List<DynamicSoundRecord>();
         private static int ID = 0;
 
@@ -31,11 +32,17 @@ namespace MainExample
         private float ОбщаяДлительностьЗвучания = 0;
         private int ИндексВыделенойПодстроки = -1;
 
-        public DynamicSoundForm(Device deviceSoundChannelManagement)
+
+
+        public DynamicSoundForm()
         {
+            if (thisForm != null)
+                return;
+
+            thisForm = this;
+
             InitializeComponent();
 
-            _deviceSoundChannelManagement = deviceSoundChannelManagement;
 
             this.comboBox_Messages.Items.Add("НОМЕР ПОЕЗДА");
             this.comboBox_Messages.Items.Add("ДОПОЛНЕНИЕ");
@@ -420,6 +427,12 @@ namespace MainExample
 
             TranslateForm окно = new TranslateForm(translateList);
             окно.ShowDialog();
+        }
+
+        private void DynamicSoundForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (thisForm == this)
+                thisForm = null;
         }
     }
 }

@@ -378,6 +378,7 @@
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
             this.Name = "SoundConfiguration";
             this.Text = "Конфигурирование воспроизводимых сообщений";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SoundConfiguration_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

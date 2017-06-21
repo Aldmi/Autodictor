@@ -330,6 +330,7 @@
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
             this.Name = "DynamicSoundForm";
             this.Text = "Динамические сообщения системы звукового оповещения";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DynamicSoundForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

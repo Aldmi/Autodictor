@@ -19,15 +19,26 @@ namespace MainExample
     
     public partial class StaticSoundForm : Form
     {
+        public static StaticSoundForm thisForm = null;
+
         public static List<StaticSoundRecord> StaticSoundRecords = new List<StaticSoundRecord>();
         private static int ID = 0;
 
+
+
         public StaticSoundForm()
         {
+            if (thisForm != null)
+                return;
+
+            thisForm = this;
+
             InitializeComponent();
             ЗагрузитьСписок();
             ОбновитьДанныеВСписке();
         }
+
+
 
         private void ОбновитьДанныеВСписке()
         {
@@ -265,6 +276,13 @@ namespace MainExample
 
             формаЗаписиСообщения.Dispose();
             формаЗаписиСообщения = null;
+        }
+
+
+        private void StaticSoundForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (thisForm == this)
+                thisForm = null;
         }
     }
 }
