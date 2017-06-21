@@ -33,11 +33,11 @@ namespace Communication.Http
 
 
 
-    public class ClientHttp : INotifyPropertyChanged, IDisposable
+    public class ClientHttp : INotifyPropertyChanged
     {
         #region fields
 
-        private const int GetRequestStreamTimeout = 2000;
+        private const int TimeDelayReconect = 3000;      // сек
 
         private string _statusString;
         private bool _isConnect;
@@ -48,7 +48,6 @@ namespace Communication.Http
         private byte _countTryingTakeData;               //счетчик попыток
 
         #endregion
-
 
 
 
@@ -118,7 +117,6 @@ namespace Communication.Http
             OnPropertyChanged(nameof(IsConnect));
             IsConnect = false;
             _countTryingTakeData = 0;
-            Dispose();
 
             await ConnectHttp();
         }
@@ -131,11 +129,11 @@ namespace Communication.Http
             {
                 try
                 {
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(Url);
+                    var httpWebRequest = (HttpWebRequest) WebRequest.Create(Url);
                     httpWebRequest.Method = "GET";
 
                     //попытка получить поток запроса, для проверки соединения с удаленным сервером.
-                    var testConnectResp = (HttpWebResponse)await httpWebRequest.GetResponseAsync().WithTimeout(_timeRespoune);
+                    var testConnectResp = (HttpWebResponse) await httpWebRequest.GetResponseAsync().WithTimeout(_timeRespoune);
                     if (testConnectResp != null && testConnectResp.StatusCode == HttpStatusCode.OK)
                     {
                         testConnectResp.Close();
@@ -143,7 +141,7 @@ namespace Communication.Http
 
                         IsConnect = true;
 
-                        Log.log.Fatal($"OK  (ConnectHttp)   Message= поток запроса по \"{Url}\" ПОЛУЧЕНН !!!"); //DEBUG_LOG
+                        //Log.log.Fatal($"OK  (ConnectHttp)   Message= поток запроса по \"{Url}\" ПОЛУЧЕНН !!!"); //DEBUG_LOG
                         return;
                     }
 
@@ -153,9 +151,12 @@ namespace Communication.Http
                 catch (Exception ex)
                 {
                     IsConnect = false;
-                    StatusString = $"Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"   \"{ex.InnerException?.Message}\"";
-                    Log.log.Fatal($"ERROR  (ConnectHttp)   Message= {StatusString}"); //DEBUG_LOG
-                    Dispose();
+                    StatusString = $"Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
+                    //Log.log.Fatal($"ERROR  (ConnectHttp)   Message= {StatusString}"); //DEBUG_LOG
+                }
+                finally
+                {
+                   await Task.Delay(TimeDelayReconect);
                 }
             }
         }
@@ -184,7 +185,7 @@ namespace Communication.Http
                 }
                 else //не смогли получить ответ ОК от сервера.
                 {
-                    Log.log.Fatal($"ERROR  (ReConnect)   Message= Данные не отправелнны"); //DEBUG_LOG
+                    //Log.log.Fatal($"ERROR  (ReConnect)   Message= не смогли получить ответ ОК от сервера"); //DEBUG_LOG
                     if (++_countTryingTakeData > _numberTryingTakeData)
                         ReConnect();
 
@@ -203,7 +204,7 @@ namespace Communication.Http
             catch (TimeoutException)
             {
                 StatusString = "Время на ожидание ответа вышло";
-                Log.log.Fatal($"ERROR  (RequestAndRespoune) TimeoutException,  Message= {StatusString}"); //DEBUG_LOG
+                //Log.log.Fatal($"ERROR  (RequestAndRespoune) TimeoutException,  Message= {StatusString}"); //DEBUG_LOG
                 if (++_countTryingTakeData > _numberTryingTakeData)
                     ReConnect();
 
@@ -212,7 +213,7 @@ namespace Communication.Http
             catch (WebException we)
             {
                 StatusString = $"Неизвестное Исключение: {we.Message}.   Внутренне исключение: {we.InnerException?.Message ?? "" }";
-                Log.log.Fatal($"ERROR  (RequestAndRespoune) WebException,  Message= {StatusString}"); //DEBUG_LOG
+                //Log.log.Fatal($"ERROR  (RequestAndRespoune) WebException,  Message= {StatusString}"); //DEBUG_LOG
                 if (++_countTryingTakeData > _numberTryingTakeData)
                     ReConnect();
 
@@ -221,14 +222,13 @@ namespace Communication.Http
             catch (Exception ex)
             {
                 StatusString = $"Неизвестное Исключение: {ex.Message}.   Внутренне исключение: {ex.InnerException?.Message ?? "" }";
-                Log.log.Fatal($"ERROR  (RequestAndRespoune) Exception,  Message= {StatusString}"); //DEBUG_LOG
+                //Log.log.Fatal($"ERROR  (RequestAndRespoune) Exception,  Message= {StatusString}"); //DEBUG_LOG
                 ReConnect();
                 return false;
             }
             IsRunDataExchange = false;
             return isValidOutDate;
         }
-
 
 
 
@@ -250,7 +250,6 @@ namespace Communication.Http
 
             return null;
         }
-
 
 
 
@@ -284,7 +283,7 @@ namespace Communication.Http
                     using (var content = new MultipartFormDataContent(boundary))
                     {
                         content.Add(new StreamContent(stream), mimeName, mimeFileName);
-                        using (var respone = await client.PostAsync(uri, content).WithTimeout(GetRequestStreamTimeout))
+                        using (var respone = await client.PostAsync(uri, content).WithTimeout(_timeRespoune))
                         {
                             var outputBody = await respone.Content.ReadAsStringAsync();
                             return new MyHttpResponse{Body = outputBody, StatusCode = respone.StatusCode, Headers = respone.Headers};
@@ -369,17 +368,5 @@ namespace Communication.Http
 
         #endregion
 
-
-
-
-
-        #region Disposable
-
-        public void Dispose()
-        {
-
-        }
-
-        #endregion
     }
 }

@@ -4342,3 +4342,8 @@ time;message;level
 20T18:45:00;ERROR  (RequestAndRespoune) Exception,  Message= Неизвестное Исключение: Ссылка на объект не указывает на экземпляр объекта..   Внутренне исключение: ;Fatal
 20T18:45:00;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
 20T18:45:09;"OK  (ConnectHttp)   Message= поток запроса по ""http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"" ПОЛУЧЕНН !!!";Fatal
+21T12:01:42;"ERROR  (ConnectHttp)   Message= Ошибка инициализации соединения ""http://cms"": ""Произошла одна или несколько ошибок.""   ""Невозможно разрешить удаленное имя: 'cms'""";Fatal
+21T12:01:46;"ERROR  (ConnectHttp)   Message= Ошибка инициализации соединения ""http://cms"": ""Произошла одна или несколько ошибок.""   ""Невозможно разрешить удаленное имя: 'cms'""";Fatal
+21T12:03:54;"ERROR  (ConnectHttp)   Message= Ошибка инициализации соединения ""http://cms"": ""Произошла одна или несколько ошибок.""   ""Невозможно разрешить удаленное имя: 'cms'""";Fatal
+21T12:03:58;"ERROR  (ConnectHttp)   Message= Ошибка инициализации соединения ""http://cms"": ""Произошла одна или несколько ошибок.""   ""Невозможно разрешить удаленное имя: 'cms'""";Fatal
+21T12:04:01;"ERROR  (ConnectHttp)   Message= Ошибка инициализации соединения ""http://cms"": ""Произошла одна или несколько ошибок.""   ""Невозможно разрешить удаленное имя: 'cms'""";Fatal
