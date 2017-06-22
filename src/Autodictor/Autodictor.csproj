@@ -189,6 +189,12 @@
     <Compile Include="DynamicSoundForm.Designer.cs">
       <DependentUpon>DynamicSoundForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TrainTableOperative.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainTableOperative.Designer.cs">
+      <DependentUpon>TrainTableOperative.cs</DependentUpon>
+    </Compile>
     <Compile Include="TranslateForm.cs">
       <SubType>Form</SubType>
     </Compile>

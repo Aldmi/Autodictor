@@ -77,8 +77,8 @@ namespace MainExample
             myMainForm = this;
 
             InitializeComponent();
-            ОбновитьДанныеВСписке();
 
+            ОбновитьДанныеВСписке();
             btnLoad_Click(null, EventArgs.Empty);  //загрузка по умолчанию 
 
 
@@ -109,6 +109,8 @@ namespace MainExample
             });
         }
 
+
+
         private void ОбновитьДанныеВСписке()
         {
             listView1.Items.Clear();
@@ -123,6 +125,8 @@ namespace MainExample
                 this.listView1.Items.Add(lvi);
             }
         }
+
+
 
         private void ОбновитьСостояниеАктивностиВТаблице()
         {
@@ -142,6 +146,7 @@ namespace MainExample
                 }
             }
         }
+
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -226,6 +231,7 @@ namespace MainExample
             TrainTableRecords.Add(Данные);
             ОбновитьДанныеВСписке();
         }
+
 
 
         private void btn_УдалитьЗапись_Click(object sender, EventArgs e)
@@ -379,6 +385,8 @@ namespace MainExample
             }
         }
 
+
+
         private void СохранитьСписок()
         {
             try
@@ -513,8 +521,6 @@ namespace MainExample
                 [WeekDays.Вс] = String.Empty
             };
             pathWeekDayes = false;
-
-
 
             if (!string.IsNullOrEmpty(str) && str.Contains("|") && str.Contains(":"))
             {

@@ -463,5 +463,20 @@ namespace MainExample
             }
         }
 
+
+
+        private void tsb_ОперативноеРасписание_Click(object sender, EventArgs e)
+        {
+            if (TrainTableOperative.myMainForm != null)
+            {
+                TrainTableOperative.myMainForm.Show();
+                TrainTableOperative.myMainForm.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                TrainTableOperative listFormOper = new TrainTableOperative { MdiParent = this };
+                listFormOper.Show();
+            }
+        }
     }
 }

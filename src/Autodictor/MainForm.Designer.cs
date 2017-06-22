@@ -80,6 +80,7 @@
             this.toolClockLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.timer_Clock = new System.Windows.Forms.Timer(this.components);
+            this.tsb_ОперативноеРасписание = new System.Windows.Forms.ToolStripButton();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -98,7 +99,7 @@
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.mainMenu.Size = new System.Drawing.Size(1241, 24);
+            this.mainMenu.Size = new System.Drawing.Size(1391, 24);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -322,10 +323,11 @@
             this.toolStripButton1,
             this.toolStripSeparator2,
             this.toolClockLabel,
-            this.toolStripSeparator3});
+            this.toolStripSeparator3,
+            this.tsb_ОперативноеРасписание});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
-            this.tSCommands.Size = new System.Drawing.Size(1241, 38);
+            this.tSCommands.Size = new System.Drawing.Size(1391, 38);
             this.tSCommands.TabIndex = 3;
             this.tSCommands.Text = "toolStrip1";
             // 
@@ -532,11 +534,22 @@
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
             // 
+            // tsb_ОперативноеРасписание
+            // 
+            this.tsb_ОперативноеРасписание.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_ОперативноеРасписание.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold);
+            this.tsb_ОперативноеРасписание.Image = ((System.Drawing.Image)(resources.GetObject("tsb_ОперативноеРасписание.Image")));
+            this.tsb_ОперативноеРасписание.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_ОперативноеРасписание.Name = "tsb_ОперативноеРасписание";
+            this.tsb_ОперативноеРасписание.Size = new System.Drawing.Size(177, 35);
+            this.tsb_ОперативноеРасписание.Text = "Оперативное расписание";
+            this.tsb_ОперативноеРасписание.Click += new System.EventHandler(this.tsb_ОперативноеРасписание_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1241, 730);
+            this.ClientSize = new System.Drawing.Size(1391, 730);
             this.Controls.Add(this.tSCommands);
             this.Controls.Add(this.mainMenu);
             this.DoubleBuffered = true;
@@ -609,6 +622,7 @@
         private System.Windows.Forms.ToolStripMenuItem отображениеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem статическаяИнформацияToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton tSBОстановить;
+        private System.Windows.Forms.ToolStripButton tsb_ОперативноеРасписание;
     }
 }
 
