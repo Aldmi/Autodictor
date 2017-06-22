@@ -14,6 +14,7 @@ using CommunicationDevices.Devices;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Infrastructure;
+using MainExample.Mappers;
 using MainExample.Services;
 
 
@@ -119,7 +120,7 @@ namespace MainExample
         public TaskManagerService TaskManager = new TaskManagerService();
 
 
-        private static int ID = 1;
+       // private static int ID = 1;
         private bool ОбновлениеСписка = false;
 
         public static MainWindowForm myMainForm = null;
@@ -600,25 +601,6 @@ namespace MainExample
                     }
                 }
 
-
-                //string[] НазванияСтанций = Config.Name.Split('-');
-                //if (НазванияСтанций.Length == 2)
-                //{
-                //    Record.СтанцияОтправления = НазванияСтанций[0].Trim();
-                //    Record.СтанцияНазначения = НазванияСтанций[1].Trim();
-                //}
-                //else if (НазванияСтанций.Length == 1)
-                //{
-                //    if ((Record.БитыАктивностиПолей & 0x04) != 0x00)
-                //    {
-                //        Record.СтанцияНазначения = НазванияСтанций[0].Trim();
-                //    }
-                //    else
-                //    {
-                //        Record.СтанцияОтправления = НазванияСтанций[0].Trim();
-                //    }
-                //}
-
                 Record.ID = id++;
 
                 byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
@@ -767,93 +749,33 @@ namespace MainExample
         }
 
 
-
-        private void СозданиеСтатическихЗвуковыхФайлов()
+        public static void СозданиеСтатическихЗвуковыхФайлов()
         {
-            foreach (SoundConfigurationRecord Config in SoundConfiguration.SoundConfigurationRecords)
+            int id = 1;
+            foreach (SoundConfigurationRecord config in SoundConfiguration.SoundConfigurationRecords)
             {
-                СтатическоеСообщение statRecord;
-                statRecord.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
-
-                if (Config.Enable == true)
+                var статСообщение = Mapper.MapSoundConfigurationRecord2СтатическоеСообщение(config, ref id);
+                if (статСообщение != null && статСообщение.Any())
                 {
-                    if (Config.EnablePeriodic == true)
+                    foreach (var стат in статСообщение)
                     {
-                        statRecord.ОписаниеКомпозиции = Config.Name;
-                        statRecord.НазваниеКомпозиции = Config.Name;
-
-                        if (statRecord.НазваниеКомпозиции == string.Empty)
-                            continue;
-
-                        string[] Times = Config.MessagePeriodic.Split(',');
-                        if (Times.Length != 3)
-                            continue;
-
-                        DateTime НачалоИнтервала2 = DateTime.Parse(Times[0]), КонецИнтервала2 = DateTime.Parse(Times[1]);
-                        int Интервал = int.Parse(Times[2]);
-
-                        while (НачалоИнтервала2 < КонецИнтервала2)
+                        var statRecord = стат;
+                        int попыткиВставитьСообщение = 5;
+                        while (попыткиВставитьСообщение-- > 0)
                         {
-                            statRecord.ID = ID++;
-                            statRecord.Время = НачалоИнтервала2;
-                            statRecord.Активность = true;
+                            string Key = statRecord.Время.ToString("yy.MM.dd  HH:mm:ss");
+                            string[] SubKeys = Key.Split(':');
+                            if (SubKeys[0].Length == 1)
+                                Key = "0" + Key;
 
-                            int ПопыткиВставитьСообщение = 5;
-                            while (ПопыткиВставитьСообщение-- > 0)
+                            if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
                             {
-                                string Key = statRecord.Время.ToString("yy.MM.dd  HH:mm:ss");
-                                string[] SubKeys = Key.Split(':');
-                                if (SubKeys[0].Length == 1)
-                                    Key = "0" + Key;
-
-                                if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
-                                {
-                                    statRecord.Время = statRecord.Время.AddSeconds(1);
-                                    continue;
-                                }
-
-                                СтатическиеЗвуковыеСообщения.Add(Key, statRecord);
-                                break;
+                                statRecord.Время = statRecord.Время.AddSeconds(1);
+                                continue;
                             }
 
-                            НачалоИнтервала2 = НачалоИнтервала2.AddMinutes(Интервал);
-                        }
-                    }
-
-
-                    if (Config.EnableSingle == true)
-                    {
-                        statRecord.ОписаниеКомпозиции = Config.Name;
-                        statRecord.НазваниеКомпозиции = Config.Name;
-
-                        if (statRecord.НазваниеКомпозиции == string.Empty)
-                            continue;
-
-                        string[] Times = Config.MessageSingle.Split(',');
-
-                        foreach (string time in Times)
-                        {
-                            statRecord.ID = ID++;
-                            statRecord.Время = DateTime.Parse(time);
-                            statRecord.Активность = true;
-
-                            int ПопыткиВставитьСообщение = 5;
-                            while (ПопыткиВставитьСообщение-- > 0)
-                            {
-                                string Key = statRecord.Время.ToString("yy.MM.dd  HH:mm:ss");
-                                string[] SubKeys = Key.Split(':');
-                                if (SubKeys[0].Length == 1)
-                                    Key = "0" + Key;
-
-                                if (СтатическиеЗвуковыеСообщения.ContainsKey(Key))
-                                {
-                                    statRecord.Время = statRecord.Время.AddSeconds(1);
-                                    continue;
-                                }
-
-                                СтатическиеЗвуковыеСообщения.Add(Key, statRecord);
-                                break;
-                            }
+                            СтатическиеЗвуковыеСообщения.Add(Key, statRecord);
+                            break;
                         }
                     }
                 }
@@ -2246,7 +2168,7 @@ namespace MainExample
                             {
                                 Данные = Карточка.ПолучитьИзмененнуюКарточку();
 
-                                string Key2 = Данные.Время.ToString("HH:mm:ss");
+                                string Key2 = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key2 = "0" + Key2;
@@ -2263,7 +2185,7 @@ namespace MainExample
                                     int ПопыткиВставитьСообщение = 5;
                                     while (ПопыткиВставитьСообщение-- > 0)
                                     {
-                                        Key2 = Данные.Время.ToString("HH:mm:ss");
+                                        Key2 = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
                                         SubKeys = Key2.Split(':');
                                         if (SubKeys[0].Length == 1)
                                             Key2 = "0" + Key2;
@@ -2292,6 +2214,7 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
+
 
 
         // Обработка двойного нажатия на сообщение (вызов формы сообщения)
@@ -3384,7 +3307,7 @@ namespace MainExample
                             {
                                 Данные = Карточка.ПолучитьИзмененнуюКарточку();
 
-                                string Key2 = Данные.Время.ToString("HH:mm:ss");
+                                string Key2 = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
                                 string[] SubKeys = Key.Split(':');
                                 if (SubKeys[0].Length == 1)
                                     Key2 = "0" + Key2;
@@ -3407,7 +3330,7 @@ namespace MainExample
                                     int ПопыткиВставитьСообщение = 5;
                                     while (ПопыткиВставитьСообщение-- > 0)
                                     {
-                                        Key2 = Данные.Время.ToString("HH:mm:ss");
+                                        Key2 = Данные.Время.ToString("yy.MM.dd  HH:mm:ss");
                                         SubKeys = Key2.Split(':');
                                         if (SubKeys[0].Length == 1)
                                             Key2 = "0" + Key2;

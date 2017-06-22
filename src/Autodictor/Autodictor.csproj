@@ -134,6 +134,7 @@
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="Infrastructure\StructCompare.cs" />
+    <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="OperativeSheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>

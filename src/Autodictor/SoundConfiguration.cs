@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using MainExample.Mappers;
 
 
 namespace MainExample
@@ -229,10 +231,12 @@ namespace MainExample
 
             Данные.MessagePeriodic = dTP_Начало.Text + "," + dTP_Конец.Text + "," + tB_Интервал.Text;
 
-
             SoundConfigurationRecords.Add(Данные);
             ОбновитьДанныеВСписке();
         }
+
+
+
 
         // Изменить сообщение
         private void button2_Click(object sender, EventArgs e)
@@ -285,12 +289,21 @@ namespace MainExample
             ОбновитьДанныеВСписке();
         }
 
+
+
         // Сохранить список
         private void btn_Сохранить_Click(object sender, EventArgs e)
         {
+            //Пересоздание спсика статики на лету.
+            MainWindowForm.СтатическиеЗвуковыеСообщения.Clear();
+            MainWindowForm.СозданиеСтатическихЗвуковыхФайлов();
+           
             int.TryParse(this.tB_ИнтервалМеждуОповещением.Text, out МинимальныйИнтервалМеждуОповещениемСекунд);
             СохранитьСписок();
         }
+
+
+
 
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
