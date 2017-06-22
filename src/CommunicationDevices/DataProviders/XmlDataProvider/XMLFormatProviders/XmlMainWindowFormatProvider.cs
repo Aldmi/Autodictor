@@ -21,6 +21,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <EvRecTime></EvRecTime>
     //    <EvSndTime>2017-06-17T00:34:00</EvSndTime>
     //    <LateTime>12:20</LateTime>                                 //час:мин
+    //    <HereDateTime>15</HereDateTime>                            //время стоянки
     //    <TrackNumber></TrackNumber>
     //    <Direction>1</Direction>
     //    <EvTrackNumber></EvTrackNumber>
@@ -123,6 +124,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
                 var lateTime = uit.DelayTime?.ToString("t") ?? string.Empty;
 
+                var stopTime = (uit.StopTime.HasValue) ? uit.StopTime.Value.Hours.ToString("D2") + ":" + uit.StopTime.Value.Minutes.ToString("D2") : string.Empty;
 
                 xDoc.Root?.Add(
                         new XElement("t",
@@ -138,7 +140,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("SndDateTime", timeDepart),                 //время отпр
                         new XElement("EvRecTime", timeArrival),
                         new XElement("EvSndTime", timeDepart),
-                        new XElement("LateTime", lateTime),                   //время задержки
+                        new XElement("LateTime", lateTime),                      //время задержки
+                        new XElement("HereDateTime", stopTime),                  //время стоянки
                         new XElement("TrackNumber", uit.PathNumber),
                         new XElement("Direction", direction),
                         new XElement("EvTrackNumber", uit.PathNumber),

@@ -365,6 +365,8 @@ namespace MainExample
                         Record.ВремяОтправления = Record.ВремяОтправления.AddDays(1);
                     }
                 }
+
+                Record.ВремяСтоянки = Record.ВремяОтправления - Record.ВремяПрибытия;
             }
 
             DialogResult = DialogResult.OK;
@@ -375,6 +377,7 @@ namespace MainExample
         private void btn_ИзменитьВремяПрибытия_Click(object sender, EventArgs e)
         {
             Record.ВремяПрибытия = dTP_Прибытие.Value;
+
             ОбновитьТекстВОкне();
             ОбновитьСостояниеТаблицыШаблонов();
             if (РазрешениеИзменений == true) СделаныИзменения = true;
@@ -648,7 +651,9 @@ namespace MainExample
                     case "ВРЕМЯ СТОЯНКИ":
                         rTb.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = Record.ВремяСтоянки.ToString() + " минут";
+                        Text = Record.ВремяСтоянки.HasValue ?
+                            (Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2"))
+                            : String.Empty;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;

@@ -293,7 +293,8 @@ namespace MainExample
                 {
                     времяПрибытия = времяПрибытия.AddDays(1);
                 }
-                РасписаниеПоезда.StopTime = (времяПрибытия - dTPОтправление.Value).TotalMinutes.ToString("0");
+                var stopTime = (времяПрибытия - dTPОтправление.Value);
+                РасписаниеПоезда.StopTime = stopTime.Hours.ToString("D2") + ":" + stopTime.Minutes.ToString("D2");
 
                 РасписаниеПоезда.ArrivalTime = dTPОтправление.Value.ToString("HH:mm");
                 РасписаниеПоезда.DepartureTime = dTPПрибытие.Value.ToString("HH:mm");

@@ -32,7 +32,7 @@ namespace MainExample
             Record.Время = DateTime.Now;
             Record.ВремяОтправления = DateTime.Now;
             Record.ВремяПрибытия = DateTime.Now;
-            Record.ВремяСтоянки = 10;
+            Record.ВремяСтоянки = null;
             Record.ОжидаемоеВремя = DateTime.Now;
             Record.ДниСледования = "";
             Record.ДниСледованияAlias = "";
@@ -166,6 +166,11 @@ namespace MainExample
                 Record.ВремяОтправления = Record.ВремяОтправления.AddDays(1);
             }
 
+
+           if ((Record.БитыАктивностиПолей & 0x14) == 0x14)
+           {
+                Record.ВремяСтоянки = (Record.ВремяПрибытия - Record.ВремяОтправления);
+           }
 
             DialogResult = DialogResult.OK;
             Close();
@@ -564,19 +569,21 @@ namespace MainExample
                                 rBПрибытие.Invoke((MethodInvoker)(() => rBПрибытие.Checked = true));
 
 
-
-                            int ВремяСтоянки = 0;
+ 
                             if (НомерСписка == 0x14)
                             {
-                                if (ВремяОтправления >= ВремяПрибытия)
-                                    ВремяСтоянки = (ВремяОтправления - ВремяПрибытия).Minutes;
-                                else
-                                    ВремяСтоянки = 1440 - ВремяПрибытия.Hour * 60 - ВремяПрибытия.Minute + ВремяОтправления.Hour * 60 + ВремяОтправления.Minute;
-
+                                var времяПрибытия = ВремяПрибытия;
+                                if (ВремяОтправления > времяПрибытия)
+                                {
+                                    времяПрибытия = времяПрибытия.AddDays(1);
+                                }
+                                var stopTime = (времяПрибытия - ВремяОтправления);
+                                Record.ВремяСтоянки = stopTime;
+                       
                                 НомерСписка |= 0x08;
                             }
 
-                            Record.ВремяСтоянки = (uint)ВремяСтоянки;
+
                             Record.БитыАктивностиПолей = НомерСписка;
                             Record.БитыАктивностиПолей |= 0x03;
 

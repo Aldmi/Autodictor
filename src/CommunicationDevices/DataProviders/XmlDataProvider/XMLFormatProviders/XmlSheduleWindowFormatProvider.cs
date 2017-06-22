@@ -122,6 +122,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         break;
                 }
 
+                var stopTime = (uit.StopTime.HasValue) ? uit.StopTime.Value.Hours.ToString("D2") + ":" + uit.StopTime.Value.Minutes.ToString("D2") : string.Empty;
+
 
                 xDoc.Root?.Add(
                     new XElement("t",
@@ -134,7 +136,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("EndStationENG", uit.StationArrival.Value ?? string.Empty),
 
                     new XElement("InDateTime", timeArrival),                   //время приб
-                    new XElement("HereDateTime", uit.StopTime),                //время стоянки
+                    new XElement("HereDateTime", stopTime),                    //время стоянки
                     new XElement("OutDateTime", timeDepart),                   //время отпр
                     new XElement("DaysOfGoing", uit.DaysFollowing),            //дни след
                     new XElement("DaysOfGoingAlias", uit.DaysFollowingAlias),  //дни след заданные в ручную

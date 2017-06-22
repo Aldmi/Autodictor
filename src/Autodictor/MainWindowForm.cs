@@ -39,10 +39,10 @@ namespace MainExample
         public DateTime ВремяОтправления;
         public DateTime? ВремяЗадержки;                      //время задержки в мин. относительно времени прибытия или отправелния
         public DateTime ОжидаемоеВремя;                      //вычисляется ВремяПрибытия или ВремяОтправления + ВремяЗадержки
-        public DateTime? ВремяСледования;                     //время в пути
-        public string Дополнение;                            //свободная переменная для ввода 
+        public DateTime? ВремяСледования;                    //время в пути
+        public TimeSpan? ВремяСтоянки;                       //вычисляется для танзитов (ВремяОтправления - ВремяПрибытия)
+        public string Дополнение;                            //свободная переменная для ввода  
         public Dictionary<string, bool> ИспользоватьДополнение; //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
-        public uint ВремяСтоянки;
         public string ДниСледования;
         public string ДниСледованияAlias;                    // дни следования записанные в ручную
         public bool Активность;
@@ -567,6 +567,7 @@ namespace MainExample
                 }
 
                 //ТРАНЗИТ
+                Record.ВремяСтоянки = null;
                 if (НомерСписка == 20)
                 {
                     //вермя отправления указанно для след. суток
@@ -574,20 +575,16 @@ namespace MainExample
                     {
                         Record.ВремяОтправления = ВремяОтправления.AddDays(1);
                     }
-                }
 
-                int ВремяСтоянки = 0;
-                if (НомерСписка == 0x14)
-                {
-                    if (ВремяОтправления >= ВремяПрибытия)
-                        ВремяСтоянки = (ВремяОтправления - ВремяПрибытия).Minutes;
-                    else
-                        ВремяСтоянки = 1440 - ВремяПрибытия.Hour * 60 - ВремяПрибытия.Minute + ВремяОтправления.Hour * 60 + ВремяОтправления.Minute;
-
+                    TimeSpan времяСтоянки;
+                    if (TimeSpan.TryParse(Config.StopTime, out времяСтоянки))
+                    {
+                        Record.ВремяСтоянки = времяСтоянки;
+                    }
                     НомерСписка |= 0x08;
                 }
 
-                Record.ВремяСтоянки = (uint)ВремяСтоянки;
+           
                 Record.БитыАктивностиПолей = НомерСписка;
                 Record.БитыАктивностиПолей |= 0x03;
 
@@ -1619,7 +1616,7 @@ namespace MainExample
                     {
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
-                            int stopTime = 0;
+                            TimeSpan stopTime;
                             var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
                             {
                                 IsActive = t.Active,
@@ -1641,7 +1638,7 @@ namespace MainExample
                                 Time = timePars(t.ArrivalTime, t.DepartureTime),
                                 TransitTime = transitTimePars(t.ArrivalTime, t.DepartureTime),
                                 DelayTime = null,
-                                StopTime = int.TryParse(t.StopTime, out stopTime) ? stopTime : 0,
+                                StopTime = (TimeSpan?) (TimeSpan.TryParse(t.StopTime, out stopTime) ? (ValueType) stopTime : null),
                                 ExpectedTime = timePars(t.ArrivalTime, t.DepartureTime),
                                 DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания(),
                                 DaysFollowingAlias = t.DaysAlias,
@@ -2107,6 +2104,7 @@ namespace MainExample
                     TransitTime = transitTimes,
                     DelayTime = data.ВремяЗадержки,
                     ExpectedTime = data.ОжидаемоеВремя,
+                    StopTime = data.ВремяСтоянки,
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     StationDeparture = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationDepartMyltiLang : new KeyValuePair<string, string>(),
                     StationArrival = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationArrivalMyltiLang : new KeyValuePair<string, string>(),
@@ -2131,6 +2129,7 @@ namespace MainExample
                     TransitTime = transitTimes,
                     DelayTime = data.ВремяЗадержки,
                     ExpectedTime = data.ОжидаемоеВремя,
+                    StopTime = data.ВремяСтоянки,
                     Stations = data.НазваниеПоезда,
                     StationDeparture= stationDepartMyltiLang,
                     StationArrival = stationArrivalMyltiLang,
@@ -2763,17 +2762,28 @@ namespace MainExample
 
 
                         case "ВРЕМЯ СТОЯНКИ":
-                            logMessage += "Стоянка: ";
-                            Text = Record.ВремяСтоянки.ToString() + " минут";
-                            logMessage += Text + " ";
-                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                            if (Record.ВремяСтоянки.HasValue)
                             {
-                                ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ВремяСтоянки % 60],
-                                Язык = язык,
-                                ParentId = формируемоеСообщение.Id,
-                                RootId = формируемоеСообщение.SoundRecordId,
-                                Приоритет = формируемоеСообщение.Приоритет
-                            });
+                                logMessage += "Стоянка: ";
+                                Text = Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2") + " минут";
+                                logMessage += Text + " ";
+                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                                {
+                                    ИмяВоспроизводимогоФайла = ФайлыЧасов[Record.ВремяСтоянки.Value.Hours],
+                                    Язык = язык,
+                                    ParentId = формируемоеСообщение.Id,
+                                    RootId = формируемоеСообщение.SoundRecordId,
+                                    Приоритет = формируемоеСообщение.Приоритет
+                                });
+                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                                {
+                                    ИмяВоспроизводимогоФайла = ФайлыМинут[Record.ВремяСтоянки.Value.Minutes],
+                                    Язык = язык,
+                                    ParentId = формируемоеСообщение.Id,
+                                    RootId = формируемоеСообщение.SoundRecordId,
+                                    Приоритет = формируемоеСообщение.Приоритет
+                                });
+                            }
                             continue;
 
 

@@ -44,7 +44,7 @@ namespace CommunicationDevices.DataProviders
         public Dictionary<string, DateTime> TransitTime { get; set; } //Транзитное время ["приб"]/["отпр"]
         public DateTime? DelayTime { get; set; }                     //Время задержки (прибытия или отправления поезда)
         public DateTime ExpectedTime { get; set; }                   //Ожидаемое время (Время + Время задержки)
-        public int StopTime { get; set; }                            //время стоянки (мин)
+        public TimeSpan? StopTime { get; set; }                      //время стоянки (для транзитов: Время отпр - время приб)
         public VagonDirection VagonDirection { get; set; }           //Нумерация вагона (с головы, с хвоста)
         public string Message { get; set; }                          //Сообщение
 
