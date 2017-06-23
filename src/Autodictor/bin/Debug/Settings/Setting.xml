@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Root>
   <CisSetting>
-    <Name>Рижский</Name>
+    <Name>Ленинградский</Name>
+	<NameEng>ЛенинградскийEng</NameEng>
     <EndpointAddress>http://127.0.0.1:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 
@@ -102,7 +103,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow" Contrains="ДельтаТекВремени:15|15"
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow" Contrains="ДельтаТекВремени:100|100"
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +

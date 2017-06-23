@@ -103,7 +103,7 @@ namespace MainExample
         private void btn_LoadRegSh_Click(object sender, EventArgs e)
         {
             //загрузили данные с ЦИС
-            CisClient.ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);
+            CisClient.ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
         }
     }
 }

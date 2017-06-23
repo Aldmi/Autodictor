@@ -49,7 +49,7 @@ namespace CommunicationDevices.Model
     {
         #region field
 
-        public static string NameRailwayStation;
+        public static KeyValuePair<string, string> NameRailwayStation; // key - название на RU. value - название на ENG
 
         private readonly IWindsorContainer _container = new WindsorContainer();
 
@@ -182,7 +182,7 @@ namespace CommunicationDevices.Model
 
 
             //СОЗДАНИЕ КЛИЕНТА ЦИС---------------------------------------------------------------------------------------------------------
-            NameRailwayStation = xmlCisSetting.Name;
+            NameRailwayStation =  new KeyValuePair<string, string>(xmlCisSetting.Name, xmlCisSetting.NameEng) ;
             CisClient = new CisClient(new EndpointAddress(xmlCisSetting.EndpointAddress), DeviceTables);
 
 

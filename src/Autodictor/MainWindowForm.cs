@@ -11,6 +11,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
+using CommunicationDevices.Model;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Infrastructure;
@@ -2082,12 +2083,15 @@ namespace MainExample
                     break;
             }
 
-            var stationDepartMyltiLang = new KeyValuePair<string, string>(data.СтанцияОтправления,
-                                         Program.Станции.ContainsKey(data.СтанцияОтправления) ? Program.Станции[data.СтанцияОтправления] : String.Empty);
+            var defaultStation = ExchangeModel.NameRailwayStation;
 
-            var stationArrivalMyltiLang = new KeyValuePair<string, string>(data.СтанцияНазначения,
-                                         Program.Станции.ContainsKey(data.СтанцияНазначения) ? Program.Станции[data.СтанцияНазначения] : String.Empty);
+            var stationDepartMyltiLang = new KeyValuePair<string, string>(
+                                         string.IsNullOrEmpty(data.СтанцияОтправления) ? defaultStation.Key : data.СтанцияОтправления,
+                                         Program.Станции.ContainsKey(data.СтанцияОтправления ?? string.Empty) ? Program.Станции[data.СтанцияОтправления] : defaultStation.Value);
 
+            var stationArrivalMyltiLang = new KeyValuePair<string, string>(
+                                         string.IsNullOrEmpty(data.СтанцияНазначения) ? defaultStation.Key : data.СтанцияНазначения,
+                                         Program.Станции.ContainsKey(data.СтанцияНазначения ?? string.Empty) ? Program.Станции[data.СтанцияНазначения] : defaultStation.Value);
 
             UniversalInputType mapData;
             if (isShow)

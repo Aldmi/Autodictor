@@ -159,14 +159,14 @@ namespace CommunicationDevices.ClientWCF
             //Сработка в 10:00:00
             if (DateTime.Now.Hour == 10 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= PeriodTimer)
             {
-                ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation);
+                ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
             }
 
 
             //Сработка в 20:00:00
             if (DateTime.Now.Hour == 20 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= PeriodTimer)
             {
-                ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation);
+                ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
             }
 
 
@@ -175,13 +175,13 @@ namespace CommunicationDevices.ClientWCF
             if (DateTime.Now.Minute == 10 && DateTime.Now.Second <= PeriodTimer)
             {
                 Log.log.Fatal(DateTime.Now.ToLongTimeString);
-                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);
+                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
             }
 
 
             //ВРЕМЕННОЙ УРОВЕНЬ 40сек (период таймера)
             //ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);       //DEBUG
-            ManualSetDiagnostic(ExchangeModel.NameRailwayStation);
+            ManualSetDiagnostic(ExchangeModel.NameRailwayStation.Key);
 
 
             //ВРЕМЕННОЙ УРОВЕНЬ 2мин
@@ -189,7 +189,7 @@ namespace CommunicationDevices.ClientWCF
             {
                 _minutLevel2 = DateTime.Now;
 
-                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);//DEBUG
+                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);//DEBUG
 
 
                 //считываем инфо.
@@ -205,13 +205,13 @@ namespace CommunicationDevices.ClientWCF
                 //Повторная попытка считать регулярное расписание
                 if (!_isSuccessGetRegSh)
                 {
-                    ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);
+                    ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
                 }
 
                 //Повторная попытка считать оперативаное распсисание
                 if (!_isSuccessGetOperSh)
                 {
-                    ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation);
+                    ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
                 }
             }
         }

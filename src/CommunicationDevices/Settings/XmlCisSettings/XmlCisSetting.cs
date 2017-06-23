@@ -8,6 +8,7 @@ namespace CommunicationDevices.Settings.XmlCisSettings
         #region prop
 
         public string Name { get; }
+        public string NameEng { get; }
         public string EndpointAddress { get; }
 
         #endregion
@@ -17,9 +18,10 @@ namespace CommunicationDevices.Settings.XmlCisSettings
 
         #region ctor
 
-        private XmlCisSetting(string name, string endpointAddress)
+        private XmlCisSetting(string name, string nameEng, string endpointAddress)
         {
             Name = name;
+            NameEng = nameEng;
             EndpointAddress = endpointAddress;
         }
 
@@ -37,6 +39,7 @@ namespace CommunicationDevices.Settings.XmlCisSettings
         {
             return new XmlCisSetting(
                            (string)xml?.Element("CisSetting")?.Element("Name"),
+                           (string)xml?.Element("CisSetting")?.Element("NameEng"),
                            (string)xml?.Element("CisSetting")?.Element("EndpointAddress")
                           );
         }

@@ -78,7 +78,7 @@ namespace MainExample
 
         private void btn_LoadOperSh_Click(object sender, EventArgs e)
         {
-            CisClient.ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation);
+            CisClient.ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
         }
     }
 }
