@@ -102,6 +102,30 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                         continue;
                     }
 
+                    matchString = Regex.Match(s, "ДельтаТекВремени\\:(.*)").Groups[1].Value;
+                    if (!string.IsNullOrEmpty(matchString))
+                    {
+                        var deltaTime = matchString.Split('|');
+                        if (deltaTime.Length == 2)
+                        {
+                            int minMinute;
+                            int maxMinute;
+                            if (int.TryParse(deltaTime[0], out minMinute) && int.TryParse(deltaTime[1], out maxMinute))
+                            {
+                                Conditions.DeltaCurrentTime = new Dictionary<string, TimeSpan>
+                                {
+                                    ["-"] = new TimeSpan(0, 0, minMinute, 0),
+                                    ["+"] = new TimeSpan(0, 0, maxMinute, 0)
+                                };
+                            }
+                        }
+
+                        int limitRow;
+                        Conditions.LimitNumberRows = (int?)(int.TryParse(matchString, out limitRow) ? (ValueType)limitRow : null);
+                        continue;
+                    }
+
+
                     switch (s)
                     {
                         case "ПРИБ.":
@@ -207,7 +231,6 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                         case "БольшеТекВремени":
                             Conditions.HightCurrentTime = true;
                             break;
-
 
 
                         case "Отменен_БлокВремОгр":

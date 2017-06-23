@@ -19,6 +19,8 @@ namespace CommunicationDevices.Settings
         public bool LowCurrentTime { get; set; } // Больше Тек. времени
         public bool HightCurrentTime { get; set; } // Меньше Тек. времени
 
+        public Dictionary<string, TimeSpan> DeltaCurrentTime { get; set; }       //+- относительно тек. времени
+
         public bool PassengerArrival { get; set; } //Пассажирский+ПРИБ.
         public bool PassengerDepart { get; set; } //Пассажирский+ОТПР.
         public IEnumerable<string> PassengerPaths { get; set; } //Пассажирский+ПУТЬ:1,2,3
@@ -104,27 +106,24 @@ namespace CommunicationDevices.Settings
             var timeFilter = true;
             if (emergencySituationCanceledFilter && emergencySituationDelayArrivalFilter && emergencySituationDelayDepartFilter)
             {
+                var time = inData.TransitTime.ContainsKey("отпр") ? inData.TransitTime["отпр"] : inData.Time;
+
                 if (LowCurrentTime) //"МеньшеТекВремени"
-                {
-                    if (inData.TransitTime.ContainsKey("отпр"))
-                    {
-                        timeFilter = inData.TransitTime["отпр"] < DateTime.Now;
-                    }
-                    else
-                    {
-                        timeFilter = inData.Time < DateTime.Now;
-                    }            
+                {               
+                    timeFilter = time < DateTime.Now;                    
                 }
+
                 if (HightCurrentTime) //"БольшеТекВремени"
                 {
-                    if (inData.TransitTime.ContainsKey("отпр"))
-                    {
-                        timeFilter = inData.TransitTime["отпр"] > DateTime.Now;
-                    }
-                    else
-                    {
-                        timeFilter = inData.Time > DateTime.Now;
-                    }         
+                    timeFilter = time > DateTime.Now;
+                }
+
+                if (DeltaCurrentTime != null && DeltaCurrentTime.ContainsKey("+") && DeltaCurrentTime.ContainsKey("-"))
+                {
+                    var min = DateTime.Now - DeltaCurrentTime["-"];
+                    var max = DateTime.Now + DeltaCurrentTime["+"];
+
+                    timeFilter = (time > min && time < max);
                 }
             }
 
