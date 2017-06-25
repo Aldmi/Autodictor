@@ -7,10 +7,6 @@ C:\Users\Aldmi\Desktop\src_old\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvto
 C:\Users\Aldmi\Desktop\src_old\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.pdb
 C:\Users\Aldmi\Desktop\src_old\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll
 C:\Users\Aldmi\Desktop\src_old\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.pdb
-D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.dll
-D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.pdb
-D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll
-D:\Git\Autodictor\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.pdb
 C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.dll
 C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\bin\Release\WCFAvtodictor2PcTableContract.pdb
 C:\Users\Aldmi\Desktop\src\WCFAvtodictor2PcPanelContract\obj\Release\WCFAvtodictor2PcTableContract.dll

@@ -333,45 +333,6 @@ D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\b
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
 D:\ALDMI\Dropbox\РАБОТА ВОКЗАЛ\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.config
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\AutoMapper.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Communication.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Library.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\MoreLinq.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.Calc.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.PlatformServices.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Threading.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\WCFAvtodictor2PcTableContract.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\WCFCis2AvtodictorContract.dll
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Communication.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Library.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\WCFAvtodictor2PcTableContract.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\WCFCis2AvtodictorContract.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\AutoMapper.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Core.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Castle.Windsor.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\MoreLinq.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\NLog.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.pdb
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\Sprache.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Core.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Interfaces.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Linq.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.PlatformServices.xml
-D:\Git\Autodictor\src\CommunicationDevices\bin\Debug\System.Reactive.Windows.Threading.xml
-D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.csprojResolveAssemblyReference.cache
-D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.dll
-D:\Git\Autodictor\src\CommunicationDevices\obj\Debug\CommunicationDevices.pdb
 C:\Users\Aldmi\Desktop\src\CommunicationDevices\bin\Debug\NLog.config
 C:\Users\Aldmi\Desktop\src\CommunicationDevices\bin\Debug\CommunicationDevices.dll
 C:\Users\Aldmi\Desktop\src\CommunicationDevices\bin\Debug\CommunicationDevices.pdb
