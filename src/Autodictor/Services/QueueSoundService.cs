@@ -419,7 +419,7 @@ namespace MainExample.Services
         private void EventEndPlayingTemplate(ВоспроизводимоеСообщение soundMessage)
         {
             //шаблон АВАРИЯ (Id сообщения > 1000)
-            if (soundMessage.ParentId.HasValue && soundMessage.ParentId > 1000)
+            if ((soundMessage.RootId > 0) && (soundMessage.ParentId.HasValue) && (soundMessage.ParentId > 1000))
             {
                 СостояниеФормируемогоСообщенияИШаблон шаблон = new СостояниеФормируемогоСообщенияИШаблон();
                 шаблон.Id = soundMessage.ParentId.Value;
@@ -436,7 +436,7 @@ namespace MainExample.Services
 
             //шаблон ДИНАМИКИ
             var soundRecord = MainWindowForm.SoundRecords.FirstOrDefault(rec => rec.Value.ID == soundMessage.RootId).Value;
-            if (soundMessage.ParentId.HasValue)
+            if ((soundRecord.ID) > 0 && (soundMessage.ParentId.HasValue))
             {
                 var template = soundRecord.СписокФормируемыхСообщений.FirstOrDefault(sm => sm.Id == soundMessage.ParentId.Value);
                 if (!string.IsNullOrEmpty(template.НазваниеШаблона))

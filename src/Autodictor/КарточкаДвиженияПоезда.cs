@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MainExample.Entites;
 using MainExample.Services;
 
 
@@ -774,7 +775,7 @@ namespace MainExample
                     ФормируемоеСообщение.Приоритет = Priority.Hight;
                     Record.СписокФормируемыхСообщений[item] = ФормируемоеСообщение;
                  
-                    MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, ФормируемоеСообщение);
+                    MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, ФормируемоеСообщение, ТипСообщения.Динамическое);
                     break;
                 }
             }
@@ -907,7 +908,7 @@ namespace MainExample
                     НазваниеШаблона = "Авария"
                 };
 
-                MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора нештатная ситуация", Record, шаблонФормируемогоСообщения);
+                MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора нештатная ситуация", Record, шаблонФормируемогоСообщения, ТипСообщения.ДинамическоеАварийное);
             }
         }
 

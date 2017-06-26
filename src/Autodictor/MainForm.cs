@@ -156,7 +156,6 @@ namespace MainExample
 
         private void dataSetExample_Click(object sender, EventArgs e)
         {
-
             if (StaticSoundForm.thisForm != null)
             {
                 StaticSoundForm.thisForm.Show();
@@ -441,6 +440,14 @@ namespace MainExample
 
 
 
+        private void техническоеСообщениеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TechnicalMessageForm techForm= new TechnicalMessageForm();
+            techForm.ShowDialog();
+        }
+
+
+
         private void timer_Clock_Tick(object sender, EventArgs e)
         {
             toolClockLabel.Text = DateTime.Now.ToString("dd.MM  HH:mm:ss");
@@ -478,5 +485,7 @@ namespace MainExample
                 listFormOper.Show();
             }
         }
+
+
     }
 }

@@ -102,10 +102,10 @@
             this.tBНомерПоездаДоп = new System.Windows.Forms.TextBox();
             this.gb_ПутьПоУмолчанию = new System.Windows.Forms.GroupBox();
             this.dgv_ПутиПоДнямНедели = new System.Windows.Forms.DataGridView();
-            this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
-            this.rb_Постоянно = new System.Windows.Forms.RadioButton();
             this.col_key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
+            this.rb_Постоянно = new System.Windows.Forms.RadioButton();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -898,6 +898,19 @@
             this.dgv_ПутиПоДнямНедели.Size = new System.Drawing.Size(204, 191);
             this.dgv_ПутиПоДнямНедели.TabIndex = 9;
             // 
+            // col_key
+            // 
+            this.col_key.HeaderText = "День";
+            this.col_key.Name = "col_key";
+            this.col_key.ReadOnly = true;
+            this.col_key.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.col_key.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cmb_Путь
+            // 
+            this.cmb_Путь.HeaderText = "Путь";
+            this.cmb_Путь.Name = "cmb_Путь";
+            // 
             // rb_ПоДнямНедели
             // 
             this.rb_ПоДнямНедели.AutoSize = true;
@@ -923,19 +936,6 @@
             this.rb_Постоянно.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.rb_Постоянно.UseVisualStyleBackColor = true;
             this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
-            // 
-            // col_key
-            // 
-            this.col_key.HeaderText = "День";
-            this.col_key.Name = "col_key";
-            this.col_key.ReadOnly = true;
-            this.col_key.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.col_key.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // cmb_Путь
-            // 
-            this.cmb_Путь.HeaderText = "Путь";
-            this.cmb_Путь.Name = "cmb_Путь";
             // 
             // Оповещение
             // 

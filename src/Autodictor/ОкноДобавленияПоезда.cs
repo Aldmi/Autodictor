@@ -23,7 +23,7 @@ namespace MainExample
 
             RecordId = recordId;
 
-            Record.ID = 0;
+            Record.ID = 1;
             Record.Активность = true;
             Record.Автомат = true;
             Record.БитыАктивностиПолей = 0x00;

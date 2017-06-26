@@ -169,6 +169,12 @@
     <Compile Include="StaticDisplayForm.Designer.cs">
       <DependentUpon>StaticDisplayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TechnicalMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechnicalMessageForm.Designer.cs">
+      <DependentUpon>TechnicalMessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TrainTable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StaticDisplayForm.resx">
       <DependentUpon>StaticDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechnicalMessageForm.resx">
+      <DependentUpon>TechnicalMessageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TrainTable.resx">
       <DependentUpon>TrainTable.cs</DependentUpon>

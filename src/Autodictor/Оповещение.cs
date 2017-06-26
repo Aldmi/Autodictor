@@ -265,8 +265,6 @@ namespace MainExample
             РасписаниеПоезда.Active = !cBБлокировка.Checked;
             РасписаниеПоезда.SoundTemplates = ПолучитьШаблоныОповещения();
 
-
-            //РасписаниеПоезда.TrainPathNumber[WeekDays.Постоянно] = cBПутьПоУмолчанию.Text;
             SavePathValues(ref РасписаниеПоезда);
 
 
@@ -457,6 +455,8 @@ namespace MainExample
             }
         }
 
+
+
         private void btnДобавитьШаблон_Click(object sender, EventArgs e)
         {
             if (cBШаблонОповещения.SelectedIndex >= 0)
@@ -481,6 +481,8 @@ namespace MainExample
                 }
             }
         }
+
+
 
         private void btnУдалитьШаблон_Click(object sender, EventArgs e)
         {
