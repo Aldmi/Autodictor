@@ -16,7 +16,7 @@ namespace MainExample
         #region prop
 
         private List<DynamicSoundRecord> DynamicTechnicalSoundRecords { get; }= new List<DynamicSoundRecord>();
-        private List<SoundRecord> SoundRecords { get; } = new List<SoundRecord>();  //Добавленные для воспроизведения сообщения
+        public static List<SoundRecord> SoundRecords { get; } = new List<SoundRecord>();  //Добавленные для воспроизведения сообщения
 
         #endregion
 
@@ -92,15 +92,15 @@ namespace MainExample
 
 
 
-        private СостояниеФормируемогоСообщенияИШаблон СоздатьСостояниеФормируемогоСообщенияИШаблон(DynamicSoundRecord template)
+        private СостояниеФормируемогоСообщенияИШаблон СоздатьСостояниеФормируемогоСообщенияИШаблон(int soundRecordId, DynamicSoundRecord template)
         {
             СостояниеФормируемогоСообщенияИШаблон новыйШаблон;
-            новыйШаблон.Id = 100;
-            новыйШаблон.SoundRecordId = 5000;
+            новыйШаблон.Id = 1;
+            новыйШаблон.SoundRecordId = soundRecordId;
             новыйШаблон.Активность = true;
             новыйШаблон.Приоритет = Priority.Hight;
             новыйШаблон.Воспроизведен = false;
-            новыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьАвтомат;
+            новыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьРучное;
             новыйШаблон.ВремяСмещения = 0;
             новыйШаблон.НазваниеШаблона = template.Name;
             новыйШаблон.Шаблон = template.Message;
@@ -112,18 +112,23 @@ namespace MainExample
 
 
 
-        private SoundRecord СоздатьSoundRecord(string pathNumber, СостояниеФормируемогоСообщенияИШаблон template)
+        private SoundRecord СоздатьSoundRecord(int soundRecordId, string pathNumber, СостояниеФормируемогоСообщенияИШаблон template)
         {
             SoundRecord record = new SoundRecord
             {
+                ID = soundRecordId,
                 НомерПоезда = "xxx",
                 НомерПути = pathNumber,
+                Время = DateTime.Now,
                 СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон> {template},
                 КоличествоПовторений = 1
             };
 
             return record;
         }
+
+
+
 
 
 
@@ -144,7 +149,6 @@ namespace MainExample
                 return;
             }
 
-
             var template = DynamicTechnicalSoundRecords[cBШаблонОповещения.SelectedIndex];
             var pathNumber = cBПутьПоУмолчанию.Text;
 
@@ -154,9 +158,11 @@ namespace MainExample
                 return;
             }
 
-            var формируемоеСообщение = СоздатьСостояниеФормируемогоСообщенияИШаблон(template);
-            var record = СоздатьSoundRecord(pathNumber, формируемоеСообщение);
+            var newId = SoundRecords.Any() ? SoundRecords.Max(rec => rec.ID) + 1 : 1;
+            var формируемоеСообщение = СоздатьСостояниеФормируемогоСообщенияИШаблон(newId, template);
+            var record = СоздатьSoundRecord(newId, pathNumber, формируемоеСообщение);
 
+            SoundRecords.Add(record);
             MainWindowForm.ВоспроизвестиШаблонОповещения("Техническое сообщение", record, формируемоеСообщение, ТипСообщения.ДинамическоеТехническое);
         }
 

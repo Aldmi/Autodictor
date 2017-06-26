@@ -263,10 +263,34 @@ namespace MainExample
 
         private void TemplateChangeRxEventHandler(TemplateChangeValue templateChangeValue)
         {
-            var soundRecord = SoundRecords.FirstOrDefault(rec => rec.Value.ID == templateChangeValue.Template.SoundRecordId);
+            //ШАБЛОН технического сообщения
+            if (templateChangeValue.SoundMessage.ТипСообщения == ТипСообщения.ДинамическоеТехническое)
+            {
+                var soundRecordTech = TechnicalMessageForm.SoundRecords.FirstOrDefault(rec => rec.ID == templateChangeValue.Template.SoundRecordId);
+                if (soundRecordTech.ID > 0)
+                {
+                    int index = TechnicalMessageForm.SoundRecords.IndexOf(soundRecordTech);
+                    var template =soundRecordTech.СписокФормируемыхСообщений.FirstOrDefault(i => i.Id == templateChangeValue.Template.Id);
+                    switch (templateChangeValue.StatusPlaying)
+                    {
+                        case StatusPlaying.Start:
+                            template.СостояниеВоспроизведения = SoundRecordStatus.ВоспроизведениеРучное;
+                            break;
 
+                        case StatusPlaying.Stop:
+                            template.СостояниеВоспроизведения = SoundRecordStatus.Выключена;
+                            break;
+                    }
+                    soundRecordTech.СписокФормируемыхСообщений[0] = template;
+                    TechnicalMessageForm.SoundRecords[index] = soundRecordTech;
+                }
+                return;
+            }
+
+
+            var soundRecord = SoundRecords.FirstOrDefault(rec => rec.Value.ID == templateChangeValue.Template.SoundRecordId);
             //шаблон АВАРИЯ
-            if (templateChangeValue.Template.Id > 1000)
+            if (templateChangeValue.SoundMessage.ТипСообщения == ТипСообщения.ДинамическоеАварийное)
             {
                 for (int i = 0; i < soundRecord.Value.СписокНештатныхСообщений.Count; i++)
                 {
@@ -1267,12 +1291,7 @@ namespace MainExample
                                             }
                                         }
 
-                                        if (DateTime.Now > времяСобытия.AddMinutes(-30) &&
-                                            !(нештатноеСообщение.СостояниеВоспроизведения ==
-                                              SoundRecordStatus.Воспроизведена &&
-                                              DateTime.Now >
-                                              времяСобытия.AddSeconds(ВремяЗадержкиВоспроизведенныхСобытий)))
-                                        //убрать через 5 мин. после воспроизведения
+                                        if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(нештатноеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена &&  DateTime.Now > времяСобытия.AddSeconds(ВремяЗадержкиВоспроизведенныхСобытий)))//убрать через 5 мин. после воспроизведения
                                         {
                                             byte состояниеСтроки = 0;
                                             switch (нештатноеСообщение.СостояниеВоспроизведения)
@@ -1534,6 +1553,55 @@ namespace MainExample
                 }
             }
             #endregion
+
+
+
+
+            #region Определить композицию для запуска технического сообщения
+
+            for (int i = 0; i < TechnicalMessageForm.SoundRecords.Count; i++)
+            {
+                var record = TechnicalMessageForm.SoundRecords[i];
+                if (record.СписокФормируемыхСообщений.Any())
+                {
+                    var формируемоеСообщение = record.СписокФормируемыхСообщений[0];
+                    if (формируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.ДобавленВОчередьРучное ||
+                        формируемоеСообщение.СостояниеВоспроизведения == SoundRecordStatus.ВоспроизведениеРучное)
+                    {
+                        byte состояниеСтроки = 0;
+                        switch (формируемоеСообщение.СостояниеВоспроизведения)
+                        {
+                            case SoundRecordStatus.ДобавленВОчередьРучное:
+                                состояниеСтроки = 1;
+                                break;
+
+                            case SoundRecordStatus.ВоспроизведениеРучное:
+                                состояниеСтроки = 4;
+                                break;
+                        }
+
+                        TaskSound taskSound = new TaskSound
+                        {
+                            НомерСписка = 0,
+                            СостояниеСтроки = состояниеСтроки,
+                            Описание = формируемоеСообщение.НазваниеШаблона,
+                            Время = record.Время,
+                            Ключ = SoundRecords.ElementAt(i).Key,
+                            ParentId = формируемоеСообщение.Id,
+                            ШаблонИлиСообщение = формируемоеСообщение.Шаблон
+                        };
+
+                        TaskManager.AddItem(taskSound);
+                    }
+                    else
+                    {
+                        TechnicalMessageForm.SoundRecords.RemoveAt(i);
+                    }
+                }
+            }
+                
+            #endregion
+
 
 
             lVСобытия_ОбновитьСостояниеТаблицы();

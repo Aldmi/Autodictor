@@ -25,6 +25,7 @@ namespace MainExample.Services
     {
         public StatusPlaying StatusPlaying { get; set; }
         public СостояниеФормируемогоСообщенияИШаблон Template { get; set; }
+        public ВоспроизводимоеСообщение SoundMessage { get; set; }
     }
 
 
@@ -382,8 +383,8 @@ namespace MainExample.Services
         /// </summary>
         private void EventStartPlayingTemplate(ВоспроизводимоеСообщение soundMessage)
         {
-            //шаблон АВАРИЯ (Id сообщения > 1000)
-            if (soundMessage.ParentId.HasValue && soundMessage.ParentId > 1000)
+            //шаблон АВАРИЯ
+            if (soundMessage.ParentId.HasValue && soundMessage.ТипСообщения == ТипСообщения.ДинамическоеАварийное)
             {
                 СостояниеФормируемогоСообщенияИШаблон шаблон = new СостояниеФормируемогоСообщенияИШаблон();
                 шаблон.Id = soundMessage.ParentId.Value;
@@ -392,22 +393,41 @@ namespace MainExample.Services
                 шаблон.Приоритет = soundMessage.Приоритет;
 
                 CurrentTemplatePlaying = шаблон;
-                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон });
+                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон, SoundMessage = soundMessage });
                 Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
                 return;
             }
 
             //шаблон ДИНАМИКИ
-            var soundRecord = MainWindowForm.SoundRecords.FirstOrDefault(rec => rec.Value.ID == soundMessage.RootId).Value;
-            if (soundRecord.СписокФормируемыхСообщений != null && soundRecord.СписокФормируемыхСообщений.Any())
+            if (soundMessage.ParentId.HasValue && soundMessage.ТипСообщения == ТипСообщения.Динамическое)
             {
-                var template = soundRecord.СписокФормируемыхСообщений.FirstOrDefault(sm => sm.Id == soundMessage.ParentId.Value);
-                if (!string.IsNullOrEmpty(template.НазваниеШаблона))
+                var soundRecord = MainWindowForm.SoundRecords.FirstOrDefault(rec => rec.Value.ID == soundMessage.RootId).Value;
+                if (soundRecord.СписокФормируемыхСообщений != null && soundRecord.СписокФормируемыхСообщений.Any())
                 {
-                    CurrentTemplatePlaying = template;
-                    TemplateChangeRx.OnNext(new TemplateChangeValue {StatusPlaying = StatusPlaying.Start, Template =  template});
-                    Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                    var template = soundRecord.СписокФормируемыхСообщений.FirstOrDefault(sm => sm.Id == soundMessage.ParentId.Value);
+                    if (!string.IsNullOrEmpty(template.НазваниеШаблона))
+                    {
+                        CurrentTemplatePlaying = template;
+                        TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = template, SoundMessage = soundMessage});
+                        Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                    }
                 }
+                return;
+            }
+
+            //шаблон ДИНАМИКИ техническое сообщение
+            if (soundMessage.ParentId.HasValue && soundMessage.ТипСообщения == ТипСообщения.ДинамическоеТехническое)
+            {
+                СостояниеФормируемогоСообщенияИШаблон шаблон = new СостояниеФормируемогоСообщенияИШаблон();
+                шаблон.Id = soundMessage.ParentId.Value;
+                шаблон.SoundRecordId = soundMessage.RootId;
+                шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
+                шаблон.Приоритет = soundMessage.Приоритет;
+
+                CurrentTemplatePlaying = шаблон;
+                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон, SoundMessage = soundMessage });
+                Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                return;
             }
         }
 
@@ -419,7 +439,7 @@ namespace MainExample.Services
         private void EventEndPlayingTemplate(ВоспроизводимоеСообщение soundMessage)
         {
             //шаблон АВАРИЯ (Id сообщения > 1000)
-            if ((soundMessage.RootId > 0) && (soundMessage.ParentId.HasValue) && (soundMessage.ParentId > 1000))
+            if ((soundMessage.RootId > 0) && (soundMessage.ParentId.HasValue) && (soundMessage.ТипСообщения == ТипСообщения.ДинамическоеАварийное))
             {
                 СостояниеФормируемогоСообщенияИШаблон шаблон = new СостояниеФормируемогоСообщенияИШаблон();
                 шаблон.Id = soundMessage.ParentId.Value;
@@ -428,27 +448,47 @@ namespace MainExample.Services
                 шаблон.Приоритет = soundMessage.Приоритет;
 
                 CurrentTemplatePlaying = шаблон;
-                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон });
+                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон, SoundMessage = soundMessage});
                 Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
                 CurrentTemplatePlaying = null;
                 return;
             }
 
             //шаблон ДИНАМИКИ
-            var soundRecord = MainWindowForm.SoundRecords.FirstOrDefault(rec => rec.Value.ID == soundMessage.RootId).Value;
-            if ((soundRecord.ID) > 0 && (soundMessage.ParentId.HasValue))
+            if (soundMessage.ParentId.HasValue && soundMessage.ТипСообщения == ТипСообщения.Динамическое)
             {
-                var template = soundRecord.СписокФормируемыхСообщений.FirstOrDefault(sm => sm.Id == soundMessage.ParentId.Value);
-                if (!string.IsNullOrEmpty(template.НазваниеШаблона))
+                var soundRecord = MainWindowForm.SoundRecords.FirstOrDefault(rec => rec.Value.ID == soundMessage.RootId).Value;
+                if ((soundRecord.ID) > 0 && (soundMessage.ParentId.HasValue))
                 {
-                    CurrentTemplatePlaying = null;
-                    TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = template });
-                    Debug.WriteLine($"--------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                    var template = soundRecord.СписокФормируемыхСообщений.FirstOrDefault(sm => sm.Id == soundMessage.ParentId.Value);
+                    if (!string.IsNullOrEmpty(template.НазваниеШаблона))
+                    {
+                        CurrentTemplatePlaying = null;
+                        TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = template, SoundMessage = soundMessage });
+                        Debug.WriteLine($"--------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                    }
                 }
+                CurrentTemplatePlaying = null;
+                return;
             }
 
-            CurrentTemplatePlaying = null;
+            //шаблон ДИНАМИКИ техническое сообщение
+            if (soundMessage.ParentId.HasValue && soundMessage.ТипСообщения == ТипСообщения.ДинамическоеТехническое)
+            {
+                СостояниеФормируемогоСообщенияИШаблон шаблон = new СостояниеФормируемогоСообщенияИШаблон();
+                шаблон.Id = soundMessage.ParentId.Value;
+                шаблон.SoundRecordId = soundMessage.RootId;
+                шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
+                шаблон.Приоритет = soundMessage.Приоритет;
+
+                CurrentTemplatePlaying = шаблон;
+                TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон, SoundMessage = soundMessage });
+                Debug.WriteLine($"-------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                CurrentTemplatePlaying = null;
+                return;
+            }   
         }
+
 
 
         /// <summary>
