@@ -134,18 +134,26 @@ namespace MainExample
         {              
             if (cBШаблонОповещения.SelectedIndex < 0)
             {
-                MessageBox.Show(@"Шаблон не выбранн !");
+                MessageBox.Show(@"Шаблон не выбранн !!!");
                 return;
             }
 
-            if (cBПутьПоУмолчанию.SelectedIndex < 0)
+            if (cBПутьПоУмолчанию.SelectedIndex < 1)
             {
-                MessageBox.Show(@"Путь не выбранн !");
+                MessageBox.Show(@"Путь не выбранн !!!");
                 return;
             }
+
 
             var template = DynamicTechnicalSoundRecords[cBШаблонОповещения.SelectedIndex];
             var pathNumber = cBПутьПоУмолчанию.Text;
+
+            if(template.Name.Contains("---"))
+            {
+                MessageBox.Show(@"Выбран разделитель вместо шаблона !!!");
+                return;
+            }
+
             var формируемоеСообщение = СоздатьСостояниеФормируемогоСообщенияИШаблон(template);
             var record = СоздатьSoundRecord(pathNumber, формируемоеСообщение);
 
