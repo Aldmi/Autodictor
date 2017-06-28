@@ -110,6 +110,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -441,6 +442,10 @@
     <ProjectReference Include="..\Communication\Communication.csproj">
       <Project>{DEA394E0-F62E-459B-98CF-3EC8DA2A90A3}</Project>
       <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{a28fd145-e193-4237-9d44-1bdf29b84b69}</Project>
+      <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{87b6f9ef-6a0d-4daf-9df0-718036b1c8e4}</Project>

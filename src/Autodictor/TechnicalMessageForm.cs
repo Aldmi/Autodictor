@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace MainExample
 
 
 
+        #region Methode
+
         protected override void OnLoad(EventArgs e)
         {
             LoadDynamicTechniclaTemplate();
@@ -56,13 +59,11 @@ namespace MainExample
 
 
 
-
-
         private void LoadDynamicTechniclaTemplate()
         {
             try
             {
-                using (System.IO.StreamReader file = new System.IO.StreamReader("DynamicSoundTechnical.ini"))
+                using (StreamReader file = new StreamReader("DynamicSoundTechnical.ini"))
                 {
                     string line;
 
@@ -98,7 +99,7 @@ namespace MainExample
             новыйШаблон.Id = 1;
             новыйШаблон.SoundRecordId = soundRecordId;
             новыйШаблон.Активность = true;
-            новыйШаблон.Приоритет = Priority.Hight;
+            новыйШаблон.Приоритет = Priority.RealTime;
             новыйШаблон.Воспроизведен = false;
             новыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьРучное;
             новыйШаблон.ВремяСмещения = 0;
@@ -126,6 +127,9 @@ namespace MainExample
 
             return record;
         }
+
+        #endregion
+
 
 
 
@@ -155,6 +159,7 @@ namespace MainExample
                 return;
             }
 
+            //на каждое сообщение создается новый SoundRecord (поезд) с одним шаблоном.
             var newId = SoundRecords.Any() ? SoundRecords.Max(rec => rec.ID) + 1 : 1;
             var формируемоеСообщение = СоздатьСостояниеФормируемогоСообщенияИШаблон(newId, template);
             var record = СоздатьSoundRecord(newId, pathNumber, формируемоеСообщение);

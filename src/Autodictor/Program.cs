@@ -5,7 +5,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
+using ConsoleApplication_test.Entitys;
+using Domain.Abstract;
+using Domain.Concrete;
 using Library.Logs;
+using Library.Xml;
 
 
 namespace MainExample
@@ -25,6 +29,8 @@ namespace MainExample
 
         public static string ИнфСтрокаНаТабло = "";
         public static Dictionary<string, string> Станции = new Dictionary<string, string>();  //Key - название на RU, Value - название на ENG
+
+        private static IRepository<Direction> DirectionRepository; //хранилище XML
 
         public static byte ПолучитьНомерПути(string НомерПути)
         {
@@ -151,15 +157,24 @@ namespace MainExample
             if (СписокДинамическихСообщений != null && СписокДинамическихСообщений.Contains(track))
                 return Path + @"Wav\Dynamic message\" + track + ".wav";
 
-            foreach (var Sound in StaticSoundForm.StaticSoundRecords)
-                if (Sound.Name == track)
-                    return Sound.Path;
+            foreach (var sound in StaticSoundForm.StaticSoundRecords)
+                if (sound.Name == track)
+                    return sound.Path;
 
             return "";
         }
 
+
+
         public static void ЗагрузкаНазванийПоездов()
         {
+            var xmlFile = XmlWorker.LoadXmlFile(string.Empty, "Stations.xml"); //все настройки в одном файле
+            if (xmlFile == null)
+                return;
+
+            DirectionRepository = new RepositoryXmlDirection(xmlFile);
+            var directions = DirectionRepository.List();  
+
             try
             {
                 using (System.IO.StreamReader file = new System.IO.StreamReader("Stations.ini"))
@@ -187,6 +202,8 @@ namespace MainExample
                 Console.WriteLine(e.Message);
             }
         }
+
+
 
         public static void ЗагрузкаНазванийПутей()
         {
