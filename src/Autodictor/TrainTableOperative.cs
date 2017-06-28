@@ -59,7 +59,6 @@ namespace MainExample
             Данные.Name = "";
             Данные.StationArrival = "";
             Данные.StationDepart = "";
-            Данные.Direction = "";
             Данные.ArrivalTime = "00:00";
             Данные.StopTime = "00:00";
             Данные.DepartureTime = "00:00";
@@ -192,8 +191,6 @@ namespace MainExample
 
 
 
-
-
         #region Methode
 
         private void ОбновитьДанныеВСписке()
@@ -313,11 +310,6 @@ namespace MainExample
                                 Данные.StationArrival = Settings[23];
                             }
 
-                            Данные.Direction = String.Empty;
-                            if (Settings.Length >= 24)
-                            {
-                                Данные.StationDepart = Settings[24];
-                            }
 
 
                             TrainTableRecords.Add(Данные);
@@ -372,8 +364,7 @@ namespace MainExample
                             TrainTableRecords[i].DaysAlias + ";" +
 
                             TrainTableRecords[i].StationDepart + ";" +
-                            TrainTableRecords[i].StationArrival + ";" +
-                            TrainTableRecords[i].Direction;
+                            TrainTableRecords[i].StationArrival;
 
                         DumpFile.WriteLine(line);
                     }

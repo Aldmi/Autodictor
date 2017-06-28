@@ -90,16 +90,10 @@ namespace MainExample
             cBНомерПоезда.Text = Record.НомерПоезда;
             cBНомерПоезда2.Text = Record.НомерПоезда2;
 
-
-            var directions = Program.DirectionRepository.List().ToList();
-            if (directions.Any())
+            foreach (var Станция in Program.Станции)
             {
-                var stationsNames = directions.FirstOrDefault(d => d.Name == Record.Направление)?.Stations?.Select(st=>st.NameRu).ToArray();
-                if (stationsNames != null && stationsNames.Any())
-                {
-                    cBОткуда.Items.AddRange(stationsNames);
-                    cBКуда.Items.AddRange(stationsNames);
-                }
+                cBОткуда.Items.Add(Станция.Key);
+                cBКуда.Items.Add(Станция.Key);
             }
 
             cBОткуда.Text = Record.СтанцияОтправления;

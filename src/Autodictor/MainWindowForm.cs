@@ -33,7 +33,6 @@ namespace MainExample
         public string НомерПоезда;
         public string НомерПоезда2;
         public string НазваниеПоезда;
-        public string Направление;
         public string СтанцияОтправления;
         public string СтанцияНазначения;
         public DateTime Время;
@@ -482,7 +481,6 @@ namespace MainExample
                     ["звук"] = Config.ИспользоватьДополнение["звук"],
                     ["табло"] = Config.ИспользоватьДополнение["табло"]
                 };
-                Record.Направление = Config.Direction;
                 Record.СтанцияОтправления = "";
                 Record.СтанцияНазначения = "";
                 Record.ДниСледования = Config.Days;

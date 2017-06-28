@@ -30,7 +30,7 @@ namespace MainExample
         public static string ИнфСтрокаНаТабло = "";
         public static Dictionary<string, string> Станции = new Dictionary<string, string>();  //Key - название на RU, Value - название на ENG
 
-        public static IRepository<Direction> DirectionRepository; //хранилище XML
+        private static IRepository<Direction> DirectionRepository; //хранилище XML
 
         public static byte ПолучитьНомерПути(string НомерПути)
         {
@@ -172,8 +172,7 @@ namespace MainExample
             if (xmlFile == null)
                 return;
 
-            DirectionRepository = new RepositoryXmlDirection(xmlFile);                 //хранилище XML
-            //directionRep = new RepositoryEf<Direction>(dbContext);                   //хранилище БД
+            DirectionRepository = new RepositoryXmlDirection(xmlFile);
             var directions = DirectionRepository.List();  
 
             try

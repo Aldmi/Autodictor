@@ -106,8 +106,6 @@
             this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
             this.rb_Постоянно = new System.Windows.Forms.RadioButton();
-            this.cBНаправ = new System.Windows.Forms.ComboBox();
-            this.lНапр = new System.Windows.Forms.Label();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -119,7 +117,7 @@
             // 
             // btn_Принять
             // 
-            this.btn_Принять.Location = new System.Drawing.Point(319, 784);
+            this.btn_Принять.Location = new System.Drawing.Point(319, 743);
             this.btn_Принять.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Принять.Name = "btn_Принять";
             this.btn_Принять.Size = new System.Drawing.Size(123, 35);
@@ -130,7 +128,7 @@
             // 
             // btn_Отменить
             // 
-            this.btn_Отменить.Location = new System.Drawing.Point(448, 784);
+            this.btn_Отменить.Location = new System.Drawing.Point(448, 743);
             this.btn_Отменить.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btn_Отменить.Name = "btn_Отменить";
             this.btn_Отменить.Size = new System.Drawing.Size(123, 35);
@@ -142,8 +140,6 @@
             // gBНаправление
             // 
             this.gBНаправление.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.gBНаправление.Controls.Add(this.cBНаправ);
-            this.gBНаправление.Controls.Add(this.lНапр);
             this.gBНаправление.Controls.Add(this.dTPСледования);
             this.gBНаправление.Controls.Add(this.label13);
             this.gBНаправление.Controls.Add(this.dTPПрибытие);
@@ -159,7 +155,7 @@
             this.gBНаправление.Margin = new System.Windows.Forms.Padding(5);
             this.gBНаправление.Name = "gBНаправление";
             this.gBНаправление.Padding = new System.Windows.Forms.Padding(5);
-            this.gBНаправление.Size = new System.Drawing.Size(546, 203);
+            this.gBНаправление.Size = new System.Drawing.Size(546, 154);
             this.gBНаправление.TabIndex = 35;
             this.gBНаправление.TabStop = false;
             this.gBНаправление.Text = "Направление";
@@ -168,7 +164,7 @@
             // 
             this.dTPСледования.CustomFormat = "HH:mm";
             this.dTPСледования.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTPСледования.Location = new System.Drawing.Point(466, 163);
+            this.dTPСледования.Location = new System.Drawing.Point(466, 120);
             this.dTPСледования.Name = "dTPСледования";
             this.dTPСледования.ShowUpDown = true;
             this.dTPСледования.Size = new System.Drawing.Size(72, 26);
@@ -177,7 +173,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(14, 165);
+            this.label13.Location = new System.Drawing.Point(14, 122);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(170, 20);
             this.label13.TabIndex = 44;
@@ -187,7 +183,7 @@
             // 
             this.dTPПрибытие.CustomFormat = "HH:mm";
             this.dTPПрибытие.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTPПрибытие.Location = new System.Drawing.Point(466, 130);
+            this.dTPПрибытие.Location = new System.Drawing.Point(466, 86);
             this.dTPПрибытие.Name = "dTPПрибытие";
             this.dTPПрибытие.ShowUpDown = true;
             this.dTPПрибытие.Size = new System.Drawing.Size(72, 26);
@@ -197,7 +193,7 @@
             // 
             this.cBКуда.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBКуда.FormattingEnabled = true;
-            this.cBКуда.Location = new System.Drawing.Point(91, 129);
+            this.cBКуда.Location = new System.Drawing.Point(91, 85);
             this.cBКуда.Name = "cBКуда";
             this.cBКуда.Size = new System.Drawing.Size(369, 28);
             this.cBКуда.TabIndex = 41;
@@ -207,7 +203,7 @@
             this.dTPОтправление.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.dTPОтправление.CustomFormat = "HH:mm";
             this.dTPОтправление.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTPОтправление.Location = new System.Drawing.Point(466, 96);
+            this.dTPОтправление.Location = new System.Drawing.Point(466, 52);
             this.dTPОтправление.Name = "dTPОтправление";
             this.dTPОтправление.ShowUpDown = true;
             this.dTPОтправление.Size = new System.Drawing.Size(72, 26);
@@ -216,7 +212,7 @@
             // lКуда
             // 
             this.lКуда.AutoSize = true;
-            this.lКуда.Location = new System.Drawing.Point(14, 132);
+            this.lКуда.Location = new System.Drawing.Point(14, 88);
             this.lКуда.Name = "lКуда";
             this.lКуда.Size = new System.Drawing.Size(50, 20);
             this.lКуда.TabIndex = 40;
@@ -226,7 +222,7 @@
             // 
             this.cBОткуда.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBОткуда.FormattingEnabled = true;
-            this.cBОткуда.Location = new System.Drawing.Point(91, 95);
+            this.cBОткуда.Location = new System.Drawing.Point(91, 51);
             this.cBОткуда.Name = "cBОткуда";
             this.cBОткуда.Size = new System.Drawing.Size(369, 28);
             this.cBОткуда.TabIndex = 39;
@@ -234,7 +230,7 @@
             // lОткуда
             // 
             this.lОткуда.AutoSize = true;
-            this.lОткуда.Location = new System.Drawing.Point(14, 98);
+            this.lОткуда.Location = new System.Drawing.Point(14, 54);
             this.lОткуда.Name = "lОткуда";
             this.lОткуда.Size = new System.Drawing.Size(71, 20);
             this.lОткуда.TabIndex = 38;
@@ -338,7 +334,7 @@
             "Не объявлять",
             "С головы состава",
             "С хвоста состава"});
-            this.cBОтсчетВагонов.Location = new System.Drawing.Point(218, 312);
+            this.cBОтсчетВагонов.Location = new System.Drawing.Point(218, 265);
             this.cBОтсчетВагонов.Name = "cBОтсчетВагонов";
             this.cBОтсчетВагонов.Size = new System.Drawing.Size(341, 28);
             this.cBОтсчетВагонов.TabIndex = 48;
@@ -346,7 +342,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 315);
+            this.label4.Location = new System.Drawing.Point(27, 268);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(175, 20);
             this.label4.TabIndex = 47;
@@ -468,7 +464,7 @@
             this.gBДниСледования.Controls.Add(this.rBВремяДействияПо);
             this.gBДниСледования.Controls.Add(this.rBВремяДействияС);
             this.gBДниСледования.Controls.Add(this.label5);
-            this.gBДниСледования.Location = new System.Drawing.Point(14, 348);
+            this.gBДниСледования.Location = new System.Drawing.Point(14, 307);
             this.gBДниСледования.Name = "gBДниСледования";
             this.gBДниСледования.Size = new System.Drawing.Size(378, 429);
             this.gBДниСледования.TabIndex = 50;
@@ -612,7 +608,7 @@
             this.cBБлокировка.AutoSize = true;
             this.cBБлокировка.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBБлокировка.ForeColor = System.Drawing.Color.OrangeRed;
-            this.cBБлокировка.Location = new System.Drawing.Point(20, 783);
+            this.cBБлокировка.Location = new System.Drawing.Point(20, 742);
             this.cBБлокировка.Name = "cBБлокировка";
             this.cBБлокировка.Size = new System.Drawing.Size(275, 33);
             this.cBБлокировка.TabIndex = 51;
@@ -634,7 +630,7 @@
             this.gBШаблонОповещения.Controls.Add(this.lVШаблоныОповещения);
             this.gBШаблонОповещения.Controls.Add(this.btnУдалитьШаблон);
             this.gBШаблонОповещения.Controls.Add(this.btnДобавитьШаблон);
-            this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 348);
+            this.gBШаблонОповещения.Location = new System.Drawing.Point(398, 307);
             this.gBШаблонОповещения.Name = "gBШаблонОповещения";
             this.gBШаблонОповещения.Size = new System.Drawing.Size(716, 429);
             this.gBШаблонОповещения.TabIndex = 52;
@@ -941,30 +937,11 @@
             this.rb_Постоянно.UseVisualStyleBackColor = true;
             this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
             // 
-            // cBНаправ
-            // 
-            this.cBНаправ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBНаправ.FormattingEnabled = true;
-            this.cBНаправ.Location = new System.Drawing.Point(91, 60);
-            this.cBНаправ.Name = "cBНаправ";
-            this.cBНаправ.Size = new System.Drawing.Size(369, 28);
-            this.cBНаправ.TabIndex = 47;
-            this.cBНаправ.SelectedIndexChanged += new System.EventHandler(this.cBНаправ_SelectedIndexChanged);
-            // 
-            // lНапр
-            // 
-            this.lНапр.AutoSize = true;
-            this.lНапр.Location = new System.Drawing.Point(14, 63);
-            this.lНапр.Name = "lНапр";
-            this.lНапр.Size = new System.Drawing.Size(77, 20);
-            this.lНапр.TabIndex = 46;
-            this.lНапр.Text = "Направ.";
-            // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1395, 819);
+            this.ClientSize = new System.Drawing.Size(1395, 782);
             this.Controls.Add(this.gb_ПутьПоУмолчанию);
             this.Controls.Add(this.tBНомерПоездаДоп);
             this.Controls.Add(this.label12);
@@ -1088,7 +1065,5 @@
         private System.Windows.Forms.RadioButton rb_Постоянно;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_key;
         private System.Windows.Forms.DataGridViewComboBoxColumn cmb_Путь;
-        private System.Windows.Forms.ComboBox cBНаправ;
-        private System.Windows.Forms.Label lНапр;
     }
 }

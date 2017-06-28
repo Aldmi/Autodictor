@@ -35,7 +35,6 @@ namespace MainExample
         public string Num;                //Номер поезда
         public string Num2;               //Номер поезда 2 для транзита
         public string Name;               //Название поезда
-        public string Direction;          //направление
         public string StationDepart;      //станция отправления
         public string StationArrival;     //станция прибытия
         public string ArrivalTime;        //прибытие
@@ -195,7 +194,6 @@ namespace MainExample
             Данные.Name = "";
             Данные.StationArrival = "";
             Данные.StationDepart = "";
-            Данные.Direction = "";
             Данные.ArrivalTime = "00:00";
             Данные.StopTime = "00:00";
             Данные.DepartureTime = "00:00";
@@ -368,12 +366,6 @@ namespace MainExample
                                 Данные.StationArrival = Settings[23];
                             }
 
-                            Данные.Direction = String.Empty;
-                            if (Settings.Length >= 25)
-                            {
-                                Данные.Direction = Settings[24];
-                            }
-
 
 
                             TrainTableRecords.Add(Данные);
@@ -428,8 +420,7 @@ namespace MainExample
                             TrainTableRecords[i].DaysAlias + ";" +
 
                             TrainTableRecords[i].StationDepart + ";" +
-                            TrainTableRecords[i].StationArrival + ";" +
-                            TrainTableRecords[i].Direction;
+                            TrainTableRecords[i].StationArrival;
 
                         DumpFile.WriteLine(line);
                     }
