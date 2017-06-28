@@ -32,11 +32,29 @@ namespace MainExample
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
 
 
-            foreach (var Станция in Program.Станции)
+            var directions = Program.DirectionRepository.List().ToList();
+            if (directions.Any())
             {
-                cBОткуда.Items.Add(Станция.Key);
-                cBКуда.Items.Add(Станция.Key);
+                string[] directionNames= directions.Select(d => d.Name).ToArray();
+                cBНаправ.Items.AddRange(directionNames);
+
+                //загрузили выбранное направление
+                cBНаправ.Text = расписаниеПоезда.Direction;
             }
+
+
+            string[] Станции = расписаниеПоезда.Name.Split('-');
+            if (Станции.Length == 2)
+            {
+                cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
+                cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
+            }
+            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
+            {
+                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
+            }
+
+
 
             rBВремяДействияС.Checked = false;
             rBВремяДействияПо.Checked = false;
@@ -80,16 +98,6 @@ namespace MainExample
 
 
 
-            string[] Станции = расписаниеПоезда.Name.Split('-');
-            if (Станции.Length == 2)
-            {
-                cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
-                cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
-            }
-            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
-            {
-                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
-            }
 
 
             cBШаблонОповещения.Items.Add("Блокировка");
@@ -228,6 +236,8 @@ namespace MainExample
             else
                 РасписаниеПоезда.Name = cBКуда.Text;
 
+
+            РасписаниеПоезда.Direction = cBНаправ.Text;
 
             if (rBТранзит.Checked)
             {
@@ -600,5 +610,31 @@ namespace MainExample
             }
         }
 
+
+
+        private void cBНаправ_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                var selectedIndex = comboBox.SelectedIndex;
+
+                if(selectedIndex < 0)
+                    return;
+
+                var directions = Program.DirectionRepository.List().ToList();
+                if (directions.Any())
+                {
+                    var stationsNames = directions[selectedIndex].Stations?.Select(st => st.NameRu).ToArray();
+                    if (stationsNames != null && stationsNames.Any())
+                    {
+                        cBОткуда.Items.Clear();
+                        cBКуда.Items.Clear();
+                        cBОткуда.Items.AddRange(stationsNames);
+                        cBКуда.Items.AddRange(stationsNames);
+                    }
+                }
+            }
+        }
     }
 }
