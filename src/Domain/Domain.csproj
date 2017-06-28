@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\Generic\RepositoryEf.cs" />
-    <Compile Include="Concrete\Generic\RepositoryXml.cs" />
     <Compile Include="Concrete\RepositoryXmlDirection.cs" />
     <Compile Include="Entitys\Direction.cs" />
     <Compile Include="Entitys\EntityBase.cs" />

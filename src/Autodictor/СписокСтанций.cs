@@ -15,7 +15,7 @@ namespace MainExample
         {
             InitializeComponent();
 
-            string[] ВыбранныеСтанции = СписокСтанций.Replace(" ", "").Split(',');
+            string[] ВыбранныеСтанции = СписокСтанций.Split(',');
 
             foreach (var Станция in Program.Станции)
                 if (ВыбранныеСтанции.Contains(Станция.Key))
