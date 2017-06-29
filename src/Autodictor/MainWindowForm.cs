@@ -2638,7 +2638,7 @@ namespace MainExample
                     {
                         this.ContextMenuStrip = this.contextMenuStrip2;
                         try
-                        {
+                         {
                             ListView.SelectedIndexCollection sic = this.lVСтатическиеСообщения.SelectedIndices;
 
                             foreach (int item in sic)

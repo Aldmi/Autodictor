@@ -627,6 +627,13 @@ namespace MainExample
                         rTb.AppendText(Text + " ");
                         break;
 
+                    case "НОМЕР ПОЕЗДА ТРАНЗИТ ОТПР":
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
+                        Text = Record.НомерПоезда2;
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTb.AppendText(Text + " ");
+                        break;
+
                     case "ДОПОЛНЕНИЕ":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.Дополнение;
