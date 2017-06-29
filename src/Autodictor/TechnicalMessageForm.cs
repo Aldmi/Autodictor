@@ -130,9 +130,6 @@ namespace MainExample
 
 
 
-
-
-
         #region EventHandler
 
         private void btn_Play_Click(object sender, EventArgs e)

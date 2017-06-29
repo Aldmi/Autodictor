@@ -440,10 +440,18 @@ namespace MainExample
 
 
 
-        private void техническоеСообщениеToolStripMenuItem_Click(object sender, EventArgs e)
+        private void оперативноеРасписаниеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TechnicalMessageForm techForm= new TechnicalMessageForm();
-            techForm.ShowDialog();
+            if (TrainTableOperative.myMainForm != null)
+            {
+                TrainTableOperative.myMainForm.Show();
+                TrainTableOperative.myMainForm.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                TrainTableOperative listFormOper = new TrainTableOperative { MdiParent = this };
+                listFormOper.Show();
+            }
         }
 
 
@@ -472,20 +480,10 @@ namespace MainExample
 
 
 
-        private void tsb_ОперативноеРасписание_Click(object sender, EventArgs e)
+        private void tsb_ТехническоеСообщение_Click(object sender, EventArgs e)
         {
-            if (TrainTableOperative.myMainForm != null)
-            {
-                TrainTableOperative.myMainForm.Show();
-                TrainTableOperative.myMainForm.WindowState = FormWindowState.Normal;
-            }
-            else
-            {
-                TrainTableOperative listFormOper = new TrainTableOperative { MdiParent = this };
-                listFormOper.Show();
-            }
+            TechnicalMessageForm techForm = new TechnicalMessageForm();
+            techForm.ShowDialog();
         }
-
-
     }
 }

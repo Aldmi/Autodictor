@@ -653,7 +653,7 @@ namespace MainExample
                         rTb.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.ВремяСтоянки.HasValue ?
-                            (Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2"))
+                            (Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2")) 
                             : String.Empty;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
