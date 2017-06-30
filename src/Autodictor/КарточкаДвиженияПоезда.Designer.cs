@@ -93,6 +93,8 @@
             this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btn_Фиксировать = new System.Windows.Forms.Button();
+            this.lb_фиксВр = new System.Windows.Forms.Label();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -153,6 +155,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lb_фиксВр);
+            this.groupBox2.Controls.Add(this.btn_Фиксировать);
             this.groupBox2.Controls.Add(this.lVШаблоны);
             this.groupBox2.Controls.Add(this.rTB_Сообщение);
             this.groupBox2.Controls.Add(this.btn_Автомат);
@@ -214,7 +218,7 @@
             this.btn_Автомат.Location = new System.Drawing.Point(277, 20);
             this.btn_Автомат.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Автомат.Name = "btn_Автомат";
-            this.btn_Автомат.Size = new System.Drawing.Size(343, 44);
+            this.btn_Автомат.Size = new System.Drawing.Size(186, 44);
             this.btn_Автомат.TabIndex = 49;
             this.btn_Автомат.Text = "АВТОМАТ";
             this.btn_Автомат.UseVisualStyleBackColor = true;
@@ -854,6 +858,27 @@
             this.label4.TabIndex = 46;
             this.label4.Text = "Дополнение:";
             // 
+            // btn_Фиксировать
+            // 
+            this.btn_Фиксировать.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Фиксировать.Location = new System.Drawing.Point(467, 20);
+            this.btn_Фиксировать.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Фиксировать.Name = "btn_Фиксировать";
+            this.btn_Фиксировать.Size = new System.Drawing.Size(89, 43);
+            this.btn_Фиксировать.TabIndex = 50;
+            this.btn_Фиксировать.Text = "ФИКС. ВРЕМЯ \"@\"";
+            this.btn_Фиксировать.UseVisualStyleBackColor = true;
+            this.btn_Фиксировать.Click += new System.EventHandler(this.btn_Фиксировать_Click);
+            // 
+            // lb_фиксВр
+            // 
+            this.lb_фиксВр.AutoSize = true;
+            this.lb_фиксВр.Location = new System.Drawing.Point(561, 32);
+            this.lb_фиксВр.Name = "lb_фиксВр";
+            this.lb_фиксВр.Size = new System.Drawing.Size(37, 21);
+            this.lb_фиксВр.TabIndex = 49;
+            this.lb_фиксВр.Text = "--:--";
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -955,5 +980,7 @@
         private System.Windows.Forms.Button btn_ИзменитьВремяВПути;
         private System.Windows.Forms.DateTimePicker dTP_ВремяВПути;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btn_Фиксировать;
+        private System.Windows.Forms.Label lb_фиксВр;
     }
 }

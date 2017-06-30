@@ -100,7 +100,7 @@ namespace MainExample
             var directions = Program.DirectionRepository.List().ToList();
             if (directions.Any())
             {
-                var stationsNames = directions.FirstOrDefault(d => d.Name == Record.Направление)?.Stations?.Select(st=>st.NameRu).ToArray();
+                var stationsNames = directions.FirstOrDefault(d => d.Name == Record.Направление)?.Stations?.Select(st => st.NameRu).ToArray();
                 if (stationsNames != null && stationsNames.Any())
                 {
                     cBОткуда.Items.AddRange(stationsNames);
@@ -140,9 +140,9 @@ namespace MainExample
                 else
                     ВремяАктивации = this.Record.ВремяОтправления.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
 
-                string языки= String.Empty;
+                string языки = String.Empty;
                 ФормируемоеСообщение.ЯзыкиОповещения.ForEach(lang => языки += lang.ToString() + ", ");
-                языки= языки.Remove(языки.Length - 2, 2);
+                языки = языки.Remove(языки.Length - 2, 2);
 
                 ListViewItem lvi = new ListViewItem(new string[] { ВремяАктивации.ToString("HH:mm"), ФормируемоеСообщение.НазваниеШаблона, языки });
                 lvi.Checked = ФормируемоеСообщение.Активность;
@@ -165,12 +165,17 @@ namespace MainExample
             {
                 btn_Автомат.Text = "АВТОМАТ";
                 btn_Автомат.BackColor = Color.Aquamarine;
+                btn_Фиксировать.Enabled = false;
             }
             else
             {
                 btn_Автомат.Text = "РУЧНОЙ";
                 btn_Автомат.BackColor = Color.DarkSlateBlue;
+                btn_Фиксировать.Enabled = true;
             }
+
+            lb_фиксВр.Text = Record.ФиксированноеВремя == null ? "--:--" : Record.ФиксированноеВремя.Value.ToString("t");
+            lb_фиксВр.BackColor = Record.ФиксированноеВремя == null ? Color.Empty: Color.Aqua; 
         }
 
 
@@ -198,7 +203,7 @@ namespace MainExample
                 if ((this.Record.ТипПоезда == ТипПоезда.Пригородный) || (this.Record.ТипПоезда == ТипПоезда.Ласточка) || (this.Record.ТипПоезда == ТипПоезда.РЭКС))
                 {
                     string Примечание = this.Record.Примечание;
-                    var списокСтанцийParse = Примечание.Substring(Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st=>st.Trim()).ToList();
+                    var списокСтанцийParse = Примечание.Substring(Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st => st.Trim()).ToList();
 
                     if (Примечание.Contains("С остановк"))
                     {
@@ -411,7 +416,7 @@ namespace MainExample
         private void btn_ИзменитьВремяЗадержки_Click(object sender, EventArgs e)
         {
             //не стоят обе галочки приб. и отпр.
-            if(!(cBПрибытие.Checked || cBОтправление.Checked))
+            if (!(cBПрибытие.Checked || cBОтправление.Checked))
                 return;
 
             Record.ВремяЗадержки = dTP_Задержка.Value;
@@ -452,8 +457,8 @@ namespace MainExample
             for (int i = 0; i < lB_ПоСтанциям.Items.Count; i++)
                 СписокВыбранныхСтанций += lB_ПоСтанциям.Items[i] + ",";
 
-            var direction = Program.DirectionRepository.List().FirstOrDefault(d=>d.Name == Record.Направление);
-            var станцииНаправления= direction?.Stations.Select(st => st.NameRu).ToArray();
+            var direction = Program.DirectionRepository.List().FirstOrDefault(d => d.Name == Record.Направление);
+            var станцииНаправления = direction?.Stations.Select(st => st.NameRu).ToArray();
 
             СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций, станцииНаправления);
 
@@ -676,7 +681,7 @@ namespace MainExample
                         rTb.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = Record.ВремяСтоянки.HasValue ?
-                            (Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2")) 
+                            (Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2"))
                             : String.Empty;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
@@ -797,7 +802,7 @@ namespace MainExample
                     ФормируемоеСообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьРучное;
                     ФормируемоеСообщение.Приоритет = Priority.Hight;
                     Record.СписокФормируемыхСообщений[item] = ФормируемоеСообщение;
-                 
+
                     MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", Record, ФормируемоеСообщение, ТипСообщения.Динамическое);
                     break;
                 }
@@ -817,10 +822,15 @@ namespace MainExample
                     var ФормируемоеСообщение = Record.СписокФормируемыхСообщений[item];
 
                     DateTime ВремяАктивации = DateTime.Now;
+
+                    var времяСмешения = (ФормируемоеСообщение.ВремяСмещенияЗафиксированное == null)
+                        ? ФормируемоеСообщение.ВремяСмещения
+                        : ФормируемоеСообщение.ВремяСмещенияЗафиксированное.Value;
+
                     if (ФормируемоеСообщение.ПривязкаКВремени == 0)
-                        ВремяАктивации = this.Record.ВремяПрибытия.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                        ВремяАктивации = this.Record.ВремяПрибытия.AddMinutes(времяСмешения);
                     else
-                        ВремяАктивации = this.Record.ВремяОтправления.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                        ВремяАктивации = this.Record.ВремяОтправления.AddMinutes(времяСмешения);
                     string ТекстовоеПредставлениеВремениАктивации = ВремяАктивации.ToString("HH:mm");
 
                     if (this.lVШаблоны.Items[item].Text != ТекстовоеПредставлениеВремениАктивации)
@@ -924,7 +934,7 @@ namespace MainExample
                 СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                 {
                     Id = 2000,
-                    Приоритет = Priority.Hight, 
+                    Приоритет = Priority.Hight,
                     SoundRecordId = Record.ID,
                     Шаблон = ФормируемоеСообщение,
                     ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
@@ -993,7 +1003,6 @@ namespace MainExample
 
 
 
-
         private void btn_Автомат_Click(object sender, EventArgs e)
         {
             if (this.Record.Автомат)
@@ -1001,15 +1010,66 @@ namespace MainExample
                 this.Record.Автомат = false;
                 btn_Автомат.Text = "РУЧНОЙ";
                 btn_Автомат.BackColor = Color.DarkSlateBlue;
+                btn_Фиксировать.Enabled = true;
             }
             else
             {
                 this.Record.Автомат = true;
                 btn_Автомат.Text = "АВТОМАТ";
                 btn_Автомат.BackColor = Color.Aquamarine;
+                btn_Фиксировать.Enabled = false;
+
+                СброситьФиксированноеВремяВШаблонах();
+                ОбновитьСостояниеТаблицыШаблонов();
             }
         }
 
 
+        private void СброситьФиксированноеВремяВШаблонах()
+        {
+            for (int i = 0; i < Record.СписокФормируемыхСообщений.Count; i++)
+            {
+                var шаблон = Record.СписокФормируемыхСообщений[i];
+                if (шаблон.НазваниеШаблона.StartsWith("@"))
+                {
+                    шаблон.ВремяСмещенияЗафиксированное = null;
+                    Record.СписокФормируемыхСообщений[i] = шаблон;
+                }
+            }
+
+            Record.ФиксированноеВремя = null;
+            lb_фиксВр.Text = @"--:--";
+            lb_фиксВр.BackColor = Color.Empty;
+        }
+
+
+        private void btn_Фиксировать_Click(object sender, EventArgs e)
+        {
+            DateTime текВремя = DateTime.Now;
+            текВремя = текВремя.AddSeconds(-текВремя.Second);
+
+            Record.ФиксированноеВремя = текВремя;
+            lb_фиксВр.Text = Record.ФиксированноеВремя.Value.ToString("t");
+            lb_фиксВр.BackColor = Color.Aqua;
+
+            var времяФиксПриб = (int)(текВремя - Record.ВремяПрибытия).TotalMinutes;
+            var времяФиксОтпр = (int)(текВремя - Record.ВремяОтправления).TotalMinutes;
+
+            for (int i = 0; i < Record.СписокФормируемыхСообщений.Count; i++)
+            {
+                var шаблон = Record.СписокФормируемыхСообщений[i];
+                if (шаблон.НазваниеШаблона.StartsWith("@"))
+                {
+                    if (шаблон.ПривязкаКВремени == 0)
+                        шаблон.ВремяСмещенияЗафиксированное = шаблон.ВремяСмещения + времяФиксПриб;
+                    else
+                        шаблон.ВремяСмещенияЗафиксированное = шаблон.ВремяСмещения + времяФиксОтпр;
+
+                    Record.СписокФормируемыхСообщений[i] = шаблон;
+                }
+            }
+
+            ОбновитьСостояниеТаблицыШаблонов();
+        }
     }
 }
