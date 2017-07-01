@@ -11,36 +11,47 @@ namespace MainExample
 {
     public partial class СписокСтанций : Form
     {
-        public СписокСтанций(string СписокСтанций)
+        private readonly string[] _станцииВыбранногоНаправления;
+
+
+
+        public СписокСтанций(string СписокСтанций, string[] станцииВыбранногоНаправления)
         {
+            _станцииВыбранногоНаправления = станцииВыбранногоНаправления;
             InitializeComponent();
 
             string[] ВыбранныеСтанции = СписокСтанций.Split(',');
 
-            foreach (var Станция in Program.Станции)
-                if (ВыбранныеСтанции.Contains(Станция.Key))
-                    lVВыбранныеСтанции.Items.Add(Станция.Key);
+            foreach (var станция in станцииВыбранногоНаправления)
+                if (ВыбранныеСтанции.Contains(станция))
+                    lVВыбранныеСтанции.Items.Add(станция);
                 else
-                    lVОбщийСписок.Items.Add(Станция.Key);
+                    lVОбщийСписок.Items.Add(станция);
         }
+
+
 
         private void btnВыбратьВсе_Click(object sender, EventArgs e)
         {
             lVОбщийСписок.Items.Clear();
 
             lVВыбранныеСтанции.Items.Clear();
-            foreach (var Станция in Program.Станции)
-                lVВыбранныеСтанции.Items.Add(Станция.Key);
+            foreach (var Станция in _станцииВыбранногоНаправления)
+                lVВыбранныеСтанции.Items.Add(Станция);
         }
+
+
 
         private void btnУдалитьВсе_Click(object sender, EventArgs e)
         {
             lVВыбранныеСтанции.Items.Clear();
 
             lVОбщийСписок.Items.Clear();
-            foreach (var Станция in Program.Станции)
-                lVОбщийСписок.Items.Add(Станция.Key);
+            foreach (var Станция in _станцииВыбранногоНаправления)
+                lVОбщийСписок.Items.Add(Станция);
         }
+
+
 
         private void btnВыбратьВыделенные_Click(object sender, EventArgs e)
         {
@@ -76,18 +87,22 @@ namespace MainExample
             for (int i = 0; i < lVВыбранныеСтанции.Items.Count; i++)
                 TempList.Add(lVВыбранныеСтанции.Items[i].SubItems[0].Text);
 
-            foreach (var Станция in Program.Станции)
-                if (TempList.Contains(Станция.Key))
-                    Result.Add(Станция.Key);
+            foreach (var станция in _станцииВыбранногоНаправления)
+                if (TempList.Contains(станция))
+                    Result.Add(станция);
 
             return Result;
         }
+
+
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             this.Close();
         }
+
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {

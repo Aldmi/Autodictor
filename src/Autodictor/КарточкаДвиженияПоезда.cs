@@ -18,13 +18,19 @@ namespace MainExample
         public bool ПрименитьКоВсемСообщениям = true;
         private bool СделаныИзменения = false;
         private bool РазрешениеИзменений = false;
+        private List<string> СтанцииВыбранногоНаправления { get; set; }
+
 
 
         public КарточкаДвиженияПоезда(SoundRecord Record, string key)
         {
             this.Record = Record;
             _key = key;
+            СтанцииВыбранногоНаправления = Program.ПолучитьСтанцииНаправления(Record.Направление)?.Select(st => st.NameRu).ToList() ?? new List<string>();
+
             InitializeComponent();
+
+
             cBОтменен.Checked = !Record.Активность;
 
             cBПрибытие.Checked = ((this.Record.БитыАктивностиПолей & 0x04) != 0x00) ? true : false;
@@ -90,14 +96,22 @@ namespace MainExample
             cBНомерПоезда.Text = Record.НомерПоезда;
             cBНомерПоезда2.Text = Record.НомерПоезда2;
 
-            foreach (var Станция in Program.Станции)
+
+            var directions = Program.DirectionRepository.List().ToList();
+            if (directions.Any())
             {
-                cBОткуда.Items.Add(Станция.Key);
-                cBКуда.Items.Add(Станция.Key);
+                var stationsNames = directions.FirstOrDefault(d => d.Name == Record.Направление)?.Stations?.Select(st=>st.NameRu).ToArray();
+                if (stationsNames != null && stationsNames.Any())
+                {
+                    cBОткуда.Items.AddRange(stationsNames);
+                    cBКуда.Items.AddRange(stationsNames);
+                }
             }
 
             cBОткуда.Text = Record.СтанцияОтправления;
             cBКуда.Text = Record.СтанцияНазначения;
+
+
 
 
             switch (Record.КоличествоПовторений)
@@ -185,15 +199,14 @@ namespace MainExample
                 {
                     string Примечание = this.Record.Примечание;
                     var списокСтанцийParse = Примечание.Substring(Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st=>st.Trim()).ToList();
-       
-        
+
                     if (Примечание.Contains("С остановк"))
                     {
                         rB_ПоСтанциям.Checked = true;
-                        foreach (var Станция in Program.Станции)
+                        foreach (var станция in СтанцииВыбранногоНаправления)
                         {
-                            if (списокСтанцийParse.Contains(Станция.Key))
-                                lB_ПоСтанциям.Items.Add(Станция.Key);
+                            if (списокСтанцийParse.Contains(станция))
+                                lB_ПоСтанциям.Items.Add(станция);
                         }
 
                         lB_ПоСтанциям.Enabled = true;
@@ -202,8 +215,8 @@ namespace MainExample
                     else if (Примечание.Contains("Со всеми остановками"))
                     {
                         rB_СоВсемиОстановками.Checked = true;
-                        foreach (var Станция in Program.Станции)
-                            lB_ПоСтанциям.Items.Add(Станция.Key);
+                        foreach (var станция in СтанцииВыбранногоНаправления)
+                            lB_ПоСтанциям.Items.Add(станция);
 
                         lB_ПоСтанциям.Enabled = true;
                         btnРедактировать.Enabled = true;
@@ -211,10 +224,10 @@ namespace MainExample
                     else if (Примечание.Contains("Кроме"))
                     {
                         rB_КромеСтанций.Checked = true;
-                        foreach (var Станция in Program.Станции)
+                        foreach (var станция in СтанцииВыбранногоНаправления)
                         {
-                            if (списокСтанцийParse.Contains(Станция.Key))
-                                lB_ПоСтанциям.Items.Add(Станция.Key);
+                            if (списокСтанцийParse.Contains(станция))
+                                lB_ПоСтанциям.Items.Add(станция);
                         }
 
                         lB_ПоСтанциям.Enabled = true;
@@ -310,28 +323,28 @@ namespace MainExample
             else if (rB_ПоСтанциям.Checked == true)
             {
                 Примечание = "С остановками: ";
-                foreach (var Станция in Program.Станции)
-                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
+                foreach (var станция in СтанцииВыбранногоНаправления)
+                    if (lB_ПоСтанциям.Items.Contains(станция))
                     {
                         if (ПерваяСтанция == true)
                             ПерваяСтанция = false;
                         else
                             Примечание += ", ";
 
-                        Примечание += Станция.Key;
+                        Примечание += станция;
                     }
             }
             else if (rB_КромеСтанций.Checked == true)
             {
                 Примечание = "Кроме: ";
-                foreach (var Станция in Program.Станции)
-                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
+                foreach (var станция in СтанцииВыбранногоНаправления)
+                    if (lB_ПоСтанциям.Items.Contains(станция))
                     {
                         if (ПерваяСтанция == true)
                             ПерваяСтанция = false;
                         else
                             Примечание += ", ";
-                        Примечание += Станция.Key;
+                        Примечание += станция;
                     }
             }
             this.Record.Примечание = Примечание;
@@ -439,7 +452,10 @@ namespace MainExample
             for (int i = 0; i < lB_ПоСтанциям.Items.Count; i++)
                 СписокВыбранныхСтанций += lB_ПоСтанциям.Items[i] + ",";
 
-            СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций);
+            var direction = Program.DirectionRepository.List().FirstOrDefault(d=>d.Name == Record.Направление);
+            var станцииНаправления= direction?.Stations.Select(st => st.NameRu).ToArray();
+
+            СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций, станцииНаправления);
 
             if (списокСтанций.ShowDialog() == DialogResult.OK)
             {
@@ -458,28 +474,28 @@ namespace MainExample
                 else if (rB_ПоСтанциям.Checked == true)
                 {
                     Примечание = "С остановками: ";
-                    foreach (var Станция in Program.Станции)
-                        if (lB_ПоСтанциям.Items.Contains(Станция.Key))
+                    foreach (var станция in СтанцииВыбранногоНаправления)
+                        if (lB_ПоСтанциям.Items.Contains(станция))
                         {
                             if (ПерваяСтанция == true)
                                 ПерваяСтанция = false;
                             else
                                 Примечание += ", ";
 
-                            Примечание += Станция.Key;
+                            Примечание += станция;
                         }
                 }
                 else if (rB_КромеСтанций.Checked == true)
                 {
                     Примечание = "Кроме: ";
-                    foreach (var Станция in Program.Станции)
-                        if (lB_ПоСтанциям.Items.Contains(Станция.Key))
+                    foreach (var станция in СтанцииВыбранногоНаправления)
+                        if (lB_ПоСтанциям.Items.Contains(станция))
                         {
                             if (ПерваяСтанция == true)
                                 ПерваяСтанция = false;
                             else
                                 Примечание += ", ";
-                            Примечание += Станция.Key;
+                            Примечание += станция;
                         }
                 }
 
@@ -712,19 +728,19 @@ namespace MainExample
                             else if (rB_ПоСтанциям.Checked == true)
                             {
                                 rTb.AppendText("Электропоезд движется с остановками на станциях: ");
-                                foreach (var Станция in Program.Станции)
-                                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
+                                foreach (var станция in СтанцииВыбранногоНаправления)
+                                    if (lB_ПоСтанциям.Items.Contains(станция))
                                     {
-                                        rTb.AppendText(Станция.Key + " ");
+                                        rTb.AppendText(станция + " ");
                                     }
                             }
                             else if (rB_КромеСтанций.Checked == true)
                             {
                                 rTb.AppendText("Электропоезд движется с остановками кроме станций: ");
-                                foreach (var Станция in Program.Станции)
-                                    if (lB_ПоСтанциям.Items.Contains(Станция.Key))
+                                foreach (var станция in СтанцииВыбранногоНаправления)
+                                    if (lB_ПоСтанциям.Items.Contains(станция))
                                     {
-                                        rTb.AppendText(Станция.Key + " ");
+                                        rTb.AppendText(станция + " ");
                                     }
                             }
                         }

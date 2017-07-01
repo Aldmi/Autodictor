@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -28,9 +29,9 @@ namespace MainExample
         public static List<string> НомераПоездов = new List<string>();
 
         public static string ИнфСтрокаНаТабло = "";
-        public static Dictionary<string, string> Станции = new Dictionary<string, string>();  //Key - название на RU, Value - название на ENG
+       // public static Dictionary<string, string> Станции = new Dictionary<string, string>();  //Key - название на RU, Value - название на ENG
 
-        private static IRepository<Direction> DirectionRepository; //хранилище XML
+        public static IRepository<Direction> DirectionRepository; //хранилище XML
 
         public static byte ПолучитьНомерПути(string НомерПути)
         {
@@ -168,38 +169,18 @@ namespace MainExample
 
         public static void ЗагрузкаНазванийПоездов()
         {
-            var xmlFile = XmlWorker.LoadXmlFile(string.Empty, "Stations.xml"); //все настройки в одном файле
-            if (xmlFile == null)
-                return;
-
-            DirectionRepository = new RepositoryXmlDirection(xmlFile);
-            var directions = DirectionRepository.List();  
-
             try
             {
-                using (System.IO.StreamReader file = new System.IO.StreamReader("Stations.ini"))
-                {
-                    string line;
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        var str = line.Split(':');
-                        if (str.Length == 2)
-                        {
-                            Станции[str[0].Trim()]= str[1].Trim();           //RU,ENG название станции
-                        }
-                        else
-                        {
-                            Станции[str[0].Trim()] = String.Empty;
-                        }                      
-                    }
+                var xmlFile = XmlWorker.LoadXmlFile(string.Empty, "Stations.xml"); //все настройки в одном файле
+                if (xmlFile == null)
+                    return;
 
-                    if (file != null)
-                        file.Close();
-                }
+                DirectionRepository = new RepositoryXmlDirection(xmlFile);                 //хранилище XML
+                //directionRep = new RepositoryEf<Direction>(dbContext);                   //хранилище БД
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                MessageBox.Show($"файл \"Stations.xml\" не загружен. Исключение: {ex.Message}");
             }
         }
 
@@ -223,6 +204,29 @@ namespace MainExample
                 Console.WriteLine(e.Message);
             }
         }
+
+
+
+        public static List<Station> ПолучитьСтанцииНаправления(string имяНаправления)
+        {
+            var direction = DirectionRepository.List().FirstOrDefault(d => d.Name == имяНаправления);
+            var станцииНаправления = direction?.Stations.ToList();
+            return станцииНаправления;
+        }
+
+        public static Station ПолучитьСтанциюНаправления(string имяНаправления, string названиеСтанцииRu)
+        {
+           return ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.NameRu == названиеСтанцииRu);        
+        }
+
+
+        public static bool ПроеритьНаличиеСтанцииВНаправлении(string названиеСтанцииRu, string имяНаправления)
+        {
+           var станция= ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.NameRu == названиеСтанцииRu);
+           return станция != null;
+        }
+
+
 
         public static void ЗаписьЛога(string ТипСообщения, string Сообщение)
         {

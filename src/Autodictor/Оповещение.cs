@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -11,6 +12,8 @@ namespace MainExample
     public partial class Оповещение : Form
     {
         public TrainTableRecord РасписаниеПоезда;
+        private string[] СтанцииВыбранногоНаправления  { get; set; } = new string[0];
+
 
 
 
@@ -32,11 +35,29 @@ namespace MainExample
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
 
 
-            foreach (var Станция in Program.Станции)
+            var directions = Program.DirectionRepository.List().ToList();
+            if (directions.Any())
             {
-                cBОткуда.Items.Add(Станция.Key);
-                cBКуда.Items.Add(Станция.Key);
+                string[] directionNames= directions.Select(d => d.Name).ToArray();
+                cBНаправ.Items.AddRange(directionNames);
+
+                //загрузили выбранное направление
+                cBНаправ.Text = расписаниеПоезда.Direction;
             }
+
+
+            string[] Станции = расписаниеПоезда.Name.Split('-');
+            if (Станции.Length == 2)
+            {
+                cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
+                cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
+            }
+            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
+            {
+                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
+            }
+
+
 
             rBВремяДействияС.Checked = false;
             rBВремяДействияПо.Checked = false;
@@ -80,16 +101,6 @@ namespace MainExample
 
 
 
-            string[] Станции = расписаниеПоезда.Name.Split('-');
-            if (Станции.Length == 2)
-            {
-                cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
-                cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
-            }
-            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
-            {
-                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
-            }
 
 
             cBШаблонОповещения.Items.Add("Блокировка");
@@ -191,7 +202,7 @@ namespace MainExample
                 string Примечание = расписаниеПоезда.Примечание.Replace("С остановками: ", "");
                 string[] СписокСтанций = Примечание.Split(',');
                 foreach (var Станция in СписокСтанций)
-                    if (Program.Станции.Keys.Contains(Станция))
+                    if (СтанцииВыбранногоНаправления.Contains(Станция))
                         lVСписокСтанций.Items.Add(Станция);
             }
             else if (расписаниеПоезда.Примечание.Contains("Кроме: "))
@@ -200,7 +211,7 @@ namespace MainExample
                 string Примечание = расписаниеПоезда.Примечание.Replace("Кроме: ", "");
                 string[] СписокСтанций = Примечание.Split(',');
                 foreach (var Станция in СписокСтанций)
-                    if (Program.Станции.Keys.Contains(Станция))
+                    if (СтанцииВыбранногоНаправления.Contains(Станция))
                         lVСписокСтанций.Items.Add(Станция);
             }
             else
@@ -208,6 +219,7 @@ namespace MainExample
                 rBНеОповещать.Checked = true;
             }
         }
+
 
 
 
@@ -228,6 +240,8 @@ namespace MainExample
             else
                 РасписаниеПоезда.Name = cBКуда.Text;
 
+
+            РасписаниеПоезда.Direction = cBНаправ.Text;
 
             if (rBТранзит.Checked)
             {
@@ -365,6 +379,8 @@ namespace MainExample
             return РезультирующийШаблонОповещения;
         }
 
+
+
         private void rBОтправление_CheckedChanged(object sender, EventArgs e)
         {
             if (rBПрибытие.Checked)
@@ -384,13 +400,15 @@ namespace MainExample
             }
         }
 
+
+
         private void btnРедактировать_Click(object sender, EventArgs e)
         {
             string СписокВыбранныхСтанций = "";
             for (int i = 0; i < lVСписокСтанций.Items.Count; i++)
                 СписокВыбранныхСтанций += lVСписокСтанций.Items[i].Text + ",";
 
-            СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций);
+            СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций, СтанцииВыбранногоНаправления);
 
             if (списокСтанций.ShowDialog() == DialogResult.OK)
             {
@@ -400,6 +418,8 @@ namespace MainExample
                     lVСписокСтанций.Items.Add(res);
             }
         }
+
+
 
         private void cBБлокировка_CheckedChanged(object sender, EventArgs e)
         {
@@ -426,6 +446,7 @@ namespace MainExample
                 gBШаблонОповещения.Enabled = true;
             }
         }
+
 
         private void btnДниСледования_Click(object sender, EventArgs e)
         {
@@ -557,6 +578,7 @@ namespace MainExample
         }
 
 
+
         private void ChangePathValues(TrainTableRecord rec)
         {
             if (!rec.PathWeekDayes)
@@ -589,6 +611,7 @@ namespace MainExample
         }
 
 
+
         private void SavePathValues(ref TrainTableRecord rec)
         {
             rec.TrainPathNumber[WeekDays.Постоянно] = cBПутьПоУмолчанию.Text;
@@ -600,5 +623,35 @@ namespace MainExample
             }
         }
 
+
+
+        private void cBНаправ_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                var selectedIndex = comboBox.SelectedIndex;
+
+                if(selectedIndex < 0)
+                    return;
+
+                var directions = Program.DirectionRepository.List().ToList();
+                if (directions.Any())
+                {
+                    СтанцииВыбранногоНаправления = directions[selectedIndex].Stations?.Select(st => st.NameRu).ToArray();
+                    if (СтанцииВыбранногоНаправления != null && СтанцииВыбранногоНаправления.Any())
+                    {
+                        cBОткуда.Items.Clear();
+                        cBКуда.Items.Clear();
+                        cBОткуда.Items.AddRange(СтанцииВыбранногоНаправления);
+                        cBКуда.Items.AddRange(СтанцииВыбранногоНаправления);
+                    }
+                }
+
+                rBНеОповещать.Checked = true;             
+                РасписаниеПоезда.Примечание = "";
+                lVСписокСтанций.Items.Clear();
+            }
+        }
     }
 }

@@ -965,7 +965,6 @@ namespace CommunicationDevices.Model
             {
                 devSp.ExhBehavior.CycleReConnect(BackGroundTasks);
             }
-
         }
 
 
