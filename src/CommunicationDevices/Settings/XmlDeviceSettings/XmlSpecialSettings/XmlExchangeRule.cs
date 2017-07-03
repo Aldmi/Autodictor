@@ -7,6 +7,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
         public string ViewType { get; set; }
         public int? TableSize { get; set; }         //устанавливается если  ViewSetting == Table
+        public int? FirstTableElement { get; set; }
 
         public string Format { get; set; }
         public XmlConditionsSetting Conditions { get; set; }

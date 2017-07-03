@@ -82,6 +82,7 @@ namespace CommunicationDevices.Settings
 
                     string viewSetting = String.Empty;
                     int viewSettingTableSize = 0;
+                    int viewSettingFirstTableElement = 0;
 
                     IEnumerable<XElement> ruleElements;
                     if (tableElement != null)
@@ -95,12 +96,17 @@ namespace CommunicationDevices.Settings
                             int.TryParse(tableSize, out viewSettingTableSize);
                         }
 
+                        var firstTableElement = (string)tableElement.Attribute("Position");
+                        if (firstTableElement != null)
+                        {
+                            int.TryParse(firstTableElement, out viewSettingFirstTableElement);
+                        }
+
                     }
                     else
                     {
                         ruleElements = el.Element("ExchangeRules")?.Elements("Rule");
                     }
-
 
 
 
@@ -110,7 +116,7 @@ namespace CommunicationDevices.Settings
                         {
                             if (ruleElem != null)
                             {
-                                var exchRule = new XmlExchangeRule { TableSize = viewSettingTableSize, ViewType = viewSetting };
+                                var exchRule = new XmlExchangeRule { TableSize = viewSettingTableSize, ViewType = viewSetting, FirstTableElement = viewSettingFirstTableElement};
 
                                 exchRule.Format = (string)ruleElem.Attribute("Format");
                                 exchRule.Conditions = ruleElem.Attribute("Resolution") == null ? null : new XmlConditionsSetting((string)ruleElem.Attribute("Resolution"));

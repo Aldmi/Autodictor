@@ -53,6 +53,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 return;
 
             var countRow = MainRule.ViewType.TableSize.Value;
+            var firstPosition =  MainRule.ViewType.FirstTableElement.Value;
             var inData = Data4CycleFunc[0];
 
             //Вывод на табличное табло построчной информации
@@ -61,8 +62,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                 for (byte i = 0; i < countRow; i++)
                 {
                     //фильтрация по ближайшему времени к текущему времени.
-                    var filteredData = inData.TableData;
-                    var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                    var skipData = (inData.TableData.Count > firstPosition) ? inData.TableData.Skip(firstPosition) : inData.TableData;
+                    var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, skipData) : skipData;
                     var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
                     orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);

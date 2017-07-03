@@ -32,6 +32,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //	  <TypeName>Пригородный</TypeName>
     //	  <TypeAlias>приг</TypeAlias>
     //	  <Addition>Поле дополнения</Addition>
+    //	  <Note>Поле дополнения</Note>                 // список остановок
     //  </t>
     //</mainWindow>
 
@@ -151,7 +152,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("EmergencySituation", uit.EmergencySituation),
                         new XElement("TypeName", typeName),
                         new XElement("TypeAlias", typeNameShort),
-                        new XElement("Addition", uit.Addition)
+                        new XElement("Addition", uit.Addition),
+                        new XElement("Note", uit.Note)                               //станции следования
                     ));
             }
 

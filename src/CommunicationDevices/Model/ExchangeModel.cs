@@ -444,7 +444,8 @@ namespace CommunicationDevices.Model
                                 new ViewType
                                 {
                                     Type = xmlExchangeRules.FirstOrDefault()?.ViewType,
-                                    TableSize = xmlExchangeRules.FirstOrDefault()?.TableSize
+                                    TableSize = xmlExchangeRules.FirstOrDefault()?.TableSize,
+                                    FirstTableElement = xmlExchangeRules.FirstOrDefault()?.FirstTableElement,
                                 }
                         };
 
@@ -757,7 +758,8 @@ namespace CommunicationDevices.Model
                                 new ViewType
                                 {
                                     Type = xmlExchangeRules.FirstOrDefault()?.ViewType,
-                                    TableSize = xmlExchangeRules.FirstOrDefault()?.TableSize
+                                    TableSize = xmlExchangeRules.FirstOrDefault()?.TableSize,
+                                    FirstTableElement = xmlExchangeRules.FirstOrDefault()?.FirstTableElement,
                                 }
                         };
 
@@ -943,7 +945,7 @@ namespace CommunicationDevices.Model
 
 
 
-            //ЗАПУТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ
+            //ЗАПУСТИМ ФОНОВЫЕ ЗАДАЧИ ПО ПОДКЛЮЧЕНИЮ К УСТРО-ВАМ
             //Защита от повторного открытия одного и тогоже порта разными ус-вами.   
             var serialPortDev = DeviceTables.Where(d => d.ExhBehavior is BaseExhangeSpBehavior).ToList();
             foreach (var devSp in serialPortDev.GroupBy(d => d.ExhBehavior.NumberPort).Select(g => g.First()))

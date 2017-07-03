@@ -33,6 +33,7 @@
             this.rB_Нумерация_СГоловы = new System.Windows.Forms.RadioButton();
             this.rB_Нумерация_Отсутствует = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_Фиксировать = new System.Windows.Forms.Button();
             this.lVШаблоны = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -42,10 +43,12 @@
             this.btnВоспроизвестиВыбранныйШаблон = new System.Windows.Forms.Button();
             this.btnПовторения = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.lb_фиксВрПриб = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cB_НомерПути = new System.Windows.Forms.ComboBox();
             this.btn_Подтвердить = new System.Windows.Forms.Button();
             this.gB_Прибытие = new System.Windows.Forms.GroupBox();
+            this.lb_фиксВрОтпр = new System.Windows.Forms.Label();
             this.cBВПути = new System.Windows.Forms.CheckBox();
             this.btn_ИзменитьВремяВПути = new System.Windows.Forms.Button();
             this.dTP_ВремяВПути = new System.Windows.Forms.DateTimePicker();
@@ -93,8 +96,6 @@
             this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btn_Фиксировать = new System.Windows.Forms.Button();
-            this.lb_фиксВр = new System.Windows.Forms.Label();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -155,7 +156,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.lb_фиксВр);
             this.groupBox2.Controls.Add(this.btn_Фиксировать);
             this.groupBox2.Controls.Add(this.lVШаблоны);
             this.groupBox2.Controls.Add(this.rTB_Сообщение);
@@ -170,6 +170,18 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Шаблоны оповещения";
+            // 
+            // btn_Фиксировать
+            // 
+            this.btn_Фиксировать.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Фиксировать.Location = new System.Drawing.Point(531, 21);
+            this.btn_Фиксировать.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_Фиксировать.Name = "btn_Фиксировать";
+            this.btn_Фиксировать.Size = new System.Drawing.Size(89, 43);
+            this.btn_Фиксировать.TabIndex = 50;
+            this.btn_Фиксировать.Text = "ФИКС. ВРЕМЯ \"@\"";
+            this.btn_Фиксировать.UseVisualStyleBackColor = true;
+            this.btn_Фиксировать.Click += new System.EventHandler(this.btn_Фиксировать_Click);
             // 
             // lVШаблоны
             // 
@@ -218,7 +230,7 @@
             this.btn_Автомат.Location = new System.Drawing.Point(277, 20);
             this.btn_Автомат.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Автомат.Name = "btn_Автомат";
-            this.btn_Автомат.Size = new System.Drawing.Size(186, 44);
+            this.btn_Автомат.Size = new System.Drawing.Size(250, 44);
             this.btn_Автомат.TabIndex = 49;
             this.btn_Автомат.Text = "АВТОМАТ";
             this.btn_Автомат.UseVisualStyleBackColor = true;
@@ -257,6 +269,15 @@
             this.label2.TabIndex = 45;
             this.label2.Text = "Кол-во повторений:";
             // 
+            // lb_фиксВрПриб
+            // 
+            this.lb_фиксВрПриб.AutoSize = true;
+            this.lb_фиксВрПриб.Location = new System.Drawing.Point(181, 31);
+            this.lb_фиксВрПриб.Name = "lb_фиксВрПриб";
+            this.lb_фиксВрПриб.Size = new System.Drawing.Size(37, 21);
+            this.lb_фиксВрПриб.TabIndex = 49;
+            this.lb_фиксВрПриб.Text = "--:--";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -291,6 +312,8 @@
             // 
             // gB_Прибытие
             // 
+            this.gB_Прибытие.Controls.Add(this.lb_фиксВрОтпр);
+            this.gB_Прибытие.Controls.Add(this.lb_фиксВрПриб);
             this.gB_Прибытие.Controls.Add(this.cBВПути);
             this.gB_Прибытие.Controls.Add(this.btn_ИзменитьВремяВПути);
             this.gB_Прибытие.Controls.Add(this.dTP_ВремяВПути);
@@ -316,10 +339,19 @@
             this.gB_Прибытие.TabStop = false;
             this.gB_Прибытие.Text = "Время движения";
             // 
+            // lb_фиксВрОтпр
+            // 
+            this.lb_фиксВрОтпр.AutoSize = true;
+            this.lb_фиксВрОтпр.Location = new System.Drawing.Point(180, 62);
+            this.lb_фиксВрОтпр.Name = "lb_фиксВрОтпр";
+            this.lb_фиксВрОтпр.Size = new System.Drawing.Size(37, 21);
+            this.lb_фиксВрОтпр.TabIndex = 50;
+            this.lb_фиксВрОтпр.Text = "--:--";
+            // 
             // cBВПути
             // 
             this.cBВПути.AutoSize = true;
-            this.cBВПути.Location = new System.Drawing.Point(219, 94);
+            this.cBВПути.Location = new System.Drawing.Point(238, 92);
             this.cBВПути.Name = "cBВПути";
             this.cBВПути.Size = new System.Drawing.Size(57, 25);
             this.cBВПути.TabIndex = 25;
@@ -328,9 +360,9 @@
             // 
             // btn_ИзменитьВремяВПути
             // 
-            this.btn_ИзменитьВремяВПути.Location = new System.Drawing.Point(302, 90);
+            this.btn_ИзменитьВремяВПути.Location = new System.Drawing.Point(301, 90);
             this.btn_ИзменитьВремяВПути.Name = "btn_ИзменитьВремяВПути";
-            this.btn_ИзменитьВремяВПути.Size = new System.Drawing.Size(136, 29);
+            this.btn_ИзменитьВремяВПути.Size = new System.Drawing.Size(137, 29);
             this.btn_ИзменитьВремяВПути.TabIndex = 24;
             this.btn_ИзменитьВремяВПути.Text = "Изменить";
             this.btn_ИзменитьВремяВПути.UseVisualStyleBackColor = true;
@@ -340,7 +372,7 @@
             // 
             this.dTP_ВремяВПути.CustomFormat = "HH:mm";
             this.dTP_ВремяВПути.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_ВремяВПути.Location = new System.Drawing.Point(105, 91);
+            this.dTP_ВремяВПути.Location = new System.Drawing.Point(90, 91);
             this.dTP_ВремяВПути.Name = "dTP_ВремяВПути";
             this.dTP_ВремяВПути.ShowUpDown = true;
             this.dTP_ВремяВПути.Size = new System.Drawing.Size(85, 29);
@@ -359,7 +391,7 @@
             // cBОтправление
             // 
             this.cBОтправление.AutoSize = true;
-            this.cBОтправление.Location = new System.Drawing.Point(219, 63);
+            this.cBОтправление.Location = new System.Drawing.Point(238, 60);
             this.cBОтправление.Name = "cBОтправление";
             this.cBОтправление.Size = new System.Drawing.Size(57, 25);
             this.cBОтправление.TabIndex = 21;
@@ -369,7 +401,7 @@
             // cBПрибытие
             // 
             this.cBПрибытие.AutoSize = true;
-            this.cBПрибытие.Location = new System.Drawing.Point(219, 31);
+            this.cBПрибытие.Location = new System.Drawing.Point(238, 29);
             this.cBПрибытие.Name = "cBПрибытие";
             this.cBПрибытие.Size = new System.Drawing.Size(57, 25);
             this.cBПрибытие.TabIndex = 20;
@@ -378,9 +410,9 @@
             // 
             // btn_ИзменитьВремяЗадержки
             // 
-            this.btn_ИзменитьВремяЗадержки.Location = new System.Drawing.Point(302, 125);
+            this.btn_ИзменитьВремяЗадержки.Location = new System.Drawing.Point(301, 125);
             this.btn_ИзменитьВремяЗадержки.Name = "btn_ИзменитьВремяЗадержки";
-            this.btn_ИзменитьВремяЗадержки.Size = new System.Drawing.Size(136, 29);
+            this.btn_ИзменитьВремяЗадержки.Size = new System.Drawing.Size(137, 29);
             this.btn_ИзменитьВремяЗадержки.TabIndex = 19;
             this.btn_ИзменитьВремяЗадержки.Text = "Изменить";
             this.btn_ИзменитьВремяЗадержки.UseVisualStyleBackColor = true;
@@ -390,7 +422,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(191, 125);
+            this.label8.Location = new System.Drawing.Point(176, 125);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(19, 25);
             this.label8.TabIndex = 18;
@@ -406,7 +438,7 @@
             this.dTP_ОжидаемоеВремя.Enabled = false;
             this.dTP_ОжидаемоеВремя.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dTP_ОжидаемоеВремя.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_ОжидаемоеВремя.Location = new System.Drawing.Point(214, 123);
+            this.dTP_ОжидаемоеВремя.Location = new System.Drawing.Point(194, 123);
             this.dTP_ОжидаемоеВремя.Name = "dTP_ОжидаемоеВремя";
             this.dTP_ОжидаемоеВремя.ShowUpDown = true;
             this.dTP_ОжидаемоеВремя.Size = new System.Drawing.Size(77, 29);
@@ -416,7 +448,7 @@
             // 
             this.dTP_Задержка.CustomFormat = "HH:mm";
             this.dTP_Задержка.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Задержка.Location = new System.Drawing.Point(105, 123);
+            this.dTP_Задержка.Location = new System.Drawing.Point(90, 123);
             this.dTP_Задержка.Name = "dTP_Задержка";
             this.dTP_Задержка.ShowUpDown = true;
             this.dTP_Задержка.Size = new System.Drawing.Size(85, 29);
@@ -434,9 +466,9 @@
             // 
             // btn_ИзменитьВремяОтправления
             // 
-            this.btn_ИзменитьВремяОтправления.Location = new System.Drawing.Point(302, 58);
+            this.btn_ИзменитьВремяОтправления.Location = new System.Drawing.Point(301, 58);
             this.btn_ИзменитьВремяОтправления.Name = "btn_ИзменитьВремяОтправления";
-            this.btn_ИзменитьВремяОтправления.Size = new System.Drawing.Size(136, 29);
+            this.btn_ИзменитьВремяОтправления.Size = new System.Drawing.Size(137, 29);
             this.btn_ИзменитьВремяОтправления.TabIndex = 12;
             this.btn_ИзменитьВремяОтправления.Text = "Изменить";
             this.btn_ИзменитьВремяОтправления.UseVisualStyleBackColor = true;
@@ -446,7 +478,7 @@
             // 
             this.dTP_ВремяОтправления.CustomFormat = "HH:mm";
             this.dTP_ВремяОтправления.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_ВремяОтправления.Location = new System.Drawing.Point(104, 59);
+            this.dTP_ВремяОтправления.Location = new System.Drawing.Point(89, 59);
             this.dTP_ВремяОтправления.Name = "dTP_ВремяОтправления";
             this.dTP_ВремяОтправления.ShowUpDown = true;
             this.dTP_ВремяОтправления.Size = new System.Drawing.Size(85, 29);
@@ -454,9 +486,9 @@
             // 
             // btn_ИзменитьВремяПрибытия
             // 
-            this.btn_ИзменитьВремяПрибытия.Location = new System.Drawing.Point(302, 23);
+            this.btn_ИзменитьВремяПрибытия.Location = new System.Drawing.Point(301, 23);
             this.btn_ИзменитьВремяПрибытия.Name = "btn_ИзменитьВремяПрибытия";
-            this.btn_ИзменитьВремяПрибытия.Size = new System.Drawing.Size(136, 29);
+            this.btn_ИзменитьВремяПрибытия.Size = new System.Drawing.Size(137, 29);
             this.btn_ИзменитьВремяПрибытия.TabIndex = 12;
             this.btn_ИзменитьВремяПрибытия.Text = "Изменить";
             this.btn_ИзменитьВремяПрибытия.UseVisualStyleBackColor = true;
@@ -476,7 +508,7 @@
             // 
             this.dTP_Прибытие.CustomFormat = "HH:mm";
             this.dTP_Прибытие.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Прибытие.Location = new System.Drawing.Point(105, 27);
+            this.dTP_Прибытие.Location = new System.Drawing.Point(90, 27);
             this.dTP_Прибытие.Name = "dTP_Прибытие";
             this.dTP_Прибытие.ShowUpDown = true;
             this.dTP_Прибытие.Size = new System.Drawing.Size(85, 29);
@@ -858,27 +890,6 @@
             this.label4.TabIndex = 46;
             this.label4.Text = "Дополнение:";
             // 
-            // btn_Фиксировать
-            // 
-            this.btn_Фиксировать.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Фиксировать.Location = new System.Drawing.Point(467, 20);
-            this.btn_Фиксировать.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Фиксировать.Name = "btn_Фиксировать";
-            this.btn_Фиксировать.Size = new System.Drawing.Size(89, 43);
-            this.btn_Фиксировать.TabIndex = 50;
-            this.btn_Фиксировать.Text = "ФИКС. ВРЕМЯ \"@\"";
-            this.btn_Фиксировать.UseVisualStyleBackColor = true;
-            this.btn_Фиксировать.Click += new System.EventHandler(this.btn_Фиксировать_Click);
-            // 
-            // lb_фиксВр
-            // 
-            this.lb_фиксВр.AutoSize = true;
-            this.lb_фиксВр.Location = new System.Drawing.Point(561, 32);
-            this.lb_фиксВр.Name = "lb_фиксВр";
-            this.lb_фиксВр.Size = new System.Drawing.Size(37, 21);
-            this.lb_фиксВр.TabIndex = 49;
-            this.lb_фиксВр.Text = "--:--";
-            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -981,6 +992,7 @@
         private System.Windows.Forms.DateTimePicker dTP_ВремяВПути;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btn_Фиксировать;
-        private System.Windows.Forms.Label lb_фиксВр;
+        private System.Windows.Forms.Label lb_фиксВрПриб;
+        private System.Windows.Forms.Label lb_фиксВрОтпр;
     }
 }

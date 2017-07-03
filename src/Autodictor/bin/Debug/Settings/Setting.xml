@@ -44,7 +44,7 @@
 
 	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:5">
 	      <ExchangeRules>    
-		    <Table Size= "3">
+		    <Table Size= "3" Position = "5">
 				   <Rule Format = "Windows-1251">
 					  <Request maxLenght = "254">
 						   STX{AddressDevice:X2}{Nbyte:X2}
@@ -103,7 +103,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" ProviderType="xml_sheduleWindow" Contrains="ЛимитСтрокТаблицы:15"
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow"
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +

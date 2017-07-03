@@ -54,6 +54,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                     return;
 
                 var countRow = MainRule.ViewType.TableSize.Value;
+                var firstPosition = MainRule.ViewType.FirstTableElement.Value;
 
                 //отправка одиночной команды-----------------------------------------------------------------------
                 if (inData != null && inData.Command != Command.None)
@@ -104,9 +105,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
 
 
-
-
-
                 //Вывод на табличное табло построчной информации----------------------------------------------------------------
                 if (inData?.TableData != null)
                 {
@@ -116,8 +114,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
                         for (byte i = 0; i < countRow; i++)
                         {
                             //фильтрация по ближайшему времени к текущему времени.
-                            var filteredData = inData.TableData;
-                            var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, filteredData) : filteredData;
+                            var skipData = (inData.TableData.Count > firstPosition) ? inData.TableData.Skip(firstPosition) : inData.TableData;
+                            var timeSampling = inData.TableData.Count > countRow ? UniversalInputType.GetFilteringByDateTimeTable(countRow, skipData) : skipData;
                             var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
                             orderSampling.ForEach(t => t.AddressDevice = internalAddr);

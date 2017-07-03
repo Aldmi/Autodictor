@@ -21,7 +21,8 @@ namespace CommunicationDevices.Rules.ExchangeRules
     {
         public string Type { get; set; }
 
-        public int? TableSize { get; set; }          //выставляется если Type == Table
+        public int? TableSize { get; set; }                   // Размер таблицы. выставляется если Type == Table
+        public int? FirstTableElement { get; set; }          //Номер стартового элемента. выставляется если Type == Table
     }
 
 
