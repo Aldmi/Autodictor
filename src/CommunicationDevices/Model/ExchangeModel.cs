@@ -906,8 +906,10 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к пути.
                         if (binding.BindingType == BindingType.ToPath)
                         {
-                            Binding2PathBehaviors.Add(new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions));
-                            DeviceTables.Last().AddCycleFunc(); //добавим все функции циклического опроса
+                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
+                            Binding2PathBehaviors.Add(bindingBeh);
+                            bindingBeh.InitializeDevicePathInfo();      //Вывод номера пути в пустом сообщении
+                            DeviceTables.Last().AddCycleFunc();        //добавим все функции циклического опроса          
                         }
 
                         //создание поведения привязка табло к главному расписанию

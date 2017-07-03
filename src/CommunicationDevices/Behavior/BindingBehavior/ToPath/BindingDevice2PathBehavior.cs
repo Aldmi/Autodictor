@@ -128,19 +128,20 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 Time = DateTime.MinValue,
                 Stations = "   ",
                 Note = "   ",
-                TypeTrain = TypeTrain.None
+                TypeTrain = TypeTrain.None,
+                TableData = new List<UniversalInputType>() { new UniversalInputType() }
             };
             inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
 
-            if (_device.ExhBehavior.GetData4CycleFunc[0].TableData != null)
-            {
-                _device.ExhBehavior.GetData4CycleFunc[0].TableData.Clear();
-            }
-            else
-            {
+            //if (_device.ExhBehavior.GetData4CycleFunc[0].TableData != null)
+            //{
+            //    _device.ExhBehavior.GetData4CycleFunc[0].TableData.Clear();
+            //}
+            //else
+            //{
                 _device.AddCycleFuncData(0, inData);
-            }
+           // }
         }
     }
 }
