@@ -51,51 +51,77 @@ namespace MainExample
 
         private void btn_ДобавитьЗапись_Click(object sender, EventArgs e)
         {
-            TrainTableRecord Данные;
-            Данные.ID = ++_id;
-            Данные.Num = "";
-            Данные.Num2 = "";
-            Данные.Addition = "";
-            Данные.Name = "";
-            Данные.StationArrival = "";
-            Данные.StationDepart = "";
-            Данные.Direction = "";
-            Данные.ArrivalTime = "00:00";
-            Данные.StopTime = "00:00";
-            Данные.DepartureTime = "00:00";
-            Данные.FollowingTime = "00:00";
-            Данные.Days = "";
-            Данные.DaysAlias = "";
-            Данные.Active = true;
-            Данные.SoundTemplates = "";
-            Данные.TrainPathDirection = 0x01;
-            Данные.ТипПоезда = ТипПоезда.НеОпределен;
-            Данные.TrainPathNumber = new Dictionary<WeekDays, string>
+            var form = new OperativeTableAddItemForm();
+            if (form.ShowDialog() == DialogResult.OK)
             {
-                [WeekDays.Постоянно] = String.Empty,
-                [WeekDays.Пн] = String.Empty,
-                [WeekDays.Вт] = String.Empty,
-                [WeekDays.Ср] = String.Empty,
-                [WeekDays.Ср] = String.Empty,
-                [WeekDays.Чт] = String.Empty,
-                [WeekDays.Пт] = String.Empty,
-                [WeekDays.Сб] = String.Empty,
-                [WeekDays.Вс] = String.Empty
-            };
-            Данные.PathWeekDayes = false;
-            Данные.Примечание = "";
-            Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
-            Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
-            Данные.Addition = "";
-            Данные.ИспользоватьДополнение = new Dictionary<string, bool>
-            {
-                ["звук"] = false,
-                ["табло"] = false
-            };
-            Данные.Автомат = true;
+                //SoundRecord Record = окно.Record;
 
-            TrainTableRecords.Add(Данные);
-            ОбновитьДанныеВСписке();
+                //int TryCounter = 50;
+                //while (--TryCounter > 0)
+                //{
+                //    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
+                //    string[] SubKeys = Key.Split(':');
+                //    if (SubKeys[0].Length == 1)
+                //        Key = "0" + Key;
+
+                //    if (MainWindowForm.SoundRecords.ContainsKey(Key) == false)
+                //    {
+                //        MainWindowForm.SoundRecords.Add(Key, Record);
+                //        MainWindowForm.SoundRecordsOld.Add(Key, Record);
+                //        break;
+                //    }
+
+                //    Record.Время = Record.Время.AddSeconds(1);
+                //}
+            }
+
+
+
+            //TrainTableRecord Данные;
+            //Данные.ID = ++_id;
+            //Данные.Num = "";
+            //Данные.Num2 = "";
+            //Данные.Addition = "";
+            //Данные.Name = "";
+            //Данные.StationArrival = "";
+            //Данные.StationDepart = "";
+            //Данные.Direction = "";
+            //Данные.ArrivalTime = "00:00";
+            //Данные.StopTime = "00:00";
+            //Данные.DepartureTime = "00:00";
+            //Данные.FollowingTime = "00:00";
+            //Данные.Days = "";
+            //Данные.DaysAlias = "";
+            //Данные.Active = true;
+            //Данные.SoundTemplates = "";
+            //Данные.TrainPathDirection = 0x01;
+            //Данные.ТипПоезда = ТипПоезда.НеОпределен;
+            //Данные.TrainPathNumber = new Dictionary<WeekDays, string>
+            //{
+            //    [WeekDays.Постоянно] = String.Empty,
+            //    [WeekDays.Пн] = String.Empty,
+            //    [WeekDays.Вт] = String.Empty,
+            //    [WeekDays.Ср] = String.Empty,
+            //    [WeekDays.Ср] = String.Empty,
+            //    [WeekDays.Чт] = String.Empty,
+            //    [WeekDays.Пт] = String.Empty,
+            //    [WeekDays.Сб] = String.Empty,
+            //    [WeekDays.Вс] = String.Empty
+            //};
+            //Данные.PathWeekDayes = false;
+            //Данные.Примечание = "";
+            //Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
+            //Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+            //Данные.Addition = "";
+            //Данные.ИспользоватьДополнение = new Dictionary<string, bool>
+            //{
+            //    ["звук"] = false,
+            //    ["табло"] = false
+            //};
+            //Данные.Автомат = true;
+
+            //TrainTableRecords.Add(Данные);
+            //ОбновитьДанныеВСписке();
         }
 
 
