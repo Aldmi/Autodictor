@@ -204,7 +204,8 @@ namespace MainExample
                 var inData = new UniversalInputType
                 {
                     TableData = new List<UniversalInputType>(),
-                    Command = Command.Clear
+                    Command = Command.Clear,
+                    DelayTime = DateTime.Now //debug
                 };
                 _devises.ToList()[e.RowIndex].AddOneTimeSendData(inData);
                 return;

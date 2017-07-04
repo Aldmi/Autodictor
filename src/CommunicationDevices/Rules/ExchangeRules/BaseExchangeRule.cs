@@ -225,9 +225,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
                             var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), (uit.DelayTime == DateTime.MinValue) ? " " : uit.DelayTime.Value.ToString(dateFormat));
                             resStr.Append(formatStr);
                         }
-                        else
+                        else                         //вывод в минутах
                         {
-                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), (uit.DelayTime == DateTime.MinValue) ? " " : uit.DelayTime.Value.ToString(CultureInfo.InvariantCulture));
+                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), (uit.DelayTime == DateTime.MinValue) ? " " : ((uit.DelayTime.Value.Hour * 60) + (uit.DelayTime.Value.Minute)).ToString());
                             resStr.Append(formatStr);
                         }
                         continue;

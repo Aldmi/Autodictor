@@ -53,7 +53,6 @@
 						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
 						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
 						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
-						   %10$00$60$t3$12{DelayTime:t}<!-- Вывод Времени задержки -->
 						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
 						   {CRCXor:X2}ETX
 					  </Request >
@@ -66,6 +65,7 @@
 				   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
 					  <Request maxLenght = "254">
 							STX{AddressDevice:X2}{Nbyte:X2}
+							{DelayTime}
 							CLEAR-------------------------
 							{CRCXor:X2}ETX
 					  </Request >

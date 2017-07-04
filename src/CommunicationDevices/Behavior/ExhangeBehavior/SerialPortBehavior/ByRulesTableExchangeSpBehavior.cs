@@ -128,6 +128,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
                     PathNumber = "  ",
                     Stations = "  ",
                     Time = DateTime.MinValue,
+                    DelayTime = inData.DelayTime,
                     Message = inData.Command + ".....................",
                     AddressDevice = inData.AddressDevice
                 };
