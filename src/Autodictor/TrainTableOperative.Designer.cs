@@ -53,8 +53,8 @@
             // 
             // listView1
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -237,7 +237,7 @@
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TrainTableOperative";
-            this.Text = "Расписание движения поездов";
+            this.Text = "Оперативное распсиание движения поездов";
             this.pnСостояниеCIS.ResumeLayout(false);
             this.groupBoxSourseShedule.ResumeLayout(false);
             this.groupBoxSourseShedule.PerformLayout();

@@ -54,74 +54,12 @@ namespace MainExample
             var form = new OperativeTableAddItemForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                //SoundRecord Record = окно.Record;
+                var tableRec = form.TableRec;
+                tableRec.ID = TrainTableRecords.Any() ? TrainTableRecords.Max(rec => rec.ID) + 1 : 1;
 
-                //int TryCounter = 50;
-                //while (--TryCounter > 0)
-                //{
-                //    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
-                //    string[] SubKeys = Key.Split(':');
-                //    if (SubKeys[0].Length == 1)
-                //        Key = "0" + Key;
-
-                //    if (MainWindowForm.SoundRecords.ContainsKey(Key) == false)
-                //    {
-                //        MainWindowForm.SoundRecords.Add(Key, Record);
-                //        MainWindowForm.SoundRecordsOld.Add(Key, Record);
-                //        break;
-                //    }
-
-                //    Record.Время = Record.Время.AddSeconds(1);
-                //}
+                TrainTableRecords.Add(tableRec);
+                ОбновитьДанныеВСписке();
             }
-
-
-
-            //TrainTableRecord Данные;
-            //Данные.ID = ++_id;
-            //Данные.Num = "";
-            //Данные.Num2 = "";
-            //Данные.Addition = "";
-            //Данные.Name = "";
-            //Данные.StationArrival = "";
-            //Данные.StationDepart = "";
-            //Данные.Direction = "";
-            //Данные.ArrivalTime = "00:00";
-            //Данные.StopTime = "00:00";
-            //Данные.DepartureTime = "00:00";
-            //Данные.FollowingTime = "00:00";
-            //Данные.Days = "";
-            //Данные.DaysAlias = "";
-            //Данные.Active = true;
-            //Данные.SoundTemplates = "";
-            //Данные.TrainPathDirection = 0x01;
-            //Данные.ТипПоезда = ТипПоезда.НеОпределен;
-            //Данные.TrainPathNumber = new Dictionary<WeekDays, string>
-            //{
-            //    [WeekDays.Постоянно] = String.Empty,
-            //    [WeekDays.Пн] = String.Empty,
-            //    [WeekDays.Вт] = String.Empty,
-            //    [WeekDays.Ср] = String.Empty,
-            //    [WeekDays.Ср] = String.Empty,
-            //    [WeekDays.Чт] = String.Empty,
-            //    [WeekDays.Пт] = String.Empty,
-            //    [WeekDays.Сб] = String.Empty,
-            //    [WeekDays.Вс] = String.Empty
-            //};
-            //Данные.PathWeekDayes = false;
-            //Данные.Примечание = "";
-            //Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
-            //Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
-            //Данные.Addition = "";
-            //Данные.ИспользоватьДополнение = new Dictionary<string, bool>
-            //{
-            //    ["звук"] = false,
-            //    ["табло"] = false
-            //};
-            //Данные.Автомат = true;
-
-            //TrainTableRecords.Add(Данные);
-            //ОбновитьДанныеВСписке();
         }
 
 
@@ -245,7 +183,7 @@ namespace MainExample
 
             try
             {
-                using (System.IO.StreamReader file = new System.IO.StreamReader(TableFileName))
+                using (StreamReader file = new StreamReader(TableFileName))
                 {
                     string line;
                     while ((line = file.ReadLine()) != null)
@@ -340,10 +278,11 @@ namespace MainExample
                             }
 
                             Данные.Direction = String.Empty;
-                            if (Settings.Length >= 24)
+                            if (Settings.Length >= 25)
                             {
-                                Данные.StationDepart = Settings[24];
+                                Данные.Direction = Settings[24];
                             }
+
 
 
                             TrainTableRecords.Add(Данные);
@@ -369,7 +308,7 @@ namespace MainExample
         {
             try
             {
-                using (StreamWriter DumpFile = new StreamWriter("TableRecords.ini"))
+                using (StreamWriter DumpFile = new StreamWriter(TableFileName))
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {

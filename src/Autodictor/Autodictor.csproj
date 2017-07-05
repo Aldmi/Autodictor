@@ -345,6 +345,9 @@
     <EmbeddedResource Include="DynamicSoundForm.resx">
       <DependentUpon>DynamicSoundForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TrainTableOperative.resx">
+      <DependentUpon>TrainTableOperative.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TranslateForm.resx">
       <DependentUpon>TranslateForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -31,6 +31,8 @@
             this.btn_Принять = new System.Windows.Forms.Button();
             this.btn_Отменить = new System.Windows.Forms.Button();
             this.gBНаправление = new System.Windows.Forms.GroupBox();
+            this.cBНаправ = new System.Windows.Forms.ComboBox();
+            this.lНапр = new System.Windows.Forms.Label();
             this.dTPСледования = new System.Windows.Forms.DateTimePicker();
             this.label13 = new System.Windows.Forms.Label();
             this.dTPПрибытие = new System.Windows.Forms.DateTimePicker();
@@ -106,8 +108,6 @@
             this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
             this.rb_Постоянно = new System.Windows.Forms.RadioButton();
-            this.cBНаправ = new System.Windows.Forms.ComboBox();
-            this.lНапр = new System.Windows.Forms.Label();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -163,6 +163,25 @@
             this.gBНаправление.TabIndex = 35;
             this.gBНаправление.TabStop = false;
             this.gBНаправление.Text = "Направление";
+            // 
+            // cBНаправ
+            // 
+            this.cBНаправ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBНаправ.FormattingEnabled = true;
+            this.cBНаправ.Location = new System.Drawing.Point(91, 60);
+            this.cBНаправ.Name = "cBНаправ";
+            this.cBНаправ.Size = new System.Drawing.Size(369, 28);
+            this.cBНаправ.TabIndex = 47;
+            this.cBНаправ.SelectedIndexChanged += new System.EventHandler(this.cBНаправ_SelectedIndexChanged);
+            // 
+            // lНапр
+            // 
+            this.lНапр.AutoSize = true;
+            this.lНапр.Location = new System.Drawing.Point(14, 63);
+            this.lНапр.Name = "lНапр";
+            this.lНапр.Size = new System.Drawing.Size(77, 20);
+            this.lНапр.TabIndex = 46;
+            this.lНапр.Text = "Направ.";
             // 
             // dTPСледования
             // 
@@ -940,25 +959,6 @@
             this.rb_Постоянно.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.rb_Постоянно.UseVisualStyleBackColor = true;
             this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
-            // 
-            // cBНаправ
-            // 
-            this.cBНаправ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBНаправ.FormattingEnabled = true;
-            this.cBНаправ.Location = new System.Drawing.Point(91, 60);
-            this.cBНаправ.Name = "cBНаправ";
-            this.cBНаправ.Size = new System.Drawing.Size(369, 28);
-            this.cBНаправ.TabIndex = 47;
-            this.cBНаправ.SelectedIndexChanged += new System.EventHandler(this.cBНаправ_SelectedIndexChanged);
-            // 
-            // lНапр
-            // 
-            this.lНапр.AutoSize = true;
-            this.lНапр.Location = new System.Drawing.Point(14, 63);
-            this.lНапр.Name = "lНапр";
-            this.lНапр.Size = new System.Drawing.Size(77, 20);
-            this.lНапр.TabIndex = 46;
-            this.lНапр.Text = "Направ.";
             // 
             // Оповещение
             // 
