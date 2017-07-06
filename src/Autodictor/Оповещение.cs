@@ -27,10 +27,10 @@ namespace MainExample
             cBПутьПоУмолчанию.Items.Add("Не определен");
             foreach (var Путь in Program.НомераПутей)
                 cBПутьПоУмолчанию.Items.Add(Путь);
-            cBПутьПоУмолчанию.SelectedIndex = 0;
-
+       
             cBПутьПоУмолчанию.Text = this.РасписаниеПоезда.TrainPathNumber[WeekDays.Постоянно];
             InitializePathValues(расписаниеПоезда);
+
 
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
 

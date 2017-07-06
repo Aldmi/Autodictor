@@ -86,16 +86,21 @@
             this.gbРежимРаботы = new System.Windows.Forms.GroupBox();
             this.rB_РежРабРучной = new System.Windows.Forms.RadioButton();
             this.rB_РежРабАвтомат = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cBНомерПоезда2 = new System.Windows.Forms.ComboBox();
+            this.gb_ПутьПоУмолчанию = new System.Windows.Forms.GroupBox();
+            this.cBПутьПоУмолчанию = new System.Windows.Forms.ComboBox();
             this.gBШаблонОповещения.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
             this.gbРежимРаботы.SuspendLayout();
+            this.gb_ПутьПоУмолчанию.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnОтмена
             // 
             this.btnОтмена.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnОтмена.Location = new System.Drawing.Point(201, 290);
+            this.btnОтмена.Location = new System.Drawing.Point(1206, 626);
             this.btnОтмена.Name = "btnОтмена";
             this.btnОтмена.Size = new System.Drawing.Size(177, 45);
             this.btnОтмена.TabIndex = 85;
@@ -105,7 +110,7 @@
             // btnДобавить
             // 
             this.btnДобавить.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnДобавить.Location = new System.Drawing.Point(19, 290);
+            this.btnДобавить.Location = new System.Drawing.Point(1024, 626);
             this.btnДобавить.Name = "btnДобавить";
             this.btnДобавить.Size = new System.Drawing.Size(176, 45);
             this.btnДобавить.TabIndex = 73;
@@ -126,7 +131,7 @@
             "Скорый",
             "Скоростной",
             "ЭкспрессПригород"});
-            this.cBКатегория.Location = new System.Drawing.Point(1087, 41);
+            this.cBКатегория.Location = new System.Drawing.Point(1174, 40);
             this.cBКатегория.Name = "cBКатегория";
             this.cBКатегория.Size = new System.Drawing.Size(186, 28);
             this.cBКатегория.TabIndex = 83;
@@ -135,7 +140,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(978, 44);
+            this.label5.Location = new System.Drawing.Point(1065, 43);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(98, 20);
             this.label5.TabIndex = 84;
@@ -440,7 +445,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(567, 44);
+            this.label4.Location = new System.Drawing.Point(654, 43);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(118, 20);
             this.label4.TabIndex = 72;
@@ -450,7 +455,7 @@
             // 
             this.cBКуда.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBКуда.FormattingEnabled = true;
-            this.cBКуда.Location = new System.Drawing.Point(691, 39);
+            this.cBКуда.Location = new System.Drawing.Point(778, 38);
             this.cBКуда.Name = "cBКуда";
             this.cBКуда.Size = new System.Drawing.Size(278, 28);
             this.cBКуда.TabIndex = 71;
@@ -459,7 +464,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(153, 44);
+            this.label3.Location = new System.Drawing.Point(240, 43);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(147, 20);
             this.label3.TabIndex = 70;
@@ -469,7 +474,7 @@
             // 
             this.cBОткуда.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBОткуда.FormattingEnabled = true;
-            this.cBОткуда.Location = new System.Drawing.Point(309, 39);
+            this.cBОткуда.Location = new System.Drawing.Point(396, 38);
             this.cBОткуда.Name = "cBОткуда";
             this.cBОткуда.Size = new System.Drawing.Size(252, 28);
             this.cBОткуда.TabIndex = 69;
@@ -480,7 +485,7 @@
             this.cBНомерПоезда.FormattingEnabled = true;
             this.cBНомерПоезда.Location = new System.Drawing.Point(43, 41);
             this.cBНомерПоезда.Name = "cBНомерПоезда";
-            this.cBНомерПоезда.Size = new System.Drawing.Size(87, 28);
+            this.cBНомерПоезда.Size = new System.Drawing.Size(77, 28);
             this.cBНомерПоезда.TabIndex = 68;
             // 
             // label2
@@ -499,7 +504,7 @@
             this.cBПоездИзРасписания.FormattingEnabled = true;
             this.cBПоездИзРасписания.Location = new System.Drawing.Point(274, 6);
             this.cBПоездИзРасписания.Name = "cBПоездИзРасписания";
-            this.cBПоездИзРасписания.Size = new System.Drawing.Size(999, 28);
+            this.cBПоездИзРасписания.Size = new System.Drawing.Size(1086, 28);
             this.cBПоездИзРасписания.TabIndex = 66;
             this.cBПоездИзРасписания.SelectedIndexChanged += new System.EventHandler(this.cBПоездИзРасписания_SelectedIndexChanged);
             // 
@@ -724,11 +729,53 @@
             this.rB_РежРабАвтомат.Text = "АВТОМАТ";
             this.rB_РежРабАвтомат.UseVisualStyleBackColor = true;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label12.Location = new System.Drawing.Point(122, 45);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(14, 20);
+            this.label12.TabIndex = 90;
+            this.label12.Text = "/";
+            // 
+            // cBНомерПоезда2
+            // 
+            this.cBНомерПоезда2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cBНомерПоезда2.FormattingEnabled = true;
+            this.cBНомерПоезда2.Location = new System.Drawing.Point(139, 41);
+            this.cBНомерПоезда2.Name = "cBНомерПоезда2";
+            this.cBНомерПоезда2.Size = new System.Drawing.Size(77, 28);
+            this.cBНомерПоезда2.TabIndex = 91;
+            // 
+            // gb_ПутьПоУмолчанию
+            // 
+            this.gb_ПутьПоУмолчанию.Controls.Add(this.cBПутьПоУмолчанию);
+            this.gb_ПутьПоУмолчанию.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.gb_ПутьПоУмолчанию.Location = new System.Drawing.Point(16, 226);
+            this.gb_ПутьПоУмолчанию.Name = "gb_ПутьПоУмолчанию";
+            this.gb_ПутьПоУмолчанию.Size = new System.Drawing.Size(259, 75);
+            this.gb_ПутьПоУмолчанию.TabIndex = 92;
+            this.gb_ПутьПоУмолчанию.TabStop = false;
+            this.gb_ПутьПоУмолчанию.Text = "Путь по умолчанию";
+            // 
+            // cBПутьПоУмолчанию
+            // 
+            this.cBПутьПоУмолчанию.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBПутьПоУмолчанию.FormattingEnabled = true;
+            this.cBПутьПоУмолчанию.Location = new System.Drawing.Point(49, 31);
+            this.cBПутьПоУмолчанию.Name = "cBПутьПоУмолчанию";
+            this.cBПутьПоУмолчанию.Size = new System.Drawing.Size(204, 28);
+            this.cBПутьПоУмолчанию.TabIndex = 46;
+            // 
             // OperativeTableAddItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1409, 683);
+            this.Controls.Add(this.gb_ПутьПоУмолчанию);
+            this.Controls.Add(this.cBНомерПоезда2);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.gbРежимРаботы);
             this.Controls.Add(this.gBДниСледования);
             this.Controls.Add(this.dTPСледования);
@@ -764,6 +811,7 @@
             this.gBДниСледования.PerformLayout();
             this.gbРежимРаботы.ResumeLayout(false);
             this.gbРежимРаботы.PerformLayout();
+            this.gb_ПутьПоУмолчанию.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -829,5 +877,9 @@
         private System.Windows.Forms.GroupBox gbРежимРаботы;
         private System.Windows.Forms.RadioButton rB_РежРабРучной;
         private System.Windows.Forms.RadioButton rB_РежРабАвтомат;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cBНомерПоезда2;
+        private System.Windows.Forms.GroupBox gb_ПутьПоУмолчанию;
+        private System.Windows.Forms.ComboBox cBПутьПоУмолчанию;
     }
 }

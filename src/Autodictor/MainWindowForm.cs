@@ -742,7 +742,7 @@ namespace MainExample
         }
 
 
-
+        //TODO: убрать, использовать метод и из маппера
         public string ПолучитьНомерПутиПоДнямНедели(TrainTableRecord record)
         {
             if (!record.PathWeekDayes)

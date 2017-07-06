@@ -51,7 +51,11 @@ namespace MainExample
 
 
             foreach (var номерПоезда in Program.НомераПоездов)
+            {
                 cBНомерПоезда.Items.Add(номерПоезда);
+                cBНомерПоезда2.Items.Add(номерПоезда);
+            }
+
 
 
             foreach (var item in DynamicSoundForm.DynamicSoundRecords)
@@ -65,6 +69,7 @@ namespace MainExample
             this.Text = "Расписание движения для поезда: " + tableRec.Num + " - " + tableRec.Name;
 
             cBНомерПоезда.Text = tableRec.Num;
+            cBНомерПоезда2.Text = tableRec.Num2;
 
             СтанцииВыбранногоНаправления = Program.ПолучитьСтанцииНаправления(tableRec.Direction)?.Select(st => st.NameRu).ToArray();
             if (СтанцииВыбранногоНаправления != null)
@@ -143,8 +148,11 @@ namespace MainExample
                 tableRec.StopTime = stopTime.ToString("t");
             }
 
-            //var номер= tableRec.TrainPathNumber[WeekDays.Постоянно];
-            //byte номерПути = (byte)(Program.НомераПутей.IndexOf(номер) + 1);
+            cBПутьПоУмолчанию.Items.Add("Не определен");
+            foreach (var путь in Program.НомераПутей)
+                cBПутьПоУмолчанию.Items.Add(путь);
+
+            cBПутьПоУмолчанию.Text = tableRec.TrainPathNumber[WeekDays.Постоянно];
 
 
             cBКатегория.SelectedIndex = (int)TableRec.ТипПоезда;
@@ -424,6 +432,7 @@ namespace MainExample
                 ID = 0,
                 SoundTemplates = ПолучитьШаблоныОповещения(),
                 Num = cBНомерПоезда.Text,
+                Num2 = cBНомерПоезда2.Text,
                 ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex, 
                 Direction = TableRec.Direction,
                 Active = true,
@@ -533,6 +542,7 @@ namespace MainExample
             //ПУТЬ
             newTableRec.PathWeekDayes = TableRec.PathWeekDayes;
             newTableRec.TrainPathNumber = TableRec.TrainPathNumber;
+            TableRec.TrainPathNumber[WeekDays.Постоянно]= cBПутьПоУмолчанию.Text;
 
             newTableRec.ИспользоватьДополнение = new Dictionary<string, bool>
             {
