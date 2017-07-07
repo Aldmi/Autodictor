@@ -463,6 +463,9 @@ namespace MainExample
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now, null, ref id);                                         // на тек. сутки
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
 
+           // СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime.Now, null, ref id);                                         // на тек. сутки
+           // СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
+
             СозданиеСтатическихЗвуковыхФайлов();
         }
 
@@ -470,6 +473,54 @@ namespace MainExample
 
         private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime день, Func<int, bool> ограничениеВремениПоЧасам, ref int id)
         {
+            var pipelineService = new SchedulingPipelineService();
+            for (var index = 0; index < TrainTable.TrainTableRecords.Count; index++)
+            {
+                var config = TrainTable.TrainTableRecords[index];
+
+                if (config.Active == false && Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок == false)
+                    continue;
+
+                if (!pipelineService.CheckTrainActuality(ref config, день, ограничениеВремениПоЧасам, РаботаПоНомеруДняНедели))
+                    continue;
+
+                var newId = id++;
+                SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
+  
+
+
+                //выдать список привязанных табло
+                byte номерПути = (byte)(Program.НомераПутей.IndexOf(record.НомерПути) + 1);
+                record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(номерПути)).Where(str => str != null).ToArray() : null;
+                record.СостояниеОтображения = TableRecordStatus.Выключена;
+
+
+                //СБРОСИТЬ НОМЕР ПУТИ, НА ВРЕМЯ МЕНЬШЕ ТЕКУЩЕГО
+                if (record.Время < DateTime.Now)
+                {
+                    record.НомерПути = String.Empty;
+                }
+
+
+                //Добавление созанной записи
+                var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, record.Время);
+                if (!string.IsNullOrEmpty(newkey))
+                {
+                    SoundRecords.Add(newkey, record);
+                    SoundRecordsOld.Add(newkey, record);
+                }
+
+                MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
+            }
+        }
+
+
+
+
+        private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime день, Func<int, bool> ограничениеВремениПоЧасам, ref int id)
+        {
+            var pipelineService = new SchedulingPipelineService();
+
             foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
             {
                 SoundRecord Record;
@@ -616,7 +667,7 @@ namespace MainExample
                     НомерСписка |= 0x08;
                 }
 
-           
+
                 Record.БитыАктивностиПолей = НомерСписка;
                 Record.БитыАктивностиПолей |= 0x03;
 
@@ -721,22 +772,30 @@ namespace MainExample
                 }
 
 
-                int TryCounter = 50;
-                while (--TryCounter > 0)
+                //Добавление созанной записи
+                var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, Record.Время);
+                if (!string.IsNullOrEmpty(newkey))
                 {
-                    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
-                    string[] SubKeys = Key.Split(':');
-                    if (SubKeys[0].Length == 1)
-                        Key = "0" + Key;
-
-                    if (SoundRecords.ContainsKey(Key) == false)
-                    {
-                        SoundRecords.Add(Key, Record);
-                        SoundRecordsOld.Add(Key, Record);
-                        break;
-                    }
-                    Record.Время = Record.Время.AddSeconds(1);
+                    SoundRecords.Add(newkey, Record);
+                    SoundRecordsOld.Add(newkey, Record);
                 }
+
+                //int TryCounter = 50;
+                //while (--TryCounter > 0)
+                //{
+                //    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
+                //    string[] SubKeys = Key.Split(':');
+                //    if (SubKeys[0].Length == 1)
+                //        Key = "0" + Key;
+
+                //    if (SoundRecords.ContainsKey(Key) == false)
+                //    {
+                //        SoundRecords.Add(Key, Record);
+                //        SoundRecordsOld.Add(Key, Record);
+                //        break;
+                //    }
+                //    Record.Время = Record.Время.AddSeconds(1);
+                //}
                 MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
             }
         }

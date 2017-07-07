@@ -55,7 +55,9 @@ namespace MainExample.Services
                 addingKey = addingKey.AddSeconds(1);
             }
 
-            throw new Exception($"Невозможно добавить запись под ключем: {addingKey:yy.MM.dd  HH:mm:ss}");
+            return null;
+
+           // throw new Exception($"Невозможно добавить запись под ключем: {addingKey:yy.MM.dd  HH:mm:ss}");
         }
 
 

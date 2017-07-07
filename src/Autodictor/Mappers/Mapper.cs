@@ -65,151 +65,151 @@ namespace MainExample.Mappers
 
 
 
-        public static SoundRecord MapTrainTableRecord2SoundRecord(TrainTableRecord Config, DateTime day)
+        public static SoundRecord MapTrainTableRecord2SoundRecord(TrainTableRecord config, DateTime day, int id)
         {
-            var Record = new SoundRecord();
-            Record.ID = 0;
-            Record.НомерПоезда = Config.Num;
-            Record.НомерПоезда2 = Config.Num2;
-            Record.НазваниеПоезда = Config.Name;
-            Record.Дополнение = Config.Addition;
-            Record.ИспользоватьДополнение = new Dictionary<string, bool>
+            var record = new SoundRecord();
+            record.ID = id;
+            record.НомерПоезда = config.Num;
+            record.НомерПоезда2 = config.Num2;
+            record.НазваниеПоезда = config.Name;
+            record.Дополнение = config.Addition;
+            record.ИспользоватьДополнение = new Dictionary<string, bool>
             {
-                ["звук"] = Config.ИспользоватьДополнение["звук"],
-                ["табло"] = Config.ИспользоватьДополнение["табло"]
+                ["звук"] = config.ИспользоватьДополнение["звук"],
+                ["табло"] = config.ИспользоватьДополнение["табло"]
             };
-            Record.Направление = Config.Direction;
-            Record.СтанцияОтправления = "";
-            Record.СтанцияНазначения = "";
-            Record.ДниСледования = Config.Days;
-            Record.ДниСледованияAlias = Config.DaysAlias;
-            Record.Активность = Config.Active;
-            Record.Автомат = Config.Автомат;
-            Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
-            Record.НомерПути = ПолучитьНомерПутиПоДнямНедели(Config);
-            Record.НумерацияПоезда = Config.TrainPathDirection;
-            Record.Примечание = Config.Примечание;
-            Record.ТипПоезда = Config.ТипПоезда;
-            Record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
-            Record.ТипСообщения = SoundRecordType.ДвижениеПоездаНеПодтвержденное;
-            Record.Описание = "";
-            Record.КоличествоПовторений = 1;
-            Record.СостояниеКарточки = 0;
-            Record.ОписаниеСостоянияКарточки = "";
-            Record.БитыНештатныхСитуаций = 0x00;
-            Record.ТаймерПовторения = 0;
-            Record.РазрешениеНаОтображениеПути = PathPermissionType.ИзФайлаНастроек;
+            record.Направление = config.Direction;
+            record.СтанцияОтправления = "";
+            record.СтанцияНазначения = "";
+            record.ДниСледования = config.Days;
+            record.ДниСледованияAlias = config.DaysAlias;
+            record.Активность = config.Active;
+            record.Автомат = config.Автомат;
+            record.ШаблонВоспроизведенияСообщений = config.SoundTemplates;
+            record.НомерПути = ПолучитьНомерПутиПоДнямНедели(config);
+            record.НумерацияПоезда = config.TrainPathDirection;
+            record.Примечание = config.Примечание;
+            record.ТипПоезда = config.ТипПоезда;
+            record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;
+            record.ТипСообщения = SoundRecordType.ДвижениеПоездаНеПодтвержденное;
+            record.Описание = "";
+            record.КоличествоПовторений = 1;
+            record.СостояниеКарточки = 0;
+            record.ОписаниеСостоянияКарточки = "";
+            record.БитыНештатныхСитуаций = 0x00;
+            record.ТаймерПовторения = 0;
+            record.РазрешениеНаОтображениеПути = PathPermissionType.ИзФайлаНастроек;
 
-            Record.ИменаФайлов = new string[0];
-            Record.ФиксированноеВремяПрибытия = null;
-            Record.ФиксированноеВремяОтправления = null;
+            record.ИменаФайлов = new string[0];
+            record.ФиксированноеВремяПрибытия = null;
+            record.ФиксированноеВремяОтправления = null;
 
 
-            //string[] названияСтанций = Config.Name.Split('-');
+            //string[] названияСтанций = config.Name.Split('-');
             //if (названияСтанций.Length == 2)
             //{
-            //    Record.СтанцияОтправления = названияСтанций[0].Trim();
-            //    Record.СтанцияНазначения = названияСтанций[1].Trim();
+            //    record.СтанцияОтправления = названияСтанций[0].Trim();
+            //    record.СтанцияНазначения = названияСтанций[1].Trim();
             //}
             //else if (названияСтанций.Length == 1)
-            //    Record.СтанцияНазначения = названияСтанций[0].Trim();
+            //    record.СтанцияНазначения = названияСтанций[0].Trim();
 
 
-            Record.СтанцияОтправления = Config.StationDepart;
-            Record.СтанцияНазначения = Config.StationArrival;
+            record.СтанцияОтправления = config.StationDepart;
+            record.СтанцияНазначения = config.StationArrival;
 
 
             int часы = 0;
             int минуты = 0;
             DateTime времяПрибытия = new DateTime(2000, 1, 1, 0, 0, 0);
             DateTime времяОтправления = new DateTime(2000, 1, 1, 0, 0, 0);
-            Record.ВремяПрибытия = DateTime.Now;
-            Record.ВремяОтправления = DateTime.Now;
-            Record.ОжидаемоеВремя = DateTime.Now;
-            Record.ВремяСледования = null;
-            Record.ВремяЗадержки = null;
+            record.ВремяПрибытия = DateTime.Now;
+            record.ВремяОтправления = DateTime.Now;
+            record.ОжидаемоеВремя = DateTime.Now;
+            record.ВремяСледования = null;
+            record.ВремяЗадержки = null;
             byte номерСписка = 0x00;
 
 
-            if (Config.ArrivalTime != "")
+            if (config.ArrivalTime != "")
             {
-                string[] subStrings = Config.ArrivalTime.Split(':');
+                string[] subStrings = config.ArrivalTime.Split(':');
                 if (int.TryParse(subStrings[0], out часы) && int.TryParse(subStrings[1], out минуты))
                 {
                     времяПрибытия = new DateTime(day.Year, day.Month, day.Day, часы, минуты, 0);
-                    Record.ВремяПрибытия = времяПрибытия;
-                    Record.ОжидаемоеВремя = времяПрибытия;
+                    record.ВремяПрибытия = времяПрибытия;
+                    record.ОжидаемоеВремя = времяПрибытия;
                     номерСписка |= 0x04;
                 }
             }
 
-            if (Config.DepartureTime != "")
+            if (config.DepartureTime != "")
             {
-                string[] subStrings = Config.DepartureTime.Split(':');
+                string[] subStrings = config.DepartureTime.Split(':');
                 if (int.TryParse(subStrings[0], out часы) && int.TryParse(subStrings[1], out минуты))
                 {
                     времяОтправления = new DateTime(day.Year, day.Month, day.Day, часы, минуты, 0);
-                    Record.ВремяОтправления = времяОтправления;
-                    Record.ОжидаемоеВремя = времяОтправления;
+                    record.ВремяОтправления = времяОтправления;
+                    record.ОжидаемоеВремя = времяОтправления;
                     номерСписка |= 0x10;
                 }
             }
 
-            if (!string.IsNullOrEmpty(Config.FollowingTime))
+            if (!string.IsNullOrEmpty(config.FollowingTime))
             {
-                string[] subStrings = Config.FollowingTime.Split(':');
+                string[] subStrings = config.FollowingTime.Split(':');
                 if (int.TryParse(subStrings[0], out часы) && int.TryParse(subStrings[1], out минуты))
                 {
-                    Record.ВремяСледования = new DateTime(day.Year, day.Month, day.Day, часы, минуты, 0);
+                    record.ВремяСледования = new DateTime(day.Year, day.Month, day.Day, часы, минуты, 0);
                 }
             }
 
             if ((номерСписка & 0x04) != 0x00)
             {
-                Record.Время = Record.ВремяПрибытия;
-                Record.ОжидаемоеВремя = Record.ВремяПрибытия;
+                record.Время = record.ВремяПрибытия;
+                record.ОжидаемоеВремя = record.ВремяПрибытия;
             }
             else
             {
-                Record.Время = Record.ВремяОтправления;
-                Record.ОжидаемоеВремя = Record.ВремяОтправления;
+                record.Время = record.ВремяОтправления;
+                record.ОжидаемоеВремя = record.ВремяОтправления;
             }
 
             //ТРАНЗИТ
-            Record.ВремяСтоянки = null;
+            record.ВремяСтоянки = null;
             if (номерСписка == 0x14)
             {
                 //вермя отправления указанно для след. суток
                 if (времяОтправления < времяПрибытия)
                 {
-                    Record.ВремяОтправления = времяОтправления.AddDays(1);
+                    record.ВремяОтправления = времяОтправления.AddDays(1);
                 }
 
                 TimeSpan времяСтоянки;
-                if (TimeSpan.TryParse(Config.StopTime, out времяСтоянки))
+                if (TimeSpan.TryParse(config.StopTime, out времяСтоянки))
                 {
-                    Record.ВремяСтоянки = времяСтоянки;
+                    record.ВремяСтоянки = времяСтоянки;
                 }
                 номерСписка |= 0x08;                                              //TODO: ???
             }
 
-            Record.БитыАктивностиПолей = номерСписка;
-            Record.БитыАктивностиПолей |= 0x03;                                   //TODO: ???
+            record.БитыАктивностиПолей = номерСписка;
+            record.БитыАктивностиПолей |= 0x03;                                   //TODO: ???
 
 
 
             // Шаблоны оповещения
-            Record.СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
-            string[] шаблонОповещения = Record.ШаблонВоспроизведенияСообщений.Split(':');
+            record.СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
+            string[] шаблонОповещения = record.ШаблонВоспроизведенияСообщений.Split(':');
             if ((шаблонОповещения.Length % 3) == 0)
             {
-                bool активностьШаблоновДанногоПоезда = Record.ТипПоезда == ТипПоезда.Пассажирский && Program.Настройки.АвтФормСообщНаПассажирскийПоезд;
-                if (Record.ТипПоезда == ТипПоезда.Пригородный && Program.Настройки.АвтФормСообщНаПригородныйЭлектропоезд) активностьШаблоновДанногоПоезда = true;
-                if (Record.ТипПоезда == ТипПоезда.Скоростной && Program.Настройки.АвтФормСообщНаСкоростнойПоезд) активностьШаблоновДанногоПоезда = true;
-                if (Record.ТипПоезда == ТипПоезда.Скорый && Program.Настройки.АвтФормСообщНаСкорыйПоезд) активностьШаблоновДанногоПоезда = true;
-                if (Record.ТипПоезда == ТипПоезда.Ласточка && Program.Настройки.АвтФормСообщНаЛасточку) активностьШаблоновДанногоПоезда = true;
-                if (Record.ТипПоезда == ТипПоезда.Фирменный && Program.Настройки.АвтФормСообщНаФирменный) активностьШаблоновДанногоПоезда = true;
-                if (Record.ТипПоезда == ТипПоезда.РЭКС && Program.Настройки.АвтФормСообщНаРЭКС) активностьШаблоновДанногоПоезда = true;
+                bool активностьШаблоновДанногоПоезда = record.ТипПоезда == ТипПоезда.Пассажирский && Program.Настройки.АвтФормСообщНаПассажирскийПоезд;
+                if (record.ТипПоезда == ТипПоезда.Пригородный && Program.Настройки.АвтФормСообщНаПригородныйЭлектропоезд) активностьШаблоновДанногоПоезда = true;
+                if (record.ТипПоезда == ТипПоезда.Скоростной && Program.Настройки.АвтФормСообщНаСкоростнойПоезд) активностьШаблоновДанногоПоезда = true;
+                if (record.ТипПоезда == ТипПоезда.Скорый && Program.Настройки.АвтФормСообщНаСкорыйПоезд) активностьШаблоновДанногоПоезда = true;
+                if (record.ТипПоезда == ТипПоезда.Ласточка && Program.Настройки.АвтФормСообщНаЛасточку) активностьШаблоновДанногоПоезда = true;
+                if (record.ТипПоезда == ТипПоезда.Фирменный && Program.Настройки.АвтФормСообщНаФирменный) активностьШаблоновДанногоПоезда = true;
+                if (record.ТипПоезда == ТипПоезда.РЭКС && Program.Настройки.АвтФормСообщНаРЭКС) активностьШаблоновДанногоПоезда = true;
 
                 int indexШаблона = 0;
                 for (int i = 0; i < шаблонОповещения.Length / 3; i++)
@@ -237,7 +237,7 @@ namespace MainExample.Mappers
                             {
                                 СостояниеФормируемогоСообщенияИШаблон новыйШаблон;
                                 новыйШаблон.Id = indexШаблона++;
-                                новыйШаблон.SoundRecordId = Record.ID;
+                                новыйШаблон.SoundRecordId = record.ID;
                                 новыйШаблон.Активность = активностьШаблоновДанногоПоезда;
                                 новыйШаблон.Приоритет = Priority.Midlle;
                                 новыйШаблон.Воспроизведен = false;
@@ -245,10 +245,10 @@ namespace MainExample.Mappers
                                 новыйШаблон.ВремяСмещения = времяСмещения;
                                 новыйШаблон.НазваниеШаблона = шаблонОповещения[3 * i + 0];
                                 новыйШаблон.Шаблон = шаблон;
-                                новыйШаблон.ПривязкаКВремени = 0;
+                                новыйШаблон.ПривязкаКВремени = привязкаВремени;
                                 новыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng };  //TODO:Брать из ШаблонОповещения полученого из TrainTable.
 
-                                Record.СписокФормируемыхСообщений.Add(новыйШаблон);
+                                record.СписокФормируемыхСообщений.Add(новыйШаблон);
                             }
                         }
                     }
@@ -256,11 +256,10 @@ namespace MainExample.Mappers
             }
 
 
-            Record.СписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
+            record.СписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
 
 
-
-            return Record;
+            return record;
         }
 
 
