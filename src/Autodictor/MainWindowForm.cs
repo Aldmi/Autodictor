@@ -12,6 +12,7 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 using CommunicationDevices.Model;
+using MainExample.Comparers;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Infrastructure;
@@ -459,25 +460,48 @@ namespace MainExample
             SoundRecordsOld.Clear();
             СтатическиеЗвуковыеСообщения.Clear();
 
-            int id = 1;
-            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now, null, ref id);                                         // на тек. сутки
-            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
+            СозданиеРасписанияЖдТранспорта();
 
-           // СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime.Now, null, ref id);                                         // на тек. сутки
-           // СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
+
+            //СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime.Now, null, ref id);                                         // на тек. сутки
+            // СозданиеЗвуковыхФайловРасписанияЖдТранспорта_old(DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
 
             СозданиеСтатическихЗвуковыхФайлов();
         }
 
 
 
-        private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта(DateTime день, Func<int, bool> ограничениеВремениПоЧасам, ref int id)
+        /// <summary>
+        /// Созданире обобщенного списка из основного и оперативного расписания
+        /// </summary>
+        public void СозданиеРасписанияЖдТранспорта()
+        {
+            int id = 1;
+
+            //Добавим весь список Оперативного расписания
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now, null, ref id);                                         // на тек. сутки
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
+
+            //Вычтем из Главного расписания элементы оперативного расписания, уже добавленные к списку.
+            var differences = TrainTable.TrainTableRecords.Where(l2 =>
+                  !SoundRecords.Values.Any(l1 =>
+                  l1.НомерПоезда == l2.Num &&
+                  l1.НомерПоезда2 == l2.Num2 &&
+                  l1.Направление == l2.Direction
+                  )).ToList();
+
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(differences, DateTime.Now, null, ref id);                                         // на тек. сутки
+            СозданиеЗвуковыхФайловРасписанияЖдТранспорта(differences, DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
+        }
+
+
+
+        private void СозданиеЗвуковыхФайловРасписанияЖдТранспорта(IList<TrainTableRecord> trainTableRecords, DateTime день, Func<int, bool> ограничениеВремениПоЧасам, ref int id)
         {
             var pipelineService = new SchedulingPipelineService();
-            for (var index = 0; index < TrainTable.TrainTableRecords.Count; index++)
+            for (var index = 0; index < trainTableRecords.Count; index++)
             {
-                var config = TrainTable.TrainTableRecords[index];
-
+                var config = trainTableRecords[index];
                 if (config.Active == false && Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок == false)
                     continue;
 
@@ -487,7 +511,6 @@ namespace MainExample
                 var newId = id++;
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
   
-
 
                 //выдать список привязанных табло
                 byte номерПути = (byte)(Program.НомераПутей.IndexOf(record.НомерПути) + 1);
@@ -506,6 +529,7 @@ namespace MainExample
                 var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, record.Время);
                 if (!string.IsNullOrEmpty(newkey))
                 {
+                    record.Время = DateTime.ParseExact(newkey, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo());
                     SoundRecords.Add(newkey, record);
                     SoundRecordsOld.Add(newkey, record);
                 }
@@ -776,26 +800,11 @@ namespace MainExample
                 var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, Record.Время);
                 if (!string.IsNullOrEmpty(newkey))
                 {
+                   // Record.Время = DateTime.ParseExact(newkey, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo());
                     SoundRecords.Add(newkey, Record);
-                    SoundRecordsOld.Add(newkey, Record);
+                    SoundRecordsOld.Add(newkey, Record);          
                 }
 
-                //int TryCounter = 50;
-                //while (--TryCounter > 0)
-                //{
-                //    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
-                //    string[] SubKeys = Key.Split(':');
-                //    if (SubKeys[0].Length == 1)
-                //        Key = "0" + Key;
-
-                //    if (SoundRecords.ContainsKey(Key) == false)
-                //    {
-                //        SoundRecords.Add(Key, Record);
-                //        SoundRecordsOld.Add(Key, Record);
-                //        break;
-                //    }
-                //    Record.Время = Record.Время.AddSeconds(1);
-                //}
                 MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
             }
         }
@@ -895,7 +904,14 @@ namespace MainExample
                     if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm");
 
 
-                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
+                    //DEBUG-----------------------------------------
+                    if (Данные.Value.НомерПоезда == "741")
+                    {
+                        
+                    }
+                    //DEBUG-----------------------------------------
+
+                    ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),  //Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss")
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
                                                                        Данные.Value.НазваниеПоезда,

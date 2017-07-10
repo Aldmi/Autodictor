@@ -132,6 +132,7 @@
     <Compile Include="CommunicationForm.Designer.cs">
       <DependentUpon>CommunicationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Comparers\TrainTableRecordComparer.cs" />
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="Infrastructure\StructCompare.cs" />

@@ -43,9 +43,10 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-            TrainTable.ЗагрузитьСписок();                 
-        
-           // Player.PlayFile("");                          //TODO: ???? включить
+            TrainTable.ЗагрузитьСписок();
+            TrainTableOperative.ЗагрузитьСписок();
+
+            // Player.PlayFile("");                          //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
 
