@@ -6,8 +6,8 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
         #region prop
 
         public string ViewType { get; set; }
-        public int? TableSize { get; set; }         //устанавливается если  ViewSetting == Table
-        public int? FirstTableElement { get; set; }
+        public int? TableSize { get; set; }          //кол-во отображаемых элементов. устанавливается если  ViewSetting == Table
+        public int? FirstTableElement { get; set; }  //начальный элемент отображения. устанавливается если  ViewSetting == Table
 
         public string Format { get; set; }
         public XmlConditionsSetting Conditions { get; set; }
