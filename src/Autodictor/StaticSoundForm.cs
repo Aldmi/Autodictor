@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
+using MainExample.Extension;
+using MainExample.Services;
 
 
 namespace MainExample
@@ -16,13 +17,16 @@ namespace MainExample
     };
 
 
-    
+
     public partial class StaticSoundForm : Form
     {
         public static StaticSoundForm thisForm = null;
 
         public static List<StaticSoundRecord> StaticSoundRecords = new List<StaticSoundRecord>();
         private static int ID = 0;
+
+        public IDisposable DispouseQueueChangeRx { get; set; }
+
 
 
 
@@ -36,6 +40,26 @@ namespace MainExample
             InitializeComponent();
             ЗагрузитьСписок();
             ОбновитьДанныеВСписке();
+
+
+            btn_Пуск.Enabled = (MainWindowForm.QueueSound.Count == 0);
+            DispouseQueueChangeRx = MainWindowForm.QueueSound.QueueChangeRx.Subscribe(status =>
+            {
+                btn_Пуск.InvokeIfNeeded(() =>
+                    {
+                        switch (status)
+                        {
+                            case StatusPlaying.Start:
+                                btn_Пуск.Enabled = false;
+                                break;
+
+                            case StatusPlaying.Stop:
+                                btn_Пуск.Enabled = true;
+                                break;
+                        }
+                    }
+                );
+            });
         }
 
 
@@ -191,23 +215,30 @@ namespace MainExample
             }
         }
 
+
+
+        /// <summary>
+        /// Воспроизвести статическое сообщение
+        /// </summary>
         private void button6_Click(object sender, EventArgs e)
         {
             if (((Button)sender).Text == "Стоп")
             {
-                button6.Text = "Пуск";
+                btn_Пуск.Text = "Пуск";
                 Player.PlayFile("");
                 return;
             }
 
             ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
-
             foreach (int item in sic)
             {
                 Player.PlayFile(this.textBox_Path.Text);
                 return;
             }
         }
+
+
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -218,12 +249,12 @@ namespace MainExample
                 int CurrentPosition = Player.GetCurrentPosition();
                 float Duration = Player.GetDuration();
 
-                button6.Text = "Стоп";
+                btn_Пуск.Text = "Стоп";
                 Player_Label.Text = (CurrentPosition / 60).ToString() + ":" + (CurrentPosition % 60).ToString("00") + " / " + (Duration / 60).ToString("0") + ":" + (Duration % 60).ToString("00");
             }
             else
             {
-                button6.Text = "Пуск";
+                btn_Пуск.Text = "Пуск";
 
                 if ((status == SoundFileStatus.Paused) || (status == SoundFileStatus.Stop))
                 {
@@ -281,6 +312,8 @@ namespace MainExample
 
         private void StaticSoundForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            DispouseQueueChangeRx.Dispose();
+
             if (thisForm == this)
                 thisForm = null;
         }

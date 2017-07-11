@@ -56,6 +56,8 @@ namespace MainExample.Services
         public СостояниеФормируемогоСообщенияИШаблон? CurrentTemplatePlaying { get; private set; }
 
 
+        public ВоспроизводимоеСообщение LastSoundMessagePlayed { get; private set; }       //последнее проигранное звуковое сообщение
+
         private List<ВоспроизводимоеСообщение> ElementsOnTemplatePlaying { get; set; }
         public IEnumerable<ВоспроизводимоеСообщение> GetElementsOnTemplatePlaying => ElementsOnTemplatePlaying;
 
@@ -285,7 +287,7 @@ namespace MainExample.Services
                             else
                             {
                                 Queue.Dequeue();
-                                EventEndPlayingTemplate(peekItem);  //CurrentSoundMessagePlaying
+                                EventEndPlayingTemplate(peekItem);
                                 CurrentSoundMessagePlaying = null;
                                 ElementsOnTemplatePlaying = null;
                             }
@@ -329,6 +331,11 @@ namespace MainExample.Services
         /// </summary>
         private void EventStartPlayingQueue()
         {
+            var firstElem= Queue.Peek();
+            LastSoundMessagePlayed = (firstElem.ОчередьШаблона == null || !firstElem.ОчередьШаблона.Any()) ? firstElem : firstElem.ОчередьШаблона.First(); //DEBUG
+            Debug.WriteLine($"EventStartPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG  //ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
+
+
             //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ *********************");//DEBUG
             QueueChangeRx.OnNext(StatusPlaying.Start);
         }
@@ -341,6 +348,8 @@ namespace MainExample.Services
         /// </summary>
         private void EventEndPlayingQueue()
         {
+            Debug.WriteLine($"EventEndPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG   ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
+
             //Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ *********************");//DEBUG
             QueueChangeRx.OnNext(StatusPlaying.Stop);
         }
@@ -368,6 +377,7 @@ namespace MainExample.Services
         /// </summary>
         private void EventEndPlayingSoundMessage(ВоспроизводимоеСообщение soundMessage)
         {
+            LastSoundMessagePlayed = soundMessage;
             SoundMessageChangeRx.OnNext(StatusPlaying.Stop);
 
             if (IsStaticSoundPlaying)

@@ -106,23 +106,26 @@ namespace MainExample
             }
         }
 
+
+
         private void btnВоспроизвести_Click(object sender, EventArgs e)
         {
-            foreach (var Sound in StaticSoundForm.StaticSoundRecords)
+            foreach (var sound in StaticSoundForm.StaticSoundRecords)
             {
-                if (Sound.Name == cB_Messages.Text)
+                if (sound.Name == cB_Messages.Text)
                 {
                     var воспроизводимоеСообщение = new ВоспроизводимоеСообщение
                     {
                         ParentId = null,
-                        RootId = Sound.ID,
-                        ИмяВоспроизводимогоФайла = Sound.Name,
+                        RootId = sound.ID,
+                        ИмяВоспроизводимогоФайла = sound.Name,
                         Приоритет = Priority.Low,
                         Язык = NotificationLanguage.Ru,
-                        ОчередьШаблона = null
+                        ОчередьШаблона = null,
+                        //НастройкиВыводаЗвука = new НастройкиВыводаЗвука { ТолькоПоВнутреннемуКаналу = true }
                     };
                     MainWindowForm.QueueSound.AddItem(воспроизводимоеСообщение);
-                    Program.ЗаписьЛога("Действие оператора", "ВоспроизведениеАвтомат звукового сообщения: " + Sound.Name);
+                    Program.ЗаписьЛога("Действие оператора", "ВоспроизведениеАвтомат звукового сообщения: " + sound.Name);
                     break;
                 }
             }

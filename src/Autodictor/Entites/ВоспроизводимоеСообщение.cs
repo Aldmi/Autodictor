@@ -11,11 +11,23 @@ namespace MainExample.Entites
     }
 
 
+    /// <summary>
+    /// настройки каналов по выводу звука.
+    /// </summary>
+    public class НастройкиВыводаЗвука
+    {
+        public bool ТолькоПоВнутреннемуКаналу { get; set; }
+
+    }
+
+
     public class ВоспроизводимоеСообщение
     {
         public Priority Приоритет { get; set; }
 
         public ТипСообщения ТипСообщения { get; set; }                          //Определяет в каком списке искать сообщение.
+
+        public НастройкиВыводаЗвука НастройкиВыводаЗвука { get; set; }         
 
         public int RootId { get; set; }                                         //Id корня, стастика- СтатическоеСообщение.Id, динамика- SoundRecord.Id
         public int? ParentId { get; set; }                                      //Id родителя, стастика- null, динамика- СостояниеФормируемогоСообщенияИШаблон.Id

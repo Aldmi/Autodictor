@@ -47,7 +47,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.btnСохранить = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btn_Пуск = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Player_Label = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -251,24 +251,24 @@
             this.btnСохранить.UseVisualStyleBackColor = true;
             this.btnСохранить.Click += new System.EventHandler(this.btnСохранить_Click);
             // 
-            // button6
+            // btn_Пуск
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(8, 25);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(117, 32);
-            this.button6.TabIndex = 23;
-            this.button6.Text = "Пуск";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.btn_Пуск.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_Пуск.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Пуск.Location = new System.Drawing.Point(8, 25);
+            this.btn_Пуск.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_Пуск.Name = "btn_Пуск";
+            this.btn_Пуск.Size = new System.Drawing.Size(117, 32);
+            this.btn_Пуск.TabIndex = 23;
+            this.btn_Пуск.Text = "Пуск";
+            this.btn_Пуск.UseVisualStyleBackColor = true;
+            this.btn_Пуск.Click += new System.EventHandler(this.button6_Click);
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.Player_Label);
-            this.groupBox1.Controls.Add(this.button6);
+            this.groupBox1.Controls.Add(this.btn_Пуск);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(1225, 585);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -364,7 +364,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btnСохранить;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btn_Пуск;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label Player_Label;
         private System.Windows.Forms.Timer timer1;
