@@ -2213,6 +2213,7 @@ namespace MainExample
                                     listView.Items[item].SubItems[0].Text = key;
                                 }
 
+
                               //Изменение названия поезда
                                 switch (listView.Name)
                                 {
@@ -2328,6 +2329,13 @@ namespace MainExample
                                                 listView.Items[item].SubItems[3].Text = actStr;
                                             break;
                                     }
+                                }
+
+                                //Смена Режима Работы.
+                                if (старыеДанные.Автомат != данные.Автомат)
+                                {
+                                    MainForm.РежимРаботы.BackColor = Color.LightGray;
+                                    MainForm.РежимРаботы.Text = @"Пользовательский";
                                 }
 
 

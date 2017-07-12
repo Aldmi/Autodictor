@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml.Linq;
-using ConsoleApplication_test.Entitys;
 using Domain.Abstract;
+using Domain.Entitys;
 
 namespace Domain.Concrete
 {

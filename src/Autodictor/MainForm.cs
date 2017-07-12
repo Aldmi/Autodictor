@@ -32,6 +32,7 @@ namespace MainExample
         static public ToolStripButton Остановить = null;
         static public ToolStripButton Включить = null;
         static public ToolStripButton ОбновитьСписок = null;
+        static public ToolStripButton РежимРаботы = null;
 
 
 
@@ -60,6 +61,7 @@ namespace MainExample
             Остановить = tSBОстановить;
             Включить = tSBВключить;
             ОбновитьСписок = tSBОбновитьСписок;
+            РежимРаботы = tSBРежимРаботы;
 
             Включить.BackColor = Color.Orange;
         }
@@ -485,6 +487,68 @@ namespace MainExample
         {
             TechnicalMessageForm techForm = new TechnicalMessageForm();
             techForm.ShowDialog();
+        }
+
+
+        /// <summary>
+        /// "Пользовательский" -> "Автомат" -> "Ручной" -> "Пользовательский"
+        /// </summary>
+
+        private void tSBРежимРаботы_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(@"Сменить режим работы?", @"Смена режима работы", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
+
+            switch (РежимРаботы.Text)
+            {
+                case @"Пользовательский":
+                    if (MainWindowForm.SoundRecords != null && MainWindowForm.SoundRecords.Any())
+                    {
+                        for (int i = 0; i < MainWindowForm.SoundRecords.Count; i++)
+                        {
+                            var key = MainWindowForm.SoundRecords.Keys.ElementAt(i);
+                            var value = MainWindowForm.SoundRecords.Values.ElementAt(i);
+                            value.Автомат = true;
+                            MainWindowForm.SoundRecords[key] = value;
+                        }
+                    }
+
+                    РежимРаботы.Text = @"Автомат";
+                    РежимРаботы.BackColor = Color.CornflowerBlue;
+                    break;
+
+
+                case @"Автомат":
+                    if (MainWindowForm.SoundRecords != null && MainWindowForm.SoundRecords.Any())
+                    {
+                        for (int i = 0; i < MainWindowForm.SoundRecords.Count; i++)
+                        {
+                            var key = MainWindowForm.SoundRecords.Keys.ElementAt(i);
+                            var value = MainWindowForm.SoundRecords.Values.ElementAt(i);
+                            value.Автомат = false;
+                            MainWindowForm.SoundRecords[key] = value;
+                        }
+                    }
+                    РежимРаботы.Text = @"Ручной";
+                    РежимРаботы.BackColor = Color.Coral;
+                    break;
+
+
+                case @"Ручной":
+                    if (MainWindowForm.SoundRecords != null && MainWindowForm.SoundRecords.Any())
+                    {
+                        for (int i = 0; i < MainWindowForm.SoundRecords.Count; i++)
+                        {
+                            var key = MainWindowForm.SoundRecords.Keys.ElementAt(i);
+                            var value = MainWindowForm.SoundRecords.Values.ElementAt(i);
+                            value.Автомат = true;
+                            MainWindowForm.SoundRecords[key] = value;
+                        }
+                    }
+                    РежимРаботы.Text = @"Автомат";
+                    РежимРаботы.BackColor = Color.Coral;
+                    break;
+            }
         }
     }
 }

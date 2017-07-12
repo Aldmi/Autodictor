@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using ConsoleApplication_test.Entitys;
 using Domain.Abstract;
+using Domain.Entitys;
 
 namespace Domain.Concrete.Generic
 {

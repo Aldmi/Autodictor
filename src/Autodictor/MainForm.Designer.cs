@@ -82,6 +82,8 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_ТехническоеСообщение = new System.Windows.Forms.ToolStripButton();
             this.timer_Clock = new System.Windows.Forms.Timer(this.components);
+            this.tSBРежимРаботы = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +102,7 @@
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.mainMenu.Size = new System.Drawing.Size(1391, 24);
+            this.mainMenu.Size = new System.Drawing.Size(1524, 24);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -332,11 +334,13 @@
             this.toolStripButton1,
             this.toolStripSeparator2,
             this.toolClockLabel,
+            this.toolStripSeparator4,
+            this.tsb_ТехническоеСообщение,
             this.toolStripSeparator3,
-            this.tsb_ТехническоеСообщение});
+            this.tSBРежимРаботы});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
-            this.tSCommands.Size = new System.Drawing.Size(1391, 38);
+            this.tSCommands.Size = new System.Drawing.Size(1524, 38);
             this.tSCommands.TabIndex = 3;
             this.tSCommands.Text = "toolStrip1";
             // 
@@ -554,11 +558,28 @@
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
             // 
+            // tSBРежимРаботы
+            // 
+            this.tSBРежимРаботы.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tSBРежимРаботы.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tSBРежимРаботы.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold);
+            this.tSBРежимРаботы.Image = ((System.Drawing.Image)(resources.GetObject("tSBРежимРаботы.Image")));
+            this.tSBРежимРаботы.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBРежимРаботы.Name = "tSBРежимРаботы";
+            this.tSBРежимРаботы.Size = new System.Drawing.Size(135, 35);
+            this.tSBРежимРаботы.Text = "Пользовательский";
+            this.tSBРежимРаботы.Click += new System.EventHandler(this.tSBРежимРаботы_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 38);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1391, 730);
+            this.ClientSize = new System.Drawing.Size(1524, 730);
             this.Controls.Add(this.tSCommands);
             this.Controls.Add(this.mainMenu);
             this.DoubleBuffered = true;
@@ -633,6 +654,8 @@
         public System.Windows.Forms.ToolStripButton tSBОстановить;
         private System.Windows.Forms.ToolStripButton tsb_ТехническоеСообщение;
         private System.Windows.Forms.ToolStripMenuItem оперативноеРасписаниеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton tSBРежимРаботы;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

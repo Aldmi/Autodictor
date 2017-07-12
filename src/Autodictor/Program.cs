@@ -6,9 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
-using ConsoleApplication_test.Entitys;
 using Domain.Abstract;
 using Domain.Concrete;
+using Domain.Entitys;
 using Library.Logs;
 using Library.Xml;
 
@@ -29,8 +29,6 @@ namespace MainExample
         public static List<string> НомераПоездов = new List<string>();
 
         public static string ИнфСтрокаНаТабло = "";
-       // public static Dictionary<string, string> Станции = new Dictionary<string, string>();  //Key - название на RU, Value - название на ENG
-
         public static IRepository<Direction> DirectionRepository; //хранилище XML
 
         public static byte ПолучитьНомерПути(string НомерПути)

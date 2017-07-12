@@ -1,4 +1,4 @@
-﻿namespace ConsoleApplication_test.Entitys
+﻿namespace Domain.Entitys
 {
     public abstract class EntityBase
     {

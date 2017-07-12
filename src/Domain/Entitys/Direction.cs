@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ConsoleApplication_test.Entitys
+namespace Domain.Entitys
 {
     public class Direction : EntityBase
     {

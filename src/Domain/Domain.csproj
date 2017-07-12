@@ -45,6 +45,7 @@
     <Compile Include="Concrete\RepositoryXmlDirection.cs" />
     <Compile Include="Entitys\Direction.cs" />
     <Compile Include="Entitys\EntityBase.cs" />
+    <Compile Include="Entitys\Pathways.cs" />
     <Compile Include="Entitys\Station.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
