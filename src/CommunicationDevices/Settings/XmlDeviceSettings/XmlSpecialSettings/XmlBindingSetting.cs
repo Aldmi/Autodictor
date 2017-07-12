@@ -42,6 +42,11 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                     SourceLoad = SourceLoad.MainWindow;
                 }
                 else
+                if (binding.ToLower().Contains("окнорасписанияоперативное"))
+                {
+                    SourceLoad = SourceLoad.SheduleOperative;
+                }
+                else
                 if (binding.ToLower().Contains("окнорасписания"))
                 {
                     SourceLoad = SourceLoad.Shedule;

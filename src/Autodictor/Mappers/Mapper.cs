@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using CommunicationDevices.DataProviders;
+
+
 
 namespace MainExample.Mappers
 {
@@ -62,6 +65,7 @@ namespace MainExample.Mappers
 
             return resultList;
         }
+
 
 
 
@@ -265,6 +269,111 @@ namespace MainExample.Mappers
 
 
 
+        public static UniversalInputType MapTrainTableRecord2UniversalInputType(TrainTableRecord t)
+        {
+            Func<string, string, DateTime> timePars = (arrival, depart) =>
+            {
+                DateTime outData;
+                if (DateTime.TryParse(arrival, out outData))
+                    return outData;
+
+                if (DateTime.TryParse(depart, out outData))
+                    return outData;
+
+                return DateTime.MinValue;
+            };
+
+            Func<string, string, string> eventPars = (arrivalTime, departTime) =>
+            {
+                if ((!string.IsNullOrEmpty(arrivalTime)) && (!string.IsNullOrEmpty(departTime)))
+                {
+                    return "СТОЯНКА";
+                }
+
+                if (!string.IsNullOrEmpty(arrivalTime))
+                {
+                    return "ПРИБ.";
+                }
+
+                if (!string.IsNullOrEmpty(departTime))
+                {
+                    return "ОТПР.";
+                }
+
+                return String.Empty;
+            };
+
+
+            Func<string, string, Dictionary<string, DateTime>> transitTimePars = (arrivalTime, departTime) =>
+            {
+                var transitTime = new Dictionary<string, DateTime>();
+                if ((!string.IsNullOrEmpty(arrivalTime)) && (!string.IsNullOrEmpty(departTime)))
+                {
+                    transitTime["приб"] = timePars(arrivalTime, String.Empty);
+                    transitTime["отпр"] = timePars(departTime, String.Empty);
+                }
+
+                return transitTime;
+            };
+
+
+            Func<string, string, KeyValuePair<string, string>> stationsPars = (station, direction) =>
+            {
+                if (string.IsNullOrEmpty(direction) || string.IsNullOrEmpty(station))
+                {
+                    return new KeyValuePair<string, string>();
+                }
+
+                var stationDir = Program.ПолучитьСтанциюНаправления(direction, station);
+                if (stationDir == null)
+                    return new KeyValuePair<string, string>();
+
+                return new KeyValuePair<string, string>(stationDir.NameRu, stationDir.NameEng);
+            };
+
+
+
+            TimeSpan stopTime;
+            UniversalInputType uit = new UniversalInputType
+            {
+                IsActive = t.Active,
+                Event = eventPars(t.ArrivalTime, t.DepartureTime),
+                TypeTrain = (t.ТипПоезда == ТипПоезда.Пассажирский) ? TypeTrain.Passenger :
+                                            (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburban :
+                                            (t.ТипПоезда == ТипПоезда.Фирменный) ? TypeTrain.Corporate :
+                                            (t.ТипПоезда == ТипПоезда.Скорый) ? TypeTrain.Express :
+                                            (t.ТипПоезда == ТипПоезда.Скоростной) ? TypeTrain.HighSpeed :
+                                            (t.ТипПоезда == ТипПоезда.Ласточка) ? TypeTrain.Swallow :
+                                            (t.ТипПоезда == ТипПоезда.РЭКС) ? TypeTrain.Rex : TypeTrain.None,
+                Note = t.Примечание, //C остановками: ...
+                PathNumber = ПолучитьНомерПутиПоДнямНедели(t),
+                VagonDirection = (VagonDirection)t.TrainPathDirection,
+                NumberOfTrain = t.Num,
+                Stations = t.Name,
+                StationDeparture = stationsPars(t.StationDepart, t.Direction),
+                StationArrival = stationsPars(t.StationArrival, t.Direction),
+                Time = timePars(t.ArrivalTime, t.DepartureTime),
+                TransitTime = transitTimePars(t.ArrivalTime, t.DepartureTime),
+                DelayTime = null,
+                StopTime = (TimeSpan?)(TimeSpan.TryParse(t.StopTime, out stopTime) ? (ValueType)stopTime : null),
+                ExpectedTime = timePars(t.ArrivalTime, t.DepartureTime),
+                DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания(),
+                DaysFollowingAlias = t.DaysAlias,
+                Addition = t.Addition,
+                Command = Command.None,
+                EmergencySituation = 0x00
+            };
+
+
+
+
+
+            return uit;
+        }
+
+
+
+
         public static string ПолучитьНомерПутиПоДнямНедели(TrainTableRecord record)
         {
             if (!record.PathWeekDayes)
@@ -298,6 +407,5 @@ namespace MainExample.Mappers
 
             return String.Empty;
         }
-
     }
 }

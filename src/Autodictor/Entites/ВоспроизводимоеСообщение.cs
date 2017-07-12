@@ -17,7 +17,6 @@ namespace MainExample.Entites
     public class НастройкиВыводаЗвука
     {
         public bool ТолькоПоВнутреннемуКаналу { get; set; }
-
     }
 
 

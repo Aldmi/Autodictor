@@ -8,7 +8,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
     {
         None,
         MainWindow,                              // Из главного окна (расписание на сутки)
-        Shedule                                  // Из окна Распсиание
+        Shedule,                                 // Из окна Расписание
+        SheduleOperative                         // Из окна Оперативное Расписание
     }
 
     public interface IBinding2GeneralSchedule
