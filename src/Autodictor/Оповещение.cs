@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Windows.Forms;
-
-
-
+using Domain.Entitys;
 
 
 namespace MainExample
@@ -13,20 +12,21 @@ namespace MainExample
     {
         public TrainTableRecord РасписаниеПоезда;
         private string[] СтанцииВыбранногоНаправления  { get; set; } = new string[0];
-
-
+        public List<Pathways> НомераПутей { get; set; }    
 
 
 
         public Оповещение(TrainTableRecord расписаниеПоезда)
         {
             this.РасписаниеПоезда = расписаниеПоезда;
+            НомераПутей = Program.PathWaysRepository.List().ToList();
 
             InitializeComponent();
 
+
             cBПутьПоУмолчанию.Items.Add("Не определен");
-            foreach (var Путь in Program.НомераПутей)
-                cBПутьПоУмолчанию.Items.Add(Путь);
+            foreach (var путь in НомераПутей.Select(p => p.Name))
+                cBПутьПоУмолчанию.Items.Add(путь);
        
             cBПутьПоУмолчанию.Text = this.РасписаниеПоезда.TrainPathNumber[WeekDays.Постоянно];
             InitializePathValues(расписаниеПоезда);
@@ -555,7 +555,7 @@ namespace MainExample
             }
 
             DataGridViewComboBoxColumn cmb = (DataGridViewComboBoxColumn)dgv_ПутиПоДнямНедели.Columns[1];
-            foreach (var путь in Program.НомераПутей)
+            foreach (var путь in НомераПутей.Select(p => p.Name))
             {
                 cmb.Items.Add(путь);
             }

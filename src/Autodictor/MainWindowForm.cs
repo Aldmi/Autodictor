@@ -12,6 +12,7 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 using CommunicationDevices.Model;
+using Domain.Entitys;
 using MainExample.Comparers;
 using MainExample.Entites;
 using MainExample.Extension;
@@ -160,7 +161,7 @@ namespace MainExample
 
         private ToolStripMenuItem[] СписокПолейПути;
 
-
+        private static List<Pathways> НомераПутей;
 
 
 
@@ -189,6 +190,8 @@ namespace MainExample
 
 
             СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь14ToolStripMenuItem, путь15ToolStripMenuItem, путь16ToolStripMenuItem, путь17ToolStripMenuItem, путь18ToolStripMenuItem, путь19ToolStripMenuItem, путь20ToolStripMenuItem, путь21ToolStripMenuItem, путь22ToolStripMenuItem, путь23ToolStripMenuItem, путь24ToolStripMenuItem, путь25ToolStripMenuItem };
+
+            НомераПутей = Program.PathWaysRepository.List().ToList();
 
 
             if (CisClient.IsConnect)
@@ -439,15 +442,17 @@ namespace MainExample
             for (var i = 0; i < SoundRecords.Count; i++)
             {
                 var данные = SoundRecords.ElementAt(i).Value;
-                var номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
-                if (номерПути > 0)
-                {
-                    var key = SoundRecords.Keys.ElementAt(i);
-                    данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                    данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-                    SoundRecords[key] = данные;
-                    SendOnPathTable(SoundRecords[key]);
-                }
+
+                //TODO: ЗАМЕНИТЬ КОД
+                //var номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
+                //if (номерПути > 0)
+                //{
+                //    var key = SoundRecords.Keys.ElementAt(i);
+                //    данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                //    данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+                //    SoundRecords[key] = данные;
+                //    SendOnPathTable(SoundRecords[key]);
+                //}
             }
         }
 
@@ -507,12 +512,12 @@ namespace MainExample
 
                 var newId = id++;
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
-  
 
+                //TODO: ЗАМЕНИТЬ КОД
                 //выдать список привязанных табло
-                byte номерПути = (byte)(Program.НомераПутей.IndexOf(record.НомерПути) + 1);
-                record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(номерПути)).Where(str => str != null).ToArray() : null;
-                record.СостояниеОтображения = TableRecordStatus.Выключена;
+                //byte номерПути = (byte)(Program.НомераПутей.IndexOf(record.НомерПути) + 1);
+                //record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(номерПути)).Where(str => str != null).ToArray() : null;
+                //record.СостояниеОтображения = TableRecordStatus.Выключена;
 
 
                 //СБРОСИТЬ НОМЕР ПУТИ, НА ВРЕМЯ МЕНЬШЕ ТЕКУЩЕГО
@@ -1654,8 +1659,10 @@ namespace MainExample
                     if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                     {
                         //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                        byte номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
-                        byte номерПутиOld = Program.ПолучитьНомерПути(данныеOld.НомерПути);
+                        var index = НомераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути);
+                        var indexOld = НомераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути);
+                        var номерПути = (index > 0) ? index : 0;
+                        var номерПутиOld = (indexOld > 0) ? indexOld : 0;
 
                         if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
                         {
@@ -2458,11 +2465,38 @@ namespace MainExample
                                         КлючВыбранныйМеню = Key;
 
 
+
+                                        //for (int i = 0; i < СписокПолейПути.Length - 1; i++)
+                                        //{
+                                        //    if (i < Program.НомераПутей.Count)
+                                        //    {
+                                        //        СписокПолейПути[i + 1].Text = Program.НомераПутей[i];
+                                        //        СписокПолейПути[i + 1].Visible = true;
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        СписокПолейПути[i + 1].Visible = false;
+                                        //    }
+                                        //}
+
+                                        //foreach (ToolStripMenuItem t in СписокПолейПути)
+                                        //    t.Checked = false;
+
+                                        //int НомерПути = Program.НомераПутей.IndexOf(Данные.НомерПути) + 1;
+                                        //if (НомерПути >= 1 && НомерПути < СписокПолейПути.Length)
+                                        //    СписокПолейПути[НомерПути].Checked = true;
+                                        //else
+                                        //    СписокПолейПути[0].Checked = true;
+
+
+
+                                        //------------------
+                                        var paths = Program.PathWaysRepository.List().Select(p => p.Name).ToList();
                                         for (int i = 0; i < СписокПолейПути.Length - 1; i++)
                                         {
-                                            if (i < Program.НомераПутей.Count)
+                                            if (i < paths.Count)
                                             {
-                                                СписокПолейПути[i + 1].Text = Program.НомераПутей[i];
+                                                СписокПолейПути[i + 1].Text = paths[i];
                                                 СписокПолейПути[i + 1].Visible = true;
                                             }
                                             else
@@ -2474,11 +2508,12 @@ namespace MainExample
                                         foreach (ToolStripMenuItem t in СписокПолейПути)
                                             t.Checked = false;
 
-                                        int НомерПути = Program.НомераПутей.IndexOf(Данные.НомерПути) + 1;
-                                        if (НомерПути >= 1 && НомерПути < СписокПолейПути.Length)
-                                            СписокПолейПути[НомерПути].Checked = true;
+                                        int номерПути = paths.IndexOf(Данные.НомерПути) + 1;
+                                        if (номерПути >= 1 && номерПути < СписокПолейПути.Length)
+                                            СписокПолейПути[номерПути].Checked = true;
                                         else
                                             СписокПолейПути[0].Checked = true;
+                                        //------------------
 
 
                                         ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
@@ -2571,10 +2606,6 @@ namespace MainExample
             string Text;
             string logMessage = "";
 
-            string[] НазваниеФайловПутей = new string[] { "",   "На 1ый путь", "На 2ой путь", "На 3ий путь", "На 4ый путь", "На 5ый путь", "На 6ой путь", "На 7ой путь", "На 8ой путь", "На 9ый путь", "На 10ый путь", "На 11ый путь", "На 12ый путь", "На 13ый путь", "На 14ый путь", "На 15ый путь", "На 16ый путь", "На 17ый путь", "На 18ый путь", "На 19ый путь", "На 20ый путь", "На 21ый путь", "На 22ой путь", "На 23ий путь", "На 24ый путь", "На 25ый путь",
-                                                                "На 1ом пути", "На 2ом пути", "На 3ем пути", "На 4ом пути", "На 5ом пути", "На 6ом пути", "На 7ом пути", "На 8ом пути", "На 9ом пути", "На 10ом пути", "На 11ом пути", "На 12ом пути", "На 13ом пути", "На 14ом пути", "На 15ом пути", "На 16ом пути", "На 17ом пути", "На 18ом пути", "На 19ом пути", "На 20ом пути", "На 21ом пути", "На 22ом пути", "На 23им пути", "На 24ом пути", "На 25ом пути",
-                                                                "С 1ого пути", "С 2ого пути", "С 3его пути", "С 4ого пути", "С 5ого пути", "С 6ого пути", "С 7ого пути", "С 8ого пути", "С 9ого пути", "С 10ого пути", "С 11ого пути", "С 12ого пути", "С 13ого пути", "С 14ого пути", "С 15ого пути", "С 16ого пути", "С 17ого пути", "С 18ого пути", "С 19ого пути", "С 20ого пути", "С 21ого пути", "С 22ого пути", "С 23его пути", "С 24ого пути", "С 25ого пути" };
-
             string[] ФайлыМинут = new string[] { "00 минут", "01 минута", "02 минуты", "03 минуты", "04 минуты", "05 минут", "06 минут", "07 минут", "08 минут",
                         "09 минут", "10 минут", "11 минут", "12 минут", "13 минут", "14 минут", "15 минут", "16 минут", "17 минут",
                         "18 минут", "19 минут", "20 минут", "21 минута", "22 минуты", "23 минуты", "24 минуты", "25 минут", "26 минут",
@@ -2614,30 +2645,50 @@ namespace MainExample
             {
                 foreach (string шаблон in элементыШаблона)
                 {
-                    int ВидНомерацииПути = 0;
+                    string текстПодстановки = String.Empty;
                     switch (шаблон)
                     {
                         case "НА НОМЕР ПУТЬ":
                         case "НА НОМЕРом ПУТИ":
                         case "С НОМЕРого ПУТИ":
-                            if (шаблон == "НА НОМЕРом ПУТИ") ВидНомерацииПути = 1;
-                            if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
-                            if (Program.НомераПутей.Contains(Record.НомерПути))
+                            var путь = НомераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
+                            if (путь == null)
+                                break;
+                            if (шаблон == "НА НОМЕР ПУТЬ") текстПодстановки = путь.НаНомерПуть;
+                            if (шаблон == "НА НОМЕРом ПУТИ") текстПодстановки = путь.НаНомерОмПути;
+                            if (шаблон == "С НОМЕРого ПУТИ") текстПодстановки = путь.СНомерОгоПути;
+
+                            Text = текстПодстановки;
+                            logMessage += Text + " ";
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(Record.НомерПути) + 1 + ВидНомерацииПути * 25];
-                                logMessage += Text + " ";
-                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
-                                {
-                                    ИмяВоспроизводимогоФайла = Text,
-                                    ТипСообщения = типСообщения,
-                                    Язык = язык,
-                                    ParentId = формируемоеСообщение.Id,
-                                    RootId = формируемоеСообщение.SoundRecordId,
-                                    Приоритет = формируемоеСообщение.Приоритет
-                                });
-                            }
+                                ИмяВоспроизводимогоФайла = Text,
+                                ТипСообщения = типСообщения,
+                                Язык = язык,
+                                ParentId = формируемоеСообщение.Id,
+                                RootId = формируемоеСообщение.SoundRecordId,
+                                Приоритет = формируемоеСообщение.Приоритет
+                            });                 
                             break;
 
+
+                        case "ПУТЬ ДОПОЛНЕНИЕ":
+                            путь = НомераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
+                            if (путь?.Addition == null)
+                                break;
+
+                            Text = путь.Addition;
+                            logMessage += Text + " ";
+                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                            {
+                                ИмяВоспроизводимогоФайла = Text,
+                                ТипСообщения = типСообщения,
+                                Язык = язык,
+                                ParentId = формируемоеСообщение.Id,
+                                RootId = формируемоеСообщение.SoundRecordId,
+                                Приоритет = формируемоеСообщение.Приоритет
+                            });
+                            break;
 
                         case "СТ.ОТПРАВЛЕНИЯ":
                             Text = Record.СтанцияОтправления;
@@ -3151,21 +3202,22 @@ namespace MainExample
             {
                 if (SoundRecords.Keys.Contains(КлючВыбранныйМеню) == true)
                 {
-                    SoundRecord Данные = SoundRecords[КлючВыбранныйМеню];
-                    SoundRecord НеИзмененныеДанные = Данные;
+                    SoundRecord данные = SoundRecords[КлючВыбранныйМеню];
+                    var paths = Program.PathWaysRepository.List().Select(p => p.Name).ToList();
 
                     for (int i = 0; i < СписокПолейПути.Length; i++)
                         if (СписокПолейПути[i].Name == tsmi.Name)
                         {
-                            string СтарыйНомерПути = Данные.НомерПути;
-                            Данные.НомерПути = i == 0 ? "" : Program.НомераПутей[i - 1];
-                            if (СтарыйНомерПути != Данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + Данные.НомерПути + "; ");
+                            string СтарыйНомерПути = данные.НомерПути;
+                            данные.НомерПути = i == 0 ? "" : paths[i - 1];
+                            if (СтарыйНомерПути != данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + данные.НомерПоезда + " " + данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + данные.НомерПути + "; ");
 
-                            Данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-                            byte номерПути = Program.ПолучитьНомерПути(Данные.НомерПути);
-                            Данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
+                            данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+                            //TODO: ЗАМЕНИТЬ КОД
+                            //byte номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
+                            //данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
 
-                            SoundRecords[КлючВыбранныйМеню] = Данные;
+                            SoundRecords[КлючВыбранныйМеню] = данные;
                             return;
                         }
 
@@ -3176,10 +3228,10 @@ namespace MainExample
                         for (int i = 0; i < СтроковыйСписокНумерацииВагонов.Length; i++)
                             if (СтроковыйСписокНумерацииВагонов[i] == tsmi.Name)
                             {
-                                byte СтараяНумерацияПоезда = Данные.НумерацияПоезда;
-                                Данные.НумерацияПоезда = (byte)i;
-                                if (СтараяНумерацияПоезда != Данные.НумерацияПоезда) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Нум.пути: " + СтараяНумерацияПоезда.ToString() + " -> " + Данные.НумерацияПоезда.ToString() + "; ");
-                                SoundRecords[КлючВыбранныйМеню] = Данные;
+                                byte СтараяНумерацияПоезда = данные.НумерацияПоезда;
+                                данные.НумерацияПоезда = (byte)i;
+                                if (СтараяНумерацияПоезда != данные.НумерацияПоезда) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + данные.НомерПоезда + " " + данные.НазваниеПоезда + ": " + "Нум.пути: " + СтараяНумерацияПоезда.ToString() + " -> " + данные.НумерацияПоезда.ToString() + "; ");
+                                SoundRecords[КлючВыбранныйМеню] = данные;
                                 return;
                             }
 
@@ -3190,10 +3242,10 @@ namespace MainExample
                         for (int i = 0; i < СтроковыйСписокКоличестваПовторов.Length; i++)
                             if (СтроковыйСписокКоличестваПовторов[i] == tsmi.Name)
                             {
-                                byte СтароеКоличествоПовторений = Данные.КоличествоПовторений;
-                                Данные.КоличествоПовторений = (byte)(i + 1);
-                                if (СтароеКоличествоПовторений != Данные.КоличествоПовторений) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + Данные.НомерПоезда + " " + Данные.НазваниеПоезда + ": " + "Кол.повт.: " + СтароеКоличествоПовторений.ToString() + " -> " + Данные.КоличествоПовторений.ToString() + "; ");
-                                SoundRecords[КлючВыбранныйМеню] = Данные;
+                                byte СтароеКоличествоПовторений = данные.КоличествоПовторений;
+                                данные.КоличествоПовторений = (byte)(i + 1);
+                                if (СтароеКоличествоПовторений != данные.КоличествоПовторений) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + данные.НомерПоезда + " " + данные.НазваниеПоезда + ": " + "Кол.повт.: " + СтароеКоличествоПовторений.ToString() + " -> " + данные.КоличествоПовторений.ToString() + "; ");
+                                SoundRecords[КлючВыбранныйМеню] = данные;
                                 return;
                             }
 
@@ -3201,12 +3253,12 @@ namespace MainExample
                     if (шаблоныОповещенияToolStripMenuItem1.DropDownItems.Contains(tsmi))
                     {
                         int ИндексШаблона = шаблоныОповещенияToolStripMenuItem1.DropDownItems.IndexOf(tsmi);
-                        if (ИндексШаблона >= 0 && ИндексШаблона < 10 && ИндексШаблона < Данные.СписокФормируемыхСообщений.Count)
+                        if (ИндексШаблона >= 0 && ИндексШаблона < 10 && ИндексШаблона < данные.СписокФормируемыхСообщений.Count)
                         {
-                            var ФормируемоеСообщение = Данные.СписокФормируемыхСообщений[ИндексШаблона];
+                            var ФормируемоеСообщение = данные.СписокФормируемыхСообщений[ИндексШаблона];
                             ФормируемоеСообщение.Активность = !tsmi.Checked;
-                            Данные.СписокФормируемыхСообщений[ИндексШаблона] = ФормируемоеСообщение;
-                            SoundRecords[КлючВыбранныйМеню] = Данные;
+                            данные.СписокФормируемыхСообщений[ИндексШаблона] = ФормируемоеСообщение;
+                            SoundRecords[КлючВыбранныйМеню] = данные;
                             return;
                         }
                     }
@@ -3217,8 +3269,8 @@ namespace MainExample
                         int индексВарианта = Табло_отображениеПутиToolStripMenuItem.DropDownItems.IndexOf(tsmi);
                         if (индексВарианта >= 0)
                         {
-                            Данные.РазрешениеНаОтображениеПути = (PathPermissionType)индексВарианта;
-                            SoundRecords[КлючВыбранныйМеню] = Данные;
+                            данные.РазрешениеНаОтображениеПути = (PathPermissionType)индексВарианта;
+                            SoundRecords[КлючВыбранныйМеню] = данные;
                             return;
                         }
                     }

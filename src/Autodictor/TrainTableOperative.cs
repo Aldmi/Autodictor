@@ -224,7 +224,9 @@ namespace MainExample
                             if (Данные.TrainPathDirection > 2)
                                 Данные.TrainPathDirection = 0;
 
-                            if (Program.НомераПутей.Contains(Данные.TrainPathNumber[WeekDays.Постоянно]) == false)
+
+                            var path = Program.PathWaysRepository.List().FirstOrDefault(p=> p.Name == Данные.TrainPathNumber[WeekDays.Постоянно]);
+                            if (path == null)
                                 Данные.TrainPathNumber[WeekDays.Постоянно] = "";
 
                             DateTime НачалоДействия = new DateTime(1900, 1, 1);

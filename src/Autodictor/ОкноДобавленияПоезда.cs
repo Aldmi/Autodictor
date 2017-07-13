@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Domain.Entitys;
 
 
 namespace MainExample
@@ -16,12 +17,14 @@ namespace MainExample
         public SoundRecord Record;
         public int  RecordId { get; private set; }
         private string[] СтанцииВыбранногоНаправления { get; set; } = new string[0];
-
+        private List<Pathways> НомераПутей { get; set; }
 
 
 
         public ОкноДобавленияПоезда(int recordId)
         {
+            НомераПутей = Program.PathWaysRepository.List().ToList();
+
             InitializeComponent();
 
             RecordId = recordId;
@@ -280,23 +283,23 @@ namespace MainExample
 
             foreach (string шаблон in ЭлементыШаблона)
             {
-                int ВидНомерацииПути = 0;
+                string текстПодстановки = String.Empty;
                 switch (шаблон)
                 {
                     case "НА НОМЕР ПУТЬ":
                     case "НА НОМЕРом ПУТИ":
                     case "С НОМЕРого ПУТИ":
-                        if (шаблон == "НА НОМЕРом ПУТИ") ВидНомерацииПути = 1;
-                        if (шаблон == "С НОМЕРого ПУТИ") ВидНомерацииПути = 2;
+                        var путь = НомераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
+                        if (путь == null)
+                            break;
+                        if (шаблон == "НА НОМЕР ПУТЬ") текстПодстановки = путь.НаНомерПуть;
+                        if (шаблон == "НА НОМЕРом ПУТИ") текстПодстановки = путь.НаНомерОмПути;
+                        if (шаблон == "С НОМЕРого ПУТИ") текстПодстановки = путь.СНомерОгоПути;
 
-                        if (Program.НомераПутей.Contains(Record.НомерПути))
-                        {
-                            УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
-
-                            Text = НазваниеФайловПутей[Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1 + ВидНомерацииПути * 25];
-                            УказательВыделенныхФрагментов.Add(Text.Length);
-                            rTB_Сообщение.AppendText(Text + " ");
-                        }
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = текстПодстановки;
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
                         break;
 
                     case "СТ.ОТПРАВЛЕНИЯ":
@@ -592,8 +595,9 @@ namespace MainExample
                             Record.БитыАктивностиПолей |= 0x03;
 
                             Record.ID = ID++;
-                            byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
-                            Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
+                            //TODO: ЗАМЕНИТЬ КОД
+                            //byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
+                            //Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
                             Record.СостояниеОтображения = TableRecordStatus.Выключена;
 
                             Record.Время = (НомерСписка & 0x04) != 0x00 ? Record.ВремяПрибытия : Record.ВремяОтправления;

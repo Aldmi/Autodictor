@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Domain.Entitys;
+using MainExample.Mappers;
 
 namespace MainExample
 {
@@ -18,6 +20,7 @@ namespace MainExample
         public TrainTableRecord TableRec { get;  private set; }
         private string[] СтанцииВыбранногоНаправления { get; set; } = new string[0];
         private Расписание Расписание { get; set; }
+        public List<Pathways> НомераПутей { get; set; }
 
 
 
@@ -27,7 +30,7 @@ namespace MainExample
         public OperativeTableAddItemForm()
         {
             TableRec= new TrainTableRecord();
-
+            НомераПутей = Program.PathWaysRepository.List().ToList();
 
             InitializeComponent();
             InitializeFormDate();
@@ -149,7 +152,7 @@ namespace MainExample
             }
 
             cBПутьПоУмолчанию.Items.Add("Не определен");
-            foreach (var путь in Program.НомераПутей)
+            foreach (var путь in НомераПутей.Select(p => p.Name))
                 cBПутьПоУмолчанию.Items.Add(путь);
 
             cBПутьПоУмолчанию.Text = tableRec.TrainPathNumber[WeekDays.Постоянно];
@@ -301,7 +304,7 @@ namespace MainExample
                 {
                     if (item.Name == шаблон)
                     {
-                        var soundRec = new SoundRecord();  //TODO: получать через мапппинг
+                        var soundRec = Mapper.MapTrainTableRecord2SoundRecord(TableRec, DateTime.Now, 1);  //TODO: получать через мапппинг
                         var key = soundRec.Время.ToString();
 
                         КарточкаДвиженияПоезда карточка= new КарточкаДвиженияПоезда(soundRec, key);
@@ -413,7 +416,7 @@ namespace MainExample
             СписокСтанций списокСтанций = new СписокСтанций(СписокВыбранныхСтанций, СтанцииВыбранногоНаправления);
             if (списокСтанций.ShowDialog() == DialogResult.OK)
             {
-                System.Collections.Generic.List<string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
+                List<string> РезультирующиеСтанции = списокСтанций.ПолучитьСписокВыбранныхСтанций();
                 lB_ПоСтанциям.Items.Clear();
                 foreach (var res in РезультирующиеСтанции)
                     lB_ПоСтанциям.Items.Add(res);

@@ -512,7 +512,6 @@ namespace MainExample
                             MainWindowForm.SoundRecords[key] = value;
                         }
                     }
-
                     РежимРаботы.Text = @"Автомат";
                     РежимРаботы.BackColor = Color.CornflowerBlue;
                     break;

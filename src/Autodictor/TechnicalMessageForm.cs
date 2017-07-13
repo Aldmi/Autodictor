@@ -48,9 +48,9 @@ namespace MainExample
             foreach (var item in DynamicTechnicalSoundRecords)
                 cBШаблонОповещения.Items.Add(item.Name);
 
-
+            var paths = Program.PathWaysRepository.List().Select(p => p.Name).ToList();
             cBПутьПоУмолчанию.Items.Add("Не определен");
-            foreach (var путь in Program.НомераПутей)
+            foreach (var путь in paths)
                 cBПутьПоУмолчанию.Items.Add(путь);
             cBПутьПоУмолчанию.SelectedIndex = 0;
 

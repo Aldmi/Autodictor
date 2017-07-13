@@ -43,6 +43,7 @@
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\Generic\RepositoryEf.cs" />
     <Compile Include="Concrete\RepositoryXmlDirection.cs" />
+    <Compile Include="Concrete\RepositoryXmlPathways.cs" />
     <Compile Include="Entitys\Direction.cs" />
     <Compile Include="Entitys\EntityBase.cs" />
     <Compile Include="Entitys\Pathways.cs" />

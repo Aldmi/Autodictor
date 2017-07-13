@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Threading;
 using Domain.Abstract;
 using Domain.Concrete;
+using Domain.Concrete.Generic;
 using Domain.Entitys;
 using Library.Logs;
 using Library.Xml;
@@ -25,19 +26,21 @@ namespace MainExample
         public static List<string> TrainNumbersFolder = null;
         public static List<string> СписокСтатическихСообщений = null;
         public static List<string> СписокДинамическихСообщений = null;
-        public static List<string> НомераПутей = new List<string>();
+        //public static List<string> НомераПутей = new List<string>();
         public static List<string> НомераПоездов = new List<string>();
 
         public static string ИнфСтрокаНаТабло = "";
-        public static IRepository<Direction> DirectionRepository; //хранилище XML
+        public static IRepository<Direction> DirectionRepository; // Направления. хранилище XML
+        public static IRepository<Pathways> PathWaysRepository; //Пути. хранилище XML
 
-        public static byte ПолучитьНомерПути(string НомерПути)
-        {
-            if (НомераПутей.Contains(НомерПути))
-                return (byte)(НомераПутей.IndexOf(НомерПути) + 1);
+        //public static byte ПолучитьНомерПути(string номерПути)
+        //{
 
-            return 0;
-        }
+        //    if (НомераПутей.Contains(номерПути))
+        //        return (byte)(НомераПутей.IndexOf(номерПути) + 1);
+
+        //    return 0;
+        //}
 
         public static _Настройки Настройки;
 
@@ -188,18 +191,16 @@ namespace MainExample
         {
             try
             {
-                using (System.IO.StreamReader file = new System.IO.StreamReader("PathNames.ini"))
-                {
-                    string line;
-                    while ((line = file.ReadLine()) != null)
-                        НомераПутей.Add(line);
+                var xmlFile = XmlWorker.LoadXmlFile(string.Empty, "PathNames.xml"); //все настройки в одном файле
+                if (xmlFile == null)
+                    return;
 
-                    file.Close();
-                }
+                PathWaysRepository = new RepositoryXmlPathways(xmlFile);                 //хранилище XML
+                //var directionRep = new RepositoryEf<Pathways>(dbContext);              //хранилище БД
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                MessageBox.Show($"файл \"PathNames.xml\" не загружен. Исключение: {ex.Message}");
             }
         }
 
