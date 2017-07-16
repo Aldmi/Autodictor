@@ -10,7 +10,7 @@ namespace Domain.Concrete
     public class RepositoryXmlPathways : IRepository<Pathways>
     {
         private readonly XElement _xElement;
-
+        private IEnumerable<Pathways> Pathways { get; set; }
 
 
 
@@ -31,12 +31,18 @@ namespace Domain.Concrete
 
         public IEnumerable<Pathways> List()
         {
+          return Pathways ?? (Pathways = ParseXmlFile());     
+        }
+
+
+
+        private IEnumerable<Pathways> ParseXmlFile()
+        {
             var pathWays = new List<Pathways>();
             try
             {
                 foreach (var directXml in _xElement.Elements("Path"))
                 {
-                    var addition = directXml.Attribute("Addition");
                     var path = new Pathways
                     {
                         Id = int.Parse((string)directXml.Attribute("Id")),
@@ -50,9 +56,9 @@ namespace Domain.Concrete
                     pathWays.Add(path);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex);
+                return null;
             }
 
             return pathWays;
@@ -79,5 +85,9 @@ namespace Domain.Concrete
         {
             throw new NotImplementedException();
         }
+
+
+
+
     }
 }

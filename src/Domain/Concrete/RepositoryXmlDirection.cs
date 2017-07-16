@@ -11,6 +11,7 @@ namespace Domain.Concrete
     public class RepositoryXmlDirection : IRepository<Direction>
     {
         private readonly XElement _xElement;
+        private IEnumerable<Direction> Directions { get; set; }
 
 
 
@@ -27,8 +28,13 @@ namespace Domain.Concrete
         }
 
 
-
         public IEnumerable<Direction> List()
+        {
+            return Directions ?? (Directions = ParseXmlFile());
+        }
+
+
+        private IEnumerable<Direction> ParseXmlFile()
         {
             var directions = new List<Direction>();
             try
@@ -60,14 +66,13 @@ namespace Domain.Concrete
                     directions.Add(direct);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex);
+                return null;
             }
 
             return directions;
         }
-
 
 
         public IEnumerable<Direction> List(Expression<Func<Direction, bool>> predicate)

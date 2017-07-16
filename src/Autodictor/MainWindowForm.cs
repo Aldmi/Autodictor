@@ -161,8 +161,6 @@ namespace MainExample
 
         private ToolStripMenuItem[] СписокПолейПути;
 
-        private static List<Pathways> НомераПутей;
-
 
 
         // Конструктор
@@ -190,8 +188,6 @@ namespace MainExample
 
 
             СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь14ToolStripMenuItem, путь15ToolStripMenuItem, путь16ToolStripMenuItem, путь17ToolStripMenuItem, путь18ToolStripMenuItem, путь19ToolStripMenuItem, путь20ToolStripMenuItem, путь21ToolStripMenuItem, путь22ToolStripMenuItem, путь23ToolStripMenuItem, путь24ToolStripMenuItem, путь25ToolStripMenuItem };
-
-            НомераПутей = Program.PathWaysRepository.List().ToList();
 
 
             if (CisClient.IsConnect)
@@ -1659,8 +1655,10 @@ namespace MainExample
                     if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                     {
                         //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                        var index = НомераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути);
-                        var indexOld = НомераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути);
+
+                        var номераПутей = Program.PathWaysRepository.List().ToList();
+                        var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути);
+                        var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути);
                         var номерПути = (index > 0) ? index : 0;
                         var номерПутиOld = (indexOld > 0) ? indexOld : 0;
 
@@ -2463,34 +2461,7 @@ namespace MainExample
                                     {
                                         SoundRecord Данные = SoundRecords[Key];
                                         КлючВыбранныйМеню = Key;
-
-
-
-                                        //for (int i = 0; i < СписокПолейПути.Length - 1; i++)
-                                        //{
-                                        //    if (i < Program.НомераПутей.Count)
-                                        //    {
-                                        //        СписокПолейПути[i + 1].Text = Program.НомераПутей[i];
-                                        //        СписокПолейПути[i + 1].Visible = true;
-                                        //    }
-                                        //    else
-                                        //    {
-                                        //        СписокПолейПути[i + 1].Visible = false;
-                                        //    }
-                                        //}
-
-                                        //foreach (ToolStripMenuItem t in СписокПолейПути)
-                                        //    t.Checked = false;
-
-                                        //int НомерПути = Program.НомераПутей.IndexOf(Данные.НомерПути) + 1;
-                                        //if (НомерПути >= 1 && НомерПути < СписокПолейПути.Length)
-                                        //    СписокПолейПути[НомерПути].Checked = true;
-                                        //else
-                                        //    СписокПолейПути[0].Checked = true;
-
-
-
-                                        //------------------
+                        
                                         var paths = Program.PathWaysRepository.List().Select(p => p.Name).ToList();
                                         for (int i = 0; i < СписокПолейПути.Length - 1; i++)
                                         {
@@ -2513,8 +2484,7 @@ namespace MainExample
                                             СписокПолейПути[номерПути].Checked = true;
                                         else
                                             СписокПолейПути[0].Checked = true;
-                                        //------------------
-
+                              
 
                                         ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
                                         for (int i = 0; i < СписокНумерацииВагонов.Length; i++)
@@ -2640,18 +2610,21 @@ namespace MainExample
 
             var воспроизводимыеСообщения = new List<ВоспроизводимоеСообщение>();
 
+            var номераПутей = Program.PathWaysRepository.List().ToList();
+            var путь = номераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
+
             string[] элементыШаблона = формируемоеСообщение.Шаблон.Split('|');
             foreach (var язык in формируемоеСообщение.ЯзыкиОповещения)
             {
                 foreach (string шаблон in элементыШаблона)
                 {
                     string текстПодстановки = String.Empty;
+
                     switch (шаблон)
                     {
                         case "НА НОМЕР ПУТЬ":
                         case "НА НОМЕРом ПУТИ":
                         case "С НОМЕРого ПУТИ":
-                            var путь = НомераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
                             if (путь == null)
                                 break;
                             if (шаблон == "НА НОМЕР ПУТЬ") текстПодстановки = путь.НаНомерПуть;
@@ -2671,9 +2644,7 @@ namespace MainExample
                             });                 
                             break;
 
-
                         case "ПУТЬ ДОПОЛНЕНИЕ":
-                            путь = НомераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
                             if (путь?.Addition == null)
                                 break;
 
@@ -3362,7 +3333,6 @@ namespace MainExample
             {
                 rtb_subtaitles.Text = string.Empty;
                 currentPlayingTemplate = string.Empty;
-
             }
         }
 

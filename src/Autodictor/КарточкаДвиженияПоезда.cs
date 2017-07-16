@@ -47,14 +47,6 @@ namespace MainExample
 
             groupBox1.Enabled = (this.Record.ТипПоезда == ТипПоезда.Пригородный) || (this.Record.ТипПоезда == ТипПоезда.Ласточка) || (this.Record.ТипПоезда == ТипПоезда.РЭКС);   //разблокируем только для пригорода
 
-            //cB_НомерПути.Items.Add("Не определен");
-            //foreach (var путь in Program.НомераПутей)
-            //    cB_НомерПути.Items.Add(путь);
-
-            //cB_НомерПути.SelectedIndex = Program.НомераПутей.IndexOf(this.Record.НомерПути) + 1;
-
-
-
             cB_НомерПути.Items.Add("Не определен");
             var paths = НомераПутей.Select(p=> p.Name).ToList();
             foreach (var путь in paths)
