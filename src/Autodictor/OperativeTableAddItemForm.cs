@@ -445,23 +445,23 @@ namespace MainExample
             };
 
 
-            if (rBТранзит.Checked)
-            {
+            //if (rBТранзит.Checked)
+            //{
                 newTableRec.StationDepart = cBОткуда.Text;
                 newTableRec.StationArrival = cBКуда.Text;
-            }
-            else
-            if (rBОтправление.Checked)
-            {
-                newTableRec.StationDepart = cBОткуда.Text;
-                newTableRec.StationArrival = String.Empty;
-            }
-            else
-            if (rBПрибытие.Checked)
-            {
-                newTableRec.StationArrival = cBКуда.Text;
-                newTableRec.StationDepart = String.Empty;
-            }
+            //}
+            //else
+            //if (rBОтправление.Checked)
+            //{
+            //    newTableRec.StationArrival = cBКуда.Text;
+            //    newTableRec.StationDepart = String.Empty;
+            //}
+            //else
+            //if (rBПрибытие.Checked)
+            //{
+            //    newTableRec.StationDepart = cBОткуда.Text;
+            //    newTableRec.StationArrival = String.Empty;
+            //}
 
 
 

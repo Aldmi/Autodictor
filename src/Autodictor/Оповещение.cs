@@ -243,23 +243,23 @@ namespace MainExample
 
             РасписаниеПоезда.Direction = cBНаправ.Text;
 
-            if (rBТранзит.Checked)
-            {
+            //if (rBТранзит.Checked)
+            //{
                 РасписаниеПоезда.StationDepart = cBОткуда.Text;
                 РасписаниеПоезда.StationArrival = cBКуда.Text;
-            }
-            else
-            if (rBОтправление.Checked)
-            {
-                РасписаниеПоезда.StationDepart = cBОткуда.Text;
-                РасписаниеПоезда.StationArrival = String.Empty;
-            }
-            else
-            if (rBПрибытие.Checked)
-            {
-                РасписаниеПоезда.StationArrival = cBКуда.Text;
-                РасписаниеПоезда.StationDepart = String.Empty;
-            }
+            //}
+            //else
+            //if (rBОтправление.Checked)
+            //{
+            //    РасписаниеПоезда.StationArrival = cBКуда.Text;
+            //    РасписаниеПоезда.StationDepart = String.Empty;
+            //}
+            //else
+            //if (rBПрибытие.Checked)
+            //{
+            //    РасписаниеПоезда.StationDepart = cBОткуда.Text;
+            //    РасписаниеПоезда.StationArrival = String.Empty;
+            //}
 
 
             if (rBВремяДействияС.Checked == true)

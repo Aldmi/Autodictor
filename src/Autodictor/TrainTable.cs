@@ -404,7 +404,7 @@ namespace MainExample
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
-                        string line = TrainTableRecords[i].ID + ";" +// (i + 1).ToString() + ";" +
+                        string line = TrainTableRecords[i].ID + ";" +
                             TrainTableRecords[i].Num + ";" +
                             TrainTableRecords[i].Name + ";" +
                             TrainTableRecords[i].ArrivalTime + ";" +
