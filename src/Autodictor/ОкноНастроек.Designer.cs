@@ -79,6 +79,9 @@
             this.btnЗагрузить = new System.Windows.Forms.Button();
             this.btnСохранить = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pCol16 = new System.Windows.Forms.Panel();
+            this.pCol15 = new System.Windows.Forms.Panel();
+            this.label114 = new System.Windows.Forms.Label();
             this.pCol14 = new System.Windows.Forms.Panel();
             this.pCol13 = new System.Windows.Forms.Panel();
             this.pCol12 = new System.Windows.Forms.Panel();
@@ -273,9 +276,8 @@
             this.chBox2_LongDist = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.chBox1_LongDist = new System.Windows.Forms.CheckBox();
-            this.pCol16 = new System.Windows.Forms.Panel();
-            this.pCol15 = new System.Windows.Forms.Panel();
-            this.label114 = new System.Windows.Forms.Label();
+            this.tBСамоеРанееВремяШаблона = new System.Windows.Forms.TextBox();
+            this.label115 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -608,6 +610,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tBСамоеРанееВремяШаблона);
+            this.groupBox2.Controls.Add(this.label115);
             this.groupBox2.Controls.Add(this.tBИнтОповещООтпрПоГотов);
             this.groupBox2.Controls.Add(this.label113);
             this.groupBox2.Controls.Add(this.label24);
@@ -633,7 +637,7 @@
             // 
             // tBИнтОповещООтпрПоГотов
             // 
-            this.tBИнтОповещООтпрПоГотов.Location = new System.Drawing.Point(429, 124);
+            this.tBИнтОповещООтпрПоГотов.Location = new System.Drawing.Point(428, 123);
             this.tBИнтОповещООтпрПоГотов.Name = "tBИнтОповещООтпрПоГотов";
             this.tBИнтОповещООтпрПоГотов.Size = new System.Drawing.Size(53, 26);
             this.tBИнтОповещООтпрПоГотов.TabIndex = 21;
@@ -651,7 +655,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(8, 230);
+            this.label24.Location = new System.Drawing.Point(8, 254);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(281, 20);
             this.label24.TabIndex = 19;
@@ -661,7 +665,7 @@
             // 
             this.dTP_Автообновление.CustomFormat = "HH:mm";
             this.dTP_Автообновление.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Автообновление.Location = new System.Drawing.Point(396, 230);
+            this.dTP_Автообновление.Location = new System.Drawing.Point(396, 254);
             this.dTP_Автообновление.Name = "dTP_Автообновление";
             this.dTP_Автообновление.ShowUpDown = true;
             this.dTP_Автообновление.Size = new System.Drawing.Size(85, 26);
@@ -670,7 +674,7 @@
             // cbРазрешитьАвтоОбновлениеРасписания
             // 
             this.cbРазрешитьАвтоОбновлениеРасписания.AutoSize = true;
-            this.cbРазрешитьАвтоОбновлениеРасписания.Location = new System.Drawing.Point(428, 206);
+            this.cbРазрешитьАвтоОбновлениеРасписания.Location = new System.Drawing.Point(428, 230);
             this.cbРазрешитьАвтоОбновлениеРасписания.Name = "cbРазрешитьАвтоОбновлениеРасписания";
             this.cbРазрешитьАвтоОбновлениеРасписания.Size = new System.Drawing.Size(15, 14);
             this.cbРазрешитьАвтоОбновлениеРасписания.TabIndex = 17;
@@ -679,7 +683,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(8, 202);
+            this.label23.Location = new System.Drawing.Point(8, 226);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(317, 20);
             this.label23.TabIndex = 16;
@@ -688,7 +692,7 @@
             // cBРазрешениеДобавленияЗаблокированныхПоездовВСписок
             // 
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.AutoSize = true;
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 180);
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 204);
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Name = "cBРазрешениеДобавленияЗаблокированныхПоездовВСписок";
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Size = new System.Drawing.Size(15, 14);
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.TabIndex = 15;
@@ -697,7 +701,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 176);
+            this.label22.Location = new System.Drawing.Point(8, 200);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(397, 20);
             this.label22.TabIndex = 8;
@@ -827,6 +831,36 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Цветовые настройки";
+            // 
+            // pCol16
+            // 
+            this.pCol16.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pCol16.Location = new System.Drawing.Point(352, 207);
+            this.pCol16.Name = "pCol16";
+            this.pCol16.Size = new System.Drawing.Size(36, 19);
+            this.pCol16.TabIndex = 30;
+            this.pCol16.Tag = "15";
+            this.pCol16.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
+            // 
+            // pCol15
+            // 
+            this.pCol15.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pCol15.Location = new System.Drawing.Point(302, 207);
+            this.pCol15.Name = "pCol15";
+            this.pCol15.Size = new System.Drawing.Size(36, 19);
+            this.pCol15.TabIndex = 29;
+            this.pCol15.Tag = "14";
+            this.pCol15.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
+            // 
+            // label114
+            // 
+            this.label114.AutoSize = true;
+            this.label114.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label114.Location = new System.Drawing.Point(5, 206);
+            this.label114.Name = "label114";
+            this.label114.Size = new System.Drawing.Size(68, 20);
+            this.label114.TabIndex = 28;
+            this.label114.Text = "Ручной";
             // 
             // pCol14
             // 
@@ -2837,35 +2871,22 @@
             this.chBox1_LongDist.TabIndex = 20;
             this.chBox1_LongDist.UseVisualStyleBackColor = true;
             // 
-            // pCol16
+            // tBСамоеРанееВремяШаблона
             // 
-            this.pCol16.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pCol16.Location = new System.Drawing.Point(352, 207);
-            this.pCol16.Name = "pCol16";
-            this.pCol16.Size = new System.Drawing.Size(36, 19);
-            this.pCol16.TabIndex = 30;
-            this.pCol16.Tag = "15";
-            this.pCol16.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
+            this.tBСамоеРанееВремяШаблона.Location = new System.Drawing.Point(428, 163);
+            this.tBСамоеРанееВремяШаблона.Name = "tBСамоеРанееВремяШаблона";
+            this.tBСамоеРанееВремяШаблона.Size = new System.Drawing.Size(53, 26);
+            this.tBСамоеРанееВремяШаблона.TabIndex = 23;
+            this.tBСамоеРанееВремяШаблона.Text = "3";
             // 
-            // pCol15
+            // label115
             // 
-            this.pCol15.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pCol15.Location = new System.Drawing.Point(302, 207);
-            this.pCol15.Name = "pCol15";
-            this.pCol15.Size = new System.Drawing.Size(36, 19);
-            this.pCol15.TabIndex = 29;
-            this.pCol15.Tag = "14";
-            this.pCol15.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
-            // 
-            // label114
-            // 
-            this.label114.AutoSize = true;
-            this.label114.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label114.Location = new System.Drawing.Point(5, 206);
-            this.label114.Name = "label114";
-            this.label114.Size = new System.Drawing.Size(68, 20);
-            this.label114.TabIndex = 28;
-            this.label114.Text = "Ручной";
+            this.label115.AutoSize = true;
+            this.label115.Location = new System.Drawing.Point(8, 167);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(410, 20);
+            this.label115.TabIndex = 22;
+            this.label115.Text = "Оповещение самого раннего времени шаблона , мин";
             // 
             // ОкноНастроек
             // 
@@ -3158,5 +3179,7 @@
         private System.Windows.Forms.Panel pCol16;
         private System.Windows.Forms.Panel pCol15;
         private System.Windows.Forms.Label label114;
+        private System.Windows.Forms.TextBox tBСамоеРанееВремяШаблона;
+        private System.Windows.Forms.Label label115;
     }
 }
