@@ -82,6 +82,7 @@ namespace MainExample
                 cBОткуда.Items.AddRange(СтанцииВыбранногоНаправления);
                 cBКуда.Items.AddRange(СтанцииВыбранногоНаправления);
             }
+
             cBОткуда.Text = tableRec.StationDepart;
             cBКуда.Text = tableRec.StationArrival;
 
@@ -439,11 +440,29 @@ namespace MainExample
                 ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex, 
                 Direction = TableRec.Direction,
                 Active = true,
-                StationDepart= cBОткуда.Text,
-                StationArrival = cBКуда.Text,
                 Автомат = rB_РежРабАвтомат.Checked,
                 DaysAlias = tb_ДниСледованияAlias.Text
             };
+
+
+            if (rBТранзит.Checked)
+            {
+                newTableRec.StationDepart = cBОткуда.Text;
+                newTableRec.StationArrival = cBКуда.Text;
+            }
+            else
+            if (rBОтправление.Checked)
+            {
+                newTableRec.StationDepart = cBОткуда.Text;
+                newTableRec.StationArrival = String.Empty;
+            }
+            else
+            if (rBПрибытие.Checked)
+            {
+                newTableRec.StationArrival = cBКуда.Text;
+                newTableRec.StationDepart = String.Empty;
+            }
+
 
 
             if (cBОткуда.Text != "")
