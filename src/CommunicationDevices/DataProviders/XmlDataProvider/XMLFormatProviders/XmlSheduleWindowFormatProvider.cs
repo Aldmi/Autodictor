@@ -12,6 +12,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //  <t>
     //  <TrainNumber>6396</TrainNumber>
     //  <TrainType>0</TrainType>
+    //  <Direction>Курское</Direction>
     //  <StartStation>Крюково</StartStation>
     //  <EndStation> </EndStation>	
     //  <StartStationENG>Крюково</StartStationENG>
@@ -129,6 +130,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("t",
                     new XElement("TrainNumber", uit.NumberOfTrain),
                     new XElement("TrainType", trainType),
+                    new XElement("Direction", uit.Direction),
                     new XElement("StartStation", uit.StationDeparture.Key),
                     new XElement("EndStation", uit.StationArrival.Key),
 

@@ -35,6 +35,7 @@ namespace CommunicationDevices.DataProviders
         public string Event { get; set; }                            //Событие (отправление/прибытие/Транзит)
         public string Addition { get; set; }                         //Дополнение (свободная строка)
         public string Stations { get; set; }                         // Станции Отправления-Прибытия. (название поезда)
+        public string Direction { get; set; }                        // Направление.
         public KeyValuePair<string, string> StationDeparture { get; set; }   //Станции отправления. Key - RU    Value- eng
         public KeyValuePair<string, string> StationArrival { get; set; }     //Станции прибытия. Key - RU    Value- eng
         public string Note { get; set; }                             //Примечание.
@@ -75,6 +76,7 @@ namespace CommunicationDevices.DataProviders
             Event = initializeData.Event;
             Addition = initializeData.Addition;
             Stations = initializeData.Stations;
+            Direction = initializeData.Direction;
             StationArrival = initializeData.StationArrival;
             StationDeparture = initializeData.StationDeparture;
             Note= initializeData.Note;

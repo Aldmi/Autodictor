@@ -1616,7 +1616,7 @@ namespace MainExample
                         {
                             foreach (var beh in binding2MainWindow)
                             {
-                                var table = SoundRecords.Where(rec => rec.Value.Автомат).Select(t => MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                var table = SoundRecords.Where(rec => rec.Value.Автомат).Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
                                 table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
@@ -1930,7 +1930,7 @@ namespace MainExample
                 var beh = Binding2PathBehaviors.FirstOrDefault(b => b.GetDeviceId == devId);
                 if (beh != null)
                 {
-                    var inData = MapSoundRecord2UniveralInputType(data, beh.GetDeviceSetting.PathPermission, true);
+                    var inData = Mapper.MapSoundRecord2UniveralInputType(data, beh.GetDeviceSetting.PathPermission, true);
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
                     beh.SendMessage4Path(inData, data.НомерПоезда, beh.CheckContrains);
@@ -1940,172 +1940,6 @@ namespace MainExample
         }
 
 
-
-        private static UniversalInputType MapSoundRecord2UniveralInputType(SoundRecord data, bool pathPermission, bool isShow)
-        {
-            DateTime time = DateTime.MinValue;
-            Dictionary<string, DateTime> transitTimes = new Dictionary<string, DateTime>();
-
-            string actStr = "   ";
-
-            var номерПоезда = data.НомерПоезда;
-            if ((data.БитыАктивностиПолей & 0x14) == 0x14)
-            {
-                actStr = "СТОЯНКА";
-                time = data.ВремяПрибытия; //TODO: выполняется фильтрация по этому полю, нужно понять по какому времени фильтровать
-                transitTimes["приб"] = data.ВремяПрибытия;
-                transitTimes["отпр"] = data.ВремяОтправления;
-
-                номерПоезда = (string.IsNullOrEmpty(data.НомерПоезда2) || string.IsNullOrWhiteSpace(data.НомерПоезда2)) ? data.НомерПоезда : (data.НомерПоезда + "/" + data.НомерПоезда2);
-            }
-            else if ((data.БитыАктивностиПолей & 0x04) == 0x04)
-            {
-                actStr = "ПРИБ.";
-                time = data.ВремяПрибытия;
-                номерПоезда = data.НомерПоезда;
-            }
-            else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
-            {
-                actStr = "ОТПР.";
-                time = data.ВремяОтправления;
-                номерПоезда = data.НомерПоезда;
-            }
-
-            TypeTrain typeTrain;
-            switch (data.ТипПоезда)
-            {
-                case ТипПоезда.Пассажирский:
-                    typeTrain = TypeTrain.Passenger;
-                    break;
-
-                case ТипПоезда.Пригородный:
-                    typeTrain = TypeTrain.Suburban;
-                    break;
-
-                case ТипПоезда.Фирменный:
-                    typeTrain = TypeTrain.Corporate;
-                    break;
-
-                case ТипПоезда.Скорый:
-                    typeTrain = TypeTrain.Express;
-                    break;
-
-                case ТипПоезда.Скоростной:
-                    typeTrain = TypeTrain.HighSpeed;
-                    break;
-
-                case ТипПоезда.Ласточка:
-                    typeTrain = TypeTrain.Swallow;
-                    break;
-
-                case ТипПоезда.РЭКС:
-                    typeTrain = TypeTrain.Rex;
-                    break;
-
-                default:
-                    typeTrain = TypeTrain.None;
-                    break;
-            }
-
-            var command = Command.None;
-            switch (data.СостояниеОтображения)
-            {
-                case TableRecordStatus.Отображение:
-                    command = Command.View;
-                    break;
-
-                case TableRecordStatus.Очистка:
-                    command = Command.Delete;
-                    break;
-
-                case TableRecordStatus.Обновление:
-                    command = Command.Update;
-                    break;
-            }
-
-            var номерПути = string.Empty;
-            switch (data.РазрешениеНаОтображениеПути)
-            {
-                case PathPermissionType.ИзФайлаНастроек:
-                    номерПути = pathPermission ? data.НомерПути : "   ";
-                    break;
-
-                case PathPermissionType.Отображать:
-                    номерПути = data.НомерПути;
-                    break;
-
-                case PathPermissionType.НеОтображать:
-                    номерПути = "   ";
-                    break;
-            }
-
-           var defaultStation = ExchangeModel.NameRailwayStation;
-
-           var cтанцияОтправления = Program.ПолучитьСтанциюНаправления(data.Направление, data.СтанцияОтправления);
-           var cтанцияНазначения = Program.ПолучитьСтанциюНаправления(data.Направление, data.СтанцияНазначения);
-
-           var stationDepartMyltiLang = new KeyValuePair<string, string>(
-                                        cтанцияОтправления == null ? defaultStation.Key : cтанцияОтправления.NameRu,
-                                        cтанцияОтправления == null ? defaultStation.Value : cтанцияОтправления.NameEng);
-
-           var stationArrivalMyltiLang = new KeyValuePair<string, string>(
-                                        cтанцияНазначения == null ? defaultStation.Key : cтанцияНазначения.NameRu,
-                                        cтанцияНазначения == null ? defaultStation.Value : cтанцияНазначения.NameEng);
-
-            UniversalInputType mapData;
-            if (isShow)
-            {
-                mapData = new UniversalInputType
-                {
-                    Id = data.ID,
-                    IsActive = data.Активность,
-                    NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? номерПоезда : "   ",
-                    VagonDirection = (VagonDirection)data.НумерацияПоезда,
-                    PathNumber = номерПути,
-                    Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
-                    Time = time,
-                    TransitTime = transitTimes,
-                    DelayTime = data.ВремяЗадержки,
-                    ExpectedTime = data.ОжидаемоеВремя,
-                    StopTime = data.ВремяСтоянки,
-                    Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
-                    StationDeparture = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationDepartMyltiLang : new KeyValuePair<string, string>(),
-                    StationArrival = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationArrivalMyltiLang : new KeyValuePair<string, string>(),
-                    Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
-                    TypeTrain = typeTrain,
-                    Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
-                    Command = command,
-                    EmergencySituation = data.БитыНештатныхСитуаций
-                };
-            }
-            else
-            {
-                mapData = new UniversalInputType
-                {
-                    Id = data.ID,
-                    IsActive = data.Активность,
-                    NumberOfTrain = номерПоезда,
-                    VagonDirection = (VagonDirection)data.НумерацияПоезда,
-                    PathNumber = номерПути,
-                    Event = actStr,
-                    Time = time,
-                    TransitTime = transitTimes,
-                    DelayTime = data.ВремяЗадержки,
-                    ExpectedTime = data.ОжидаемоеВремя,
-                    StopTime = data.ВремяСтоянки,
-                    Stations = data.НазваниеПоезда,
-                    StationDeparture= stationDepartMyltiLang,
-                    StationArrival = stationArrivalMyltiLang,
-                    Note = data.Примечание,
-                    TypeTrain = typeTrain,
-                    Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
-                    Command = command,
-                    EmergencySituation = data.БитыНештатныхСитуаций
-                };
-            }
-
-            return mapData;
-        }
 
 
 
