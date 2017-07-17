@@ -17,7 +17,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
         #region prop
 
         public BindingType BindingType { get; }
-        public IEnumerable<byte> PathNumbers { get; }          // при привязке на путь
+        public IEnumerable<string> PathNumbers { get; }          // при привязке на путь
         public SourceLoad SourceLoad { get; }                  // при привязке к расписанию
 
         #endregion
@@ -62,7 +62,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             {
                 BindingType = BindingType.ToPath;
                 var pathNumbers = new string(binding.SkipWhile(c => c != ':').Skip(1).ToArray()).Split(',');
-                PathNumbers = (pathNumbers.First() == string.Empty) ? new List<byte>() : pathNumbers.Select(byte.Parse).ToList();
+                PathNumbers = (pathNumbers.First() == string.Empty) ? new List<string>() : pathNumbers.ToList();
             }
             else
             if (binding.ToLower().Contains("tostatic:"))

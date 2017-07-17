@@ -7,9 +7,9 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 {
     public interface IBinding2PathBehavior
     {
-        string GetDevicesName4Path(byte pathNumber);
+        string GetDevicesName4Path(string pathNumber);
 
-        IEnumerable<byte> CollectionPathNumber { get; }
+        IEnumerable<string> CollectionPathNumber { get; }
 
         string GetDeviceName { get; }
         int GetDeviceId { get; }

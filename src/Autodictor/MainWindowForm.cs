@@ -267,6 +267,7 @@ namespace MainExample
         }
 
 
+
         private void TemplateChangeRxEventHandler(TemplateChangeValue templateChangeValue)
         {
             //ШАБЛОН технического сообщения
@@ -439,16 +440,15 @@ namespace MainExample
             {
                 var данные = SoundRecords.ElementAt(i).Value;
 
-                //TODO: ЗАМЕНИТЬ КОД
-                //var номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
-                //if (номерПути > 0)
-                //{
-                //    var key = SoundRecords.Keys.ElementAt(i);
-                //    данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                //    данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-                //    SoundRecords[key] = данные;
-                //    SendOnPathTable(SoundRecords[key]);
-                //}
+                //TODO: ЗАМЕНИТЬ КОД  
+                if (!string.IsNullOrEmpty(данные.НомерПути))
+                {
+                    var key = SoundRecords.Keys.ElementAt(i);
+                    данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                    данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+                    SoundRecords[key] = данные;
+                    SendOnPathTable(SoundRecords[key]);
+                }
             }
         }
 
@@ -511,9 +511,8 @@ namespace MainExample
 
                 //TODO: ЗАМЕНИТЬ КОД
                 //выдать список привязанных табло
-                //byte номерПути = (byte)(Program.НомераПутей.IndexOf(record.НомерПути) + 1);
-                //record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(номерПути)).Where(str => str != null).ToArray() : null;
-                //record.СостояниеОтображения = TableRecordStatus.Выключена;
+                record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(record.НомерПути)).Where(str => str != null).ToArray() : null;
+                record.СостояниеОтображения = TableRecordStatus.Выключена;
 
 
                 //СБРОСИТЬ НОМЕР ПУТИ, НА ВРЕМЯ МЕНЬШЕ ТЕКУЩЕГО
@@ -523,7 +522,7 @@ namespace MainExample
                 }
 
 
-                //Добавление созанной записи
+                //Добавление созданной записи
                 var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, record.Время);
                 if (!string.IsNullOrEmpty(newkey))
                 {
@@ -536,42 +535,6 @@ namespace MainExample
             }
         }
 
-
-
-        //TODO: убрать, использовать метод и из маппера
-        public string ПолучитьНомерПутиПоДнямНедели(TrainTableRecord record)
-        {
-            if (!record.PathWeekDayes)
-            {
-                return record.TrainPathNumber[WeekDays.Постоянно] == "Не определен" ? string.Empty : record.TrainPathNumber[WeekDays.Постоянно];
-            }
-
-            switch (DateTime.Now.DayOfWeek)
-            {
-                case DayOfWeek.Monday:
-                    return record.TrainPathNumber[WeekDays.Пн];
-
-                case DayOfWeek.Tuesday:
-                    return record.TrainPathNumber[WeekDays.Вт];
-
-                case DayOfWeek.Wednesday:
-                    return record.TrainPathNumber[WeekDays.Ср];
-
-                case DayOfWeek.Thursday:
-                    return record.TrainPathNumber[WeekDays.Чт];
-
-                case DayOfWeek.Friday:
-                    return record.TrainPathNumber[WeekDays.Пн];
-
-                case DayOfWeek.Saturday:
-                    return record.TrainPathNumber[WeekDays.Сб];
-
-                case DayOfWeek.Sunday:
-                    return record.TrainPathNumber[WeekDays.Вс];
-            }
-
-            return String.Empty;
-        }
 
 
         public static void СозданиеСтатическихЗвуковыхФайлов()
@@ -1482,104 +1445,12 @@ namespace MainExample
                     var binding2Shedule = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.Shedule).ToList();
                     var binding2OperativeShedule = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.SheduleOperative).ToList();
 
-                    Func<string, string, DateTime> timePars = (arrival, depart) =>
-                    {
-                        DateTime outData;
-                        if (DateTime.TryParse(arrival, out outData))
-                            return outData;
-
-                        if (DateTime.TryParse(depart, out outData))
-                            return outData;
-
-                        return DateTime.MinValue;
-                    };
-
-                    Func<string, string, string> eventPars = (arrivalTime, departTime) =>
-                    {
-                        if ((!string.IsNullOrEmpty(arrivalTime)) && (!string.IsNullOrEmpty(departTime)))
-                        {
-                            return "СТОЯНКА";
-                        }
-
-                        if (!string.IsNullOrEmpty(arrivalTime))
-                        {
-                            return "ПРИБ.";
-                        }
-
-                        if (!string.IsNullOrEmpty(departTime))
-                        {
-                            return "ОТПР.";
-                        }
-
-                        return String.Empty;
-                    };
-
-
-                    Func<string, string, Dictionary<string, DateTime>> transitTimePars = (arrivalTime, departTime) =>
-                    {
-                        var transitTime = new Dictionary<string, DateTime>();
-                        if ((!string.IsNullOrEmpty(arrivalTime)) && (!string.IsNullOrEmpty(departTime)))
-                        {
-                            transitTime["приб"] = timePars(arrivalTime, String.Empty);
-                            transitTime["отпр"] = timePars(departTime, String.Empty);
-                        }
-
-                        return transitTime;
-                    };
-
-
-                    Func<string, string, KeyValuePair<string, string>> stationsPars = (station, direction) => 
-                    {
-                        if (string.IsNullOrEmpty(direction) || string.IsNullOrEmpty(station))
-                        {
-                            return new KeyValuePair<string, string>();
-                        }
-
-                        var stationDir= Program.ПолучитьСтанциюНаправления(direction, station);
-                        if(stationDir == null)
-                            return new KeyValuePair<string, string>();
-
-                        return new KeyValuePair<string, string>(stationDir.NameRu, stationDir.NameEng);
-                    };
-
 
                     //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
-                            //TimeSpan stopTime;
-                            //var table = TrainTable.TrainTableRecords.Select(t => new UniversalInputType
-                            //{
-                            //    IsActive = t.Active,
-                            //    Event = eventPars(t.ArrivalTime, t.DepartureTime),
-                            //    TypeTrain = (t.ТипПоезда == ТипПоезда.Пассажирский) ? TypeTrain.Passenger :
-                            //                (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburban :
-                            //                (t.ТипПоезда == ТипПоезда.Фирменный) ? TypeTrain.Corporate :
-                            //                (t.ТипПоезда == ТипПоезда.Скорый) ? TypeTrain.Express :
-                            //                (t.ТипПоезда == ТипПоезда.Скоростной) ? TypeTrain.HighSpeed :
-                            //                (t.ТипПоезда == ТипПоезда.Ласточка) ? TypeTrain.Swallow :
-                            //                (t.ТипПоезда == ТипПоезда.РЭКС) ? TypeTrain.Rex : TypeTrain.None,
-                            //    Note = t.Примечание, //C остановками: ...
-                            //    PathNumber = ПолучитьНомерПутиПоДнямНедели(t),
-                            //    VagonDirection = (VagonDirection)t.TrainPathDirection,
-                            //    NumberOfTrain = t.Num,
-                            //    Stations = t.Name,
-                            //    StationDeparture = stationsPars(t.StationDepart, t.Direction),
-                            //    StationArrival = stationsPars(t.StationArrival, t.Direction),
-                            //    Time = timePars(t.ArrivalTime, t.DepartureTime),
-                            //    TransitTime = transitTimePars(t.ArrivalTime, t.DepartureTime),
-                            //    DelayTime = null,
-                            //    StopTime = (TimeSpan?) (TimeSpan.TryParse(t.StopTime, out stopTime) ? (ValueType) stopTime : null),
-                            //    ExpectedTime = timePars(t.ArrivalTime, t.DepartureTime),
-                            //    DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания(),
-                            //    DaysFollowingAlias = t.DaysAlias,
-                            //    Addition = t.Addition,
-                            //    Command = Command.None,
-                            //    EmergencySituation = 0x00
-                            //}).ToList();
-
-
                             var table = TrainTable.TrainTableRecords.Select(Mapper.MapTrainTableRecord2UniversalInputType).ToList();
                             table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
 
@@ -1647,12 +1518,19 @@ namespace MainExample
                     if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                     {
                         //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-
                         var номераПутей = Program.PathWaysRepository.List().ToList();
-                        var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути);
-                        var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути);
+                        var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути) + 1;
+                        var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути) + 1;
                         var номерПути = (index > 0) ? index : 0;
                         var номерПутиOld = (indexOld > 0) ? indexOld : 0;
+
+                        //-----------DEBUG--------------
+                        if (данные.НомерПоезда == "562")
+                        {
+                            
+                        }
+                        //-----------
+
 
                         if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
                         {
@@ -1920,7 +1798,7 @@ namespace MainExample
             if (data.СостояниеОтображения == TableRecordStatus.Выключена || data.СостояниеОтображения == TableRecordStatus.ОжиданиеОтображения)
                 return;
 
-            if (data.НазванияТабло == null)
+            if (data.НазванияТабло == null || !data.НазванияТабло.Any())
                 return;
 
 
@@ -3013,6 +2891,7 @@ namespace MainExample
                             //TODO: ЗАМЕНИТЬ КОД
                             //byte номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
                             //данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
+                            данные.НазванияТабло = данные.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(данные.НомерПути)).Where(str => str != null).ToArray() : null;
 
                             SoundRecords[КлючВыбранныйМеню] = данные;
                             return;

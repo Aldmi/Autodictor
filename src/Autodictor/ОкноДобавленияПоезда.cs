@@ -18,6 +18,7 @@ namespace MainExample
         public int  RecordId { get; private set; }
         private string[] СтанцииВыбранногоНаправления { get; set; } = new string[0];
         private List<Pathways> НомераПутей { get; set; }
+        public List<string> ИспользуемыеНомераПоездов { get; set; }
 
 
 
@@ -80,8 +81,14 @@ namespace MainExample
             }
 
 
-            foreach (var НомерПоезда in Program.НомераПоездов)
-                cBНомерПоезда.Items.Add(НомерПоезда);
+
+            ИспользуемыеНомераПоездов = MainWindowForm.SoundRecords.Values.Select(rec=>rec.НомерПоезда).ToList();
+            var неИспользуемыеНомераПоездов = Program.НомераПоездов.Where(n =>
+                ИспользуемыеНомераПоездов.All(n2 => n != n2)
+            );
+            foreach (var номерПоезда in неИспользуемыеНомераПоездов)
+                cBНомерПоезда.Items.Add(номерПоезда);
+
 
 
             foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
@@ -164,6 +171,25 @@ namespace MainExample
                 Record.Время= Record.Время.AddDays(1);
                 Record.ВремяПрибытия = Record.ВремяПрибытия.AddDays(1);
                 Record.ВремяОтправления = Record.ВремяОтправления.AddDays(1);
+            }
+
+
+            //------------DEBUG-------
+            //Record.Время = dtp_ДатаДобавления.Value.Date + Record.Время.TimeOfDay;
+            //-----------------------
+
+
+            //Номер поезда введен вручную
+            if (Record.НомерПоезда != cBНомерПоезда.Text)
+            {
+                if (ИспользуемыеНомераПоездов.Contains(cBНомерПоезда.Text))
+                {
+                    MessageBox.Show($@"Номер поезда {cBНомерПоезда.Text} уже есть в списке !!! Выберите из списка или задайте уникальный номер поезду.");
+                    return;
+                }
+
+                Record.НомерПоезда = cBНомерПоезда.Text;
+                Program.НомераПоездов.Add(Record.НомерПоезда);
             }
 
 
@@ -492,8 +518,16 @@ namespace MainExample
                         if (Config.ID == ID)
                         {
                             // Нашли параметры выбранного поезда. Заполняем все поля.
-                            Record.НомерПоезда = Config.Num;
-                            cBНомерПоезда.Text = Record.НомерПоезда;
+                            if (ИспользуемыеНомераПоездов.Contains(Config.Num))
+                            {
+                                Record.НомерПоезда = string.Empty;
+                                cBНомерПоезда.Text = string.Empty;
+                            }
+                            else
+                            {
+                                Record.НомерПоезда = Config.Num;
+                                cBНомерПоезда.Text = Record.НомерПоезда;
+                            }
 
                             Record.НазваниеПоезда = Config.Name;
 
@@ -598,6 +632,7 @@ namespace MainExample
                             //TODO: ЗАМЕНИТЬ КОД
                             //byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
                             //Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
+                            Record.НазванияТабло = Record.НомерПути != "0" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
                             Record.СостояниеОтображения = TableRecordStatus.Выключена;
 
                             Record.Время = (НомерСписка & 0x04) != 0x00 ? Record.ВремяПрибытия : Record.ВремяОтправления;

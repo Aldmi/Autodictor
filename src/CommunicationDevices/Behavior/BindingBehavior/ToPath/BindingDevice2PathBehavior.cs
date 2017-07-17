@@ -18,7 +18,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
     public class Binding2PathBehavior : IBinding2PathBehavior
     {
         private readonly Device _device;
-        public IEnumerable<byte> CollectionPathNumber { get; }
+        public IEnumerable<string> CollectionPathNumber { get; }
         public Conditions Conditions { get; }
         public string GetDeviceName => _device.Name;
         public int GetDeviceId => _device.Id;
@@ -28,7 +28,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public Binding2PathBehavior(Device device, IEnumerable<byte> pathNumbers, Conditions conditions)
+        public Binding2PathBehavior(Device device, IEnumerable<string> pathNumbers, Conditions conditions)
         {
             _device = device;
             CollectionPathNumber = pathNumbers;
@@ -38,7 +38,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
 
 
-        public string GetDevicesName4Path(byte pathNumber)
+        public string GetDevicesName4Path(string pathNumber)
         {
             //привязка на все пути
             if (!CollectionPathNumber.Any())
@@ -143,5 +143,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 _device.AddCycleFuncData(0, inData);
            // }
         }
+
     }
 }

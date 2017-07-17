@@ -6,6 +6,7 @@ using CommunicationDevices.Model;
 using System.Drawing;
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using MainExample.Entites;
 using MainExample.Extension;
-
+using MainExample.Services;
 
 
 namespace MainExample
@@ -409,24 +410,16 @@ namespace MainExample
             ОкноДобавленияПоезда окно = new ОкноДобавленияПоезда(newRecId);
             if (окно.ShowDialog() == DialogResult.OK)
             {
-                SoundRecord Record = окно.Record;
+                var record = окно.Record;
 
-                int TryCounter = 50;
-                while (--TryCounter > 0)
+                //Добавление созданной записи
+                var pipelineService = new SchedulingPipelineService();
+                var newkey = pipelineService.GetUniqueKey(MainWindowForm.SoundRecords.Keys, record.Время);
+                if (!string.IsNullOrEmpty(newkey))
                 {
-                    string Key = Record.Время.ToString("yy.MM.dd  HH:mm:ss");
-                    string[] SubKeys = Key.Split(':');
-                    if (SubKeys[0].Length == 1)
-                        Key = "0" + Key;
-
-                    if (MainWindowForm.SoundRecords.ContainsKey(Key) == false)
-                    {
-                        MainWindowForm.SoundRecords.Add(Key, Record);
-                        MainWindowForm.SoundRecordsOld.Add(Key, Record);
-                        break;
-                    }
-
-                    Record.Время = Record.Время.AddSeconds(1);
+                    record.Время = DateTime.ParseExact(newkey, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo());
+                    MainWindowForm.SoundRecords.Add(newkey, record);
+                    MainWindowForm.SoundRecordsOld.Add(newkey, record);
                 }
 
                 MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
