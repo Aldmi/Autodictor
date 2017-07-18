@@ -894,7 +894,7 @@ namespace CommunicationDevices.Model
                                     break;
 
                                 case XmlType.XmlSheduleWindow:
-                                    provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider());
+                                    provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(DateTimeFormat.Sortable));
                                     break;
                             }
 

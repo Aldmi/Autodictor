@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convertion\DateTimeConvertion.cs" />
     <Compile Include="Convertion\NumericConvertion.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Library\BlockClick.cs" />

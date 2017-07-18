@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Linq;
-
 
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider
 {
+    public enum DateTimeFormat
+    {
+        None,
+        Sortable,
+        LinuxTimeStamp
+    }
+
+
     public interface IFormatProvider
     {
         string CreateDoc(IEnumerable<UniversalInputType> tables);
