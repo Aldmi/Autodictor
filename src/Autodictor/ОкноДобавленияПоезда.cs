@@ -49,7 +49,8 @@ namespace MainExample
             Record.НазванияТабло = new string[0];
             Record.НомерПоезда = "";
             Record.НомерПоезда2 = "";
-            Record.НомерПути = "1";
+            Record.НомерПути = "0";
+            Record.НомерПутиБезАвтосброса = "0";
             Record.НумерацияПоезда = 0;
             Record.Описание = "";
             Record.Примечание = "";
@@ -535,6 +536,7 @@ namespace MainExample
                             Record.Активность = Config.Active;
                             Record.ШаблонВоспроизведенияСообщений = Config.SoundTemplates;
                             Record.НомерПути = Config.TrainPathNumber[WeekDays.Постоянно];
+                            Record.НомерПутиБезАвтосброса = Record.НомерПути;
                             Record.НумерацияПоезда = Config.TrainPathDirection;
                             Record.Примечание = Config.Примечание;
                             Record.ТипПоезда = Config.ТипПоезда;
@@ -629,9 +631,7 @@ namespace MainExample
                             Record.БитыАктивностиПолей |= 0x03;
 
                             Record.ID = ID++;
-                            //TODO: ЗАМЕНИТЬ КОД
-                            //byte НомерПути = (byte)(Program.НомераПутей.IndexOf(Record.НомерПути) + 1);
-                            //Record.НазванияТабло = Record.НомерПути != "" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(НомерПути)).Where(str => str != null).ToArray() : null;
+
                             Record.НазванияТабло = Record.НомерПути != "0" ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
                             Record.СостояниеОтображения = TableRecordStatus.Выключена;
 

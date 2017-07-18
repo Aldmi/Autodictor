@@ -297,9 +297,10 @@ namespace MainExample
 
         private void cB_НомерПути_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int НомерПути = cB_НомерПути.SelectedIndex;
+            int номерПути = cB_НомерПути.SelectedIndex;
             Record.НомерПути = cB_НомерПути.SelectedIndex == 0 ? "" : cB_НомерПути.Text;
-            Record.НазванияТабло = НомерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
+            Record.НомерПутиБезАвтосброса = Record.НомерПути;
+            Record.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(Record.НомерПути)).Where(str => str != null).ToArray() : null;
             ОбновитьТекстВОкне();
             if (РазрешениеИзменений == true) СделаныИзменения = true;
         }

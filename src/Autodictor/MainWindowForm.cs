@@ -56,8 +56,9 @@ namespace MainExample
         public string ШаблонВоспроизведенияСообщений;
         public byte НумерацияПоезда;
         public string НомерПути;
+        public string НомерПутиБезАвтосброса;                //выставленные пути не обнуляются через определенное время
         public ТипПоезда ТипПоезда;
-        public string Примечание;                              //С остановками....
+        public string Примечание;                            //С остановками....
         public string Описание;
         public SoundRecordStatus Состояние;
         public SoundRecordType ТипСообщения;
@@ -410,6 +411,7 @@ namespace MainExample
 
 
 
+
         // Обновление списка вопроизведения сообщений при нажатии кнопки на панели
         public void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
@@ -424,6 +426,7 @@ namespace MainExample
 
 
 
+
         private void ОчиститьВсеТабло()
         {
             foreach (var beh in Binding2PathBehaviors)
@@ -434,13 +437,12 @@ namespace MainExample
 
 
 
+
         private void ИнициализироватьВсеТабло()
         {
             for (var i = 0; i < SoundRecords.Count; i++)
             {
                 var данные = SoundRecords.ElementAt(i).Value;
-
-                //TODO: ЗАМЕНИТЬ КОД  
                 if (!string.IsNullOrEmpty(данные.НомерПути))
                 {
                     var key = SoundRecords.Keys.ElementAt(i);
@@ -454,6 +456,7 @@ namespace MainExample
 
 
 
+
         // Формирование списка воспроизведения
         public void ОбновитьСписокЗвуковыхСообщений(object sender, EventArgs e)
         {
@@ -462,9 +465,9 @@ namespace MainExample
             СтатическиеЗвуковыеСообщения.Clear();
 
             СозданиеРасписанияЖдТранспорта();
-
             СозданиеСтатическихЗвуковыхФайлов();
         }
+
 
 
 
@@ -509,7 +512,7 @@ namespace MainExample
                 var newId = id++;
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
 
-                //TODO: ЗАМЕНИТЬ КОД
+
                 //выдать список привязанных табло
                 record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(record.НомерПути)).Where(str => str != null).ToArray() : null;
                 record.СостояниеОтображения = TableRecordStatus.Выключена;
@@ -518,7 +521,8 @@ namespace MainExample
                 //СБРОСИТЬ НОМЕР ПУТИ, НА ВРЕМЯ МЕНЬШЕ ТЕКУЩЕГО
                 if (record.Время < DateTime.Now)
                 {
-                    record.НомерПути = String.Empty;
+                    record.НомерПути = string.Empty;
+                    record.НомерПутиБезАвтосброса = string.Empty;
                 }
 
 
@@ -594,6 +598,7 @@ namespace MainExample
                     if ((Данные.Value.БитыАктивностиПолей & 0x04) != 0x00) ВремяПрибытия = Данные.Value.ВремяПрибытия.ToString("HH:mm");
                     if ((Данные.Value.БитыАктивностиПолей & 0x10) != 0x00) ВремяОтправления = Данные.Value.ВремяОтправления.ToString("HH:mm");
 
+
                     ListViewItem lvi1 = new ListViewItem(new string[] {Данные.Value.Время.ToString("yy.MM.dd  HH:mm:ss"),
                                                                        Данные.Value.НомерПоезда.Replace(':', ' '),
                                                                        Данные.Value.НомерПути.ToString(),
@@ -603,7 +608,7 @@ namespace MainExample
                                                                        Данные.Value.Примечание,
                                                                        Данные.Value.ИспользоватьДополнение["звук"] ? Данные.Value.Дополнение : String.Empty});
                     lvi1.Tag = Данные.Value.ID;
-                    lvi1.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                    lvi1.Checked = Данные.Value.Состояние != SoundRecordStatus.Выключена;
                     this.listView1.Items.Add(lvi1);
 
                     if ((Данные.Value.БитыАктивностиПолей & 0x14) == 0x04)
@@ -615,7 +620,7 @@ namespace MainExample
                                                                        Данные.Value.НазваниеПоезда,
                                                                        Данные.Value.ИспользоватьДополнение["звук"] ? Данные.Value.Дополнение : String.Empty});
                         lvi2.Tag = Данные.Value.ID;
-                        lvi2.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                        lvi2.Checked = Данные.Value.Состояние != SoundRecordStatus.Выключена;
                         this.lVПрибытие.Items.Add(lvi2);
                     }
 
@@ -629,7 +634,7 @@ namespace MainExample
                                                                        Данные.Value.НазваниеПоезда,
                                                                        Данные.Value.ИспользоватьДополнение["звук"] ? Данные.Value.Дополнение : String.Empty});
                         lvi3.Tag = Данные.Value.ID;
-                        lvi3.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                        lvi3.Checked = Данные.Value.Состояние != SoundRecordStatus.Выключена;
                         this.lVТранзит.Items.Add(lvi3);
                     }
 
@@ -642,7 +647,7 @@ namespace MainExample
                                                                        Данные.Value.НазваниеПоезда,
                                                                        Данные.Value.Дополнение});
                         lvi4.Tag = Данные.Value.ID;
-                        lvi4.Checked = Данные.Value.Состояние == SoundRecordStatus.Выключена ? false : true;
+                        lvi4.Checked = Данные.Value.Состояние != SoundRecordStatus.Выключена;
                         this.lVОтправление.Items.Add(lvi4);
                     }
                 }
@@ -821,9 +826,14 @@ namespace MainExample
                                     break;
                             }
 
-                            //Обновить номер пути
-                            if (lv.Items[item].SubItems[2].Text != Данные.НомерПути.ToString())
-                                lv.Items[item].SubItems[2].Text = Данные.НомерПути.ToString();
+                            //Обновить номер пути (текущий номер / предыдущий, до автосброса)
+                            var номерПути = (Данные.НомерПути != Данные.НомерПутиБезАвтосброса) ?
+                                             $"{Данные.НомерПути} ({Данные.НомерПутиБезАвтосброса})" :
+                                             Данные.НомерПути;               
+                            if (lv.Items[item].SubItems[2].Text != номерПути)
+                            {
+                                lv.Items[item].SubItems[2].Text = номерПути;
+                            }
 
                             if (lv.Name == "listView1")
                             {
@@ -2275,6 +2285,7 @@ namespace MainExample
 
 
 
+
         public static void ВоспроизвестиШаблонОповещения(string названиеСообщения,  SoundRecord Record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
         {
             string Text;
@@ -2787,11 +2798,13 @@ namespace MainExample
 
 
 
+
         private void listView5_Enter(object sender, EventArgs e)
         {
             if (this.ContextMenuStrip != null)
                 this.ContextMenuStrip = null;
         }
+
 
 
 
@@ -2839,6 +2852,7 @@ namespace MainExample
 
 
 
+
         private void включитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -2869,6 +2883,7 @@ namespace MainExample
 
 
 
+
         private void путь1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
@@ -2883,16 +2898,14 @@ namespace MainExample
                     for (int i = 0; i < СписокПолейПути.Length; i++)
                         if (СписокПолейПути[i].Name == tsmi.Name)
                         {
-                            string СтарыйНомерПути = данные.НомерПути;
+                            string старыйНомерПути = данные.НомерПути;
                             данные.НомерПути = i == 0 ? "" : paths[i - 1];
-                            if (СтарыйНомерПути != данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + данные.НомерПоезда + " " + данные.НазваниеПоезда + ": " + "Путь: " + СтарыйНомерПути + " -> " + данные.НомерПути + "; ");
+                            if (старыйНомерПути != данные.НомерПути) Program.ЗаписьЛога("Действие оператора", "Изменение настроек поезда: " + данные.НомерПоезда + " " + данные.НазваниеПоезда + ": " + "Путь: " + старыйНомерПути + " -> " + данные.НомерПути + "; ");
 
                             данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
-                            //TODO: ЗАМЕНИТЬ КОД
-                            //byte номерПути = Program.ПолучитьНомерПути(данные.НомерПути);
-                            //данные.НазванияТабло = номерПути != 0 ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path((byte)номерПути)).Where(str => str != null).ToArray() : null;
                             данные.НазванияТабло = данные.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(данные.НомерПути)).Where(str => str != null).ToArray() : null;
 
+                            данные.НомерПутиБезАвтосброса = данные.НомерПути;
                             SoundRecords[КлючВыбранныйМеню] = данные;
                             return;
                         }

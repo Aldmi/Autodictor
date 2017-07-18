@@ -305,7 +305,7 @@ namespace MainExample
                 {
                     if (item.Name == шаблон)
                     {
-                        var soundRec = Mapper.MapTrainTableRecord2SoundRecord(TableRec, DateTime.Now, 1);  //TODO: получать через мапппинг
+                        var soundRec = Mapper.MapTrainTableRecord2SoundRecord(TableRec, DateTime.Now, 1);
                         var key = soundRec.Время.ToString();
 
                         КарточкаДвиженияПоезда карточка= new КарточкаДвиженияПоезда(soundRec, key);
