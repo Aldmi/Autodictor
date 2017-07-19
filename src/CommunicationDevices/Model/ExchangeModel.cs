@@ -890,11 +890,11 @@ namespace CommunicationDevices.Model
                                     break;
 
                                 case XmlType.XmlMainWindow:
-                                    provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider());
+                                    provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider(providerType.DateTimeFormat));
                                     break;
 
                                 case XmlType.XmlSheduleWindow:
-                                    provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(DateTimeFormat.Sortable));
+                                    provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat));
                                     break;
                             }
 

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using Library.Convertion;
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
@@ -124,6 +125,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         switch (_dateTimeFormat)
                         {
                             case DateTimeFormat.None:
+                                timeDepart = uit.Time.ToString("s");
                                 break;
 
                             case DateTimeFormat.Sortable:
@@ -141,6 +143,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         switch (_dateTimeFormat)
                         {
                             case DateTimeFormat.None:
+                                timeDepart = uit.Time.ToString("s");
                                 break;
 
                             case DateTimeFormat.Sortable:
@@ -158,6 +161,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         switch (_dateTimeFormat)
                         {
                             case DateTimeFormat.None:
+                                timeDepart = uit.Time.ToString("s");
                                 break;
 
                             case DateTimeFormat.Sortable:

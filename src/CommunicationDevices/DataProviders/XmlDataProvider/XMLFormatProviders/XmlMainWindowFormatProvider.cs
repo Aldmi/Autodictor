@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
+using Library.Convertion;
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 {
@@ -41,6 +44,19 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
     public class XmlMainWindowFormatProvider : IFormatProvider
     {
+        private readonly DateTimeFormat _dateTimeFormat;
+
+
+
+
+        public XmlMainWindowFormatProvider(DateTimeFormat dateTimeFormat)
+        {
+            _dateTimeFormat = dateTimeFormat;
+        }
+
+
+
+
         public string CreateDoc(IEnumerable<UniversalInputType> tables)
         {
             if (tables == null || !tables.Any())
@@ -108,18 +124,58 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                 switch (uit.Event)
                 {
                     case "ПРИБ.":
-                        timeArrival = uit.Time.ToString("s");
+                        switch (_dateTimeFormat)
+                        {
+                            case DateTimeFormat.None:
+                                timeDepart = uit.Time.ToString("s");
+                                break;
+
+                            case DateTimeFormat.Sortable:
+                                timeArrival = uit.Time.ToString("");
+                                break;
+
+                            case DateTimeFormat.LinuxTimeStamp:
+                                timeArrival = DateTimeConvertion.ConvertToUnixTimestamp(uit.Time).ToString(CultureInfo.InvariantCulture);
+                                break;
+                        }
                         direction = 0;
                         break;
 
                     case "ОТПР.":
-                        timeDepart = uit.Time.ToString("s");
+                        switch (_dateTimeFormat)
+                        {
+                            case DateTimeFormat.None:
+                                timeDepart = uit.Time.ToString("s");
+                                break;
+
+                            case DateTimeFormat.Sortable:
+                                timeDepart = uit.Time.ToString("s");
+                                break;
+
+                            case DateTimeFormat.LinuxTimeStamp:
+                                timeDepart = DateTimeConvertion.ConvertToUnixTimestamp(uit.Time).ToString(CultureInfo.InvariantCulture);
+                                break;
+                        }
                         direction = 1;
                         break;
 
                     case "СТОЯНКА":
-                        timeArrival = uit.TransitTime.ContainsKey("приб") ? uit.TransitTime["приб"].ToString("s") : String.Empty;
-                        timeDepart = uit.TransitTime.ContainsKey("отпр") ? uit.TransitTime["отпр"].ToString("s") : String.Empty;
+                        switch (_dateTimeFormat)
+                        {
+                            case DateTimeFormat.None:
+                                timeDepart = uit.Time.ToString("s");
+                                break;
+
+                            case DateTimeFormat.Sortable:
+                                timeArrival = uit.TransitTime.ContainsKey("приб") ? uit.TransitTime["приб"].ToString("s") : String.Empty;
+                                timeDepart = uit.TransitTime.ContainsKey("отпр") ? uit.TransitTime["отпр"].ToString("s") : String.Empty;
+                                break;
+
+                            case DateTimeFormat.LinuxTimeStamp:
+                                timeArrival = uit.TransitTime.ContainsKey("приб") ? DateTimeConvertion.ConvertToUnixTimestamp(uit.TransitTime["приб"]).ToString(CultureInfo.InvariantCulture) : String.Empty;
+                                timeDepart = uit.TransitTime.ContainsKey("отпр") ? DateTimeConvertion.ConvertToUnixTimestamp(uit.TransitTime["отпр"]).ToString(CultureInfo.InvariantCulture) : String.Empty;
+                                break;
+                        }
                         direction = 2;
                         break;
                 }

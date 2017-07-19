@@ -33,16 +33,17 @@ namespace MainExample
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv_main = new System.Windows.Forms.DataGridView();
+            this.cl_NumbOfTrain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_Show = new System.Windows.Forms.Button();
             this.lv_select = new System.Windows.Forms.ListView();
             this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.cl_NumbOfTrain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_main)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv_main
             // 
+            this.dgv_main.AllowDrop = true;
             this.dgv_main.AllowUserToResizeRows = false;
             this.dgv_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -73,6 +74,16 @@ namespace MainExample
             this.dgv_main.TabIndex = 0;
             this.dgv_main.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_main_CellEndEdit);
             this.dgv_main.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgv_main_UserDeletingRow);
+            this.dgv_main.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgv_main_DragDrop);
+            this.dgv_main.DragOver += new System.Windows.Forms.DragEventHandler(this.dgv_main_DragOver);
+            this.dgv_main.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgv_main_MouseDown);
+            this.dgv_main.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgv_main_MouseMove);
+            // 
+            // cl_NumbOfTrain
+            // 
+            this.cl_NumbOfTrain.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cl_NumbOfTrain.HeaderText = "Текст";
+            this.cl_NumbOfTrain.Name = "cl_NumbOfTrain";
             // 
             // btn_Show
             // 
@@ -112,12 +123,6 @@ namespace MainExample
             this.Name.Text = "Название";
             this.Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Name.Width = 200;
-            // 
-            // cl_NumbOfTrain
-            // 
-            this.cl_NumbOfTrain.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cl_NumbOfTrain.HeaderText = "Текст";
-            this.cl_NumbOfTrain.Name = "cl_NumbOfTrain";
             // 
             // StaticDisplayForm
             // 
