@@ -174,7 +174,6 @@ namespace CommunicationDevices.ClientWCF
             //(DateTime.Now.Hour == 22 && DateTime.Now.Minute == 00 && DateTime.Now.Second <= PeriodTimer)
             if (DateTime.Now.Minute == 10 && DateTime.Now.Second <= PeriodTimer)
             {
-                Log.log.Fatal(DateTime.Now.ToLongTimeString);
                 ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
             }
 

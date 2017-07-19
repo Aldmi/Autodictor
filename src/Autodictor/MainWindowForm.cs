@@ -19,6 +19,7 @@ using MainExample.Extension;
 using MainExample.Infrastructure;
 using MainExample.Mappers;
 using MainExample.Services;
+using Library.Logs;
 
 
 namespace MainExample
@@ -1497,7 +1498,7 @@ namespace MainExample
                         {
                             foreach (var beh in binding2MainWindow)
                             {
-                                var table = SoundRecords.Where(rec => rec.Value.Автомат).Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                var table = SoundRecords.Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
                                 table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
@@ -1734,7 +1735,8 @@ namespace MainExample
         private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
         {
             //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
-
+            Log.log.Fatal("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
+            
             if (SoundChanelManagment != null)
             {
                 var soundChUit = new UniversalInputType { SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList(), ViewBag = new Dictionary<string, dynamic>() };
@@ -1748,6 +1750,7 @@ namespace MainExample
         private void СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений()
         {
             //Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ");//DEBUG
+            Log.log.Fatal("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
 
             if (SoundChanelManagment != null)
             {

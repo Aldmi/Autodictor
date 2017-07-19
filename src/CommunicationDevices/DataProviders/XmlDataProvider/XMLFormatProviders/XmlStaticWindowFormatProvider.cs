@@ -12,7 +12,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //<? xml version="1.0" encoding="utf-8" standalone="yes"?>
     //<staticWindow>
     //  <t>
-    //     <Row>6396</Row>
+    //     <Row>текст собщения</Row>
     //  </t>
     //</staticWindow>
 
@@ -39,8 +39,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocStaticTable.info";
-            xDoc.Save(path);
+            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocStaticTable.info";
+            //xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

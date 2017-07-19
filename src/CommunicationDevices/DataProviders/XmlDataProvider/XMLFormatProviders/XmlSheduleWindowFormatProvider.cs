@@ -212,8 +212,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocSheduleWindow.info";
-            xDoc.Save(path);
+            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocSheduleWindow.info";
+            //xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

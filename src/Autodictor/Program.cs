@@ -26,21 +26,11 @@ namespace MainExample
         public static List<string> TrainNumbersFolder = null;
         public static List<string> СписокСтатическихСообщений = null;
         public static List<string> СписокДинамическихСообщений = null;
-        //public static List<string> НомераПутей = new List<string>();
         public static List<string> НомераПоездов = new List<string>();
 
         public static string ИнфСтрокаНаТабло = "";
         public static IRepository<Direction> DirectionRepository; // Направления. хранилище XML
         public static IRepository<Pathways> PathWaysRepository; //Пути. хранилище XML
-
-        //public static byte ПолучитьНомерПути(string номерПути)
-        //{
-
-        //    if (НомераПутей.Contains(номерПути))
-        //        return (byte)(НомераПутей.IndexOf(номерПути) + 1);
-
-        //    return 0;
-        //}
 
         public static _Настройки Настройки;
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Root>
   <CisSetting>
-    <Name>Рижский</Name>
+    <Name>Ленинградский</Name>
+	<NameEng>ЛенинградскийEng</NameEng>
     <EndpointAddress>http://127.0.0.1:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 
@@ -41,9 +42,9 @@
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:5">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToStatic:">
 	      <ExchangeRules>    
-		    <Table Size= "3">
+		    <Table Size= "3" Position = "5">
 				   <Rule Format = "Windows-1251">
 					  <Request maxLenght = "254">
 						   STX{AddressDevice:X2}{Nbyte:X2}
@@ -52,7 +53,6 @@
 						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
 						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
 						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
-						   %10$00$60$t3$12{DelayTime:t}<!-- Вывод Времени задержки -->
 						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
 						   {CRCXor:X2}ETX
 					  </Request >
@@ -65,6 +65,7 @@
 				   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
 					  <Request maxLenght = "254">
 							STX{AddressDevice:X2}{Nbyte:X2}
+							{DelayTime}
 							CLEAR-------------------------
 							{CRCXor:X2}ETX
 					  </Request >
@@ -96,13 +97,34 @@
   
   
 <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="VidorTableStr1" Address="192.168.178.101:8000"  DeviceAddress="1,11"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:" CountRow="8"/>
+	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToGeneral:ГлавноеОкно">  
+	 	   <ExchangeRules>    
+				<Table Size= "3">
+					   <Rule Format = "Windows-1251">
+						  <Request maxLenght = "254">
+							   STX{AddressDevice:X2}{Nbyte:X2}
+							   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+							   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+							   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+							   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+							   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
+							   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
+							   {CRCXor:X2}ETX
+						  </Request >
+
+						  <Response maxLenght = "8" TimeRespone="500">
+							STX0200FDETX
+						  </Response >	  
+					   </Rule>					   
+				 </Table>
+		  </ExchangeRules>
+	</DeviceTcpIp>
 </DevicesWithTcpIp>
 
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" ProviderType="xml_mainWindow"  
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow"
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -161,15 +183,19 @@
 			 (ПРИБ.+ПУТЬ:1,2,3)
 			 (ОТПР.+ПУТЬ:1,2,3)
              ("Отменен_БлокВремОгр/ЗадержкаПрибытия_БлокВремОгр/ЗадержкаОтправления_БлокВремОгр") - Если указанно ограничение "МеньшеТекВремени" или "БольшеТекВремени" и поезд отмененн/задерживается, то временные огранчиения не учитываются
+			 
 			 ("МеньшеТекВремени/БольшеТекВремени")
+			 (ДельтаТекВремени:120|120)  (-|+)
 			 
 			 (ЛимитСтрокТаблицы:15)
+			 
+			 
 
 			 -->
 
 			 
 <!-- Binding="ToGeneral:ГлавноеОкно" -->
-<!--Варианты (ГлавноеОкно/ОкноРасписания)-->
+<!--Варианты (ГлавноеОкно/ОкноРасписания/ОкноРасписанияОперативное)-->
 
 
 
@@ -183,6 +209,7 @@
 
 <!--ProviderType= xml_tlist-->		
 <!--ProviderType= xml_mainWindow-->		
-<!--ProviderType= xml_sheduleWindow-->						   
+<!--ProviderType= xml_sheduleWindow-->		
+<!--ProviderType= xml_staticWindow-->					   
 					   
 						   
