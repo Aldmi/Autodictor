@@ -27,7 +27,7 @@ namespace MainExample
 
         #region prop
 
-        public Dictionary<byte, List<string[]>> Tables { get; set; } = new Dictionary<byte, List<string[]>>();
+        public Dictionary<byte, List<string>> Tables { get; set; } = new Dictionary<byte, List<string>>();
 
         #endregion
 
@@ -100,14 +100,12 @@ namespace MainExample
 
 
 
-        private List<string[]> LoadTableFromFile(string fileName)
+        private List<string> LoadTableFromFile(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
                 return null;
 
-            var table = new List<string[]>();
-            string[] array;
-
+            var table = new List<string>();
             string path = Application.StartupPath + @"\StaticTableDisplay" + @"\" + fileName;
             if (File.Exists(path))
             {
@@ -118,20 +116,18 @@ namespace MainExample
                         string line;
                         while ((line = file.ReadLine()) != null)
                         {
-                            array = line.Split(';');
-                            table.Add(array);
+                            table.Add(line);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка чтения файла {path}  ОШИБКА: {ex.Message}");
+                    MessageBox.Show($@"Ошибка чтения файла {path}  ОШИБКА: {ex.Message}");
                 }
             }
             else
             {
-                array = new string[dgv_main.ColumnCount];
-                table.Add(array);
+                table.Add(String.Empty);
             }
 
             return table;
@@ -139,7 +135,7 @@ namespace MainExample
 
 
 
-        private void SaveTableToFile(List<string[]> table, string fileName)
+        private void SaveTableToFile(List<string> table, string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
                 return;
@@ -149,15 +145,9 @@ namespace MainExample
             {
                 using (StreamWriter dumpFile = new StreamWriter(path))            //если файла нет, он будет создан
                 {
-                    foreach (string[] row in table)
+                    foreach (string row in table)
                     {
-                        StringBuilder line= new StringBuilder();
-                        for (int j = 0; j < row.Length; j++)
-                        {
-                            var spliter = (j < row.Length - 1) ? ";" : string.Empty;
-                            line.Append(row[j] + spliter);
-                        }
-                        dumpFile.WriteLine(line.ToString());
+                        dumpFile.WriteLine(row);
                     }
 
                     dumpFile.Close();
@@ -165,7 +155,7 @@ namespace MainExample
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка записи файла {path}  ОШИБКА: {ex.Message}");
+                MessageBox.Show($@"Ошибка записи файла {path}  ОШИБКА: {ex.Message}");
             }
         }
 
@@ -203,13 +193,8 @@ namespace MainExample
                 currentTable1.Clear();
                 for (int i = 0; i < dgv_main.Rows.Count - 1; i++)
                 {
-                    List<string> rowVal = new List<string>();
-                    for (int j = 0; j < dgv_main.Columns.Count; j++)
-                    {
-                        rowVal.Add(dgv_main[j, i].FormattedValue as string);
-                    }
-
-                    currentTable1.Add(rowVal.ToArray());
+                    string rowVal= dgv_main[0, i].FormattedValue as string;
+                    currentTable1.Add(rowVal);
                 }
 
                 //сохранение на диск-----------------------------------
@@ -224,7 +209,7 @@ namespace MainExample
             //отобразим новую таблицу-----------------------------------
             dgv_main.Rows.Clear();
             var currentTable = Tables[(byte)selectIndex];
-            foreach (object[] row in currentTable)
+            foreach (string row in currentTable)
             {
                 dgv_main.Rows.Add(row);
             }
@@ -244,27 +229,20 @@ namespace MainExample
 
             //формирование таблицу отправки------------------------------
             var currentTable = Tables[(byte)_currentSelectIndex];
+
+            DateTime date=  new DateTime(2017,1,1, 10,0,0);
             foreach (var row in currentTable)
             {
-                var uit = new UniversalInputType();
+                var uit = new UniversalInputType
+                {
+                    NumberOfTrain = row?.Trim(),
+                    Time = date
+                };
 
-                var numberOfTrain = row[0]?.Trim();
-                var numberOfPath = row[1]?.Trim();
-                var stations = row[2]?.Trim();
-                var time = row[3]?.Trim();
-                var note = row[4]?.Trim();
-
-                uit.NumberOfTrain = numberOfTrain;
-                uit.PathNumber = numberOfPath;
-                uit.Stations = stations;
-                uit.Note = note;
-                DateTime outTimeVal;
-                if (!DateTime.TryParse(time, out outTimeVal))
-                    continue;
-                uit.Time = outTimeVal;
-
-                uit.Message = $"ПОЕЗД:{uit.NumberOfTrain}, ПУТЬ:{uit.PathNumber}, СОБЫТИЕ:{uit.Event}, СТАНЦИИ:{uit.Stations}, ВРЕМЯ:{uit.Time.ToShortTimeString()}";
+                uit.Message = $"Статическая строка:{uit.NumberOfTrain}";
                 resultUit.TableData.Add(uit);
+
+                date = date.Add(new TimeSpan(0, 1, 0)); //для упорядочевания по времени при отправке
             }
 
 

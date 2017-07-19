@@ -33,15 +33,11 @@ namespace MainExample
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv_main = new System.Windows.Forms.DataGridView();
-            this.cl_NumbOfTrain = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl_numberOfPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl_Stations = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cl_note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_Show = new System.Windows.Forms.Button();
             this.lv_select = new System.Windows.Forms.ListView();
             this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cl_NumbOfTrain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_main)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,11 +58,7 @@ namespace MainExample
             this.dgv_main.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_main.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cl_NumbOfTrain,
-            this.cl_numberOfPath,
-            this.cl_Stations,
-            this.cl_time,
-            this.cl_note});
+            this.cl_NumbOfTrain});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -81,39 +73,6 @@ namespace MainExample
             this.dgv_main.TabIndex = 0;
             this.dgv_main.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_main_CellEndEdit);
             this.dgv_main.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgv_main_UserDeletingRow);
-            // 
-            // cl_NumbOfTrain
-            // 
-            this.cl_NumbOfTrain.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cl_NumbOfTrain.HeaderText = "Номер поезда";
-            this.cl_NumbOfTrain.Name = "cl_NumbOfTrain";
-            this.cl_NumbOfTrain.Width = 116;
-            // 
-            // cl_numberOfPath
-            // 
-            this.cl_numberOfPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cl_numberOfPath.HeaderText = "Номер пути";
-            this.cl_numberOfPath.Name = "cl_numberOfPath";
-            this.cl_numberOfPath.Width = 101;
-            // 
-            // cl_Stations
-            // 
-            this.cl_Stations.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cl_Stations.HeaderText = "Станция";
-            this.cl_Stations.Name = "cl_Stations";
-            // 
-            // cl_time
-            // 
-            this.cl_time.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.cl_time.HeaderText = "Время";
-            this.cl_time.Name = "cl_time";
-            this.cl_time.Width = 74;
-            // 
-            // cl_note
-            // 
-            this.cl_note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cl_note.HeaderText = "Примечание";
-            this.cl_note.Name = "cl_note";
             // 
             // btn_Show
             // 
@@ -154,6 +113,12 @@ namespace MainExample
             this.Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Name.Width = 200;
             // 
+            // cl_NumbOfTrain
+            // 
+            this.cl_NumbOfTrain.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cl_NumbOfTrain.HeaderText = "Текст";
+            this.cl_NumbOfTrain.Name = "cl_NumbOfTrain";
+            // 
             // StaticDisplayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,7 +129,7 @@ namespace MainExample
             this.Controls.Add(this.lv_select);
             this.Controls.Add(this.btn_Show);
             this.Controls.Add(this.dgv_main);
-           // this.Name = "StaticDisplayForm";
+
             this.Text = "Отображение статической информации";
             ((System.ComponentModel.ISupportInitialize)(this.dgv_main)).EndInit();
             this.ResumeLayout(false);
@@ -179,9 +144,5 @@ namespace MainExample
         private System.Windows.Forms.ColumnHeader Id;
         private System.Windows.Forms.ColumnHeader Name;
         private DataGridViewTextBoxColumn cl_NumbOfTrain;
-        private DataGridViewTextBoxColumn cl_numberOfPath;
-        private DataGridViewTextBoxColumn cl_Stations;
-        private DataGridViewTextBoxColumn cl_time;
-        private DataGridViewTextBoxColumn cl_note;
     }
 }
