@@ -4,7 +4,7 @@
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow }
+    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow }
 
     public enum DateTimeFormat
     {
@@ -56,6 +56,12 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             {
                 XmlType = XmlSpecialSettings.XmlType.XmlSheduleWindow;
             }
+            else
+            if (providerName.ToLower().Contains("xml_staticwindow"))
+            {
+                XmlType = XmlSpecialSettings.XmlType.XmlStaticWindow;
+            }
+
 
             if (string.IsNullOrEmpty(timeFormat))
             {

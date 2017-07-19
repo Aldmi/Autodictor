@@ -896,6 +896,10 @@ namespace CommunicationDevices.Model
                                 case XmlType.XmlSheduleWindow:
                                     provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat));
                                     break;
+
+                                case XmlType.XmlStaticWindow:
+                                    provider = new StreamWriteDataProvider(new XmlStaticWindowFormatProvider());
+                                    break;
                             }
 
                             behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);

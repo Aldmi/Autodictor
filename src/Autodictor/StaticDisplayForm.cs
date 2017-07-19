@@ -230,19 +230,23 @@ namespace MainExample
             //формирование таблицу отправки------------------------------
             var currentTable = Tables[(byte)_currentSelectIndex];
 
-            DateTime date=  new DateTime(2017,1,1, 10,0,0);
+            DateTime time=  new DateTime(2017,1,1, 10,0,0);
             foreach (var row in currentTable)
             {
                 var uit = new UniversalInputType
                 {
                     NumberOfTrain = row?.Trim(),
-                    Time = date
+                    ViewBag= new Dictionary<string, dynamic>()
+                    { 
+                        { "staticTable", row?.Trim()}
+                    },
+                    Time = time
                 };
 
                 uit.Message = $"Статическая строка:{uit.NumberOfTrain}";
                 resultUit.TableData.Add(uit);
 
-                date = date.Add(new TimeSpan(0, 1, 0)); //для упорядочевания по времени при отправке
+                time = time.Add(new TimeSpan(0, 1, 0)); //для упорядочевания по времени при отправке
             }
 
 
@@ -285,15 +289,10 @@ namespace MainExample
 
 
 
-        //-----------
+        //Добавление DragAndDrope
         private Rectangle dragBoxFromMouseDown;
         private int rowIndexFromMouseDown;
         private int rowIndexOfItemUnderMouseToDrop;
-
-
-
-
-
 
         private void dgv_main_MouseMove(object sender, MouseEventArgs e)
         {

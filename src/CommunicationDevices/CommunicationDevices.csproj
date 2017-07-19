@@ -111,6 +111,7 @@
     <Compile Include="DataProviders\XmlDataProvider\IFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlSheduleWindowFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlMainWindowFormatProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlStaticWindowFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlTListFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\StreamWriteDataProvider.cs" />
     <Compile Include="Rules\ExchangeRules\BaseExchangeRule.cs" />
