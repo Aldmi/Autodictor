@@ -1749,7 +1749,7 @@ namespace MainExample
 
         private void СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений()
         {
-            //Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ");//DEBUG
+            Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ");//DEBUG
             Log.log.Fatal("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
 
             if (SoundChanelManagment != null)

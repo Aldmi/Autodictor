@@ -127,11 +127,11 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         switch (_dateTimeFormat)
                         {
                             case DateTimeFormat.None:
-                                timeDepart = uit.Time.ToString("s");
+                                timeArrival = uit.Time.ToString("s");
                                 break;
 
                             case DateTimeFormat.Sortable:
-                                timeArrival = uit.Time.ToString("");
+                                timeArrival = uit.Time.ToString("s");
                                 break;
 
                             case DateTimeFormat.LinuxTimeStamp:
@@ -218,8 +218,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            xDoc.Save(path);
+            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            //xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();
