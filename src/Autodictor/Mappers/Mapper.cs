@@ -4,6 +4,7 @@ using System.Linq;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Model;
 using Domain.Entitys;
+using MainExample.Entites;
 
 
 namespace MainExample.Mappers

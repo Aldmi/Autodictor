@@ -108,12 +108,6 @@ namespace MainExample
         public string ШаблонИлиСообщение;   //текст стат. сообщения, или номер шаблона в динам. сообщении (для Субтитров)
     };
 
-    public class SoundRecordChanges
-    {
-        public DateTime TimeStamp { get; set; }       //Время фиксации изменений
-        public SoundRecord Rec { get; set; }         //До 
-        public SoundRecord NewRec { get; set; }      //После
-    }
 
 
     public partial class MainWindowForm : Form
@@ -208,18 +202,18 @@ namespace MainExample
             }
 
             DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
-             {
-                 if (isConnect)
-                 {
-                     MainForm.СвязьСЦис.Text = "ЦИС на связи";
-                     MainForm.СвязьСЦис.BackColor = Color.LightGreen;
-                 }
-                 else
-                 {
-                     MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
-                     MainForm.СвязьСЦис.BackColor = Color.Orange;
-                 }
-             });
+            {
+                if (isConnect)
+                {
+                    MainForm.СвязьСЦис.Text = "ЦИС на связи";
+                    MainForm.СвязьСЦис.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
+                    MainForm.СвязьСЦис.BackColor = Color.Orange;
+                }
+            });
 
 
             DispouseQueueChangeRx = QueueSound.QueueChangeRx.Subscribe(status =>
@@ -283,7 +277,7 @@ namespace MainExample
                 if (soundRecordTech.ID > 0)
                 {
                     int index = TechnicalMessageForm.SoundRecords.IndexOf(soundRecordTech);
-                    var template =soundRecordTech.СписокФормируемыхСообщений.FirstOrDefault(i => i.Id == templateChangeValue.Template.Id);
+                    var template = soundRecordTech.СписокФормируемыхСообщений.FirstOrDefault(i => i.Id == templateChangeValue.Template.Id);
                     switch (templateChangeValue.StatusPlaying)
                     {
                         case StatusPlaying.Start:
@@ -838,7 +832,7 @@ namespace MainExample
                             //Обновить номер пути (текущий номер / предыдущий, до автосброса)
                             var номерПути = (Данные.НомерПути != Данные.НомерПутиБезАвтосброса) ?
                                              $"{Данные.НомерПути} ({Данные.НомерПутиБезАвтосброса})" :
-                                             Данные.НомерПути;               
+                                             Данные.НомерПути;
                             if (lv.Items[item].SubItems[2].Text != номерПути)
                             {
                                 lv.Items[item].SubItems[2].Text = номерПути;
@@ -927,7 +921,7 @@ namespace MainExample
                                     {
                                         ParentId = null,
                                         RootId = Сообщение.ID,
-                                        ТипСообщения= ТипСообщения.Статическое,
+                                        ТипСообщения = ТипСообщения.Статическое,
                                         ИмяВоспроизводимогоФайла = Sound.Name,
                                         Приоритет = Priority.Low,
                                         Язык = NotificationLanguage.Ru,
@@ -995,15 +989,15 @@ namespace MainExample
             for (int i = 0; i < SoundRecords.Count; i++)
             {
                 var Данные = SoundRecords.ElementAt(i).Value;
-                var key= SoundRecords.ElementAt(i).Key;
+                var key = SoundRecords.ElementAt(i).Key;
                 внесеныИзменения = false;
 
                 while (true)
                 {
                     if (Данные.Активность == true)
                     {
-                       if ((Данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                             Данные.СписокНештатныхСообщений.Clear();
+                        if ((Данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                            Данные.СписокНештатныхСообщений.Clear();
 
                         // Проверка на нештатные ситуации
                         if ((Данные.БитыНештатныхСитуаций & 0x0F) != 0x00)
@@ -1080,12 +1074,12 @@ namespace MainExample
                                                         //TODO: вычислять языки оповещения 
                                                         НазваниеШаблона = нештатноеСообщение.НазваниеШаблона,
                                                     };
-                                                    MainWindowForm.ВоспроизвестиШаблонОповещения( "Автоматическое воспроизведение сообщения о внештатной ситуации", Данные, шаблонФормируемогоСообщения, ТипСообщения.ДинамическоеАварийное);
+                                                    MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение сообщения о внештатной ситуации", Данные, шаблонФормируемогоСообщения, ТипСообщения.ДинамическоеАварийное);
                                                 }
                                             }
                                         }
 
-                                        if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(нештатноеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена &&  DateTime.Now > времяСобытия.AddSeconds(ВремяЗадержкиВоспроизведенныхСобытий)))//убрать через 5 мин. после воспроизведения
+                                        if (DateTime.Now > времяСобытия.AddMinutes(-30) && !(нештатноеСообщение.СостояниеВоспроизведения == SoundRecordStatus.Воспроизведена && DateTime.Now > времяСобытия.AddSeconds(ВремяЗадержкиВоспроизведенныхСобытий)))//убрать через 5 мин. после воспроизведения
                                         {
                                             byte состояниеСтроки = 0;
                                             switch (нештатноеСообщение.СостояниеВоспроизведения)
@@ -1200,7 +1194,7 @@ namespace MainExample
                         }
 
                         if (DateTime.Now > СамоеПозднееВремя.AddMinutes(3))
-                        {            
+                        {
                             if (Данные.СостояниеКарточки != 0)
                             {
                                 Данные.СостояниеКарточки = 0;
@@ -1225,7 +1219,7 @@ namespace MainExample
                                 }
                             }
                             else
-                            if (Данные.СостояниеКарточки != 3)  
+                            if (Данные.СостояниеКарточки != 3)
                             {
                                 Данные.СостояниеКарточки = 3;
                                 Данные.ОписаниеСостоянияКарточки = "Нет пути";
@@ -1236,7 +1230,7 @@ namespace MainExample
 
 
                         // ОБЛАСТЬ СРАБОТКИ ШАБЛОНОВ
-                        int КоличествоВключенныхГалочек = 0;                                 
+                        int КоличествоВключенныхГалочек = 0;
                         for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
                         {
                             var формируемоеСообщение = Данные.СписокФормируемыхСообщений[j];
@@ -1291,7 +1285,7 @@ namespace MainExample
                                             внесеныИзменения = true;
 
                                             if (РазрешениеРаботы == true)
-                                                MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение расписания", Данные,формируемоеСообщение, ТипСообщения.Динамическое);
+                                                MainWindowForm.ВоспроизвестиШаблонОповещения("Автоматическое воспроизведение расписания", Данные, формируемоеСообщение, ТипСообщения.Динамическое);
                                         }
                                     }
 
@@ -1436,7 +1430,7 @@ namespace MainExample
                     }
                 }
             }
-                
+
             #endregion
 
 
@@ -1546,7 +1540,7 @@ namespace MainExample
                         //-----------DEBUG--------------
                         if (данные.НомерПоезда == "562")
                         {
-                            
+
                         }
                         //-----------
 
@@ -1744,7 +1738,7 @@ namespace MainExample
         {
             //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
             Log.log.Fatal("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
-            
+
             if (SoundChanelManagment != null)
             {
                 var soundChUit = new UniversalInputType { SoundChanels = Program.Настройки.КаналыДальнегоСлед.ToList(), ViewBag = new Dictionary<string, dynamic>() };
@@ -1944,7 +1938,7 @@ namespace MainExample
                                 }
 
 
-                              //Изменение названия поезда
+                                //Изменение названия поезда
                                 switch (listView.Name)
                                 {
                                     case "listView1":
@@ -1988,7 +1982,7 @@ namespace MainExample
 
                                 if (данные.БитыНештатныхСитуаций != старыеДанные.БитыНештатныхСитуаций)
                                 {
-                                    данные= ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                                    данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
                                 }
 
 
@@ -2190,7 +2184,7 @@ namespace MainExample
                                     {
                                         SoundRecord Данные = SoundRecords[Key];
                                         КлючВыбранныйМеню = Key;
-                        
+
                                         var paths = Program.PathWaysRepository.List().Select(p => p.Name).ToList();
                                         for (int i = 0; i < СписокПолейПути.Length - 1; i++)
                                         {
@@ -2213,7 +2207,7 @@ namespace MainExample
                                             СписокПолейПути[номерПути].Checked = true;
                                         else
                                             СписокПолейПути[0].Checked = true;
-                              
+
 
                                         ToolStripMenuItem[] СписокНумерацииВагонов = new ToolStripMenuItem[] { отсутсвуетToolStripMenuItem, сГоловыСоставаToolStripMenuItem, сХвостаСоставаToolStripMenuItem };
                                         for (int i = 0; i < СписокНумерацииВагонов.Length; i++)
@@ -2270,7 +2264,7 @@ namespace MainExample
                     {
                         this.ContextMenuStrip = this.contextMenuStrip2;
                         try
-                         {
+                        {
                             ListView.SelectedIndexCollection sic = this.lVСтатическиеСообщения.SelectedIndices;
 
                             foreach (int item in sic)
@@ -2301,7 +2295,7 @@ namespace MainExample
 
 
 
-        public static void ВоспроизвестиШаблонОповещения(string названиеСообщения,  SoundRecord Record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
+        public static void ВоспроизвестиШаблонОповещения(string названиеСообщения, SoundRecord Record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
         {
             string Text;
             string logMessage = "";
@@ -2371,7 +2365,7 @@ namespace MainExample
                                 ParentId = формируемоеСообщение.Id,
                                 RootId = формируемоеСообщение.SoundRecordId,
                                 Приоритет = формируемоеСообщение.Приоритет
-                            });                 
+                            });
                             break;
 
                         case "ПУТЬ ДОПОЛНЕНИЕ":
@@ -2424,7 +2418,7 @@ namespace MainExample
                         case "НОМЕР ПОЕЗДА ТРАНЗИТ ОТПР":
                             if (!string.IsNullOrEmpty(Record.НомерПоезда2))
                             {
-                                Text = Record.НомерПоезда2;           
+                                Text = Record.НомерПоезда2;
                                 logMessage += Text + " ";
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                 {
@@ -2612,7 +2606,7 @@ namespace MainExample
 
 
                         case "ВРЕМЯ СЛЕДОВАНИЯ":
-                            if(!Record.ВремяСледования.HasValue)
+                            if (!Record.ВремяСледования.HasValue)
                                 continue;
 
                             logMessage += "Время следования: ";
@@ -2661,10 +2655,10 @@ namespace MainExample
                             if ((Record.ТипПоезда == ТипПоезда.Пригородный) || (Record.ТипПоезда == ТипПоезда.Ласточка) ||
                                 (Record.ТипПоезда == ТипПоезда.РЭКС))
                             {
-                                var списокСтанцийНаправления= Program.ПолучитьСтанцииНаправления(Record.Направление)?.Select(st=>st.NameRu).ToList();
+                                var списокСтанцийНаправления = Program.ПолучитьСтанцииНаправления(Record.Направление)?.Select(st => st.NameRu).ToList();
                                 var списокСтанцийParse = Record.Примечание.Substring(Record.Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st => st.Trim()).ToList();
 
-                                if(списокСтанцийНаправления == null || !списокСтанцийНаправления.Any())
+                                if (списокСтанцийНаправления == null || !списокСтанцийНаправления.Any())
                                     break;
 
                                 if (!списокСтанцийParse.Any())
@@ -3207,11 +3201,11 @@ namespace MainExample
             if (СтарыеДанные.СтанцияНазначения != Данные.СтанцияНазначения) СообщениеОбИзменениях += "Ст.Назн.: " + СтарыеДанные.СтанцияНазначения + " -> " + Данные.СтанцияНазначения + "; ";
             if ((СтарыеДанные.БитыАктивностиПолей & 0x04) != 0x00) if (СтарыеДанные.ВремяПрибытия != Данные.ВремяПрибытия) СообщениеОбИзменениях += "Прибытие: " + СтарыеДанные.ВремяПрибытия.ToString("HH:mm") + " -> " + Данные.ВремяПрибытия.ToString("HH:mm") + "; ";
             if ((СтарыеДанные.БитыАктивностиПолей & 0x10) != 0x00) if (СтарыеДанные.ВремяОтправления != Данные.ВремяОтправления) СообщениеОбИзменениях += "Отправление: " + СтарыеДанные.ВремяОтправления.ToString("HH:mm") + " -> " + Данные.ВремяОтправления.ToString("HH:mm") + "; ";
-            if (СтарыеДанные.Автомат != Данные.Автомат) СообщениеОбИзменениях += "Режим работы измененн: " + 
+            if (СтарыеДанные.Автомат != Данные.Автомат) СообщениеОбИзменениях += "Режим работы измененн: " +
                     (СтарыеДанные.Автомат ? "Автомат" : "Ручное") + " -> " +
                     (Данные.Автомат ? "Автомат" : "Ручное") + "; ";
-            if (СтарыеДанные.ФиксированноеВремяПрибытия != Данные.ФиксированноеВремяПрибытия) СообщениеОбИзменениях += "Фиксированное время ПРИБЫТИЯ измененно: " + 
-                    ((СтарыеДанные.ФиксированноеВремяПрибытия == null) ? "--:--": СтарыеДанные.ФиксированноеВремяПрибытия.Value.ToString("HH:mm")) + " -> " + 
+            if (СтарыеДанные.ФиксированноеВремяПрибытия != Данные.ФиксированноеВремяПрибытия) СообщениеОбИзменениях += "Фиксированное время ПРИБЫТИЯ измененно: " +
+                    ((СтарыеДанные.ФиксированноеВремяПрибытия == null) ? "--:--" : СтарыеДанные.ФиксированноеВремяПрибытия.Value.ToString("HH:mm")) + " -> " +
                     ((Данные.ФиксированноеВремяПрибытия == null) ? "--:--" : Данные.ФиксированноеВремяПрибытия.Value.ToString("HH:mm")) + "; ";
             if (СтарыеДанные.ФиксированноеВремяОтправления != Данные.ФиксированноеВремяОтправления) СообщениеОбИзменениях += "Фиксированное время ОТПРАВЛЕНИЯ измененно: " +
                     ((СтарыеДанные.ФиксированноеВремяОтправления == null) ? "--:--" : СтарыеДанные.ФиксированноеВремяОтправления.Value.ToString("HH:mm")) + " -> " +
