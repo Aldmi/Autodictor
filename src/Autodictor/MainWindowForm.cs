@@ -12,6 +12,7 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 using CommunicationDevices.Model;
+using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
 using MainExample.Comparers;
 using MainExample.Entites;
@@ -24,11 +25,6 @@ using Library.Logs;
 
 namespace MainExample
 {
-    public enum SoundRecordStatus { Выключена = 0, ОжиданиеВоспроизведения, ВоспроизведениеАвтомат, ВоспроизведениеРучное, Воспроизведена, ДобавленВОчередьАвтомат, ДобавленВОчередьРучное };
-    public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Обновление, Очистка };
-    public enum SoundRecordType { Обычное = 0, ДвижениеПоезда, ДвижениеПоездаНеПодтвержденное, Предупредительное, Важное };
-    public enum PathPermissionType { ИзФайлаНастроек = 0, Отображать, НеОтображать };
-    public enum Priority { Low = 0, Midlle, Hight, RealTime };
 
     public struct SoundRecord
     {
@@ -77,16 +73,6 @@ namespace MainExample
         public uint ТаймерПовторения;
     };
 
-    public struct СтатическоеСообщение
-    {
-        public int ID;
-        public DateTime Время;
-        public string НазваниеКомпозиции;
-        public string ОписаниеКомпозиции;
-        public SoundRecordStatus СостояниеВоспроизведения;
-        public bool Активность;
-    };
-
     public struct СостояниеФормируемогоСообщенияИШаблон
     {
         public int Id;                            // порядковый номер шаблона
@@ -102,6 +88,16 @@ namespace MainExample
         public List<NotificationLanguage> ЯзыкиОповещения;
     };
 
+    public struct СтатическоеСообщение
+    {
+        public int ID;
+        public DateTime Время;
+        public string НазваниеКомпозиции;
+        public string ОписаниеКомпозиции;
+        public SoundRecordStatus СостояниеВоспроизведения;
+        public bool Активность;
+    };
+
     public struct ОписаниеСобытия
     {
         public DateTime Время;
@@ -111,6 +107,13 @@ namespace MainExample
         public byte СостояниеСтроки;        // 0 - Выключена, 1 - движение поезда (динамика), 2 - статическое сообщение, 3 - аварийное сообщение, 4 - воспроизведение, 5 - воспроизведЕН
         public string ШаблонИлиСообщение;   //текст стат. сообщения, или номер шаблона в динам. сообщении (для Субтитров)
     };
+
+    public class SoundRecordChanges
+    {
+        public DateTime TimeStamp { get; set; }       //Время фиксации изменений
+        public SoundRecord Rec { get; set; }         //До 
+        public SoundRecord NewRec { get; set; }      //После
+    }
 
 
     public partial class MainWindowForm : Form
@@ -125,10 +128,11 @@ namespace MainExample
 
         public static SortedDictionary<string, СтатическоеСообщение> СтатическиеЗвуковыеСообщения = new SortedDictionary<string, СтатическоеСообщение>();
 
+        public static List<SoundRecordChanges> SoundRecordChanges = new List<SoundRecordChanges>();
+
         public TaskManagerService TaskManager = new TaskManagerService();
 
 
-       // private static int ID = 1;
         private bool ОбновлениеСписка = false;
 
         public static MainWindowForm myMainForm = null;
@@ -479,6 +483,11 @@ namespace MainExample
         {
             int id = 1;
 
+            //загрузим список изменений на текущий день.
+            SoundRecordChanges = Program.SoundRecordChangesDbRepository.List()
+                                                                       .Where(p => p.TimeStamp.Date == DateTime.Now.Date)
+                                                                       .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges).ToList();
+
             //Добавим весь список Оперативного расписания
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now, null, ref id);                                         // на тек. сутки
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
@@ -742,7 +751,6 @@ namespace MainExample
                 }
             }
             #endregion
-
         }
 
 
@@ -1980,7 +1988,7 @@ namespace MainExample
 
                                 if (данные.БитыНештатныхСитуаций != старыеДанные.БитыНештатныхСитуаций)
                                 {
-                                    ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                                    данные= ЗаполнениеСпискаНештатныхСитуаций(данные, key);
                                 }
 
 
@@ -2010,7 +2018,7 @@ namespace MainExample
                                 var actStr = "";
                                 if ((данные.БитыАктивностиПолей & 0x04) != 0x00)
                                 {
-                                    ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                                    данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
 
                                     actStr = данные.ВремяПрибытия.ToString("HH:mm");
                                     switch (listView.Name)
@@ -2031,7 +2039,7 @@ namespace MainExample
                                 //Обновить Время ОТПР
                                 if ((данные.БитыАктивностиПолей & 0x10) != 0x00)
                                 {
-                                    ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                                    данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
 
                                     actStr = данные.ВремяОтправления.ToString("HH:mm");
                                     switch (listView.Name)
@@ -2067,6 +2075,8 @@ namespace MainExample
                                 }
 
 
+                                СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
+
                                 ОбновитьСостояниеЗаписейТаблицы();
                             }
                         }
@@ -2080,10 +2090,10 @@ namespace MainExample
         }
 
 
-        private void ЗаполнениеСпискаНештатныхСитуаций(SoundRecord данные, string key)
+        private SoundRecord ЗаполнениеСпискаНештатныхСитуаций(SoundRecord данные, string key)
         {
             if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                return;
+                return данные;
 
             DateTime ВременноеВремяСобытия = (данные.БитыАктивностиПолей & 0x04) != 0x00 ? данные.ВремяПрибытия : данные.ВремяОтправления;
             string ФормируемоеСообщение = "";
@@ -2098,37 +2108,37 @@ namespace MainExample
             int indexШаблона = 1000;              //нештатные сообшения индексируются от 1000
             for (var date = startDate; date < endDate; date += new TimeSpan(0, 0, (int)(Program.Настройки.ИнтервалМеждуОповещениемОбОтменеПоезда * 60.0)))
             {
-                СостояниеФормируемогоСообщенияИШаблон НовыйШаблон;
-                НовыйШаблон.Id = indexШаблона++;
-                НовыйШаблон.SoundRecordId = данные.ID;
-                НовыйШаблон.Активность = данные.Активность;
-                НовыйШаблон.Приоритет = Priority.Midlle;
-                НовыйШаблон.Воспроизведен = false;
-                НовыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
-                НовыйШаблон.ВремяСмещения = (((ВременноеВремяСобытия - date).Hours * 60) + (ВременноеВремяСобытия - date).Minutes) * -1;
-                НовыйШаблон.НазваниеШаблона = String.Empty;
-                НовыйШаблон.Шаблон = String.Empty;
-                НовыйШаблон.ПривязкаКВремени = ((данные.БитыАктивностиПолей & 0x04) != 0x00) ? 0 : 1;
-                НовыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng };
+                СостояниеФормируемогоСообщенияИШаблон новыйШаблон;
+                новыйШаблон.Id = indexШаблона++;
+                новыйШаблон.SoundRecordId = данные.ID;
+                новыйШаблон.Активность = данные.Активность;
+                новыйШаблон.Приоритет = Priority.Midlle;
+                новыйШаблон.Воспроизведен = false;
+                новыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
+                новыйШаблон.ВремяСмещения = (((ВременноеВремяСобытия - date).Hours * 60) + (ВременноеВремяСобытия - date).Minutes) * -1;
+                новыйШаблон.НазваниеШаблона = String.Empty;
+                новыйШаблон.Шаблон = String.Empty;
+                новыйШаблон.ПривязкаКВремени = ((данные.БитыАктивностиПолей & 0x04) != 0x00) ? 0 : 1;
+                новыйШаблон.ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng };
 
                 if ((данные.БитыНештатныхСитуаций & 0x01) != 0x00)
                 {
-                    НовыйШаблон.НазваниеШаблона = "Авария:Отмена";
+                    новыйШаблон.НазваниеШаблона = "Авария:Отмена";
                     ФормируемоеСообщение = Program.ШаблонОповещенияОбОтменеПоезда[ТипПоезда];
                 }
                 else if ((данные.БитыНештатныхСитуаций & 0x02) != 0x00)
                 {
-                    НовыйШаблон.НазваниеШаблона = "Авария:ЗадержкаПрибытия";
+                    новыйШаблон.НазваниеШаблона = "Авария:ЗадержкаПрибытия";
                     ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеПрибытияПоезда[ТипПоезда];
                 }
                 else if ((данные.БитыНештатныхСитуаций & 0x04) != 0x00)
                 {
-                    НовыйШаблон.НазваниеШаблона = "Авария:ЗадержкаОтправления";
+                    новыйШаблон.НазваниеШаблона = "Авария:ЗадержкаОтправления";
                     ФормируемоеСообщение = Program.ШаблонОповещенияОЗадержкеОтправленияПоезда[ТипПоезда];
                 }
                 else if ((данные.БитыНештатныхСитуаций & 0x08) != 0x00)
                 {
-                    НовыйШаблон.НазваниеШаблона = "Авария:ОтправлениеПоГотов.";
+                    новыйШаблон.НазваниеШаблона = "Авария:ОтправлениеПоГотов.";
                     ФормируемоеСообщение = Program.ШаблонОповещенияООтправлениеПоГотовностиПоезда[ТипПоезда];
                 }
 
@@ -2137,16 +2147,18 @@ namespace MainExample
                     foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
                         if (Item.Name == ФормируемоеСообщение)
                         {
-                            НовыйШаблон.Шаблон = Item.Message;
+                            новыйШаблон.Шаблон = Item.Message;
                             break;
                         }
                 }
 
-                текущийСписокНештатныхСообщений.Add(НовыйШаблон);
+                текущийСписокНештатныхСообщений.Add(новыйШаблон);
             }
 
             данные.СписокНештатныхСообщений = текущийСписокНештатныхСообщений;
             SoundRecords[key] = данные;
+
+            return данные;
         }
 
 
@@ -3211,7 +3223,21 @@ namespace MainExample
             return Данные;
         }
 
-        
+
+
+        private void СохранениеИзмененийДанныхВКарточке(SoundRecord старыеДанные, SoundRecord данные)
+        {
+            var recChange = new SoundRecordChanges
+            {
+                TimeStamp = DateTime.Now,
+                Rec = старыеДанные,
+                NewRec = данные
+            };
+            SoundRecordChanges.Add(recChange);
+            Program.SoundRecordChangesDbRepository.Add(Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange));
+        }
+
+
 
         private void ОбработкаРучногоВоспроизведенияШаблона(ref SoundRecord Данные, string key)
         {

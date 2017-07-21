@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
+using Domain.Entitys;
+using Library.Logs;
 using MainExample.Entites;
 using WCFCis2AvtodictorContract.DataContract;
 
@@ -366,8 +368,8 @@ namespace MainExample.Services
             if(IsStaticSoundPlaying)
                 EventStartPlayingStatic(soundMessage);
 
-
-           // Debug.WriteLine($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+            Log.log.Fatal($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+            // Debug.WriteLine($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
 
@@ -383,6 +385,7 @@ namespace MainExample.Services
             if (IsStaticSoundPlaying)
                 EventEndPlayingStatic(soundMessage);
 
+            Log.log.Fatal($"конец проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
             //Debug.WriteLine($"конец проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 

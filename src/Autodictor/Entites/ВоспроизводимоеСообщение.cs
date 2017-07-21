@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Domain.Entitys;
 
 namespace MainExample.Entites
 {

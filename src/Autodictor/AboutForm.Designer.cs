@@ -95,7 +95,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(252, 24);
             this.label6.TabIndex = 5;
-            this.label6.Text = "Версия от:  19.07.2017_ver2";
+            this.label6.Text = "Версия от:  21.07.2017_ver2";
             // 
             // AboutForm
             // 

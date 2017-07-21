@@ -5,7 +5,7 @@ using Domain.Entitys;
 
 namespace Domain.Abstract
 {
-    public interface IRepository<T> where T : EntityBase
+    public interface IRepository<T>
     {
         T GetById(int id);
         IEnumerable<T> List();

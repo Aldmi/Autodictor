@@ -9,22 +9,13 @@ using System.Linq;
 using System.Text;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
+using Domain.Entitys;
 using MainExample.Extension;
 
 
 namespace MainExample
 {
-    public enum ТипПоезда
-    {
-        НеОпределен = 0,
-        Пассажирский = 1,
-        Пригородный = 2,
-        Фирменный = 3,
-        Скорый = 4,
-        Скоростной = 5,
-        Ласточка = 6,
-        РЭКС = 7
-    };
+
 
     public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
 

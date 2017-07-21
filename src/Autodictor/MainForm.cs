@@ -13,6 +13,7 @@ using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
+using Domain.Entitys;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Services;

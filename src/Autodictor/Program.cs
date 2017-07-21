@@ -9,6 +9,7 @@ using System.Threading;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Concrete.Generic;
+using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
 using Library.Logs;
 using Library.Xml;
@@ -16,7 +17,6 @@ using Library.Xml;
 
 namespace MainExample
 {
-    public enum NotificationLanguage {Ru, Eng };
 
     static class Program
     {
@@ -31,6 +31,8 @@ namespace MainExample
         public static string ИнфСтрокаНаТабло = "";
         public static IRepository<Direction> DirectionRepository; // Направления. хранилище XML
         public static IRepository<Pathways> PathWaysRepository; //Пути. хранилище XML
+
+        public static IRepository<SoundRecordChangesDb> SoundRecordChangesDbRepository; //Изменения в SoundRecord хранилище NoSqlDb
 
         public static _Настройки Настройки;
 
@@ -82,6 +84,10 @@ namespace MainExample
                 СписокДинамическихСообщений = new List<string>();
                 foreach (FileInfo file in dir.GetFiles("*.wav"))
                     СписокДинамическихСообщений.Add(Path.GetFileNameWithoutExtension(file.FullName));
+
+
+                string connection = @"NoSqlDb\Main.db";
+                SoundRecordChangesDbRepository = new RepositoryNoSql<SoundRecordChangesDb>(connection);
             }
             catch (Exception ex) { };
 

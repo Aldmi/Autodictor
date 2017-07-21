@@ -211,7 +211,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("TypeName", typeName),
                         new XElement("TypeAlias", typeNameShort),
                         new XElement("Addition", uit.Addition),
-                        new XElement("Note", uit.Note)                               //станции следования
+                        new XElement("Note", uit.Note)                            //станции следования
                     ));
             }
 
