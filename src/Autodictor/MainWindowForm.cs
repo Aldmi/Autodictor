@@ -123,7 +123,7 @@ namespace MainExample
 
         public static SortedDictionary<string, СтатическоеСообщение> СтатическиеЗвуковыеСообщения = new SortedDictionary<string, СтатическоеСообщение>();
 
-        public static List<SoundRecordChanges> SoundRecordChanges = new List<SoundRecordChanges>();
+        public static List<SoundRecordChanges> SoundRecordChanges = new List<SoundRecordChanges>();  //Изменения на тек.сутки + изменения на пред. сутки для поездов ходящих в тек. сутки
 
         public TaskManagerService TaskManager = new TaskManagerService();
 
@@ -482,13 +482,11 @@ namespace MainExample
             int id = 1;
 
             //загрузим список изменений на текущий день.
+            var currentDay = DateTime.Now.Date;
             SoundRecordChanges = Program.SoundRecordChangesDbRepository.List()
-                                                                       .Where(p => p.TimeStamp.Date == DateTime.Now.Date)
+                                                                       .Where(p => (p.TimeStamp.Date == currentDay) ||
+                                                                                  ((p.TimeStamp.Date == currentDay.AddDays(-1)) && (p.Rec.Время.Date == currentDay )))
                                                                        .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges).ToList();
-
-            //фильтрация по последним изменениям. среди элементов с одинаковым Id выбрать элементы с большей датой.
-            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => gr.NewRec.ID).Select(elem => elem.MaxBy(b => b.TimeStamp)).ToList();
-
 
             //Добавим весь список Оперативного расписания
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now, null, ref id);                                         // на тек. сутки
@@ -505,6 +503,9 @@ namespace MainExample
             //Добавим оставшиеся записи
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(differences, DateTime.Now, null, ref id);                                         // на тек. сутки
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(differences, DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
+
+            //Корректировка записей по изменениям
+            КорректировкаЗаписейПоИзменениям();
         }
 
 
@@ -548,6 +549,40 @@ namespace MainExample
                 }
 
                 MainWindowForm.ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
+            }
+        }
+
+
+
+        private void КорректировкаЗаписейПоИзменениям()
+        {
+            //фильтрация по последним изменениям. среди элементов с одинаковым Id выбрать элементы с большей датой.
+            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => gr.NewRec.ID)
+                .Select(elem => elem.MaxBy(b => b.TimeStamp))
+                .ToList();
+
+            for (int i = 0; i < SoundRecords.Count; i++)
+            {
+                var key = SoundRecords.Keys.ElementAt(i);
+                var rec = SoundRecords[key];
+
+                if (rec.НомерПоезда == "6808")
+                {
+                    var h = 5 + 5;
+                }
+
+                var change = filtredOnMaxDate.FirstOrDefault(f => (f.Rec.НомерПоезда == rec.НомерПоезда) &&
+                                                                  (f.Rec.НомерПоезда2 == rec.НомерПоезда2)&&
+                                                                  (f.Rec.Время.Date == rec.Время.Date));
+                if (change != null)
+                {
+                    var keyNew = change.Rec.Время.ToString("yy.MM.dd  HH:mm:ss");
+                    SoundRecords.Remove(keyNew);
+
+                    keyNew = change.NewRec.Время.ToString("yy.MM.dd  HH:mm:ss");
+                    SoundRecords[keyNew] = change.NewRec;
+                    ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
+                }
             }
         }
 
@@ -3240,6 +3275,7 @@ namespace MainExample
                 NewRec = данные
             };
             SoundRecordChanges.Add(recChange);
+           // var hh = Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange);//DEBUG
             Program.SoundRecordChangesDbRepository.Add(Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange));
         }
 

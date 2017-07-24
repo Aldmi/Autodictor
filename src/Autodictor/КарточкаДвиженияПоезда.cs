@@ -52,6 +52,7 @@ namespace MainExample
             foreach (var путь in paths)
                 cB_НомерПути.Items.Add(путь);
 
+
             cB_НомерПути.SelectedIndex = paths.IndexOf(this.Record.НомерПути) + 1;
 
 
