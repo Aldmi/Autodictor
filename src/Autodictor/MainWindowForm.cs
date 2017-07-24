@@ -21,6 +21,7 @@ using MainExample.Infrastructure;
 using MainExample.Mappers;
 using MainExample.Services;
 using Library.Logs;
+using MoreLinq;
 
 
 namespace MainExample
@@ -485,7 +486,8 @@ namespace MainExample
                                                                        .Where(p => p.TimeStamp.Date == DateTime.Now.Date)
                                                                        .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges).ToList();
 
-            //фильтрация по последним изменениям. среди элементов с одинаковым Id выбрать элементы с большей датой
+            //фильтрация по последним изменениям. среди элементов с одинаковым Id выбрать элементы с большей датой.
+            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => gr.NewRec.ID).Select(elem => elem.MaxBy(b => b.TimeStamp)).ToList();
 
 
             //Добавим весь список Оперативного расписания

@@ -320,9 +320,9 @@ namespace MainExample.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Invoke = {ex.ToString()}");//DEBUG
+                //Debug.WriteLine($"Invoke = {ex.ToString()}");//DEBUG
+                Log.log.Fatal($"Exception внутри очереди: {ex}");//DEBUG
             }
-
 
         }
 
@@ -334,8 +334,8 @@ namespace MainExample.Services
         private void EventStartPlayingQueue()
         {
             var firstElem= Queue.Peek();
-            LastSoundMessagePlayed = (firstElem.ОчередьШаблона == null || !firstElem.ОчередьШаблона.Any()) ? firstElem : firstElem.ОчередьШаблона.First(); //DEBUG
-            Debug.WriteLine($"EventStartPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG  //ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
+            LastSoundMessagePlayed = (firstElem.ОчередьШаблона == null || !firstElem.ОчередьШаблона.Any()) ? firstElem : firstElem.ОчередьШаблона.FirstOrDefault(); //DEBUG
+            //Debug.WriteLine($"EventStartPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG  //ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
 
 
             //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ *********************");//DEBUG
@@ -346,11 +346,11 @@ namespace MainExample.Services
 
         /// <summary>
         /// Событие КОНЦА проигрывания очереди.
-        /// До этого момента из очереди проигрывался послдений файл.
+        /// До этого момента из очереди проигрывался последний файл.
         /// </summary>
         private void EventEndPlayingQueue()
         {
-            Debug.WriteLine($"EventEndPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG   ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
+            //Debug.WriteLine($"EventEndPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG   ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
 
             //Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ *********************");//DEBUG
             QueueChangeRx.OnNext(StatusPlaying.Stop);
@@ -407,7 +407,7 @@ namespace MainExample.Services
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон, SoundMessage = soundMessage });
-                Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                //Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
                 return;
             }
 
@@ -422,7 +422,7 @@ namespace MainExample.Services
                     {
                         CurrentTemplatePlaying = template;
                         TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = template, SoundMessage = soundMessage});
-                        Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                        //Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
                     }
                 }
                 return;
@@ -439,7 +439,7 @@ namespace MainExample.Services
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон, SoundMessage = soundMessage });
-                Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+               // Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
                 return;
             }
         }
@@ -462,7 +462,7 @@ namespace MainExample.Services
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон, SoundMessage = soundMessage});
-                Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                //Debug.WriteLine($"-------------НАЧАЛО проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
                 CurrentTemplatePlaying = null;
                 return;
             }
@@ -478,7 +478,7 @@ namespace MainExample.Services
                     {
                         CurrentTemplatePlaying = null;
                         TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = template, SoundMessage = soundMessage });
-                        Debug.WriteLine($"--------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
+                        //Debug.WriteLine($"--------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {template.НазваниеШаблона}-----------------");//DEBUG
                     }
                 }
                 CurrentTemplatePlaying = null;
@@ -496,7 +496,7 @@ namespace MainExample.Services
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон, SoundMessage = soundMessage });
-                Debug.WriteLine($"-------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
+                //Debug.WriteLine($"-------------КОНЕЦ проигрывания ШАБЛОНА: НазваниеШаблона= {шаблон.НазваниеШаблона}-----------------");//DEBUG
                 CurrentTemplatePlaying = null;
                 return;
             }   
@@ -510,7 +510,7 @@ namespace MainExample.Services
         private void EventStartPlayingStatic(ВоспроизводимоеСообщение soundMessage)
         {
              StaticChangeRx.OnNext(new StaticChangeValue {StatusPlaying = StatusPlaying.Start, SoundMessage = soundMessage});
-             Debug.WriteLine($"^^^^^^^^^^^СТАТИКА НАЧАЛО {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+             //Debug.WriteLine($"^^^^^^^^^^^СТАТИКА НАЧАЛО {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
 
@@ -521,7 +521,7 @@ namespace MainExample.Services
         private void EventEndPlayingStatic(ВоспроизводимоеСообщение soundMessage)
         {
             StaticChangeRx.OnNext(new StaticChangeValue { StatusPlaying = StatusPlaying.Stop, SoundMessage = soundMessage });
-            Debug.WriteLine($"^^^^^^^^^^^СТАТИКА КОНЕЦ: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+            //Debug.WriteLine($"^^^^^^^^^^^СТАТИКА КОНЕЦ: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
         #endregion
