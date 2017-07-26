@@ -6,6 +6,6 @@ namespace MainExample.Entites
     {
         public DateTime TimeStamp { get; set; }       //Время фиксации изменений
         public SoundRecord Rec { get; set; }         //До 
-        public SoundRecord NewRec { get; set; }      //После
+        public SoundRecord NewRec { get; set; }      //После  
     }
 }
