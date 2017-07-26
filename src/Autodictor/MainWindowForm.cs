@@ -440,7 +440,6 @@ namespace MainExample
 
 
 
-
         private void ИнициализироватьВсеТабло()
         {
             for (var i = 0; i < SoundRecords.Count; i++)
@@ -557,7 +556,11 @@ namespace MainExample
         private void КорректировкаЗаписейПоИзменениям()
         {
             //фильтрация по последним изменениям. среди элементов с одинаковым Id выбрать элементы с большей датой.
-            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => gr.NewRec.ID)
+            //var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => gr.NewRec.ID)
+            //    .Select(elem => elem.MaxBy(b => b.TimeStamp))
+            //    .ToList();
+
+            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.Rec.НазваниеПоезда, gr.Rec.Время.Date })
                 .Select(elem => elem.MaxBy(b => b.TimeStamp))
                 .ToList();
 

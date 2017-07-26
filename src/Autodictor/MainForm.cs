@@ -453,6 +453,22 @@ namespace MainExample
 
 
 
+        private void ИзмененияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ОкноАрхиваИзменений.myMainForm != null)
+            {
+                ОкноАрхиваИзменений.myMainForm.Show();
+                ОкноАрхиваИзменений.myMainForm.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                ОкноАрхиваИзменений listFormOper = new ОкноАрхиваИзменений { MdiParent = this };
+                listFormOper.Show();
+            }
+        }
+
+
+
         private void timer_Clock_Tick(object sender, EventArgs e)
         {
             toolClockLabel.Text = DateTime.Now.ToString("dd.MM  HH:mm:ss");
@@ -543,5 +559,7 @@ namespace MainExample
                     break;
             }
         }
+
+
     }
 }

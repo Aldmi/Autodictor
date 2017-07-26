@@ -234,6 +234,12 @@
     <Compile Include="КарточкаДвиженияПоезда.Designer.cs">
       <DependentUpon>КарточкаДвиженияПоезда.cs</DependentUpon>
     </Compile>
+    <Compile Include="ОкноАрхиваИзменений.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ОкноАрхиваИзменений.Designer.cs">
+      <DependentUpon>ОкноАрхиваИзменений.cs</DependentUpon>
+    </Compile>
     <Compile Include="ОкноДобавленияПоезда.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -364,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="КарточкаДвиженияПоезда.resx">
       <DependentUpon>КарточкаДвиженияПоезда.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ОкноАрхиваИзменений.resx">
+      <DependentUpon>ОкноАрхиваИзменений.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ОкноДобавленияПоезда.resx">
       <DependentUpon>ОкноДобавленияПоезда.cs</DependentUpon>
