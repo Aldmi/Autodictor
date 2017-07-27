@@ -70,9 +70,31 @@ namespace MainExample
 
 
 
+        private void CheckAuthentication()
+        {
+            var isAuth = false;
+            while (isAuth == false)
+            {
+                var autenForm = new AuthenticationForm();
+                var result = autenForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    isAuth = autenForm.IsAuthentication; //ВХОД
+                }
+                else
+                {                   
+                    Application.Exit();                  //ВЫХОД
+                    break;
+                }
+            }
+        }
+
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            CheckAuthentication();
+
             ExchangeModel.LoadSetting();
             ExchangeModel.StartCisClient();
 

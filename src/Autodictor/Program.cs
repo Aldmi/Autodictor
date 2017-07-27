@@ -6,11 +6,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Concrete.Generic;
 using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
+using Domain.Entitys.Authentication;
 using Library.Logs;
 using Library.Xml;
 
@@ -33,6 +35,8 @@ namespace MainExample
         public static IRepository<Pathways> PathWaysRepository; //Пути. хранилище XML
 
         public static IRepository<SoundRecordChangesDb> SoundRecordChangesDbRepository; //Изменения в SoundRecord хранилище NoSqlDb
+
+        public static IRepository<User> UsersDbRepository; //Пользователи, хранилище NoSqlDb
 
         public static _Настройки Настройки;
 
@@ -62,6 +66,13 @@ namespace MainExample
             ЗагрузкаНазванийПоездов();
             ОкноНастроек.ЗагрузитьНастройки();
 
+            string connection = @"NoSqlDb\Main.db";
+            SoundRecordChangesDbRepository = new RepositoryNoSql<SoundRecordChangesDb>(connection);
+
+            connection = @"NoSqlDb\Users.db";
+            UsersDbRepository = new RepositoryNoSql<User>(connection);
+
+            //UsersDbInitialize();//не дожидаемся окончания Task-а загрузки БД
 
             try
             {
@@ -84,10 +95,6 @@ namespace MainExample
                 СписокДинамическихСообщений = new List<string>();
                 foreach (FileInfo file in dir.GetFiles("*.wav"))
                     СписокДинамическихСообщений.Add(Path.GetFileNameWithoutExtension(file.FullName));
-
-
-                string connection = @"NoSqlDb\Main.db";
-                SoundRecordChangesDbRepository = new RepositoryNoSql<SoundRecordChangesDb>(connection);
             }
             catch (Exception ex) { };
 
@@ -102,14 +109,68 @@ namespace MainExample
         }
 
 
+
         static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Log.log.Fatal($"Исключение из не UI потока {e.Exception.Message}");
         }
 
+
+
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Log.log.Fatal($"Исключение основного UI потока {(e.ExceptionObject as Exception)?.Message}");
+        }
+
+
+
+        private static async Task UsersDbInitialize()
+        {
+           await Task.Factory.StartNew(() =>
+                {
+                    string adminLogin = "admin";
+                    string adminPassword = "123456";
+
+                    var admin = UsersDbRepository.List(user => (user.Role == Role.Admin) &&
+                                                               (user.Login == adminLogin) &&
+                                                               (user.Password == adminPassword)).FirstOrDefault();
+                    if (admin == null)
+                    {
+                        UsersDbRepository.Add(new User { Login = adminLogin, Password = adminPassword, Role = Role.Admin });
+                    }
+
+                    //--DEBUG------------------------------------------------------------------------
+                    var user1 = new User { Login = "User1", Password = "User1", Role = Role.User };
+                    var userDb1 = UsersDbRepository.List(user => (user.Role == user1.Role) &&
+                                                                 (user.Login == user1.Login) &&
+                                                                 (user.Password == user1.Password)).FirstOrDefault();
+                    if (userDb1 == null)
+                    {
+                        UsersDbRepository.Add(user1);
+                    }
+
+
+                    var user2 = new User { Login = "User2", Password = "User2", Role = Role.User };
+                    var userDb2 = UsersDbRepository.List(user => (user.Role == user2.Role) &&
+                                                                 (user.Login == user2.Login) &&
+                                                                 (user.Password == user2.Password)).FirstOrDefault();
+                    if (userDb2 == null)
+                    {
+                        UsersDbRepository.Add(user2);
+                    }
+
+
+                    var user3 = new User { Login = "User3", Password = "User3", Role = Role.User };
+                    var userDb3 = UsersDbRepository.List(user => (user.Role == user3.Role) &&
+                                                                 (user.Login == user3.Login) &&
+                                                                 (user.Password == user3.Password)).FirstOrDefault();
+                    if (userDb3 == null)
+                    {
+                        UsersDbRepository.Add(user3);
+                    }
+                    //-------------------------------------------------------
+                }
+            );
         }
 
 
@@ -120,6 +181,8 @@ namespace MainExample
             return (!createdNew);
         }
 
+
+
         public static string ByteArrayToHexString(byte[] data, int begin, int count)
         {
             int i;
@@ -129,7 +192,8 @@ namespace MainExample
             return sb.ToString().ToUpper();
         }
 
-       
+
+
         public static string GetFileName(string track, NotificationLanguage lang = NotificationLanguage.Ru)
         {
             string langPostfix = String.Empty;
@@ -141,7 +205,7 @@ namespace MainExample
             }
             track += langPostfix;
             string Path = Application.StartupPath + @"\";
-         
+
 
             if (FilesFolder != null && FilesFolder.Contains(track))
                 return Path + @"Wav\Sounds\" + track + ".wav";
@@ -209,16 +273,19 @@ namespace MainExample
             return станцииНаправления;
         }
 
+
+
         public static Station ПолучитьСтанциюНаправления(string имяНаправления, string названиеСтанцииRu)
         {
-           return ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.NameRu == названиеСтанцииRu);        
+            return ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.NameRu == названиеСтанцииRu);
         }
+
 
 
         public static bool ПроеритьНаличиеСтанцииВНаправлении(string названиеСтанцииRu, string имяНаправления)
         {
-           var станция= ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.NameRu == названиеСтанцииRu);
-           return станция != null;
+            var станция = ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.NameRu == названиеСтанцииRu);
+            return станция != null;
         }
 
 

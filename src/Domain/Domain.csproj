@@ -49,6 +49,8 @@
     <Compile Include="Concrete\NoSqlReposutory\RepositoryNoSql.cs" />
     <Compile Include="Concrete\RepositoryXmlDirection.cs" />
     <Compile Include="Concrete\RepositoryXmlPathways.cs" />
+    <Compile Include="Entitys\Authentication\Role.cs" />
+    <Compile Include="Entitys\Authentication\User.cs" />
     <Compile Include="Entitys\Direction.cs" />
     <Compile Include="Entitys\EntityBase.cs" />
     <Compile Include="Entitys\Pathways.cs" />
