@@ -64,7 +64,7 @@ namespace MainExample
         {
             InitializeComponent();
 
-            _панели = new Panel[] { pCol1, pCol2, pCol3, pCol4, pCol5, pCol6, pCol7, pCol8, pCol9, pCol10, pCol11, pCol12, pCol13, pCol14, pCol15, pCol16 };
+            _панели = new Panel[] { pCol1, pCol2, pCol3, pCol4, pCol5, pCol6, pCol7, pCol8, pCol9, pCol10, pCol11, pCol12, pCol13, pCol14, pCol15, pCol16, pCol17, pCol18 };
 
             _каналыДальнегоСлед= new CheckBox[] {chBox1_LongDist, chBox2_LongDist, chBox3_LongDist, chBox4_LongDist, chBox5_LongDist, chBox6_LongDist, chBox7_LongDist, chBox8_LongDist, chBox9_LongDist, chBox10_LongDist, chBox11_LongDist, chBox12_LongDist, chBox13_LongDist, chBox14_LongDist, chBox15_LongDist, chBox16_LongDist, chBox17_LongDist, chBox18_LongDist, chBox19_LongDist, chBox20_LongDist};
             _каналыПригорода = new CheckBox[] { chBox1_Suburb, chBox2_Suburb, chBox3_Suburb, chBox4_Suburb, chBox5_Suburb, chBox6_Suburb, chBox7_Suburb, chBox8_Suburb, chBox9_Suburb, chBox10_Suburb, chBox11_Suburb, chBox12_Suburb, chBox13_Suburb, chBox14_Suburb, chBox15_Suburb, chBox16_Suburb, chBox17_Suburb, chBox18_Suburb, chBox19_Suburb, chBox20_Suburb };
@@ -124,7 +124,7 @@ namespace MainExample
             cbРазрешитьАвтоОбновлениеРасписания.Checked = Program.Настройки.РазрешениеАвтообновленияРасписания;
             dTP_Автообновление.Value = Program.Настройки.ВремяАвтообновленияРасписания;
 
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 18; i++)
                 _панели[i].BackColor = Program.Настройки.НастройкиЦветов[i];
 
             for (int i = 0; i < Program.Настройки.КаналыДальнегоСлед.Length; i++)
@@ -202,7 +202,7 @@ namespace MainExample
 
         public static void ЗагрузитьНастройки()
         {
-            Program.Настройки.НастройкиЦветов = new Color[] { Color.Black, Color.LightGray, Color.Black, Color.LightBlue, Color.Black, Color.White, Color.Black, Color.Yellow, Color.Black, Color.LightGreen, Color.Black, Color.YellowGreen, Color.Black, Color.Orange, Color.Black, Color.DarkSalmon};
+            Program.Настройки.НастройкиЦветов = new Color[] { Color.Black, Color.LightGray, Color.Black, Color.LightBlue, Color.Black, Color.White, Color.Black, Color.Yellow, Color.Black, Color.LightGreen, Color.Black, Color.YellowGreen, Color.Black, Color.Orange, Color.Black, Color.DarkSalmon, Color.Black, Color.Black };
 
             try
             {
@@ -332,8 +332,8 @@ namespace MainExample
 
                                 case "ЦветовыеНастройки":
                                     string[] ЦветовыеНастройки = Settings[1].Split(',');
-                                    if (ЦветовыеНастройки.Length == 16)
-                                        for (int i = 0; i < 16; i++)
+                                    if (ЦветовыеНастройки.Length == 18)
+                                        for (int i = 0; i < 18; i++)
                                             Program.Настройки.НастройкиЦветов[i] = ColorTranslator.FromHtml(ЦветовыеНастройки[i]);
                                     break;
 
@@ -443,7 +443,7 @@ namespace MainExample
                     DumpFile.WriteLine("ОповещениеСамогоРаннегоВремениШаблона=" + Program.Настройки.ОповещениеСамогоРаннегоВремениШаблона.ToString("0.0"));
 
                     string ЦветовыеНастройки = "";
-                    for (int i = 0; i < 16; i++)
+                    for (int i = 0; i < 18; i++)
                         ЦветовыеНастройки += ColorTranslator.ToHtml(Program.Настройки.НастройкиЦветов[i]) + ",";
                     if (ЦветовыеНастройки[ЦветовыеНастройки.Length - 1] == ',')
                         ЦветовыеНастройки = ЦветовыеНастройки.Remove(ЦветовыеНастройки.Length - 1, 1);

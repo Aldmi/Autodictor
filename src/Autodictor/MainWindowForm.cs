@@ -556,11 +556,7 @@ namespace MainExample
 
         private void КорректировкаЗаписейПоИзменениям()
         {
-            //фильтрация по последним изменениям. среди элементов с одинаковым Id выбрать элементы с большей датой.
-            //var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => gr.NewRec.ID)
-            //    .Select(elem => elem.MaxBy(b => b.TimeStamp))
-            //    .ToList();
-
+            //фильтрация по последним изменениям. среди элементов с одинаковым Названием поезда и сутками движенгия, выбрать элементы с большей датой.
             var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.Rec.НазваниеПоезда, gr.Rec.Время.Date })
                 .Select(elem => elem.MaxBy(b => b.TimeStamp))
                 .ToList();
@@ -580,11 +576,59 @@ namespace MainExample
                     SoundRecordsOld.Remove(keyNew);
 
                     keyNew = change.NewRec.Время.ToString("yy.MM.dd  HH:mm:ss");
-                    SoundRecords[keyNew] = change.NewRec;
-                    SoundRecordsOld[keyNew] = change.NewRec;
+
+                    ПрименениеЗагруженныхИзменений(rec, change.NewRec, keyNew);
+                    //SoundRecords[keyNew] = change.NewRec;
+                    //SoundRecordsOld[keyNew] = change.NewRec;
                     ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
                 }
             }
+        }
+
+
+
+
+        private void ПрименениеЗагруженныхИзменений(SoundRecord rec,  SoundRecord newRec, string key)
+        {
+           //ПРИМЕНЕНИЕ ИЗМЕНЕНИЙ
+            rec.Время = newRec.Время;
+            rec.ВремяЗадержки = newRec.ВремяЗадержки;
+            rec.ВремяОтправления = newRec.ВремяОтправления;
+            rec.ВремяПрибытия = newRec.ВремяПрибытия;
+            rec.ВремяСтоянки = newRec.ВремяСтоянки;
+            rec.ВремяСледования = newRec.ВремяСледования;
+            rec.ОжидаемоеВремя = newRec.ОжидаемоеВремя;
+            rec.ФиксированноеВремяОтправления = newRec.ФиксированноеВремяОтправления;
+            rec.ФиксированноеВремяПрибытия= newRec.ФиксированноеВремяПрибытия;
+            rec.ФиксированноеВремяОтправления = newRec.ФиксированноеВремяОтправления;
+
+            rec.Автомат = newRec.Автомат;
+            rec.Активность = newRec.Активность;
+            rec.БитыАктивностиПолей = newRec.БитыАктивностиПолей;
+            rec.БитыНештатныхСитуаций = newRec.БитыНештатныхСитуаций;
+
+            rec.Дополнение = newRec.Дополнение;
+            rec.ИменаФайлов = newRec.ИменаФайлов;  //???
+            rec.ИспользоватьДополнение = newRec.ИспользоватьДополнение;//???
+            rec.КоличествоПовторений = newRec.КоличествоПовторений;
+            rec.НазванияТабло = newRec.НазванияТабло;
+            rec.НомерПути = newRec.НомерПути;
+            rec.НомерПутиБезАвтосброса = newRec.НомерПутиБезАвтосброса;
+            rec.Описание = newRec.Описание;
+            rec.ОписаниеСостоянияКарточки = newRec.ОписаниеСостоянияКарточки;
+            rec.Примечание = newRec.Примечание;
+            rec.РазрешениеНаОтображениеПути = newRec.РазрешениеНаОтображениеПути;
+            rec.НумерацияПоезда = newRec.НумерацияПоезда;
+            rec.СтанцияНазначения = newRec.СтанцияНазначения;
+            rec.СтанцияОтправления = newRec.СтанцияОтправления;
+            rec.СостояниеОтображения = newRec.СостояниеОтображения;
+            rec.ТипСообщения = newRec.ТипСообщения;//???
+
+            rec.СписокНештатныхСообщений = newRec.СписокНештатныхСообщений;
+
+            //СОХРАНЕНИЕ
+            SoundRecords[key] = rec;
+            SoundRecordsOld[key] = rec;
         }
 
 
@@ -813,11 +857,11 @@ namespace MainExample
                                 Данные.ТипПоезда == ТипПоезда.Фирменный ||
                                 Данные.ТипПоезда == ТипПоезда.Скоростной)
                             {
-                                foreColor = Program.Настройки.НастройкиЦветов[0];
+                                foreColor = Program.Настройки.НастройкиЦветов[17];
                             }
                             else
                             {
-                                foreColor = Program.Настройки.НастройкиЦветов[2];
+                                foreColor = Program.Настройки.НастройкиЦветов[16];
                             }
 
 
@@ -825,137 +869,68 @@ namespace MainExample
                             {
                                 default:
                                 case 0: // Выключен или не актуален
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[0] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[0] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[1])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[1];
                                     break;
 
                                 case 1: // Отсутствую шаблоны оповещения
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[2] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[2] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[3])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[3];
                                     break;
 
                                 case 2: // Время не подошло (за 30 минут)
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[4] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[4] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[5])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[5];
                                     break;
 
                                 case 3: // Не установлен путь
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[6] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[6] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[7])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[7];
                                     break;
 
                                 case 4: // Не полностью включены все галочки
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[8] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[8] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[9])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[9];
                                     break;
 
                                 case 5: // Полностью включены все галочки
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[10] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[10] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[11])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[11];
                                     break;
 
                                 case 6: // Задержка
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[12] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[12] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[13])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[13];
                                     break;
 
                                 case 7: // Ручной режим за 30 мин до самого ранего события или если не выставленн ПУТЬ
-                                    if (lv.Items[item].ForeColor != foreColor)
-                                        lv.Items[item].ForeColor = foreColor;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[14] : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[14] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
                                     break;
 
                                 case 8: // Ручной режим
-                                    if (lv.Items[item].ForeColor != Color.White)
-                                        lv.Items[item].ForeColor = Color.White;
+                                    if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Color.White : foreColor))
+                                        lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Color.White : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
                                     break;
                             }
-
-
-                            //switch (Данные.СостояниеКарточки)
-                            //{
-                            //    default:
-                            //    case 0: // Выключен или не актуален
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[0])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[0];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[1])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[1];
-                            //        break;
-
-                            //    case 1: // Отсутствую шаблоны оповещения
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[2])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[2];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[3])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[3];
-                            //        break;
-
-                            //    case 2: // Время не подошло (за 30 минут)
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[4])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[4];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[5])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[5];
-                            //        break;
-
-                            //    case 3: // Не установлен путь
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[6])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[6];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[7])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[7];
-                            //        break;
-
-                            //    case 4: // Не полностью включены все галочки
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[8])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[8];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[9])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[9];
-                            //        break;
-
-                            //    case 5: // Полностью включены все галочки
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[10])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[10];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[11])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[11];
-                            //        break;
-
-                            //    case 6: // Задержка
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[12])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[12];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[13])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[13];
-                            //        break;
-
-                            //    case 7: // Ручной режим за 30 мин до самого ранего события или если не выставленн ПУТЬ
-                            //        if (lv.Items[item].ForeColor != Program.Настройки.НастройкиЦветов[14])
-                            //            lv.Items[item].ForeColor = Program.Настройки.НастройкиЦветов[14];
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
-                            //        break;
-
-                            //    case 8: // Ручной режим
-                            //        if (lv.Items[item].ForeColor != Color.White)
-                            //            lv.Items[item].ForeColor = Color.White;
-                            //        if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
-                            //            lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
-                            //        break;
-                            //}
-
 
                             //Обновить номер пути (текущий номер / предыдущий, до автосброса)
                             var номерПути = (Данные.НомерПути != Данные.НомерПутиБезАвтосброса) ?
