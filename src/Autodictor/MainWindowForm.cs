@@ -524,7 +524,7 @@ namespace MainExample
                 var newId = id++;
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
 
-
+                
                 //выдать список привязанных табло
                 record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(record.НомерПути)).Where(str => str != null).ToArray() : null;
                 record.СостояниеОтображения = TableRecordStatus.Выключена;
