@@ -172,13 +172,6 @@ namespace MainExample.Mappers
                 }
             }
 
-            if (record.НомерПоезда == "001")//DEBUG
-            {
-                var t = 5 + 5;
-            }
-
-
-
 
             if ((номерСписка & 0x10) == 0x10 ||
                 (номерСписка & 0x14) == 0x14)
@@ -399,12 +392,6 @@ namespace MainExample.Mappers
 
         public static string ПолучитьНомерПутиПоДнямНедели(TrainTableRecord record)
         {
-            if (record.Num == "6225") //DEBUG
-            {
-                var g = 5 + 5;
-            }
-
-
             if (!record.PathWeekDayes)
             {
                 return record.TrainPathNumber[WeekDays.Постоянно] == "Не определен" ? string.Empty : record.TrainPathNumber[WeekDays.Постоянно];
@@ -768,14 +755,6 @@ namespace MainExample.Mappers
 
         public static SoundRecordChangesDb SoundRecordChanges2SoundRecordChangesDb(SoundRecordChanges data)
         {
-
-            //var hh= new SoundRecordChangesDb      //DEBUG
-            //{
-            //    Rec = MapSoundRecord2SoundRecordDb(data.Rec),
-            //    NewRec = MapSoundRecord2SoundRecordDb(data.NewRec),
-            //    TimeStamp = data.TimeStamp
-            //};
-
             return new SoundRecordChangesDb
             {
                 Rec = MapSoundRecord2SoundRecordDb(data.Rec),
