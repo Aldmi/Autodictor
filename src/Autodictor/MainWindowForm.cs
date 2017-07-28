@@ -522,10 +522,18 @@ namespace MainExample
                 if (!pipelineService.CheckTrainActuality(ref config, день, ограничениеВремениПоЧасам, РаботаПоНомеруДняНедели))
                     continue;
 
+                
+            //   ДублированиеТарн
+
                 var newId = id++;
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
 
-                
+                if (record.НомерПоезда == "052")//DEBUG
+                {
+                    var t = 5 + 5;
+                }
+
+
                 //выдать список привязанных табло
                 record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(record.НомерПути)).Where(str => str != null).ToArray() : null;
                 record.СостояниеОтображения = TableRecordStatus.Выключена;
@@ -3291,7 +3299,11 @@ namespace MainExample
             if ((старыеДанные.ВремяПрибытия != данные.ВремяПрибытия) ||
                 (старыеДанные.ВремяОтправления != данные.ВремяОтправления))
             {
-                данные.Время = (данные.БитыАктивностиПолей & 0x04) != 0x00 ? данные.ВремяПрибытия : данные.ВремяОтправления;
+                данные.Время = ((данные.БитыАктивностиПолей & 0x10) == 0x10 ||
+                                (данные.БитыАктивностиПолей & 0x14) == 0x14) ? данные.ВремяОтправления : данные.ВремяПрибытия;
+
+                //DEBUG транзиты по ПРИБ.
+                //данные.Время = (данные.БитыАктивностиПолей & 0x04) != 0x00 ? данные.ВремяПрибытия : данные.ВремяОтправления;
 
                 var pipelineService = new SchedulingPipelineService();
                 var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, данные.Время);

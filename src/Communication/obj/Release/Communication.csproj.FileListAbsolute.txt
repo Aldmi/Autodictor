@@ -89,13 +89,3 @@ C:\Git\Autodictor\src\Communication\bin\Release\NLog.xml
 C:\Git\Autodictor\src\Communication\obj\Release\Communication.csprojResolveAssemblyReference.cache
 C:\Git\Autodictor\src\Communication\obj\Release\Communication.dll
 C:\Git\Autodictor\src\Communication\obj\Release\Communication.pdb
-D:\Git\Autodictor\src\Communication\bin\Release\NLog.config
-D:\Git\Autodictor\src\Communication\bin\Release\Communication.dll
-D:\Git\Autodictor\src\Communication\bin\Release\Communication.pdb
-D:\Git\Autodictor\src\Communication\bin\Release\Library.dll
-D:\Git\Autodictor\src\Communication\bin\Release\NLog.dll
-D:\Git\Autodictor\src\Communication\bin\Release\Library.pdb
-D:\Git\Autodictor\src\Communication\bin\Release\NLog.xml
-D:\Git\Autodictor\src\Communication\obj\Release\Communication.csprojResolveAssemblyReference.cache
-D:\Git\Autodictor\src\Communication\obj\Release\Communication.dll
-D:\Git\Autodictor\src\Communication\obj\Release\Communication.pdb
