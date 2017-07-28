@@ -24,14 +24,24 @@ namespace MainExample.Services
                 if (limitationTime != null)
                 {
                     DateTime времяПрибытия;
-                    if (DateTime.TryParse(config.ArrivalTime, out времяПрибытия))
+                    DateTime времяОтправления;
+
+                    bool приб = DateTime.TryParse(config.ArrivalTime, out времяПрибытия);
+                    bool отпр = DateTime.TryParse(config.DepartureTime, out времяОтправления);
+
+                    if (приб && отпр) //ТРАНЗИТ
+                    {
+                        if (!limitationTime(времяОтправления.Hour))
+                            return false;
+                    }
+                    else
+                    if (приб)
                     {
                         if (!limitationTime(времяПрибытия.Hour))
                             return false;
                     }
-
-                    DateTime времяОтправления;
-                    if (DateTime.TryParse(config.DepartureTime, out времяОтправления))
+                    else
+                    if (отпр)
                     {
                         if (!limitationTime(времяОтправления.Hour))
                             return false;
