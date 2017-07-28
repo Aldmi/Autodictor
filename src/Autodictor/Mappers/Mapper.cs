@@ -377,6 +377,12 @@ namespace MainExample.Mappers
 
         public static string ПолучитьНомерПутиПоДнямНедели(TrainTableRecord record)
         {
+            if (record.Num == "6225") //DEBUG
+            {
+                var g = 5 + 5;
+            }
+
+
             if (!record.PathWeekDayes)
             {
                 return record.TrainPathNumber[WeekDays.Постоянно] == "Не определен" ? string.Empty : record.TrainPathNumber[WeekDays.Постоянно];
@@ -397,7 +403,7 @@ namespace MainExample.Mappers
                     return record.TrainPathNumber[WeekDays.Чт];
 
                 case DayOfWeek.Friday:
-                    return record.TrainPathNumber[WeekDays.Пн];
+                    return record.TrainPathNumber[WeekDays.Пт];
 
                 case DayOfWeek.Saturday:
                     return record.TrainPathNumber[WeekDays.Сб];

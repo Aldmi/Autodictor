@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Root>
   <CisSetting>
-    <Name>Москва</Name>
-	<NameEng>Mosсow</NameEng>
+    <Name>Ленинградский</Name>
+	<NameEng>ЛенинградскийEng</NameEng>
     <EndpointAddress>http://127.0.0.1:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 
@@ -11,16 +11,8 @@
 	<CountPortion>2</CountPortion>
   </LogSetting>
 
+
   <SerialPorts>
-	<Serial>
-      <Port>1</Port>
-	  <BaudRate>19200</BaudRate>
-	  <DataBits>8</DataBits>
-	  <StopBits>1</StopBits>
-	  <Parity>Even</Parity>  
-	  <DtrEnable>True</DtrEnable> 
-	  <RtsEnable>True</RtsEnable> 
-    </Serial>
 	<Serial>
       <Port>3</Port>
 	  <BaudRate>19200</BaudRate>
@@ -30,57 +22,51 @@
 	  <DtrEnable>True</DtrEnable> 
 	  <RtsEnable>True</RtsEnable> 
     </Serial>
-<Serial>
+	
+	<Serial>
       <Port>4</Port>
-	  <BaudRate>4800</BaudRate>
+	  <BaudRate>9600</BaudRate>
 	  <DataBits>8</DataBits>
-	  <StopBits>2</StopBits>
-	  <Parity>Even</Parity>  
-	  <DtrEnable>True</DtrEnable> 
-	  <RtsEnable>True</RtsEnable> 
+	  <StopBits>1</StopBits>
+	  <Parity>None</Parity>  
+	  <DtrEnable>False</DtrEnable> 
+	  <RtsEnable>False</RtsEnable> 
     </Serial>
   </SerialPorts>
 
-  <DevicesWithSP>	 
-	 
-	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="200" TimeRespone="100" Description="Управление распределением звука по каналам"/>
 
-	 <DeviceSp Id="1" Name="PrigTable" Port="1" Address="81" TimeRespone="100" Description="Пригород" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пассажирский;Скорый;Фирменный;Скоростной;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "5">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011800144%10$16$00$60$t3МАРШРУТ
-					%001862360144%10$16$00$60$t3ВРЕМЯ
-					%002372560144%10$16$00$60$t3П
-					%42001180017017%42187234017017%42238255017017
-					%00001180{(rowNumber*28+6):D3}4%10$00$60$t3$16{Stations}<!-- Маршрут -->
-					%00186236{(rowNumber*28+6):D3}4%10$00$60$t3$16{Time:t}<!-- Время -->
-					%00237256{(rowNumber*28+6):D3}4%10$00$60$t3$16{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001256{(rowNumber*28+20):D3}4%10$00$60$t3$16{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
+
+
+
+  <DevicesWithSP> 
+<!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
+
+
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToStatic:">
+	      <ExchangeRules>    
+		    <Table Size= "3" Position = "5">
+				   <Rule Format = "Windows-1251">
+					  <Request maxLenght = "254">
+						   STX{AddressDevice:X2}{Nbyte:X2}
+						   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+						   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
+						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
+						   {CRCXor:X2}ETX
+					  </Request >
+
+					  <Response maxLenght = "8" TimeRespone="500">
+						STX0200FDETX
+					  </Response >	  
+				   </Rule>
+
+				   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
 					  <Request maxLenght = "254">
 							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
+							{DelayTime}
+							CLEAR-------------------------
 							{CRCXor:X2}ETX
 					  </Request >
 
@@ -92,1452 +78,60 @@
 				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
 					  <Request maxLenght = "254">
 							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
+							RESET-------------------------
 							{CRCXor:X2}ETX
 					  </Request >
 
 					  <Response maxLenght = "8" TimeRespone="1000">
 						STX0200FDETX
 					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="2" Name="PrigTable" Port="1" Address="5" TimeRespone="100" Description="Пригород" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пассажирский;Скорый;Фирменный;Скоростной;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "5">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011800144%10$16$00$60$t3МАРШРУТ
-					%001862360144%10$16$00$60$t3ВРЕМЯ
-					%002372560144%10$16$00$60$t3П
-					%42001180017017%42187234017017%42238255017017
-					%00001180{(rowNumber*28+6):D3}4%10$00$60$t3$16{Stations}<!-- Маршрут -->
-					%00186236{(rowNumber*28+6):D3}4%10$00$60$t3$16{Time:t}<!-- Время -->
-					%00237256{(rowNumber*28+6):D3}4%10$00$60$t3$16{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001256{(rowNumber*28+20):D3}4%10$00$60$t3$16{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="3" Name="PrigTable" Port="1" Address="6" TimeRespone="100" Description="Пригород" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пассажирский;Скорый;Фирменный;Скоростной;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "5">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011800144%10$16$00$60$t3МАРШРУТ
-					%001862360144%10$16$00$60$t3ВРЕМЯ
-					%002372560144%10$16$00$60$t3П
-					%42001180017017%42187234017017%42238255017017
-					%00001180{(rowNumber*28+6):D3}4%10$00$60$t3$16{Stations}<!-- Маршрут -->
-					%00186236{(rowNumber*28+6):D3}4%10$00$60$t3$16{Time:t}<!-- Время -->
-					%00237256{(rowNumber*28+6):D3}4%10$00$60$t3$16{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001256{(rowNumber*28+20):D3}4%10$00$60$t3$16{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="4" Name="DalOtprTable" Port="1" Address="80" TimeRespone="100" Description="Дальние отправления" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пригородный;Ласточка;РЭКС;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "3">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000012560154%10$15$00$60$t3ОТПРАВЛЕНИЕ
-					%42001256018018
-					%42001256029029
-					%42001256040040
-					%42001256051051
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001021{(rowNumber*11+16):D3}4%10$00$60$t3$13{NumberOfTrain}<!-- Номер поезда -->
-					%00025144{(rowNumber*11+16):D3}4%10$00$60$t3$13{Stations}<!-- Маршрут -->
-					%00168199{(rowNumber*11+16):D3}4%10$00$60$t3$13{Time:t}<!-- Время отправления -->
-					%00202233{(rowNumber*11+16):D3}4%10$00$60$t3$13   <!-- Время прибытия -->
-					%00241254{(rowNumber*11+16):D3}4%10$00$60$t3$13{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="5" Name="DalPribTable" Port="1" Address="80" TimeRespone="100" Description="Дальние прибытие" Binding="ToGeneral:ГлавноеОкно" Contrains="ОТПР.;ЗадержкаПрибытия_БлокВремОгр;Пригородный;Ласточка;РЭКС;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "3">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000012560614%10$15$00$60$t3ПРИБЫТИЕ
-					%42001256065065
-					%42001256076076
-					%42001256087087
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001021{(rowNumber*11+63):D3}4%10$00$60$t3$13{NumberOfTrain}<!-- Номер поезда -->
-					%00025144{(rowNumber*11+63):D3}4%10$00$60$t3$13{Stations}<!-- Маршрут -->
-					%00168199{(rowNumber*11+63):D3}4%10$00$60$t3$13   <!-- Время отправления -->
-					%00202233{(rowNumber*11+63):D3}4%10$00$60$t3$13{Time:t}<!-- Время прибытия -->
-					%00241254{(rowNumber*11+63):D3}4%10$00$60$t3$13{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="6" Name="DalOtprTable" Port="1" Address="76" TimeRespone="100" Description="Дальние отправления" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пригородный;Ласточка;РЭКС;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "3">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000012560154%10$15$00$60$t3ОТПРАВЛЕНИЕ
-					%42001256018018
-					%42001256029029
-					%42001256040040
-					%42001256051051
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001021{(rowNumber*11+16):D3}4%10$00$60$t3$13{NumberOfTrain}<!-- Номер поезда -->
-					%00025144{(rowNumber*11+16):D3}4%10$00$60$t3$13{Stations}<!-- Маршрут -->
-					%00168199{(rowNumber*11+16):D3}4%10$00$60$t3$13{Time:t}<!-- Время отправления -->
-					%00202233{(rowNumber*11+16):D3}4%10$00$60$t3$13   <!-- Время прибытия -->
-					%00241254{(rowNumber*11+16):D3}4%10$00$60$t3$13{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="7" Name="DalPribTable" Port="1" Address="76" TimeRespone="100" Description="Дальние прибытие" Binding="ToGeneral:ГлавноеОкно" Contrains="ОТПР.;ЗадержкаПрибытия_БлокВремОгр;Пригородный;Ласточка;РЭКС;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "3">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000012560614%10$15$00$60$t3ПРИБЫТИЕ
-					%42001256065065
-					%42001256076076
-					%42001256087087
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001021{(rowNumber*11+63):D3}4%10$00$60$t3$13{NumberOfTrain}<!-- Номер поезда -->
-					%00025144{(rowNumber*11+63):D3}4%10$00$60$t3$13{Stations}<!-- Маршрут -->
-					%00168199{(rowNumber*11+63):D3}4%10$00$60$t3$13   <!-- Время отправления -->
-					%00202233{(rowNumber*11+63):D3}4%10$00$60$t3$13{Time:t}<!-- Время прибытия -->
-					%00241254{(rowNumber*11+63):D3}4%10$00$60$t3$13{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
+				   </Rule>						   
+             </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
 
-	 <DeviceSp Id="10" Name="PerronDal" Port="3" Address="20" TimeRespone="100" Description="Путь 1а" Binding="ToPath:1">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011600194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%000010500404%10$16$00$60$t3{NumberOfTrain}<!-- Номер поезда -->
-					%000611300404%10$16$00$60$t3{Time:t}<!-- Время отправления -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
+<!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/> -->
 
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
+<!-- 	 <DeviceSp Id="2" Name="Vidor" Port="3" Address="2" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5"/> -->
+  </DevicesWithSP>
+  
+  
+<DevicesWithTcpIp>
+	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToGeneral:ГлавноеОкно">  
+	 	   <ExchangeRules>    
+				<Table Size= "3">
+					   <Rule Format = "Windows-1251">
+						  <Request maxLenght = "254">
+							   STX{AddressDevice:X2}{Nbyte:X2}
+							   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
+							   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+							   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
+							   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
+							   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
+							   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
+							   {CRCXor:X2}ETX
+						  </Request >
 
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
+						  <Response maxLenght = "8" TimeRespone="500">
+							STX0200FDETX
+						  </Response >	  
+					   </Rule>					   
+				 </Table>
 		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="11" Name="PerronDal" Port="3" Address="21" TimeRespone="100" Description="Путь 1" Binding="ToPath:2">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011600194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%000010500404%10$16$00$60$t3{NumberOfTrain}<!-- Номер поезда -->
-					%000611300404%10$16$00$60$t3{Time:t}<!-- Время отправления -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="12" Name="PerronDal" Port="3" Address="22" TimeRespone="100" Description="Путь 2" Binding="ToPath:3">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011600194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%000010500404%10$16$00$60$t3{NumberOfTrain}<!-- Номер поезда -->
-					%000611300404%10$16$00$60$t3{Time:t}<!-- Время отправления -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="13" Name="PerronDal" Port="3" Address="23" TimeRespone="100" Description="Путь 3" Binding="ToPath:4">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011600194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%000010500404%10$16$00$60$t3{NumberOfTrain}<!-- Номер поезда -->
-					%000611300404%10$16$00$60$t3{Time:t}<!-- Время отправления -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="14" Name="PerronDal" Port="3" Address="24" TimeRespone="100" Description="Путь 4" Binding="ToPath:5">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011600194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%000010500404%10$16$00$60$t3{NumberOfTrain}<!-- Номер поезда -->
-					%000611300404%10$16$00$60$t3{Time:t}<!-- Время отправления -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="15" Name="PerronDal" Port="3" Address="25" TimeRespone="100" Description="Путь 5" Binding="ToPath:6">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011600194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%000010500404%10$16$00$60$t3{NumberOfTrain}<!-- Номер поезда -->
-					%000611300404%10$16$00$60$t3{Time:t}<!-- Время отправления -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="16" Name="PerronPrig" Port="3" Address="26" TimeRespone="100" Description="Путь 6" Binding="ToPath:7">
-		<ExchangeRules>
-			<Table Size= "2">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			  </Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="17" Name="PerronPrig" Port="3" Address="27" TimeRespone="100" Description="Путь 7" Binding="ToPath:8">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="18" Name="PerronPrig" Port="3" Address="28" TimeRespone="100" Description="Путь 8" Binding="ToPath:9">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="19" Name="PerronPrig" Port="3" Address="29" TimeRespone="100" Description="Путь 9" Binding="ToPath:10">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="20" Name="PerronPrig" Port="3" Address="30" TimeRespone="100" Description="Путь 10" Binding="ToPath:11">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="21" Name="PerronPrig" Port="3" Address="31" TimeRespone="100" Description="Путь 11" Binding="ToPath:12">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="22" Name="PerronPrig" Port="3" Address="32" TimeRespone="100" Description="Путь 12" Binding="ToPath:13">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="23" Name="PerronPrig" Port="3" Address="33" TimeRespone="100" Description="Путь 13" Binding="ToPath:14">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="24" Name="PerronPrig" Port="3" Address="34" TimeRespone="100" Description="Путь 14" Binding="ToPath:15">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="25" Name="PerronPrig" Port="3" Address="35" TimeRespone="100" Description="Путь 15" Binding="ToPath:16">
-		<ExchangeRules>
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011350194%10$16$00$60$t3{Stations}<!-- Маршрут -->
-					%001411920194%10$16$00$60$t3{Time:t}<!-- Время -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%000011920424%10$16$00$60$t3{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="30" Name="DalPribTable" Port="3" Address="1" TimeRespone="100" Description="Дальние прибытие" Binding="ToGeneral:ГлавноеОкно" Contrains="ОТПР.;ЗадержкаПрибытия_БлокВремОгр;Пригородный;Ласточка;РЭКС;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "9">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000010290144%10$16$00$60$t3№
-					%000331400144%10$16$00$60$t3МАРШРУТ
-					%001441840144%10$16$00$60$t3ВРЕМЯ
-					%001872340144%10$16$00$60$t3ОПОЗД
-					%002372560144%10$16$00$60$t3П
-					%42001029017017%42033140017017%42144184017017%42187234017017%42238255017017
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001029{(rowNumber*14+20):D3}4%10$00$60$t3$16{NumberOfTrain}<!-- Номер поезда -->
-					%00033140{(rowNumber*14+20):D3}4%10$00$60$t3$16{Stations}<!-- Маршрут -->
-					%00144184{(rowNumber*14+20):D3}4%10$00$60$t3$16{Time:t}<!-- Время отправления -->
-					%00187234{(rowNumber*14+20):D3}4%10$00$60$t3$16{DelayTime}<!-- Время задержки -->
-					%00237256{(rowNumber*14+20):D3}4%10$00$60$t3$16{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="31" Name="DalOtprTable" Port="3" Address="2" TimeRespone="100" Description="Дальние отправления" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пригородный;Ласточка;РЭКС;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "9">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000010290144%10$16$00$60$t3№
-					%000331400144%10$16$00$60$t3МАРШРУТ
-					%001441840144%10$16$00$60$t3ВРЕМЯ
-					%001872340144%10$16$00$60$t3ОПОЗД
-					%002372560144%10$16$00$60$t3П
-					%42001029017017%42033140017017%42144184017017%42187234017017%42238255017017
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001029{(rowNumber*14+20):D3}4%10$00$60$t3$16{NumberOfTrain}<!-- Номер поезда -->
-					%00033140{(rowNumber*14+20):D3}4%10$00$60$t3$16{Stations}<!-- Маршрут -->
-					%00144184{(rowNumber*14+20):D3}4%10$00$60$t3$16{Time:t}<!-- Время отправления -->
-					%00187234{(rowNumber*14+20):D3}4%10$00$60$t3$16{DelayTime}<!-- Время задержки -->
-					%00237256{(rowNumber*14+20):D3}4%10$00$60$t3$16{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-	 
-	 <DeviceSp Id="32" Name="PrigTable" Port="3" Address="40" TimeRespone="100" Description="Пригород" Binding="ToGeneral:ГлавноеОкно" Contrains="ПРИБ.;ЗадержкаОтправления_БлокВремОгр;Пассажирский;Скорый;Фирменный;Скоростной;БольшеТекВремени">
-		<ExchangeRules>
-			<Table Size= "5">
-		      <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%30{Hour:D2}{Minute:D2}{Second:D2}<!-- синхр. вр -->
-					%000011800144%10$16$00$60$t3МАРШРУТ
-					%001862360144%10$16$00$60$t3ВРЕМЯ
-					%002372560144%10$16$00$60$t3П
-					%42001180017017%42187234017017%42238255017017
-					%00001180{(rowNumber*28+6):D3}4%10$00$60$t3$16{Stations}<!-- Маршрут -->
-					%00186236{(rowNumber*28+6):D3}4%10$00$60$t3$16{Time:t}<!-- Время -->
-					%00237256{(rowNumber*28+6):D3}4%10$00$60$t3$16{PathNumber}<!-- Путь -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251">
-			      <Request maxLenght = "254">
-				    STX{AddressDevice:X2}{Nbyte:X2}
-					%00001256{(rowNumber*28+20):D3}4%10$00$60$t3$16{Note}<!-- Остановки -->
-					{CRCXor:X2}ETX
-		          </Request >
-			
-			      <Response maxLenght = "8" TimeRespone="500">
-				    STX0200FDETX
-		          </Response >	  
-		       </Rule>
-			   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%23
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							%39
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-			</Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-
-
-</DevicesWithSP>
-
-  <DevicesWithPC>
-	 </DevicesWithPC>
-   
-  <DevicesWithTcpIp>
+	</DeviceTcpIp>
 </DevicesWithTcpIp>
 
-<DevicesWithHttp>
 
-	<DeviceHttp Id="299" Name="HttpTable" Address="http://10.255.247.2/upload.php?terminalid=10" TimeRespone="3000" Description="Online-табло" 
-	 Binding="ToGeneral:ГлавноеОкно" Contrains="ДельтаТекВремени:60|2160" ProviderType="xml_tlist" 
+
+<DevicesWithHttp>
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow"
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
 						   Connection: Keep-Alive +
 						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="userfile"; filename="xDoc.xml"'
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   />
-						   
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:16;Пригородный;Ласточка;РЭКС" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_t1.xml"'
-						   />
-<DeviceHttp Id="301" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:16;Пригородный;Ласточка;РЭКС" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_t2.xml"'
-						   />
-<DeviceHttp Id="302" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:16;Пригородный;Ласточка;РЭКС" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_t3.xml"'
-						   />
-<DeviceHttp Id="304" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:16;Пригородный;Ласточка;РЭКС" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_t5.xml"'
-						   />
-<DeviceHttp Id="305" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:6" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:1" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p06.xml"'
-						   />
-<DeviceHttp Id="306" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:7" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:1" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p07.xml"'
-						   />
-<DeviceHttp Id="307" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:8" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:1" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p08.xml"'
-						   />
-<DeviceHttp Id="308" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:9,10" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:2" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p0910.xml"'
-						   />
-<DeviceHttp Id="309" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:11" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:1" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p11.xml"'
-						   />
-<DeviceHttp Id="310" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:12" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:1" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p12.xml"'
-						   />
-<DeviceHttp Id="311" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:13" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:1" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p13.xml"'
-						   />
-<DeviceHttp Id="312" Name="HttpTable" Address="http://api/handler.php" TimeRespone="3000" Description="перрон" Binding="ToPath:14,15" Contrains="БольшеТекВремени;ЗадержкаОтправления_БлокВремОгр;ЗадержкаПрибытия_БлокВремОгр;ЛимитСтрокТаблицы:2" ProviderType="xml_mainWindow"  
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="mya_p1415.xml"'
-						   />						   
 </DevicesWithHttp>
 
 </Root>
@@ -1549,10 +143,73 @@
 <!-- Paging="5,10" - Разбиение на страницы по 5 элементов на каждой, перебирать страницы раз в 10сек. -->
 
 <!-- Contrains="ПРИБ.;ПРИГ." - Не выводить все прибывающие и все пригородные поезда. -->
-<!--Варианты (ПРИГ./ДАЛЬН.) 
+<!--Варианты:
+              (Пассажирский)
+			  (Пассажирский+ПРИБ.)
+			  (Пассажирский+ОТПР.)
+			  (Пассажирский+ПУТЬ:1,2,3)
+			  
+			  (Пригородный)
+			  (Пригородный+ПРИБ.)
+			  (Пригородный+ОТПР.)
+			  (Пригородный+ПУТЬ:1,2,3)
+			  
+			  (Фирменный)
+			  (Фирменный+ПРИБ.)
+			  (Фирменный+ОТПР.)
+			  (Фирменный+ПУТЬ:1,2,3)
+			  
+			  (Скорый)
+			  (Скорый+ПРИБ.)
+			  (Скорый+ОТПР.)
+			  (Скорый+ПУТЬ:1,2,3)
+			  
+			  (Скоростной)
+			  (Скоростной+ПРИБ.)
+			  (Скоростной+ОТПР.)
+			  (Скоростной+ПУТЬ:1,2,3)
+			  
+			  (Ласточка)
+			  (Ласточка+ПРИБ.)
+			  (Ласточка+ОТПР.)
+			  (Ласточка+ПУТЬ:1,2,3)
+			  
+			  (РЭКС)
+			  (РЭКС+ПРИБ.)
+			  (РЭКС+ОТПР.)
+			  (РЭКС+ПУТЬ:1,2,3)
+
              (ПРИБ./ОТПР.) 
-			 (ПРИБ.+ПРИГ./ПРИБ.+ДАЛЬН./ОТПР.+ПРИГ./ОТПР.+ДАЛЬН.)
-             ("МеньшеТекВремени/БольшеТекВремени") -->
+			 (ПРИБ.+ПУТЬ:1,2,3)
+			 (ОТПР.+ПУТЬ:1,2,3)
+             ("Отменен_БлокВремОгр/ЗадержкаПрибытия_БлокВремОгр/ЗадержкаОтправления_БлокВремОгр") - Если указанно ограничение "МеньшеТекВремени" или "БольшеТекВремени" и поезд отмененн/задерживается, то временные огранчиения не учитываются
+			 
+			 ("МеньшеТекВремени/БольшеТекВремени")
+			 (ДельтаТекВремени:120|120)  (-|+)
+			 
+			 (ЛимитСтрокТаблицы:15)
+			 
+			 
+
+			 -->
+
 			 
 <!-- Binding="ToGeneral:ГлавноеОкно" -->
-<!--Варианты (ГлавноеОкно/ОкноРасписания)-->
+<!--Варианты (ГлавноеОкно/ОкноРасписания/ОкноРасписанияОперативное)-->
+
+
+
+<!-- 	              Headers='Methode:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Content-Type: multipart/form-data +
+						   Host: cms.indigointeractive.ru +
+						   Connection: Keep-Alive +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"' -->
+
+<!--ProviderType= xml_tlist-->		
+<!--ProviderType= xml_mainWindow-->		
+<!--ProviderType= xml_sheduleWindow-->		
+<!--ProviderType= xml_staticWindow-->					   
+					   
+						   
