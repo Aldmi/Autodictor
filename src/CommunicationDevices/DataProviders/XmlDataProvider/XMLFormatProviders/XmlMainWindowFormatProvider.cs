@@ -163,9 +163,6 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         switch (_dateTimeFormat)
                         {
                             case DateTimeFormat.None:
-                                timeDepart = uit.Time.ToString("s");
-                                break;
-
                             case DateTimeFormat.Sortable:
                                 timeArrival = uit.TransitTime.ContainsKey("приб") ? uit.TransitTime["приб"].ToString("s") : String.Empty;
                                 timeDepart = uit.TransitTime.ContainsKey("отпр") ? uit.TransitTime["отпр"].ToString("s") : String.Empty;

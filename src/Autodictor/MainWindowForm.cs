@@ -522,11 +522,9 @@ namespace MainExample
                 if (!pipelineService.CheckTrainActuality(ref config, день, ограничениеВремениПоЧасам, РаботаПоНомеруДняНедели))
                     continue;
 
-                
-            //   ДублированиеТарн
-
                 var newId = id++;
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
+
 
                 if (record.НомерПоезда == "052")//DEBUG
                 {
