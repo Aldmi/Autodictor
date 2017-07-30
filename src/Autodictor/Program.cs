@@ -15,6 +15,7 @@ using Domain.Entitys;
 using Domain.Entitys.Authentication;
 using Library.Logs;
 using Library.Xml;
+using MainExample.Services;
 
 
 namespace MainExample
@@ -51,6 +52,8 @@ namespace MainExample
         public static string[] ШаблонОповещенияООтправлениеПоГотовностиПоезда = new string[] { "", "Отправление по готовности пассажирского поезда", "Отправление по готовности пригородного электропоезда", "Отправление по готовности фирменного поезда", "Отправление по готовности скорого поезда", "Отправление по готовности скоростного поезда", "Отправление по готовности ласточки", "Отправление по готовности РЭКСа" };
 
 
+        public static AuthenticationService AuthenticationService { get; set; } = new AuthenticationService();
+
 
 
         /// <summary>
@@ -72,7 +75,7 @@ namespace MainExample
             connection = @"NoSqlDb\Users.db";
             UsersDbRepository = new RepositoryNoSql<User>(connection);
 
-            //UsersDbInitialize();//не дожидаемся окончания Task-а загрузки БД
+            AuthenticationService.UsersDbInitialize();//не дожидаемся окончания Task-а загрузки БД
 
             try
             {
@@ -123,55 +126,6 @@ namespace MainExample
         }
 
 
-
-        private static async Task UsersDbInitialize()
-        {
-           await Task.Factory.StartNew(() =>
-                {
-                    string adminLogin = "admin";
-                    string adminPassword = "123456";
-
-                    var admin = UsersDbRepository.List(user => (user.Role == Role.Admin) &&
-                                                               (user.Login == adminLogin) &&
-                                                               (user.Password == adminPassword)).FirstOrDefault();
-                    if (admin == null)
-                    {
-                        UsersDbRepository.Add(new User { Login = adminLogin, Password = adminPassword, Role = Role.Admin });
-                    }
-
-                    //--DEBUG------------------------------------------------------------------------
-                    var user1 = new User { Login = "User1", Password = "User1", Role = Role.User };
-                    var userDb1 = UsersDbRepository.List(user => (user.Role == user1.Role) &&
-                                                                 (user.Login == user1.Login) &&
-                                                                 (user.Password == user1.Password)).FirstOrDefault();
-                    if (userDb1 == null)
-                    {
-                        UsersDbRepository.Add(user1);
-                    }
-
-
-                    var user2 = new User { Login = "User2", Password = "User2", Role = Role.User };
-                    var userDb2 = UsersDbRepository.List(user => (user.Role == user2.Role) &&
-                                                                 (user.Login == user2.Login) &&
-                                                                 (user.Password == user2.Password)).FirstOrDefault();
-                    if (userDb2 == null)
-                    {
-                        UsersDbRepository.Add(user2);
-                    }
-
-
-                    var user3 = new User { Login = "User3", Password = "User3", Role = Role.User };
-                    var userDb3 = UsersDbRepository.List(user => (user.Role == user3.Role) &&
-                                                                 (user.Login == user3.Login) &&
-                                                                 (user.Password == user3.Password)).FirstOrDefault();
-                    if (userDb3 == null)
-                    {
-                        UsersDbRepository.Add(user3);
-                    }
-                    //-------------------------------------------------------
-                }
-            );
-        }
 
 
         static bool InstanceExists()

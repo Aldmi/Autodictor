@@ -894,3 +894,4 @@ D:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ФормаЗаписи�
 D:\Git\Autodictor\src\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
 D:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.exe
 D:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.pdb
+C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.AuthenticationForm.resources

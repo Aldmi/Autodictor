@@ -40,7 +40,7 @@ namespace Domain.Concrete.NoSqlReposutory
                 var dbContext = db.GetCollection<T>(nameof(T));
                 var results = dbContext.FindById(id);
                 return results;
-            }
+            }         
         }
 
 

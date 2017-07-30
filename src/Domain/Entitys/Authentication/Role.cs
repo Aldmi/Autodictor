@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Domain.Entitys.Authentication
 {
 
-    public enum Role { Admin, User, Engineer }
+    public enum Role {Наблюдатель, Администратор, Диктор, Инженер }
 
     //public class Role : EntityBase
     //{

@@ -26,15 +26,17 @@ namespace MainExample
         public ExchangeModel ExchangeModel { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
 
-        static public int VisibleStyle = 0;
+        public static int VisibleStyle = 0;
 
-        static public MainForm mainForm = null;
-        static public ToolStripButton СвязьСЦис = null;
-        static public ToolStripButton Пауза = null;
-        static public ToolStripButton Остановить = null;
-        static public ToolStripButton Включить = null;
-        static public ToolStripButton ОбновитьСписок = null;
-        static public ToolStripButton РежимРаботы = null;
+        public static MainForm mainForm = null;
+        public static ToolStripButton СвязьСЦис = null;
+        public static ToolStripButton Пауза = null;
+        public static ToolStripButton Остановить = null;
+        public static ToolStripButton Включить = null;
+        public static ToolStripButton ОбновитьСписок = null;
+        public static ToolStripButton РежимРаботы = null;
+
+
 
 
 
@@ -69,21 +71,34 @@ namespace MainExample
         }
 
 
-
-        private void CheckAuthentication()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flagApplicationExit">ВЫХОД из приложения</param>
+        private void CheckAuthentication(bool flagApplicationExit)
         {
-            var isAuth = false;
-            while (isAuth == false)
+            while (Program.AuthenticationService.IsAuthentication == false)
             {
                 var autenForm = new AuthenticationForm();
                 var result = autenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    isAuth = autenForm.IsAuthentication; //ВХОД
+                    if (Program.AuthenticationService.IsAuthentication)
+                    {
+                        //ОТОБРАЗИТЬ ВОШЕДШЕГО ПОЛЬЗОВАТЕЛЯ
+                        tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
+                    }
                 }
                 else
-                {                   
-                    Application.Exit();                  //ВЫХОД
+                {        
+                    if (flagApplicationExit)
+                    {
+                        Application.Exit();                  //ВЫХОД
+                    }
+
+                    //ПОЛЬЗОВАТЕЛЬ - НАБЛЮДАТЕЛЬ
+                    Program.AuthenticationService.SetObserver();
+                    tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
                     break;
                 }
             }
@@ -93,7 +108,7 @@ namespace MainExample
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            CheckAuthentication();
+            CheckAuthentication(true);
 
             ExchangeModel.LoadSetting();
             ExchangeModel.StartCisClient();
@@ -522,10 +537,10 @@ namespace MainExample
         }
 
 
+
         /// <summary>
         /// "Пользовательский" -> "Автомат" -> "Ручной" -> "Пользовательский"
         /// </summary>
-
         private void tSBРежимРаботы_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(@"Сменить режим работы?", @"Смена режима работы", MessageBoxButtons.YesNo) == DialogResult.No)
@@ -583,5 +598,14 @@ namespace MainExample
         }
 
 
+
+        /// <summary>
+        /// Смена пользователя
+        /// </summary>
+        private void tSBLogOut_Click(object sender, EventArgs e)
+        {
+            Program.AuthenticationService.LogOut();
+            CheckAuthentication(false);
+        }
     }
 }

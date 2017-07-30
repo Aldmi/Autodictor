@@ -54,6 +54,8 @@
             this.RegulatoryShedules = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ИзмененияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.просмотрСправкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,8 +86,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tSBРежимРаботы = new System.Windows.Forms.ToolStripButton();
             this.timer_Clock = new System.Windows.Forms.Timer(this.components);
-            this.сервисToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ИзмененияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tSBLogOut = new System.Windows.Forms.ToolStripButton();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -297,6 +298,21 @@
             this.настройкиToolStripMenuItem1.Text = "Общие настройки";
             this.настройкиToolStripMenuItem1.Click += new System.EventHandler(this.настройкиToolStripMenuItem1_Click);
             // 
+            // сервисToolStripMenuItem
+            // 
+            this.сервисToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ИзмененияToolStripMenuItem});
+            this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
+            this.сервисToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.сервисToolStripMenuItem.Text = "Сервис";
+            // 
+            // ИзмененияToolStripMenuItem
+            // 
+            this.ИзмененияToolStripMenuItem.Name = "ИзмененияToolStripMenuItem";
+            this.ИзмененияToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.ИзмененияToolStripMenuItem.Text = "Изменения";
+            this.ИзмененияToolStripMenuItem.Click += new System.EventHandler(this.ИзмененияToolStripMenuItem_Click);
+            // 
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -311,7 +327,7 @@
             this.просмотрСправкиToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("просмотрСправкиToolStripMenuItem.Image")));
             this.просмотрСправкиToolStripMenuItem.Name = "просмотрСправкиToolStripMenuItem";
             this.просмотрСправкиToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.просмотрСправкиToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
+            this.просмотрСправкиToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.просмотрСправкиToolStripMenuItem.Text = "&Просмотр справки";
             this.просмотрСправкиToolStripMenuItem.Click += new System.EventHandler(this.просмотрСправкиToolStripMenuItem_Click);
             // 
@@ -319,7 +335,7 @@
             // 
             this.оПрограммеToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("оПрограммеToolStripMenuItem.Image")));
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(202, 26);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.оПрограммеToolStripMenuItem.Text = "&О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
@@ -340,7 +356,8 @@
             this.toolStripSeparator4,
             this.tsb_ТехническоеСообщение,
             this.toolStripSeparator3,
-            this.tSBРежимРаботы});
+            this.tSBРежимРаботы,
+            this.tSBLogOut});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
             this.tSCommands.Size = new System.Drawing.Size(1524, 38);
@@ -551,8 +568,8 @@
             this.tsb_ТехническоеСообщение.Image = ((System.Drawing.Image)(resources.GetObject("tsb_ТехническоеСообщение.Image")));
             this.tsb_ТехническоеСообщение.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_ТехническоеСообщение.Name = "tsb_ТехническоеСообщение";
-            this.tsb_ТехническоеСообщение.Size = new System.Drawing.Size(114, 35);
-            this.tsb_ТехническоеСообщение.Text = "Тех. сообщение";
+            this.tsb_ТехническоеСообщение.Size = new System.Drawing.Size(88, 35);
+            this.tsb_ТехническоеСообщение.Text = "Тех. сообщ.";
             this.tsb_ТехническоеСообщение.Click += new System.EventHandler(this.tsb_ТехническоеСообщение_Click);
             // 
             // toolStripSeparator3
@@ -578,20 +595,16 @@
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
             // 
-            // сервисToolStripMenuItem
+            // tSBLogOut
             // 
-            this.сервисToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ИзмененияToolStripMenuItem});
-            this.сервисToolStripMenuItem.Name = "сервисToolStripMenuItem";
-            this.сервисToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.сервисToolStripMenuItem.Text = "Сервис";
-            // 
-            // ИзмененияToolStripMenuItem
-            // 
-            this.ИзмененияToolStripMenuItem.Name = "ИзмененияToolStripMenuItem";
-            this.ИзмененияToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ИзмененияToolStripMenuItem.Text = "Изменения";
-            this.ИзмененияToolStripMenuItem.Click += new System.EventHandler(this.ИзмененияToolStripMenuItem_Click);
+            this.tSBLogOut.BackColor = System.Drawing.Color.PaleGreen;
+            this.tSBLogOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tSBLogOut.Image = ((System.Drawing.Image)(resources.GetObject("tSBLogOut.Image")));
+            this.tSBLogOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBLogOut.Name = "tSBLogOut";
+            this.tSBLogOut.Size = new System.Drawing.Size(26, 35);
+            this.tSBLogOut.Text = "---";
+            this.tSBLogOut.Click += new System.EventHandler(this.tSBLogOut_Click);
             // 
             // MainForm
             // 
@@ -676,6 +689,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem сервисToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ИзмененияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton tSBLogOut;
     }
 }
 

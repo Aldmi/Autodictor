@@ -76,6 +76,7 @@
             this.cb_Roles.Name = "cb_Roles";
             this.cb_Roles.Size = new System.Drawing.Size(254, 28);
             this.cb_Roles.TabIndex = 3;
+            this.cb_Roles.SelectedIndexChanged += new System.EventHandler(this.cb_Roles_SelectedIndexChanged);
             // 
             // cb_Users
             // 

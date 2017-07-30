@@ -40,7 +40,6 @@ C:\Git\Autodictor\src\Library\bin\Release\Library.dll
 C:\Git\Autodictor\src\Library\bin\Release\Library.pdb
 C:\Git\Autodictor\src\Library\bin\Release\NLog.dll
 C:\Git\Autodictor\src\Library\bin\Release\NLog.xml
-C:\Git\Autodictor\src\Library\obj\Release\Library.csprojResolveAssemblyReference.cache
 C:\Git\Autodictor\src\Library\obj\Release\Library.dll
 C:\Git\Autodictor\src\Library\obj\Release\Library.pdb
 D:\Git\Autodictor\src\Library\bin\Release\NLog.config
