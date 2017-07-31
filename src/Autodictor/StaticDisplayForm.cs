@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using CommunicationDevices.Behavior.BindingBehavior.ToStatic;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
+using Domain.Entitys.Authentication;
 
 
 namespace MainExample
@@ -219,6 +220,13 @@ namespace MainExample
 
         private void btn_Show_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             if (_binding2StaticFormBehaviors == null || !_binding2StaticFormBehaviors.Any())
                 return;
 

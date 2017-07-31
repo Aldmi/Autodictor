@@ -14,6 +14,7 @@ using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using Domain.Entitys;
+using Domain.Entitys.Authentication;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Services;
@@ -71,12 +72,14 @@ namespace MainExample
         }
 
 
+
         /// <summary>
-        /// 
+        /// Проверка аутентификации.
         /// </summary>
         /// <param name="flagApplicationExit">ВЫХОД из приложения</param>
         private void CheckAuthentication(bool flagApplicationExit)
         {
+            tSBAdmin.Visible = false;
             while (Program.AuthenticationService.IsAuthentication == false)
             {
                 var autenForm = new AuthenticationForm();
@@ -87,6 +90,13 @@ namespace MainExample
                     {
                         //ОТОБРАЗИТЬ ВОШЕДШЕГО ПОЛЬЗОВАТЕЛЯ
                         tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
+
+                        switch (Program.AuthenticationService.CurrentUser.Role)
+                        {
+                            case Role.Администратор:
+                                tSBAdmin.Visible = true;
+                                break;
+                        }
                     }
                 }
                 else
@@ -103,6 +113,7 @@ namespace MainExample
                 }
             }
         }
+
 
 
 
@@ -137,6 +148,7 @@ namespace MainExample
         }
 
 
+
         private void btnMainWindowShow_Click(object sender, EventArgs e)
         {
             if (MainWindowForm.myMainForm != null)
@@ -155,6 +167,8 @@ namespace MainExample
                 mainform.btnОбновитьСписок_Click(null, EventArgs.Empty);
             }
         }
+
+
 
         //Расписание движения поездов
         private void listExample_Click(object sender, EventArgs e)
@@ -236,6 +250,8 @@ namespace MainExample
             form.Show();
         }
 
+
+
         private void просмотрСправкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -247,6 +263,7 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
+
 
 
         private void OperativeShedules_Click(object sender, EventArgs e)
@@ -263,6 +280,7 @@ namespace MainExample
                 operativeSheduleForm.Show();
             }
         }
+
 
 
         private void RegulatoryShedules_Click(object sender, EventArgs e)
@@ -322,12 +340,16 @@ namespace MainExample
             base.OnClosed(e);
         }
 
+
+
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             toolStripMenuItem1.Checked = true;
             toolStripMenuItem2.Checked = false;
             VisibleStyle = 0;
         }
+
+
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
@@ -336,8 +358,17 @@ namespace MainExample
             VisibleStyle = 1;
         }
 
+
+
         private void добавитьСтатическоеСообщениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             СтатическоеСообщение Сообщение;
             Сообщение.ID = 0;
             Сообщение.Активность = true;
@@ -371,6 +402,8 @@ namespace MainExample
                 }
             }
         }
+
+
 
         private void TSMIПоКалендарю_Click(object sender, EventArgs e)
         {
@@ -444,6 +477,13 @@ namespace MainExample
 
         private void добавитьВнештатныйПоездToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             var newRecId = MainWindowForm.SoundRecords.Max(rec => rec.Value.ID) + 1;
             ОкноДобавленияПоезда окно = new ОкноДобавленияПоезда(newRecId);
             if (окно.ShowDialog() == DialogResult.OK)
@@ -532,6 +572,13 @@ namespace MainExample
 
         private void tsb_ТехническоеСообщение_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             TechnicalMessageForm techForm = new TechnicalMessageForm();
             techForm.ShowDialog();
         }
@@ -543,6 +590,13 @@ namespace MainExample
         /// </summary>
         private void tSBРежимРаботы_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if(!Program.AuthenticationService.CheckRoleAcsess(new List<Role> {Role.Администратор, Role.Диктор, Role.Инженер}))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             if (MessageBox.Show(@"Сменить режим работы?", @"Смена режима работы", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
@@ -606,6 +660,16 @@ namespace MainExample
         {
             Program.AuthenticationService.LogOut();
             CheckAuthentication(false);
+        }
+
+
+        /// <summary>
+        /// Админка. Управление пользователями.
+        /// </summary>
+        private void tSBAdmin_Click(object sender, EventArgs e)
+        {
+            var form= new AdminForm();
+            form.ShowDialog();
         }
     }
 }

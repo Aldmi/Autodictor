@@ -14,6 +14,7 @@ using CommunicationDevices.Devices;
 using CommunicationDevices.Model;
 using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
+using Domain.Entitys.Authentication;
 using MainExample.Comparers;
 using MainExample.Entites;
 using MainExample.Extension;
@@ -393,8 +394,14 @@ namespace MainExample
         // Обработка нажатия кнопки блокировки/разрешения работы
         private void btnБлокировка_Click(object sender, EventArgs e)
         {
-            РазрешениеРаботы = !РазрешениеРаботы;
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
 
+            РазрешениеРаботы = !РазрешениеРаботы;
             if (РазрешениеРаботы == true)
             {
                 MainForm.Включить.Text = "ОТКЛЮЧИТЬ";
@@ -416,7 +423,6 @@ namespace MainExample
         public void btnОбновитьСписок_Click(object sender, EventArgs e)
         {
             ОбновитьСписокЗвуковыхСообщений(sender, e);
-            //ОбновитьСписокЗвуковыхСообщенийВТаблице();
             ОбновитьСписокЗвуковыхСообщенийВТаблицеСтатическихСообщений();
             ОбновитьСостояниеЗаписейТаблицы();
 
@@ -563,7 +569,7 @@ namespace MainExample
         private void КорректировкаЗаписейПоИзменениям()
         {
             //фильтрация по последним изменениям. среди элементов с одинаковым Названием поезда и сутками движенгия, выбрать элементы с большей датой.
-            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.Rec.НазваниеПоезда, gr.Rec.Время.Date })
+            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.Rec.НомерПоезда, gr.Rec.Время.Date })
                 .Select(elem => elem.MaxBy(b => b.TimeStamp))
                 .ToList();
 
@@ -572,9 +578,12 @@ namespace MainExample
                 var key = SoundRecords.Keys.ElementAt(i);
                 var rec = SoundRecords[key];
 
+
                 var change = filtredOnMaxDate.FirstOrDefault(f => (f.Rec.НомерПоезда == rec.НомерПоезда) &&
                                                                   (f.Rec.НомерПоезда2 == rec.НомерПоезда2)&&
                                                                   (f.Rec.Время.Date == rec.Время.Date));
+
+
                 if (change != null)
                 {
                     var keyNew = change.Rec.Время.ToString("yy.MM.dd  HH:mm:ss");
@@ -1822,6 +1831,8 @@ namespace MainExample
             }
         }
 
+
+
         private void CheckAutoApdate()
         {
             if (!Program.Настройки.РазрешениеАвтообновленияРасписания)
@@ -1873,6 +1884,7 @@ namespace MainExample
         // ВоспроизведениеАвтомат выбраной в таблице записи
         private void btnПауза_Click(object sender, EventArgs e)
         {
+
             SoundFileStatus status = Player.GetFileStatus();
             switch (status)
             {
@@ -1892,6 +1904,13 @@ namespace MainExample
         // ВоспроизведениеАвтомат выбраной в таблице записи
         private void btnОстановить_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             SoundFileStatus status = Player.GetFileStatus();
             switch (status)
             {
@@ -1899,15 +1918,6 @@ namespace MainExample
                     QueueSound.Erase();
                     break;
             }
-        }
-
-
-
-        // Обработка закрытия основной формы
-        private void MainWindowForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (myMainForm == this)
-                myMainForm = null;
         }
 
 
@@ -1942,8 +1952,6 @@ namespace MainExample
                 }
             }
         }
-
-
 
 
 
@@ -2197,6 +2205,7 @@ namespace MainExample
         }
 
 
+
         private SoundRecord ЗаполнениеСпискаНештатныхСитуаций(SoundRecord данные, string key)
         {
             if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
@@ -2404,7 +2413,6 @@ namespace MainExample
                 //                contextMenuStrip1.Items.Add(list.Name);
             }
         }
-
 
 
 
@@ -3119,8 +3127,6 @@ namespace MainExample
 
 
 
-
-
         private void lVСобытия_ОбновитьСостояниеТаблицы()
         {
             int НомерСтроки = 0;
@@ -3163,6 +3169,7 @@ namespace MainExample
             while (НомерСтроки < lVСобытия.Items.Count)
                 lVСобытия.Items.RemoveAt(НомерСтроки);
         }
+
 
 
         private string currentPlayingTemplate = string.Empty;
@@ -3401,6 +3408,14 @@ namespace MainExample
             }
         }
 
+
+
+        // Обработка закрытия основной формы
+        private void MainWindowForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (myMainForm == this)
+                myMainForm = null;
+        }
 
 
 

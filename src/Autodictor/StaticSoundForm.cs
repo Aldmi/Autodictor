@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Domain.Entitys.Authentication;
 using MainExample.Extension;
 using MainExample.Services;
 
@@ -88,6 +89,13 @@ namespace MainExample
         // Добавить сообщение
         private void button2_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             StaticSoundRecord Данные;
 
             Данные.ID = ++ID;
@@ -102,6 +110,13 @@ namespace MainExample
         // Изменить сообщение
         private void button3_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
 
             foreach (int item in sic)
@@ -277,6 +292,13 @@ namespace MainExample
 
         private void btnЗаписатьСообщение_Click(object sender, EventArgs e)
         {
+            //проверка ДОСТУПА
+            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            {
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                return;
+            }
+
             ФормаЗаписиСообщения формаЗаписиСообщения = new ФормаЗаписиСообщения();
             if (формаЗаписиСообщения.ShowDialog() == DialogResult.OK)
             {

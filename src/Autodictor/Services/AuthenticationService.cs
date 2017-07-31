@@ -121,6 +121,17 @@ namespace MainExample.Services
             CurrentUser = new User {Login = "Наблюдатель", Role = Role.Наблюдатель};
         }
 
+
+
+        /// <summary>
+        /// Проверка доступа по ролям
+        /// </summary>
+        public bool CheckRoleAcsess(IEnumerable<Role> roles)
+        {
+            return roles.Contains(CurrentUser.Role);
+        }
+
+
         #endregion
     }
 }

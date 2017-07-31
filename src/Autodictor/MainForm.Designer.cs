@@ -85,8 +85,10 @@
             this.tsb_ТехническоеСообщение = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tSBРежимРаботы = new System.Windows.Forms.ToolStripButton();
-            this.timer_Clock = new System.Windows.Forms.Timer(this.components);
             this.tSBLogOut = new System.Windows.Forms.ToolStripButton();
+            this.tSBAdmin = new System.Windows.Forms.ToolStripButton();
+            this.timer_Clock = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -353,11 +355,13 @@
             this.toolStripButton1,
             this.toolStripSeparator2,
             this.toolClockLabel,
-            this.toolStripSeparator4,
+            this.toolStripSeparator5,
             this.tsb_ТехническоеСообщение,
             this.toolStripSeparator3,
             this.tSBРежимРаботы,
-            this.tSBLogOut});
+            this.toolStripSeparator4,
+            this.tSBLogOut,
+            this.tSBAdmin});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
             this.tSCommands.Size = new System.Drawing.Size(1524, 38);
@@ -589,22 +593,40 @@
             this.tSBРежимРаботы.Text = "Пользовательский";
             this.tSBРежимРаботы.Click += new System.EventHandler(this.tSBРежимРаботы_Click);
             // 
+            // tSBLogOut
+            // 
+            this.tSBLogOut.BackColor = System.Drawing.Color.PaleGreen;
+            this.tSBLogOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tSBLogOut.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tSBLogOut.Image = ((System.Drawing.Image)(resources.GetObject("tSBLogOut.Image")));
+            this.tSBLogOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBLogOut.Name = "tSBLogOut";
+            this.tSBLogOut.Size = new System.Drawing.Size(27, 35);
+            this.tSBLogOut.Text = "---";
+            this.tSBLogOut.Click += new System.EventHandler(this.tSBLogOut_Click);
+            // 
+            // tSBAdmin
+            // 
+            this.tSBAdmin.BackColor = System.Drawing.Color.PaleGreen;
+            this.tSBAdmin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tSBAdmin.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tSBAdmin.Image = ((System.Drawing.Image)(resources.GetObject("tSBAdmin.Image")));
+            this.tSBAdmin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBAdmin.Name = "tSBAdmin";
+            this.tSBAdmin.Size = new System.Drawing.Size(63, 35);
+            this.tSBAdmin.Text = "Админка";
+            this.tSBAdmin.Click += new System.EventHandler(this.tSBAdmin_Click);
+            // 
             // timer_Clock
             // 
             this.timer_Clock.Enabled = true;
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
             // 
-            // tSBLogOut
+            // toolStripSeparator5
             // 
-            this.tSBLogOut.BackColor = System.Drawing.Color.PaleGreen;
-            this.tSBLogOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tSBLogOut.Image = ((System.Drawing.Image)(resources.GetObject("tSBLogOut.Image")));
-            this.tSBLogOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tSBLogOut.Name = "tSBLogOut";
-            this.tSBLogOut.Size = new System.Drawing.Size(26, 35);
-            this.tSBLogOut.Text = "---";
-            this.tSBLogOut.Click += new System.EventHandler(this.tSBLogOut_Click);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 38);
             // 
             // MainForm
             // 
@@ -690,6 +712,8 @@
         private System.Windows.Forms.ToolStripMenuItem сервисToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ИзмененияToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton tSBLogOut;
+        private System.Windows.Forms.ToolStripButton tSBAdmin;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 
