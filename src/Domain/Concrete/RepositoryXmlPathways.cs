@@ -86,8 +86,14 @@ namespace Domain.Concrete
             throw new NotImplementedException();
         }
 
+        public void Delete(Expression<Func<Pathways, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
 
-
-
+        public void AddRange(IEnumerable<Pathways> entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

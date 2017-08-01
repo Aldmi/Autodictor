@@ -80,6 +80,18 @@ namespace Domain.Concrete.NoSqlReposutory
         }
 
 
+        public void AddRange(IEnumerable<T> entity)
+        {
+            using (var db = new LiteDatabase(_connectionString))
+            {
+                // Get a collection (or create, if doesn't exist)
+                var dbContext = db.GetCollection<T>(nameof(T));
+                dbContext.Insert(entity);
+                dbContext.EnsureIndex(x => x.Id);
+            }
+        }
+
+
 
         public void Delete(T entity)
         {
@@ -110,10 +122,24 @@ namespace Domain.Concrete.NoSqlReposutory
         }
 
 
+        public void Delete(Expression<Func<T, bool>> predicate)
+        {
+            using (var db = new LiteDatabase(_connectionString))
+            {
+                var dbContext = db.GetCollection<T>(nameof(T));
+                dbContext.Delete(predicate);
+            }
+
+        }
+
 
         public void Edit(T entity)
         {
-            throw new NotImplementedException();
+            using (var db = new LiteDatabase(_connectionString))
+            {
+                var dbContext = db.GetCollection<T>(nameof(T));
+                dbContext.Update(entity);
+            }
         }
     }
 }

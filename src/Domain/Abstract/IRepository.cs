@@ -11,7 +11,9 @@ namespace Domain.Abstract
         IEnumerable<T> List();
         IEnumerable<T> List(Expression<Func<T, bool>> predicate);
         void Add(T entity);
+        void AddRange(IEnumerable<T> entity); 
         void Delete(T entity);
+        void Delete(Expression<Func<T, bool>> predicate);
         void Edit(T entity);
     }
 }

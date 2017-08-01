@@ -78,5 +78,15 @@ namespace Domain.Concrete.Generic
         {
             throw new NotImplementedException();
         }
+
+        public void Delete(Expression<Func<T, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<T> entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

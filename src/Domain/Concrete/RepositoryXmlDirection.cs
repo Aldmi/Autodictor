@@ -94,5 +94,15 @@ namespace Domain.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public void Delete(Expression<Func<Direction, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<Direction> entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
