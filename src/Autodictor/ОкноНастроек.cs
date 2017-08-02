@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,14 @@ namespace MainExample
         public bool[] КаналыКасс;
 
         public float КаналыПериодОтправкиПакетов;
+
+        public int УровеньГромкостиДень;
+        public int УровеньГромкостиНочь;
+
+        public DateTime ВремяНочнойПериодНачало;
+        public DateTime ВремяНочнойПериодКонец;
     };
+
 
 
     public partial class ОкноНастроек : Form
@@ -71,10 +79,7 @@ namespace MainExample
             _каналыПлатформ = new CheckBox[] { chBox1_Platform, chBox2_Platform, chBox3_Platform, chBox4_Platform, chBox5_Platform, chBox6_Platform, chBox7_Platform, chBox8_Platform, chBox9_Platform, chBox10_Platform, chBox11_Platform, chBox12_Platform, chBox13_Platform, chBox14_Platform, chBox15_Platform, chBox16_Platform, chBox17_Platform, chBox18_Platform, chBox19_Platform, chBox20_Platform };
             _каналыКасс = new CheckBox[] { chBox1_Cashbox, chBox2_Cashbox, chBox3_Cashbox, chBox4_Cashbox, chBox5_Cashbox, chBox6_Cashbox, chBox7_Cashbox, chBox8_Cashbox, chBox9_Cashbox, chBox10_Cashbox, chBox11_Cashbox, chBox12_Cashbox, chBox13_Cashbox, chBox14_Cashbox, chBox15_Cashbox, chBox16_Cashbox, chBox17_Cashbox, chBox18_Cashbox, chBox19_Cashbox, chBox20_Cashbox };
 
-
             ОтобразитьНастройкиВОкне();
-
-            tBРегуляторГромкости.Value = Player.GetVolume();
         }
 
 
@@ -140,7 +145,19 @@ namespace MainExample
                 _каналыКасс[i].Checked = Program.Настройки.КаналыКасс[i];
 
             tBКаналыПериодОтправкиПакетов.Text = Program.Настройки.КаналыПериодОтправкиПакетов.ToString("0.0");
+
+            tBРегуляторГромкостиДень.Value = Program.Настройки.УровеньГромкостиДень;
+            lbl_громкостьДень.Text = ПреобразрватьУровеньГромкостиВПроценты(Program.Настройки.УровеньГромкостиДень).ToString("F") + @"%";
+
+            tBРегуляторГромкостиНочь.Value = Program.Настройки.УровеньГромкостиНочь;
+            lbl_громкостьНочь.Text = ПреобразрватьУровеньГромкостиВПроценты(Program.Настройки.УровеньГромкостиНочь).ToString("F") + @"%";
+
+            dTP_НочнойПериодНачало.Value=Program.Настройки.ВремяНочнойПериодНачало;
+            dTP_НочнойПериодКонец.Value=Program.Настройки.ВремяНочнойПериодКонец;
+
         }
+
+
 
         private void СчитатьНастройкиИзОкнаВФайл()
         {
@@ -196,6 +213,13 @@ namespace MainExample
 
             if (float.TryParse(tBКаналыПериодОтправкиПакетов.Text.Replace('.', ','), out НастройкаВремени))
                 Program.Настройки.КаналыПериодОтправкиПакетов = НастройкаВремени;
+
+
+            Program.Настройки.УровеньГромкостиДень = tBРегуляторГромкостиДень.Value;
+            Program.Настройки.УровеньГромкостиНочь = tBРегуляторГромкостиНочь.Value;
+
+            Program.Настройки.ВремяНочнойПериодНачало = dTP_НочнойПериодНачало.Value;
+            Program.Настройки.ВремяНочнойПериодКонец = dTP_НочнойПериодКонец.Value;
         }
 
 
@@ -209,6 +233,7 @@ namespace MainExample
                 using (System.IO.StreamReader file = new System.IO.StreamReader("Settings.ini"))
                 {
                     string line;
+                    int  ПеременнаяInt;
                     float ПеременнаяFloat;
                     bool ПеременнаяBool;
                     DateTime переменнаяDateTime;
@@ -387,6 +412,27 @@ namespace MainExample
                                     if (float.TryParse(Settings[1], out ПеременнаяFloat))
                                         Program.Настройки.КаналыПериодОтправкиПакетов = ПеременнаяFloat;
                                     break;
+
+                                case "УровеньГромкостиДень":
+                                    if (int.TryParse(Settings[1], out ПеременнаяInt))
+                                        Program.Настройки.УровеньГромкостиДень = ПеременнаяInt;
+                                    break;
+
+                                case "УровеньГромкостиНочь":
+                                    if (int.TryParse(Settings[1], out ПеременнаяInt))
+                                        Program.Настройки.УровеньГромкостиНочь = ПеременнаяInt;
+                                    break;
+
+                                case "ВремяНочнойПериодНачало":
+                                    if (DateTime.TryParse(Settings[1], out переменнаяDateTime))
+                                        Program.Настройки.ВремяНочнойПериодНачало = переменнаяDateTime;
+                                    break;
+
+                                case "ВремяНочнойПериодКонец":
+                                    if (DateTime.TryParse(Settings[1], out переменнаяDateTime))
+                                        Program.Настройки.ВремяНочнойПериодКонец = переменнаяDateTime;
+                                    break;
+
                             }
                         }
                     }
@@ -406,6 +452,7 @@ namespace MainExample
             if (Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда < 1)
                 Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда = 1;
         }
+
 
 
         public static void СохранитьНастройки()
@@ -480,6 +527,10 @@ namespace MainExample
 
                     DumpFile.WriteLine("КаналыПериодОтправкиПакетов=" + Program.Настройки.КаналыПериодОтправкиПакетов.ToString("0.0"));
 
+                    DumpFile.WriteLine("УровеньГромкостиДень=" + Program.Настройки.УровеньГромкостиДень);
+                    DumpFile.WriteLine("УровеньГромкостиНочь=" + Program.Настройки.УровеньГромкостиНочь);
+                    DumpFile.WriteLine("ВремяНочнойПериодНачало=" + Program.Настройки.ВремяНочнойПериодНачало.ToString("t"));
+                    DumpFile.WriteLine("ВремяНочнойПериодКонец=" + Program.Настройки.ВремяНочнойПериодКонец.ToString("t"));
 
                     DumpFile.Close();
                 }
@@ -489,6 +540,8 @@ namespace MainExample
                 Program.ЗаписьЛога("Системное сообщение", "Ошибка сохранения настроек: " + ex.Message);
             }
         }
+
+
 
         private void pCol1_DoubleClick(object sender, EventArgs e)
         {
@@ -502,9 +555,36 @@ namespace MainExample
             }
         }
 
-        private void tBРегуляторГромкости_Scroll(object sender, EventArgs e)
+
+
+        private void tBРегуляторГромкостиДень_Scroll(object sender, EventArgs e)
         {
-            Player.SetVolume(tBРегуляторГромкости.Value);
+            //Громкость сохраняется сразу.
+            Program.Настройки.УровеньГромкостиДень = tBРегуляторГромкостиДень.Value; 
+            lbl_громкостьДень.Text = ПреобразрватьУровеньГромкостиВПроценты(Program.Настройки.УровеньГромкостиДень).ToString("F") + @"%";
+
+            Player.SetVolume(Program.Настройки.УровеньГромкостиДень);
         }
+
+
+
+        private void tBРегуляторГромкостиНочь_Scroll(object sender, EventArgs e)
+        {
+            //Громкость сохраняется сразу.
+            Program.Настройки.УровеньГромкостиНочь = tBРегуляторГромкостиНочь.Value;
+            lbl_громкостьНочь.Text = ПреобразрватьУровеньГромкостиВПроценты(Program.Настройки.УровеньГромкостиНочь).ToString("F") + @"%";
+        }
+
+
+        private double ПреобразрватьУровеньГромкостиВПроценты(int volume)
+        {
+            double maxScale = 7000.0;
+            double scale = maxScale + volume;
+
+            var percent= (scale * 100.0) / maxScale;
+            return percent;
+        }
+
+
     }
 }

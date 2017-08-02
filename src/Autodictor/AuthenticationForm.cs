@@ -21,7 +21,12 @@ namespace MainExample
             InitializeComponent();
             CreateMyPasswordTextBox();
 
+            //Установить фокус на кнопку
+            btn_Enter.Focus();
+            btn_Enter.Select();
+
             cb_Roles.DataSource = Enum.GetValues(typeof(Role));
+            cb_Roles.SelectedItem = Role.Диктор;
         }
 
         #endregion
@@ -34,13 +39,8 @@ namespace MainExample
 
         public void CreateMyPasswordTextBox()
         {
-            // Set the maximum length of text in the control to eight.
             tb_password.MaxLength = 8;
-            // Assign the asterisk to be the password character.
             tb_password.PasswordChar = '*';
-            // Change all text entered to be lowercase.
-            // tb_password.CharacterCasing = CharacterCasing.Lower;
-            // Align the text in the center of the TextBox control.
             tb_password.TextAlign = HorizontalAlignment.Center;
         }
 

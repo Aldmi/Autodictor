@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.DirectX.AudioVideoPlayback;
 using System.IO;
@@ -40,6 +41,7 @@ namespace MainExample
                 if (System.IO.File.Exists(TrackPath) == true)
                 {
                     track_to_play = new Audio(TrackPath);
+                    SetVolume(Program.Настройки.УровеньГромкостиДень);//DEBUG   
                     track_to_play.Play();
                     return true;
                 }
@@ -168,7 +170,9 @@ namespace MainExample
         public static void SetVolume(int Volume)
         {
             if (track_to_play != null)
+            {
                 track_to_play.Volume = Volume;
+            }
         }
     }
 }

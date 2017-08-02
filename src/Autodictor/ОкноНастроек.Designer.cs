@@ -81,6 +81,10 @@
             this.btnЗагрузить = new System.Windows.Forms.Button();
             this.btnСохранить = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pCol18 = new System.Windows.Forms.Panel();
+            this.label117 = new System.Windows.Forms.Label();
+            this.pCol17 = new System.Windows.Forms.Panel();
+            this.label116 = new System.Windows.Forms.Label();
             this.pCol16 = new System.Windows.Forms.Panel();
             this.pCol15 = new System.Windows.Forms.Panel();
             this.label114 = new System.Windows.Forms.Label();
@@ -109,7 +113,16 @@
             this.label9 = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tBРегуляторГромкости = new System.Windows.Forms.TrackBar();
+            this.label123 = new System.Windows.Forms.Label();
+            this.label122 = new System.Windows.Forms.Label();
+            this.dTP_НочнойПериодКонец = new System.Windows.Forms.DateTimePicker();
+            this.dTP_НочнойПериодНачало = new System.Windows.Forms.DateTimePicker();
+            this.label120 = new System.Windows.Forms.Label();
+            this.lbl_громкостьНочь = new System.Windows.Forms.Label();
+            this.tBРегуляторГромкостиНочь = new System.Windows.Forms.TrackBar();
+            this.label119 = new System.Windows.Forms.Label();
+            this.lbl_громкостьДень = new System.Windows.Forms.Label();
+            this.tBРегуляторГромкостиДень = new System.Windows.Forms.TrackBar();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tBКаналыПериодОтправкиПакетов = new System.Windows.Forms.TextBox();
@@ -278,15 +291,12 @@
             this.chBox2_LongDist = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.chBox1_LongDist = new System.Windows.Forms.CheckBox();
-            this.pCol17 = new System.Windows.Forms.Panel();
-            this.label116 = new System.Windows.Forms.Label();
-            this.pCol18 = new System.Windows.Forms.Panel();
-            this.label117 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкости)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкостиНочь)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкостиДень)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -857,6 +867,46 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Цветовые настройки";
             // 
+            // pCol18
+            // 
+            this.pCol18.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pCol18.Location = new System.Drawing.Point(302, 257);
+            this.pCol18.Name = "pCol18";
+            this.pCol18.Size = new System.Drawing.Size(36, 19);
+            this.pCol18.TabIndex = 34;
+            this.pCol18.Tag = "17";
+            this.pCol18.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label117.Location = new System.Drawing.Point(6, 256);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(143, 20);
+            this.label117.TabIndex = 33;
+            this.label117.Text = "Дальнего след.";
+            // 
+            // pCol17
+            // 
+            this.pCol17.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pCol17.Location = new System.Drawing.Point(302, 232);
+            this.pCol17.Name = "pCol17";
+            this.pCol17.Size = new System.Drawing.Size(36, 19);
+            this.pCol17.TabIndex = 32;
+            this.pCol17.Tag = "16";
+            this.pCol17.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label116.Location = new System.Drawing.Point(6, 231);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(92, 20);
+            this.label116.TabIndex = 31;
+            this.label116.Text = "Пригород";
+            // 
             // pCol16
             // 
             this.pCol16.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -1119,7 +1169,16 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.tBРегуляторГромкости);
+            this.groupBox4.Controls.Add(this.label123);
+            this.groupBox4.Controls.Add(this.label122);
+            this.groupBox4.Controls.Add(this.dTP_НочнойПериодКонец);
+            this.groupBox4.Controls.Add(this.dTP_НочнойПериодНачало);
+            this.groupBox4.Controls.Add(this.label120);
+            this.groupBox4.Controls.Add(this.lbl_громкостьНочь);
+            this.groupBox4.Controls.Add(this.tBРегуляторГромкостиНочь);
+            this.groupBox4.Controls.Add(this.label119);
+            this.groupBox4.Controls.Add(this.lbl_громкостьДень);
+            this.groupBox4.Controls.Add(this.tBРегуляторГромкостиДень);
             this.groupBox4.Location = new System.Drawing.Point(911, 446);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(515, 149);
@@ -1127,15 +1186,105 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Герулятор громкости";
             // 
-            // tBРегуляторГромкости
+            // label123
             // 
-            this.tBРегуляторГромкости.Location = new System.Drawing.Point(6, 31);
-            this.tBРегуляторГромкости.Maximum = 0;
-            this.tBРегуляторГромкости.Minimum = -10000;
-            this.tBРегуляторГромкости.Name = "tBРегуляторГромкости";
-            this.tBРегуляторГромкости.Size = new System.Drawing.Size(503, 45);
-            this.tBРегуляторГромкости.TabIndex = 0;
-            this.tBРегуляторГромкости.Scroll += new System.EventHandler(this.tBРегуляторГромкости_Scroll);
+            this.label123.AutoSize = true;
+            this.label123.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label123.Location = new System.Drawing.Point(313, 112);
+            this.label123.Name = "label123";
+            this.label123.Size = new System.Drawing.Size(17, 24);
+            this.label123.TabIndex = 35;
+            this.label123.Text = "-";
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label122.Location = new System.Drawing.Point(7, 114);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(139, 20);
+            this.label122.TabIndex = 34;
+            this.label122.Text = "Ночной период";
+            // 
+            // dTP_НочнойПериодКонец
+            // 
+            this.dTP_НочнойПериодКонец.CustomFormat = "HH:mm";
+            this.dTP_НочнойПериодКонец.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dTP_НочнойПериодКонец.Location = new System.Drawing.Point(332, 112);
+            this.dTP_НочнойПериодКонец.Name = "dTP_НочнойПериодКонец";
+            this.dTP_НочнойПериодКонец.ShowUpDown = true;
+            this.dTP_НочнойПериодКонец.Size = new System.Drawing.Size(85, 26);
+            this.dTP_НочнойПериодКонец.TabIndex = 24;
+            // 
+            // dTP_НочнойПериодНачало
+            // 
+            this.dTP_НочнойПериодНачало.CustomFormat = "HH:mm";
+            this.dTP_НочнойПериодНачало.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dTP_НочнойПериодНачало.Location = new System.Drawing.Point(225, 112);
+            this.dTP_НочнойПериодНачало.Name = "dTP_НочнойПериодНачало";
+            this.dTP_НочнойПериодНачало.ShowUpDown = true;
+            this.dTP_НочнойПериодНачало.Size = new System.Drawing.Size(85, 26);
+            this.dTP_НочнойПериодНачало.TabIndex = 24;
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label120.Location = new System.Drawing.Point(6, 79);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(52, 20);
+            this.label120.TabIndex = 33;
+            this.label120.Text = "Ночь";
+            // 
+            // lbl_громкостьНочь
+            // 
+            this.lbl_громкостьНочь.AutoSize = true;
+            this.lbl_громкостьНочь.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbl_громкостьНочь.Location = new System.Drawing.Point(441, 73);
+            this.lbl_громкостьНочь.Name = "lbl_громкостьНочь";
+            this.lbl_громкостьНочь.Size = new System.Drawing.Size(69, 20);
+            this.lbl_громкостьНочь.TabIndex = 32;
+            this.lbl_громкостьНочь.Text = "85.25%";
+            // 
+            // tBРегуляторГромкостиНочь
+            // 
+            this.tBРегуляторГромкостиНочь.Location = new System.Drawing.Point(58, 73);
+            this.tBРегуляторГромкостиНочь.Maximum = 0;
+            this.tBРегуляторГромкостиНочь.Minimum = -7000;
+            this.tBРегуляторГромкостиНочь.Name = "tBРегуляторГромкостиНочь";
+            this.tBРегуляторГромкостиНочь.Size = new System.Drawing.Size(380, 45);
+            this.tBРегуляторГромкостиНочь.TabIndex = 31;
+            this.tBРегуляторГромкостиНочь.Scroll += new System.EventHandler(this.tBРегуляторГромкостиНочь_Scroll);
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label119.Location = new System.Drawing.Point(6, 37);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(52, 20);
+            this.label119.TabIndex = 30;
+            this.label119.Text = "День";
+            // 
+            // lbl_громкостьДень
+            // 
+            this.lbl_громкостьДень.AutoSize = true;
+            this.lbl_громкостьДень.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbl_громкостьДень.Location = new System.Drawing.Point(441, 31);
+            this.lbl_громкостьДень.Name = "lbl_громкостьДень";
+            this.lbl_громкостьДень.Size = new System.Drawing.Size(69, 20);
+            this.lbl_громкостьДень.TabIndex = 29;
+            this.lbl_громкостьДень.Text = "85.25%";
+            // 
+            // tBРегуляторГромкостиДень
+            // 
+            this.tBРегуляторГромкостиДень.Location = new System.Drawing.Point(58, 31);
+            this.tBРегуляторГромкостиДень.Maximum = 0;
+            this.tBРегуляторГромкостиДень.Minimum = -7000;
+            this.tBРегуляторГромкостиДень.Name = "tBРегуляторГромкостиДень";
+            this.tBРегуляторГромкостиДень.Size = new System.Drawing.Size(380, 45);
+            this.tBРегуляторГромкостиДень.TabIndex = 0;
+            this.tBРегуляторГромкостиДень.Scroll += new System.EventHandler(this.tBРегуляторГромкостиДень_Scroll);
             // 
             // groupBox5
             // 
@@ -2896,46 +3045,6 @@
             this.chBox1_LongDist.TabIndex = 20;
             this.chBox1_LongDist.UseVisualStyleBackColor = true;
             // 
-            // pCol17
-            // 
-            this.pCol17.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pCol17.Location = new System.Drawing.Point(302, 232);
-            this.pCol17.Name = "pCol17";
-            this.pCol17.Size = new System.Drawing.Size(36, 19);
-            this.pCol17.TabIndex = 32;
-            this.pCol17.Tag = "16";
-            this.pCol17.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
-            // 
-            // label116
-            // 
-            this.label116.AutoSize = true;
-            this.label116.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label116.Location = new System.Drawing.Point(6, 231);
-            this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(92, 20);
-            this.label116.TabIndex = 31;
-            this.label116.Text = "Пригород";
-            // 
-            // pCol18
-            // 
-            this.pCol18.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pCol18.Location = new System.Drawing.Point(302, 257);
-            this.pCol18.Name = "pCol18";
-            this.pCol18.Size = new System.Drawing.Size(36, 19);
-            this.pCol18.TabIndex = 34;
-            this.pCol18.Tag = "17";
-            this.pCol18.DoubleClick += new System.EventHandler(this.pCol1_DoubleClick);
-            // 
-            // label117
-            // 
-            this.label117.AutoSize = true;
-            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label117.Location = new System.Drawing.Point(6, 256);
-            this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(143, 20);
-            this.label117.TabIndex = 33;
-            this.label117.Text = "Дальнего след.";
-            // 
             // ОкноНастроек
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -2962,7 +3071,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкости)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкостиНочь)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tBРегуляторГромкостиДень)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -3033,7 +3143,7 @@
         private System.Windows.Forms.TextBox tBИнтОповещОбОтменеПоезда;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TrackBar tBРегуляторГромкости;
+        private System.Windows.Forms.TrackBar tBРегуляторГромкостиДень;
         private System.Windows.Forms.CheckBox cBРазрешениеДобавленияЗаблокированныхПоездовВСписок;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.CheckBox cbРазрешитьАвтоОбновлениеРасписания;
@@ -3233,5 +3343,14 @@
         private System.Windows.Forms.Label label117;
         private System.Windows.Forms.Panel pCol17;
         private System.Windows.Forms.Label label116;
+        private System.Windows.Forms.Label label123;
+        private System.Windows.Forms.Label label122;
+        private System.Windows.Forms.DateTimePicker dTP_НочнойПериодКонец;
+        private System.Windows.Forms.DateTimePicker dTP_НочнойПериодНачало;
+        private System.Windows.Forms.Label label120;
+        private System.Windows.Forms.Label lbl_громкостьНочь;
+        private System.Windows.Forms.TrackBar tBРегуляторГромкостиНочь;
+        private System.Windows.Forms.Label label119;
+        private System.Windows.Forms.Label lbl_громкостьДень;
     }
 }

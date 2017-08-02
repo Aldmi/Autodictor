@@ -39,8 +39,6 @@ namespace MainExample
             {
                 column.DataSource = Enum.GetValues(typeof(Role)).Cast<Role>().Where(r=> (r != Role.Администратор) && (r != Role.Наблюдатель)).Select(r => r.ToString()).ToArray();
                 column.DataPropertyName = "Role";
-                //column.ValueMember = "Role";
-                //column.DisplayMember = "Role";
             }
 
             //Заполнить грид.
