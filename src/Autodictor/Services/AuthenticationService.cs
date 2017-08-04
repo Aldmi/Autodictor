@@ -14,6 +14,8 @@ namespace MainExample.Services
         public bool IsAuthentication { get; private set; }
         public User CurrentUser { get; private set; }
 
+        public User OldUser { get; private set; }
+
         #endregion
 
 
@@ -106,10 +108,21 @@ namespace MainExample.Services
         /// </summary>
         public void LogOut()
         {
+            OldUser = CurrentUser;
             CurrentUser = null;
             IsAuthentication = false;
         }
 
+
+
+        /// <summary>
+        /// Установить пользователя с правами НАБЛЮДАТЕЛЬ
+        /// </summary>
+        public void SetOldUser()
+        {
+            IsAuthentication = true;
+            CurrentUser = OldUser;
+        }
 
 
         /// <summary>

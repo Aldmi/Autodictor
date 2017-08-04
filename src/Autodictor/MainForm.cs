@@ -90,13 +90,6 @@ namespace MainExample
                     {
                         //ОТОБРАЗИТЬ ВОШЕДШЕГО ПОЛЬЗОВАТЕЛЯ
                         tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
-
-                        switch (Program.AuthenticationService.CurrentUser.Role)
-                        {
-                            case Role.Администратор:
-                                tSBAdmin.Visible = true;
-                                break;
-                        }
                     }
                 }
                 else
@@ -106,11 +99,19 @@ namespace MainExample
                         Application.Exit();                  //ВЫХОД
                     }
 
-                    //ПОЛЬЗОВАТЕЛЬ - НАБЛЮДАТЕЛЬ
-                    Program.AuthenticationService.SetObserver();
+                    //ПОЛЬЗОВАТЕЛЬ - Предыдущий пользователь
+                    Program.AuthenticationService.SetOldUser();
                     tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
                     break;
                 }
+            }
+
+            //Отрисовать вход в админку
+            switch (Program.AuthenticationService.CurrentUser.Role)
+            {
+                case Role.Администратор:
+                    tSBAdmin.Visible = true;
+                    break;
             }
         }
 
