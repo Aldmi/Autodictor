@@ -158,7 +158,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules, ExchangeModel.DeviceSoundChannelManagement)
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules, ExchangeModel.Binding2ChangesSchedules, ExchangeModel.DeviceSoundChannelManagement)
                 {
                     MdiParent = this,
                     WindowState = FormWindowState.Maximized

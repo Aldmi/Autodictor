@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behavior\BindingBehavior\Helpers\PaggingHelper.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToChange\Binding2ChangesBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToChange\IBinding2ChangesBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToDepartureArrivalSchedule\IBinding2DepatureArrivalShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\BindingDevice2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />

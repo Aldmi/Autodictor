@@ -10,15 +10,17 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     //ToGeneral - привязка к главному табло с расписанием
     //ToArrivalAndDeparture - привязка к табло отправление / прибытие поездов
     //ToStatic - привязка к форме отправки статической информации.
-    public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture, ToStatic }
+    //ToChangeWindow - привязка БД с изменениями.
+    public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture, ToStatic, ToChange }
 
     public class XmlBindingSetting
     {
         #region prop
 
         public BindingType BindingType { get; }
-        public IEnumerable<string> PathNumbers { get; }          // при привязке на путь
+        public IEnumerable<string> PathNumbers { get; }        // при привязке на путь
         public SourceLoad SourceLoad { get; }                  // при привязке к расписанию
+        public int HourDepth { get; set; }                    // при привязке к ToChangeWindow (за сколько часов брать изменения из БД)
 
         #endregion
 
@@ -69,7 +71,19 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             {
                 BindingType = BindingType.ToStatic;
             }
+            else
+            if (binding.ToLower().Contains("tochangewindow:"))
+            {
+                BindingType = BindingType.ToChange;
+                var houerDepthStr = new string(binding.SkipWhile(c => c != ':').Skip(1).ToArray()).Split(',').FirstOrDefault();
 
+                HourDepth = 1;//значение по умолчанию
+                int houerDepth;
+                if (int.TryParse(houerDepthStr, out houerDepth))
+                {
+                    HourDepth = houerDepth;
+                }
+            }
         }
 
         #endregion

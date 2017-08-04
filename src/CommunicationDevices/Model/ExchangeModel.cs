@@ -12,6 +12,7 @@ using Communication.Interfaces;
 using Communication.SerialPort;
 using Communication.Settings;
 using CommunicationDevices.Behavior;
+using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.BindingBehavior.ToStatic;
@@ -72,7 +73,7 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2PathBehavior> Binding2PathBehaviors { get; set; } = new List<IBinding2PathBehavior>();
         public ICollection<IBinding2GeneralSchedule> Binding2GeneralSchedules { get; set; } = new List<IBinding2GeneralSchedule>();
         public ICollection<IBinding2StaticFormBehavior> Binding2StaticFormBehaviors { get; set; } = new List<IBinding2StaticFormBehavior>();
-
+        public ICollection<IBinding2ChangesBehavior> Binding2ChangesSchedules { get; set; } = new List<IBinding2ChangesBehavior>();
 
         private string _errorString;
         public string ErrorString
@@ -930,6 +931,18 @@ namespace CommunicationDevices.Model
                         //создание поведения привязка табло к форме статических сообщений
                         if (binding.BindingType == BindingType.ToStatic)
                             Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
+
+
+                        //создание поведения привязка табло к Изменениям
+                        if (binding.BindingType == BindingType.ToChange)
+                        {
+                            Binding2ChangesSchedules.Add(new Binding2ChangesBehavior(DeviceTables.Last(),  binding.HourDepth, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                            if (!Binding2ChangesSchedules.Last().IsPaging)
+                            {
+                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                            }
+                        }
 
                         break;
 

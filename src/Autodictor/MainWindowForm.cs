@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using System.Linq;
 using System.Windows.Input;
+using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
@@ -140,6 +141,7 @@ namespace MainExample
         public CisClient CisClient { get; }
         public static IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
         public static IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
+        public static IEnumerable<IBinding2ChangesBehavior> Binding2ChangesBehaviors { get; set; }
         public Device SoundChanelManagment { get; }
 
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
@@ -166,7 +168,7 @@ namespace MainExample
 
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, Device soundChanelManagment)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors, Device soundChanelManagment)
         {
             if (myMainForm != null)
                 return;
@@ -181,6 +183,7 @@ namespace MainExample
 
             Binding2PathBehaviors = binding2PathBehaviors;
             Binding2GeneralScheduleBehaviors = binding2GeneralScheduleBehaviors;
+            Binding2ChangesBehaviors = binding2ChangesBehaviors;
             SoundChanelManagment = soundChanelManagment;
 
             MainForm.Пауза.Click += new System.EventHandler(this.btnПауза_Click);
@@ -255,10 +258,10 @@ namespace MainExample
                     СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
                     break;
 
-                //case StatusPlaying.Stop:
-                //    Debug.WriteLine($"Статическое СТОП");//DEBUG
-                //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
-                //    break;
+                    //case StatusPlaying.Stop:
+                    //    Debug.WriteLine($"Статическое СТОП");//DEBUG
+                    //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+                    //    break;
             }
 
             for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count(); i++)
@@ -295,10 +298,10 @@ namespace MainExample
                     СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
                     break;
 
-                //case StatusPlaying.Stop:
-                //    Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТОП");//DEBUG
-                //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
-                //    break;
+                    //case StatusPlaying.Stop:
+                    //    Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТОП");//DEBUG
+                    //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+                    //    break;
             }
 
 
@@ -484,7 +487,7 @@ namespace MainExample
                 if (!string.IsNullOrEmpty(данные.НомерПути))
                 {
                     var key = SoundRecords.Keys.ElementAt(i);
-                    данные.СостояниеОтображения =  (данные.НомерПути == string.Empty || данные.НомерПути == "0") ? TableRecordStatus.Очистка :
+                    данные.СостояниеОтображения = (данные.НомерПути == string.Empty || данные.НомерПути == "0") ? TableRecordStatus.Очистка :
                                                                                                                    TableRecordStatus.Отображение;
                     данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
                     SoundRecords[key] = данные;
@@ -521,7 +524,7 @@ namespace MainExample
             var currentDay = DateTime.Now.Date;
             SoundRecordChanges = Program.SoundRecordChangesDbRepository.List()
                                                                        .Where(p => (p.TimeStamp.Date == currentDay) ||
-                                                                                  ((p.TimeStamp.Date == currentDay.AddDays(-1)) && (p.Rec.Время.Date == currentDay )))
+                                                                                  ((p.TimeStamp.Date == currentDay.AddDays(-1)) && (p.Rec.Время.Date == currentDay)))
                                                                        .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges).ToList();
 
             //Добавим весь список Оперативного расписания
@@ -562,12 +565,6 @@ namespace MainExample
                 SoundRecord record = Mapper.MapTrainTableRecord2SoundRecord(config, день, newId);
 
 
-                if (record.НомерПоезда == "052")//DEBUG
-                {
-                    var t = 5 + 5;
-                }
-
-
                 //выдать список привязанных табло
                 record.НазванияТабло = record.НомерПути != "0" ? Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(record.НомерПути)).Where(str => str != null).ToArray() : null;
                 record.СостояниеОтображения = TableRecordStatus.Выключена;
@@ -598,7 +595,7 @@ namespace MainExample
 
         private void КорректировкаЗаписейПоИзменениям()
         {
-            //фильтрация по последним изменениям. среди элементов с одинаковым Названием поезда и сутками движенгия, выбрать элементы с большей датой.
+            //фильтрация по последним изменениям. среди элементов с одинаковым Названием поезда и сутками движения, выбрать элементы с большей датой.
             var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.Rec.НомерПоезда, gr.Rec.Время.Date })
                 .Select(elem => elem.MaxBy(b => b.TimeStamp))
                 .ToList();
@@ -610,7 +607,7 @@ namespace MainExample
 
 
                 var change = filtredOnMaxDate.FirstOrDefault(f => (f.Rec.НомерПоезда == rec.НомерПоезда) &&
-                                                                  (f.Rec.НомерПоезда2 == rec.НомерПоезда2)&&
+                                                                  (f.Rec.НомерПоезда2 == rec.НомерПоезда2) &&
                                                                   (f.Rec.Время.Date == rec.Время.Date));
 
 
@@ -623,8 +620,6 @@ namespace MainExample
                     keyNew = change.NewRec.Время.ToString("yy.MM.dd  HH:mm:ss");
 
                     ПрименениеЗагруженныхИзменений(rec, change.NewRec, keyNew);
-                    //SoundRecords[keyNew] = change.NewRec;
-                    //SoundRecordsOld[keyNew] = change.NewRec;
                     ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
                 }
             }
@@ -633,9 +628,9 @@ namespace MainExample
 
 
 
-        private void ПрименениеЗагруженныхИзменений(SoundRecord rec,  SoundRecord newRec, string key)
+        private void ПрименениеЗагруженныхИзменений(SoundRecord rec, SoundRecord newRec, string key)
         {
-           //ПРИМЕНЕНИЕ ИЗМЕНЕНИЙ
+            //ПРИМЕНЕНИЕ ИЗМЕНЕНИЙ
             rec.Время = newRec.Время;
             rec.ВремяЗадержки = newRec.ВремяЗадержки;
             rec.ВремяОтправления = newRec.ВремяОтправления;
@@ -644,7 +639,7 @@ namespace MainExample
             rec.ВремяСледования = newRec.ВремяСледования;
             rec.ОжидаемоеВремя = newRec.ОжидаемоеВремя;
             rec.ФиксированноеВремяОтправления = newRec.ФиксированноеВремяОтправления;
-            rec.ФиксированноеВремяПрибытия= newRec.ФиксированноеВремяПрибытия;
+            rec.ФиксированноеВремяПрибытия = newRec.ФиксированноеВремяПрибытия;
             rec.ФиксированноеВремяОтправления = newRec.ФиксированноеВремяОтправления;
 
             rec.Автомат = newRec.Автомат;
@@ -1175,6 +1170,13 @@ namespace MainExample
                                         DateTime времяСобытия = нештатноеСообщение.ПривязкаКВремени == 0 ? Данные.ВремяПрибытия : Данные.ВремяОтправления;
                                         времяСобытия = времяСобытия.AddMinutes(нештатноеСообщение.ВремяСмещения);
 
+
+                                        if (Данные.НомерПоезда == "094")//DEBUG
+                                        {
+                                            var t = 5 + 5;
+                                        }
+
+
                                         if (DateTime.Now < времяСобытия)
                                         {
                                             if (нештатноеСообщение.СостояниеВоспроизведения != SoundRecordStatus.ОжиданиеВоспроизведения)
@@ -1596,15 +1598,21 @@ namespace MainExample
         {
             #region ВЫВОД РАСПИСАНИЯ НА ТАБЛО (из главного окна или из окна расписания)
 
-            if (Binding2GeneralScheduleBehaviors != null && Binding2GeneralScheduleBehaviors.Any())
+            if (_tickCounter++ > 50)
             {
-                if (_tickCounter++ > 50)
-                {
-                    _tickCounter = 0;
+                _tickCounter = 0;
 
-                    var binding2MainWindow = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.MainWindow).ToList();
-                    var binding2Shedule = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.Shedule).ToList();
-                    var binding2OperativeShedule = Binding2GeneralScheduleBehaviors.Where(b => b.SourceLoad == SourceLoad.SheduleOperative).ToList();
+                if (Binding2GeneralScheduleBehaviors != null && Binding2GeneralScheduleBehaviors.Any())
+                {
+                    var binding2MainWindow = Binding2GeneralScheduleBehaviors
+                        .Where(b => b.SourceLoad == SourceLoad.MainWindow)
+                        .ToList();
+                    var binding2Shedule = Binding2GeneralScheduleBehaviors
+                        .Where(b => b.SourceLoad == SourceLoad.Shedule)
+                        .ToList();
+                    var binding2OperativeShedule = Binding2GeneralScheduleBehaviors
+                        .Where(b => b.SourceLoad == SourceLoad.SheduleOperative)
+                        .ToList();
 
 
                     //Отправить расписание из окна РАСПИСАНИЕ
@@ -1612,10 +1620,12 @@ namespace MainExample
                     {
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
-                            var table = TrainTable.TrainTableRecords.Select(Mapper.MapTrainTableRecord2UniversalInputType).ToList();
-                            table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+                            var table = TrainTable.TrainTableRecords
+                                .Select(Mapper.MapTrainTableRecord2UniversalInputType)
+                                .ToList();
+                            table.ForEach(t => t.Message =$"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
 
-                            var inData = new UniversalInputType { TableData = table };
+                            var inData = new UniversalInputType {TableData = table};
                             foreach (var beh in binding2Shedule)
                             {
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
@@ -1627,12 +1637,16 @@ namespace MainExample
                     //Отправить расписание из окна ОПЕРАТИВНОГО РАСПИСАНИЕ
                     if (binding2OperativeShedule.Any())
                     {
-                        if (TrainTableOperative.TrainTableRecords != null && TrainTableOperative.TrainTableRecords.Any())
+                        if (TrainTableOperative.TrainTableRecords != null &&
+                            TrainTableOperative.TrainTableRecords.Any())
                         {
-                            var table = TrainTableOperative.TrainTableRecords.Select(Mapper.MapTrainTableRecord2UniversalInputType).ToList();
-                            table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+                            var table = TrainTableOperative.TrainTableRecords
+                                .Select(Mapper.MapTrainTableRecord2UniversalInputType)
+                                .ToList();
+                            table.ForEach(t => t.Message =
+                                $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
 
-                            var inData = new UniversalInputType { TableData = table };
+                            var inData = new UniversalInputType {TableData = table};
                             foreach (var beh in binding2OperativeShedule)
                             {
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
@@ -1648,12 +1662,47 @@ namespace MainExample
                         {
                             foreach (var beh in binding2MainWindow)
                             {
-                                var table = SoundRecords.Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false)).ToList();
+                                var table = SoundRecords
+                                    .Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false))
+                                    .ToList();
                                 table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
-                                var inData = new UniversalInputType { TableData = table };
+                                var inData = new UniversalInputType {TableData = table};
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
+                    }
+                }
+
+
+                //ОТПРАВИТЬ ИЗМЕНЕНИЯ
+                if (Binding2ChangesBehaviors != null && Binding2ChangesBehaviors.Any())
+                {
+                    foreach (var beh in Binding2ChangesBehaviors)
+                    {
+                        //загрузим список изменений на глубину beh.HourDepth.
+                        var min = DateTime.Now.AddHours(beh.HourDepth * (-1));
+                        var changes = Program.SoundRecordChangesDbRepository.List()
+                            .Where(p => p.TimeStamp.Date >= min)
+                            .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges)
+                            .ToList();
+
+
+                        List<UniversalInputType> table= new List<UniversalInputType>();
+                        foreach (var change in changes)
+                        {
+                            var uit = Mapper.MapSoundRecord2UniveralInputType(change.Rec, beh.GetDeviceSetting.PathPermission, false);
+                            uit.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", change.TimeStamp }}; 
+
+                            var uitNew = Mapper.MapSoundRecord2UniveralInputType(change.NewRec, beh.GetDeviceSetting.PathPermission, false);
+                            uitNew.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", change.TimeStamp } };
+
+                            table.Add(uit);
+                            table.Add(uitNew);
+                        }
+
+                        table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+                        var inData = new UniversalInputType { TableData = table };
+                        beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                     }
                 }
             }
@@ -1662,110 +1711,69 @@ namespace MainExample
 
 
 
+              
             #region ВЫВОД НА ПУТЕВЫЕ ТАБЛО
 
-            for (var i = 0; i < SoundRecords.Count; i++)
-            {
-                try
+                for (var i = 0; i < SoundRecords.Count; i++)
                 {
-                    var key = SoundRecords.Keys.ElementAt(i);
-                    var данные = SoundRecords.ElementAt(i).Value;
-                    var данныеOld = SoundRecordsOld.ElementAt(i).Value;
-
-                    if (!данные.Автомат)
-                        continue;
-
-                    var _checked = данные.Состояние != SoundRecordStatus.Выключена;
-                    if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
+                    try
                     {
-                        //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                        var номераПутей = Program.PathWaysRepository.List().ToList();
-                        var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути) + 1;
-                        var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути) + 1;
-                        var номерПути = (index > 0) ? index : 0;
-                        var номерПутиOld = (indexOld > 0) ? indexOld : 0;
+                        var key = SoundRecords.Keys.ElementAt(i);
+                        var данные = SoundRecords.ElementAt(i).Value;
+                        var данныеOld = SoundRecordsOld.ElementAt(i).Value;
 
-                        if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
+                        if (!данные.Автомат)
+                            continue;
+
+                        var _checked = данные.Состояние != SoundRecordStatus.Выключена;
+                        if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                         {
-                            //ПОМЕНЯЛИ ПУТЬ
-                            if (номерПути != номерПутиOld)
-                            {
-                                //очистили старый путь, если он не "0";
-                                if (номерПутиOld > 0)
-                                {
-                                    данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
-                                    SendOnPathTable(данныеOld);
-                                }
+                            //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
+                            var номераПутей = Program.PathWaysRepository.List().ToList();
+                            var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути) + 1;
+                            var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути) + 1;
+                            var номерПути = (index > 0) ? index : 0;
+                            var номерПутиOld = (indexOld > 0) ? indexOld : 0;
 
-                                //вывод на новое табло
-                                данные.СостояниеОтображения = TableRecordStatus.Отображение;
-                                SendOnPathTable(данные);
-                            }
-                            else
+                            if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
                             {
-                                //ИЗДАНИЕ СОБЫТИЯ ИЗМЕНЕНИЯ ДАННЫХ В ЗАПИСИ SoundRecords.
-                                if (!StructCompare.SoundRecordComparer(ref данные, ref данныеOld))
+                                //ПОМЕНЯЛИ ПУТЬ
+                                if (номерПути != номерПутиOld)
                                 {
-                                    данные.СостояниеОтображения = TableRecordStatus.Обновление;
+                                    //очистили старый путь, если он не "0";
+                                    if (номерПутиOld > 0)
+                                    {
+                                        данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
+                                        SendOnPathTable(данныеOld);
+                                    }
+
+                                    //вывод на новое табло
+                                    данные.СостояниеОтображения = TableRecordStatus.Отображение;
                                     SendOnPathTable(данные);
                                 }
-                            }
-
-
-
-                            //ОТПРАВЛЕНИЕ, ТРАНЗИТЫ
-                            if ((данные.БитыАктивностиПолей & 0x10) == 0x10 ||
-                                (данные.БитыАктивностиПолей & 0x14) == 0x14)
-                            {
-                                //ОЧИСТИТЬ если нет нештатных ситуаций на момент отправления
-                                if ((DateTime.Now >= данные.ВремяОтправления.AddMinutes(1) &&       //1
-                                     (DateTime.Now <= данные.ВремяОтправления.AddMinutes(1.02))))
+                                else
                                 {
-                                    if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                          (данные.СостояниеОтображения == TableRecordStatus.Обновление))
-                                        {
-                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                            данные.НомерПути = "0";
-
-                                            var данныеОчистки = данные;
-                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                            SendOnPathTable(данныеОчистки);
-
-                                            СохранениеИзмененийДанныхВКарточке(данныеOld, данные);//DEBUG
-                                        }
-                                }
-
-                                //ОЧИСТИТЬ если убрали нештатные ситуации
-                                if (((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                                    && ((данныеOld.БитыНештатныхСитуаций & 0x0F) != 0x00)
-                                    && (DateTime.Now >= данные.ВремяОтправления.AddMinutes(1)))
-                                {
-                                    if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                       (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                    //ИЗДАНИЕ СОБЫТИЯ ИЗМЕНЕНИЯ ДАННЫХ В ЗАПИСИ SoundRecords.
+                                    if (!StructCompare.SoundRecordComparer(ref данные, ref данныеOld))
                                     {
-                                        данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                        данные.НомерПути = "0";
-
-                                        var данныеОчистки = данные;
-                                        данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                        SendOnPathTable(данныеОчистки);
-
-                                        СохранениеИзмененийДанныхВКарточке(данныеOld, данные);//DEBUG
+                                        данные.СостояниеОтображения = TableRecordStatus.Обновление;
+                                        SendOnPathTable(данные);
                                     }
                                 }
-                            }
-                            //ПРИБЫТИЕ
-                            else
-                            if ((данные.БитыАктивностиПолей & 0x04) == 0x04)
+
+
+
+                                //ОТПРАВЛЕНИЕ, ТРАНЗИТЫ
+                                if ((данные.БитыАктивностиПолей & 0x10) == 0x10 ||
+                                    (данные.БитыАктивностиПолей & 0x14) == 0x14)
                                 {
-                                    //ОЧИСТИТЬ если нет нештатных ситуаций на момент прибытия
-                                    if ((DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10) &&        //10
-                                        (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(10.02))))
+                                    //ОЧИСТИТЬ если нет нештатных ситуаций на момент отправления
+                                    if ((DateTime.Now >= данные.ВремяОтправления.AddMinutes(1) && //1
+                                         (DateTime.Now <= данные.ВремяОтправления.AddMinutes(1.02))))
                                     {
                                         if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
                                             if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                               (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                                (данные.СостояниеОтображения == TableRecordStatus.Обновление))
                                             {
                                                 данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                                 данные.НомерПути = "0";
@@ -1774,7 +1782,48 @@ namespace MainExample
                                                 данныеОчистки.НомерПути = данныеOld.НомерПути;
                                                 SendOnPathTable(данныеОчистки);
 
-                                                СохранениеИзмененийДанныхВКарточке(данныеOld, данные);//DEBUG
+                                                СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                            }
+                                    }
+
+                                    //ОЧИСТИТЬ если убрали нештатные ситуации
+                                    if (((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                                        && ((данныеOld.БитыНештатныхСитуаций & 0x0F) != 0x00)
+                                        && (DateTime.Now >= данные.ВремяОтправления.AddMinutes(1)))
+                                    {
+                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                            (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                        {
+                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                            данные.НомерПути = "0";
+
+                                            var данныеОчистки = данные;
+                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                            SendOnPathTable(данныеОчистки);
+
+                                            СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                        }
+                                    }
+                                }
+                                //ПРИБЫТИЕ
+                                else if ((данные.БитыАктивностиПолей & 0x04) == 0x04)
+                                {
+                                    //ОЧИСТИТЬ если нет нештатных ситуаций на момент прибытия
+                                    if ((DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10) && //10
+                                         (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(10.02))))
+                                    {
+                                        if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                                (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                            {
+                                                данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                                данные.НомерПути = "0";
+
+                                                var данныеОчистки = данные;
+                                                данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                                SendOnPathTable(данныеОчистки);
+
+                                                СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
                                             }
                                     }
 
@@ -1785,7 +1834,7 @@ namespace MainExample
                                         && (DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10)))
                                     {
                                         if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                           (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                            (данные.СостояниеОтображения == TableRecordStatus.Обновление))
                                         {
                                             данные.СостояниеОтображения = TableRecordStatus.Очистка;
                                             данные.НомерПути = "0";
@@ -1794,24 +1843,24 @@ namespace MainExample
                                             данныеОчистки.НомерПути = данныеOld.НомерПути;
                                             SendOnPathTable(данныеОчистки);
 
-                                            СохранениеИзмененийДанныхВКарточке(данныеOld, данные);//DEBUG
-                                       }
+                                            СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                        }
                                     }
                                 }
-                  
+
+                            }
                         }
+
+                        SoundRecords[key] = данные;
+                        SoundRecordsOld[key] = данные;
                     }
-
-                    SoundRecords[key] = данные;
-                    SoundRecordsOld[key] = данные;
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
                 }
-                catch (Exception)
-                {
-                    // ignored
-                }
-            }
 
-            #endregion
+                #endregion         
         }
 
 
@@ -2108,7 +2157,7 @@ namespace MainExample
                                 }
 
                                 //Изменение номера поезда
-                                switch (listView.Name) 
+                                switch (listView.Name)
                                 {
                                     case "listView1":
                                         if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)
@@ -2245,7 +2294,7 @@ namespace MainExample
             string ФормируемоеСообщение = "";
 
             //Сформируем список нештатных сообщений--------------------------------------
-            var startDate = ВременноеВремяСобытия.AddMinutes(-30);
+            var startDate = ВременноеВремяСобытия.AddHours(-10);
             var endDate = ВременноеВремяСобытия.AddHours(27 - DateTime.Now.Hour); //часы до конца суток  +3 часа
             List<СостояниеФормируемогоСообщенияИШаблон> текущийСписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
 
@@ -3392,7 +3441,7 @@ namespace MainExample
                 NewRec = данные
             };
             SoundRecordChanges.Add(recChange);
-           // var hh = Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange);//DEBUG
+            // var hh = Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange);//DEBUG
             Program.SoundRecordChangesDbRepository.Add(Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange));
         }
 
