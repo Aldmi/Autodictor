@@ -41,7 +41,7 @@ namespace MainExample
                 if (System.IO.File.Exists(TrackPath) == true)
                 {
                     track_to_play = new Audio(TrackPath);
-                    SetVolume(Program.Настройки.УровеньГромкостиДень);//DEBUG   
+                    SetVolume(Program.Настройки.ВыборУровняГромкости());//DEBUG   
                     track_to_play.Play();
                     return true;
                 }
