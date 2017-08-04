@@ -57,7 +57,6 @@ namespace MainExample
 
 
 
-
         #region Methode
 
         public int ВыборУровняГромкости()

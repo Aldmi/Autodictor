@@ -368,7 +368,7 @@ namespace MainExample.Services
             if(IsStaticSoundPlaying)
                 EventStartPlayingStatic(soundMessage);
 
-            Log.log.Fatal($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+            //Log.log.Fatal($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
             // Debug.WriteLine($"начало проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 
@@ -385,7 +385,7 @@ namespace MainExample.Services
             if (IsStaticSoundPlaying)
                 EventEndPlayingStatic(soundMessage);
 
-            Log.log.Fatal($"конец проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
+            //Log.log.Fatal($"конец проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
             //Debug.WriteLine($"конец проигрывания файла: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }
 

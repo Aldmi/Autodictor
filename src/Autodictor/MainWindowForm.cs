@@ -232,6 +232,7 @@ namespace MainExample
                 }
             });
 
+
             DispouseStaticChangeRx = QueueSound.StaticChangeRx.Subscribe(StaticChangeRxEventHandler);
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
@@ -246,6 +247,20 @@ namespace MainExample
 
         private void StaticChangeRxEventHandler(StaticChangeValue staticChangeValue)
         {
+            //DEBUG QUEUE-----------------------------------------
+            switch (staticChangeValue.StatusPlaying)
+            {
+                case StatusPlaying.Start:
+                    Debug.WriteLine($"Статическое СТАРТ");//DEBUG
+                    СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
+                    break;
+
+                //case StatusPlaying.Stop:
+                //    Debug.WriteLine($"Статическое СТОП");//DEBUG
+                //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+                //    break;
+            }
+
             for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count(); i++)
             {
                 string Key = СтатическиеЗвуковыеСообщения.ElementAt(i).Key;
@@ -272,6 +287,21 @@ namespace MainExample
 
         private void TemplateChangeRxEventHandler(TemplateChangeValue templateChangeValue)
         {
+            //DEBUG QUEUE-----------------------------------------
+            switch (templateChangeValue.StatusPlaying)
+            {
+                case StatusPlaying.Start:
+                    Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТАРТ");//DEBUG
+                    СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
+                    break;
+
+                //case StatusPlaying.Stop:
+                //    Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТОП");//DEBUG
+                //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+                //    break;
+            }
+
+
             //ШАБЛОН технического сообщения
             if (templateChangeValue.SoundMessage.ТипСообщения == ТипСообщения.ДинамическоеТехническое)
             {
@@ -1853,7 +1883,7 @@ namespace MainExample
         private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
         {
             //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
-            Log.log.Fatal("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
+            //Log.log.Fatal("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
 
             if (SoundChanelManagment != null)
             {
@@ -1868,7 +1898,7 @@ namespace MainExample
         private void СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений()
         {
             //Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ");//DEBUG
-            Log.log.Fatal("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
+            //Log.log.Fatal("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
 
             if (SoundChanelManagment != null)
             {
