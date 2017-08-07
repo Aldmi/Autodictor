@@ -1,0 +1,298 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
+using Library.Convertion;
+
+
+
+namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
+{
+
+    //<? xml version="1.0" encoding="utf-8" standalone="yes"?>
+    //<changes>
+    //  <t>
+    //    <TimeStamp>2017-08-07T19:16:00</TimeStamp>
+    //    <TrainNumber>6309</TrainNumber>
+    //    <TrainType>0</TrainType>
+    //    <DirectionStation>Ряжское</DirectionStation>
+    //    <DirectionStationNew>Ряжское</DirectionStationNew>
+    //    <StartStation>Ленинградский</StartStation>
+    //    <StartStationNew>Ленинградский</StartStationNew>
+    //    <EndStation>Ленинградский</EndStation>
+    //    <EndStationNew>Ленинградский</EndStationNew>
+    //    <StartStationENG>ЛенинградскийEng</StartStationENG>
+    //    <StartStationENGNew>ЛенинградскийEng</StartStationENGNew>
+    //    <EndStationENG>ЛенинградскийEng</EndStationENG>
+    //    <EndStationENGNew>ЛенинградскийEng</EndStationENGNew>
+    //    <InDateTime>2017-08-07T19:16:00</InDateTime>
+    //    <InDateTimeNew>2017-08-07T19:16:00</InDateTimeNew>
+    //    <HereDateTime></HereDateTime>
+    //    <HereDateTimeNew></HereDateTimeNew>
+    //    <OutDateTime></OutDateTime>
+    //    <OutDateTimeNew></OutDateTimeNew>
+    //    <LateTime></LateTime>
+    //    <LateTimeNew></LateTimeNew>
+    //    <TrackNumber></TrackNumber>
+    //    <TrackNumberNew>1</TrackNumberNew>
+    //    <Direction>0</Direction>
+    //    <VagonDirection>0</VagonDirection>
+    //    <VagonDirectionNew>0</VagonDirectionNew>
+    //    <Enabled>1</Enabled>
+    //    <EnabledNew>1</EnabledNew>
+    //    <Note></Note>
+    //    <NoteNew></NoteNew>
+    //  </t>
+    //</changes>
+
+
+    public class XmlChangesFormatProvider : IFormatProvider
+    {
+        private readonly DateTimeFormat _dateTimeFormat;
+
+
+
+
+
+        public XmlChangesFormatProvider(DateTimeFormat dateTimeFormat)
+        {
+            _dateTimeFormat = dateTimeFormat;
+        }
+
+
+
+
+
+        public string CreateDoc(IEnumerable<UniversalInputType> tables)
+        {
+            var universalInputTypes = tables as IList<UniversalInputType> ?? tables.ToList();
+            if (!universalInputTypes.Any())
+                return null;
+
+            var xDoc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"), new XElement("changes"));
+            for (var i = 0; i < universalInputTypes.Count; i+=2)
+            {
+                var uit = universalInputTypes[i];
+                var uitNew = universalInputTypes[i+1];
+
+                string trainType;
+                string typeName ;
+                string typeNameShort;
+                GetTypeTrain(uit.TypeTrain, out trainType, out typeName, out typeNameShort);
+
+
+                string timeArrival;
+                string timeDepart;
+                byte direction;
+                GetTypeEvent(uit, out timeArrival, out timeDepart, out direction);
+
+                string timeArrivalNew;
+                string timeDepartNew;
+                byte directionNew;
+                GetTypeEvent(uitNew, out timeArrivalNew, out timeDepartNew, out directionNew);
+
+
+                var lateTime = uit.DelayTime?.ToString("t") ?? string.Empty;
+                var lateTimeNew = uitNew.DelayTime?.ToString("t") ?? string.Empty;
+
+                var stopTime = (uit.StopTime.HasValue) ? uit.StopTime.Value.Hours.ToString("D2") + ":" + uit.StopTime.Value.Minutes.ToString("D2") : string.Empty;
+                var stopTimeNew = (uitNew.StopTime.HasValue) ? uitNew.StopTime.Value.Hours.ToString("D2") + ":" + uitNew.StopTime.Value.Minutes.ToString("D2") : string.Empty;
+
+                // Время изменения
+                string timeStamp = string.Empty;
+                switch (_dateTimeFormat)
+                {
+                    case DateTimeFormat.None:
+                    case DateTimeFormat.Sortable:
+                        timeStamp = uit.ViewBag.ContainsKey("TimeStamp") ? ((DateTime)uit.ViewBag["TimeStamp"]).ToString("s") : string.Empty;
+                        break;
+
+                    case DateTimeFormat.LinuxTimeStamp:
+                        timeStamp = uit.ViewBag.ContainsKey("TimeStamp") ? DateTimeConvertion.ConvertToUnixTimestamp((DateTime)uit.ViewBag["TimeStamp"]).ToString(CultureInfo.InvariantCulture) : string.Empty;
+                        break;
+                }
+
+                xDoc.Root?.Add(
+                    new XElement("t",
+                    new XElement("TimeStamp", timeStamp),
+                    new XElement("TrainNumber", uit.NumberOfTrain),
+                    new XElement("TrainType", trainType),
+
+                    new XElement("DirectionStation", uit.DirectionStation),
+                    new XElement("DirectionStationNew", uitNew.DirectionStation),
+
+                    new XElement("StartStation", uit.StationDeparture.Key),
+                    new XElement("StartStationNew", uitNew.StationDeparture.Key),
+                    new XElement("EndStation", uit.StationArrival.Key),
+                    new XElement("EndStationNew", uitNew.StationArrival.Key),
+
+                    new XElement("StartStationENG", uit.StationDeparture.Value ?? string.Empty),
+                    new XElement("StartStationENGNew", uitNew.StationDeparture.Value ?? string.Empty),
+                    new XElement("EndStationENG", uit.StationArrival.Value ?? string.Empty),
+                    new XElement("EndStationENGNew", uitNew.StationArrival.Value ?? string.Empty),
+
+                    new XElement("InDateTime", timeArrival),                   //время приб
+                    new XElement("InDateTimeNew", timeArrivalNew),             //
+                    new XElement("HereDateTime", stopTime),                    //время стоянки
+                    new XElement("HereDateTimeNew", stopTimeNew),              //
+                    new XElement("OutDateTime", timeDepart),                   //время отпр
+                    new XElement("OutDateTimeNew", timeDepartNew),             //
+
+                    new XElement("LateTime", lateTime),                       //время задержки
+                    new XElement("LateTimeNew", lateTimeNew),                 //время задержки
+
+                    new XElement("TrackNumber", uit.PathNumber),
+                    new XElement("TrackNumberNew", uitNew.PathNumber),
+
+                    new XElement("Direction", direction),
+
+                    new XElement("VagonDirection", (byte)uit.VagonDirection),
+                    new XElement("VagonDirectionNew", (byte)uitNew.VagonDirection),
+
+                    new XElement("Enabled", (uit.EmergencySituation & 0x01) == 0x01 ? 0 : 1),
+                    new XElement("EnabledNew", (uitNew.EmergencySituation & 0x01) == 0x01 ? 0 : 1),
+
+                    new XElement("Note", uit.Note),                               //станции следования
+                    new XElement("NoteNew", uitNew.Note)                          //
+                    ));
+            }
+
+            //DEBUG------------------------
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocChanges.info";
+            xDoc.Save(path);
+            //-----------------------------
+
+            return xDoc.ToString();
+        }
+
+
+
+        private void GetTypeTrain(TypeTrain typeTrain, out string typeTrainStr, out string typeNameStr, out string typeNameShortStr)
+        {
+            typeTrainStr = String.Empty;
+            typeNameStr = String.Empty;
+            typeNameShortStr = String.Empty;
+            switch (typeTrain)
+            {
+                case TypeTrain.None:
+                    typeTrainStr = String.Empty;
+                    typeNameStr = String.Empty;
+                    break;
+
+                case TypeTrain.Suburban:
+                    typeTrainStr = "0";
+                    typeNameStr = "Пригородный";
+                    typeNameShortStr = "приг";
+                    break;
+
+                case TypeTrain.Express:
+                    typeTrainStr = "1";
+                    typeNameStr = "Экспресс";
+                    typeNameShortStr = "экспресс";
+                    break;
+
+                case TypeTrain.HighSpeed:
+                    typeTrainStr = "2";
+                    typeNameStr = "Скорый";
+                    typeNameShortStr = "скор";
+                    break;
+
+                case TypeTrain.Corporate:
+                    typeTrainStr = "3";
+                    typeNameStr = "Фирменный";
+                    typeNameShortStr = "фирм";
+                    break;
+
+                case TypeTrain.Passenger:
+                    typeTrainStr = "4";
+                    typeNameStr = "Пассажирский";
+                    typeNameShortStr = "пасс";
+                    break;
+
+                case TypeTrain.Swallow:
+                    typeTrainStr = "5";
+                    typeNameStr = "Скоростной";
+                    typeNameShortStr = "скоростной";
+                    break;
+
+                case TypeTrain.Rex:
+                    typeTrainStr = "5";
+                    typeNameStr = "Скоростной";
+                    typeNameShortStr = "скоростной";
+                    break;
+            }
+        }
+
+
+
+        private void GetTypeEvent(UniversalInputType uit, out string timeArrival, out string timeDepart, out byte direction)
+        {
+             timeArrival = string.Empty;
+             timeDepart = string.Empty;
+             direction = 0;
+
+            switch (uit.Event)
+            {
+                case "ПРИБ.":
+                    switch (_dateTimeFormat)
+                    {
+                        case DateTimeFormat.None:
+                            timeArrival = uit.Time.ToString("s");
+                            break;
+
+                        case DateTimeFormat.Sortable:
+                            timeArrival = uit.Time.ToString("s");
+                            break;
+
+                        case DateTimeFormat.LinuxTimeStamp:
+                            timeArrival = DateTimeConvertion.ConvertToUnixTimestamp(uit.Time).ToString(CultureInfo.InvariantCulture);
+                            break;
+                    }
+                    direction = 0;
+                    break;
+
+                case "ОТПР.":
+                    switch (_dateTimeFormat)
+                    {
+                        case DateTimeFormat.None:
+                            timeDepart = uit.Time.ToString("s");
+                            break;
+
+                        case DateTimeFormat.Sortable:
+                            timeDepart = uit.Time.ToString("s");
+                            break;
+
+                        case DateTimeFormat.LinuxTimeStamp:
+                            timeDepart = DateTimeConvertion.ConvertToUnixTimestamp(uit.Time).ToString(CultureInfo.InvariantCulture);
+                            break;
+                    }
+                    direction = 1;
+                    break;
+
+                case "СТОЯНКА":
+                    switch (_dateTimeFormat)
+                    {
+                        case DateTimeFormat.None:
+                            timeDepart = uit.Time.ToString("s");
+                            break;
+
+                        case DateTimeFormat.Sortable:
+                            timeArrival = uit.TransitTime.ContainsKey("приб") ? uit.TransitTime["приб"].ToString("s") : String.Empty;
+                            timeDepart = uit.TransitTime.ContainsKey("отпр") ? uit.TransitTime["отпр"].ToString("s") : String.Empty;
+                            break;
+
+                        case DateTimeFormat.LinuxTimeStamp:
+                            timeArrival = uit.TransitTime.ContainsKey("приб") ? DateTimeConvertion.ConvertToUnixTimestamp(uit.TransitTime["приб"]).ToString(CultureInfo.InvariantCulture) : String.Empty;
+                            timeDepart = uit.TransitTime.ContainsKey("отпр") ? DateTimeConvertion.ConvertToUnixTimestamp(uit.TransitTime["отпр"]).ToString(CultureInfo.InvariantCulture) : String.Empty;
+                            break;
+                    }
+                    direction = 2;
+                    break;
+            }
+
+        }
+     }
+}

@@ -1675,7 +1675,7 @@ namespace MainExample
                         //загрузим список изменений на глубину beh.HourDepth.
                         var min = DateTime.Now.AddHours(beh.HourDepth * (-1));
                         var changes = Program.SoundRecordChangesDbRepository.List()
-                            .Where(p => p.TimeStamp.Date >= min)
+                            .Where(p => p.TimeStamp >= min)
                             .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges)
                             .ToList();
 

@@ -4,7 +4,7 @@
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow }
+    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange }
 
     public enum DateTimeFormat
     {
@@ -61,25 +61,30 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             {
                 XmlType = XmlSpecialSettings.XmlType.XmlStaticWindow;
             }
+            else
+            if (providerName.ToLower().Contains("xml_change"))
+            {
+                XmlType = XmlSpecialSettings.XmlType.XmlChange;
+            }
 
 
             if (string.IsNullOrEmpty(timeFormat))
             {
-                DateTimeFormat = XmlSpecialSettings.DateTimeFormat.None;
+                DateTimeFormat = DateTimeFormat.None;
                 return;
             }
             if (timeFormat.ToLower().Contains("linuxtimestamp"))
             {
-                DateTimeFormat = XmlSpecialSettings.DateTimeFormat.LinuxTimeStamp;
+                DateTimeFormat = DateTimeFormat.LinuxTimeStamp;
             }
             else
             if (timeFormat.ToLower().Contains("sortable"))
             {
-                DateTimeFormat = XmlSpecialSettings.DateTimeFormat.Sortable;
+                DateTimeFormat = DateTimeFormat.Sortable;
             }
             else
             {
-                DateTimeFormat = XmlSpecialSettings.DateTimeFormat.None;
+                DateTimeFormat = DateTimeFormat.None;
             }
         }
 

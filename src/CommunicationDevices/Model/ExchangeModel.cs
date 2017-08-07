@@ -901,6 +901,10 @@ namespace CommunicationDevices.Model
                                 case XmlType.XmlStaticWindow:
                                     provider = new StreamWriteDataProvider(new XmlStaticWindowFormatProvider());
                                     break;
+
+                                case XmlType.XmlChange:
+                                    provider = new StreamWriteDataProvider(new XmlChangesFormatProvider(providerType.DateTimeFormat));
+                                    break;
                             }
 
                             behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);
@@ -913,8 +917,8 @@ namespace CommunicationDevices.Model
                         {
                             var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
                             Binding2PathBehaviors.Add(bindingBeh);
-                            bindingBeh.InitializeDevicePathInfo();      //Вывод номера пути в пустом сообщении
-                            DeviceTables.Last().AddCycleFunc();        //добавим все функции циклического опроса          
+                            bindingBeh.InitializeDevicePathInfo();     //Вывод номера пути в пустом сообщении
+                            DeviceTables.Last().AddCycleFunc();        //Добавим все функции циклического опроса          
                         }
 
                         //создание поведения привязка табло к главному расписанию

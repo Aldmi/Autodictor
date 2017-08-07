@@ -111,6 +111,7 @@
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementWriteDataProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\IFormatProvider.cs" />
+    <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlChangesFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlSheduleWindowFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlMainWindowFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlStaticWindowFormatProvider.cs" />
