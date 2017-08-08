@@ -735,7 +735,7 @@
             this.cBОтправлениеПоГотовности.TabIndex = 52;
             this.cBОтправлениеПоГотовности.Text = "Сообщение \"Отправление по готовности ...\"";
             this.cBОтправлениеПоГотовности.UseVisualStyleBackColor = true;
-            this.cBОтправлениеПоГотовности.CheckedChanged += new System.EventHandler(this.cBПоездОтменен_CheckedChanged);
+            this.cBОтправлениеПоГотовности.CheckedChanged += new System.EventHandler(this.cBНештатки_CheckedChanged);
             // 
             // btnЗадержкаОтправления
             // 
@@ -779,7 +779,7 @@
             this.cBОтправлениеЗадерживается.TabIndex = 2;
             this.cBОтправлениеЗадерживается.Text = "Сообщение \"Отправление поезда задерживается ...\"";
             this.cBОтправлениеЗадерживается.UseVisualStyleBackColor = true;
-            this.cBОтправлениеЗадерживается.CheckedChanged += new System.EventHandler(this.cBПоездОтменен_CheckedChanged);
+            this.cBОтправлениеЗадерживается.CheckedChanged += new System.EventHandler(this.cBНештатки_CheckedChanged);
             // 
             // cBПрибытиеЗадерживается
             // 
@@ -790,7 +790,7 @@
             this.cBПрибытиеЗадерживается.TabIndex = 1;
             this.cBПрибытиеЗадерживается.Text = "Сообщение \"Прибытие поезда задерживается ...\"";
             this.cBПрибытиеЗадерживается.UseVisualStyleBackColor = true;
-            this.cBПрибытиеЗадерживается.CheckedChanged += new System.EventHandler(this.cBПоездОтменен_CheckedChanged);
+            this.cBПрибытиеЗадерживается.CheckedChanged += new System.EventHandler(this.cBНештатки_CheckedChanged);
             // 
             // cBПоездОтменен
             // 
@@ -801,7 +801,7 @@
             this.cBПоездОтменен.TabIndex = 0;
             this.cBПоездОтменен.Text = "Сообщение \"Поезд отменен ...\"";
             this.cBПоездОтменен.UseVisualStyleBackColor = true;
-            this.cBПоездОтменен.CheckedChanged += new System.EventHandler(this.cBПоездОтменен_CheckedChanged);
+            this.cBПоездОтменен.CheckedChanged += new System.EventHandler(this.cBНештатки_CheckedChanged);
             // 
             // gBНастройкиПоезда
             // 

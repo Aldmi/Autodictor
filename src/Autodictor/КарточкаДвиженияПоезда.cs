@@ -400,6 +400,29 @@ namespace MainExample
                 Record.ВремяСтоянки = Record.ВремяОтправления - Record.ВремяПрибытия;
             }
 
+
+            //Присвоение битов нештатных ситуаций-------------------
+            Record.БитыНештатныхСитуаций &= 0x00;
+            if (cBПоездОтменен.Checked)
+            {
+                Record.БитыНештатныхСитуаций |= 0x01;
+            }
+            else
+            if (cBПрибытиеЗадерживается.Checked)
+            {
+                Record.БитыНештатныхСитуаций |= 0x02;
+            }
+            else
+            if (cBОтправлениеЗадерживается.Checked)
+            {
+                Record.БитыНештатныхСитуаций |= 0x04;
+            }
+            else
+            if (cBОтправлениеПоГотовности.Checked)
+            {
+                Record.БитыНештатныхСитуаций |= 0x08;
+            }
+
             DialogResult = DialogResult.OK;
         }
 
@@ -960,17 +983,15 @@ namespace MainExample
 
 
 
-        private void cBПоездОтменен_CheckedChanged(object sender, EventArgs e)
+        private void cBНештатки_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
-                Record.БитыНештатныхСитуаций &= (byte)0x00;
-                if ((sender as CheckBox).Checked == true)
+                if (((CheckBox) sender).Checked == true)
                 {
-                    switch ((sender as CheckBox).Name)
+                    switch (((CheckBox) sender).Name)
                     {
                         case "cBПоездОтменен":
-                            Record.БитыНештатныхСитуаций |= 0x01;
                             if (cBПрибытиеЗадерживается.Checked)
                                 cBПрибытиеЗадерживается.Checked = false;
                             if (cBОтправлениеЗадерживается.Checked)
@@ -980,7 +1001,6 @@ namespace MainExample
                             break;
 
                         case "cBПрибытиеЗадерживается":
-                            Record.БитыНештатныхСитуаций |= 0x02;
                             if (cBПоездОтменен.Checked)
                                 cBПоездОтменен.Checked = false;
                             if (cBОтправлениеЗадерживается.Checked)
@@ -990,17 +1010,21 @@ namespace MainExample
                             break;
 
                         case "cBОтправлениеЗадерживается":
-                            Record.БитыНештатныхСитуаций |= 0x04;
-                            cBПоездОтменен.Checked = false;
-                            cBПрибытиеЗадерживается.Checked = false;
-                            cBОтправлениеПоГотовности.Checked = false;
+                            if (cBПоездОтменен.Checked)
+                                cBПоездОтменен.Checked = false;
+                            if (cBПрибытиеЗадерживается.Checked)
+                                cBПрибытиеЗадерживается.Checked = false;
+                            if (cBОтправлениеПоГотовности.Checked)
+                                cBОтправлениеПоГотовности.Checked = false;
                             break;
 
                         case "cBОтправлениеПоГотовности":
-                            Record.БитыНештатныхСитуаций |= 0x08;
-                            cBПоездОтменен.Checked = false;
-                            cBПрибытиеЗадерживается.Checked = false;
-                            cBОтправлениеЗадерживается.Checked = false;
+                            if (cBПоездОтменен.Checked)
+                                cBПоездОтменен.Checked = false;
+                            if (cBПрибытиеЗадерживается.Checked)
+                                cBПрибытиеЗадерживается.Checked = false;
+                            if (cBОтправлениеЗадерживается.Checked)
+                                cBОтправлениеЗадерживается.Checked = false;
                             break;
                     }
                     ОбновитьТекстВОкне();
