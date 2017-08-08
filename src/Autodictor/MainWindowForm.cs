@@ -664,7 +664,15 @@ namespace MainExample
             rec.СостояниеОтображения = newRec.СостояниеОтображения;
             rec.ТипСообщения = newRec.ТипСообщения;//???
 
-            rec.СписокНештатныхСообщений = newRec.СписокНештатныхСообщений;
+            //rec.СписокНештатныхСообщений = newRec.СписокНештатныхСообщений;
+
+
+            //Заполнение СписокНештатныхСообщений.
+            if ((rec.БитыНештатныхСитуаций & 0x0F) != 0x00)
+            {
+                rec= ЗаполнениеСпискаНештатныхСитуаций(rec, null);
+            }
+
 
             //СОХРАНЕНИЕ
             SoundRecords[key] = rec;
@@ -2365,7 +2373,11 @@ namespace MainExample
             }
 
             данные.СписокНештатныхСообщений = текущийСписокНештатныхСообщений;
-            SoundRecords[key] = данные;
+
+            if (!string.IsNullOrEmpty(key))
+            {
+                SoundRecords[key] = данные;
+            }
 
             return данные;
         }
@@ -3455,7 +3467,7 @@ namespace MainExample
                 NewRec = данные
             };
             SoundRecordChanges.Add(recChange);
-            // var hh = Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange);//DEBUG
+            //var hh = Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange);//DEBUG
             Program.SoundRecordChangesDbRepository.Add(Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange));
         }
 

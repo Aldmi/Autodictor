@@ -96,6 +96,7 @@
             this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btn_выход = new System.Windows.Forms.Button();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -301,10 +302,10 @@
             // 
             // btn_Подтвердить
             // 
-            this.btn_Подтвердить.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Подтвердить.Location = new System.Drawing.Point(1037, 487);
+            this.btn_Подтвердить.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Подтвердить.Location = new System.Drawing.Point(844, 487);
             this.btn_Подтвердить.Name = "btn_Подтвердить";
-            this.btn_Подтвердить.Size = new System.Drawing.Size(122, 39);
+            this.btn_Подтвердить.Size = new System.Drawing.Size(136, 39);
             this.btn_Подтвердить.TabIndex = 6;
             this.btn_Подтвердить.Text = "Подтвердить";
             this.btn_Подтвердить.UseVisualStyleBackColor = true;
@@ -422,7 +423,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(176, 125);
+            this.label8.Location = new System.Drawing.Point(174, 125);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(19, 25);
             this.label8.TabIndex = 18;
@@ -526,14 +527,14 @@
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(1181, 487);
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(991, 487);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 39);
+            this.button1.Size = new System.Drawing.Size(155, 39);
             this.button1.TabIndex = 14;
             this.button1.Text = "Отмена";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.btn_ОтменаClick);
             // 
             // comboBox_displayTable
             // 
@@ -683,6 +684,7 @@
             this.cBНомерПоезда.Name = "cBНомерПоезда";
             this.cBНомерПоезда.Size = new System.Drawing.Size(82, 28);
             this.cBНомерПоезда.TabIndex = 44;
+            this.cBНомерПоезда.Enter += new System.EventHandler(this.cBНомерПоезда_Enter);
             // 
             // cBОтменен
             // 
@@ -718,7 +720,7 @@
             // btnОтправлениеПоГотовности
             // 
             this.btnОтправлениеПоГотовности.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnОтправлениеПоГотовности.Location = new System.Drawing.Point(463, 83);
+            this.btnОтправлениеПоГотовности.Location = new System.Drawing.Point(463, 84);
             this.btnОтправлениеПоГотовности.Name = "btnОтправлениеПоГотовности";
             this.btnОтправлениеПоГотовности.Size = new System.Drawing.Size(157, 24);
             this.btnОтправлениеПоГотовности.TabIndex = 53;
@@ -740,7 +742,7 @@
             // btnЗадержкаОтправления
             // 
             this.btnЗадержкаОтправления.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnЗадержкаОтправления.Location = new System.Drawing.Point(463, 58);
+            this.btnЗадержкаОтправления.Location = new System.Drawing.Point(463, 60);
             this.btnЗадержкаОтправления.Name = "btnЗадержкаОтправления";
             this.btnЗадержкаОтправления.Size = new System.Drawing.Size(157, 24);
             this.btnЗадержкаОтправления.TabIndex = 51;
@@ -751,7 +753,7 @@
             // btnЗадержкаПрибытия
             // 
             this.btnЗадержкаПрибытия.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnЗадержкаПрибытия.Location = new System.Drawing.Point(463, 33);
+            this.btnЗадержкаПрибытия.Location = new System.Drawing.Point(463, 36);
             this.btnЗадержкаПрибытия.Name = "btnЗадержкаПрибытия";
             this.btnЗадержкаПрибытия.Size = new System.Drawing.Size(157, 24);
             this.btnЗадержкаПрибытия.TabIndex = 50;
@@ -762,7 +764,7 @@
             // btnОтменаПоезда
             // 
             this.btnОтменаПоезда.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnОтменаПоезда.Location = new System.Drawing.Point(463, 9);
+            this.btnОтменаПоезда.Location = new System.Drawing.Point(463, 12);
             this.btnОтменаПоезда.Name = "btnОтменаПоезда";
             this.btnОтменаПоезда.Size = new System.Drawing.Size(157, 24);
             this.btnОтменаПоезда.TabIndex = 49;
@@ -849,6 +851,7 @@
             this.cBНомерПоезда2.Name = "cBНомерПоезда2";
             this.cBНомерПоезда2.Size = new System.Drawing.Size(82, 28);
             this.cBНомерПоезда2.TabIndex = 50;
+            this.cBНомерПоезда2.Enter += new System.EventHandler(this.cBНомерПоезда2_Enter);
             // 
             // cb_Дополнение_Табло
             // 
@@ -890,11 +893,23 @@
             this.label4.TabIndex = 46;
             this.label4.Text = "Дополнение:";
             // 
+            // btn_выход
+            // 
+            this.btn_выход.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_выход.Location = new System.Drawing.Point(1156, 487);
+            this.btn_выход.Name = "btn_выход";
+            this.btn_выход.Size = new System.Drawing.Size(155, 39);
+            this.btn_выход.TabIndex = 49;
+            this.btn_выход.Text = "Выход";
+            this.btn_выход.UseVisualStyleBackColor = true;
+            this.btn_выход.Click += new System.EventHandler(this.btn_выход_Click);
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1319, 532);
+            this.Controls.Add(this.btn_выход);
             this.Controls.Add(this.gBНастройкиПоезда);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.cBОтменен);
@@ -994,5 +1009,6 @@
         private System.Windows.Forms.Button btn_Фиксировать;
         private System.Windows.Forms.Label lb_фиксВрПриб;
         private System.Windows.Forms.Label lb_фиксВрОтпр;
+        private System.Windows.Forms.Button btn_выход;
     }
 }
