@@ -174,15 +174,27 @@ namespace MainExample
         //Расписание движения поездов
         private void listExample_Click(object sender, EventArgs e)
         {
-            if (TrainTable.myMainForm != null)
+            //if (TrainTable.myMainForm != null)
+            //{
+            //    TrainTable.myMainForm.Show();
+            //    TrainTable.myMainForm.WindowState = FormWindowState.Normal;
+            //}
+            //else
+            //{
+            //    TrainTable listForm = new TrainTable(ExchangeModel.CisClient) {MdiParent = this};
+            //    listForm.Show();
+            //}
+
+
+            if (TrainTableGrid.MyMainForm != null)
             {
-                TrainTable.myMainForm.Show();
-                TrainTable.myMainForm.WindowState = FormWindowState.Normal;
+                TrainTableGrid.MyMainForm.Show();
+                TrainTableGrid.MyMainForm.WindowState = FormWindowState.Normal;
             }
             else
             {
-                TrainTable listForm = new TrainTable(ExchangeModel.CisClient) {MdiParent = this};
-                listForm.Show();
+                TrainTableGrid form = new TrainTableGrid() { MdiParent = this }; //TrainTableGrid(ExchangeModel.CisClient) 
+                form.Show();
             }
         }
 

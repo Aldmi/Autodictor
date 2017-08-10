@@ -117,6 +117,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WinFormsExpander, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinFormsExpander.0.1.0\lib\net45\WinFormsExpander.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutForm.cs">
@@ -153,6 +157,12 @@
     <Compile Include="Entites\SoundRecordChanges.cs" />
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
+    <Compile Include="TrainTableGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainTableGrid.Designer.cs">
+      <DependentUpon>TrainTableGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\StructCompare.cs" />
     <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="OperativeSheduleForm.cs">
@@ -334,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommunicationForm.resx">
       <DependentUpon>CommunicationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainTableGrid.resx">
+      <DependentUpon>TrainTableGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OperativeSheduleForm.resx">
       <DependentUpon>OperativeSheduleForm.cs</DependentUpon>
