@@ -112,17 +112,6 @@ namespace MainExample.Mappers
             record.ФиксированноеВремяПрибытия = null;
             record.ФиксированноеВремяОтправления = null;
 
-
-            //string[] названияСтанций = config.Name.Split('-');
-            //if (названияСтанций.Length == 2)
-            //{
-            //    record.СтанцияОтправления = названияСтанций[0].Trim();
-            //    record.СтанцияНазначения = названияСтанций[1].Trim();
-            //}
-            //else if (названияСтанций.Length == 1)
-            //    record.СтанцияНазначения = названияСтанций[0].Trim();
-
-
             record.СтанцияОтправления = config.StationDepart;
             record.СтанцияНазначения = config.StationArrival;
 
@@ -172,30 +161,10 @@ namespace MainExample.Mappers
                 }
             }
 
-            //DEBUG транзиты по ПРИБ---------------------
-            //if ((номерСписка & 0x04) == 0x04 ||
-            //    (номерСписка & 0x14) == 0x14)
-            //{
-            //    record.Время = record.ВремяПрибытия;
-            //    record.ОжидаемоеВремя = record.ВремяПрибытия;
-            //}
-            //else
-            //{
-            //    record.Время = record.ВремяОтправления;
-            //    record.ОжидаемоеВремя = record.ВремяОтправления;
-            //}
-
-
             //ТРАНЗИТ
             record.ВремяСтоянки = null;
             if (номерСписка == 0x14)
             {
-                //вермя отправления указанно для след. суток
-                //if (времяОтправления < времяПрибытия)                              //??????????????
-                //{
-                //    record.ВремяОтправления = времяОтправления.AddDays(1);
-                //}
-
                 if (времяОтправления < времяПрибытия)                              //??????????????
                 {
                     record.ВремяПрибытия = времяПрибытия.AddDays(-1);
@@ -567,6 +536,8 @@ namespace MainExample.Mappers
                     StationArrival = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationArrivalMyltiLang : new KeyValuePair<string, string>(),
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
+                    DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(data.ДниСледования).ПолучитьСтрокуОписанияРасписания(),
+                    DaysFollowingAlias = data.ДниСледованияAlias,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
@@ -593,6 +564,8 @@ namespace MainExample.Mappers
                     StationArrival = stationArrivalMyltiLang,
                     Note = data.Примечание,
                     TypeTrain = typeTrain,
+                    DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(data.ДниСледования).ПолучитьСтрокуОписанияРасписания(),
+                    DaysFollowingAlias = data.ДниСледованияAlias,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций

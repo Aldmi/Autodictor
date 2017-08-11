@@ -26,6 +26,10 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <EvSndTime>2017-06-17T00:34:00</EvSndTime>
     //    <LateTime>12:20</LateTime>                                 //час:мин
     //    <HereDateTime>15</HereDateTime>                            //время стоянки
+
+    //    <DaysOfGoing>12:20</DaysOfGoing>                           //Дни след
+    //    <DaysOfGoingAlias>15</DaysOfGoingAlias>                    //Дни след. заданные вручную
+
     //    <TrackNumber></TrackNumber>
     //    <Direction>1</Direction>
     //    <EvTrackNumber></EvTrackNumber>
@@ -39,7 +43,6 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //	  <Note>Поле дополнения</Note>                 // список остановок
     //  </t>
     //</mainWindow>
-
 
 
     public class XmlMainWindowFormatProvider : IFormatProvider
@@ -198,6 +201,10 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("EvSndTime", timeDepart),
                         new XElement("LateTime", lateTime),                      //время задержки
                         new XElement("HereDateTime", stopTime),                  //время стоянки
+
+                        new XElement("DaysOfGoing", uit.DaysFollowing),            //дни след
+                        new XElement("DaysOfGoingAlias", uit.DaysFollowingAlias),  //дни след заданные в ручную
+
                         new XElement("TrackNumber", uit.PathNumber),
                         new XElement("Direction", direction),
                         new XElement("EvTrackNumber", uit.PathNumber),
@@ -215,8 +222,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            //xDoc.Save(path);
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();
