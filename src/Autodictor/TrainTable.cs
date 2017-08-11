@@ -176,6 +176,7 @@ namespace MainExample
         }
 
 
+
         private void btn_ДобавитьЗапись_Click(object sender, EventArgs e)
         {
             TrainTableRecord Данные;

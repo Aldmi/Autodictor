@@ -181,7 +181,7 @@ namespace MainExample
             //}
             //else
             //{
-            //    TrainTable listForm = new TrainTable(ExchangeModel.CisClient) {MdiParent = this};
+            //    TrainTable listForm = new TrainTable(ExchangeModel.CisClient) { MdiParent = this };
             //    listForm.Show();
             //}
 

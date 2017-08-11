@@ -27,8 +27,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <LateTime>12:20</LateTime>                                 //час:мин
     //    <HereDateTime>15</HereDateTime>                            //время стоянки
 
-    //    <DaysOfGoing>12:20</DaysOfGoing>                           //Дни след
-    //    <DaysOfGoingAlias>15</DaysOfGoingAlias>                    //Дни след. заданные вручную
+    //    <DaysOfGoing>Ежедневно</DaysOfGoing>                           //Дни след
+    //    <DaysOfGoingAlias></DaysOfGoingAlias>                    //Дни след. заданные вручную
 
     //    <TrackNumber></TrackNumber>
     //    <Direction>1</Direction>
@@ -222,8 +222,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            xDoc.Save(path);
+            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            //xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

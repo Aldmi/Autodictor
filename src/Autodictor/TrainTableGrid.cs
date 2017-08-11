@@ -19,7 +19,6 @@ namespace MainExample
         private readonly List<CheckBox> _checkBoxes;
 
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
-        private static int ID = 0;
 
         #endregion
 
@@ -53,11 +52,10 @@ namespace MainExample
             _checkBoxes = new List<CheckBox> { chb_Id, chb_Номер, chb_ВремяПрибытия, chb_ВремяОтпр, chb_Маршрут, chb_ДниСледования };
             Model2Controls();
 
-            //Заполнение таблицы данными-------------------
-            btnLoad_Click(null, EventArgs.Empty);
         }
 
         #endregion
+
 
 
 
@@ -88,8 +86,6 @@ namespace MainExample
             for (int i = 0; i < dgv_TrainTable.Columns.Count; i++)
             {
                 var col = dgv_TrainTable.Columns[i];
-                //col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
                 switch (col.Name)
                 {
                     case "Id":
@@ -130,7 +126,6 @@ namespace MainExample
         private void Model2Controls()
         {
             CreateDataTable();
-
             LoadSettings();
 
             //Заполнение ChBox---------------------------------------
@@ -143,6 +138,7 @@ namespace MainExample
                 }
             }
         }
+
 
 
         /// <summary>
@@ -221,25 +217,25 @@ namespace MainExample
                         string[] settings = line.Split(';');
                         if ((settings.Length == 13) || (settings.Length == 15) || (settings.Length >= 16))
                         {
-                            TrainTableRecord Данные;
+                            TrainTableRecord данные;
 
-                            Данные.ID = int.Parse(settings[0]);
-                            Данные.Num = settings[1];
-                            Данные.Name = settings[2];
-                            Данные.ArrivalTime = settings[3];
-                            Данные.StopTime = settings[4];
-                            Данные.DepartureTime = settings[5];
-                            Данные.Days = settings[6];
-                            Данные.Active = settings[7] == "1" ? true : false;
-                            Данные.SoundTemplates = settings[8];
-                            Данные.TrainPathDirection = byte.Parse(settings[9]);
-                            Данные.TrainPathNumber = LoadPathFromFile(settings[10], out Данные.PathWeekDayes);
-                            Данные.ИспользоватьДополнение = new Dictionary<string, bool>()
+                            данные.ID = int.Parse(settings[0]);
+                            данные.Num = settings[1];
+                            данные.Name = settings[2];
+                            данные.ArrivalTime = settings[3];
+                            данные.StopTime = settings[4];
+                            данные.DepartureTime = settings[5];
+                            данные.Days = settings[6];
+                            данные.Active = settings[7] == "1" ? true : false;
+                            данные.SoundTemplates = settings[8];
+                            данные.TrainPathDirection = byte.Parse(settings[9]);
+                            данные.TrainPathNumber = LoadPathFromFile(settings[10], out данные.PathWeekDayes);
+                            данные.ИспользоватьДополнение = new Dictionary<string, bool>()
                             {
                                 ["звук"] = false,
                                 ["табло"] = false
                             };
-                            Данные.Автомат = true;
+                            данные.Автомат = true;
 
                             ТипПоезда типПоезда = ТипПоезда.НеОпределен;
                             try
@@ -247,26 +243,26 @@ namespace MainExample
                                 типПоезда = (ТипПоезда)Enum.Parse(typeof(ТипПоезда), settings[11]);
                             }
                             catch (ArgumentException) { }
-                            Данные.ТипПоезда = типПоезда;
+                            данные.ТипПоезда = типПоезда;
 
-                            Данные.Примечание = settings[12];
+                            данные.Примечание = settings[12];
 
-                            if (Данные.TrainPathDirection > 2)
-                                Данные.TrainPathDirection = 0;
+                            if (данные.TrainPathDirection > 2)
+                                данные.TrainPathDirection = 0;
 
-                            var path = Program.PathWaysRepository.List().FirstOrDefault(p => p.Name == Данные.TrainPathNumber[WeekDays.Постоянно]);
+                            var path = Program.PathWaysRepository.List().FirstOrDefault(p => p.Name == данные.TrainPathNumber[WeekDays.Постоянно]);
                             if (path == null)
-                                Данные.TrainPathNumber[WeekDays.Постоянно] = "";
+                                данные.TrainPathNumber[WeekDays.Постоянно] = "";
 
-                            DateTime НачалоДействия = new DateTime(1900, 1, 1);
-                            DateTime КонецДействия = new DateTime(2100, 1, 1);
+                            DateTime началоДействия = new DateTime(1900, 1, 1);
+                            DateTime конецДействия = new DateTime(2100, 1, 1);
                             if (settings.Length >= 15)
                             {
-                                DateTime.TryParse(settings[13], out НачалоДействия);
-                                DateTime.TryParse(settings[14], out КонецДействия);
+                                DateTime.TryParse(settings[13], out началоДействия);
+                                DateTime.TryParse(settings[14], out конецДействия);
                             }
-                            Данные.ВремяНачалаДействияРасписания = НачалоДействия;
-                            Данные.ВремяОкончанияДействияРасписания = КонецДействия;
+                            данные.ВремяНачалаДействияРасписания = началоДействия;
+                            данные.ВремяОкончанияДействияРасписания = конецДействия;
 
 
                             var addition = "";
@@ -274,55 +270,50 @@ namespace MainExample
                             {
                                 addition = settings[15];
                             }
-                            Данные.Addition = addition;
+                            данные.Addition = addition;
 
 
                             if (settings.Length >= 18)
                             {
-                                Данные.ИспользоватьДополнение["табло"] = settings[16] == "1";
-                                Данные.ИспользоватьДополнение["звук"] = settings[17] == "1";
+                                данные.ИспользоватьДополнение["табло"] = settings[16] == "1";
+                                данные.ИспользоватьДополнение["звук"] = settings[17] == "1";
                             }
 
                             if (settings.Length >= 19)
                             {
-                                Данные.Автомат = (string.IsNullOrEmpty(settings[18]) || settings[18] == "1"); // по умолчанию true
+                                данные.Автомат = (string.IsNullOrEmpty(settings[18]) || settings[18] == "1"); // по умолчанию true
                             }
 
 
-                            Данные.Num2 = String.Empty;
-                            Данные.FollowingTime = String.Empty;
-                            Данные.DaysAlias = String.Empty;
+                            данные.Num2 = String.Empty;
+                            данные.FollowingTime = String.Empty;
+                            данные.DaysAlias = String.Empty;
                             if (settings.Length >= 22)
                             {
-                                Данные.Num2 = settings[19];
-                                Данные.FollowingTime = settings[20];
-                                Данные.DaysAlias = settings[21];
+                                данные.Num2 = settings[19];
+                                данные.FollowingTime = settings[20];
+                                данные.DaysAlias = settings[21];
                             }
 
 
-                            Данные.StationDepart = String.Empty;
-                            Данные.StationArrival = String.Empty;
+                            данные.StationDepart = String.Empty;
+                            данные.StationArrival = String.Empty;
                             if (settings.Length >= 23)
                             {
-                                Данные.StationDepart = settings[22];
-                                Данные.StationArrival = settings[23];
+                                данные.StationDepart = settings[22];
+                                данные.StationArrival = settings[23];
                             }
 
-                            Данные.Direction = String.Empty;
+                            данные.Direction = String.Empty;
                             if (settings.Length >= 25)
                             {
-                                Данные.Direction = settings[24];
+                                данные.Direction = settings[24];
                             }
 
-
-
-                            TrainTableRecords.Add(Данные);
-                            Program.НомераПоездов.Add(Данные.Num);
-                            if (!string.IsNullOrEmpty(Данные.Num2))
-                                Program.НомераПоездов.Add(Данные.Num2);
-
-                            if (Данные.ID > ID)
-                                ID = Данные.ID;
+                            TrainTableRecords.Add(данные);
+                            Program.НомераПоездов.Add(данные.Num);
+                            if (!string.IsNullOrEmpty(данные.Num2))
+                                Program.НомераПоездов.Add(данные.Num2);
                         }
                     }
                 }
@@ -472,6 +463,7 @@ namespace MainExample
         }
 
 
+
         public void SourceLoadMainList()
         {
             if (rbSourseSheduleLocal.Checked)
@@ -483,6 +475,7 @@ namespace MainExample
                 //LoadListFromCis();
             }
         }
+
 
 
         private void ОбновитьДанныеВСписке()
@@ -510,12 +503,68 @@ namespace MainExample
             dgv_TrainTable.Refresh();
         }
 
+
+
+        /// <summary>
+        /// Редактирование элемента
+        /// </summary>
+        /// <param name="index">Если указанн индекс то элемент уже есть в списке, если равен null, то это новый элемент добавленный в конец списка</param>
+        private TrainTableRecord? EditData(TrainTableRecord данные, int? index = null)
+        {
+            ПланРасписанияПоезда текущийПланРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days);
+            текущийПланРасписанияПоезда.УстановитьНомерПоезда(данные.Num);
+            текущийПланРасписанияПоезда.УстановитьНазваниеПоезда(данные.Name);
+
+            Оповещение оповещение = new Оповещение(данные);
+            оповещение.ShowDialog();
+            данные.Active = !оповещение.cBБлокировка.Checked;
+            if (оповещение.DialogResult == DialogResult.OK)
+            {
+                данные = оповещение.РасписаниеПоезда;
+                var строкаОписанияРасписания = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days).ПолучитьСтрокуОписанияРасписания();
+                if (index != null)
+                {
+                    var row = DataTable.Rows[index.Value];
+                    row["Номер"] = данные.Num;
+                    row["ВремяПрибытия"] = данные.ArrivalTime;
+                    row["ВремяОтправления"] = данные.DepartureTime;
+                    row["Маршрут"] = данные.Name;
+                    row["ДниСледования"] = строкаОписанияРасписания;
+                }
+                else
+                {
+                    var row = DataTable.NewRow();
+                    row["Id"] = данные.ID;
+                    row["Номер"] = данные.Num;
+                    row["ВремяПрибытия"] = данные.ArrivalTime;
+                    row["ВремяОтправления"] = данные.DepartureTime;
+                    row["Маршрут"] = данные.Name;
+                    row["ДниСледования"] = строкаОписанияРасписания;
+                    DataTable.Rows.Add(row);
+
+                    dgv_TrainTable.Rows[dgv_TrainTable.Rows.Count - 1].DefaultCellStyle.BackColor = данные.Active ? Color.LightGreen : Color.LightGray;
+                    dgv_TrainTable.Rows[dgv_TrainTable.Rows.Count - 1].Tag = данные.ID;
+                }
+                return данные;
+            }
+
+            return null;
+        }
+
         #endregion
 
 
 
 
         #region EventHandler
+
+        protected override void OnLoad(EventArgs e)
+        {
+            //Заполнение таблицы данными-------------------
+            btnLoad_Click(null, EventArgs.Empty);
+        }
+
+
 
         /// <summary>
         /// Фильтрация таблицы
@@ -647,6 +696,9 @@ namespace MainExample
 
 
 
+        /// <summary>
+        /// Добавить
+        /// </summary>
         private void dgv_TrainTable_DoubleClick(object sender, EventArgs e)
         {
             var selected = dgv_TrainTable.SelectedRows[0];
@@ -657,32 +709,108 @@ namespace MainExample
             {
                 if (TrainTableRecords[i].ID == (int)selected.Tag)
                 {
-                    TrainTableRecord данные = TrainTableRecords[i];
-
-                    ПланРасписанияПоезда текущийПланРасписанияПоезда = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days);
-                    текущийПланРасписанияПоезда.УстановитьНомерПоезда(данные.Num);
-                    текущийПланРасписанияПоезда.УстановитьНазваниеПоезда(данные.Name);
-
-                    Оповещение оповещение = new Оповещение(данные);
-                    оповещение.ShowDialog();
-                    данные.Active = !оповещение.cBБлокировка.Checked;
-                    if (оповещение.DialogResult == DialogResult.OK)
-                    {
-                        данные = оповещение.РасписаниеПоезда;
-                        var строкаОписанияРасписания = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days).ПолучитьСтрокуОписанияРасписания();
-                        var row = DataTable.Rows[i];
-                        row["Номер"] = данные.Num;
-                        row["ВремяПрибытия"] = данные.ArrivalTime;
-                        row["ВремяОтправления"] = данные.DepartureTime;
-                        row["Маршрут"] = данные.Name;
-                        row["ДниСледования"] = строкаОписанияРасписания;
-                    }
-
-                    TrainTableRecords[i] = данные;
-                    break;
+                   var данные= EditData(TrainTableRecords[i], i);
+                   if (данные != null)
+                   {
+                       TrainTableRecords[i] = данные.Value;
+                   }
+        
+                   break;
                 }
             }
         }
 
+
+
+
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        private void btn_УдалитьЗапись_Click(object sender, EventArgs e)
+        {
+            var selected = dgv_TrainTable.SelectedRows[0];
+            if (selected == null)
+                return;
+
+            var delItem = TrainTableRecords.FirstOrDefault(t => t.ID == (int) selected.Tag);
+            TrainTableRecords.Remove(delItem);
+            ОбновитьДанныеВСписке();
+        }
+
+
+
+        /// <summary>
+        /// Добавить
+        /// </summary>
+        private void btn_ДобавитьЗапись_Click(object sender, EventArgs e)
+        {
+            int maxId = TrainTableRecords.Max(t => t.ID);
+
+            //создали новый элемент
+            TrainTableRecord Данные;
+            Данные.ID = ++maxId;
+            Данные.Num = "";
+            Данные.Num2 = "";
+            Данные.Addition = "";
+            Данные.Name = "";
+            Данные.StationArrival = "";
+            Данные.StationDepart = "";
+            Данные.Direction = "";
+            Данные.ArrivalTime = "00:00";
+            Данные.StopTime = "00:00";
+            Данные.DepartureTime = "00:00";
+            Данные.FollowingTime = "00:00";
+            Данные.Days = "";
+            Данные.DaysAlias = "";
+            Данные.Active = true;
+            Данные.SoundTemplates = "";
+            Данные.TrainPathDirection = 0x01;
+            Данные.ТипПоезда = ТипПоезда.НеОпределен;
+            Данные.TrainPathNumber = new Dictionary<WeekDays, string>
+            {
+                [WeekDays.Постоянно] = String.Empty,
+                [WeekDays.Пн] = String.Empty,
+                [WeekDays.Вт] = String.Empty,
+                [WeekDays.Ср] = String.Empty,
+                [WeekDays.Ср] = String.Empty,
+                [WeekDays.Чт] = String.Empty,
+                [WeekDays.Пт] = String.Empty,
+                [WeekDays.Сб] = String.Empty,
+                [WeekDays.Вс] = String.Empty
+            };
+            Данные.PathWeekDayes = false;
+            Данные.Примечание = "";
+            Данные.ВремяНачалаДействияРасписания = new DateTime(1900, 1, 1);
+            Данные.ВремяОкончанияДействияРасписания = new DateTime(2100, 1, 1);
+            Данные.Addition = "";
+            Данные.ИспользоватьДополнение = new Dictionary<string, bool>
+            {
+                ["звук"] = false,
+                ["табло"] = false
+            };
+            Данные.Автомат = true;
+
+            //Добавили в список
+            TrainTableRecords.Add(Данные);
+
+            //Отредактировали добавленный элемент
+            int lastIndex = TrainTableRecords.Count - 1;
+            var данные = EditData(TrainTableRecords[lastIndex]);
+            if (данные != null)
+            {
+                TrainTableRecords[lastIndex] = данные.Value;
+            }
+        }
+
+
+
+
+         /// <summary>
+         /// Сохранить
+         /// </summary>
+        private void btn_Сохранить_Click(object sender, EventArgs e)
+        {
+            СохранитьСписок();
+        }
     }
 }
