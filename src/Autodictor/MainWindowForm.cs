@@ -1642,14 +1642,14 @@ namespace MainExample
                     {
                         if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
                         {
-                            var table = TrainTable.TrainTableRecords
-                                .Select(Mapper.MapTrainTableRecord2UniversalInputType)
-                                .ToList();
-                            table.ForEach(t => t.Message =$"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
-
-                            var inData = new UniversalInputType {TableData = table};
                             foreach (var beh in binding2Shedule)
                             {
+                                var table = TrainTable.TrainTableRecords
+                                    .Select(Mapper.MapTrainTableRecord2UniversalInputType)
+                                    .ToList();
+
+                                table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+                                var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
@@ -1662,15 +1662,14 @@ namespace MainExample
                         if (TrainTableOperative.TrainTableRecords != null &&
                             TrainTableOperative.TrainTableRecords.Any())
                         {
-                            var table = TrainTableOperative.TrainTableRecords
-                                .Select(Mapper.MapTrainTableRecord2UniversalInputType)
-                                .ToList();
-                            table.ForEach(t => t.Message =
-                                $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
-
-                            var inData = new UniversalInputType {TableData = table};
                             foreach (var beh in binding2OperativeShedule)
                             {
+                                var table = TrainTableOperative.TrainTableRecords
+                                    .Select(Mapper.MapTrainTableRecord2UniversalInputType)
+                                    .ToList();
+
+                                table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+                                var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
@@ -1687,6 +1686,7 @@ namespace MainExample
                                 var table = SoundRecords
                                     .Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false))
                                     .ToList();
+
                                 table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType {TableData = table};
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
@@ -2026,12 +2026,6 @@ namespace MainExample
         //Отправка сообшений на табло
         private void SendOnPathTable(SoundRecord data)
         {
-            if (data.НомерПоезда == "7216")//DEBUG
-            {
-                var t = 5 + 5;
-            }
-
-
             if (data.СостояниеОтображения == TableRecordStatus.Выключена || data.СостояниеОтображения == TableRecordStatus.ОжиданиеОтображения)
                 return;
 

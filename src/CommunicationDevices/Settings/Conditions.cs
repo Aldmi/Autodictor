@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.AccessControl;
 using CommunicationDevices.DataProviders;
@@ -60,6 +61,8 @@ namespace CommunicationDevices.Settings
         public bool EmergencySituationDelayDepart { get; set; }        //Нешатная ситуация отменен, задержка отправления
 
         public int? LimitNumberRows { get; set; }                     //Ограничение кол-ва строк
+
+        public List<string> DirectionStations { get; set; }                 //Направленния
 
         #endregion
 
@@ -235,20 +238,17 @@ namespace CommunicationDevices.Settings
             var swallowArrivalfilter = true;
             if (SwallowArrival)
             {
-                swallowArrivalfilter =
-                    !((inData.Event == "ПРИБ.") && (inData.TypeTrain == DataProviders.TypeTrain.Swallow));
+                swallowArrivalfilter =!((inData.Event == "ПРИБ.") && (inData.TypeTrain == DataProviders.TypeTrain.Swallow));
             }
             var swallowDepartFilter = true;
             if (SwallowDepart)
             {
-                swallowDepartFilter =
-                    !((inData.Event == "ОТПР.") && (inData.TypeTrain == DataProviders.TypeTrain.Swallow));
+                swallowDepartFilter =!((inData.Event == "ОТПР.") && (inData.TypeTrain == DataProviders.TypeTrain.Swallow));
             }
             var swallowPathsFilter = true;
             if (SwallowPaths != null && SwallowPaths.Any())
             {
-                swallowPathsFilter =
-                    !(SwallowPaths.Contains(inData.PathNumber) && (inData.TypeTrain == DataProviders.TypeTrain.Swallow));
+                swallowPathsFilter =!(SwallowPaths.Contains(inData.PathNumber) && (inData.TypeTrain == DataProviders.TypeTrain.Swallow));
             }
 
 
@@ -265,8 +265,7 @@ namespace CommunicationDevices.Settings
             var rexPathsFilter = true;
             if (RexPaths != null && RexPaths.Any())
             {
-                rexPathsFilter =
-                    !(RexPaths.Contains(inData.PathNumber) && (inData.TypeTrain == DataProviders.TypeTrain.Rex));
+                rexPathsFilter = !(RexPaths.Contains(inData.PathNumber) && (inData.TypeTrain == DataProviders.TypeTrain.Rex));
             }
 
 
@@ -280,6 +279,13 @@ namespace CommunicationDevices.Settings
             if (DeparturePaths != null && DeparturePaths.Any())
             {
                 departurePathsFilter = !((inData.Event == "ОТПР.") && DeparturePaths.Contains(inData.PathNumber));
+            }
+
+
+            var directionStationsFilter = true;
+            if (DirectionStations != null && DirectionStations.Any())
+            {
+                directionStationsFilter = DirectionStations.Contains(inData.DirectionStation.ToLower());
             }
 
 
@@ -308,7 +314,8 @@ namespace CommunicationDevices.Settings
                    rexDepartFilter &&
                    rexPathsFilter &&
                    arrivalPathsFilter &&
-                   departurePathsFilter;
+                   departurePathsFilter &&
+                   directionStationsFilter;
         }
 
 

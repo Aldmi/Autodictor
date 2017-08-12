@@ -117,8 +117,39 @@ namespace TestGrid4WinForms
             }
 
             //Заполнение таблицы данными-------------------
-            foreach (var rec in TableRecs)
+
+
+            //DataTable.Rows.Clear();
+
+            //for (var i = 0; i < TrainTableRecords.Count; i++)
+            //{
+            //    var данные = TrainTableRecords[i];
+            //    string строкаОписанияРасписания = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days).ПолучитьСтрокуОписанияРасписания();
+
+            //    var row = DataTable.NewRow();
+            //    row["Id"] = данные.ID;
+            //    row["Номер"] = данные.Num;
+            //    row["ВремяПрибытия"] = данные.ArrivalTime;
+            //    row["ВремяОтправления"] = данные.DepartureTime;
+            //    row["Маршрут"] = данные.Name;
+            //    row["ДниСледования"] = строкаОписанияРасписания;
+            //    DataTable.Rows.Add(row);
+
+            //    dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = данные.Active ? Color.LightGreen : Color.LightGray;
+            //    dgv_TrainTable.Rows[i].Tag = данные.ID;
+            //}
+
+            //dgv_TrainTable.Refresh();
+        }
+
+
+        protected override void OnLoad(EventArgs e)
+        {
+            DataTable.Rows.Clear();
+
+            for (var i = 0; i < TableRecs.Count; i++)
             {
+                var rec = TableRecs[i];
                 var row = DataTable.NewRow();
                 row["Id"] = rec.Id;
                 row["Номер"] = rec.Number;
@@ -126,11 +157,31 @@ namespace TestGrid4WinForms
                 row["ВремяОтправления"] = rec.DepartureTime;
                 row["Маршрут"] = rec.Route;
                 row["ДниСледования"] = rec.DaysFollowing;
-
                 DataTable.Rows.Add(row);
+
+                dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+                dgv_TrainTable.Rows[i].Tag = rec.Id;
             }
+
+            dgv_TrainTable.Refresh();
+
+            base.OnLoad(e);
         }
 
+
+        private void РаскраситьСписок()
+        {
+            for (var i = 0; i < dgv_TrainTable.Rows.Count; i++)
+            {
+                var row = dgv_TrainTable.Rows[i];
+                var id = (int)row.Cells[0].Value;
+
+                dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+                var firstOrDefault = TableRecs.FirstOrDefault(t => t.Id == id);
+                if (firstOrDefault != null)
+                    dgv_TrainTable.Rows[i].Tag = firstOrDefault.Id;
+            }
+        }
 
 
         /// <summary>
@@ -182,6 +233,8 @@ namespace TestGrid4WinForms
             }
 
             DataView.RowFilter = filter;
+
+            РаскраситьСписок();
         }
 
 
@@ -295,6 +348,11 @@ namespace TestGrid4WinForms
             {
                 chBox.Enabled = (string)chBox.Tag != col0;
             }
+        }
+
+        private void dgv_TrainTable_Sorted(object sender, EventArgs e)
+        {
+            РаскраситьСписок();
         }
     }
 }

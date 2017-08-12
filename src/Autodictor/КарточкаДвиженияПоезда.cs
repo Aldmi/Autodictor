@@ -896,7 +896,7 @@ namespace MainExample
                 {
                     var ФормируемоеСообщение = _record.СписокФормируемыхСообщений[item];
 
-                    var активность = lVШаблоны.Items[item].Checked;//DEBUG
+                    var активность = lVШаблоны.Items[item].Checked;
 
                     var ручноШаблон= ФормируемоеСообщение.НазваниеШаблона.StartsWith("@");
                     var времяПриб = (_record.ФиксированноеВремяПрибытия == null || !ручноШаблон) ? _record.ВремяПрибытия : _record.ФиксированноеВремяПрибытия.Value;

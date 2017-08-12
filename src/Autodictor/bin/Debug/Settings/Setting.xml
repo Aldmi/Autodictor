@@ -97,7 +97,7 @@
   
   
 <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToGeneral:ГлавноеОкно">  
+	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:">  
 	 	   <ExchangeRules>    
 				<Table Size= "3">
 					   <Rule Format = "Windows-1251">
@@ -124,7 +124,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow"
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" Contrains="Направление:Московское" ProviderType="xml_sheduleWindow:sortable"
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -132,6 +132,15 @@
 						   Content-Type: multipart/form-data +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   />
+						   
+	 <DeviceHttp Id="301" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=611" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" Contrains="Направление:Дальние" ProviderType="xml_sheduleWindow:sortable"
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />					   
 </DevicesWithHttp>
 
 </Root>
@@ -188,8 +197,8 @@
 			 (ДельтаТекВремени:120|120)  (-|+)
 			 
 			 (ЛимитСтрокТаблицы:15)
-			 
-			 
+		 
+			 (Направление:Московское|Дальние)
 
 			 -->
 

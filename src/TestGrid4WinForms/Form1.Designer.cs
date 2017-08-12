@@ -83,6 +83,7 @@
             this.dgv_TrainTable.Size = new System.Drawing.Size(934, 307);
             this.dgv_TrainTable.TabIndex = 0;
             this.dgv_TrainTable.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv_TrainTable_ColumnDisplayIndexChanged);
+            this.dgv_TrainTable.Sorted += new System.EventHandler(this.dgv_TrainTable_Sorted);
             // 
             // btn_Filter
             // 

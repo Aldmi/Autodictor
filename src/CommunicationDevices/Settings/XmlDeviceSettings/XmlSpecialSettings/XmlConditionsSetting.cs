@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Castle.Components.DictionaryAdapter;
 using CommunicationDevices.DataProviders;
-
+using MoreLinq;
 
 
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
@@ -122,6 +122,15 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
                         int limitRow;
                         Conditions.LimitNumberRows = (int?)(int.TryParse(matchString, out limitRow) ? (ValueType)limitRow : null);
+                        continue;
+                    }
+
+
+                    matchString = Regex.Match(s, "Направление\\:(.*)").Groups[1].Value;
+                    if (!string.IsNullOrEmpty(matchString))
+                    {
+                        var directions = matchString.Split('|').Select(item=> item.ToLower()).ToList();
+                        Conditions.DirectionStations = directions;
                         continue;
                     }
 
