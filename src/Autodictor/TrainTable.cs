@@ -392,7 +392,7 @@ namespace MainExample
         {
             try
             {
-                using (StreamWriter DumpFile = new StreamWriter("TableRecords.ini"))
+                using (StreamWriter dumpFile = new StreamWriter("TableRecords.ini"))
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
@@ -424,10 +424,10 @@ namespace MainExample
                             TrainTableRecords[i].StationArrival + ";" +
                             TrainTableRecords[i].Direction;
 
-                        DumpFile.WriteLine(line);
+                        dumpFile.WriteLine(line);
                     }
 
-                    DumpFile.Close();
+                    dumpFile.Close();
                 }
             }
             catch (Exception e)
@@ -495,6 +495,7 @@ namespace MainExample
         }
 
 
+
         public void SourceLoadMainList()
         {
             if (rbSourseSheduleLocal.Checked)
@@ -506,6 +507,7 @@ namespace MainExample
                 LoadListFromCis();
             }
         }
+
 
 
         private static Dictionary<WeekDays, string> LoadPathFromFile(string str, out bool pathWeekDayes)

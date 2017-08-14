@@ -15,6 +15,7 @@ namespace MainExample
     {
         #region Field
 
+        private readonly string _pathGridSetting = "UISettings/GridTableRec.ini";
         public static TrainTableGrid MyMainForm = null;
         private readonly List<CheckBox> _checkBoxes;
 
@@ -38,7 +39,6 @@ namespace MainExample
 
 
 
-
         #region ctor
 
         public TrainTableGrid()
@@ -49,7 +49,7 @@ namespace MainExample
 
             InitializeComponent();
 
-            _checkBoxes = new List<CheckBox> { chb_Id, chb_Номер, chb_ВремяПрибытия, chb_ВремяОтпр, chb_Маршрут, chb_ДниСледования };
+            _checkBoxes = new List<CheckBox> { chb_Id, chb_Номер, chb_ВремяПрибытия, chb_Стоянка, chb_ВремяОтпр, chb_Маршрут, chb_ДниСледования };
             Model2Controls();
 
         }
@@ -63,6 +63,24 @@ namespace MainExample
 
         #region Methods
 
+        private void Model2Controls()
+        {
+            CreateDataTable();
+            LoadSettings();
+
+            //Заполнение ChBox---------------------------------------
+            for (var i = 0; i < dgv_TrainTable.Columns.Count; i++)
+            {
+                var chBox = _checkBoxes.FirstOrDefault(ch => (string)ch.Tag == dgv_TrainTable.Columns[i].Name);
+                if (chBox != null)
+                {
+                    chBox.Checked = dgv_TrainTable.Columns[i].Visible;
+                }
+            }
+        }
+
+
+
         private void CreateDataTable()
         {
             //Создание  таблицы
@@ -72,6 +90,7 @@ namespace MainExample
                 new DataColumn("Id", typeof(int)),
                 new DataColumn("Номер", typeof(string)),
                 new DataColumn("ВремяПрибытия", typeof(string)),
+                new DataColumn("Стоянка", typeof(string)),
                 new DataColumn("ВремяОтправления", typeof(string)),
                 new DataColumn("Маршрут", typeof(string)),
                 new DataColumn("ДниСледования", typeof(string))
@@ -103,6 +122,11 @@ namespace MainExample
                         col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                         break;
 
+                    case "Стоянка":
+                        col.HeaderText = @"Стоянка";
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        break;
+
                     case "ВремяОтправления":
                         col.HeaderText = @"Время отправления";
                         col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -123,23 +147,6 @@ namespace MainExample
 
 
 
-        private void Model2Controls()
-        {
-            CreateDataTable();
-            LoadSettings();
-
-            //Заполнение ChBox---------------------------------------
-            for (var i = 0; i < dgv_TrainTable.Columns.Count; i++)
-            {
-                var chBox = _checkBoxes.FirstOrDefault(ch => (string)ch.Tag == dgv_TrainTable.Columns[i].Name);
-                if (chBox != null)
-                {
-                    chBox.Checked = dgv_TrainTable.Columns[i].Visible;
-                }
-            }
-        }
-
-
 
         /// <summary>
         /// Сохранить форматирование грида в файл.
@@ -148,7 +155,7 @@ namespace MainExample
         {
             try
             {
-                using (StreamWriter dumpFile = new StreamWriter("GridTableRec.ini"))
+                using (StreamWriter dumpFile = new StreamWriter(_pathGridSetting))
                 {
                     for (var i = 0; i < dgv_TrainTable.Columns.Count; i++)
                     {
@@ -169,12 +176,14 @@ namespace MainExample
         }
 
 
-
+        /// <summary>
+        /// Загрузить форматирование грида из файла.
+        /// </summary>
         private void LoadSettings()
         {
             try
             {
-                using (StreamReader file = new StreamReader("GridTableRec.ini"))
+                using (StreamReader file = new StreamReader(_pathGridSetting))
                 {
                     string line;
                     int numberLine = 0;
@@ -376,6 +385,21 @@ namespace MainExample
 
 
 
+        private void РаскраситьСписок()
+        {
+            for (var i = 0; i < dgv_TrainTable.Rows.Count; i++)
+            {
+                var row = dgv_TrainTable.Rows[i];
+                var id = (int)row.Cells[0].Value;
+                var firstOrDefault = TrainTableRecords.FirstOrDefault(t => t.ID == id);
+
+                dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = firstOrDefault.Active ? Color.LightGreen : Color.LightGray;
+                dgv_TrainTable.Rows[i].Tag = firstOrDefault.ID;
+            }
+        }
+
+
+
         private static Dictionary<WeekDays, string> LoadPathFromFile(string str, out bool pathWeekDayes)
         {
             Dictionary<WeekDays, string> pathDictionary = new Dictionary<WeekDays, string>
@@ -464,6 +488,9 @@ namespace MainExample
 
 
 
+        /// <summary>
+        /// Выбор источника загрузки
+        /// </summary>
         public void SourceLoadMainList()
         {
             if (rbSourseSheduleLocal.Checked)
@@ -481,7 +508,6 @@ namespace MainExample
         private void ОбновитьДанныеВСписке()
         {        
             DataTable.Rows.Clear();
-
             for (var i = 0; i < TrainTableRecords.Count; i++)
             {
                 var данные = TrainTableRecords[i];
@@ -491,6 +517,7 @@ namespace MainExample
                 row["Id"] = данные.ID;
                 row["Номер"] = данные.Num;
                 row["ВремяПрибытия"] = данные.ArrivalTime;
+                row["Стоянка"] = данные.StopTime;
                 row["ВремяОтправления"] = данные.DepartureTime;
                 row["Маршрут"] = данные.Name;
                 row["ДниСледования"] = строкаОписанияРасписания;
@@ -500,7 +527,7 @@ namespace MainExample
                 dgv_TrainTable.Rows[i].Tag = данные.ID;
             }
 
-            dgv_TrainTable.Refresh();
+           РаскраситьСписок();
         }
 
 
@@ -527,6 +554,7 @@ namespace MainExample
                     var row = DataTable.Rows[index.Value];
                     row["Номер"] = данные.Num;
                     row["ВремяПрибытия"] = данные.ArrivalTime;
+                    row["Стоянка"] = данные.StopTime;
                     row["ВремяОтправления"] = данные.DepartureTime;
                     row["Маршрут"] = данные.Name;
                     row["ДниСледования"] = строкаОписанияРасписания;
@@ -537,6 +565,7 @@ namespace MainExample
                     row["Id"] = данные.ID;
                     row["Номер"] = данные.Num;
                     row["ВремяПрибытия"] = данные.ArrivalTime;
+                    row["Стоянка"] = данные.StopTime;
                     row["ВремяОтправления"] = данные.DepartureTime;
                     row["Маршрут"] = данные.Name;
                     row["ДниСледования"] = строкаОписанияРасписания;
@@ -552,6 +581,7 @@ namespace MainExample
         }
 
         #endregion
+
 
 
 
@@ -615,6 +645,8 @@ namespace MainExample
             }
 
             DataView.RowFilter = filter;
+
+            РаскраситьСписок();
         }
 
 
@@ -671,20 +703,6 @@ namespace MainExample
 
 
 
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            if (MyMainForm == this)
-                MyMainForm = null;
-
-            //DispouseCisClientIsConnectRx.Dispose();
-            base.OnClosing(e);
-        }
-
-        #endregion
-
-
-
         /// <summary>
         /// Загрузить расписание
         /// </summary>
@@ -702,24 +720,23 @@ namespace MainExample
         private void dgv_TrainTable_DoubleClick(object sender, EventArgs e)
         {
             var selected = dgv_TrainTable.SelectedRows[0];
-            if(selected == null)
+            if (selected == null)
                 return;
 
             for (int i = 0; i < TrainTableRecords.Count; i++)
             {
                 if (TrainTableRecords[i].ID == (int)selected.Tag)
                 {
-                   var данные= EditData(TrainTableRecords[i], i);
-                   if (данные != null)
-                   {
-                       TrainTableRecords[i] = данные.Value;
-                   }
-        
-                   break;
+                    var данные = EditData(TrainTableRecords[i], i);
+                    if (данные != null)
+                    {
+                        TrainTableRecords[i] = данные.Value;
+                    }
+
+                    break;
                 }
             }
         }
-
 
 
 
@@ -732,7 +749,7 @@ namespace MainExample
             if (selected == null)
                 return;
 
-            var delItem = TrainTableRecords.FirstOrDefault(t => t.ID == (int) selected.Tag);
+            var delItem = TrainTableRecords.FirstOrDefault(t => t.ID == (int)selected.Tag);
             TrainTableRecords.Remove(delItem);
             ОбновитьДанныеВСписке();
         }
@@ -804,13 +821,35 @@ namespace MainExample
 
 
 
-
-         /// <summary>
-         /// Сохранить
-         /// </summary>
+        /// <summary>
+        /// Сохранить
+        /// </summary>
         private void btn_Сохранить_Click(object sender, EventArgs e)
         {
             СохранитьСписок();
         }
+
+
+
+        /// <summary>
+        /// Сортировка спсиска
+        /// </summary>
+        private void dgv_TrainTable_Sorted(object sender, EventArgs e)
+        {
+            РаскраситьСписок();
+        }
+
+
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (MyMainForm == this)
+                MyMainForm = null;
+
+            //DispouseCisClientIsConnectRx.Dispose();
+            base.OnClosing(e);
+        }
+
+        #endregion
     }
 }

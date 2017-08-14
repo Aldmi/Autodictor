@@ -30,6 +30,8 @@ namespace TestGrid4WinForms
 
         public DataTable DataTable { get; set; }
         public DataView DataView { get; set; }
+        public Point PointGridViewDefault { get; set; }
+
 
 
 
@@ -38,6 +40,7 @@ namespace TestGrid4WinForms
         {
             InitializeComponent();
 
+            PointGridViewDefault= dgv_TrainTable.Location;
             _checkBoxes = new List<CheckBox> { chb_Id, chb_Номер, chb_ВремяПрибытия, chb_ВремяОтпр, chb_Маршрут, chb_ДниСледования };
             Model2Controls();
         }
@@ -350,9 +353,31 @@ namespace TestGrid4WinForms
             }
         }
 
+
+
         private void dgv_TrainTable_Sorted(object sender, EventArgs e)
         {
             РаскраситьСписок();
+        }
+
+
+
+
+        private void exp_Filter_ExpandedChanged_1(object sender, EventArgs e)
+        {
+            //if (!exp_Filter.IsExpanded)
+            //{
+            //    dgv_TrainTable.Location = new Point(PointGridViewDefault.X, 30);
+
+            //    var height = this.Size.Height - dgv_TrainTable.Size.Height;
+
+            //    dgv_TrainTable.Size= new Size(dgv_TrainTable.Size.Width, dgv_TrainTable.Size.Height+ height);
+
+            //}
+            //else
+            //{
+            //    dgv_TrainTable.Location = new Point(PointGridViewDefault.X, PointGridViewDefault.Y);
+            //}
         }
     }
 }

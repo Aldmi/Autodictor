@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dgv_TrainTable = new System.Windows.Forms.DataGridView();
             this.btn_Filter = new System.Windows.Forms.Button();
@@ -56,9 +56,14 @@
             this.chb_ВремяПрибытия = new System.Windows.Forms.CheckBox();
             this.chb_Номер = new System.Windows.Forms.CheckBox();
             this.chb_Id = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_TrainTable)).BeginInit();
             this.exp_Filter.Content.SuspendLayout();
             this.grb_Main.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv_TrainTable
@@ -67,20 +72,21 @@
             this.dgv_TrainTable.AllowUserToDeleteRows = false;
             this.dgv_TrainTable.AllowUserToOrderColumns = true;
             this.dgv_TrainTable.AllowUserToResizeRows = false;
+            this.dgv_TrainTable.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgv_TrainTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_TrainTable.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgv_TrainTable.Location = new System.Drawing.Point(0, 245);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_TrainTable.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgv_TrainTable.Location = new System.Drawing.Point(0, 243);
             this.dgv_TrainTable.MultiSelect = false;
             this.dgv_TrainTable.Name = "dgv_TrainTable";
             this.dgv_TrainTable.ReadOnly = true;
-            this.dgv_TrainTable.Size = new System.Drawing.Size(934, 307);
+            this.dgv_TrainTable.Size = new System.Drawing.Size(934, 183);
             this.dgv_TrainTable.TabIndex = 0;
             this.dgv_TrainTable.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgv_TrainTable_ColumnDisplayIndexChanged);
             this.dgv_TrainTable.Sorted += new System.EventHandler(this.dgv_TrainTable_Sorted);
@@ -194,6 +200,7 @@
             this.exp_Filter.Name = "exp_Filter";
             this.exp_Filter.Size = new System.Drawing.Size(934, 239);
             this.exp_Filter.TabIndex = 14;
+            this.exp_Filter.ExpandedChanged += new System.EventHandler(this.exp_Filter_ExpandedChanged_1);
             // 
             // grb_Main
             // 
@@ -349,11 +356,53 @@
             this.chb_Id.UseVisualStyleBackColor = true;
             this.chb_Id.CheckedChanged += new System.EventHandler(this.chb_CheckedChanged);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(0, 432);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(928, 100);
+            this.tabControl1.TabIndex = 16;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(920, 74);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(920, 74);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(920, 74);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 552);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.exp_Filter);
             this.Controls.Add(this.btn_DisableColumn);
             this.Controls.Add(this.dgv_TrainTable);
@@ -364,6 +413,7 @@
             this.exp_Filter.Content.PerformLayout();
             this.grb_Main.ResumeLayout(false);
             this.grb_Main.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -396,6 +446,10 @@
         private System.Windows.Forms.CheckBox chb_ВремяПрибытия;
         private System.Windows.Forms.CheckBox chb_Номер;
         private System.Windows.Forms.CheckBox chb_Id;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
     }
 }
 
