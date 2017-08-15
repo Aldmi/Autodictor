@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dgv_TrainTable = new System.Windows.Forms.DataGridView();
             this.btn_Filter = new System.Windows.Forms.Button();
@@ -74,14 +74,14 @@
             this.dgv_TrainTable.AllowUserToResizeRows = false;
             this.dgv_TrainTable.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgv_TrainTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_TrainTable.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_TrainTable.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_TrainTable.Location = new System.Drawing.Point(0, 243);
             this.dgv_TrainTable.MultiSelect = false;
             this.dgv_TrainTable.Name = "dgv_TrainTable";
@@ -227,9 +227,10 @@
             // 
             // btn_SaveTableFormat
             // 
+            this.btn_SaveTableFormat.Image = ((System.Drawing.Image)(resources.GetObject("btn_SaveTableFormat.Image")));
             this.btn_SaveTableFormat.Location = new System.Drawing.Point(381, 93);
             this.btn_SaveTableFormat.Name = "btn_SaveTableFormat";
-            this.btn_SaveTableFormat.Size = new System.Drawing.Size(100, 29);
+            this.btn_SaveTableFormat.Size = new System.Drawing.Size(100, 36);
             this.btn_SaveTableFormat.TabIndex = 16;
             this.btn_SaveTableFormat.Text = "Сохранить";
             this.btn_SaveTableFormat.UseVisualStyleBackColor = true;

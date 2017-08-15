@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 using System.Linq;
 using System.Windows.Input;
@@ -187,7 +188,6 @@ namespace MainExample
             SoundChanelManagment = soundChanelManagment;
 
             MainForm.Пауза.Click += new System.EventHandler(this.btnПауза_Click);
-            MainForm.Остановить.Click += new System.EventHandler(this.btnОстановить_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
             MainForm.ОбновитьСписок.Click += new System.EventHandler(this.btnОбновитьСписок_Click);
 
@@ -241,7 +241,7 @@ namespace MainExample
 
             QueueSound.StartQueue();
 
-            MainForm.Включить.BackColor = Color.Orange;
+            MainForm.Включить.BackColor = Color.Red;
             Program.ЗаписьЛога("Системное сообщение", "Программный комплекс включен");
         }
 
@@ -439,12 +439,14 @@ namespace MainExample
             {
                 MainForm.Включить.Text = "ОТКЛЮЧИТЬ";
                 MainForm.Включить.BackColor = Color.LightGreen;
+                QueueSound.StartAndPlayedCurrentMessage();
                 Program.ЗаписьЛога("Действие оператора", "Работа разрешена");
             }
             else
             {
                 MainForm.Включить.Text = "ВКЛЮЧИТЬ";
-                MainForm.Включить.BackColor = Color.Orange;
+                MainForm.Включить.BackColor = Color.Red;
+                QueueSound.StopAndPlayedCurrentMessage();
                 Program.ЗаписьЛога("Действие оператора", "Работа запрещена");
             }
         }
@@ -1905,29 +1907,16 @@ namespace MainExample
             SoundFileStatus status = Player.GetFileStatus();
             switch (status)
             {
+                case SoundFileStatus.Error:
                 case SoundFileStatus.Stop:
                 case SoundFileStatus.Paused:
-                    MainForm.Пауза.Text = "Старт";
-                    MainForm.Пауза.Enabled = true;
-                    MainForm.Пауза.BackColor = Color.White;
-                    MainForm.Остановить.Enabled = false;
-                    MainForm.Остановить.BackColor = Color.White;
-                    break;
-
-                case SoundFileStatus.Error:
-                    MainForm.Пауза.Text = "...";
+                    MainForm.Пауза.BackColor = Color.Gray;
                     MainForm.Пауза.Enabled = false;
-                    MainForm.Пауза.BackColor = Color.White;
-                    MainForm.Остановить.Enabled = false;
-                    MainForm.Остановить.BackColor = Color.White;
                     break;
 
                 case SoundFileStatus.Playing:
-                    MainForm.Пауза.Text = "Пауза";
+                    MainForm.Пауза.BackColor = Color.Red;
                     MainForm.Пауза.Enabled = true;
-                    MainForm.Пауза.BackColor = Color.DarkOrange;
-                    MainForm.Остановить.Enabled = true;
-                    MainForm.Остановить.BackColor = Color.Brown;
                     break;
             }
         }
@@ -1984,26 +1973,6 @@ namespace MainExample
 
         // ВоспроизведениеАвтомат выбраной в таблице записи
         private void btnПауза_Click(object sender, EventArgs e)
-        {
-
-            SoundFileStatus status = Player.GetFileStatus();
-            switch (status)
-            {
-                case SoundFileStatus.Paused:
-                case SoundFileStatus.Stop:
-                    QueueSound.PlayPlayer();
-                    break;
-
-                case SoundFileStatus.Playing:
-                    QueueSound.PausePlayer();
-                    break;
-            }
-        }
-
-
-
-        // ВоспроизведениеАвтомат выбраной в таблице записи
-        private void btnОстановить_Click(object sender, EventArgs e)
         {
             //проверка ДОСТУПА
             if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))

@@ -32,7 +32,6 @@ namespace MainExample
         public static MainForm mainForm = null;
         public static ToolStripButton СвязьСЦис = null;
         public static ToolStripButton Пауза = null;
-        public static ToolStripButton Остановить = null;
         public static ToolStripButton Включить = null;
         public static ToolStripButton ОбновитьСписок = null;
         public static ToolStripButton РежимРаботы = null;
@@ -63,12 +62,12 @@ namespace MainExample
             СвязьСЦис.BackColor = Color.Orange;
 
             Пауза = tSBПауза;
-            Остановить = tSBОстановить;
+
             Включить = tSBВключить;
             ОбновитьСписок = tSBОбновитьСписок;
             РежимРаботы = tSBРежимРаботы;
 
-            Включить.BackColor = Color.Orange;
+            Включить.BackColor = Color.Red;
         }
 
 

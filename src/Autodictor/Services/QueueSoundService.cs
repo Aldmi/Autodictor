@@ -50,15 +50,16 @@ namespace MainExample.Services
         public IEnumerable<ВоспроизводимоеСообщение> GetElements => Queue;
         public int Count => Queue.Count;
 
-        public bool IsStaticSoundPlaying =>(MainWindowForm.QueueSound.CurrentTemplatePlaying == null) &&
-                                           (MainWindowForm.QueueSound.CurrentSoundMessagePlaying != null);
+        public bool IsStaticSoundPlaying => (MainWindowForm.QueueSound.CurrentTemplatePlaying == null) &&
+                                            (MainWindowForm.QueueSound.CurrentSoundMessagePlaying != null);
 
 
         public ВоспроизводимоеСообщение CurrentSoundMessagePlaying { get; private set; }
         public СостояниеФормируемогоСообщенияИШаблон? CurrentTemplatePlaying { get; private set; }
 
 
-        public ВоспроизводимоеСообщение LastSoundMessagePlayed { get; private set; }       //последнее проигранное звуковое сообщение
+        public ВоспроизводимоеСообщение LastSoundMessagePlayed { get; private set; }
+        //последнее проигранное звуковое сообщение
 
         private List<ВоспроизводимоеСообщение> ElementsOnTemplatePlaying { get; set; }
         public IEnumerable<ВоспроизводимоеСообщение> GetElementsOnTemplatePlaying => ElementsOnTemplatePlaying;
@@ -68,10 +69,10 @@ namespace MainExample.Services
         {
             get
             {
-                if(CurrentSoundMessagePlaying == null)
+                if (CurrentSoundMessagePlaying == null)
                     return new List<ВоспроизводимоеСообщение>();
 
-                var result= new List<ВоспроизводимоеСообщение>();
+                var result = new List<ВоспроизводимоеСообщение>();
                 if (IsStaticSoundPlaying)
                 {
                     result.Add(CurrentSoundMessagePlaying);
@@ -89,6 +90,8 @@ namespace MainExample.Services
 
         public bool IsWorking { get; private set; }
 
+        public bool IsPlayedCurrentMessage { get; private set; }  //доиграть последнее сообщение и остановить очередь
+
         #endregion
 
 
@@ -96,10 +99,14 @@ namespace MainExample.Services
 
         #region Rx
 
-        public Subject<StatusPlaying> QueueChangeRx { get; } = new Subject<StatusPlaying>();             //Событие определния начала/конца проигрывания ОЧЕРЕДИ
-        public Subject<StatusPlaying> SoundMessageChangeRx { get; } = new Subject<StatusPlaying>();      //Событие определния начала/конца проигрывания ФАЙЛА
-        public Subject<TemplateChangeValue> TemplateChangeRx { get; } = new Subject<TemplateChangeValue>();          //Событие определния начала/конца проигрывания динамического ШАБЛОНА
-        public Subject<StaticChangeValue> StaticChangeRx { get; } = new Subject<StaticChangeValue>();            //Событие определния начала/конца проигрывания  статического ФАЙЛА
+        public Subject<StatusPlaying> QueueChangeRx { get; } = new Subject<StatusPlaying>();
+        //Событие определния начала/конца проигрывания ОЧЕРЕДИ
+        public Subject<StatusPlaying> SoundMessageChangeRx { get; } = new Subject<StatusPlaying>();
+        //Событие определния начала/конца проигрывания ФАЙЛА
+        public Subject<TemplateChangeValue> TemplateChangeRx { get; } = new Subject<TemplateChangeValue>();
+        //Событие определния начала/конца проигрывания динамического ШАБЛОНА
+        public Subject<StaticChangeValue> StaticChangeRx { get; } = new Subject<StaticChangeValue>();
+        //Событие определния начала/конца проигрывания  статического ФАЙЛА
 
         #endregion
 
@@ -118,6 +125,20 @@ namespace MainExample.Services
         {
             IsWorking = false;
         }
+
+
+        public void StartAndPlayedCurrentMessage()
+        {
+            IsPlayedCurrentMessage = false;
+            StartQueue();
+        }
+
+
+        public void StopAndPlayedCurrentMessage()
+        {
+            IsPlayedCurrentMessage = true;
+        }
+    
 
 
 
@@ -207,8 +228,8 @@ namespace MainExample.Services
 
         public void Erase()
         {
-          Clear();
-          Player.PlayFile(string.Empty);
+           Clear();
+           Player.PlayFile(string.Empty);
         }
 
 
@@ -451,6 +472,9 @@ namespace MainExample.Services
         /// </summary>
         private void EventEndPlayingTemplate(ВоспроизводимоеСообщение soundMessage)
         {
+            if (IsPlayedCurrentMessage)
+                Erase();               //Очистить очередь после проигрывания
+
             //шаблон АВАРИЯ (Id сообщения > 1000)
             if ((soundMessage.RootId > 0) && (soundMessage.ParentId.HasValue) && (soundMessage.ТипСообщения == ТипСообщения.ДинамическоеАварийное))
             {
@@ -520,6 +544,9 @@ namespace MainExample.Services
         /// </summary>
         private void EventEndPlayingStatic(ВоспроизводимоеСообщение soundMessage)
         {
+            if (IsPlayedCurrentMessage)
+                Erase();               //Очистить очередь после проигрывания
+
             StaticChangeRx.OnNext(new StaticChangeValue { StatusPlaying = StatusPlaying.Stop, SoundMessage = soundMessage });
             //Debug.WriteLine($"^^^^^^^^^^^СТАТИКА КОНЕЦ: {soundMessage.ИмяВоспроизводимогоФайла}");//DEBUG
         }

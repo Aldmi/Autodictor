@@ -66,9 +66,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tSLСостояниеСвязиСЦИС = new System.Windows.Forms.ToolStripButton();
             this.tSBОбновитьСписок = new System.Windows.Forms.ToolStripButton();
-            this.tSBПауза = new System.Windows.Forms.ToolStripButton();
-            this.tSBОстановить = new System.Windows.Forms.ToolStripButton();
             this.tSBВключить = new System.Windows.Forms.ToolStripButton();
+            this.tSBПауза = new System.Windows.Forms.ToolStripButton();
             this.tSDDBРаботаПоДням = new System.Windows.Forms.ToolStripDropDownButton();
             this.TSMIПоПонедельнику = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIПоВторнику = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,14 +80,14 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolClockLabel = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_ТехническоеСообщение = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tSBРежимРаботы = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tSBLogOut = new System.Windows.Forms.ToolStripButton();
             this.tSBAdmin = new System.Windows.Forms.ToolStripButton();
             this.timer_Clock = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenu.SuspendLayout();
             this.tSCommands.SuspendLayout();
             this.SuspendLayout();
@@ -348,9 +347,8 @@
             this.toolStripSeparator1,
             this.tSLСостояниеСвязиСЦИС,
             this.tSBОбновитьСписок,
-            this.tSBПауза,
-            this.tSBОстановить,
             this.tSBВключить,
+            this.tSBПауза,
             this.tSDDBРаботаПоДням,
             this.toolStripButton1,
             this.toolStripSeparator2,
@@ -364,7 +362,7 @@
             this.tSBAdmin});
             this.tSCommands.Location = new System.Drawing.Point(0, 24);
             this.tSCommands.Name = "tSCommands";
-            this.tSCommands.Size = new System.Drawing.Size(1524, 38);
+            this.tSCommands.Size = new System.Drawing.Size(1524, 55);
             this.tSCommands.TabIndex = 3;
             this.tSCommands.Text = "toolStrip1";
             // 
@@ -378,7 +376,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(82, 35);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(82, 52);
             this.toolStripDropDownButton1.Text = "Вид окон";
             // 
             // toolStripMenuItem1
@@ -400,7 +398,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 55);
             // 
             // tSLСостояниеСвязиСЦИС
             // 
@@ -410,7 +408,7 @@
             this.tSLСостояниеСвязиСЦИС.Image = ((System.Drawing.Image)(resources.GetObject("tSLСостояниеСвязиСЦИС.Image")));
             this.tSLСостояниеСвязиСЦИС.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSLСостояниеСвязиСЦИС.Name = "tSLСостояниеСвязиСЦИС";
-            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 35);
+            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 52);
             this.tSLСостояниеСвязиСЦИС.Text = "ЦИС НЕ на связи";
             // 
             // tSBОбновитьСписок
@@ -420,39 +418,32 @@
             this.tSBОбновитьСписок.Image = ((System.Drawing.Image)(resources.GetObject("tSBОбновитьСписок.Image")));
             this.tSBОбновитьСписок.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBОбновитьСписок.Name = "tSBОбновитьСписок";
-            this.tSBОбновитьСписок.Size = new System.Drawing.Size(86, 35);
+            this.tSBОбновитьСписок.Size = new System.Drawing.Size(86, 52);
             this.tSBОбновитьСписок.Text = "ОБНОВИТЬ";
-            // 
-            // tSBПауза
-            // 
-            this.tSBПауза.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tSBПауза.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tSBПауза.Image = ((System.Drawing.Image)(resources.GetObject("tSBПауза.Image")));
-            this.tSBПауза.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tSBПауза.Name = "tSBПауза";
-            this.tSBПауза.Size = new System.Drawing.Size(56, 35);
-            this.tSBПауза.Text = "ПАУЗА";
-            // 
-            // tSBОстановить
-            // 
-            this.tSBОстановить.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tSBОстановить.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tSBОстановить.Image = ((System.Drawing.Image)(resources.GetObject("tSBОстановить.Image")));
-            this.tSBОстановить.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tSBОстановить.Name = "tSBОстановить";
-            this.tSBОстановить.Size = new System.Drawing.Size(44, 35);
-            this.tSBОстановить.Text = "Стоп";
             // 
             // tSBВключить
             // 
-            this.tSBВключить.BackColor = System.Drawing.Color.LightGray;
-            this.tSBВключить.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tSBВключить.BackColor = System.Drawing.Color.Transparent;
+            this.tSBВключить.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tSBВключить.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tSBВключить.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tSBВключить.Image = ((System.Drawing.Image)(resources.GetObject("tSBВключить.Image")));
+            this.tSBВключить.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tSBВключить.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBВключить.Name = "tSBВключить";
-            this.tSBВключить.Size = new System.Drawing.Size(88, 35);
+            this.tSBВключить.Size = new System.Drawing.Size(52, 52);
             this.tSBВключить.Text = "ВКЛЮЧИТЬ";
+            // 
+            // tSBПауза
+            // 
+            this.tSBПауза.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tSBПауза.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tSBПауза.Image = ((System.Drawing.Image)(resources.GetObject("tSBПауза.Image")));
+            this.tSBПауза.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tSBПауза.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tSBПауза.Name = "tSBПауза";
+            this.tSBПауза.Size = new System.Drawing.Size(52, 52);
+            this.tSBПауза.Text = "ПАУЗА";
             // 
             // tSDDBРаботаПоДням
             // 
@@ -471,7 +462,7 @@
             this.tSDDBРаботаПоДням.Image = ((System.Drawing.Image)(resources.GetObject("tSDDBРаботаПоДням.Image")));
             this.tSDDBРаботаПоДням.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSDDBРаботаПоДням.Name = "tSDDBРаботаПоДням";
-            this.tSDDBРаботаПоДням.Size = new System.Drawing.Size(188, 35);
+            this.tSDDBРаботаПоДням.Size = new System.Drawing.Size(188, 52);
             this.tSDDBРаботаПоДням.Text = "РАБОТА ПО КАЛЕНДАРЮ";
             // 
             // TSMIПоПонедельнику
@@ -539,7 +530,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(123, 35);
+            this.toolStripButton1.Size = new System.Drawing.Size(123, 52);
             this.toolStripButton1.Text = "ОЧЕРЕДЬ ЗВУКА";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -548,7 +539,7 @@
             this.toolStripSeparator2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.toolStripSeparator2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
             // 
             // toolClockLabel
             // 
@@ -557,13 +548,13 @@
             this.toolClockLabel.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.toolClockLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.toolClockLabel.Name = "toolClockLabel";
-            this.toolClockLabel.Size = new System.Drawing.Size(131, 35);
+            this.toolClockLabel.Size = new System.Drawing.Size(131, 52);
             this.toolClockLabel.Text = "00:00:00";
             // 
-            // toolStripSeparator4
+            // toolStripSeparator5
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 55);
             // 
             // tsb_ТехническоеСообщение
             // 
@@ -572,14 +563,14 @@
             this.tsb_ТехническоеСообщение.Image = ((System.Drawing.Image)(resources.GetObject("tsb_ТехническоеСообщение.Image")));
             this.tsb_ТехническоеСообщение.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_ТехническоеСообщение.Name = "tsb_ТехническоеСообщение";
-            this.tsb_ТехническоеСообщение.Size = new System.Drawing.Size(88, 35);
+            this.tsb_ТехническоеСообщение.Size = new System.Drawing.Size(88, 52);
             this.tsb_ТехническоеСообщение.Text = "Тех. сообщ.";
             this.tsb_ТехническоеСообщение.Click += new System.EventHandler(this.tsb_ТехническоеСообщение_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 55);
             // 
             // tSBРежимРаботы
             // 
@@ -589,9 +580,14 @@
             this.tSBРежимРаботы.Image = ((System.Drawing.Image)(resources.GetObject("tSBРежимРаботы.Image")));
             this.tSBРежимРаботы.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBРежимРаботы.Name = "tSBРежимРаботы";
-            this.tSBРежимРаботы.Size = new System.Drawing.Size(135, 35);
+            this.tSBРежимРаботы.Size = new System.Drawing.Size(135, 52);
             this.tSBРежимРаботы.Text = "Пользовательский";
             this.tSBРежимРаботы.Click += new System.EventHandler(this.tSBРежимРаботы_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 55);
             // 
             // tSBLogOut
             // 
@@ -601,7 +597,7 @@
             this.tSBLogOut.Image = ((System.Drawing.Image)(resources.GetObject("tSBLogOut.Image")));
             this.tSBLogOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBLogOut.Name = "tSBLogOut";
-            this.tSBLogOut.Size = new System.Drawing.Size(27, 35);
+            this.tSBLogOut.Size = new System.Drawing.Size(27, 52);
             this.tSBLogOut.Text = "---";
             this.tSBLogOut.Click += new System.EventHandler(this.tSBLogOut_Click);
             // 
@@ -613,7 +609,7 @@
             this.tSBAdmin.Image = ((System.Drawing.Image)(resources.GetObject("tSBAdmin.Image")));
             this.tSBAdmin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSBAdmin.Name = "tSBAdmin";
-            this.tSBAdmin.Size = new System.Drawing.Size(63, 35);
+            this.tSBAdmin.Size = new System.Drawing.Size(63, 52);
             this.tSBAdmin.Text = "Админка";
             this.tSBAdmin.Click += new System.EventHandler(this.tSBAdmin_Click);
             // 
@@ -622,11 +618,6 @@
             this.timer_Clock.Enabled = true;
             this.timer_Clock.Interval = 1000;
             this.timer_Clock.Tick += new System.EventHandler(this.timer_Clock_Tick);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 38);
             // 
             // MainForm
             // 
@@ -704,7 +695,6 @@
         private System.Windows.Forms.ToolStripMenuItem коммуникацияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отображениеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem статическаяИнформацияToolStripMenuItem;
-        public System.Windows.Forms.ToolStripButton tSBОстановить;
         private System.Windows.Forms.ToolStripButton tsb_ТехническоеСообщение;
         private System.Windows.Forms.ToolStripMenuItem оперативноеРасписаниеToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton tSBРежимРаботы;
