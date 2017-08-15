@@ -39,7 +39,7 @@ namespace MainExample
 
         public static IRepository<User> UsersDbRepository; //Пользователи, хранилище NoSqlDb
 
-        public static _Настройки Настройки;
+        public static Настройки Настройки;
 
         public static string[] ТипыОповещения = new string[] { "Не определено", "На Х-ый путь", "На Х-ом пути", "С Х-ого пути" };
         public static string[] ТипыВремени = new string[] { "Прибытие", "Отправление" };

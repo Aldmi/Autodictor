@@ -60,6 +60,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtb_Дальние = new System.Windows.Forms.TextBox();
+            this.txtb_Пригород = new System.Windows.Forms.TextBox();
             this.tBСамоеРанееВремяШаблона = new System.Windows.Forms.TextBox();
             this.label115 = new System.Windows.Forms.Label();
             this.tBИнтОповещООтпрПоГотов = new System.Windows.Forms.TextBox();
@@ -624,6 +626,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtb_Дальние);
+            this.groupBox2.Controls.Add(this.txtb_Пригород);
             this.groupBox2.Controls.Add(this.tBСамоеРанееВремяШаблона);
             this.groupBox2.Controls.Add(this.label115);
             this.groupBox2.Controls.Add(this.tBИнтОповещООтпрПоГотов);
@@ -648,6 +652,26 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Общие настройки";
+            // 
+            // txtb_Дальние
+            // 
+            this.txtb_Дальние.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtb_Дальние.Location = new System.Drawing.Point(11, 548);
+            this.txtb_Дальние.Multiline = true;
+            this.txtb_Дальние.Name = "txtb_Дальние";
+            this.txtb_Дальние.Size = new System.Drawing.Size(141, 22);
+            this.txtb_Дальние.TabIndex = 26;
+            this.txtb_Дальние.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Дальние_MouseDoubleClick);
+            // 
+            // txtb_Пригород
+            // 
+            this.txtb_Пригород.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtb_Пригород.Location = new System.Drawing.Point(11, 520);
+            this.txtb_Пригород.Multiline = true;
+            this.txtb_Пригород.Name = "txtb_Пригород";
+            this.txtb_Пригород.Size = new System.Drawing.Size(141, 22);
+            this.txtb_Пригород.TabIndex = 25;
+            this.txtb_Пригород.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Пригород_MouseDoubleClick);
             // 
             // tBСамоеРанееВремяШаблона
             // 
@@ -3352,5 +3376,7 @@
         private System.Windows.Forms.TrackBar tBРегуляторГромкостиНочь;
         private System.Windows.Forms.Label label119;
         private System.Windows.Forms.Label lbl_громкостьДень;
+        private System.Windows.Forms.TextBox txtb_Пригород;
+        private System.Windows.Forms.TextBox txtb_Дальние;
     }
 }

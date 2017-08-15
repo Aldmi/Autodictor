@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MainExample
 {
-    public struct _Настройки
+    public struct Настройки
     {
         public float ЗадержкаМеждуЗвуковымиСообщениями;
         public float ИнтервалМеждуОповещениемОбОтменеПоезда;
@@ -55,6 +55,8 @@ namespace MainExample
         public DateTime ВремяНочнойПериодНачало;
         public DateTime ВремяНочнойПериодКонец;
 
+        public Font FontПригород;
+        public Font FontДальние;
 
 
         #region Methode
@@ -607,5 +609,25 @@ namespace MainExample
         }
 
 
+        private void txtb_Пригород_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var fontDialog = new FontDialog { Font = Program.Настройки.FontПригород };
+            if (fontDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                Program.Настройки.FontПригород = fontDialog.Font;
+                txtb_Пригород.Text = $@"{Program.Настройки.FontПригород.Name} {Program.Настройки.FontПригород.Size}";
+            }
+        }
+
+
+        private void txtb_Дальние_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var fontDialog = new FontDialog { Font = Program.Настройки.FontДальние };
+            if (fontDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                Program.Настройки.FontДальние = fontDialog.Font;
+                txtb_Дальние.Text = $@"{Program.Настройки.FontДальние.Name} {Program.Настройки.FontДальние.Size}";
+            }
+        }
     }
 }

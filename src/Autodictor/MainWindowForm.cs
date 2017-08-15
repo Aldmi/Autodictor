@@ -902,17 +902,25 @@ namespace MainExample
                             SoundRecord Данные = SoundRecords[Key];
 
                             Color foreColor;
+                            Font font;
                             if (Данные.ТипПоезда == ТипПоезда.Пассажирский ||
                                 Данные.ТипПоезда == ТипПоезда.Скорый ||
                                 Данные.ТипПоезда == ТипПоезда.Фирменный ||
                                 Данные.ТипПоезда == ТипПоезда.Скоростной)
                             {
                                 foreColor = Program.Настройки.НастройкиЦветов[17];
+                                font = Program.Настройки.FontДальние;
                             }
                             else
                             {
                                 foreColor = Program.Настройки.НастройкиЦветов[16];
+                                font = Program.Настройки.FontПригород;
                             }
+
+
+                            //DEBUG
+                            if (font == null)
+                                font = lv.Items[item].Font;
 
 
                             switch (Данные.СостояниеКарточки)
@@ -923,6 +931,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[0] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[1])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[1];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 1: // Отсутствую шаблоны оповещения
@@ -930,6 +940,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[2] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[3])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[3];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 2: // Время не подошло (за 30 минут)
@@ -937,6 +949,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[4] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[5])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[5];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 3: // Не установлен путь
@@ -944,6 +958,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[6] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[7])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[7];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 4: // Не полностью включены все галочки
@@ -951,6 +967,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[8] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[9])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[9];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 5: // Полностью включены все галочки
@@ -958,6 +976,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[10] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[11])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[11];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 6: // Нештатная ситуация "Отмена"
@@ -969,6 +989,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[12] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[13])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[13];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 7: // Ручной режим за 30 мин до самого ранего события или если не выставленн ПУТЬ
@@ -976,6 +998,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[14] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
 
                                 case 8: // Ручной режим
@@ -983,6 +1007,8 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Color.White : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                        lv.Items[item].Font = font;
                                     break;
                             }
 
