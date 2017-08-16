@@ -247,6 +247,14 @@ namespace MainExample
 
 
 
+        private void SetHeight(ListView listView, int height)
+        {
+            ImageList imgList = new ImageList();
+            imgList.ImageSize = new Size(1, height);
+            listView.SmallImageList = imgList;
+        }
+
+
 
         private void StaticChangeRxEventHandler(StaticChangeValue staticChangeValue)
         {
@@ -899,14 +907,14 @@ namespace MainExample
 
                         if (SoundRecords.Keys.Contains(Key) == true)
                         {
-                            SoundRecord Данные = SoundRecords[Key];
+                            SoundRecord данные = SoundRecords[Key];
 
                             Color foreColor;
                             Font font;
-                            if (Данные.ТипПоезда == ТипПоезда.Пассажирский ||
-                                Данные.ТипПоезда == ТипПоезда.Скорый ||
-                                Данные.ТипПоезда == ТипПоезда.Фирменный ||
-                                Данные.ТипПоезда == ТипПоезда.Скоростной)
+                            if (данные.ТипПоезда == ТипПоезда.Пассажирский ||
+                                данные.ТипПоезда == ТипПоезда.Скорый ||
+                                данные.ТипПоезда == ТипПоезда.Фирменный ||
+                                данные.ТипПоезда == ТипПоезда.Скоростной)
                             {
                                 foreColor = Program.Настройки.НастройкиЦветов[17];
                                 font = Program.Настройки.FontДальние;
@@ -917,13 +925,10 @@ namespace MainExample
                                 font = Program.Настройки.FontПригород;
                             }
 
-
-                            //DEBUG
                             if (font == null)
                                 font = lv.Items[item].Font;
 
-
-                            switch (Данные.СостояниеКарточки)
+                            switch (данные.СостояниеКарточки)
                             {
                                 default:
                                 case 0: // Выключен или не актуален
@@ -931,8 +936,12 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[0] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[1])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[1];
-                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) ||
+                                        (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 1: // Отсутствую шаблоны оповещения
@@ -941,7 +950,10 @@ namespace MainExample
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[3])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[3];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 2: // Время не подошло (за 30 минут)
@@ -950,7 +962,10 @@ namespace MainExample
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[5])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[5];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 3: // Не установлен путь
@@ -959,7 +974,10 @@ namespace MainExample
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[7])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[7];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 4: // Не полностью включены все галочки
@@ -968,7 +986,10 @@ namespace MainExample
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[9])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[9];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 5: // Полностью включены все галочки
@@ -977,20 +998,25 @@ namespace MainExample
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[11])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[11];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 6: // Нештатная ситуация "Отмена"
                                 case 16: // Нештатная ситуация "Задержка приб"
                                 case 26: // Нештатная ситуация "Задержка отпр"
                                 case 36: // Нештатная ситуация "Отпр по готов"
-
                                     if (lv.Items[item].ForeColor != ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[12] : foreColor))
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Program.Настройки.НастройкиЦветов[12] : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[13])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[13];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 7: // Ручной режим за 30 мин до самого ранего события или если не выставленн ПУТЬ
@@ -999,7 +1025,10 @@ namespace MainExample
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
                                     if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
 
                                 case 8: // Ручной режим
@@ -1007,15 +1036,18 @@ namespace MainExample
                                         lv.Items[item].ForeColor = ((foreColor == Color.Black) ? Color.White : foreColor);
                                     if (lv.Items[item].BackColor != Program.Настройки.НастройкиЦветов[15])
                                         lv.Items[item].BackColor = Program.Настройки.НастройкиЦветов[15];
-                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.25) || (font.Name != lv.Items[item].Font.Name))
+                                    if ((Math.Abs(lv.Items[item].Font.Size - font.Size) > 0.2) || (font.Name != lv.Items[item].Font.Name))
+                                    {
                                         lv.Items[item].Font = font;
+                                        SetHeight(listView1, (int)(font.Size * 2));
+                                    }
                                     break;
                             }
 
                             //Обновить номер пути (текущий номер / предыдущий, до автосброса)
-                            var номерПути = (Данные.НомерПути != Данные.НомерПутиБезАвтосброса) ?
-                                             $"{Данные.НомерПути} ({Данные.НомерПутиБезАвтосброса})" :
-                                             Данные.НомерПути;
+                            var номерПути = (данные.НомерПути != данные.НомерПутиБезАвтосброса) ?
+                                             $"{данные.НомерПути} ({данные.НомерПутиБезАвтосброса})" :
+                                             данные.НомерПути;
                             if (lv.Items[item].SubItems[2].Text != номерПути)
                             {
                                 lv.Items[item].SubItems[2].Text = номерПути;
@@ -1024,7 +1056,7 @@ namespace MainExample
                             if (lv.Name == "listView1")
                             {
                                 string нумерацияПоезда = String.Empty;
-                                switch (Данные.НумерацияПоезда)
+                                switch (данные.НумерацияПоезда)
                                 {
                                     case 1:
                                         нумерацияПоезда = "Нумерация поезда с ГОЛОВЫ состава";
@@ -1036,8 +1068,8 @@ namespace MainExample
                                 }
 
 
-                                if (lv.Items[item].SubItems[6].Text != Данные.Примечание + нумерацияПоезда)
-                                    lv.Items[item].SubItems[6].Text = Данные.Примечание + нумерацияПоезда;
+                                if (lv.Items[item].SubItems[6].Text != данные.Примечание + нумерацияПоезда)
+                                    lv.Items[item].SubItems[6].Text = данные.Примечание + нумерацияПоезда;
                             }
                         }
                     }

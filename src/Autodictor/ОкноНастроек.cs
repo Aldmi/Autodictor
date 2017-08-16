@@ -87,6 +87,9 @@ namespace MainExample
         private CheckBox[] _каналыКасс;
 
 
+        private Font FontПригород { get; set; }
+        private Font FontДальние { get; set; }
+
         public ОкноНастроек()
         {
             InitializeComponent();
@@ -174,6 +177,10 @@ namespace MainExample
             dTP_НочнойПериодНачало.Value=Program.Настройки.ВремяНочнойПериодНачало;
             dTP_НочнойПериодКонец.Value=Program.Настройки.ВремяНочнойПериодКонец;
 
+            FontДальние= Program.Настройки.FontДальние;
+            FontПригород = Program.Настройки.FontПригород;
+            txtb_Дальние.Text = $@"{FontДальние?.Name ?? string.Empty} {FontДальние?.Size ?? 0.0}";
+            txtb_Пригород.Text = $@"{FontПригород?.Name ?? string.Empty} {FontПригород?.Size ?? 0.0}";
         }
 
 
@@ -239,6 +246,9 @@ namespace MainExample
 
             Program.Настройки.ВремяНочнойПериодНачало = dTP_НочнойПериодНачало.Value;
             Program.Настройки.ВремяНочнойПериодКонец = dTP_НочнойПериодКонец.Value;
+
+            Program.Настройки.FontДальние  = FontДальние;
+            Program.Настройки.FontПригород = FontПригород;
         }
 
 
@@ -452,6 +462,13 @@ namespace MainExample
                                         Program.Настройки.ВремяНочнойПериодКонец = переменнаяDateTime;
                                     break;
 
+                                case "FontДальние":
+                                    Program.Настройки.FontДальние = ConverString2Font(Settings[1]);
+                                    break;
+
+                                case "FontПригород":
+                                    Program.Настройки.FontПригород = ConverString2Font(Settings[1]);
+                                    break;
                             }
                         }
                     }
@@ -470,6 +487,50 @@ namespace MainExample
                 Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеПрибытияПоезда = 1;
             if (Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда < 1)
                 Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда = 1;
+        }
+
+
+
+        /// <summary>
+        /// formatStr[0]-название шрифта
+        /// formatStr[1]-размер шрифта
+        /// formatStr[2]- стиль шрифта
+        /// </summary>
+        private static Font ConverString2Font(string formatStr)
+        {
+            float size = 8;
+            var style = FontStyle.Regular;
+
+            var fontSetting = formatStr.Split(':');
+            if (fontSetting.Length == 3)
+            {
+                float.TryParse(fontSetting[1], out size);
+
+                switch (fontSetting[2])
+                {
+                    case "Bold":
+                        style = FontStyle.Bold;
+                        break;
+
+                    case "Italic":
+                        style = FontStyle.Italic;
+                        break;
+
+                    case "Regular":
+                        style = FontStyle.Regular;
+                        break;
+
+                    case "Strikeout":
+                        style = FontStyle.Strikeout;
+                        break;
+
+                    case "Underline":
+                        style = FontStyle.Underline;
+                        break;
+                }
+            }
+
+            return new Font(fontSetting[0], size, style);
         }
 
 
@@ -551,6 +612,10 @@ namespace MainExample
                     DumpFile.WriteLine("ВремяНочнойПериодНачало=" + Program.Настройки.ВремяНочнойПериодНачало.ToString("t"));
                     DumpFile.WriteLine("ВремяНочнойПериодКонец=" + Program.Настройки.ВремяНочнойПериодКонец.ToString("t"));
 
+
+                    DumpFile.WriteLine("FontДальние=" + $"{Program.Настройки.FontДальние.Name}:{Program.Настройки.FontДальние.Size}:{Program.Настройки.FontДальние.Style}");
+                    DumpFile.WriteLine("FontПригород=" + $"{Program.Настройки.FontПригород.Name}:{Program.Настройки.FontПригород.Size}:{Program.Настройки.FontПригород.Style}");
+
                     DumpFile.Close();
                 }
             }
@@ -611,22 +676,22 @@ namespace MainExample
 
         private void txtb_Пригород_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var fontDialog = new FontDialog { Font = Program.Настройки.FontПригород };
+            var fontDialog = new FontDialog { Font = FontПригород };
             if (fontDialog.ShowDialog() != DialogResult.Cancel)
             {
-                Program.Настройки.FontПригород = fontDialog.Font;
-                txtb_Пригород.Text = $@"{Program.Настройки.FontПригород.Name} {Program.Настройки.FontПригород.Size}";
+                FontПригород = fontDialog.Font;
+                txtb_Пригород.Text = $@"{FontПригород.Name} {FontПригород.Size}";
             }
         }
 
 
         private void txtb_Дальние_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var fontDialog = new FontDialog { Font = Program.Настройки.FontДальние };
+            var fontDialog = new FontDialog { Font = FontДальние };
             if (fontDialog.ShowDialog() != DialogResult.Cancel)
             {
-                Program.Настройки.FontДальние = fontDialog.Font;
-                txtb_Дальние.Text = $@"{Program.Настройки.FontДальние.Name} {Program.Настройки.FontДальние.Size}";
+                FontДальние = fontDialog.Font;
+                txtb_Дальние.Text = $@"{FontДальние.Name} {FontДальние.Size}";
             }
         }
     }

@@ -293,6 +293,7 @@
             this.chBox2_LongDist = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.chBox1_LongDist = new System.Windows.Forms.CheckBox();
+            this.label118 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -626,8 +627,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.txtb_Дальние);
-            this.groupBox2.Controls.Add(this.txtb_Пригород);
             this.groupBox2.Controls.Add(this.tBСамоеРанееВремяШаблона);
             this.groupBox2.Controls.Add(this.label115);
             this.groupBox2.Controls.Add(this.tBИнтОповещООтпрПоГотов);
@@ -648,7 +647,7 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Location = new System.Drawing.Point(417, 22);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(488, 573);
+            this.groupBox2.Size = new System.Drawing.Size(488, 294);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Общие настройки";
@@ -656,20 +655,20 @@
             // txtb_Дальние
             // 
             this.txtb_Дальние.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtb_Дальние.Location = new System.Drawing.Point(11, 548);
+            this.txtb_Дальние.Location = new System.Drawing.Point(405, 256);
             this.txtb_Дальние.Multiline = true;
             this.txtb_Дальние.Name = "txtb_Дальние";
-            this.txtb_Дальние.Size = new System.Drawing.Size(141, 22);
+            this.txtb_Дальние.Size = new System.Drawing.Size(141, 18);
             this.txtb_Дальние.TabIndex = 26;
             this.txtb_Дальние.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Дальние_MouseDoubleClick);
             // 
             // txtb_Пригород
             // 
             this.txtb_Пригород.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtb_Пригород.Location = new System.Drawing.Point(11, 520);
+            this.txtb_Пригород.Location = new System.Drawing.Point(405, 232);
             this.txtb_Пригород.Multiline = true;
             this.txtb_Пригород.Name = "txtb_Пригород";
-            this.txtb_Пригород.Size = new System.Drawing.Size(141, 22);
+            this.txtb_Пригород.Size = new System.Drawing.Size(141, 18);
             this.txtb_Пригород.TabIndex = 25;
             this.txtb_Пригород.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Пригород_MouseDoubleClick);
             // 
@@ -854,7 +853,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txtb_Дальние);
+            this.groupBox3.Controls.Add(this.label118);
             this.groupBox3.Controls.Add(this.pCol18);
+            this.groupBox3.Controls.Add(this.txtb_Пригород);
             this.groupBox3.Controls.Add(this.label117);
             this.groupBox3.Controls.Add(this.pCol17);
             this.groupBox3.Controls.Add(this.label116);
@@ -884,9 +886,9 @@
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(12, 313);
+            this.groupBox3.Location = new System.Drawing.Point(12, 320);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(400, 282);
+            this.groupBox3.Size = new System.Drawing.Size(893, 282);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Цветовые настройки";
@@ -3069,6 +3071,16 @@
             this.chBox1_LongDist.TabIndex = 20;
             this.chBox1_LongDist.UseVisualStyleBackColor = true;
             // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label118.Location = new System.Drawing.Point(436, 13);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(69, 20);
+            this.label118.TabIndex = 35;
+            this.label118.Text = "Шрифт";
+            // 
             // ОкноНастроек
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -3378,5 +3390,6 @@
         private System.Windows.Forms.Label lbl_громкостьДень;
         private System.Windows.Forms.TextBox txtb_Пригород;
         private System.Windows.Forms.TextBox txtb_Дальние;
+        private System.Windows.Forms.Label label118;
     }
 }

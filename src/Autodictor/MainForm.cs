@@ -68,6 +68,8 @@ namespace MainExample
             РежимРаботы = tSBРежимРаботы;
 
             Включить.BackColor = Color.Red;
+
+            
         }
 
 
