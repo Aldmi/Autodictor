@@ -9,10 +9,13 @@ namespace Domain.Entitys
         public SoundRecordDb Rec { get; set; }         //До 
         public SoundRecordDb NewRec { get; set; }      //После
 
+        public string UserInfo { get; set; }           //Кто изменил имя(роль)
+
+
 
         public override string ToString()
         {
-            string сообщениеОбИзменениях = "";
+            string сообщениеОбИзменениях = String.Empty;
             if (Rec.НазваниеПоезда != NewRec.НазваниеПоезда) сообщениеОбИзменениях += "Поезд: " + Rec.НазваниеПоезда + " -> " + NewRec.НазваниеПоезда + "; ";
             if (Rec.НомерПоезда != NewRec.НомерПоезда) сообщениеОбИзменениях += "№Поезда: " + Rec.НомерПоезда + " -> " + NewRec.НомерПоезда + "; ";
             if (Rec.НомерПути != NewRec.НомерПути) сообщениеОбИзменениях += "Путь: " + Rec.НомерПути + " -> " + NewRec.НомерПути + "; ";

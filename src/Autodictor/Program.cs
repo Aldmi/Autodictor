@@ -244,13 +244,13 @@ namespace MainExample
 
 
 
-        public static void ЗаписьЛога(string ТипСообщения, string Сообщение)
+        public static void ЗаписьЛога(string ТипСообщения, string Сообщение, User user)
         {
             try
             {
                 using (StreamWriter sw = new StreamWriter(File.Open("Logs\\" + DateTime.Now.ToString("yy.MM.dd") + ".log", FileMode.Append)))
                 {
-                    sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + ": \t" + ТипСообщения + "\t" + Сообщение);
+                    sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + ": \t" + user.Login + ": \t" + ТипСообщения + "\t" + Сообщение);
                     sw.Close();
                 }
             }

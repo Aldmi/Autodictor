@@ -476,7 +476,7 @@ namespace MainExample
             }
             catch (Exception ex)
             {
-                Program.ЗаписьЛога("Системное сообщение", "Ошибка загрузки настроек: " + ex.Message);
+                Program.ЗаписьЛога("Системное сообщение", "Ошибка загрузки настроек: " + ex.Message, Program.AuthenticationService.CurrentUser);
             }
 
             if (Program.Настройки.ЗадержкаМеждуЗвуковымиСообщениями < 1)
@@ -621,7 +621,7 @@ namespace MainExample
             }
             catch (Exception ex)
             {
-                Program.ЗаписьЛога("Системное сообщение", "Ошибка сохранения настроек: " + ex.Message);
+                Program.ЗаписьЛога("Системное сообщение", "Ошибка сохранения настроек: " + ex.Message, Program.AuthenticationService.CurrentUser);
             }
         }
 

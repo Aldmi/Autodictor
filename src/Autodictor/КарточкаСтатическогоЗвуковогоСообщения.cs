@@ -126,7 +126,7 @@ namespace MainExample
                         //НастройкиВыводаЗвука = new НастройкиВыводаЗвука { ТолькоПоВнутреннемуКаналу = true }
                     };
                     MainWindowForm.QueueSound.AddItem(воспроизводимоеСообщение);
-                    Program.ЗаписьЛога("Действие оператора", "ВоспроизведениеАвтомат звукового сообщения: " + sound.Name);
+                    Program.ЗаписьЛога("Действие оператора", "ВоспроизведениеАвтомат звукового сообщения: " + sound.Name, Program.AuthenticationService.CurrentUser);
                     break;
                 }
             }

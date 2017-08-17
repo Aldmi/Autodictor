@@ -75,6 +75,9 @@ namespace MainExample
         #endregion
 
 
+
+
+
         private void ShowRecords()
         {
             if (!RecordChanges.Any())
@@ -86,7 +89,7 @@ namespace MainExample
             List<string[]> rows= new List<string[]>();
             foreach (var ch in RecordChanges)
             {
-                rows.Add(new string[] { ch.TimeStamp.ToString("G"), ch.ToString() });
+                rows.Add(new string[] { ch.TimeStamp.ToString("G"), ch.UserInfo, ch.ToString() });
             }
 
             dgv_архив.Rows.Clear();
