@@ -1146,6 +1146,7 @@ namespace MainExample
                                         ТипСообщения = ТипСообщения.Статическое,
                                         ИмяВоспроизводимогоФайла = Sound.Name,
                                         ПриоритетГлавный = Priority.Low,
+                                        ПриоритетВторостепенный = PriorityPrecise.Zero,
                                         Язык = NotificationLanguage.Ru,
                                         ОчередьШаблона = null
                                     };

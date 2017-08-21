@@ -121,6 +121,7 @@ namespace MainExample
                         RootId = sound.ID,
                         ИмяВоспроизводимогоФайла = sound.Name,
                         ПриоритетГлавный = Priority.Low,
+                        ПриоритетВторостепенный = PriorityPrecise.Zero,
                         Язык = NotificationLanguage.Ru,
                         ОчередьШаблона = null,
                         //НастройкиВыводаЗвука = new НастройкиВыводаЗвука { ТолькоПоВнутреннемуКаналу = true }
