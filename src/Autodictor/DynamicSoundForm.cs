@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
+using Domain.Entitys;
 using NickBuhro.Translit;
 
 
@@ -15,7 +17,21 @@ namespace MainExample
         public int ID;
         public string Name;
         public string Message;
+        public PriorityPrecise PriorityTemplate;
     };
+
+
+
+    public struct ComboboxPriorityItem
+    {
+        public string Text { get; set; }
+        public PriorityPrecise Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
+    }
 
 
 
@@ -43,7 +59,7 @@ namespace MainExample
 
             InitializeComponent();
 
-
+            //ПЕРЕМЕННЫЕ ШАБЛОНА
             this.comboBox_Messages.Items.Add("НОМЕР ПОЕЗДА");
             this.comboBox_Messages.Items.Add("ДОПОЛНЕНИЕ");
             this.comboBox_Messages.Items.Add("СТ.ОТПРАВЛЕНИЯ");
@@ -56,34 +72,53 @@ namespace MainExample
             this.comboBox_Messages.Items.Add("ВРЕМЯ ОТПРАВЛЕНИЯ");
             this.comboBox_Messages.Items.Add("НУМЕРАЦИЯ СОСТАВА");
 
-            foreach (var Данные in Program.FilesFolder)
-                this.comboBox_Messages.Items.Add(Данные);
+            //ПРИОРИРЕТЫ
+            var variant = Enum.GetValues(typeof(PriorityPrecise)).Cast<PriorityPrecise>().ToList();
+            for (int i = 0; i < variant.Count; i++)
+            {
+                var item = new ComboboxPriorityItem { Text = i.ToString(), Value = variant[i] };
+                this.cb_Priority.Items.Add(item);
+            }
+
+
+            foreach (var данные in Program.FilesFolder)
+                this.comboBox_Messages.Items.Add(данные);
                         
 
             ЗагрузитьСписок();
             ОбновитьДанныеВСписке();
         }
 
+
+
         private void ОбновитьДанныеВСписке()
         {
-            int НомерЭлемента = 0;
+            int номерЭлемента = 0;
 
             listView1.Items.Clear();
 
-            foreach (var Данные in DynamicSoundRecords)
+            foreach (var данные in DynamicSoundRecords)
             {
-                ListViewItem lvi = new ListViewItem(new string[] { Данные.ID.ToString(), Данные.Name, Данные.Message });
-                lvi.Tag = Данные.ID;
-                lvi.BackColor = (НомерЭлемента++ % 2) == 0 ? Color.Aqua : Color.LightGreen;
+                var variant = Enum.GetValues(typeof(PriorityPrecise)).Cast<PriorityPrecise>().ToList();
+                var priorityNum = данные.Name.Contains("---------") ? string.Empty :  variant.IndexOf(данные.PriorityTemplate).ToString();
+
+            
+                ListViewItem lvi = new ListViewItem(new string[] { данные.ID.ToString(), данные.Name, данные.Message, priorityNum });
+                lvi.Tag = данные.ID;
+                lvi.BackColor = (номерЭлемента++ % 2) == 0 ? Color.Aqua : Color.LightGreen;
                 this.listView1.Items.Add(lvi);
             }
         }
+
+
 
         // Обновить список сообщений
         private void button1_Click(object sender, EventArgs e)
         {
             ОбновитьДанныеВСписке();
         }
+
+
 
         // Добавить сообщение
         private void button2_Click(object sender, EventArgs e)
@@ -93,27 +128,34 @@ namespace MainExample
             Данные.ID = ++ID;
             Данные.Name = this.textBox_Name.Text;
             Данные.Message = this.textBox_Message.Text;
+            Данные.PriorityTemplate = PriorityPrecise.Zero;
 
             DynamicSoundRecords.Add(Данные);
             ОбновитьДанныеВСписке();
         }
 
+
+
         // Изменить сообщение
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonИзменить_Click(object sender, EventArgs e)
         {
-            ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
+            var item = this.listView1.SelectedIndices[0];
+            if (this.textBox_Name.Text.Contains("---------"))
+                return;
 
-            foreach (int item in sic)
-            {
-                this.listView1.Items[item].SubItems[1].Text = this.textBox_Name.Text;
-                this.listView1.Items[item].SubItems[2].Text = this.textBox_Message.Text;
 
-                DynamicSoundRecord Данные = DynamicSoundRecords[item];
-                Данные.Name = this.textBox_Name.Text;
-                Данные.Message = this.textBox_Message.Text;
-                DynamicSoundRecords[item] = Данные;
-            }
+            this.listView1.Items[item].SubItems[1].Text = this.textBox_Name.Text;
+            this.listView1.Items[item].SubItems[2].Text = this.textBox_Message.Text;
+            this.listView1.Items[item].SubItems[3].Text = cb_Priority.SelectedIndex.ToString();
+
+            DynamicSoundRecord данные = DynamicSoundRecords[item];
+            данные.Name = this.textBox_Name.Text;
+            данные.Message = this.textBox_Message.Text;
+            данные.PriorityTemplate = ((ComboboxPriorityItem)cb_Priority.SelectedItem).Value;
+            DynamicSoundRecords[item] = данные;
         }
+
+
 
         // Удалить сообщение
         private void button4_Click(object sender, EventArgs e)
@@ -126,23 +168,27 @@ namespace MainExample
             ОбновитьДанныеВСписке();
         }
 
+
+
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
             {
-                ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
+                var item = this.listView1.SelectedIndices[0];
+                if(this.listView1.Items[item].SubItems[1].Text.Contains("---------"))
+                    return;
 
-                foreach (int item in sic)
-                {
-                    this.textBox_Name.Text = this.listView1.Items[item].SubItems[1].Text;
-                    this.textBox_Message.Text = this.listView1.Items[item].SubItems[2].Text;
-                }
+                this.textBox_Name.Text = this.listView1.Items[item].SubItems[1].Text;
+                this.textBox_Message.Text = this.listView1.Items[item].SubItems[2].Text;
+                cb_Priority.SelectedIndex = int.Parse(this.listView1.Items[item].SubItems[3].Text);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
+
+
 
         // Вставить текст
         private void button5_Click(object sender, EventArgs e)
@@ -153,6 +199,8 @@ namespace MainExample
             this.textBox_Message.Text += this.comboBox_Messages.Text;
             
         }
+
+
 
         // Передвинуть курсор влево
         private void button_left_Click(object sender, EventArgs e)
@@ -188,6 +236,8 @@ namespace MainExample
                 ИндексВыделенойПодстроки = -1;
         }
 
+
+
         // Передвинуть курсор вправо
         private void button_right_Click(object sender, EventArgs e)
         {
@@ -222,6 +272,8 @@ namespace MainExample
                 ИндексВыделенойПодстроки = -1;
         }
 
+
+
         // Удалить выделенное сообщение
         private void button_delete_Click(object sender, EventArgs e)
         {
@@ -251,6 +303,7 @@ namespace MainExample
         }
 
 
+
         public static void ЗагрузитьСписок()
         {
             DynamicSoundRecords.Clear();
@@ -266,14 +319,15 @@ namespace MainExample
                     while ((line = file.ReadLine()) != null)
                     {
                         string[] Settings = line.Split(';');
-                        if (Settings.Length == 3)
+                        if (Settings.Length == 4)
                         {
                             DynamicSoundRecord Данные;
+                            PriorityPrecise priorityPrecise;
 
                             Данные.ID = int.Parse(Settings[0]);
                             Данные.Name = Settings[1];
-                            Данные.Message = Settings[2];
-
+                            Данные.Message = Settings[2];    
+                            Данные.PriorityTemplate = (Enum.TryParse(Settings[3], out priorityPrecise)) ? priorityPrecise : PriorityPrecise.Zero;
                             DynamicSoundRecords.Add(Данные);
                             Program.ШаблоныОповещения.Add(Settings[1]);
 
@@ -291,16 +345,21 @@ namespace MainExample
             }
         }
 
+
+
         private static void СохранитьСписок()
         {
             try
             {
-                using (System.IO.StreamWriter DumpFile = new System.IO.StreamWriter("DynamicSound.ini"))
+                using (System.IO.StreamWriter dumpFile = new System.IO.StreamWriter("DynamicSound.ini"))
                 {
-                    foreach (var Данные in DynamicSoundRecords)
-                        DumpFile.WriteLine(Данные.ID.ToString() + ";" + Данные.Name + ";" + Данные.Message);
+                    foreach (var данные in DynamicSoundRecords)
+                    {
+                        string priority = данные.Name.Contains("---------") ? string.Empty  : данные.PriorityTemplate.ToString();
+                        dumpFile.WriteLine(данные.ID.ToString() + ";" + данные.Name + ";" + данные.Message + ";" + priority);
+                    }
 
-                    DumpFile.Close();
+                    dumpFile.Close();
                 }
             }
             catch (Exception ex)
@@ -308,6 +367,7 @@ namespace MainExample
                 Console.WriteLine(ex.Message);
             }
         }
+
 
 
         private void button6_Click(object sender, EventArgs e)
@@ -322,6 +382,8 @@ namespace MainExample
 
             НачатьВоспроизведениеФайла();
         }
+
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -366,6 +428,8 @@ namespace MainExample
             }
         }
 
+
+
         private bool НачатьВоспроизведениеФайла()
         {
             PlayList = textBox_Message.Text.Split('|');
@@ -402,6 +466,7 @@ namespace MainExample
         }
 
 
+
         private void textBox_Message_MouseDoubleClick(object sender, MouseEventArgs e)
         {
            var templateStr= this.textBox_Message.Text;
@@ -428,6 +493,8 @@ namespace MainExample
             TranslateForm окно = new TranslateForm(translateList);
             окно.ShowDialog();
         }
+
+
 
         private void DynamicSoundForm_FormClosing(object sender, FormClosingEventArgs e)
         {

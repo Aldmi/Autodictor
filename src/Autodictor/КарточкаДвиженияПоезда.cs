@@ -170,7 +170,12 @@ namespace MainExample
                 формируемоеСообщение.ЯзыкиОповещения.ForEach(lang => языки += lang.ToString() + ", ");
                 языки = языки.Remove(языки.Length - 2, 2);
 
-                ListViewItem lvi = new ListViewItem(new string[] { времяАктивации.ToString("HH:mm"), формируемоеСообщение.НазваниеШаблона, языки });
+                var variant = Enum.GetValues(typeof(PriorityPrecise)).Cast<PriorityPrecise>().ToList();
+                var priorntyNum = variant.IndexOf(формируемоеСообщение.ПриоритетВторостепенный).ToString();
+               
+
+
+                ListViewItem lvi = new ListViewItem(new string[] { времяАктивации.ToString("HH:mm"), формируемоеСообщение.НазваниеШаблона, языки, priorntyNum });
                 lvi.Checked = формируемоеСообщение.Активность;
                 lvi.Tag = i;
 
@@ -875,7 +880,7 @@ namespace MainExample
                     var формируемоеСообщение = _record.СписокФормируемыхСообщений[номерШаблона];
                     формируемоеСообщение.Воспроизведен = true;
                     формируемоеСообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьРучное;
-                    формируемоеСообщение.Приоритет = Priority.Hight;
+                    формируемоеСообщение.ПриоритетГлавный = Priority.Hight;
                     _record.СписокФормируемыхСообщений[item] = формируемоеСообщение;
 
                     MainWindowForm.ВоспроизвестиШаблонОповещения("Действие оператора", _record, формируемоеСообщение, ТипСообщения.Динамическое);
@@ -1005,7 +1010,7 @@ namespace MainExample
                 СостояниеФормируемогоСообщенияИШаблон шаблонФормируемогоСообщения = new СостояниеФормируемогоСообщенияИШаблон
                 {
                     Id = 2000,
-                    Приоритет = Priority.Hight,
+                    ПриоритетГлавный = Priority.Hight,
                     SoundRecordId = _record.ID,
                     Шаблон = ФормируемоеСообщение,
                     ЯзыкиОповещения = new List<NotificationLanguage> { NotificationLanguage.Ru, NotificationLanguage.Eng }, //TODO: вычислять языки оповещения 
@@ -1157,7 +1162,7 @@ namespace MainExample
                 {
                     формируемоеСообщение.Воспроизведен = true;
                     формируемоеСообщение.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьРучное;
-                    формируемоеСообщение.Приоритет = Priority.Hight;
+                    формируемоеСообщение.ПриоритетГлавный = Priority.Hight;
                     _record.СписокФормируемыхСообщений[i] = формируемоеСообщение;
 
                     MainWindowForm.ВоспроизвестиШаблонОповещения("Воспроизведение шаблона в ручном режиме при фиксации времени", _record, формируемоеСообщение, ТипСообщения.Динамическое);

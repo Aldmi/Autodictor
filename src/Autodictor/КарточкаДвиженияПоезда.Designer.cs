@@ -97,6 +97,7 @@
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -190,7 +191,8 @@
             this.lVШаблоны.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3});
+            this.columnHeader3,
+            this.columnHeader4});
             this.lVШаблоны.FullRowSelect = true;
             this.lVШаблоны.GridLines = true;
             this.lVШаблоны.Location = new System.Drawing.Point(13, 68);
@@ -214,7 +216,8 @@
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Языки";
+            this.columnHeader3.DisplayIndex = 3;
+            this.columnHeader3.Text = "Яз.";
             this.columnHeader3.Width = 120;
             // 
             // rTB_Сообщение
@@ -904,6 +907,13 @@
             this.btn_выход.UseVisualStyleBackColor = true;
             this.btn_выход.Click += new System.EventHandler(this.btn_выход_Click);
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 2;
+            this.columnHeader4.Text = "Приор.";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 70;
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1010,5 +1020,6 @@
         private System.Windows.Forms.Label lb_фиксВрПриб;
         private System.Windows.Forms.Label lb_фиксВрОтпр;
         private System.Windows.Forms.Button btn_выход;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }

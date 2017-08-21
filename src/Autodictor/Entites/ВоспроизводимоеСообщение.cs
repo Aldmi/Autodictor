@@ -23,7 +23,8 @@ namespace MainExample.Entites
 
     public class ВоспроизводимоеСообщение
     {
-        public Priority Приоритет { get; set; }
+        public Priority ПриоритетГлавный { get; set; }                         //ПриоритетГлавный по типу сообщения
+        public PriorityPrecise ПриоритетВторостепенный { get; set; }           //ПриоритетГлавный внутри групп, разбитых по типу сообщения
 
         public ТипСообщения ТипСообщения { get; set; }                          //Определяет в каком списке искать сообщение.
 

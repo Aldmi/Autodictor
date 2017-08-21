@@ -78,6 +78,7 @@ namespace MainExample
                             Данные.ID = int.Parse(Settings[0]);
                             Данные.Name = Settings[1];
                             Данные.Message = Settings[2];
+                            Данные.PriorityTemplate= PriorityPrecise.Zero; //TODO: загружать из файла
 
                             DynamicTechnicalSoundRecords.Add(Данные);
                         }
@@ -100,7 +101,8 @@ namespace MainExample
             новыйШаблон.Id = 1;
             новыйШаблон.SoundRecordId = soundRecordId;
             новыйШаблон.Активность = true;
-            новыйШаблон.Приоритет = Priority.RealTime;
+            новыйШаблон.ПриоритетГлавный = Priority.VeryHight;
+            новыйШаблон.ПриоритетВторостепенный = PriorityPrecise.One;
             новыйШаблон.Воспроизведен = false;
             новыйШаблон.СостояниеВоспроизведения = SoundRecordStatus.ДобавленВОчередьРучное;
             новыйШаблон.ВремяСмещения = 0;

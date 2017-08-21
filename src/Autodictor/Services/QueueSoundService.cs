@@ -152,7 +152,7 @@ namespace MainExample.Services
                 return;
 
             //делать сортировку по приоритету.
-            if (item.Приоритет == Priority.Low)
+            if (item.ПриоритетГлавный == Priority.Low)
             {
                 Queue.Enqueue(item);
             }
@@ -168,9 +168,9 @@ namespace MainExample.Services
                 var currentFirstItem = Queue.FirstOrDefault();
                 Queue.Dequeue();
 
-                //добавили новый элемент и отсортировали
+                //добавили новый элемент и отсортировали.
                 Queue.Enqueue(item);
-                var ordered = Queue.OrderByDescending(elem => elem.Приоритет).ToList();  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
+                var ordered = Queue.OrderByDescending(elem => elem.ПриоритетГлавный).ThenByDescending(elem=>elem.ПриоритетВторостепенный).ToList();  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
 
                 //Очистили и заполнили заново очередь
                 Queue.Clear();
@@ -424,7 +424,7 @@ namespace MainExample.Services
                 шаблон.Id = soundMessage.ParentId.Value;
                 шаблон.SoundRecordId = soundMessage.RootId;
                 шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
-                шаблон.Приоритет = soundMessage.Приоритет;
+                шаблон.ПриоритетГлавный = soundMessage.ПриоритетГлавный;
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон, SoundMessage = soundMessage });
@@ -456,7 +456,7 @@ namespace MainExample.Services
                 шаблон.Id = soundMessage.ParentId.Value;
                 шаблон.SoundRecordId = soundMessage.RootId;
                 шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
-                шаблон.Приоритет = soundMessage.Приоритет;
+                шаблон.ПриоритетГлавный = soundMessage.ПриоритетГлавный;
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Start, Template = шаблон, SoundMessage = soundMessage });
@@ -482,7 +482,7 @@ namespace MainExample.Services
                 шаблон.Id = soundMessage.ParentId.Value;
                 шаблон.SoundRecordId = soundMessage.RootId;
                 шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
-                шаблон.Приоритет = soundMessage.Приоритет;
+                шаблон.ПриоритетГлавный = soundMessage.ПриоритетГлавный;
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон, SoundMessage = soundMessage});
@@ -516,7 +516,7 @@ namespace MainExample.Services
                 шаблон.Id = soundMessage.ParentId.Value;
                 шаблон.SoundRecordId = soundMessage.RootId;
                 шаблон.НазваниеШаблона = soundMessage.ИмяВоспроизводимогоФайла;
-                шаблон.Приоритет = soundMessage.Приоритет;
+                шаблон.ПриоритетГлавный = soundMessage.ПриоритетГлавный;
 
                 CurrentTemplatePlaying = шаблон;
                 TemplateChangeRx.OnNext(new TemplateChangeValue { StatusPlaying = StatusPlaying.Stop, Template = шаблон, SoundMessage = soundMessage });

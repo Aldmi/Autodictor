@@ -52,6 +52,9 @@
             this.button6 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button5 = new System.Windows.Forms.Button();
+            this.cb_Priority = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,7 +66,8 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3});
+            this.columnHeader3,
+            this.columnHeader4});
             this.listView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
@@ -89,6 +93,7 @@
             // 
             // columnHeader3
             // 
+            this.columnHeader3.DisplayIndex = 3;
             this.columnHeader3.Text = "Сообщение";
             this.columnHeader3.Width = 1657;
             // 
@@ -116,7 +121,7 @@
             // 
             this.textBox_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox_Name.Location = new System.Drawing.Point(50, 297);
+            this.textBox_Name.Location = new System.Drawing.Point(57, 297);
             this.textBox_Name.Name = "textBox_Name";
             this.textBox_Name.Size = new System.Drawing.Size(228, 29);
             this.textBox_Name.TabIndex = 12;
@@ -178,7 +183,7 @@
             this.button3.TabIndex = 19;
             this.button3.Text = "Изменить сообщение";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.buttonИзменить_Click);
             // 
             // button4
             // 
@@ -211,9 +216,9 @@
             this.comboBox_Messages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Messages.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox_Messages.FormattingEnabled = true;
-            this.comboBox_Messages.Location = new System.Drawing.Point(284, 296);
+            this.comboBox_Messages.Location = new System.Drawing.Point(538, 294);
             this.comboBox_Messages.Name = "comboBox_Messages";
-            this.comboBox_Messages.Size = new System.Drawing.Size(716, 32);
+            this.comboBox_Messages.Size = new System.Drawing.Size(439, 32);
             this.comboBox_Messages.TabIndex = 22;
             // 
             // button_left
@@ -304,11 +309,42 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.btnСохранить_Click);
             // 
+            // cb_Priority
+            // 
+            this.cb_Priority.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cb_Priority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Priority.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cb_Priority.FormattingEnabled = true;
+            this.cb_Priority.Location = new System.Drawing.Point(402, 295);
+            this.cb_Priority.Name = "cb_Priority";
+            this.cb_Priority.Size = new System.Drawing.Size(91, 32);
+            this.cb_Priority.TabIndex = 28;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(299, 303);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(97, 20);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "Приоритет:";
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 2;
+            this.columnHeader4.Text = "Приоритет";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 100;
+            // 
             // DynamicSoundForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1315, 447);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cb_Priority);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button_delete);
@@ -363,5 +399,8 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ComboBox cb_Priority;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }

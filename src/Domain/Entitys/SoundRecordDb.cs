@@ -7,7 +7,8 @@ namespace Domain.Entitys
     public enum TableRecordStatus { Выключена = 0, ОжиданиеОтображения, Отображение, Обновление, Очистка };
     public enum SoundRecordType { Обычное = 0, ДвижениеПоезда, ДвижениеПоездаНеПодтвержденное, Предупредительное, Важное };
     public enum PathPermissionType { ИзФайлаНастроек = 0, Отображать, НеОтображать };
-    public enum Priority { Low = 0, Midlle, Hight, RealTime };
+    public enum Priority { Low = 0, Midlle, Hight, VeryHight };
+    public enum PriorityPrecise {Zero = 0, One, Two, Three, Four, Five, Six, Seven, Eight, Nine };
     public enum NotificationLanguage { Ru, Eng };
 
     public enum ТипПоезда
