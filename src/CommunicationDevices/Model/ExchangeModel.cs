@@ -74,6 +74,7 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2GeneralSchedule> Binding2GeneralSchedules { get; set; } = new List<IBinding2GeneralSchedule>();
         public ICollection<IBinding2StaticFormBehavior> Binding2StaticFormBehaviors { get; set; } = new List<IBinding2StaticFormBehavior>();
         public ICollection<IBinding2ChangesBehavior> Binding2ChangesSchedules { get; set; } = new List<IBinding2ChangesBehavior>();
+        public ICollection<IBinding2ChangesEventBehavior> Binding2ChangesEvent { get; set; } = new List<IBinding2ChangesEventBehavior>();
 
         private string _errorString;
         public string ErrorString
@@ -936,7 +937,6 @@ namespace CommunicationDevices.Model
                         if (binding.BindingType == BindingType.ToStatic)
                             Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
 
-
                         //создание поведения привязка табло к Изменениям
                         if (binding.BindingType == BindingType.ToChange)
                         {
@@ -948,9 +948,13 @@ namespace CommunicationDevices.Model
                             }
                         }
 
+                        //создание поведения привязка табло к отпрвки изменения по событию
+                        if (binding.BindingType == BindingType.ToChangeEvent)
+                        {
+                            Binding2ChangesEvent.Add(new Binding2ChangesEventBehavior(DeviceTables.Last()));
+                        }
+
                         break;
-
-
 
 
 

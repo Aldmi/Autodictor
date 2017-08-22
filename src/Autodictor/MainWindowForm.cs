@@ -144,6 +144,7 @@ namespace MainExample
         public static IEnumerable<IBinding2PathBehavior> Binding2PathBehaviors { get; set; }
         public static IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
         public static IEnumerable<IBinding2ChangesBehavior> Binding2ChangesBehaviors { get; set; }
+        public static IEnumerable<IBinding2ChangesEventBehavior> Binding2ChangesEventBehaviors { get; set; }
         public Device SoundChanelManagment { get; }
 
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
@@ -170,7 +171,7 @@ namespace MainExample
 
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors, Device soundChanelManagment)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors, IEnumerable<IBinding2ChangesEventBehavior> binding2ChangesEventBehaviors, Device soundChanelManagment)
         {
             if (myMainForm != null)
                 return;
@@ -186,6 +187,7 @@ namespace MainExample
             Binding2PathBehaviors = binding2PathBehaviors;
             Binding2GeneralScheduleBehaviors = binding2GeneralScheduleBehaviors;
             Binding2ChangesBehaviors = binding2ChangesBehaviors;
+            Binding2ChangesEventBehaviors = binding2ChangesEventBehaviors;
             SoundChanelManagment = soundChanelManagment;
 
             MainForm.Пауза.Click += new System.EventHandler(this.btnПауза_Click);
@@ -3521,7 +3523,37 @@ namespace MainExample
             };
             SoundRecordChanges.Add(recChange);
             //var hh = Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange);//DEBUG
+
+            //Сохранить в БД
             Program.SoundRecordChangesDbRepository.Add(Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange));
+
+            //Отправить на устройства с привязкой "Binding2ChangesEvent"
+            SendData4Binding2ChangesEvent(старыеДанные, данные, recChange.TimeStamp);
+        }
+
+
+        /// <summary>
+        /// Отправка изменения.
+        /// </summary>
+        public void SendData4Binding2ChangesEvent(SoundRecord старыеДанные, SoundRecord данные, DateTime timeStamp)
+        {
+            if (Binding2ChangesEventBehaviors != null && Binding2ChangesEventBehaviors.Any())
+            {
+                foreach (var beh in Binding2ChangesEventBehaviors)
+                {
+                    List<UniversalInputType> table = new List<UniversalInputType>();
+                    var uit = Mapper.MapSoundRecord2UniveralInputType(старыеДанные, true, false);
+                    uit.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", timeStamp } };
+                    var uitNew = Mapper.MapSoundRecord2UniveralInputType(данные, true, false);
+                    uitNew.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", timeStamp } };
+
+                    table.Add(uit);
+                    table.Add(uitNew);
+                    table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
+                    var inData = new UniversalInputType { TableData = table };
+                    beh.SendMessage(inData);
+                }
+            }
         }
 
 

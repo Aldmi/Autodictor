@@ -11,7 +11,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     //ToArrivalAndDeparture - привязка к табло отправление / прибытие поездов
     //ToStatic - привязка к форме отправки статической информации.
     //ToChangeWindow - привязка БД с изменениями.
-    public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture, ToStatic, ToChange }
+    public enum BindingType { None, ToPath, ToGeneral, ToArrivalAndDeparture, ToStatic, ToChange, ToChangeEvent }
 
     public class XmlBindingSetting
     {
@@ -83,6 +83,11 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                 {
                     HourDepth = houerDepth;
                 }
+            }
+            else
+            if (binding.ToLower().Contains("tochangeevent:"))
+            {
+                BindingType = BindingType.ToChangeEvent;
             }
         }
 

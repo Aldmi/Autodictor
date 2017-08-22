@@ -9,7 +9,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     public enum DateTimeFormat
     {
         None,
-        Sortable,      //2015-07-17T17:04:43
+        Sortable,      //формат: 2015-07-17T17:04:43
         LinuxTimeStamp
     }
 

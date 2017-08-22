@@ -98,7 +98,9 @@
   <ItemGroup>
     <Compile Include="Behavior\BindingBehavior\Helpers\PaggingHelper.cs" />
     <Compile Include="Behavior\BindingBehavior\ToChange\Binding2ChangesBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToChange\Binding2ChangesEventBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToChange\IBinding2ChangesBehavior.cs" />
+    <Compile Include="Behavior\BindingBehavior\ToChange\IBinding2ChangesEventBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToDepartureArrivalSchedule\IBinding2DepatureArrivalShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToGeneralSchedule\BindingDevice2GeneralShBehavior.cs" />
     <Compile Include="Behavior\BindingBehavior\ToPath\BindingDevice2PathBehavior.cs" />
@@ -163,6 +165,10 @@
     <ProjectReference Include="..\Communication\Communication.csproj">
       <Project>{dea394e0-f62e-459b-98cf-3ec8da2a90a3}</Project>
       <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{a28fd145-e193-4237-9d44-1bdf29b84b69}</Project>
+      <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{87b6f9ef-6a0d-4daf-9df0-718036b1c8e4}</Project>
