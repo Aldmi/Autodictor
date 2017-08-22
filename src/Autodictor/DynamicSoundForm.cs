@@ -355,7 +355,7 @@ namespace MainExample
                 {
                     foreach (var данные in DynamicSoundRecords)
                     {
-                        string priority = данные.Name.Contains("---------") ? string.Empty  : данные.PriorityTemplate.ToString();
+                        string priority = данные.Name.Contains("---------") ? string.Empty  : данные.PriorityTemplate.ToString("D");
                         dumpFile.WriteLine(данные.ID.ToString() + ";" + данные.Name + ";" + данные.Message + ";" + priority);
                     }
 
