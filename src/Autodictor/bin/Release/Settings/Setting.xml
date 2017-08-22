@@ -97,7 +97,7 @@
   
   
 <DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToGeneral:ГлавноеОкно">  
+	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:">  
 	 	   <ExchangeRules>    
 				<Table Size= "3">
 					   <Rule Format = "Windows-1251">
@@ -124,7 +124,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="Направление:Московское|Дальние" ProviderType="xml_mainWindow"
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" Contrains="ПРИБ.;ТРАНЗ." ProviderType="xml_sheduleWindow:sortable" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -132,6 +132,8 @@
 						   Content-Type: multipart/form-data +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   />
+						   
+					<!-- 	   Binding="ToGeneral:ОкноРасписания" Contrains="Направление:Московское" ProviderType="xml_sheduleWindow:sortable" -->		   
 </DevicesWithHttp>
 
 </Root>
@@ -179,7 +181,7 @@
 			  (РЭКС+ОТПР.)
 			  (РЭКС+ПУТЬ:1,2,3)
 
-             (ПРИБ./ОТПР.) 
+             (ПРИБ./ОТПР./ТРАНЗ.) 
 			 (ПРИБ.+ПУТЬ:1,2,3)
 			 (ОТПР.+ПУТЬ:1,2,3)
              ("Отменен_БлокВремОгр/ЗадержкаПрибытия_БлокВремОгр/ЗадержкаОтправления_БлокВремОгр") - Если указанно ограничение "МеньшеТекВремени" или "БольшеТекВремени" и поезд отмененн/задерживается, то временные огранчиения не учитываются
@@ -197,6 +199,10 @@
 <!-- Binding="ToGeneral:ГлавноеОкно" -->
 <!--Варианты (ГлавноеОкно/ОкноРасписания/ОкноРасписанияОперативное)-->
 
+<!-- 
+ToChangeWindow:72  к окну изменений
+ToChangeEvent:      отправка 1 раз при изменении
+ -->
 
 
 <!-- 	              Headers='Methode:POST + 

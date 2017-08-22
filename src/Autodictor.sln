@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFAvtodictor2PcTableContra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A28FD145-E193-4237-9D44-1BDF29B84B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGrid4WinForms", "TestGrid4WinForms\TestGrid4WinForms.csproj", "{AB793D0B-3BA0-43E5-8B7A-E32C6B76C6AE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{A28FD145-E193-4237-9D44-1BDF29B84B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A28FD145-E193-4237-9D44-1BDF29B84B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A28FD145-E193-4237-9D44-1BDF29B84B69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB793D0B-3BA0-43E5-8B7A-E32C6B76C6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB793D0B-3BA0-43E5-8B7A-E32C6B76C6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB793D0B-3BA0-43E5-8B7A-E32C6B76C6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB793D0B-3BA0-43E5-8B7A-E32C6B76C6AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

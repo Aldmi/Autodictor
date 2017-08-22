@@ -13,7 +13,7 @@ namespace CommunicationDevices.Settings
         #region prop
 
         public List<TypeTrain> TypeTrain { get; set; } //типы поездов, ОДИНОЧНЫЕ БЕЗ +
-        public string Event { get; set; } //Событие (отправление/прибытие), ОДИНОЧНЫЕ БЕЗ +
+        public List<string> Event { get; set; }        //События (отправление/прибытие/транзит), ОДИНОЧНЫЕ БЕЗ +
 
         public Command Command { get; set; }                //команда Очистка, Перезагрузка
 
@@ -83,9 +83,9 @@ namespace CommunicationDevices.Settings
             }
 
             var eventFilter = true;
-            if (!string.IsNullOrEmpty(Event))
+            if (Event != null && Event.Any())
             {
-                eventFilter = (inData.Event != Event);
+                eventFilter = !Event.Contains(inData.Event);
             }
 
 
@@ -332,11 +332,10 @@ namespace CommunicationDevices.Settings
             }
 
             var eventFilter = true;
-            if (!string.IsNullOrEmpty(Event))
+            if (Event != null && Event.Any())
             {
-                eventFilter = (inData.Event == Event);
+                eventFilter = Event.Contains(inData.Event);
             }
-
 
             var commandFilter = true;
             if (Command != Command.None)

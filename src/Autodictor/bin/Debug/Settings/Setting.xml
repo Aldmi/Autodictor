@@ -124,7 +124,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToChangeEvent:" ProviderType="xml_change:sortable"
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" Contrains="ПРИБ.;ТРАНЗ." ProviderType="xml_sheduleWindow:sortable" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -181,7 +181,7 @@
 			  (РЭКС+ОТПР.)
 			  (РЭКС+ПУТЬ:1,2,3)
 
-             (ПРИБ./ОТПР.) 
+             (ПРИБ./ОТПР./ТРАНЗ.) 
 			 (ПРИБ.+ПУТЬ:1,2,3)
 			 (ОТПР.+ПУТЬ:1,2,3)
              ("Отменен_БлокВремОгр/ЗадержкаПрибытия_БлокВремОгр/ЗадержкаОтправления_БлокВремОгр") - Если указанно ограничение "МеньшеТекВремени" или "БольшеТекВремени" и поезд отмененн/задерживается, то временные огранчиения не учитываются

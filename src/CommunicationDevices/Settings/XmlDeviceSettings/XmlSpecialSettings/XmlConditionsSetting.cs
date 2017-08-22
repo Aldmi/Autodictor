@@ -28,7 +28,11 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             var contr = contrains.Split(';');
             if (contr.Any())
             {
-                Conditions = new Conditions {TypeTrain = new List<TypeTrain>()};
+                Conditions = new Conditions
+                {
+                    TypeTrain = new List<TypeTrain>(),
+                    Event = new List<string>()
+                };
                 foreach (var s in contr)
                 {
                     var matchString = Regex.Match(s, "Пассажирский\\+ПУТЬ:(.*)").Groups[1].Value;
@@ -138,11 +142,15 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                     switch (s)
                     {
                         case "ПРИБ.":
-                            Conditions.Event = s;
+                            Conditions.Event.Add(s);
                             break;
 
                         case "ОТПР.":
-                            Conditions.Event = s;
+                            Conditions.Event.Add(s);
+                            break;
+
+                        case "ТРАНЗ.":
+                            Conditions.Event.Add("СТОЯНКА");
                             break;
 
                         case "Пассажирский":
