@@ -109,32 +109,32 @@ namespace MainExample
                 {
                     case "Id":
                         col.HeaderText = @"Id";
-                        col.AutoSizeMode= DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
 
                     case "Номер":
                         col.HeaderText = @"Номер";
-                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
 
                     case "ВремяПрибытия":
                         col.HeaderText = @"Время прибытия";
-                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
 
                     case "Стоянка":
                         col.HeaderText = @"Стоянка";
-                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
 
                     case "ВремяОтправления":
                         col.HeaderText = @"Время отправления";
-                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
 
                     case "Маршрут":
                         col.HeaderText = @"Маршрут";
-                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         break;
 
                     case "ДниСледования":
@@ -396,6 +396,9 @@ namespace MainExample
                 dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = firstOrDefault.Active ? Color.LightGreen : Color.LightGray;
                 dgv_TrainTable.Rows[i].Tag = firstOrDefault.ID;
             }
+
+
+            dgv_TrainTable.AllowUserToResizeColumns = true;
         }
 
 
@@ -592,6 +595,9 @@ namespace MainExample
         {
             //Заполнение таблицы данными-------------------
             btnLoad_Click(null, EventArgs.Empty);
+
+
+
         }
 
 
