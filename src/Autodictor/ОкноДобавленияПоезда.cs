@@ -75,7 +75,7 @@ namespace MainExample
             };
 
 
-            foreach (var Данные in TrainTable.TrainTableRecords)
+            foreach (var Данные in TrainTableGrid.TrainTableRecords)
             {
                 string Поезд = Данные.ID.ToString() + ":   " + Данные.Num + " " + Данные.Name + (Данные.ArrivalTime != "" ? "   Приб: " + Данные.ArrivalTime : "" ) + (Данные.DepartureTime != "" ? "   Отпр: " + Данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(Поезд);
@@ -515,7 +515,7 @@ namespace MainExample
                 int ID;
                 if (int.TryParse(Parts[0], out ID) == true)
                 {
-                    foreach (var Config in TrainTable.TrainTableRecords)
+                    foreach (var Config in TrainTableGrid.TrainTableRecords)
                     {
                         if (Config.ID == ID)
                         {

@@ -316,7 +316,7 @@ namespace MainExample
             РасписаниеПоездов.Clear();
             РасписаниеЭлектричек.Clear();
 
-            foreach (TrainTableRecord Config in TrainTable.TrainTableRecords)
+            foreach (TrainTableRecord Config in TrainTableGrid.TrainTableRecords)
             {
                 if (Config.Active == true)
                 {

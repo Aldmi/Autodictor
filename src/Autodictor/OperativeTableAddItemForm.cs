@@ -46,7 +46,7 @@ namespace MainExample
 
         private void InitializeFormDate()
         {
-            foreach (var данные in TrainTable.TrainTableRecords)
+            foreach (var данные in TrainTableGrid.TrainTableRecords)
             {
                 string поезд = данные.ID + ":   " + данные.Num + " " + данные.Name + (данные.ArrivalTime != "" ? "   Приб: " + данные.ArrivalTime : "") + (данные.DepartureTime != "" ? "   Отпр: " + данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(поезд);
@@ -283,7 +283,7 @@ namespace MainExample
                 int ID;
                 if (int.TryParse(parts[0], out ID) == true)
                 {
-                    foreach (var config in TrainTable.TrainTableRecords)
+                    foreach (var config in TrainTableGrid.TrainTableRecords)
                     {
                         if (config.ID == ID)
                         {

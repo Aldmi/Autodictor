@@ -545,7 +545,7 @@ namespace MainExample
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
 
             //Вычтем из Главного расписания элементы оперативного расписания, уже добавленные к списку.
-            var differences = TrainTable.TrainTableRecords.Where(l2 =>
+            var differences = TrainTableGrid.TrainTableRecords.Where(l2 =>
                   !SoundRecords.Values.Any(l1 =>
                   l1.НомерПоезда == l2.Num &&
                   l1.НомерПоезда2 == l2.Num2 &&
@@ -568,6 +568,13 @@ namespace MainExample
             for (var index = 0; index < trainTableRecords.Count; index++)
             {
                 var config = trainTableRecords[index];
+
+                //DEBUG
+                if (config.Num == "516")
+                {
+                    var t = 5 + 5;
+                }
+
                 if (config.Active == false && Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок == false)
                     continue;
 
@@ -1710,11 +1717,11 @@ namespace MainExample
                     //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
-                        if (TrainTable.TrainTableRecords != null && TrainTable.TrainTableRecords.Any())
+                        if (TrainTableGrid.TrainTableRecords != null && TrainTableGrid.TrainTableRecords.Any())
                         {
                             foreach (var beh in binding2Shedule)
                             {
-                                var table = TrainTable.TrainTableRecords
+                                var table = TrainTableGrid.TrainTableRecords
                                     .Select(Mapper.MapTrainTableRecord2UniversalInputType)
                                     .ToList();
 

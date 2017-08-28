@@ -48,7 +48,7 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-            TrainTable.ЗагрузитьСписок();
+            TrainTableGrid.ЗагрузитьСписок();
             TrainTableOperative.ЗагрузитьСписок();
 
             // Player.PlayFile("");                          //TODO: ???? включить

@@ -213,12 +213,6 @@
     <Compile Include="TechnicalMessageForm.Designer.cs">
       <DependentUpon>TechnicalMessageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TrainTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TrainTable.Designer.cs">
-      <DependentUpon>TrainTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -369,9 +363,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TechnicalMessageForm.resx">
       <DependentUpon>TechnicalMessageForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrainTable.resx">
-      <DependentUpon>TrainTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindowForm.resx">
       <DependentUpon>MainWindowForm.cs</DependentUpon>
