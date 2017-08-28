@@ -189,11 +189,14 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("TrainNumber", uit.NumberOfTrain),
                         new XElement("TrainType", trainType),
                         new XElement("DirectionStation", uit.DirectionStation),
-                        new XElement("StartStation", uit.StationDeparture.Key),
-                        new XElement("EndStation", uit.StationArrival.Key),
 
-                        new XElement("StartStationENG", uit.StationDeparture.Value),
-                        new XElement("EndStationENG", uit.StationArrival.Value),
+                        new XElement("StartStation", uit.StationDeparture1?.NameRu ?? string.Empty),
+                        new XElement("EndStation", uit.StationArrival1?.NameRu ?? string.Empty),
+                        new XElement("StartStationENG", uit.StationDeparture1?.NameEng ?? string.Empty),
+                        new XElement("EndStationENG", uit.StationArrival1?.NameEng ?? string.Empty),
+                        new XElement("StartStationCH", uit.StationDeparture1?.NameCh ?? string.Empty),
+                        new XElement("EndStationCH", uit.StationArrival1?.NameCh ?? string.Empty),
+
 
                         new XElement("RecDateTime", timeArrival),                //время приб
                         new XElement("SndDateTime", timeDepart),                 //время отпр
@@ -222,8 +225,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            //xDoc.Save(path);
+            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();

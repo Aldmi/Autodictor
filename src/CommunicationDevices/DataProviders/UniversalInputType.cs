@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Entitys;
 using MoreLinq;
 
 
@@ -36,8 +37,16 @@ namespace CommunicationDevices.DataProviders
         public string Addition { get; set; }                         //Дополнение (свободная строка)
         public string Stations { get; set; }                         // Станции Отправления-Прибытия. (название поезда)
         public string DirectionStation { get; set; }                        // Направление.
+
         public KeyValuePair<string, string> StationDeparture { get; set; }   //Станции отправления. Key - RU    Value- eng
         public KeyValuePair<string, string> StationArrival { get; set; }     //Станции прибытия. Key - RU    Value- eng
+
+
+        public Station StationDeparture1 { get; set; }
+        public Station StationArrival1 { get; set; }
+
+
+
         public string Note { get; set; }                             //Примечание.
         public string DaysFollowing { get; set; }                    //Дни следования
         public string DaysFollowingAlias { get; set; }               //Дни следования, заданные в строке в нужном формате

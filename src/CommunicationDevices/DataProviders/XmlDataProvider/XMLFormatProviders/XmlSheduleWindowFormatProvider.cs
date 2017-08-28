@@ -19,7 +19,9 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //  <StartStation>Крюково</StartStation>
     //  <EndStation> </EndStation>	
     //  <StartStationENG>Крюково</StartStationENG>
-    //  <EndStationENG> </EndStationENG>	
+    //  <EndStationENG> </EndStationENG>
+    //  <StartStationCH>Крюково</StartStationENG>
+    //  <EndStationCH> </EndStationENG>		
     //  <InDateTime>2017-06-08T13:17:00</InDateTime>                               //время прибытия
     //  <HereDateTime>15</HereDateTime>                                            //время стоянки
     //  <OutDateTime>2017-06-08T13:17:00</OutDateTime>                             //время отправки
@@ -186,11 +188,13 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("TrainNumber", uit.NumberOfTrain),
                     new XElement("TrainType", trainType),
                     new XElement("DirectionStation", uit.DirectionStation),
-                    new XElement("StartStation", uit.StationDeparture.Key),
-                    new XElement("EndStation", uit.StationArrival.Key),
 
-                    new XElement("StartStationENG", uit.StationDeparture.Value ?? string.Empty),
-                    new XElement("EndStationENG", uit.StationArrival.Value ?? string.Empty),
+                    new XElement("StartStation", uit.StationDeparture1?.NameRu ?? string.Empty),
+                    new XElement("EndStation", uit.StationArrival1?.NameRu ?? string.Empty),
+                    new XElement("StartStationENG", uit.StationDeparture1?.NameEng ?? string.Empty),
+                    new XElement("EndStationENG", uit.StationArrival1?.NameEng ?? string.Empty),
+                    new XElement("StartStationCH", uit.StationDeparture1?.NameCh ?? string.Empty),
+                    new XElement("EndStationCH", uit.StationArrival1?.NameCh ?? string.Empty),
 
                     new XElement("InDateTime", timeArrival),                   //время приб
                     new XElement("HereDateTime", stopTime),                    //время стоянки

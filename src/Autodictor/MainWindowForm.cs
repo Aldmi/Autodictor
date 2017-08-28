@@ -568,13 +568,6 @@ namespace MainExample
             for (var index = 0; index < trainTableRecords.Count; index++)
             {
                 var config = trainTableRecords[index];
-
-                //DEBUG
-                if (config.Num == "516")
-                {
-                    var t = 5 + 5;
-                }
-
                 if (config.Active == false && Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок == false)
                     continue;
 

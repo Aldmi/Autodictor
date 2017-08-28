@@ -66,7 +66,7 @@ namespace MainExample
                 return;
 
             ЗагрузкаНазванийПутей();
-            ЗагрузкаНазванийПоездов();
+            ЗагрузкаНазванийНаправлений();
             ОкноНастроек.ЗагрузитьНастройки();
 
             string connection = @"NoSqlDb\Main.db";
@@ -182,7 +182,7 @@ namespace MainExample
 
 
 
-        public static void ЗагрузкаНазванийПоездов()
+        public static void ЗагрузкаНазванийНаправлений()
         {
             try
             {

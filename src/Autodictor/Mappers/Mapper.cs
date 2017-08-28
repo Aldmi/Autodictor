@@ -315,6 +315,7 @@ namespace MainExample.Mappers
             };
 
 
+            //DEL
             Func<string, string, KeyValuePair<string, string>> stationsPars = (station, direction) =>
             {
                 if (string.IsNullOrEmpty(direction) || string.IsNullOrEmpty(station))
@@ -329,6 +330,28 @@ namespace MainExample.Mappers
                 return new KeyValuePair<string, string>(stationDir.NameRu, stationDir.NameEng);
             };
 
+
+
+            Func<string, string, Station> stationsPars2 = (station, direction) =>
+            {
+                var emptyStation= new Station { NameRu = string.Empty, NameEng = string.Empty, NameCh = string.Empty };
+                if (string.IsNullOrEmpty(direction) || string.IsNullOrEmpty(station))
+                {
+                    return emptyStation;
+                }
+
+                var stationDir = Program.ПолучитьСтанциюНаправления(direction, station);
+                if (stationDir == null)
+                    return emptyStation;
+
+                return stationDir;
+            };
+
+            //DEBUG
+            if (t.Num == "")
+            {
+                
+            }
 
 
             TimeSpan stopTime;
@@ -349,8 +372,10 @@ namespace MainExample.Mappers
                 NumberOfTrain = t.Num,
                 Stations = t.Name,
                 DirectionStation = t.Direction,
-                StationDeparture = stationsPars(t.StationDepart, t.Direction),
-                StationArrival = stationsPars(t.StationArrival, t.Direction),
+                StationDeparture = stationsPars(t.StationDepart, t.Direction), //DEL
+                StationArrival = stationsPars(t.StationArrival, t.Direction),  //DEL
+                StationDeparture1 = stationsPars2(t.StationDepart, t.Direction),
+                StationArrival1 = stationsPars2(t.StationArrival, t.Direction),
                 Time = timePars(t.ArrivalTime, t.DepartureTime),
                 TransitTime = transitTimePars(t.ArrivalTime, t.DepartureTime),
                 DelayTime = null,
@@ -509,6 +534,7 @@ namespace MainExample.Mappers
             var cтанцияОтправления = Program.ПолучитьСтанциюНаправления(data.Направление, data.СтанцияОтправления);
             var cтанцияНазначения = Program.ПолучитьСтанциюНаправления(data.Направление, data.СтанцияНазначения);
 
+            //DEL
             var stationDepartMyltiLang = new KeyValuePair<string, string>(
                                          cтанцияОтправления == null ? defaultStation.Key : cтанцияОтправления.NameRu,
                                          cтанцияОтправления == null ? defaultStation.Value : cтанцияОтправления.NameEng);
@@ -535,8 +561,14 @@ namespace MainExample.Mappers
                     StopTime = data.ВремяСтоянки,
                     Stations = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.НазваниеПоезда : "   ",
                     DirectionStation = data.Направление,
+
+                    //DEL
                     StationDeparture = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationDepartMyltiLang : new KeyValuePair<string, string>(),
                     StationArrival = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? stationArrivalMyltiLang : new KeyValuePair<string, string>(),
+
+                    StationDeparture1 = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? cтанцияОтправления : new Station(),
+                    StationArrival1 = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? cтанцияНазначения : new Station(),
+
                     Note = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? data.Примечание : "   ",
                     TypeTrain = typeTrain,
                     DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(data.ДниСледования).ПолучитьСтрокуОписанияРасписания(),
