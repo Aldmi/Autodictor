@@ -31,15 +31,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lVВыбранныеСтанции = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lVОбщийСписок = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnВыбратьВсе = new System.Windows.Forms.Button();
             this.btnУдалитьВсе = new System.Windows.Forms.Button();
             this.btnВыбратьВыделенные = new System.Windows.Forms.Button();
             this.btnУдалитьВыбранные = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // label1
@@ -70,10 +70,13 @@
             this.lVВыбранныеСтанции.Location = new System.Drawing.Point(12, 32);
             this.lVВыбранныеСтанции.Name = "lVВыбранныеСтанции";
             this.lVВыбранныеСтанции.Size = new System.Drawing.Size(364, 404);
-            this.lVВыбранныеСтанции.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lVВыбранныеСтанции.TabIndex = 2;
             this.lVВыбранныеСтанции.UseCompatibleStateImageBehavior = false;
             this.lVВыбранныеСтанции.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 360;
             // 
             // lVОбщийСписок
             // 
@@ -85,10 +88,13 @@
             this.lVОбщийСписок.Location = new System.Drawing.Point(510, 32);
             this.lVОбщийСписок.Name = "lVОбщийСписок";
             this.lVОбщийСписок.Size = new System.Drawing.Size(364, 404);
-            this.lVОбщийСписок.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lVОбщийСписок.TabIndex = 3;
             this.lVОбщийСписок.UseCompatibleStateImageBehavior = false;
             this.lVОбщийСписок.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 360;
             // 
             // btnВыбратьВсе
             // 
@@ -149,14 +155,6 @@
             this.btnCancel.Text = "Отмена";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 360;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Width = 360;
             // 
             // СписокСтанций
             // 

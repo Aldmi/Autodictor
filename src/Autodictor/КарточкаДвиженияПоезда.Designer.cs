@@ -38,6 +38,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rTB_Сообщение = new System.Windows.Forms.RichTextBox();
             this.btn_Автомат = new System.Windows.Forms.Button();
             this.btnВоспроизвестиВыбранныйШаблон = new System.Windows.Forms.Button();
@@ -97,7 +98,6 @@
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -219,6 +219,13 @@
             this.columnHeader3.DisplayIndex = 3;
             this.columnHeader3.Text = "Яз.";
             this.columnHeader3.Width = 120;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 2;
+            this.columnHeader4.Text = "Приор.";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 70;
             // 
             // rTB_Сообщение
             // 
@@ -615,7 +622,6 @@
             this.lB_ПоСтанциям.Margin = new System.Windows.Forms.Padding(2);
             this.lB_ПоСтанциям.Name = "lB_ПоСтанциям";
             this.lB_ПоСтанциям.Size = new System.Drawing.Size(368, 144);
-            this.lB_ПоСтанциям.Sorted = true;
             this.lB_ПоСтанциям.TabIndex = 3;
             // 
             // rB_КромеСтанций
@@ -906,13 +912,6 @@
             this.btn_выход.Text = "Выход";
             this.btn_выход.UseVisualStyleBackColor = true;
             this.btn_выход.Click += new System.EventHandler(this.btn_выход_Click);
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.DisplayIndex = 2;
-            this.columnHeader4.Text = "Приор.";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader4.Width = 70;
             // 
             // КарточкаДвиженияПоезда
             // 
