@@ -35,6 +35,7 @@ using CommunicationDevices.Settings;
 using CommunicationDevices.Settings.XmlCisSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
+using Domain.Entitys;
 using Library.Logs;
 using Library.Xml;
 using WCFAvtodictor2PcTableContract.DataContract;
@@ -50,7 +51,7 @@ namespace CommunicationDevices.Model
     {
         #region field
 
-        public static KeyValuePair<string, string> NameRailwayStation; // key - название на RU. value - название на ENG
+        public static Station NameRailwayStation; // Название текущего вокзала
 
         private readonly IWindsorContainer _container = new WindsorContainer();
 
@@ -184,7 +185,12 @@ namespace CommunicationDevices.Model
 
 
             //СОЗДАНИЕ КЛИЕНТА ЦИС---------------------------------------------------------------------------------------------------------
-            NameRailwayStation =  new KeyValuePair<string, string>(xmlCisSetting.Name, xmlCisSetting.NameEng) ;
+            NameRailwayStation = new Station
+            {
+                NameRu = xmlCisSetting.Name,
+                NameEng = xmlCisSetting.NameEng,
+                NameCh = xmlCisSetting.NameCh
+            };
             CisClient = new CisClient(new EndpointAddress(xmlCisSetting.EndpointAddress), DeviceTables);
 
 

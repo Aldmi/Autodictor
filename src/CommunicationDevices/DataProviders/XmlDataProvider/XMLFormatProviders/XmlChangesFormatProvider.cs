@@ -128,20 +128,20 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("DirectionStation", uit.DirectionStation),
                     new XElement("DirectionStationNew", uitNew.DirectionStation),
 
-                    new XElement("StartStation", uit.StationDeparture1?.NameRu ?? string.Empty),
-                    new XElement("StartStationNew", uitNew.StationDeparture1?.NameRu ?? string.Empty),
-                    new XElement("EndStation", uit.StationArrival1?.NameRu ?? string.Empty),
-                    new XElement("EndStationNew", uitNew.StationArrival1?.NameRu ?? string.Empty),
+                    new XElement("StartStation", uit.StationDeparture?.NameRu ?? string.Empty),
+                    new XElement("StartStationNew", uitNew.StationDeparture?.NameRu ?? string.Empty),
+                    new XElement("EndStation", uit.StationArrival?.NameRu ?? string.Empty),
+                    new XElement("EndStationNew", uitNew.StationArrival?.NameRu ?? string.Empty),
 
-                    new XElement("StartStationENG", uit.StationDeparture1?.NameEng ?? string.Empty),
-                    new XElement("StartStationENGNew", uitNew.StationDeparture1?.NameEng ?? string.Empty),
-                    new XElement("EndStationENG", uit.StationArrival1?.NameEng ?? string.Empty),
-                    new XElement("EndStationENGNew", uitNew.StationArrival1?.NameEng ?? string.Empty),
+                    new XElement("StartStationENG", uit.StationDeparture?.NameEng ?? string.Empty),
+                    new XElement("StartStationENGNew", uitNew.StationDeparture?.NameEng ?? string.Empty),
+                    new XElement("EndStationENG", uit.StationArrival?.NameEng ?? string.Empty),
+                    new XElement("EndStationENGNew", uitNew.StationArrival?.NameEng ?? string.Empty),
 
-                    new XElement("StartStationCH", uit.StationDeparture1?.NameCh ?? string.Empty),
-                    new XElement("StartStationCHNew", uitNew.StationDeparture1?.NameCh ?? string.Empty),
-                    new XElement("EndStationCH", uit.StationArrival1?.NameCh ?? string.Empty),
-                    new XElement("EndStationCHNew", uitNew.StationArrival1?.NameCh ?? string.Empty),
+                    new XElement("StartStationCH", uit.StationDeparture?.NameCh ?? string.Empty),
+                    new XElement("StartStationCHNew", uitNew.StationDeparture?.NameCh ?? string.Empty),
+                    new XElement("EndStationCH", uit.StationArrival?.NameCh ?? string.Empty),
+                    new XElement("EndStationCHNew", uitNew.StationArrival?.NameCh ?? string.Empty),
 
 
                     new XElement("InDateTime", timeArrival),                   //время приб

@@ -156,63 +156,63 @@ namespace CommunicationDevices.ClientWCF
 
         private async void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            //Сработка в 10:00:00
-            if (DateTime.Now.Hour == 10 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= PeriodTimer)
-            {
-                ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
-            }
+            ////Сработка в 10:00:00
+            //if (DateTime.Now.Hour == 10 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= PeriodTimer)
+            //{
+            //    ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
+            //}
 
 
-            //Сработка в 20:00:00
-            if (DateTime.Now.Hour == 20 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= PeriodTimer)
-            {
-                ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
-            }
+            ////Сработка в 20:00:00
+            //if (DateTime.Now.Hour == 20 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= PeriodTimer)
+            //{
+            //    ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
+            //}
 
 
-            //Сработка в 22:00:00
-            //(DateTime.Now.Hour == 22 && DateTime.Now.Minute == 00 && DateTime.Now.Second <= PeriodTimer)
-            if (DateTime.Now.Minute == 10 && DateTime.Now.Second <= PeriodTimer)
-            {
-                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
-            }
+            ////Сработка в 22:00:00
+            ////(DateTime.Now.Hour == 22 && DateTime.Now.Minute == 00 && DateTime.Now.Second <= PeriodTimer)
+            //if (DateTime.Now.Minute == 10 && DateTime.Now.Second <= PeriodTimer)
+            //{
+            //    ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
+            //}
 
 
-            //ВРЕМЕННОЙ УРОВЕНЬ 40сек (период таймера)
-            //ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);       //DEBUG
-            ManualSetDiagnostic(ExchangeModel.NameRailwayStation.Key);
+            ////ВРЕМЕННОЙ УРОВЕНЬ 40сек (период таймера)
+            ////ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation);       //DEBUG
+            //ManualSetDiagnostic(ExchangeModel.NameRailwayStation.Key);
 
 
-            //ВРЕМЕННОЙ УРОВЕНЬ 2мин
-            if (DateTime.Now.Subtract(_minutLevel2).Minutes >= 2)
-            {
-                _minutLevel2 = DateTime.Now;
+            ////ВРЕМЕННОЙ УРОВЕНЬ 2мин
+            //if (DateTime.Now.Subtract(_minutLevel2).Minutes >= 2)
+            //{
+            //    _minutLevel2 = DateTime.Now;
 
-                ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);//DEBUG
-
-
-                //считываем инфо.
-                // ManualLoadingInfoSh(ExchangeModel.NameRailwayStation);
-            }
+            //    ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);//DEBUG
 
 
-            //ВРЕМЕННОЙ УРОВЕНЬ 5мин (повторные попытки считывания расписания если при считывании в основное время произошла ошибка)
-            if (DateTime.Now.Subtract(_minutLevel5).Minutes >= 5)
-            {
-                _minutLevel5 = DateTime.Now;
+            //    //считываем инфо.
+            //    // ManualLoadingInfoSh(ExchangeModel.NameRailwayStation);
+            //}
 
-                //Повторная попытка считать регулярное расписание
-                if (!_isSuccessGetRegSh)
-                {
-                    ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
-                }
 
-                //Повторная попытка считать оперативаное распсисание
-                if (!_isSuccessGetOperSh)
-                {
-                    ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
-                }
-            }
+            ////ВРЕМЕННОЙ УРОВЕНЬ 5мин (повторные попытки считывания расписания если при считывании в основное время произошла ошибка)
+            //if (DateTime.Now.Subtract(_minutLevel5).Minutes >= 5)
+            //{
+            //    _minutLevel5 = DateTime.Now;
+
+            //    //Повторная попытка считать регулярное расписание
+            //    if (!_isSuccessGetRegSh)
+            //    {
+            //        ManualLoadingRegulatorySh(ExchangeModel.NameRailwayStation.Key);
+            //    }
+
+            //    //Повторная попытка считать оперативаное распсисание
+            //    if (!_isSuccessGetOperSh)
+            //    {
+            //        ManualLoadingOperativeSh(ExchangeModel.NameRailwayStation.Key);
+            //    }
+            //}
         }
 
 

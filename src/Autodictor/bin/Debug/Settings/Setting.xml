@@ -3,6 +3,7 @@
   <CisSetting>
     <Name>Ленинградский</Name>
 	<NameEng>ЛенинградскийEng</NameEng>
+	<NameCh>ЛенинградскийCh</NameCh>
     <EndpointAddress>http://127.0.0.1:50000/Service/Cis</EndpointAddress>
   </CisSetting>
 

@@ -189,12 +189,12 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("TrainType", trainType),
                     new XElement("DirectionStation", uit.DirectionStation),
 
-                    new XElement("StartStation", uit.StationDeparture1?.NameRu ?? string.Empty),
-                    new XElement("EndStation", uit.StationArrival1?.NameRu ?? string.Empty),
-                    new XElement("StartStationENG", uit.StationDeparture1?.NameEng ?? string.Empty),
-                    new XElement("EndStationENG", uit.StationArrival1?.NameEng ?? string.Empty),
-                    new XElement("StartStationCH", uit.StationDeparture1?.NameCh ?? string.Empty),
-                    new XElement("EndStationCH", uit.StationArrival1?.NameCh ?? string.Empty),
+                    new XElement("StartStation", uit.StationDeparture?.NameRu ?? string.Empty),
+                    new XElement("EndStation", uit.StationArrival?.NameRu ?? string.Empty),
+                    new XElement("StartStationENG", uit.StationDeparture?.NameEng ?? string.Empty),
+                    new XElement("EndStationENG", uit.StationArrival?.NameEng ?? string.Empty),
+                    new XElement("StartStationCH", uit.StationDeparture?.NameCh ?? string.Empty),
+                    new XElement("EndStationCH", uit.StationArrival?.NameCh ?? string.Empty),
 
                     new XElement("InDateTime", timeArrival),                   //время приб
                     new XElement("HereDateTime", stopTime),                    //время стоянки
@@ -216,8 +216,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocSheduleWindow.info";
-            xDoc.Save(path);
+            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocSheduleWindow.info";
+            //xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();
