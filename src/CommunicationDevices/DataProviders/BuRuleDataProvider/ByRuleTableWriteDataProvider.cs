@@ -22,7 +22,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         public int CountSetDataByte { get; }
 
         public UniversalInputType InputData { get; set; }
-        public byte OutputData { get; }
+        public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; }
 
@@ -165,7 +165,14 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
             }
         }
 
+
         public Stream GetStream()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public bool SetStream(Stream stream)
         {
             throw new NotImplementedException();
         }

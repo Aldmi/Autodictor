@@ -179,8 +179,12 @@ namespace Communication.Http
                 var responseBody =  TakeData(response);
                 if (responseBody != null)
                 {
-                    var bytes = Encoding.UTF8.GetBytes(responseBody);
-                     isValidOutDate= dataProvider.SetDataByte(bytes);
+                    //var bytes = Encoding.UTF8.GetBytes(responseBody);
+                    // isValidOutDate= dataProvider.SetDataByte(bytes);
+
+                    var stream = responseBody.GenerateStreamFromString();
+                    isValidOutDate = dataProvider.SetStream(stream);
+
                     _countTryingTakeData = 0;
                 }
                 else //не смогли получить ответ ОК от сервера.
@@ -260,7 +264,7 @@ namespace Communication.Http
         {
             string mimeName = String.Empty;
             string mimeFileName = String.Empty;
-            if (Headers.ContainsKey("Content-Type"))
+            if (Headers.ContainsKey("Content-Type"))  // ??? Content-Disposition
             {
                 if (Regex.Match(Headers["Content-Disposition"], "name=\"[^\"]*\"").Success)
                 {

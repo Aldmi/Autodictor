@@ -14,6 +14,7 @@ using Communication.Settings;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
+using CommunicationDevices.Behavior.BindingBehavior.ToGetData;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.Behavior.BindingBehavior.ToStatic;
 using CommunicationDevices.Behavior.ExhangeBehavior;
@@ -76,6 +77,7 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2StaticFormBehavior> Binding2StaticFormBehaviors { get; set; } = new List<IBinding2StaticFormBehavior>();
         public ICollection<IBinding2ChangesBehavior> Binding2ChangesSchedules { get; set; } = new List<IBinding2ChangesBehavior>();
         public ICollection<IBinding2ChangesEventBehavior> Binding2ChangesEvent { get; set; } = new List<IBinding2ChangesEventBehavior>();
+        public ICollection<IBinding2GetData> Binding2GetData{ get; set; } = new List<IBinding2GetData>();
 
         private string _errorString;
         public string ErrorString
@@ -886,6 +888,7 @@ namespace CommunicationDevices.Model
                 switch (xmlDeviceHttp.Name)
                 {
                     case "HttpTable":
+                    case "HttpApkDk":
                         maxCountFaildRespowne = 3;
 
                         if (providerType?.XmlType != null)
@@ -911,6 +914,10 @@ namespace CommunicationDevices.Model
 
                                 case XmlType.XmlChange:
                                     provider = new StreamWriteDataProvider(new XmlChangesFormatProvider(providerType.DateTimeFormat));
+                                    break;
+
+                                case XmlType.XmlApkDkMoscow:
+                                    provider = new StreamWriteDataProvider(new XmlApkDkMoscowFormatProvider(providerType.Login, providerType.Password, providerType.EcpCode));
                                     break;
                             }
 
@@ -960,6 +967,13 @@ namespace CommunicationDevices.Model
                             Binding2ChangesEvent.Add(new Binding2ChangesEventBehavior(DeviceTables.Last()));
                         }
 
+                        //создание поведения привязка ус-ва к серверу получения информации
+                        if (binding.BindingType == BindingType.ToGetData)
+                        {
+                            Binding2GetData.Add(new Binding2GetData(DeviceTables.Last()));
+                            DeviceTables.Last().AddCycleFunc();
+                        }
+
                         break;
 
 
@@ -968,7 +982,6 @@ namespace CommunicationDevices.Model
                         ErrorString = $" Устройсвто с именем {xmlDeviceHttp.Name} не найденно";
                         Log.log.Error(ErrorString);
                         break;
-
                 }
             }
 
@@ -1021,8 +1034,6 @@ namespace CommunicationDevices.Model
 
 
         #endregion
-
-
 
 
 

@@ -18,7 +18,7 @@ namespace CommunicationDevices.DataProviders.VidorDataProvider
         public int CountSetDataByte { get; } = 8;
 
         public UniversalInputType InputData { get; set; }
-        public byte OutputData { get; }
+        public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; private set; }
 
@@ -274,6 +274,11 @@ namespace CommunicationDevices.DataProviders.VidorDataProvider
             throw new NotImplementedException();
         }
 
+
+        public bool SetStream(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
 
 
         /// <summary>

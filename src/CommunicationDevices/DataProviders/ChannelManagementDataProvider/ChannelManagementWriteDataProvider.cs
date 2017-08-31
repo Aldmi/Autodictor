@@ -19,7 +19,7 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
         public int CountSetDataByte { get; } = 8;
 
         public UniversalInputType InputData { get; set; }
-        public byte OutputData { get; }
+        public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; private set; }
 
@@ -124,6 +124,11 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
             throw new NotImplementedException();
         }
 
+
+        public bool SetStream(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool SetDataByte(byte[] data)
         {

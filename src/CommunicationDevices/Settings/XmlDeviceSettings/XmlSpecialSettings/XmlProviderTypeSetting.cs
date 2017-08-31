@@ -1,10 +1,12 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange }
+    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow }
 
     public enum DateTimeFormat
     {
@@ -21,6 +23,10 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
         public XmlType? XmlType { get; set; }
         public DateTimeFormat DateTimeFormat { get; set; }
+
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public int EcpCode { get; set; }
 
         #endregion
 
@@ -65,6 +71,24 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             if (providerName.ToLower().Contains("xml_change"))
             {
                 XmlType = XmlSpecialSettings.XmlType.XmlChange;
+            }
+            else
+            if (providerName.ToLower().Contains("xml_apkdkmoscow"))
+            {
+                XmlType = XmlSpecialSettings.XmlType.XmlApkDkMoscow;
+                //парсим информацию в скоюках.
+                var regex = Regex.Match(providerName, @"\((.*?)\)"); //@"\((.*?)\)"
+                string value = regex.Groups[1].Value;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var agruments = value.Split(',');
+                    if (agruments.Length == 3)
+                    {
+                        Login = agruments[0];
+                        Password = agruments[1];
+                        EcpCode = int.Parse(agruments[2]);
+                    }
+                }
             }
 
 

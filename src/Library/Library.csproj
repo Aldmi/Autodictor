@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Convertion\DateTimeConvertion.cs" />
     <Compile Include="Convertion\NumericConvertion.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Library\BlockClick.cs" />
     <Compile Include="Async\AsyncHelp.cs" />

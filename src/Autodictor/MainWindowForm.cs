@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
+using CommunicationDevices.Behavior.BindingBehavior.ToGetData;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
@@ -145,6 +146,7 @@ namespace MainExample
         public static IEnumerable<IBinding2GeneralSchedule> Binding2GeneralScheduleBehaviors { get; set; }
         public static IEnumerable<IBinding2ChangesBehavior> Binding2ChangesBehaviors { get; set; }
         public static IEnumerable<IBinding2ChangesEventBehavior> Binding2ChangesEventBehaviors { get; set; }
+        public static IEnumerable<IBinding2GetData> Binding2GetDataBehaviors { get; set; }
         public Device SoundChanelManagment { get; }
 
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
@@ -171,7 +173,7 @@ namespace MainExample
 
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors, IEnumerable<IBinding2ChangesEventBehavior> binding2ChangesEventBehaviors, Device soundChanelManagment)
+        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors, IEnumerable<IBinding2ChangesEventBehavior> binding2ChangesEventBehaviors, IEnumerable<IBinding2GetData> binding2GetDataBehaviors, Device soundChanelManagment)
         {
             if (myMainForm != null)
                 return;
@@ -188,6 +190,7 @@ namespace MainExample
             Binding2GeneralScheduleBehaviors = binding2GeneralScheduleBehaviors;
             Binding2ChangesBehaviors = binding2ChangesBehaviors;
             Binding2ChangesEventBehaviors = binding2ChangesEventBehaviors;
+            Binding2GetDataBehaviors = binding2GetDataBehaviors;
             SoundChanelManagment = soundChanelManagment;
 
             MainForm.Пауза.Click += new System.EventHandler(this.btnПауза_Click);
@@ -246,6 +249,24 @@ namespace MainExample
 
             MainForm.Включить.BackColor = Color.Red;
             Program.ЗаписьЛога("Системное сообщение", "Программный комплекс включен", Program.AuthenticationService.CurrentUser);
+        }
+
+
+        /// <summary>
+        /// Загрузка формы
+        /// </summary>
+        protected override void OnLoad(EventArgs e)
+        {
+            foreach (var beh in Binding2GetDataBehaviors)
+            {
+                //инициализируем таблицу, для прохождения условия в функции отправки "AddOneTimeSendData".
+                var uit = new UniversalInputType
+                {
+                  TableData = new List<UniversalInputType> { new UniversalInputType() }
+                };
+                beh.SendMessage(uit);
+            }
+            base.OnLoad(e);
         }
 
 

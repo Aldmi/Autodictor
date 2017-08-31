@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using Communication.Annotations;
 using Communication.Interfaces;
+using Library.Extensions;
 
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider
@@ -21,7 +22,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
         public int CountSetDataByte { get; }
 
         public UniversalInputType InputData { get; set; }
-        public byte OutputData { get; }
+        public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; private set; }
 
@@ -63,7 +64,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
                 {
                     var xmlVersion = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
                     var resultXmlDoc = xmlVersion + xmlRequest;
-                    return  GenerateStreamFromString(resultXmlDoc);
+                    return resultXmlDoc.GenerateStreamFromString();
                 }
             }
             catch (Exception ex)
@@ -76,14 +77,12 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
 
 
-        public Stream GenerateStreamFromString(string s)
+        public bool SetStream(Stream stream)
         {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
+            //сменить тип OutputData на Stream и генерировать событие GetStreamEvent куда передавать Stream.
+            OutputData = 10; //сменить тип OutputData на Stream
+
+            throw new NotImplementedException();
         }
 
 
