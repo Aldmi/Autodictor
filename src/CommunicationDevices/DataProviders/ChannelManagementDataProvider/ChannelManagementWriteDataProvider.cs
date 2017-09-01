@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using Communication.Annotations;
 using Communication.Interfaces;
@@ -22,6 +23,7 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
         public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; private set; }
+        public Subject<byte> OutputDataChangeRx { get; } = null;
 
         public IEnumerable<bool> ChanelSwitches { get; }
 

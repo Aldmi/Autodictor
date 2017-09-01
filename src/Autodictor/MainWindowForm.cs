@@ -265,8 +265,31 @@ namespace MainExample
                   TableData = new List<UniversalInputType> { new UniversalInputType() }
                 };
                 beh.SendMessage(uit);
+
+                //Подписка на событие получения данных
+                if (beh.OutputDataChangeRx != null)
+                {
+                    switch (beh.GetDeviceName)
+                    {
+                        case "HttpApkDk":
+                            beh.OutputDataChangeRx.Subscribe(GetOutputDataApkDk);
+                            break;
+                    }
+                }
+
             }
             base.OnLoad(e);
+        }
+
+
+        /// <summary>
+        /// Обравботчик события получения потока данных от сервера апк-дк
+        /// </summary>
+        private void GetOutputDataApkDk(Stream stream)
+        {
+            StreamReader reader = new StreamReader(stream);
+            string text = reader.ReadToEnd();
+            //преобразовать к XDocument и распарсить.
         }
 
 

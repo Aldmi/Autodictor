@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using CommunicationDevices.DataProviders;
@@ -29,5 +30,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior
         ISubject<IExhangeBehavior> IsDataExchangeSuccessChange { get; }
         ISubject<IExhangeBehavior> IsConnectChange { get; }
         ISubject<IExhangeBehavior> LastSendDataChange { get; }
+
+        Subject<Stream> OutputDataChangeRx { get; set; }                        //События изменения (получения) выходных данных
     }
 }

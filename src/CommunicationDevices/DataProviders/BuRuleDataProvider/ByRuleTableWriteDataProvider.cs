@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,6 +26,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; }
+        public Subject<byte> OutputDataChangeRx { get; } = null;
 
         public RequestRule RequestRule { get; set; }
         public ResponseRule ResponseRule { get; set; }

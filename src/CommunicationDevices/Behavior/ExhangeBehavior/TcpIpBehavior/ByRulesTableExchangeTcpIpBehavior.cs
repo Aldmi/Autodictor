@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
@@ -17,6 +19,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
         public MainRule MainRule { get; }
         public List<string> InternalAddressCollection { get; set; }      //адресс уст-ва нужный для протокола обмена.
         public int InternalPeriodTimer { get; set; }                     //Период опроса между устройствами подключенными к 1 TCP/Ip соединению.
+
+        public override Subject<Stream> OutputDataChangeRx { get; set; } = null;
 
         #endregion
 
@@ -156,5 +160,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
             _sendLock = false;
         }
+
+
     }
 }

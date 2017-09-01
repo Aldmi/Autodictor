@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -26,6 +27,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
         public byte OutputData { get; set; }
 
         public bool IsOutDataValid { get; private set; }
+        public Subject<byte> OutputDataChangeRx { get; }
 
         public RequestRule RequestRule { get; set; }
         public ResponseRule ResponseRule { get; set; }

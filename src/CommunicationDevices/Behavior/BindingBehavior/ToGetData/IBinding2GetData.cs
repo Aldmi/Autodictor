@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using CommunicationDevices.DataProviders;
@@ -15,5 +17,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGetData
         DeviceSetting GetDeviceSetting { get; }
 
         void SendMessage(UniversalInputType inData);
+
+        Subject<Stream> OutputDataChangeRx { get; }
     }
 }

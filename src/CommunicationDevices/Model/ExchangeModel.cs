@@ -893,7 +893,7 @@ namespace CommunicationDevices.Model
 
                         if (providerType?.XmlType != null)
                         {
-                            IExchangeDataProvider<UniversalInputType, byte> provider = null;
+                            IExchangeDataProvider<UniversalInputType, Stream> provider = null;
                             switch (providerType.XmlType.Value)
                             {
                                 case XmlType.XmlTlist:

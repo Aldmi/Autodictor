@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.VidorDataProvider;
@@ -26,6 +28,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
         public bool IsSyncTime { get; set; }
         public int InternalPeriodTimer { get; set; }                              //Период опроса в мСек.
+
+        public override Subject<Stream> OutputDataChangeRx { get; set; }
 
         #endregion
 
@@ -98,5 +102,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
 
             _sendLock = false;
         }
+
+
     }
 }

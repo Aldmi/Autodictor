@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
+using System.Reactive.Subjects;
 using Castle.Core.Internal;
 using CommunicationDevices.Behavior;
 using CommunicationDevices.Behavior.ExhangeBehavior;
@@ -24,7 +26,9 @@ namespace CommunicationDevices.Devices
         public BindingType BindingType { get; private set; }
         public IExhangeBehavior ExhBehavior { get; }
 
-        public DeviceSetting Setting { get; set; }       
+        public DeviceSetting Setting { get; set; }
+
+        public Subject<Stream> GetOutputDataChangeRx => ExhBehavior.OutputDataChangeRx; 
 
         #endregion
 

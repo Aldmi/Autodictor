@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -156,6 +157,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
         public abstract void AddOneTimeSendData(UniversalInputType inData);
+
+        public abstract Subject<Stream> OutputDataChangeRx { get; set; }
 
 
 

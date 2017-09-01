@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -14,7 +15,7 @@ using Library.Extensions;
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider
 {
-    public class StreamWriteDataProvider : IExchangeDataProvider<UniversalInputType, byte>
+    public class StreamWriteDataProvider : IExchangeDataProvider<UniversalInputType, Stream>
     {
         #region Prop
 
@@ -22,11 +23,13 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
         public int CountSetDataByte { get; }
 
         public UniversalInputType InputData { get; set; }
-        public byte OutputData { get; set; }
+        public Stream OutputData { get; set; }
 
         public bool IsOutDataValid { get; private set; }
 
         public IFormatProvider FormatProvider { get; set; }
+
+        public Subject<Stream> OutputDataChangeRx { get; } = new Subject<Stream> ();
 
         #endregion
 
@@ -79,22 +82,16 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
         public bool SetStream(Stream stream)
         {
-            //сменить тип OutputData на Stream и генерировать событие GetStreamEvent куда передавать Stream.
-            OutputData = 10; //сменить тип OutputData на Stream
+            OutputData = stream;
+            OutputDataChangeRx.OnNext(stream);
 
-            throw new NotImplementedException();
+            return (stream != null);
         }
 
 
 
         public bool SetDataByte(byte[] data)
         {
-            //TODO: преобразовать массив байт обратно в строку и проверить ответ
-            if (data != null && data.Length == 15)
-            {
-                return (data[0] == 78) && (data[1] == 85);
-            }
-
             return false;
         }
 
