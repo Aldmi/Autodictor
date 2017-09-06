@@ -36,6 +36,14 @@ namespace MainExample
         public bool EngСообщНаЛасточку;
         public bool EngСообщНаРЭКС;
 
+        public int TimeZoneНаПассажирскийПоезд;
+        public int TimeZoneНаСкорыйПоезд;
+        public int TimeZoneНаСкоростнойПоезд;
+        public int TimeZoneНаПригородныйЭлектропоезд;
+        public int TimeZoneНаФирменный;
+        public int TimeZoneНаЛасточку;
+        public int TimeZoneНаРЭКС;
+
         public bool РазрешениеДобавленияЗаблокированныхПоездовВСписок;
         public bool РазрешениеАвтообновленияРасписания;
         public DateTime ВремяАвтообновленияРасписания;
@@ -63,8 +71,24 @@ namespace MainExample
 
         public int ВыборУровняГромкости()
         {
-            if (DateTime.Now >= ВремяНочнойПериодНачало &&
-                DateTime.Now <= ВремяНочнойПериодКонец)
+            //корректировка вермени на текущую дату
+           var startTime = DateTime.Now.Date.Add(ВремяНочнойПериодНачало.TimeOfDay);
+           var endTime = DateTime.Now.Date.Add(ВремяНочнойПериодКонец.TimeOfDay);
+            if (endTime < startTime)
+            {
+                if (DateTime.Now.TimeOfDay > TimeSpan.Parse("00:00:00") &&
+                    DateTime.Now.TimeOfDay < TimeSpan.Parse("12:00:00"))
+                {
+                    startTime = startTime.AddDays(-1);
+                }
+                else
+                {
+                    endTime = endTime.AddDays(1);
+                }
+            }
+
+            if (DateTime.Now >= startTime &&
+                DateTime.Now <= endTime)
             {
                 return УровеньГромкостиНочь;
             }
@@ -256,6 +280,17 @@ namespace MainExample
         public static void ЗагрузитьНастройки()
         {
             Program.Настройки.НастройкиЦветов = new Color[] { Color.Black, Color.LightGray, Color.Black, Color.LightBlue, Color.Black, Color.White, Color.Black, Color.Yellow, Color.Black, Color.LightGreen, Color.Black, Color.YellowGreen, Color.Black, Color.Orange, Color.Black, Color.DarkSalmon, Color.Black, Color.Black };
+
+            //DEBUG--------------
+            Program.Настройки.TimeZoneНаПассажирскийПоезд = 0*60;
+            Program.Настройки.TimeZoneНаЛасточку = 0* 60;
+            Program.Настройки.TimeZoneНаПригородныйЭлектропоезд = 0 * 60;
+            Program.Настройки.TimeZoneНаРЭКС = 0 * 60;
+            Program.Настройки.TimeZoneНаСкоростнойПоезд = 0 * 60;
+            Program.Настройки.TimeZoneНаСкорыйПоезд = 0 * 60;
+            Program.Настройки.TimeZoneНаФирменный = 0 * 60;
+            //DEBUG--------------
+
 
             try
             {

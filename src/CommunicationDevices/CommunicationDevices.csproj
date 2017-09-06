@@ -149,6 +149,8 @@
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UitPreprocessingOutputService.cs" />
+    <Compile Include="Services\UitPreprocessingTimezone.cs" />
     <Compile Include="Settings\Conditions.cs" />
     <Compile Include="Settings\XmlCisSettings\XmlCisSetting.cs" />
     <Compile Include="Settings\XmlDeviceSettings\XmlSpecialSettings\XmlExchangeRule.cs" />
