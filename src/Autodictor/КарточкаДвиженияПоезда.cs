@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using Domain.Entitys;
 using MainExample.Entites;
 using MainExample.Services;
-using MainExample.Services.FactoryServices;
 
 
 namespace MainExample
@@ -707,12 +706,6 @@ namespace MainExample
 
         public void ОтобразитьШаблонОповещенияНаRichTb(string шаблонОповещения, RichTextBox rTb)
         {
-            //сервис с препроцессором корректировки времени по часовому поясу
-            var record = _record;
-            var soundRecordPreprocessingService = PreprocessingOutputFactory.CreateSoundRecordPreprocessingService();
-            soundRecordPreprocessingService.StartPreprocessing(ref record);
-
-
             rTb.Text = "";
             string Text;
 
@@ -730,7 +723,7 @@ namespace MainExample
                     case "НА НОМЕР ПУТЬ":
                     case "НА НОМЕРом ПУТИ":
                     case "С НОМЕРого ПУТИ":
-                        путь = НомераПутей.FirstOrDefault(p => p.Name == record.НомерПути);
+                        путь = НомераПутей.FirstOrDefault(p => p.Name == _record.НомерПути);
                         if(путь == null)
                             break;
                         if (шаблон == "НА НОМЕР ПУТЬ") текстПодстановки =  путь.НаНомерПуть;
@@ -744,7 +737,7 @@ namespace MainExample
                         break;
 
                     case "ПУТЬ ДОПОЛНЕНИЕ":
-                        путь = НомераПутей.FirstOrDefault(p => p.Name == record.НомерПути);
+                        путь = НомераПутей.FirstOrDefault(p => p.Name == _record.НомерПути);
                         текстПодстановки = путь?.Addition ?? string.Empty;
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = текстПодстановки;
@@ -754,35 +747,35 @@ namespace MainExample
 
                     case "СТ.ОТПРАВЛЕНИЯ":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.СтанцияОтправления;
+                        Text = _record.СтанцияОтправления;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
 
                     case "НОМЕР ПОЕЗДА":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.НомерПоезда;
+                        Text = _record.НомерПоезда;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
 
                     case "НОМЕР ПОЕЗДА ТРАНЗИТ ОТПР":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.НомерПоезда2;
+                        Text = _record.НомерПоезда2;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
 
                     case "ДОПОЛНЕНИЕ":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.Дополнение;
+                        Text = _record.Дополнение;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
 
                     case "СТ.ПРИБЫТИЯ":
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.СтанцияНазначения;
+                        Text = _record.СтанцияНазначения;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
@@ -790,7 +783,7 @@ namespace MainExample
                     case "ВРЕМЯ ПРИБЫТИЯ":
                         rTb.Text += "Время прибытия: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.ВремяПрибытия.ToString("HH:mm");
+                        Text = _record.ВремяПрибытия.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
@@ -798,8 +791,8 @@ namespace MainExample
                     case "ВРЕМЯ СТОЯНКИ":
                         rTb.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.ВремяСтоянки.HasValue ?
-                            (record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + record.ВремяСтоянки.Value.Minutes.ToString("D2"))
+                        Text = _record.ВремяСтоянки.HasValue ?
+                            (_record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + _record.ВремяСтоянки.Value.Minutes.ToString("D2"))
                             : String.Empty;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
@@ -808,7 +801,7 @@ namespace MainExample
                     case "ВРЕМЯ ОТПРАВЛЕНИЯ":
                         rTb.Text += "Время отправления: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.ВремяОтправления.ToString("HH:mm");
+                        Text = _record.ВремяОтправления.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
@@ -816,7 +809,7 @@ namespace MainExample
                     case "ВРЕМЯ ЗАДЕРЖКИ":
                         rTb.Text += "Время задержки: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = (record.ВремяЗадержки == null) ? "00:00" : record.ВремяЗадержки.Value.ToString("HH:mm");
+                        Text = (_record.ВремяЗадержки == null) ? "00:00" : this._record.ВремяЗадержки.Value.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
@@ -824,17 +817,17 @@ namespace MainExample
                     case "ОЖИДАЕМОЕ ВРЕМЯ":
                         rTb.Text += "Ожидаемое время: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.ОжидаемоеВремя.ToString("HH:mm");
+                        Text = _record.ОжидаемоеВремя.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
 
 
                     case "НУМЕРАЦИЯ СОСТАВА":
-                        if ((record.НумерацияПоезда > 0) && (record.НумерацияПоезда <= 2))
+                        if ((_record.НумерацияПоезда > 0) && (_record.НумерацияПоезда <= 2))
                         {
                             УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                            Text = НазваниеФайловНумерацииПутей[record.НумерацияПоезда];
+                            Text = НазваниеФайловНумерацииПутей[_record.НумерацияПоезда];
                             УказательВыделенныхФрагментов.Add(Text.Length);
                             rTb.AppendText(Text + " ");
                         }
@@ -842,7 +835,7 @@ namespace MainExample
 
 
                     case "СТАНЦИИ":
-                        if ((record.ТипПоезда == ТипПоезда.Пригородный) || (record.ТипПоезда == ТипПоезда.Ласточка) || (record.ТипПоезда == ТипПоезда.РЭКС))
+                        if ((_record.ТипПоезда == ТипПоезда.Пригородный) || (_record.ТипПоезда == ТипПоезда.Ласточка) || (_record.ТипПоезда == ТипПоезда.РЭКС))
                         {
                             if (rB_СоВсемиОстановками.Checked == true)
                             {

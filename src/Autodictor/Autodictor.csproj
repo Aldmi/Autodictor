@@ -157,8 +157,6 @@
     <Compile Include="Entites\SoundRecordChanges.cs" />
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
-    <Compile Include="Services\FactoryServices\PreprocessingOutputFactory.cs" />
-    <Compile Include="Services\SoundRecordPreprocessingService.cs" />
     <Compile Include="TrainTableGrid.cs">
       <SubType>Form</SubType>
     </Compile>

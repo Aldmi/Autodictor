@@ -15,7 +15,6 @@ using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 using CommunicationDevices.Model;
-using CommunicationDevices.Services;
 using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
 using Domain.Entitys.Authentication;
@@ -26,9 +25,7 @@ using MainExample.Infrastructure;
 using MainExample.Mappers;
 using MainExample.Services;
 using Library.Logs;
-using MainExample.Services.FactoryServices;
 using MoreLinq;
-using ISoundRecordPreprocessing = MainExample.Services.ISoundRecordPreprocessing;
 
 
 namespace MainExample
@@ -134,11 +131,6 @@ namespace MainExample
         public static List<SoundRecordChanges> SoundRecordChanges = new List<SoundRecordChanges>();  //Изменения на тек.сутки + изменения на пред. сутки для поездов ходящих в тек. сутки
 
         public TaskManagerService TaskManager = new TaskManagerService();
-
-        //public static SoundRecordPreprocessingService SoundRecordPreprocessingService { get; set; } = new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>
-        //{
-        //    new SoundRecordPreprocessingTimezone(-3*60)
-        //});
 
 
         private bool ОбновлениеСписка = false;
@@ -1746,8 +1738,6 @@ namespace MainExample
             {
                 _tickCounter = 0;
 
-                var uitPreprocessingService = PreprocessingOutputFactory.CreateUitPreprocessingOutputService();
-
                 if (Binding2GeneralScheduleBehaviors != null && Binding2GeneralScheduleBehaviors.Any())
                 {
                     var binding2MainWindow = Binding2GeneralScheduleBehaviors
@@ -1772,11 +1762,7 @@ namespace MainExample
                                     .Select(Mapper.MapTrainTableRecord2UniversalInputType)
                                     .ToList();
 
-                                table.ForEach(t =>
-                                {
-                                    uitPreprocessingService.StartPreprocessing(t);
-                                    t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
-                                });
+                                table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
@@ -1796,12 +1782,7 @@ namespace MainExample
                                     .Select(Mapper.MapTrainTableRecord2UniversalInputType)
                                     .ToList();
 
-                                table.ForEach(t =>
-                                {
-                                    uitPreprocessingService.StartPreprocessing(t);
-                                    t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
-                                });
-
+                                table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
@@ -1820,11 +1801,7 @@ namespace MainExample
                                     .Select(t => Mapper.MapSoundRecord2UniveralInputType(t.Value, beh.GetDeviceSetting.PathPermission, false))
                                     .ToList();
 
-                                table.ForEach(t =>
-                                    {
-                                        uitPreprocessingService.StartPreprocessing(t);
-                                        t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
-                                    });
+                                table.ForEach(t => t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}");
                                 var inData = new UniversalInputType {TableData = table};
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
@@ -2023,6 +2000,8 @@ namespace MainExample
         }
 
 
+
+
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
         private void ОбработкаЗвуковогоПотка()
         {
@@ -2142,8 +2121,6 @@ namespace MainExample
                 if (beh != null)
                 {
                     var inData = Mapper.MapSoundRecord2UniveralInputType(data, beh.GetDeviceSetting.PathPermission, true);
-                    var uitPreprocessingService = PreprocessingOutputFactory.CreateUitPreprocessingOutputService();
-                    uitPreprocessingService.StartPreprocessing(inData);
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
                     beh.SendMessage4Path(inData, data.НомерПоезда, beh.CheckContrains);
@@ -2620,7 +2597,7 @@ namespace MainExample
 
 
 
-        public static void ВоспроизвестиШаблонОповещения(string названиеСообщения, SoundRecord record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
+        public static void ВоспроизвестиШаблонОповещения(string названиеСообщения, SoundRecord Record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
         {
             string logMessage = "";
 
@@ -2641,22 +2618,17 @@ namespace MainExample
                                                                                         "08 часов", "09 часов", "10 часов", "11 часов", "12 часов", "13 часов", "14 часов", "15 часов",
                                                                                         "16 часов", "17 часов", "18 часов", "19 часов", "20 часов", "21 час", "22 часа", "23 часа" };
 
-            string[] названиеФайловНумерацииПутей = new string[] { "", "Нумерация с головы", "Нумерация с хвоста" };
-
-
-            //сервис с препроцессором корректировки времени по часовому поясу.
-            var soundRecordPreprocessingService =  PreprocessingOutputFactory.CreateSoundRecordPreprocessingService();
-            soundRecordPreprocessingService.StartPreprocessing(ref record);
+            string[] НазваниеФайловНумерацииПутей = new string[] { "", "Нумерация с головы", "Нумерация с хвоста" };
 
 
             //удалить англ. язык, если запрешенно произношения на аннглийском для данного типа поезда.
-            if (!((record.ТипПоезда == ТипПоезда.Пассажирский && Program.Настройки.EngСообщНаПассажирскийПоезд) ||
-                (record.ТипПоезда == ТипПоезда.Пригородный && Program.Настройки.EngСообщНаПригородныйЭлектропоезд) ||
-                (record.ТипПоезда == ТипПоезда.Скоростной && Program.Настройки.EngСообщНаСкоростнойПоезд) ||
-                (record.ТипПоезда == ТипПоезда.Скорый && Program.Настройки.EngСообщНаСкорыйПоезд) ||
-                (record.ТипПоезда == ТипПоезда.Ласточка && Program.Настройки.EngСообщНаЛасточку) ||
-                (record.ТипПоезда == ТипПоезда.Фирменный && Program.Настройки.EngСообщНаФирменный) ||
-                (record.ТипПоезда == ТипПоезда.РЭКС && Program.Настройки.EngСообщНаРЭКС)))
+            if (!((Record.ТипПоезда == ТипПоезда.Пассажирский && Program.Настройки.EngСообщНаПассажирскийПоезд) ||
+                (Record.ТипПоезда == ТипПоезда.Пригородный && Program.Настройки.EngСообщНаПригородныйЭлектропоезд) ||
+                (Record.ТипПоезда == ТипПоезда.Скоростной && Program.Настройки.EngСообщНаСкоростнойПоезд) ||
+                (Record.ТипПоезда == ТипПоезда.Скорый && Program.Настройки.EngСообщНаСкорыйПоезд) ||
+                (Record.ТипПоезда == ТипПоезда.Ласточка && Program.Настройки.EngСообщНаЛасточку) ||
+                (Record.ТипПоезда == ТипПоезда.Фирменный && Program.Настройки.EngСообщНаФирменный) ||
+                (Record.ТипПоезда == ТипПоезда.РЭКС && Program.Настройки.EngСообщНаРЭКС)))
             {
                 формируемоеСообщение.ЯзыкиОповещения.Remove(NotificationLanguage.Eng);
             }
@@ -2664,7 +2636,7 @@ namespace MainExample
             var воспроизводимыеСообщения = new List<ВоспроизводимоеСообщение>();
 
             var номераПутей = Program.PathWaysRepository.List().ToList();
-            var путь = номераПутей.FirstOrDefault(p => p.Name == record.НомерПути);
+            var путь = номераПутей.FirstOrDefault(p => p.Name == Record.НомерПути);
 
             string[] элементыШаблона = формируемоеСообщение.Шаблон.Split('|');
             foreach (var язык in формируемоеСообщение.ЯзыкиОповещения)
@@ -2716,7 +2688,7 @@ namespace MainExample
                             break;
 
                         case "СТ.ОТПРАВЛЕНИЯ":
-                            text = record.СтанцияОтправления;
+                            text = Record.СтанцияОтправления;
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
@@ -2731,7 +2703,7 @@ namespace MainExample
 
 
                         case "НОМЕР ПОЕЗДА":
-                            text = record.НомерПоезда;
+                            text = Record.НомерПоезда;
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
@@ -2746,9 +2718,9 @@ namespace MainExample
 
 
                         case "НОМЕР ПОЕЗДА ТРАНЗИТ ОТПР":
-                            if (!string.IsNullOrEmpty(record.НомерПоезда2))
+                            if (!string.IsNullOrEmpty(Record.НомерПоезда2))
                             {
-                                text = record.НомерПоезда2;
+                                text = Record.НомерПоезда2;
                                 logMessage += text + " ";
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                 {
@@ -2764,9 +2736,9 @@ namespace MainExample
 
 
                         case "ДОПОЛНЕНИЕ":
-                            if (record.ИспользоватьДополнение["звук"])
+                            if (Record.ИспользоватьДополнение["звук"])
                             {
-                                text = record.Дополнение;
+                                text = Record.Дополнение;
                                 logMessage += text + " ";
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                 {
@@ -2782,7 +2754,7 @@ namespace MainExample
 
 
                         case "СТ.ПРИБЫТИЯ":
-                            text = record.СтанцияНазначения;
+                            text = Record.СтанцияНазначения;
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
@@ -2798,11 +2770,11 @@ namespace MainExample
 
                         case "ВРЕМЯ ПРИБЫТИЯ":
                             logMessage += "Время прибытия: ";
-                            text = record.ВремяПрибытия.ToString("HH:mm");
+                            text = Record.ВремяПрибытия.ToString("HH:mm");
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[record.ВремяПрибытия.Hour],
+                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[Record.ВремяПрибытия.Hour],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2811,7 +2783,7 @@ namespace MainExample
                             });
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыМинут[record.ВремяПрибытия.Minute],
+                                ИмяВоспроизводимогоФайла = файлыМинут[Record.ВремяПрибытия.Minute],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2822,17 +2794,17 @@ namespace MainExample
 
 
                         case "ВРЕМЯ СТОЯНКИ":
-                            if (record.ВремяСтоянки.HasValue)
+                            if (Record.ВремяСтоянки.HasValue)
                             {
                                 logMessage += "Стоянка: ";
-                                text = record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + record.ВремяСтоянки.Value.Minutes.ToString("D2") + " минут";
+                                text = Record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + Record.ВремяСтоянки.Value.Minutes.ToString("D2") + " минут";
                                 logMessage += text + " ";
 
-                                if (record.ВремяСтоянки.Value.Hours > 0)
+                                if (Record.ВремяСтоянки.Value.Hours > 0)
                                 {
                                     воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                     {
-                                        ИмяВоспроизводимогоФайла = файлыЧасов[record.ВремяСтоянки.Value.Hours],
+                                        ИмяВоспроизводимогоФайла = файлыЧасов[Record.ВремяСтоянки.Value.Hours],
                                         ТипСообщения = типСообщения,
                                         Язык = язык,
                                         ParentId = формируемоеСообщение.Id,
@@ -2842,7 +2814,7 @@ namespace MainExample
                                 }
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                 {
-                                    ИмяВоспроизводимогоФайла = файлыМинут[record.ВремяСтоянки.Value.Minutes],
+                                    ИмяВоспроизводимогоФайла = файлыМинут[Record.ВремяСтоянки.Value.Minutes],
                                     ТипСообщения = типСообщения,
                                     Язык = язык,
                                     ParentId = формируемоеСообщение.Id,
@@ -2855,11 +2827,11 @@ namespace MainExample
 
                         case "ВРЕМЯ ОТПРАВЛЕНИЯ":
                             logMessage += "Время отправления: ";
-                            text = record.ВремяОтправления.ToString("HH:mm");
+                            text = Record.ВремяОтправления.ToString("HH:mm");
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[record.ВремяОтправления.Hour],
+                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[Record.ВремяОтправления.Hour],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2868,7 +2840,7 @@ namespace MainExample
                             });
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыМинут[record.ВремяОтправления.Minute],
+                                ИмяВоспроизводимогоФайла = файлыМинут[Record.ВремяОтправления.Minute],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2879,17 +2851,17 @@ namespace MainExample
 
 
                         case "ВРЕМЯ ЗАДЕРЖКИ":
-                            if (record.ВремяЗадержки != null)
+                            if (Record.ВремяЗадержки != null)
                             {
                                 logMessage += "Время задержки: ";
-                                text = record.ВремяЗадержки.Value.ToString("HH:mm");
+                                text = Record.ВремяЗадержки.Value.ToString("HH:mm");
                                 logMessage += text + " ";
 
-                                if (record.ВремяЗадержки.Value.Hour > 0)
+                                if (Record.ВремяЗадержки.Value.Hour > 0)
                                 {
                                     воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                     {
-                                        ИмяВоспроизводимогоФайла = файлыЧасов[record.ВремяЗадержки.Value.Hour],
+                                        ИмяВоспроизводимогоФайла = файлыЧасов[Record.ВремяЗадержки.Value.Hour],
                                         ТипСообщения = типСообщения,
                                         Язык = язык,
                                         ParentId = формируемоеСообщение.Id,
@@ -2899,7 +2871,7 @@ namespace MainExample
                                 }
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                 {
-                                    ИмяВоспроизводимогоФайла = файлыМинут[record.ВремяЗадержки.Value.Minute],
+                                    ИмяВоспроизводимогоФайла = файлыМинут[Record.ВремяЗадержки.Value.Minute],
                                     ТипСообщения = типСообщения,
                                     Язык = язык,
                                     ParentId = формируемоеСообщение.Id,
@@ -2912,11 +2884,11 @@ namespace MainExample
 
                         case "ОЖИДАЕМОЕ ВРЕМЯ":
                             logMessage += "Ожидаемое время: ";
-                            text = record.ОжидаемоеВремя.ToString("HH:mm");
+                            text = Record.ОжидаемоеВремя.ToString("HH:mm");
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[record.ОжидаемоеВремя.Hour],
+                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[Record.ОжидаемоеВремя.Hour],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2925,7 +2897,7 @@ namespace MainExample
                             });
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыМинут[record.ОжидаемоеВремя.Minute],
+                                ИмяВоспроизводимогоФайла = файлыМинут[Record.ОжидаемоеВремя.Minute],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2936,15 +2908,15 @@ namespace MainExample
 
 
                         case "ВРЕМЯ СЛЕДОВАНИЯ":
-                            if (!record.ВремяСледования.HasValue)
+                            if (!Record.ВремяСледования.HasValue)
                                 continue;
 
                             logMessage += "Время следования: ";
-                            text = record.ВремяСледования.Value.ToString("HH:mm");
+                            text = Record.ВремяСледования.Value.ToString("HH:mm");
                             logMessage += text + " ";
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[record.ВремяСледования.Value.Hour],
+                                ИмяВоспроизводимогоФайла = файлыЧасовПрефиксВ[Record.ВремяСледования.Value.Hour],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2953,7 +2925,7 @@ namespace MainExample
                             });
                             воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                             {
-                                ИмяВоспроизводимогоФайла = файлыМинут[record.ВремяСледования.Value.Minute],
+                                ИмяВоспроизводимогоФайла = файлыМинут[Record.ВремяСледования.Value.Minute],
                                 ТипСообщения = типСообщения,
                                 Язык = язык,
                                 ParentId = формируемоеСообщение.Id,
@@ -2964,9 +2936,9 @@ namespace MainExample
 
 
                         case "НУМЕРАЦИЯ СОСТАВА":
-                            if ((record.НумерацияПоезда > 0) && (record.НумерацияПоезда <= 2))
+                            if ((Record.НумерацияПоезда > 0) && (Record.НумерацияПоезда <= 2))
                             {
-                                text = названиеФайловНумерацииПутей[record.НумерацияПоезда];
+                                text = НазваниеФайловНумерацииПутей[Record.НумерацияПоезда];
                                 logMessage += text + " ";
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
                                 {
@@ -2982,11 +2954,11 @@ namespace MainExample
 
 
                         case "СТАНЦИИ":
-                            if ((record.ТипПоезда == ТипПоезда.Пригородный) || (record.ТипПоезда == ТипПоезда.Ласточка) ||
-                                (record.ТипПоезда == ТипПоезда.РЭКС))
+                            if ((Record.ТипПоезда == ТипПоезда.Пригородный) || (Record.ТипПоезда == ТипПоезда.Ласточка) ||
+                                (Record.ТипПоезда == ТипПоезда.РЭКС))
                             {
-                                var списокСтанцийНаправления = Program.ПолучитьСтанцииНаправления(record.Направление)?.Select(st => st.NameRu).ToList();
-                                var списокСтанцийParse = record.Примечание.Substring(record.Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st => st.Trim()).ToList();
+                                var списокСтанцийНаправления = Program.ПолучитьСтанцииНаправления(Record.Направление)?.Select(st => st.NameRu).ToList();
+                                var списокСтанцийParse = Record.Примечание.Substring(Record.Примечание.IndexOf(":", StringComparison.Ordinal) + 1).Split(',').Select(st => st.Trim()).ToList();
 
                                 if (списокСтанцийНаправления == null || !списокСтанцийНаправления.Any())
                                     break;
@@ -2994,7 +2966,7 @@ namespace MainExample
                                 if (!списокСтанцийParse.Any())
                                     break;
 
-                                if (record.Примечание.Contains("Со всеми остановками"))
+                                if (Record.Примечание.Contains("Со всеми остановками"))
                                 {
                                     logMessage += "Электропоезд движется со всеми остановками ";
                                     if (Program.FilesFolder.Contains("СоВсемиОстановками"))
@@ -3010,7 +2982,7 @@ namespace MainExample
                                         });
                                     }
                                 }
-                                else if (record.Примечание.Contains("С остановк"))
+                                else if (Record.Примечание.Contains("С остановк"))
                                 {
                                     logMessage += "Электропоезд движется с остановками на станциях: ";
                                     foreach (var станция in списокСтанцийНаправления)
@@ -3045,7 +3017,7 @@ namespace MainExample
                                                 });
                                             }
                                 }
-                                else if (record.Примечание.Contains("Кроме"))
+                                else if (Record.Примечание.Contains("Кроме"))
                                 {
                                     logMessage += "Электропоезд движется с остановками кроме станций: ";
                                     foreach (var станция in списокСтанцийНаправления)
@@ -3126,14 +3098,14 @@ namespace MainExample
                 ОчередьШаблона = new Queue<ВоспроизводимоеСообщение>(воспроизводимыеСообщения)
             };
 
-            for (int i = 0; i < record.КоличествоПовторений; i++)
+            for (int i = 0; i < Record.КоличествоПовторений; i++)
             {
                 QueueSound.AddItem(сообщениеШаблона);
             }
 
-            var логНомерПоезда = string.IsNullOrEmpty(record.НомерПоезда2) ? record.НомерПоезда : record.НомерПоезда + "/" + record.НомерПоезда2;
-            var логНазваниеПоезда = record.НазваниеПоезда;
-            Program.ЗаписьЛога(названиеСообщения, $"Формирование звукового сообщения для поезда \"№{логНомерПоезда}  {логНазваниеПоезда}\": " + logMessage + ". Повтор " + record.КоличествоПовторений + " раз.", Program.AuthenticationService.CurrentUser);
+            var логНомерПоезда = string.IsNullOrEmpty(Record.НомерПоезда2) ? Record.НомерПоезда : Record.НомерПоезда + "/" + Record.НомерПоезда2;
+            var логНазваниеПоезда = Record.НазваниеПоезда;
+            Program.ЗаписьЛога(названиеСообщения, $"Формирование звукового сообщения для поезда \"№{логНомерПоезда}  {логНазваниеПоезда}\": " + logMessage + ". Повтор " + Record.КоличествоПовторений + " раз.", Program.AuthenticationService.CurrentUser);
         }
 
 

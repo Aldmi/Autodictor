@@ -134,7 +134,7 @@
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   /> -->
 						   
-	 <DeviceHttp Id="300" Name="HttpApkDk" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow" 
+	 <DeviceHttp Id="300" Name="HttpApkDk" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkMoscow(ddd,samba,36985)" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -213,8 +213,6 @@
 ToChangeWindow:72  к окну изменений
 ToChangeEvent:      отправка 1 раз при изменении
  -->
- 
-<!--  ToGetData: -->
 
 
 <!-- 	              Headers='Methode:POST + 
@@ -228,7 +226,6 @@ ToChangeEvent:      отправка 1 раз при изменении
 <!--ProviderType= xml_tlist-->		
 <!--ProviderType= xml_mainWindow-->		
 <!--ProviderType= xml_sheduleWindow-->		
-<!--ProviderType= xml_staticWindow-->	
-<!--ProviderType="xml_ApkDkMoscow(ddd,samba,36985)" 	 -->			   
+<!--ProviderType= xml_staticWindow-->					   
 					   
 						   
