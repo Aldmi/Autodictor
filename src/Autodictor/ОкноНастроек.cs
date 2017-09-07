@@ -63,8 +63,24 @@ namespace MainExample
 
         public int ВыборУровняГромкости()
         {
-            if (DateTime.Now >= ВремяНочнойПериодНачало &&
-                DateTime.Now <= ВремяНочнойПериодКонец)
+            //корректировка вермени на текущую дату
+           var startTime = DateTime.Now.Date.Add(ВремяНочнойПериодНачало.TimeOfDay);
+           var endTime = DateTime.Now.Date.Add(ВремяНочнойПериодКонец.TimeOfDay);
+            if (endTime < startTime)
+            {
+                if (DateTime.Now.TimeOfDay > TimeSpan.Parse("00:00:00") &&
+                    DateTime.Now.TimeOfDay < TimeSpan.Parse("12:00:00"))
+                {
+                    startTime = startTime.AddDays(-1);
+                }
+                else
+                {
+                    endTime = endTime.AddDays(1);
+                }
+            }
+
+            if (DateTime.Now >= startTime &&
+                DateTime.Now <= endTime)
             {
                 return УровеньГромкостиНочь;
             }
@@ -487,11 +503,6 @@ namespace MainExample
                 Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеПрибытияПоезда = 1;
             if (Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда < 1)
                 Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда = 1;
-
-            if (Program.Настройки.ВремяНочнойПериодКонец < Program.Настройки.ВремяНочнойПериодНачало)
-            {
-                Program.Настройки.ВремяНочнойПериодКонец = Program.Настройки.ВремяНочнойПериодКонец.AddDays(1);
-            }
         }
 
 
