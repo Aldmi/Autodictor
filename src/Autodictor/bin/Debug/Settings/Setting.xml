@@ -134,13 +134,11 @@
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   /> -->
 						   
-	 <DeviceHttp Id="300" Name="HttpApkDk" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow" 
-	              Headers='Method:POST + 
-				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+	 <DeviceHttp Id="300" Name="HttpApkDk" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
+	              Headers='Method: GET + 
+				           ContentEncoding: gzip +
 						   Accept: text/html, */* +
 						   Connection: Keep-Alive +
-						   Content-Type: multipart/form-data +
-						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   />
 						   
 					<!-- 	   Binding="ToGeneral:ОкноРасписания" Contrains="Направление:Московское" ProviderType="xml_sheduleWindow:sortable" -->		   
