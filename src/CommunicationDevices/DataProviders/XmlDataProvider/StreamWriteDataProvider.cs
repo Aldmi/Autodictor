@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using Communication.Annotations;
 using Communication.Interfaces;
+using Domain.Entitys;
 using Library.Extensions;
 
 
@@ -30,6 +31,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
         public IFormatProvider FormatProvider { get; set; }
 
         public Subject<Stream> OutputDataChangeRx { get; } = new Subject<Stream>();
+        public string ProviderName { get; }
 
         #endregion
 
@@ -42,6 +44,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
         public StreamWriteDataProvider(IFormatProvider formatProvider)
         {
             FormatProvider = formatProvider;
+            ProviderName = formatProvider.GetType().Name;
         }
 
         #endregion
@@ -82,11 +85,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
         public bool SetStream(Stream stream) 
         {
-            //логика преобразования находится внутри провайдера
-            // var xmlRespawn= FormatProvider.GetRewspawnDoc(stream); 
-
-            OutputData = stream;                   // Stream заменить на string
-            OutputDataChangeRx.OnNext(stream);     // Stream заменить на string
+            OutputData = stream;                
+            OutputDataChangeRx.OnNext(stream); 
 
             return (stream != null);
         }

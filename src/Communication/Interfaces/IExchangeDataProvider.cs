@@ -12,5 +12,6 @@ namespace Communication.Interfaces
 
 
         Subject<TOutput> OutputDataChangeRx { get; }
+        string ProviderName { get; }
     }
 }

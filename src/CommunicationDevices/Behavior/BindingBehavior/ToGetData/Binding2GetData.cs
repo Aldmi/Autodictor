@@ -16,9 +16,11 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGetData
 
         private readonly Device _device;
         public string GetDeviceName => _device.Name;
+        public string GetProviderName => _device.ExhBehavior.ProviderName;
         public int GetDeviceId => _device.Id;
         public string GetDeviceAddress => _device.Address;
         public DeviceSetting GetDeviceSetting => _device.Setting;
+
 
         public Subject<Stream> OutputDataChangeRx => _device.GetOutputDataChangeRx;
 

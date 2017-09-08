@@ -26,6 +26,7 @@ namespace CommunicationDevices.DataProviders.VidorDataProvider
 
         public bool IsOutDataValid { get; private set; }
         public Subject<byte> OutputDataChangeRx { get; }
+        public string ProviderName { get; }
 
         #endregion
 

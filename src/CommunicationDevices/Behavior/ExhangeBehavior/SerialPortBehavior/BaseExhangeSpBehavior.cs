@@ -113,6 +113,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         public ISubject<IExhangeBehavior> IsConnectChange { get; } = new Subject<IExhangeBehavior>();
         public ISubject<IExhangeBehavior> LastSendDataChange { get; } = new Subject<IExhangeBehavior>();
         public Subject<Stream> OutputDataChangeRx { get; set; }
+        public string ProviderName { get; set; }
 
         #endregion
 

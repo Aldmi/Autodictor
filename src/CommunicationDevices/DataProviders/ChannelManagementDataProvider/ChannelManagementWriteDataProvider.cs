@@ -24,6 +24,7 @@ namespace CommunicationDevices.DataProviders.ChannelManagementDataProvider
 
         public bool IsOutDataValid { get; private set; }
         public Subject<byte> OutputDataChangeRx { get; } = null;
+        public string ProviderName { get; }
 
         public IEnumerable<bool> ChanelSwitches { get; }
 

@@ -160,6 +160,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
         public abstract Subject<Stream> OutputDataChangeRx { get; set; }
 
+        public abstract string ProviderName { get; set; }
+
 
 
         /// <summary>

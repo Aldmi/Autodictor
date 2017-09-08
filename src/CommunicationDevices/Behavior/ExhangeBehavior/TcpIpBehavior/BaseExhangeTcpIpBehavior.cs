@@ -107,6 +107,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
         public ISubject<IExhangeBehavior> IsConnectChange { get; } = new Subject<IExhangeBehavior>();
         public ISubject<IExhangeBehavior> LastSendDataChange { get; } = new Subject<IExhangeBehavior>();
         public abstract Subject<Stream> OutputDataChangeRx { get; set; }
+        public string ProviderName { get; set; }
 
         #endregion
 

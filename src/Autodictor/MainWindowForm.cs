@@ -277,9 +277,9 @@ namespace MainExample
                 //Подписка на событие получения данных
                 if (beh.OutputDataChangeRx != null)
                 {
-                    switch (beh.GetDeviceName)
+                    switch (beh.GetProviderName)
                     {
-                        case "HttpApkDk":
+                        case "XmlApkDkGetFormatProvider":
                             beh.OutputDataChangeRx.Subscribe(GetOutputDataApkDk);
                             break;
                     }
@@ -291,7 +291,7 @@ namespace MainExample
 
 
         /// <summary>
-        /// Обравботчик события получения потока данных от сервера апк-дк
+        /// Обравботчик события получения потока данных от сервера апк-дк (GET запрос)
         /// </summary>
         private void GetOutputDataApkDk(Stream stream)
         {

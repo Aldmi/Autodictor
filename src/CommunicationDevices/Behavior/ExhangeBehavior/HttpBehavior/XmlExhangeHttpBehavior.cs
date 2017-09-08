@@ -14,7 +14,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
         #region Prop
 
         public IExchangeDataProvider<UniversalInputType, Stream> XmlExcangeDataProvider { get; set; }
-        public override Subject<Stream> OutputDataChangeRx { get; set; }  
+        public override Subject<Stream> OutputDataChangeRx { get; set; }
+        public override string ProviderName { get; set; }
 
         #endregion
 
@@ -31,6 +32,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
             XmlExcangeDataProvider = xmlExcangeDataProvider;
 
             OutputDataChangeRx = XmlExcangeDataProvider.OutputDataChangeRx;  //событие изменения выходных данных возьмем из провайдера данных
+            ProviderName = XmlExcangeDataProvider.ProviderName;
         }
 
         #endregion
