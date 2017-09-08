@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow }
+    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow, XmlApkDkGet }
 
     public enum DateTimeFormat
     {
@@ -89,6 +89,11 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                         EcpCode = int.Parse(agruments[2]);
                     }
                 }
+            }
+            else
+            if (providerName.ToLower().Contains("xml_apkdkget"))
+            {
+                XmlType = XmlSpecialSettings.XmlType.XmlApkDkGet;
             }
 
 

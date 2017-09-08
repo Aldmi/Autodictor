@@ -29,7 +29,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
         public IFormatProvider FormatProvider { get; set; }
 
-        public Subject<Stream> OutputDataChangeRx { get; } = new Subject<Stream> ();
+        public Subject<Stream> OutputDataChangeRx { get; } = new Subject<Stream>();
 
         #endregion
 

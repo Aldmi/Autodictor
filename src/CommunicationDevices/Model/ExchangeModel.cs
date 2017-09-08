@@ -919,6 +919,11 @@ namespace CommunicationDevices.Model
                                 case XmlType.XmlApkDkMoscow:
                                     provider = new StreamWriteDataProvider(new XmlApkDkMoscowFormatProvider(providerType.Login, providerType.Password, providerType.EcpCode));
                                     break;
+
+                                case XmlType.XmlApkDkGet:
+                                    provider = new StreamWriteDataProvider(new XmlApkDkGetFormatProvider());
+                                    break;
+
                             }
 
                             behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);

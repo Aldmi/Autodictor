@@ -81,14 +81,14 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
                     case TypeTrain.Express:
                         trainType = "1";
-                        typeName = "Экспресс";
-                        typeNameShort = "экспресс";
+                        typeName = "Скорый";
+                        typeNameShort = "скор";
                         break;
 
                     case TypeTrain.HighSpeed:
                         trainType = "2";
-                        typeName = "Скорый";
-                        typeNameShort = "скор";
+                        typeName = "Скоростной";
+                        typeNameShort = "скорост";
                         break;
 
                     case TypeTrain.Corporate:
@@ -105,14 +105,14 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
                     case TypeTrain.Swallow:
                         trainType = "5";
-                        typeName = "Скоростной";
-                        typeNameShort = "скоростной";
+                        typeName = "Экспресс";
+                        typeNameShort = "эксп";
                         break;
 
                     case TypeTrain.Rex:
                         trainType = "5";
-                        typeName = "Скоростной";
-                        typeNameShort = "скоростной";
+                        typeName = "Экспресс";
+                        typeNameShort = "эксп";
                         break;
                 }
 
