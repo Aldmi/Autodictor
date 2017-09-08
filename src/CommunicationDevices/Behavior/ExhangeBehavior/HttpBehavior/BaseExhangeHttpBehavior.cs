@@ -82,12 +82,12 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
         #region ctor
 
-        protected BaseExhangeHttpBehavior(string connectionString, Dictionary<string, string> headers, byte maxCountFaildRespowne, int timeRespowne, double taimerPeriod)
+        protected BaseExhangeHttpBehavior(string connectionString, Dictionary<string, string> headers, byte maxCountFaildRespowne, int timeRespowne, double timerPeriod)
         {
             ClientHttp = new ClientHttp(connectionString, headers, timeRespowne, maxCountFaildRespowne);
             ClientHttp.PropertyChanged += MasterHttp_PropertyChanged;
 
-            _timer = new Timer(taimerPeriod);
+            _timer = new Timer(timerPeriod);
             _timer.Elapsed += OnTimedEvent;
         }
 

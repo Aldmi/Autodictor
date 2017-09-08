@@ -80,10 +80,13 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
 
 
-        public bool SetStream(Stream stream)
+        public bool SetStream(Stream stream) 
         {
-            OutputData = stream;
-            OutputDataChangeRx.OnNext(stream);
+            //логика преобразования находится внутри провайдера
+            // var xmlRespawn= FormatProvider.GetRewspawnDoc(stream); 
+
+            OutputData = stream;                   // Stream заменить на string
+            OutputDataChangeRx.OnNext(stream);     // Stream заменить на string
 
             return (stream != null);
         }

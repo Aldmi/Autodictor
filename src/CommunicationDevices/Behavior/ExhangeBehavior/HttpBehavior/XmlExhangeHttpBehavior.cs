@@ -24,8 +24,8 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
         #region ctor
 
-        public XmlExhangeHttpBehavior(string connectionString, Dictionary<string, string> headers, byte maxCountFaildRespowne, int timeRespowne, double taimerPeriod, IExchangeDataProvider<UniversalInputType, Stream> xmlExcangeDataProvider)
-            : base(connectionString, headers,  maxCountFaildRespowne, timeRespowne, taimerPeriod)
+        public XmlExhangeHttpBehavior(string connectionString, Dictionary<string, string> headers, byte maxCountFaildRespowne, int timeRespowne, double timerPeriod, IExchangeDataProvider<UniversalInputType, Stream> xmlExcangeDataProvider)
+            : base(connectionString, headers,  maxCountFaildRespowne, timeRespowne, timerPeriod)
         {
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
             XmlExcangeDataProvider = xmlExcangeDataProvider;

@@ -27,7 +27,7 @@ namespace Communication.Http
     public class MyHttpResponse
     {
         public HttpResponseHeaders Headers { get; set; }
-        public string Body { get; set; }
+        public Stream Body { get; set; }
         public HttpStatusCode StatusCode { get; set; }
     }
 
@@ -179,12 +179,7 @@ namespace Communication.Http
                 var responseBody =  TakeData(response);
                 if (responseBody != null)
                 {
-                    //var bytes = Encoding.UTF8.GetBytes(responseBody);
-                    // isValidOutDate= dataProvider.SetDataByte(bytes);
-
-                    var stream = responseBody.GenerateStreamFromString();
-                    isValidOutDate = dataProvider.SetStream(stream);
-
+                    isValidOutDate = dataProvider.SetStream(responseBody);
                     _countTryingTakeData = 0;
                 }
                 else //не смогли получить ответ ОК от сервера.
@@ -239,17 +234,84 @@ namespace Communication.Http
         public async Task<MyHttpResponse> SendData(IExchangeDataProviderBase dataProvider)
         {
             Stream stream = dataProvider.GetStream();
-            if (stream == null)
-                return null;
-
-            if (Headers.ContainsKey("Method") && Headers.ContainsKey("Content-Type"))
+            if (Headers.ContainsKey("Method"))
             {
-                //ОБМЕН ДАННЫМИ POST multipart
-                if (Headers["Method"] == "POST" && Headers["Content-Type"] == "multipart/form-data")
+                //УСТАНОВКА ДЕКОДИРОВАНИЯ ДАННЫХ
+                var handler = new HttpClientHandler
                 {
-                    var boundary = DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture);
-                    return await SendPostMultipartHttp(Url, stream, boundary);
+                    AutomaticDecompression = DecompressionMethods.None
+                }; 
+                if (Headers.ContainsKey("ContentEncoding"))
+                {
+                    switch (Headers["ContentEncoding"])
+                    {
+                        case "gzip":
+                            handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                            break;
+                    }
                 }
+
+                //ОПРЕДЕЛЕНИЕ МЕТОДА ОБРАБОТКИ
+                switch (Headers["Method"])
+                {
+                    case "GET":
+                        return await SendGetHttp(Url, handler);
+
+
+                    case "POST":
+                        if (Headers.ContainsKey("Content-Type"))
+                        {    
+                            //ОБМЕН ДАННЫМИ POST multipart
+                            if (Headers["Content-Type"] == "multipart/form-data")
+                            {
+                                var boundary = DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture);
+                                return await SendPostMultipartHttp(Url, stream, boundary, handler);
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Отправка потока через HttpClient POST Multipart.
+        /// </summary>
+        public async Task<MyHttpResponse> SendGetHttp(string uri, HttpClientHandler handler)
+        {
+            try
+            {
+                using (var client = new HttpClient(handler))
+                {
+                    using (var response = await client.GetAsync(new Uri(uri)))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            using (HttpContent content = response.Content)
+                            {
+                                var outputBody = await content.ReadAsStreamAsync();
+                                var memoryStream = new MemoryStream();
+                                await outputBody.CopyToAsync(memoryStream);
+                                memoryStream.Position = 0;
+
+                                return new MyHttpResponse { Body = memoryStream, StatusCode = response.StatusCode, Headers = response.Headers };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (TimeoutException)
+            {
+                throw;
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return null;
@@ -257,11 +319,15 @@ namespace Communication.Http
 
 
 
+
         /// <summary>
         /// Отправка потока через HttpClient POST Multipart.
         /// </summary>
-        public async Task<MyHttpResponse> SendPostMultipartHttp(string uri, Stream stream, string boundary)
+        public async Task<MyHttpResponse> SendPostMultipartHttp(string uri, Stream stream, string boundary, HttpClientHandler handler)
         {
+            if (stream == null)
+                return null;
+
             string mimeName = String.Empty;
             string mimeFileName = String.Empty;
             if (Headers.ContainsKey("Content-Type"))  // ??? Content-Disposition
@@ -281,7 +347,7 @@ namespace Communication.Http
 
             try
             {
-                using (var client = new HttpClient())
+                using (var client = new HttpClient(handler))
                 {
                     SetHeaders4HttpClient(client);
                     using (var content = new MultipartFormDataContent(boundary))
@@ -289,8 +355,12 @@ namespace Communication.Http
                         content.Add(new StreamContent(stream), mimeName, mimeFileName);
                         using (var respone = await client.PostAsync(uri, content).WithTimeout(_timeRespoune))
                         {
-                            var outputBody = await respone.Content.ReadAsStringAsync();
-                            return new MyHttpResponse{Body = outputBody, StatusCode = respone.StatusCode, Headers = respone.Headers};
+                            var outputBody = await respone.Content.ReadAsStreamAsync();
+                            var memoryStream = new MemoryStream();
+                            await outputBody.CopyToAsync(memoryStream);
+                            memoryStream.Position = 0;
+
+                            return new MyHttpResponse{Body = memoryStream, StatusCode = respone.StatusCode, Headers = respone.Headers};
                         }
                     }
                 }
@@ -342,7 +412,7 @@ namespace Communication.Http
 
 
 
-        public string TakeData(MyHttpResponse httpResponse)
+        public Stream TakeData(MyHttpResponse httpResponse)
         {
             if (httpResponse?.StatusCode == HttpStatusCode.OK)
             {
