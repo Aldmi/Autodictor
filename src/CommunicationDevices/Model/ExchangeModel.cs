@@ -169,7 +169,7 @@ namespace CommunicationDevices.Model
                 xmlDeviceSpSettings = XmlSettingFactory.CreateXmlSpSetting(xmlFile);
                 xmlDevicePcSettings = XmlSettingFactory.CreateXmlPcSetting(xmlFile);
                 xmlDeviceTcpIpSettings = XmlSettingFactory.CreateXmlTcpIpSetting(xmlFile);
-                xmlDeviceHttpSettings= XmlSettingFactory.CreateXmlHttpSetting(xmlFile);
+                xmlDeviceHttpSettings = XmlSettingFactory.CreateXmlHttpSetting(xmlFile);
                 xmlCisSetting = XmlCisSetting.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
@@ -925,8 +925,8 @@ namespace CommunicationDevices.Model
                                     break;
 
                             }
-
-                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, 10000, provider);
+                            //TODO:  timerPeriod передавать из настрек
+                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, xmlDeviceHttp.Period, provider);
                             DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, behavior, binding.BindingType, setting));
                         }
 

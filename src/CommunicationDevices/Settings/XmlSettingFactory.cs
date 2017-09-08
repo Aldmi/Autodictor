@@ -471,6 +471,7 @@ namespace CommunicationDevices.Settings
                                    (string)el.Attribute("Id"),
                                    (string)el.Attribute("Name"),
                                    (string)el.Attribute("Address"),
+                                   (string)el.Attribute("Period"),
                                    (string)el.Attribute("TimeRespone"),
                                    (string)el.Attribute("Description"));
 

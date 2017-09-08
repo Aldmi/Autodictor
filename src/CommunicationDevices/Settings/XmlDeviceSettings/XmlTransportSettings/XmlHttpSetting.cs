@@ -12,6 +12,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
         public int Id { get; }
         public string Name { get; }
         public string Address { get; }
+        public ushort Period { get; }
         public ushort TimeRespone { get; }
         public string Description { get; }
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
@@ -25,11 +26,12 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
 
         #region ctor
 
-        public XmlHttpSetting(string id, string name, string address, string timeRespone, string description)
+        public XmlHttpSetting(string id, string name, string address, string period, string timeRespone,  string description)
         {
             Id = int.Parse(id);
             Name = name;
             Address = address;
+            Period = ushort.Parse(period);
             TimeRespone = ushort.Parse(timeRespone);
             Description = description;
         }
