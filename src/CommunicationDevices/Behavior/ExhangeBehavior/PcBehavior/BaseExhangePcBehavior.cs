@@ -150,7 +150,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior
         public ISubject<IExhangeBehavior> IsConnectChange { get; } = new Subject<IExhangeBehavior>();
         public ISubject<IExhangeBehavior> LastSendDataChange { get; } = new Subject<IExhangeBehavior>();
 
-        public Subject<Stream> OutputDataChangeRx { get; set; }     //События изменения (получения) выходных данных
         public string ProviderName { get; set; }
 
         #endregion

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 {
-    public class XmlApkDkGetFormatProvider : IFormatProvider
+    /// <summary>
+    /// Универсальный GET провайдер. Тело пустое, все параметры передаются в URL.
+    /// </summary>
+    public class XmlGetFormatProvider : IFormatProvider
     {
         public string CreateDoc(IEnumerable<UniversalInputType> tables)
         {

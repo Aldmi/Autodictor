@@ -157,9 +157,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
 
 
         public abstract void AddOneTimeSendData(UniversalInputType inData);
-
-        public abstract Subject<Stream> OutputDataChangeRx { get; set; }
-
         public abstract string ProviderName { get; set; }
 
 

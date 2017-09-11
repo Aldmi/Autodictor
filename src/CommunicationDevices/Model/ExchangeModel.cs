@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using AutoMapper;
 using Castle.Windsor;
 using Communication.Interfaces;
@@ -37,6 +39,7 @@ using CommunicationDevices.Settings.XmlCisSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
 using Domain.Entitys;
+using Domain.Entitys.ApkDk;
 using Library.Logs;
 using Library.Xml;
 using WCFAvtodictor2PcTableContract.DataContract;
@@ -79,6 +82,10 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2ChangesEventBehavior> Binding2ChangesEvent { get; set; } = new List<IBinding2ChangesEventBehavior>();
         public ICollection<IBinding2GetData> Binding2GetData{ get; set; } = new List<IBinding2GetData>();
 
+        public Subject<IEnumerable<ApkDkVolgogradShedule>> ApkDkVolgogradSheduleChangeRx { get; } = new Subject<IEnumerable<ApkDkVolgogradShedule>>();
+
+
+
         private string _errorString;
         public string ErrorString
         {
@@ -92,6 +99,8 @@ namespace CommunicationDevices.Model
         }
 
         public List<Task> BackGroundTasks { get; set; } = new List<Task>();
+
+        public List<IDisposable> ListApkdkStreamChangeRx { get; } = new List<IDisposable>();
 
         #endregion
 
@@ -921,7 +930,8 @@ namespace CommunicationDevices.Model
                                     break;
 
                                 case XmlType.XmlApkDkGet:
-                                    provider = new StreamWriteDataProvider(new XmlApkDkGetFormatProvider());
+                                    provider = new StreamWriteDataProvider(new XmlGetFormatProvider());
+                                    ListApkdkStreamChangeRx.Add(provider.OutputDataChangeRx.Subscribe(ApkDkGetStreamChangesRx)); //Подписка на событие плучения потока выходных данных
                                     break;
 
                             }
@@ -1021,6 +1031,26 @@ namespace CommunicationDevices.Model
         }
 
 
+        /// <summary>
+        /// Обравботчик события получения потока данных от сервера апк-дк (GET запрос)
+        /// </summary>
+        private void ApkDkGetStreamChangesRx(Stream stream)
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(stream);
+                string text = reader.ReadToEnd();
+                XDocument xDoc = XDocument.Parse(text);
+                var apkDkVolgogradShedule=  ApkDkVolgogradShedule.ParseXml2ApkDkschedule(xDoc);
+                ApkDkVolgogradSheduleChangeRx.OnNext(apkDkVolgogradShedule);
+            }
+            catch (Exception ex)
+            {
+                Log.log.Error($"метод ApkDkGetStreamChangesRx:  {ex.Message}");
+            }
+        }
+
+
 
         public void InitializeDeviceSoundChannelManagement()
         {
@@ -1048,6 +1078,7 @@ namespace CommunicationDevices.Model
         {
             CisClient?.Dispose();
             MasterSerialPorts?.ForEach(s => s.Dispose());
+            ListApkdkStreamChangeRx?.ForEach(apkDk=> apkDk.Dispose());
         }
     }
 }

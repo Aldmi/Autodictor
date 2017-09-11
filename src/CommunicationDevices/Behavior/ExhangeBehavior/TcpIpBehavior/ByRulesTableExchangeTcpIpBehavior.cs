@@ -20,8 +20,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
         public List<string> InternalAddressCollection { get; set; }      //адресс уст-ва нужный для протокола обмена.
         public int InternalPeriodTimer { get; set; }                     //Период опроса между устройствами подключенными к 1 TCP/Ip соединению.
 
-        public override Subject<Stream> OutputDataChangeRx { get; set; } = null;
-
         #endregion
 
 

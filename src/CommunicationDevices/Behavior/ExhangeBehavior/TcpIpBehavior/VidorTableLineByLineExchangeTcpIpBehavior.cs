@@ -29,8 +29,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior
         public bool IsSyncTime { get; set; }
         public int InternalPeriodTimer { get; set; }                              //Период опроса в мСек.
 
-        public override Subject<Stream> OutputDataChangeRx { get; set; }
-
         #endregion
 
 

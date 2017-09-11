@@ -27,6 +27,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
         public bool IsOutDataValid { get; }
         public Subject<byte> OutputDataChangeRx { get; } = null;
+
         public string ProviderName { get; }
 
         public RequestRule RequestRule { get; set; }

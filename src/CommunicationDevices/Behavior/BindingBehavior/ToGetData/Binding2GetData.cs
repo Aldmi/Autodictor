@@ -21,9 +21,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGetData
         public string GetDeviceAddress => _device.Address;
         public DeviceSetting GetDeviceSetting => _device.Setting;
 
-
-        public Subject<Stream> OutputDataChangeRx => _device.GetOutputDataChangeRx;
-
         #endregion
 
 

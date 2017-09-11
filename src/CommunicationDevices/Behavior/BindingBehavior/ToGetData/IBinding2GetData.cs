@@ -17,8 +17,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGetData
         DeviceSetting GetDeviceSetting { get; }
 
         void SendMessage(UniversalInputType inData);
-
-        Subject<Stream> OutputDataChangeRx { get; }
         string GetProviderName { get; }
     }
 }

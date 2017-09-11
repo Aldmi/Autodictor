@@ -28,8 +28,6 @@ namespace CommunicationDevices.Devices
 
         public DeviceSetting Setting { get; set; }
 
-        public Subject<Stream> GetOutputDataChangeRx => ExhBehavior.OutputDataChangeRx; 
-
         #endregion
 
 

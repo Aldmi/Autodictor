@@ -159,7 +159,7 @@ namespace MainExample
             }
             else
             {
-                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules, ExchangeModel.Binding2ChangesSchedules, ExchangeModel.Binding2ChangesEvent, ExchangeModel.Binding2GetData, ExchangeModel.DeviceSoundChannelManagement)
+                MainWindowForm mainform = new MainWindowForm(ExchangeModel.CisClient, ExchangeModel.Binding2PathBehaviors, ExchangeModel.Binding2GeneralSchedules, ExchangeModel.Binding2ChangesSchedules, ExchangeModel.Binding2ChangesEvent, ExchangeModel.Binding2GetData, ExchangeModel.DeviceSoundChannelManagement, ExchangeModel.ApkDkVolgogradSheduleChangeRx)
                 {
                     MdiParent = this,
                     WindowState = FormWindowState.Maximized

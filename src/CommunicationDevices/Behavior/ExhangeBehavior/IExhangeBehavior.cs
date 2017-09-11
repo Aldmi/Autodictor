@@ -31,7 +31,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior
         ISubject<IExhangeBehavior> IsConnectChange { get; }
         ISubject<IExhangeBehavior> LastSendDataChange { get; }
 
-        Subject<Stream> OutputDataChangeRx { get; set; }                        //События изменения (получения) выходных данных
         string ProviderName { get; set; }
     }
 }
