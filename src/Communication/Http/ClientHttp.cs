@@ -284,7 +284,7 @@ namespace Communication.Http
             {
                 using (var client = new HttpClient(handler))
                 {
-                    using (var response = await client.GetAsync(new Uri(uri)))
+                    using (var response = await client.GetAsync(new Uri(uri)).WithTimeout(_timeRespoune))
                     {
                         if (response.IsSuccessStatusCode)
                         {

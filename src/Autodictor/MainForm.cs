@@ -167,8 +167,8 @@ namespace MainExample
                                                              ExchangeModel.Binding2GetData,
                                                              ExchangeModel.DeviceSoundChannelManagement,
                                                              ExchangeModel.ApkDkVolgogradSheduleChangeRx,
-                                                             ExchangeModel.ApkDkVolgogradSheduleChangeConnectRx,
-                                                             ExchangeModel.ApkDkVolgogradSheduleDataExchangeSuccessChangeRx)
+                                                             ExchangeModel.ApkDkVolgogradChangeConnectRx,
+                                                             ExchangeModel.ApkDkVolgogradDataExchangeSuccessRx)
                 {
                     MdiParent = this,
                     WindowState = FormWindowState.Maximized

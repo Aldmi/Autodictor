@@ -263,9 +263,9 @@ namespace MainExample
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
             //ОБРАБОТЧИКИ СОБЫТИЙ ОТ АПКДК ВОЛКОГРАД
-            DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
-            DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
-            DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
+            DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
+            DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx?.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
+            DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
 
             //
             QueueSound.StartQueue();
@@ -284,7 +284,11 @@ namespace MainExample
             {
                 switch (beh.GetDeviceName)
                 {
-                    case "HttpApkDk":
+                    case "HttpApkDkVolgograd":
+                        //TODO: ВКЛ/ОТКЛ элементы UI данного девайса
+                        break;
+
+                    case "Moscov":
                         //TODO: ВКЛ/ОТКЛ элементы UI данного девайса
                         break;
                 }
@@ -309,6 +313,10 @@ namespace MainExample
             listView.SmallImageList = imgList;
         }
 
+
+
+
+        #region Обработка RX событий протокола Volgograd
 
         private void ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler(IExhangeBehavior exhangeBehavior)
         {
@@ -336,6 +344,9 @@ namespace MainExample
                 //DEBUG---------------------------------
             }
         }
+
+       #endregion
+
 
 
 

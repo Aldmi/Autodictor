@@ -83,8 +83,8 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2GetData> Binding2GetData{ get; set; } = new List<IBinding2GetData>();
 
         public ISubject<IEnumerable<ApkDkVolgogradShedule>> ApkDkVolgogradSheduleChangeRx { get; } = new Subject<IEnumerable<ApkDkVolgogradShedule>>();
-        public ISubject<IExhangeBehavior> ApkDkVolgogradSheduleChangeConnectRx { get; private set; }
-        public ISubject<IExhangeBehavior> ApkDkVolgogradSheduleDataExchangeSuccessChangeRx { get; private set; }
+        public ISubject<IExhangeBehavior> ApkDkVolgogradChangeConnectRx { get; private set; }
+        public ISubject<IExhangeBehavior> ApkDkVolgogradDataExchangeSuccessRx { get; private set; }
 
 
         private string _errorString;
@@ -101,7 +101,7 @@ namespace CommunicationDevices.Model
 
         public List<Task> BackGroundTasks { get; set; } = new List<Task>();
 
-        public List<IDisposable> ListApkdkStreamChangeRx { get; } = new List<IDisposable>();
+        public IDisposable ApkDkVolgogradStreamChangeRxDispose { get; set; }
 
         #endregion
 
@@ -841,9 +841,6 @@ namespace CommunicationDevices.Model
 
             foreach (var xmlDeviceHttp in xmlDeviceHttpSettings)
             {
-                IExhangeBehavior behavior;
-                byte maxCountFaildRespowne;
-
                 XmlBindingSetting binding = null;
                 XmlConditionsSetting contrains = null;
                 XmlPagingSetting paging = null;
@@ -895,114 +892,110 @@ namespace CommunicationDevices.Model
                 }
 
 
-                switch (xmlDeviceHttp.Name)
+            
+                byte maxCountFaildRespowne = 3;
+                if (providerType?.XmlType != null)
                 {
-                    case "HttpTable":
-                    case "HttpApkDk":
-                        maxCountFaildRespowne = 3;
+                    IExchangeDataProvider<UniversalInputType, Stream> provider = null;
+                    var httpBeh= new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, xmlDeviceHttp.Period, provider);
+                    switch (providerType.XmlType.Value)
+                    {
+                        case XmlType.XmlTlist:
+                            provider = new StreamWriteDataProvider(new XmlTListFormatProvider());
+                            break;
 
-                        if (providerType?.XmlType != null)
-                        {
-                            IExchangeDataProvider<UniversalInputType, Stream> provider = null;
-                            var httpBeh= new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, xmlDeviceHttp.Period, provider);
-                            switch (providerType.XmlType.Value)
+                        case XmlType.XmlMainWindow:
+                            provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider(providerType.DateTimeFormat));
+                            break;
+
+                        case XmlType.XmlSheduleWindow:
+                            provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat));
+                            break;
+
+                        case XmlType.XmlStaticWindow:
+                            provider = new StreamWriteDataProvider(new XmlStaticWindowFormatProvider());
+                            break;
+
+                        case XmlType.XmlChange:
+                            provider = new StreamWriteDataProvider(new XmlChangesFormatProvider(providerType.DateTimeFormat));
+                            break;
+
+                        case XmlType.XmlApkDkMoscow:
+                            provider = new StreamWriteDataProvider(new XmlApkDkMoscowFormatProvider(providerType.Login, providerType.Password, providerType.EcpCode));
+                            break;
+
+                        case XmlType.XmlApkDkGet:
+                            provider = new StreamWriteDataProvider(new XmlGetFormatProvider());
+                            switch (xmlDeviceHttp.Name)
                             {
-                                case XmlType.XmlTlist:
-                                    provider = new StreamWriteDataProvider(new XmlTListFormatProvider());
+                                case "HttpApkDkVolgograd":
+                                    ApkDkVolgogradStreamChangeRxDispose = provider.OutputDataChangeRx.Subscribe(ApkDkVolgogradGetStreamChangesRx); //Подписка на событие получения потока выходных данных.
+                                    ApkDkVolgogradChangeConnectRx = httpBeh.IsConnectChange;                                              //Получение события изменения состояния подключения.
+                                    ApkDkVolgogradDataExchangeSuccessRx = httpBeh.IsDataExchangeSuccessChange;                            //Получение события получения данных.
                                     break;
 
-                                case XmlType.XmlMainWindow:
-                                    provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider(providerType.DateTimeFormat));
+                                case "Moscov":
                                     break;
-
-                                case XmlType.XmlSheduleWindow:
-                                    provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat));
-                                    break;
-
-                                case XmlType.XmlStaticWindow:
-                                    provider = new StreamWriteDataProvider(new XmlStaticWindowFormatProvider());
-                                    break;
-
-                                case XmlType.XmlChange:
-                                    provider = new StreamWriteDataProvider(new XmlChangesFormatProvider(providerType.DateTimeFormat));
-                                    break;
-
-                                case XmlType.XmlApkDkMoscow:
-                                    provider = new StreamWriteDataProvider(new XmlApkDkMoscowFormatProvider(providerType.Login, providerType.Password, providerType.EcpCode));
-                                    break;
-
-                                case XmlType.XmlApkDkGet:
-                                    provider = new StreamWriteDataProvider(new XmlGetFormatProvider());
-                                    ListApkdkStreamChangeRx.Add(provider.OutputDataChangeRx.Subscribe(ApkDkGetStreamChangesRx)); //Подписка на событие плучения потока выходных данных
-                                    ApkDkVolgogradSheduleChangeConnectRx = httpBeh.IsConnectChange;
-                                    ApkDkVolgogradSheduleDataExchangeSuccessChangeRx = httpBeh.IsDataExchangeSuccessChange;
-                                    break;
-
                             }
+                            break;
 
-                            httpBeh.XmlExcangeDataProvider = provider;
-                            httpBeh.XmlExcangeDataProvider.ProviderName = provider.ProviderName;
-                            DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, httpBeh, binding.BindingType, setting));
-                        }
+                    }
 
-
-                        //создание поведения привязка табло к пути.
-                        if (binding.BindingType == BindingType.ToPath)
-                        {
-                            var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
-                            Binding2PathBehaviors.Add(bindingBeh);
-                            bindingBeh.InitializeDevicePathInfo();     //Вывод номера пути в пустом сообщении
-                            DeviceTables.Last().AddCycleFunc();        //Добавим все функции циклического опроса          
-                        }
-
-                        //создание поведения привязка табло к главному расписанию
-                        if (binding.BindingType == BindingType.ToGeneral)
-                        {
-                            Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
-                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
-                            if (!Binding2GeneralSchedules.Last().IsPaging)
-                            {
-                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
-                            }
-                        }
-
-                        //создание поведения привязка табло к форме статических сообщений
-                        if (binding.BindingType == BindingType.ToStatic)
-                            Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
-
-                        //создание поведения привязка табло к Изменениям
-                        if (binding.BindingType == BindingType.ToChange)
-                        {
-                            Binding2ChangesSchedules.Add(new Binding2ChangesBehavior(DeviceTables.Last(),  binding.HourDepth, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
-                            //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
-                            if (!Binding2ChangesSchedules.Last().IsPaging)
-                            {
-                                DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
-                            }
-                        }
-
-                        //создание поведения привязка табло к отпрвки изменения по событию
-                        if (binding.BindingType == BindingType.ToChangeEvent)
-                        {
-                            Binding2ChangesEvent.Add(new Binding2ChangesEventBehavior(DeviceTables.Last()));
-                        }
-
-                        //создание поведения привязка ус-ва к серверу получения информации
-                        if (binding.BindingType == BindingType.ToGetData)
-                        {
-                            Binding2GetData.Add(new Binding2GetData(DeviceTables.Last()));
-                            DeviceTables.Last().AddCycleFunc();
-                        }
-
-                        break;
-
-
-
-                    default:
-                        ErrorString = $" Устройсвто с именем {xmlDeviceHttp.Name} не найденно";
-                        Log.log.Error(ErrorString);
-                        break;
+                    httpBeh.XmlExcangeDataProvider = provider;
+                    httpBeh.XmlExcangeDataProvider.ProviderName = provider.ProviderName;
+                    DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, httpBeh, binding.BindingType, setting));
                 }
+
+
+                //создание поведения привязка табло к пути.
+                if (binding.BindingType == BindingType.ToPath)
+                {
+                    var bindingBeh = new Binding2PathBehavior(DeviceTables.Last(), binding.PathNumbers, contrains?.Conditions);
+                    Binding2PathBehaviors.Add(bindingBeh);
+                    bindingBeh.InitializeDevicePathInfo();     //Вывод номера пути в пустом сообщении
+                    DeviceTables.Last().AddCycleFunc();        //Добавим все функции циклического опроса          
+                }
+
+                //создание поведения привязка табло к главному расписанию
+                if (binding.BindingType == BindingType.ToGeneral)
+                {
+                    Binding2GeneralSchedules.Add(new BindingDevice2GeneralShBehavior(DeviceTables.Last(), binding.SourceLoad, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                    //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                    if (!Binding2GeneralSchedules.Last().IsPaging)
+                    {
+                        DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                    }
+                }
+
+                //создание поведения привязка табло к форме статических сообщений
+                if (binding.BindingType == BindingType.ToStatic)
+                    Binding2StaticFormBehaviors.Add(new Binding2StaticFormBehavior(DeviceTables.Last()));
+
+                //создание поведения привязка табло к Изменениям
+                if (binding.BindingType == BindingType.ToChange)
+                {
+                    Binding2ChangesSchedules.Add(new Binding2ChangesBehavior(DeviceTables.Last(),  binding.HourDepth, contrains?.Conditions, paging?.CountPage ?? 0, paging?.TimePaging ?? 0));
+                    //Если отключен пагинатор, то работаем по таймеру ExchangeBehavior ус-ва.
+                    if (!Binding2ChangesSchedules.Last().IsPaging)
+                    {
+                        DeviceTables.Last().AddCycleFunc();//добавим все функции циклического опроса
+                    }
+                }
+
+                //создание поведения привязка табло к отпрвки изменения по событию
+                if (binding.BindingType == BindingType.ToChangeEvent)
+                {
+                    Binding2ChangesEvent.Add(new Binding2ChangesEventBehavior(DeviceTables.Last()));
+                }
+
+                //создание поведения привязка ус-ва к серверу получения информации
+                if (binding.BindingType == BindingType.ToGetData)
+                {
+                    Binding2GetData.Add(new Binding2GetData(DeviceTables.Last()));
+                    DeviceTables.Last().AddCycleFunc();
+                }
+
+                break;
             }
 
             #endregion
@@ -1038,11 +1031,10 @@ namespace CommunicationDevices.Model
 
 
 
-
         /// <summary>
-        /// Обравботчик события получения потока данных от сервера апк-дк (GET запрос)
+        /// Обравботчик события получения потока данных от сервера апк-дк ВОЛГОГРАД (GET запрос)
         /// </summary>
-        private void ApkDkGetStreamChangesRx(Stream stream)
+        private void ApkDkVolgogradGetStreamChangesRx(Stream stream)
         {
             try
             {
@@ -1087,7 +1079,7 @@ namespace CommunicationDevices.Model
         {
             CisClient?.Dispose();
             MasterSerialPorts?.ForEach(s => s.Dispose());
-            ListApkdkStreamChangeRx?.ForEach(apkDk=> apkDk.Dispose());
+            ApkDkVolgogradStreamChangeRxDispose?.Dispose();
         }
     }
 }
