@@ -82,8 +82,9 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2ChangesEventBehavior> Binding2ChangesEvent { get; set; } = new List<IBinding2ChangesEventBehavior>();
         public ICollection<IBinding2GetData> Binding2GetData{ get; set; } = new List<IBinding2GetData>();
 
-        public Subject<IEnumerable<ApkDkVolgogradShedule>> ApkDkVolgogradSheduleChangeRx { get; } = new Subject<IEnumerable<ApkDkVolgogradShedule>>();
-
+        public ISubject<IEnumerable<ApkDkVolgogradShedule>> ApkDkVolgogradSheduleChangeRx { get; } = new Subject<IEnumerable<ApkDkVolgogradShedule>>();
+        public ISubject<IExhangeBehavior> ApkDkVolgogradSheduleChangeConnectRx { get; private set; }
+        public ISubject<IExhangeBehavior> ApkDkVolgogradSheduleDataExchangeSuccessChangeRx { get; private set; }
 
 
         private string _errorString;
@@ -903,6 +904,7 @@ namespace CommunicationDevices.Model
                         if (providerType?.XmlType != null)
                         {
                             IExchangeDataProvider<UniversalInputType, Stream> provider = null;
+                            var httpBeh= new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, xmlDeviceHttp.Period, provider);
                             switch (providerType.XmlType.Value)
                             {
                                 case XmlType.XmlTlist:
@@ -932,12 +934,15 @@ namespace CommunicationDevices.Model
                                 case XmlType.XmlApkDkGet:
                                     provider = new StreamWriteDataProvider(new XmlGetFormatProvider());
                                     ListApkdkStreamChangeRx.Add(provider.OutputDataChangeRx.Subscribe(ApkDkGetStreamChangesRx)); //Подписка на событие плучения потока выходных данных
+                                    ApkDkVolgogradSheduleChangeConnectRx = httpBeh.IsConnectChange;
+                                    ApkDkVolgogradSheduleDataExchangeSuccessChangeRx = httpBeh.IsDataExchangeSuccessChange;
                                     break;
 
                             }
-                            //TODO:  timerPeriod передавать из настрек
-                            behavior = new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, xmlDeviceHttp.Period, provider);
-                            DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, behavior, binding.BindingType, setting));
+
+                            httpBeh.XmlExcangeDataProvider = provider;
+                            httpBeh.XmlExcangeDataProvider.ProviderName = provider.ProviderName;
+                            DeviceTables.Add(new Device(xmlDeviceHttp.Id, xmlDeviceHttp.Address, xmlDeviceHttp.Name, xmlDeviceHttp.Description, httpBeh, binding.BindingType, setting));
                         }
 
 
@@ -1031,6 +1036,9 @@ namespace CommunicationDevices.Model
         }
 
 
+
+
+
         /// <summary>
         /// Обравботчик события получения потока данных от сервера апк-дк (GET запрос)
         /// </summary>
@@ -1038,6 +1046,7 @@ namespace CommunicationDevices.Model
         {
             try
             {
+                MessageBox.Show("ПОТОК полученн");//DEBUG ApkDk
                 StreamReader reader = new StreamReader(stream);
                 string text = reader.ReadToEnd();
                 XDocument xDoc = XDocument.Parse(text);

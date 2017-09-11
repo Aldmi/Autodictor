@@ -29,7 +29,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.HttpBehavior
         {
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
             XmlExcangeDataProvider = xmlExcangeDataProvider;
-            ProviderName = XmlExcangeDataProvider.ProviderName;
+           // ProviderName = XmlExcangeDataProvider.ProviderName;
         }
 
         #endregion

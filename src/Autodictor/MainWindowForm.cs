@@ -12,6 +12,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToGetData;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
+using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
@@ -159,6 +160,8 @@ namespace MainExample
         public IDisposable DispouseStaticChangeRx { get; set; }
         public IDisposable DispouseTemplateChangeRx { get; set; }
         public IDisposable DispouseApkDkVolgogradSheduleChangeRx { get; set; }
+        public IDisposable DispouseApkDkVolgogradSheduleChangeConnectRx { get; set; }
+        public IDisposable DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx { get; set; }
 
 
         public int ВремяЗадержкиМеждуСообщениями = 0;
@@ -179,7 +182,17 @@ namespace MainExample
 
 
         // Конструктор
-        public MainWindowForm(CisClient cisClient, IEnumerable<IBinding2PathBehavior> binding2PathBehaviors, IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors, IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors, IEnumerable<IBinding2ChangesEventBehavior> binding2ChangesEventBehaviors, IEnumerable<IBinding2GetData> binding2GetDataBehaviors, Device soundChanelManagment, Subject<IEnumerable<ApkDkVolgogradShedule>> apkDkVolgogradSheduleChangeRx)
+        public MainWindowForm(CisClient cisClient,
+                              IEnumerable<IBinding2PathBehavior> binding2PathBehaviors,
+                              IEnumerable<IBinding2GeneralSchedule> binding2GeneralScheduleBehaviors,
+                              IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors,
+                              IEnumerable<IBinding2ChangesEventBehavior> binding2ChangesEventBehaviors,
+                              IEnumerable<IBinding2GetData> binding2GetDataBehaviors,
+                              Device soundChanelManagment,
+                              ISubject<IEnumerable<ApkDkVolgogradShedule>> apkDkVolgogradSheduleChangeRx,
+                              ISubject<IExhangeBehavior> apkDkVolgogradSheduleChangeConnectRx,
+                              ISubject<IExhangeBehavior> apkDkVolgogradSheduleDataExchangeSuccessChangeRx
+                              )
         {
             if (myMainForm != null)
                 return;
@@ -232,7 +245,7 @@ namespace MainExample
                 }
             });
 
-
+            //
             DispouseQueueChangeRx = QueueSound.QueueChangeRx.Subscribe(status =>
             {
                 switch (status)
@@ -246,23 +259,20 @@ namespace MainExample
                         break;
                 }
             });
-
-
             DispouseStaticChangeRx = QueueSound.StaticChangeRx.Subscribe(StaticChangeRxEventHandler);
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
+            //ОБРАБОТЧИКИ СОБЫТИЙ ОТ АПКДК ВОЛКОГРАД
             DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
+            DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
+            DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
 
+            //
             QueueSound.StartQueue();
 
             MainForm.Включить.BackColor = Color.Red;
             Program.ЗаписьЛога("Системное сообщение", "Программный комплекс включен", Program.AuthenticationService.CurrentUser);
         }
-
-
-
-
-
 
 
         /// <summary>
@@ -272,6 +282,14 @@ namespace MainExample
         {
             foreach (var beh in Binding2GetDataBehaviors)
             {
+                switch (beh.GetDeviceName)
+                {
+                    case "HttpApkDk":
+                        //TODO: ВКЛ/ОТКЛ элементы UI данного девайса
+                        break;
+                }
+
+
                 //инициализируем таблицу, для прохождения условия в функции отправки "AddOneTimeSendData".
                 var uit = new UniversalInputType
                 {
@@ -292,13 +310,30 @@ namespace MainExample
         }
 
 
+        private void ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler(IExhangeBehavior exhangeBehavior)
+        {
+
+        }
+
+
+        private void ApkDkVolgogradSheduleChangeConnectRxEventHandler(IExhangeBehavior exhangeBehavior)
+        {
+
+        }
 
 
         private void GetApkDkVolgorgadSheduleRxEventHandler(IEnumerable<ApkDkVolgogradShedule> apkDkVolgogradShedules)
         {
             if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
             {
-
+                //DEBUG---------------------------------
+                string sumstr= String.Empty;
+                foreach (var item in apkDkVolgogradShedules)
+                {
+                    sumstr+= $"N= {item.Ntrain}  Путь= {item.Put}  Время отпр={item.TmOtpr:g}" + "||||||||||";
+                }
+                MessageBox.Show(sumstr);
+                //DEBUG---------------------------------
             }
         }
 
@@ -3659,6 +3694,8 @@ namespace MainExample
             DispouseQueueChangeRx?.Dispose();
             DispouseStaticChangeRx?.Dispose();
             DispouseApkDkVolgogradSheduleChangeRx?.Dispose();
+            DispouseApkDkVolgogradSheduleChangeConnectRx?.Dispose();
+            DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Dispose();
 
             base.OnClosed(e);
         }

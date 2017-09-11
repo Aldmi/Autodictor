@@ -23,7 +23,7 @@ namespace CommunicationDevices.DataProviders.DisplaySysDataProvider
 
         public bool IsOutDataValid { get; private set; }
         public Subject<byte> OutputDataChangeRx { get; } = null;
-        public string ProviderName { get; }
+        public string ProviderName { get; set; }
 
         #endregion
 

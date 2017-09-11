@@ -293,21 +293,21 @@ namespace Communication.Http
                                 var outputBody = await content.ReadAsStreamAsync();
 
                                 //DEBUG-----------------
-                                try
-                                {
-                                    string path = @"D:\doc_.xml";
-                                    var extension = Path.GetExtension(path);
-                                    if (extension != null && (File.Exists(path) && extension.ToLower() == ".xml"))
-                                    {
-                                        var xDoc = XDocument.Load(path);
-                                        outputBody = xDoc.ToString().GenerateStreamFromString();
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine(e);
-                                    throw;
-                                }
+                                //try
+                                //{
+                                //    string path = @"D:\doc_.xml";
+                                //    var extension = Path.GetExtension(path);
+                                //    if (extension != null && (File.Exists(path) && extension.ToLower() == ".xml"))
+                                //    {
+                                //        var xDoc = XDocument.Load(path);
+                                //        outputBody = xDoc.ToString().GenerateStreamFromString();
+                                //    }
+                                //}
+                                //catch (Exception e)
+                                //{
+                                //    Console.WriteLine(e);
+                                //    throw;
+                                //}
                                 //------------------
 
 
