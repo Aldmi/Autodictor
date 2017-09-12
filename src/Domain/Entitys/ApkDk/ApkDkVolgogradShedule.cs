@@ -16,6 +16,9 @@ namespace Domain.Entitys.ApkDk
         public string StFinish { get; set; }      //Станция назначения
         public string StDeparture { get; set; }   //Станция отправления
         public TimeSpan TmOtpr { get; set; }      //время отправления с запрошенной станции
+        public TimeSpan TmPrib { get; set; }      //время прибытия с запрошенной станции
+        public DateTime DtOtpr { get; set; }      //дата отправления с запрошенной станции
+        public DateTime DtPrib { get; set; }      //дата прибытия с запрошенной станции
         public string Stops { get; set; }         //Тип остановок (Везде, Кроме, На...)
         public string OstFull { get; set; }       //Остановочные станции 	(Остановки: ...)
         public string Put { get; set; }           //Путь
@@ -75,6 +78,25 @@ namespace Domain.Entitys.ApkDk
                         TimeSpan tmOtpr;
                         TimeSpan.TryParse(elem, out tmOtpr);
                         apkDk.TmOtpr = tmOtpr;
+
+                        elem = line?.Element("tm_prib")?.Value ?? string.Empty;
+                        elem = Regex.Replace(elem, "[\r\n\t]+", "");
+                        TimeSpan tmPrib;
+                        TimeSpan.TryParse(elem, out tmPrib);
+                        apkDk.TmPrib = tmPrib;
+
+                        elem = line?.Element("dt_otpr")?.Value ?? string.Empty;
+                        elem = Regex.Replace(elem, "[\r\n\t]+", "");
+                        DateTime dtOtpr;
+                        DateTime.TryParse(elem, out dtOtpr);
+                        apkDk.DtOtpr = dtOtpr;
+
+                        elem = line?.Element("dt_prib")?.Value ?? string.Empty;
+                        elem = Regex.Replace(elem, "[\r\n\t]+", "");
+                        DateTime dtPrib;
+                        DateTime.TryParse(elem, out dtPrib);
+                        apkDk.DtPrib = dtPrib;
+
 
                         elem = line?.Element("stops")?.Value ?? string.Empty;
                         apkDk.Stops = Regex.Replace(elem, "[\r\n\t]+", "");
