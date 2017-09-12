@@ -67,9 +67,11 @@ namespace MainExample
             this.comboBox_Messages.Items.Add("НА НОМЕР ПУТЬ");
             this.comboBox_Messages.Items.Add("НА НОМЕРом ПУТИ");
             this.comboBox_Messages.Items.Add("С НОМЕРого ПУТИ");
+            this.comboBox_Messages.Items.Add("ВРЕМЯ ПРИБЫТИЯ UTC");
             this.comboBox_Messages.Items.Add("ВРЕМЯ ПРИБЫТИЯ");
             this.comboBox_Messages.Items.Add("ВРЕМЯ СТОЯНКИ");
             this.comboBox_Messages.Items.Add("ВРЕМЯ ОТПРАВЛЕНИЯ");
+            this.comboBox_Messages.Items.Add("ВРЕМЯ ОТПРАВЛЕНИЯ UTC");
             this.comboBox_Messages.Items.Add("НУМЕРАЦИЯ СОСТАВА");
 
             //ПРИОРИРЕТЫ

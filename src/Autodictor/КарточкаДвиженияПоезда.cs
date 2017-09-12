@@ -795,12 +795,19 @@ namespace MainExample
                         rTb.AppendText(Text + " ");
                         break;
 
+                    case "ВРЕМЯ ПРИБЫТИЯ UTC":
+                        rTb.Text += "Время прибытия UTC: ";
+                        var времяUtc = record.ВремяПрибытия.AddMinutes(Program.Настройки.UTC);
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
+                        Text = времяUtc.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTb.AppendText(Text + " ");
+                        break;
+
                     case "ВРЕМЯ СТОЯНКИ":
                         rTb.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.ВремяСтоянки.HasValue ?
-                            (record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + record.ВремяСтоянки.Value.Minutes.ToString("D2"))
-                            : String.Empty;
+                        Text = record.ВремяСтоянки.HasValue ? (record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + record.ВремяСтоянки.Value.Minutes.ToString("D2")): String.Empty;
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
@@ -809,6 +816,15 @@ namespace MainExample
                         rTb.Text += "Время отправления: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = record.ВремяОтправления.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTb.AppendText(Text + " ");
+                        break;
+
+                    case "ВРЕМЯ ОТПРАВЛЕНИЯ UTC":
+                        rTb.Text += "Время отправления UTC: ";
+                        времяUtc = record.ВремяОтправления.AddMinutes(Program.Настройки.UTC);
+                        УказательВыделенныхФрагментов.Add(rTb.Text.Length);
+                        Text = времяUtc.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;

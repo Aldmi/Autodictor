@@ -44,6 +44,8 @@ namespace MainExample
         public int TimeZoneНаЛасточку;
         public int TimeZoneНаРЭКС;
 
+        public int UTC;                            //часовой пояс в формате UTC
+
         public bool РазрешениеДобавленияЗаблокированныхПоездовВСписок;
         public bool РазрешениеАвтообновленияРасписания;
         public DateTime ВремяАвтообновленияРасписания;
@@ -154,6 +156,7 @@ namespace MainExample
             tBИнтОповещОЗадержкеОтправления.Text = Program.Настройки.ИнтервалМеждуОповещениемОЗадержкеОтправленияПоезда.ToString("0.0");
             tBИнтОповещООтпрПоГотов.Text = Program.Настройки.ИнтервалМеждуОповещениемООтправлениеПоГотовности.ToString("0.0");
             tBСамоеРанееВремяШаблона.Text = Program.Настройки.ОповещениеСамогоРаннегоВремениШаблона.ToString("0.0");
+            tBUtcЗвука.Text = Program.Настройки.UTC.ToString("D");
 
             cBПассажирскийПоезд.Checked = Program.Настройки.АвтФормСообщНаПассажирскийПоезд;
             cBСкорыйПоезд.Checked = Program.Настройки.АвтФормСообщНаСкорыйПоезд;
@@ -226,6 +229,9 @@ namespace MainExample
 
             if (float.TryParse(tBСамоеРанееВремяШаблона.Text.Replace('.', ','), out НастройкаВремени))
                 Program.Настройки.ОповещениеСамогоРаннегоВремениШаблона = НастройкаВремени;
+
+            if (float.TryParse(tBUtcЗвука.Text.Replace('.', ','), out НастройкаВремени))
+                Program.Настройки.UTC = (int) НастройкаВремени;
 
 
             Program.Настройки.АвтФормСообщНаПассажирскийПоезд = cBПассажирскийПоезд.Checked;
@@ -504,6 +510,11 @@ namespace MainExample
                                 case "FontПригород":
                                     Program.Настройки.FontПригород = ConverString2Font(Settings[1]);
                                     break;
+
+                                case "UTC":
+                                    if (int.TryParse(Settings[1], out ПеременнаяInt))
+                                        Program.Настройки.UTC = ПеременнаяInt;
+                                    break;
                             }
                         }
                     }
@@ -650,6 +661,8 @@ namespace MainExample
 
                     DumpFile.WriteLine("FontДальние=" + $"{Program.Настройки.FontДальние.Name}:{Program.Настройки.FontДальние.Size}:{Program.Настройки.FontДальние.Style}");
                     DumpFile.WriteLine("FontПригород=" + $"{Program.Настройки.FontПригород.Name}:{Program.Настройки.FontПригород.Size}:{Program.Настройки.FontПригород.Style}");
+
+                    DumpFile.WriteLine("UTC=" + Program.Настройки.UTC.ToString("D"));
 
                     DumpFile.Close();
                 }

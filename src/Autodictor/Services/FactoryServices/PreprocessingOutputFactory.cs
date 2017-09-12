@@ -28,10 +28,12 @@ namespace MainExample.Services.FactoryServices
 
         public static  SoundRecordPreprocessingService CreateSoundRecordPreprocessingService()
         {
-            return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>
-            {
-                new SoundRecordPreprocessingTimezone()
-            });
+            return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>());
+
+            //return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>
+            //{
+            //    new SoundRecordPreprocessingTimezone()
+            //});
         }
     }
 }

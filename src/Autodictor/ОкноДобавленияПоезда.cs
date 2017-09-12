@@ -367,6 +367,15 @@ namespace MainExample
                         rTB_Сообщение.AppendText(Text + " ");
                         break;
 
+                    case "ВРЕМЯ ПРИБЫТИЯ UTC":
+                        rTB_Сообщение.Text += "Время прибытия UTC: ";
+                        var времяUtc = record.ВремяПрибытия.AddMinutes(Program.Настройки.UTC);
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = времяUtc.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
                     case "ВРЕМЯ СТОЯНКИ":
                         rTB_Сообщение.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
@@ -379,6 +388,15 @@ namespace MainExample
                         rTB_Сообщение.Text += "Время отправления: ";
                         УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
                         Text = record.ВремяОтправления.ToString("HH:mm");
+                        УказательВыделенныхФрагментов.Add(Text.Length);
+                        rTB_Сообщение.AppendText(Text + " ");
+                        break;
+
+                    case "ВРЕМЯ ОТПРАВЛЕНИЯ UTC":
+                        rTB_Сообщение.Text += "Время отправления UTC: ";
+                        времяUtc = record.ВремяОтправления.AddMinutes(Program.Настройки.UTC);
+                        УказательВыделенныхФрагментов.Add(rTB_Сообщение.Text.Length);
+                        Text = времяUtc.ToString("HH:mm");
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTB_Сообщение.AppendText(Text + " ");
                         break;

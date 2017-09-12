@@ -60,8 +60,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtb_Дальние = new System.Windows.Forms.TextBox();
-            this.txtb_Пригород = new System.Windows.Forms.TextBox();
             this.tBСамоеРанееВремяШаблона = new System.Windows.Forms.TextBox();
             this.label115 = new System.Windows.Forms.Label();
             this.tBИнтОповещООтпрПоГотов = new System.Windows.Forms.TextBox();
@@ -80,9 +78,12 @@
             this.label19 = new System.Windows.Forms.Label();
             this.tBВремяМеждуСообщениями = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.txtb_Дальние = new System.Windows.Forms.TextBox();
+            this.txtb_Пригород = new System.Windows.Forms.TextBox();
             this.btnЗагрузить = new System.Windows.Forms.Button();
             this.btnСохранить = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label118 = new System.Windows.Forms.Label();
             this.pCol18 = new System.Windows.Forms.Panel();
             this.label117 = new System.Windows.Forms.Label();
             this.pCol17 = new System.Windows.Forms.Panel();
@@ -293,7 +294,8 @@
             this.chBox2_LongDist = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.chBox1_LongDist = new System.Windows.Forms.CheckBox();
-            this.label118 = new System.Windows.Forms.Label();
+            this.tBUtcЗвука = new System.Windows.Forms.TextBox();
+            this.label121 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -627,6 +629,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tBUtcЗвука);
+            this.groupBox2.Controls.Add(this.label121);
             this.groupBox2.Controls.Add(this.tBСамоеРанееВремяШаблона);
             this.groupBox2.Controls.Add(this.label115);
             this.groupBox2.Controls.Add(this.tBИнтОповещООтпрПоГотов);
@@ -652,29 +656,9 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Общие настройки";
             // 
-            // txtb_Дальние
-            // 
-            this.txtb_Дальние.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtb_Дальние.Location = new System.Drawing.Point(405, 256);
-            this.txtb_Дальние.Multiline = true;
-            this.txtb_Дальние.Name = "txtb_Дальние";
-            this.txtb_Дальние.Size = new System.Drawing.Size(141, 18);
-            this.txtb_Дальние.TabIndex = 26;
-            this.txtb_Дальние.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Дальние_MouseDoubleClick);
-            // 
-            // txtb_Пригород
-            // 
-            this.txtb_Пригород.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtb_Пригород.Location = new System.Drawing.Point(405, 232);
-            this.txtb_Пригород.Multiline = true;
-            this.txtb_Пригород.Name = "txtb_Пригород";
-            this.txtb_Пригород.Size = new System.Drawing.Size(141, 18);
-            this.txtb_Пригород.TabIndex = 25;
-            this.txtb_Пригород.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Пригород_MouseDoubleClick);
-            // 
             // tBСамоеРанееВремяШаблона
             // 
-            this.tBСамоеРанееВремяШаблона.Location = new System.Drawing.Point(428, 163);
+            this.tBСамоеРанееВремяШаблона.Location = new System.Drawing.Point(428, 150);
             this.tBСамоеРанееВремяШаблона.Name = "tBСамоеРанееВремяШаблона";
             this.tBСамоеРанееВремяШаблона.Size = new System.Drawing.Size(53, 26);
             this.tBСамоеРанееВремяШаблона.TabIndex = 23;
@@ -683,7 +667,7 @@
             // label115
             // 
             this.label115.AutoSize = true;
-            this.label115.Location = new System.Drawing.Point(8, 167);
+            this.label115.Location = new System.Drawing.Point(8, 154);
             this.label115.Name = "label115";
             this.label115.Size = new System.Drawing.Size(410, 20);
             this.label115.TabIndex = 22;
@@ -709,7 +693,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(8, 254);
+            this.label24.Location = new System.Drawing.Point(8, 265);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(281, 20);
             this.label24.TabIndex = 19;
@@ -719,7 +703,7 @@
             // 
             this.dTP_Автообновление.CustomFormat = "HH:mm";
             this.dTP_Автообновление.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Автообновление.Location = new System.Drawing.Point(396, 254);
+            this.dTP_Автообновление.Location = new System.Drawing.Point(396, 265);
             this.dTP_Автообновление.Name = "dTP_Автообновление";
             this.dTP_Автообновление.ShowUpDown = true;
             this.dTP_Автообновление.Size = new System.Drawing.Size(85, 26);
@@ -728,7 +712,7 @@
             // cbРазрешитьАвтоОбновлениеРасписания
             // 
             this.cbРазрешитьАвтоОбновлениеРасписания.AutoSize = true;
-            this.cbРазрешитьАвтоОбновлениеРасписания.Location = new System.Drawing.Point(428, 230);
+            this.cbРазрешитьАвтоОбновлениеРасписания.Location = new System.Drawing.Point(428, 241);
             this.cbРазрешитьАвтоОбновлениеРасписания.Name = "cbРазрешитьАвтоОбновлениеРасписания";
             this.cbРазрешитьАвтоОбновлениеРасписания.Size = new System.Drawing.Size(15, 14);
             this.cbРазрешитьАвтоОбновлениеРасписания.TabIndex = 17;
@@ -737,7 +721,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(8, 226);
+            this.label23.Location = new System.Drawing.Point(8, 237);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(317, 20);
             this.label23.TabIndex = 16;
@@ -746,7 +730,7 @@
             // cBРазрешениеДобавленияЗаблокированныхПоездовВСписок
             // 
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.AutoSize = true;
-            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 204);
+            this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Location = new System.Drawing.Point(428, 215);
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Name = "cBРазрешениеДобавленияЗаблокированныхПоездовВСписок";
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.Size = new System.Drawing.Size(15, 14);
             this.cBРазрешениеДобавленияЗаблокированныхПоездовВСписок.TabIndex = 15;
@@ -755,7 +739,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 200);
+            this.label22.Location = new System.Drawing.Point(8, 211);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(397, 20);
             this.label22.TabIndex = 8;
@@ -829,6 +813,26 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Время паузы между сообщениями, сек";
             // 
+            // txtb_Дальние
+            // 
+            this.txtb_Дальние.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtb_Дальние.Location = new System.Drawing.Point(405, 256);
+            this.txtb_Дальние.Multiline = true;
+            this.txtb_Дальние.Name = "txtb_Дальние";
+            this.txtb_Дальние.Size = new System.Drawing.Size(141, 18);
+            this.txtb_Дальние.TabIndex = 26;
+            this.txtb_Дальние.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Дальние_MouseDoubleClick);
+            // 
+            // txtb_Пригород
+            // 
+            this.txtb_Пригород.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtb_Пригород.Location = new System.Drawing.Point(405, 232);
+            this.txtb_Пригород.Multiline = true;
+            this.txtb_Пригород.Name = "txtb_Пригород";
+            this.txtb_Пригород.Size = new System.Drawing.Size(141, 18);
+            this.txtb_Пригород.TabIndex = 25;
+            this.txtb_Пригород.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtb_Пригород_MouseDoubleClick);
+            // 
             // btnЗагрузить
             // 
             this.btnЗагрузить.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -892,6 +896,16 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Цветовые настройки";
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label118.Location = new System.Drawing.Point(436, 13);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(69, 20);
+            this.label118.TabIndex = 35;
+            this.label118.Text = "Шрифт";
             // 
             // pCol18
             // 
@@ -3071,15 +3085,22 @@
             this.chBox1_LongDist.TabIndex = 20;
             this.chBox1_LongDist.UseVisualStyleBackColor = true;
             // 
-            // label118
+            // tBUtcЗвука
             // 
-            this.label118.AutoSize = true;
-            this.label118.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label118.Location = new System.Drawing.Point(436, 13);
-            this.label118.Name = "label118";
-            this.label118.Size = new System.Drawing.Size(69, 20);
-            this.label118.TabIndex = 35;
-            this.label118.Text = "Шрифт";
+            this.tBUtcЗвука.Location = new System.Drawing.Point(428, 177);
+            this.tBUtcЗвука.Name = "tBUtcЗвука";
+            this.tBUtcЗвука.Size = new System.Drawing.Size(53, 26);
+            this.tBUtcЗвука.TabIndex = 25;
+            this.tBUtcЗвука.Text = "3";
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Location = new System.Drawing.Point(8, 181);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(347, 20);
+            this.label121.TabIndex = 24;
+            this.label121.Text = "UTC для звуковой переменой шаблона , мин";
             // 
             // ОкноНастроек
             // 
@@ -3391,5 +3412,7 @@
         private System.Windows.Forms.TextBox txtb_Пригород;
         private System.Windows.Forms.TextBox txtb_Дальние;
         private System.Windows.Forms.Label label118;
+        private System.Windows.Forms.TextBox tBUtcЗвука;
+        private System.Windows.Forms.Label label121;
     }
 }
