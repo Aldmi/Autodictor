@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum XmlType {None, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow, XmlApkDkGet }
+    public enum ProviderType {None, ChMan, ChManOnOff, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow, XmlApkDkGet }
 
     public enum DateTimeFormat
     {
@@ -21,7 +21,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
     {
         #region prop
 
-        public XmlType? XmlType { get; set; }
+        public ProviderType? ProviderType { get; set; }
         public DateTimeFormat DateTimeFormat { get; set; }
 
         public string Login { get; set; }
@@ -40,7 +40,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
         {
             if (string.IsNullOrEmpty(providerType))
             {
-                XmlType = null;
+                ProviderType = null;
                 return;
             }
 
@@ -48,34 +48,44 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             var providerName = providerSettings[0];
             var timeFormat = (providerSettings.Length > 1) ? providerSettings[1] : null;
 
+            if (providerName.ToLower().Contains("channelprovider"))
+            {
+                ProviderType = XmlSpecialSettings.ProviderType.ChMan;
+            }
+            else
+            if (providerName.ToLower().Contains("onoffprovider"))
+            {
+                ProviderType = XmlSpecialSettings.ProviderType.ChManOnOff;
+            }
+            else
             if (providerName.ToLower().Contains("xml_tlist"))
             {
-                XmlType= XmlSpecialSettings.XmlType.XmlTlist;            
+                ProviderType= XmlSpecialSettings.ProviderType.XmlTlist;            
             }
             else
             if (providerName.ToLower().Contains("xml_mainwindow"))
             {
-                XmlType = XmlSpecialSettings.XmlType.XmlMainWindow;
+                ProviderType = XmlSpecialSettings.ProviderType.XmlMainWindow;
             }
             else
             if (providerName.ToLower().Contains("xml_shedulewindow"))
             {
-                XmlType = XmlSpecialSettings.XmlType.XmlSheduleWindow;
+                ProviderType = XmlSpecialSettings.ProviderType.XmlSheduleWindow;
             }
             else
             if (providerName.ToLower().Contains("xml_staticwindow"))
             {
-                XmlType = XmlSpecialSettings.XmlType.XmlStaticWindow;
+                ProviderType = XmlSpecialSettings.ProviderType.XmlStaticWindow;
             }
             else
             if (providerName.ToLower().Contains("xml_change"))
             {
-                XmlType = XmlSpecialSettings.XmlType.XmlChange;
+                ProviderType = XmlSpecialSettings.ProviderType.XmlChange;
             }
             else
             if (providerName.ToLower().Contains("xml_apkdkmoscow"))
             {
-                XmlType = XmlSpecialSettings.XmlType.XmlApkDkMoscow;
+                ProviderType = XmlSpecialSettings.ProviderType.XmlApkDkMoscow;
                 //парсим информацию в скоюках.
                 var regex = Regex.Match(providerName, @"\((.*?)\)"); //@"\((.*?)\)"
                 string value = regex.Groups[1].Value;
@@ -93,7 +103,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             else
             if (providerName.ToLower().Contains("xml_apkdkget"))
             {
-                XmlType = XmlSpecialSettings.XmlType.XmlApkDkGet;
+                ProviderType = XmlSpecialSettings.ProviderType.XmlApkDkGet;
             }
 
 

@@ -335,12 +335,12 @@ namespace MainExample
             if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
             {
                 //DEBUG---------------------------------
-                string sumstr= String.Empty;
-                foreach (var item in apkDkVolgogradShedules)
-                {
-                    sumstr+= $"N= {item.Ntrain}  Путь= {item.Put}    Дата отпр={item.DtOtpr:d} Время отпр={item.TmOtpr:g}     Дата приб={item.DtPrib:d} Время приб={item.TmPrib:g}" + "||||||||||";
-                }
-                MessageBox.Show(sumstr);
+                //string sumstr= String.Empty;
+                //foreach (var item in apkDkVolgogradShedules)
+                //{
+                //    sumstr+= $"N= {item.Ntrain}  Путь= {item.Put}    Дата отпр={item.DtOtpr:d} Время отпр={item.TmOtpr:g}     Дата приб={item.DtPrib:d} Время приб={item.TmPrib:g}" + "||||||||||";
+                //}
+                //MessageBox.Show(sumstr);
                 //DEBUG---------------------------------
             }
         }

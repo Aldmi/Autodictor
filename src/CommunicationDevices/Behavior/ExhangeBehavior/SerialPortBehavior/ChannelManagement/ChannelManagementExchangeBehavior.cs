@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Communication.Interfaces;
 using Communication.SerialPort;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.ChannelManagementDataProvider;
@@ -15,11 +16,21 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.Chann
     /// </summary>
     public class ChannelManagementExchangeBehavior : BaseExhangeSpBehavior
     {
+        #region prop
+
+        public IExchangeDataProvider<UniversalInputType, byte> WriteProvider { get; set; }
+
+        #endregion
+
+
+
+
         #region ctor
 
-        public ChannelManagementExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne)
+        public ChannelManagementExchangeBehavior(MasterSerialPort port, ushort timeRespone, byte maxCountFaildRespowne, IExchangeDataProvider<UniversalInputType, byte> provider)
             : base(port, timeRespone, maxCountFaildRespowne)
         {
+            WriteProvider = provider;
         }
 
         #endregion
@@ -35,10 +46,10 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.Chann
             var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;  //хранит адресс устройства.
             if (inData != null)
             {
-                var writeProvider = new ChannelManagementWriteDataProvider(inData.SoundChanels) {InputData = inData};
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+                WriteProvider.InputData = inData;
+                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, WriteProvider, ct);
 
-                if (writeProvider.IsOutDataValid)
+                if (WriteProvider.IsOutDataValid)
                 {
                     // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
                 }

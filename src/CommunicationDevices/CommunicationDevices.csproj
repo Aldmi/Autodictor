@@ -113,6 +113,7 @@
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\BaseExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\XmlExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
+    <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementOnOffWriteDataProvider.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementWriteDataProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\IFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlGetFormatProvider.cs" />

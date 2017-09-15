@@ -28,6 +28,7 @@ using CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
+using CommunicationDevices.DataProviders.ChannelManagementDataProvider;
 using CommunicationDevices.DataProviders.VidorDataProvider;
 using CommunicationDevices.DataProviders.XmlDataProvider;
 using CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders;
@@ -226,6 +227,7 @@ namespace CommunicationDevices.Model
                 XmlPagingSetting paging = null;
                 XmlCountRowSetting countRow = null;
                 XmlPathPermissionSetting pathPermission = null;
+                XmlProviderTypeSetting providerType = null;
                 List<XmlExchangeRule> xmlExchangeRules = null;
 
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("Binding"))
@@ -251,6 +253,11 @@ namespace CommunicationDevices.Model
                 if (xmlDeviceSp.SpecialDictionary.ContainsKey("PathPermission"))
                 {
                     pathPermission = xmlDeviceSp.SpecialDictionary["PathPermission"] as XmlPathPermissionSetting;
+                }
+
+                if (xmlDeviceSp.SpecialDictionary.ContainsKey("ProviderType"))
+                {
+                    providerType = xmlDeviceSp.SpecialDictionary["ProviderType"] as XmlProviderTypeSetting;
                 }
 
                 var setting = new DeviceSetting
@@ -410,8 +417,24 @@ namespace CommunicationDevices.Model
 
                     case "ChannelManagement":
                         maxCountFaildRespowne = 3;
-                        behavior = new ChannelManagementExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne);
-                        DeviceSoundChannelManagement=  new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, null);
+                        if (providerType?.ProviderType != null)
+                        {
+                            IExchangeDataProvider<UniversalInputType, byte> provider = null;
+                            switch (providerType.ProviderType.Value)
+                            {
+                                case ProviderType.ChMan:
+                                    provider = new ChannelManagementWriteDataProvider();
+                                    break;
+
+                                case ProviderType.ChManOnOff:
+                                    provider = new ChannelManagementOnOffWriteDataProvider();
+                                    break;
+                            }
+       
+                            behavior = new ChannelManagementExchangeBehavior(MasterSerialPorts.FirstOrDefault(s => s.PortNumber == xmlDeviceSp.PortNumber), xmlDeviceSp.TimeRespone, maxCountFaildRespowne, provider);
+                            DeviceSoundChannelManagement = new Device(xmlDeviceSp.Id, xmlDeviceSp.Address, xmlDeviceSp.Name, xmlDeviceSp.Description, behavior, binding.BindingType, null);
+                        }
+
                         break;
 
 
@@ -894,37 +917,37 @@ namespace CommunicationDevices.Model
 
             
                 byte maxCountFaildRespowne = 3;
-                if (providerType?.XmlType != null)
+                if (providerType?.ProviderType != null)
                 {
                     IExchangeDataProvider<UniversalInputType, Stream> provider = null;
                     var httpBeh= new XmlExhangeHttpBehavior(xmlDeviceHttp.Address, xmlDeviceHttp.Headers, maxCountFaildRespowne, xmlDeviceHttp.TimeRespone, xmlDeviceHttp.Period, provider);
-                    switch (providerType.XmlType.Value)
+                    switch (providerType.ProviderType.Value)
                     {
-                        case XmlType.XmlTlist:
+                        case ProviderType.XmlTlist:
                             provider = new StreamWriteDataProvider(new XmlTListFormatProvider());
                             break;
 
-                        case XmlType.XmlMainWindow:
+                        case ProviderType.XmlMainWindow:
                             provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider(providerType.DateTimeFormat));
                             break;
 
-                        case XmlType.XmlSheduleWindow:
+                        case ProviderType.XmlSheduleWindow:
                             provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat));
                             break;
 
-                        case XmlType.XmlStaticWindow:
+                        case ProviderType.XmlStaticWindow:
                             provider = new StreamWriteDataProvider(new XmlStaticWindowFormatProvider());
                             break;
 
-                        case XmlType.XmlChange:
+                        case ProviderType.XmlChange:
                             provider = new StreamWriteDataProvider(new XmlChangesFormatProvider(providerType.DateTimeFormat));
                             break;
 
-                        case XmlType.XmlApkDkMoscow:
+                        case ProviderType.XmlApkDkMoscow:
                             provider = new StreamWriteDataProvider(new XmlApkDkMoscowFormatProvider(providerType.Login, providerType.Password, providerType.EcpCode));
                             break;
 
-                        case XmlType.XmlApkDkGet:
+                        case ProviderType.XmlApkDkGet:
                             provider = new StreamWriteDataProvider(new XmlGetFormatProvider());
                             switch (xmlDeviceHttp.Name)
                             {
@@ -1038,7 +1061,6 @@ namespace CommunicationDevices.Model
         {
             try
             {
-                MessageBox.Show("ПОТОК полученн");//DEBUG ApkDk
                 StreamReader reader = new StreamReader(stream);
                 string text = reader.ReadToEnd();
                 XDocument xDoc = XDocument.Parse(text);

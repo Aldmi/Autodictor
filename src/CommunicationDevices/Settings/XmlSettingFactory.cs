@@ -63,6 +63,12 @@ namespace CommunicationDevices.Settings
                     spSett.SpecialDictionary.Add("CountRow", new XmlCountRowSetting(countRow));
                 }
 
+                var providerType = (string)el.Attribute("ProviderType");
+                if (providerType != null)
+                {
+                    spSett.SpecialDictionary.Add("ProviderType", new XmlProviderTypeSetting(providerType));
+                }
+
                 if (el.Element("Settings") != null)
                 {
                     var pathPermissionElem = el.Element("Settings")?.Element("PathPermission");
