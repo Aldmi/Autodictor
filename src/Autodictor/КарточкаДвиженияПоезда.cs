@@ -92,6 +92,8 @@ namespace MainExample
                 case 2: rB_Нумерация_СХвоста.Checked = true; break;
             }
 
+            chbox_сменнаяНумерация.Checked = record.СменнаяНумерацияПоезда;
+
 
             tb_Дополнение.Text = record.Дополнение;
             cb_Дополнение_Звук.Checked = record.ИспользоватьДополнение["звук"];
@@ -358,6 +360,8 @@ namespace MainExample
 
             _record.НомерПоезда = cBНомерПоезда.Text;
             _record.НомерПоезда2 = cBНомерПоезда2.Text;
+
+            _record.СменнаяНумерацияПоезда = chbox_сменнаяНумерация.Checked;
 
 
             if (rB_СоВсемиОстановками.Checked == true)
@@ -685,31 +689,31 @@ namespace MainExample
                 string Шаблон = "";
 
                 bool наличиеШаблона = false;
+                СостояниеФормируемогоСообщенияИШаблон? сообшение = null;
                 foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
                     if (Item.Name == Key)
                     {
                         наличиеШаблона = true;
                         Шаблон = Item.Message;
-                        int текущийШаблон = (int)this.lVШаблоны.Items[item].Tag;
-                        if (текущийШаблон < _record.СписокФормируемыхСообщений.Count())
-                        {
-                            var формируемоеСообщение = _record.СписокФормируемыхСообщений[текущийШаблон];
-                        }
+                        сообшение= _record.СписокФормируемыхСообщений.FirstOrDefault(t => t.НазваниеШаблона == Key);
                         break;
                     }
 
                 if (наличиеШаблона == true)
-                    ОтобразитьШаблонОповещенияНаRichTb(Шаблон, rTB_Сообщение);
+                    ОтобразитьШаблонОповещенияНаRichTb(Шаблон, ref сообшение, rTB_Сообщение);
             }
         }
 
 
 
-        public void ОтобразитьШаблонОповещенияНаRichTb(string шаблонОповещения, RichTextBox rTb)
+        public void ОтобразитьШаблонОповещенияНаRichTb(string шаблонОповещения, ref СостояниеФормируемогоСообщенияИШаблон? сообшение, RichTextBox rTb)
         {
-            //сервис с препроцессором корректировки времени по часовому поясу
+            var option = new Dictionary<string, dynamic>
+            {
+                {"формируемоеСообщение", сообшение }
+            };
             var record = _record;
-            var soundRecordPreprocessingService = PreprocessingOutputFactory.CreateSoundRecordPreprocessingService();
+            var soundRecordPreprocessingService = PreprocessingOutputFactory.CreateSoundRecordPreprocessingService(option);
             soundRecordPreprocessingService.StartPreprocessing(ref record);
 
 
@@ -774,6 +778,8 @@ namespace MainExample
                         break;
 
                     case "ДОПОЛНЕНИЕ":
+                        if(string.IsNullOrEmpty(record.Дополнение))
+                            break;
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
                         Text = record.Дополнение;
                         УказательВыделенныхФрагментов.Add(Text.Length);

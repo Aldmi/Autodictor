@@ -300,7 +300,7 @@ namespace MainExample
         {
             //сервис с препроцессором корректировки времени по часовому поясу
             var record = Record;
-            var soundRecordPreprocessingService = PreprocessingOutputFactory.CreateSoundRecordPreprocessingService();
+            var soundRecordPreprocessingService = PreprocessingOutputFactory.CreateSoundRecordPreprocessingService(null);
             soundRecordPreprocessingService.StartPreprocessing(ref record);
 
 

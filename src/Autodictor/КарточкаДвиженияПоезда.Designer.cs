@@ -98,6 +98,7 @@
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
+            this.chbox_сменнаяНумерация = new System.Windows.Forms.CheckBox();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -108,6 +109,7 @@
             // 
             // gB_НумерацияПоезда
             // 
+            this.gB_НумерацияПоезда.Controls.Add(this.chbox_сменнаяНумерация);
             this.gB_НумерацияПоезда.Controls.Add(this.rB_Нумерация_СХвоста);
             this.gB_НумерацияПоезда.Controls.Add(this.rB_Нумерация_СГоловы);
             this.gB_НумерацияПоезда.Controls.Add(this.rB_Нумерация_Отсутствует);
@@ -122,7 +124,7 @@
             // rB_Нумерация_СХвоста
             // 
             this.rB_Нумерация_СХвоста.AutoSize = true;
-            this.rB_Нумерация_СХвоста.Location = new System.Drawing.Point(15, 127);
+            this.rB_Нумерация_СХвоста.Location = new System.Drawing.Point(15, 86);
             this.rB_Нумерация_СХвоста.Name = "rB_Нумерация_СХвоста";
             this.rB_Нумерация_СХвоста.Size = new System.Drawing.Size(143, 25);
             this.rB_Нумерация_СХвоста.TabIndex = 3;
@@ -134,7 +136,7 @@
             // rB_Нумерация_СГоловы
             // 
             this.rB_Нумерация_СГоловы.AutoSize = true;
-            this.rB_Нумерация_СГоловы.Location = new System.Drawing.Point(15, 75);
+            this.rB_Нумерация_СГоловы.Location = new System.Drawing.Point(15, 53);
             this.rB_Нумерация_СГоловы.Name = "rB_Нумерация_СГоловы";
             this.rB_Нумерация_СГоловы.Size = new System.Drawing.Size(148, 25);
             this.rB_Нумерация_СГоловы.TabIndex = 2;
@@ -913,6 +915,17 @@
             this.btn_выход.UseVisualStyleBackColor = true;
             this.btn_выход.Click += new System.EventHandler(this.btn_выход_Click);
             // 
+            // chbox_сменнаяНумерация
+            // 
+            this.chbox_сменнаяНумерация.AutoSize = true;
+            this.chbox_сменнаяНумерация.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Italic);
+            this.chbox_сменнаяНумерация.Location = new System.Drawing.Point(16, 128);
+            this.chbox_сменнаяНумерация.Name = "chbox_сменнаяНумерация";
+            this.chbox_сменнаяНумерация.Size = new System.Drawing.Size(167, 22);
+            this.chbox_сменнаяНумерация.TabIndex = 62;
+            this.chbox_сменнаяНумерация.Text = "Сменная нумерация";
+            this.chbox_сменнаяНумерация.UseVisualStyleBackColor = true;
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1020,5 +1033,6 @@
         private System.Windows.Forms.Label lb_фиксВрОтпр;
         private System.Windows.Forms.Button btn_выход;
         private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
     }
 }

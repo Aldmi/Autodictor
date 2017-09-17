@@ -59,6 +59,50 @@ namespace MainExample.Services
 
 
 
+    public class SoundRecordPreprocessingChangeTrainPathDirection : ISoundRecordPreprocessing
+    {
+        private readonly СостояниеФормируемогоСообщенияИШаблон? _шаблон;
+
+
+
+        public SoundRecordPreprocessingChangeTrainPathDirection(Dictionary<string, dynamic> option)
+        {
+            if (option.ContainsKey("формируемоеСообщение"))
+            {
+                _шаблон = (СостояниеФормируемогоСообщенияИШаблон?) option["формируемоеСообщение"];
+            }
+        }
+
+
+
+
+        public void StartPreprocessing(ref SoundRecord rec)
+        {
+            if (_шаблон == null)
+                return;
+
+            //для ТРНАЗИТОВ
+            if ((rec.БитыАктивностиПолей & 0x1F) != 0x00)
+            {
+                var привязкаКВремени = _шаблон.Value.ПривязкаКВремени;
+                if (rec.СменнаяНумерацияПоезда && привязкаКВремени == 1) // если привязка шаблона к ОТПР, то смена нумерации
+                {
+                    switch (rec.НумерацияПоезда)
+                    {
+                        case 1:
+                            rec.НумерацияПоезда = 2;
+                            break;
+                        case 2:
+                            rec.НумерацияПоезда = 1;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+
+
 
     public class SoundRecordPreprocessingService
     {

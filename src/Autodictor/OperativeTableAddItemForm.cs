@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 using Domain.Entitys;
 using MainExample.Mappers;
 
@@ -309,7 +310,8 @@ namespace MainExample
                         var key = soundRec.Время.ToString();
 
                         КарточкаДвиженияПоезда карточка= new КарточкаДвиженияПоезда(soundRec, key);
-                        карточка.ОтобразитьШаблонОповещенияНаRichTb(item.Message, rTB_Сообщение);
+                        СостояниеФормируемогоСообщенияИШаблон? сообшение = soundRec.СписокФормируемыхСообщений.FirstOrDefault(t => t.НазваниеШаблона == шаблон);
+                        карточка.ОтобразитьШаблонОповещенияНаRichTb(item.Message, ref сообшение, rTB_Сообщение);
                         break;
                     }
                 }

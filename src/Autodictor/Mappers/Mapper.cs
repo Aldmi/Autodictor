@@ -96,6 +96,7 @@ namespace MainExample.Mappers
             record.НомерПути = ПолучитьНомерПутиПоДнямНедели(config);
             record.НомерПутиБезАвтосброса = record.НомерПути;
             record.НумерацияПоезда = config.TrainPathDirection;
+            record.СменнаяНумерацияПоезда = config.ChangeTrainPathDirection;
             record.Примечание = config.Примечание;
             record.ТипПоезда = config.ТипПоезда;
             record.Состояние = SoundRecordStatus.ОжиданиеВоспроизведения;

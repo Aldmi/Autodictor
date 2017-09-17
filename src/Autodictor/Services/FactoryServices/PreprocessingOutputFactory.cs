@@ -8,32 +8,32 @@ namespace MainExample.Services.FactoryServices
     {
         public static UitPreprocessingOutputService CreateUitPreprocessingOutputService()
         {
-            Dictionary<TypeTrain, int> typeTrainTimeZoneDictionary = new Dictionary<TypeTrain, int>
-            {
-                [TypeTrain.Passenger] = Program.Настройки.TimeZoneНаПассажирскийПоезд,
-                [TypeTrain.Suburban] = Program.Настройки.TimeZoneНаПригородныйЭлектропоезд,
-                [TypeTrain.Corporate] = Program.Настройки.TimeZoneНаФирменный,
-                [TypeTrain.Express] = Program.Настройки.TimeZoneНаСкорыйПоезд,
-                [TypeTrain.HighSpeed] = Program.Настройки.TimeZoneНаСкоростнойПоезд,
-                [TypeTrain.Swallow] = Program.Настройки.TimeZoneНаЛасточку,
-                [TypeTrain.Rex] = Program.Настройки.TimeZoneНаРЭКС
-            };
+            //Dictionary<TypeTrain, int> typeTrainTimeZoneDictionary = new Dictionary<TypeTrain, int>
+            //{
+            //    [TypeTrain.Passenger] = Program.Настройки.TimeZoneНаПассажирскийПоезд,
+            //    [TypeTrain.Suburban] = Program.Настройки.TimeZoneНаПригородныйЭлектропоезд,
+            //    [TypeTrain.Corporate] = Program.Настройки.TimeZoneНаФирменный,
+            //    [TypeTrain.Express] = Program.Настройки.TimeZoneНаСкорыйПоезд,
+            //    [TypeTrain.HighSpeed] = Program.Настройки.TimeZoneНаСкоростнойПоезд,
+            //    [TypeTrain.Swallow] = Program.Настройки.TimeZoneНаЛасточку,
+            //    [TypeTrain.Rex] = Program.Настройки.TimeZoneНаРЭКС
+            //};
             return new UitPreprocessingOutputService(new List<IUitPreprocessing>
             {
-                new UitPreprocessingTimezone(typeTrainTimeZoneDictionary)
+                new UitPreprocessingChnagePathDirection4Transit()
             });
         }
 
 
 
-        public static  SoundRecordPreprocessingService CreateSoundRecordPreprocessingService()
+        public static  SoundRecordPreprocessingService CreateSoundRecordPreprocessingService(Dictionary<string, dynamic> option)
         {
-            return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>());
+            //return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>());
 
-            //return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>
-            //{
-            //    new SoundRecordPreprocessingTimezone()
-            //});
+            return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>
+            {
+               new SoundRecordPreprocessingChangeTrainPathDirection(option)
+            });
         }
     }
 }
