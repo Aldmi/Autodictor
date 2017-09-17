@@ -10,7 +10,6 @@ namespace CommunicationDevices.Services
 
         public void StartPreprocessing(UniversalInputType uit)
         {
-            uit.ChangeVagonDirection = true;//DEBUG
             if (uit.Event == "СТОЯНКА") 
             {
                 if (uit.ChangeVagonDirection)

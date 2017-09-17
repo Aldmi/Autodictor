@@ -59,13 +59,13 @@ namespace MainExample.Services
 
 
 
-    public class SoundRecordPreprocessingChangeTrainPathDirection : ISoundRecordPreprocessing
+    public class SoundRecordPreprocessingChangeTrainPathDirection4Transit : ISoundRecordPreprocessing
     {
         private readonly СостояниеФормируемогоСообщенияИШаблон? _шаблон;
 
 
 
-        public SoundRecordPreprocessingChangeTrainPathDirection(Dictionary<string, dynamic> option)
+        public SoundRecordPreprocessingChangeTrainPathDirection4Transit(Dictionary<string, dynamic> option)
         {
             if (option.ContainsKey("формируемоеСообщение"))
             {

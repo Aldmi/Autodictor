@@ -32,7 +32,7 @@ namespace MainExample.Services.FactoryServices
 
             return new SoundRecordPreprocessingService(new List<ISoundRecordPreprocessing>
             {
-               new SoundRecordPreprocessingChangeTrainPathDirection(option)
+               new SoundRecordPreprocessingChangeTrainPathDirection4Transit(option)
             });
         }
     }
