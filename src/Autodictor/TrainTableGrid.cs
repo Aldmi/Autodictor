@@ -32,6 +32,7 @@ namespace MainExample
         public bool Active;               //активность, отмека галочкой
         public string SoundTemplates;     //
         public byte TrainPathDirection;
+        public bool ChangeTrainPathDirection;      //смена направления (для трназитов)
         public Dictionary<WeekDays, string> TrainPathNumber;      //Пути по дням недели или постоянно
         public bool PathWeekDayes;                                //true- установленны пути по дням недели, false - путь установленн постоянно
         public ТипПоезда ТипПоезда;
@@ -354,6 +355,14 @@ namespace MainExample
                                 данные.Direction = settings[24];
                             }
 
+                            данные.ChangeTrainPathDirection = false;
+                            if (settings.Length >= 26)
+                            {
+                                bool changeDirection;
+                                bool.TryParse(settings[25], out changeDirection);
+                                данные.ChangeTrainPathDirection = changeDirection;
+                            }
+
                             TrainTableRecords.Add(данные);
                             Program.НомераПоездов.Add(данные.Num);
                             if (!string.IsNullOrEmpty(данные.Num2))
@@ -374,7 +383,7 @@ namespace MainExample
         {
             try
             {
-                using (StreamWriter DumpFile = new StreamWriter("TableRecords.ini"))
+                using (StreamWriter dumpFile = new StreamWriter("TableRecords.ini"))
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
@@ -388,11 +397,14 @@ namespace MainExample
                                       (TrainTableRecords[i].Active ? "1" : "0") + ";" +
                                       TrainTableRecords[i].SoundTemplates + ";" +
                                       TrainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                                      SavePath2File(TrainTableRecords[i].TrainPathNumber, TrainTableRecords[i].PathWeekDayes) + ";" +
+                                      SavePath2File(TrainTableRecords[i].TrainPathNumber,
+                                          TrainTableRecords[i].PathWeekDayes) + ";" +
                                       TrainTableRecords[i].ТипПоезда.ToString() + ";" +
                                       TrainTableRecords[i].Примечание + ";" +
-                                      TrainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                      TrainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                      TrainTableRecords[i]
+                                          .ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                      TrainTableRecords[i]
+                                          .ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
                                       TrainTableRecords[i].Addition + ";" +
                                       (TrainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
                                       (TrainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
@@ -404,12 +416,13 @@ namespace MainExample
 
                                       TrainTableRecords[i].StationDepart + ";" +
                                       TrainTableRecords[i].StationArrival + ";" +
-                                      TrainTableRecords[i].Direction;
+                                      TrainTableRecords[i].Direction + ";" +
+                                      TrainTableRecords[i].ChangeTrainPathDirection;
 
-                        DumpFile.WriteLine(line);
+                        dumpFile.WriteLine(line);
                     }
 
-                    DumpFile.Close();
+                    dumpFile.Close();
                 }
             }
             catch (Exception e)
@@ -823,6 +836,7 @@ namespace MainExample
             Данные.Active = true;
             Данные.SoundTemplates = "";
             Данные.TrainPathDirection = 0x01;
+            Данные.ChangeTrainPathDirection = false;
             Данные.ТипПоезда = ТипПоезда.НеОпределен;
             Данные.TrainPathNumber = new Dictionary<WeekDays, string>
             {

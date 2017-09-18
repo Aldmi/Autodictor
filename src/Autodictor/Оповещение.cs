@@ -33,6 +33,7 @@ namespace MainExample
 
 
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
+            chbox_сменнаяНумерация.Checked= this.РасписаниеПоезда.ChangeTrainPathDirection;
 
 
             var directions = Program.DirectionRepository.List().ToList();
@@ -292,6 +293,8 @@ namespace MainExample
             РасписаниеПоезда.TrainPathDirection = (byte)cBОтсчетВагонов.SelectedIndex;
             РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
 
+            РасписаниеПоезда.ChangeTrainPathDirection = chbox_сменнаяНумерация.Checked;
+
 
             if (rBПрибытие.Checked == true)
             {
@@ -394,16 +397,23 @@ namespace MainExample
             {
                 dTPПрибытие.Visible = false;
                 tBНомерПоездаДоп.Visible = false;
+
+                chbox_сменнаяНумерация.Checked = false;
+                chbox_сменнаяНумерация.Enabled = false;
             }
             else if (rBОтправление.Checked)
             {
                 dTPПрибытие.Visible = false;
                 tBНомерПоездаДоп.Visible = false;
+
+                chbox_сменнаяНумерация.Checked = false;
+                chbox_сменнаяНумерация.Enabled = false;
             }
             else
             {
                 dTPПрибытие.Visible = true;
                 tBНомерПоездаДоп.Visible = true;
+                chbox_сменнаяНумерация.Enabled = true;
             }
         }
 
@@ -440,6 +450,7 @@ namespace MainExample
                 cBПутьПоУмолчанию.Enabled = false;
                 cBОтсчетВагонов.Enabled = false;
                 gBШаблонОповещения.Enabled = false;
+                chbox_сменнаяНумерация.Enabled = false;
             }
             else
             {
@@ -451,6 +462,7 @@ namespace MainExample
                 cBПутьПоУмолчанию.Enabled = true;
                 cBОтсчетВагонов.Enabled = true;
                 gBШаблонОповещения.Enabled = true;
+                chbox_сменнаяНумерация.Enabled = true;
             }
         }
 

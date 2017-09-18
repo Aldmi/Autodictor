@@ -286,6 +286,13 @@ namespace MainExample
                                 Данные.Direction = Settings[24];
                             }
 
+                            Данные.ChangeTrainPathDirection = false;
+                            if (Settings.Length >= 26)
+                            {
+                                bool changeDirection;
+                                bool.TryParse(Settings[25], out changeDirection);
+                                Данные.ChangeTrainPathDirection = changeDirection;
+                            }
 
 
                             TrainTableRecords.Add(Данные);
@@ -341,7 +348,8 @@ namespace MainExample
 
                             TrainTableRecords[i].StationDepart + ";" +
                             TrainTableRecords[i].StationArrival + ";" +
-                            TrainTableRecords[i].Direction;
+                            TrainTableRecords[i].Direction + ";" +
+                            TrainTableRecords[i].ChangeTrainPathDirection;
 
                         DumpFile.WriteLine(line);
                     }

@@ -108,6 +108,7 @@
             this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
             this.rb_Постоянно = new System.Windows.Forms.RadioButton();
+            this.chbox_сменнаяНумерация = new System.Windows.Forms.CheckBox();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -960,11 +961,23 @@
             this.rb_Постоянно.UseVisualStyleBackColor = true;
             this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
             // 
+            // chbox_сменнаяНумерация
+            // 
+            this.chbox_сменнаяНумерация.AutoSize = true;
+            this.chbox_сменнаяНумерация.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+            this.chbox_сменнаяНумерация.Location = new System.Drawing.Point(580, 318);
+            this.chbox_сменнаяНумерация.Name = "chbox_сменнаяНумерация";
+            this.chbox_сменнаяНумерация.Size = new System.Drawing.Size(180, 24);
+            this.chbox_сменнаяНумерация.TabIndex = 61;
+            this.chbox_сменнаяНумерация.Text = "Сменная нумерация";
+            this.chbox_сменнаяНумерация.UseVisualStyleBackColor = true;
+            // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1395, 712);
+            this.Controls.Add(this.chbox_сменнаяНумерация);
             this.Controls.Add(this.gb_ПутьПоУмолчанию);
             this.Controls.Add(this.tBНомерПоездаДоп);
             this.Controls.Add(this.label12);
@@ -1090,5 +1103,6 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn cmb_Путь;
         private System.Windows.Forms.ComboBox cBНаправ;
         private System.Windows.Forms.Label lНапр;
+        private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
     }
 }
