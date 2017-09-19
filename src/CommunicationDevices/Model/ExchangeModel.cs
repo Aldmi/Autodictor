@@ -1017,8 +1017,6 @@ namespace CommunicationDevices.Model
                     Binding2GetData.Add(new Binding2GetData(DeviceTables.Last()));
                     DeviceTables.Last().AddCycleFunc();
                 }
-
-                break;
             }
 
             #endregion
