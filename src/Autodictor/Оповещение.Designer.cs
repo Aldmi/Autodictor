@@ -61,18 +61,19 @@
             this.rBСоВсемиОстановками = new System.Windows.Forms.RadioButton();
             this.rBНеОповещать = new System.Windows.Forms.RadioButton();
             this.gBДниСледования = new System.Windows.Forms.GroupBox();
+            this.grbВремяДействия = new System.Windows.Forms.GroupBox();
+            this.rBВремяДействияС = new System.Windows.Forms.RadioButton();
+            this.rBВремяДействияПо = new System.Windows.Forms.RadioButton();
+            this.rBВремяДействияСПо = new System.Windows.Forms.RadioButton();
+            this.rBВремяДействияПостоянно = new System.Windows.Forms.RadioButton();
+            this.dTPВремяДействияС = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dTPВремяДействияПо = new System.Windows.Forms.DateTimePicker();
+            this.dTPВремяДействияПо2 = new System.Windows.Forms.DateTimePicker();
+            this.dTPВремяДействияС2 = new System.Windows.Forms.DateTimePicker();
             this.tb_ДниСледованияAlias = new System.Windows.Forms.TextBox();
             this.tBОписаниеДнейСледования = new System.Windows.Forms.TextBox();
             this.btnДниСледования = new System.Windows.Forms.Button();
-            this.rBВремяДействияПостоянно = new System.Windows.Forms.RadioButton();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dTPВремяДействияПо2 = new System.Windows.Forms.DateTimePicker();
-            this.dTPВремяДействияС2 = new System.Windows.Forms.DateTimePicker();
-            this.dTPВремяДействияПо = new System.Windows.Forms.DateTimePicker();
-            this.dTPВремяДействияС = new System.Windows.Forms.DateTimePicker();
-            this.rBВремяДействияСПо = new System.Windows.Forms.RadioButton();
-            this.rBВремяДействияПо = new System.Windows.Forms.RadioButton();
-            this.rBВремяДействияС = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.cBБлокировка = new System.Windows.Forms.CheckBox();
             this.gBШаблонОповещения = new System.Windows.Forms.GroupBox();
@@ -112,6 +113,7 @@
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
+            this.grbВремяДействия.SuspendLayout();
             this.gBШаблонОповещения.SuspendLayout();
             this.gbРежимРаботы.SuspendLayout();
             this.gb_ПутьПоУмолчанию.SuspendLayout();
@@ -475,25 +477,134 @@
             // 
             // gBДниСледования
             // 
+            this.gBДниСледования.Controls.Add(this.grbВремяДействия);
             this.gBДниСледования.Controls.Add(this.tb_ДниСледованияAlias);
             this.gBДниСледования.Controls.Add(this.tBОписаниеДнейСледования);
             this.gBДниСледования.Controls.Add(this.btnДниСледования);
-            this.gBДниСледования.Controls.Add(this.rBВремяДействияПостоянно);
-            this.gBДниСледования.Controls.Add(this.label6);
-            this.gBДниСледования.Controls.Add(this.dTPВремяДействияПо2);
-            this.gBДниСледования.Controls.Add(this.dTPВремяДействияС2);
-            this.gBДниСледования.Controls.Add(this.dTPВремяДействияПо);
-            this.gBДниСледования.Controls.Add(this.dTPВремяДействияС);
-            this.gBДниСледования.Controls.Add(this.rBВремяДействияСПо);
-            this.gBДниСледования.Controls.Add(this.rBВремяДействияПо);
-            this.gBДниСледования.Controls.Add(this.rBВремяДействияС);
-            this.gBДниСледования.Controls.Add(this.label5);
             this.gBДниСледования.Location = new System.Drawing.Point(14, 348);
             this.gBДниСледования.Name = "gBДниСледования";
             this.gBДниСледования.Size = new System.Drawing.Size(378, 360);
             this.gBДниСледования.TabIndex = 50;
             this.gBДниСледования.TabStop = false;
             this.gBДниСледования.Text = "Дни следования";
+            // 
+            // grbВремяДействия
+            // 
+            this.grbВремяДействия.Controls.Add(this.rBВремяДействияС);
+            this.grbВремяДействия.Controls.Add(this.rBВремяДействияПо);
+            this.grbВремяДействия.Controls.Add(this.rBВремяДействияСПо);
+            this.grbВремяДействия.Controls.Add(this.rBВремяДействияПостоянно);
+            this.grbВремяДействия.Controls.Add(this.dTPВремяДействияС);
+            this.grbВремяДействия.Controls.Add(this.label6);
+            this.grbВремяДействия.Controls.Add(this.dTPВремяДействияПо);
+            this.grbВремяДействия.Controls.Add(this.dTPВремяДействияПо2);
+            this.grbВремяДействия.Controls.Add(this.dTPВремяДействияС2);
+            this.grbВремяДействия.Location = new System.Drawing.Point(9, 24);
+            this.grbВремяДействия.Name = "grbВремяДействия";
+            this.grbВремяДействия.Size = new System.Drawing.Size(362, 142);
+            this.grbВремяДействия.TabIndex = 61;
+            this.grbВремяДействия.TabStop = false;
+            this.grbВремяДействия.Text = "Время действия";
+            // 
+            // rBВремяДействияС
+            // 
+            this.rBВремяДействияС.AutoSize = true;
+            this.rBВремяДействияС.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rBВремяДействияС.Location = new System.Drawing.Point(7, 25);
+            this.rBВремяДействияС.Name = "rBВремяДействияС";
+            this.rBВремяДействияС.Size = new System.Drawing.Size(35, 24);
+            this.rBВремяДействияС.TabIndex = 44;
+            this.rBВремяДействияС.Text = "с";
+            this.rBВремяДействияС.UseVisualStyleBackColor = true;
+            this.rBВремяДействияС.CheckedChanged += new System.EventHandler(this.rBВремяДействияС_CheckedChanged);
+            // 
+            // rBВремяДействияПо
+            // 
+            this.rBВремяДействияПо.AutoSize = true;
+            this.rBВремяДействияПо.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rBВремяДействияПо.Location = new System.Drawing.Point(7, 55);
+            this.rBВремяДействияПо.Name = "rBВремяДействияПо";
+            this.rBВремяДействияПо.Size = new System.Drawing.Size(45, 24);
+            this.rBВремяДействияПо.TabIndex = 52;
+            this.rBВремяДействияПо.Text = "по";
+            this.rBВремяДействияПо.UseVisualStyleBackColor = true;
+            this.rBВремяДействияПо.CheckedChanged += new System.EventHandler(this.rBВремяДействияПо_CheckedChanged);
+            // 
+            // rBВремяДействияСПо
+            // 
+            this.rBВремяДействияСПо.AutoSize = true;
+            this.rBВремяДействияСПо.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rBВремяДействияСПо.Location = new System.Drawing.Point(7, 85);
+            this.rBВремяДействияСПо.Name = "rBВремяДействияСПо";
+            this.rBВремяДействияСПо.Size = new System.Drawing.Size(35, 24);
+            this.rBВремяДействияСПо.TabIndex = 53;
+            this.rBВремяДействияСПо.Text = "с";
+            this.rBВремяДействияСПо.UseVisualStyleBackColor = true;
+            this.rBВремяДействияСПо.CheckedChanged += new System.EventHandler(this.rBВремяДействияСПо_CheckedChanged);
+            // 
+            // rBВремяДействияПостоянно
+            // 
+            this.rBВремяДействияПостоянно.AutoSize = true;
+            this.rBВремяДействияПостоянно.Checked = true;
+            this.rBВремяДействияПостоянно.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rBВремяДействияПостоянно.Location = new System.Drawing.Point(7, 115);
+            this.rBВремяДействияПостоянно.Name = "rBВремяДействияПостоянно";
+            this.rBВремяДействияПостоянно.Size = new System.Drawing.Size(110, 24);
+            this.rBВремяДействияПостоянно.TabIndex = 58;
+            this.rBВремяДействияПостоянно.TabStop = true;
+            this.rBВремяДействияПостоянно.Text = "Постоянно";
+            this.rBВремяДействияПостоянно.UseVisualStyleBackColor = true;
+            this.rBВремяДействияПостоянно.CheckedChanged += new System.EventHandler(this.rBВремяДействияПостоянно_CheckedChanged);
+            // 
+            // dTPВремяДействияС
+            // 
+            this.dTPВремяДействияС.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dTPВремяДействияС.CustomFormat = "HH:mm";
+            this.dTPВремяДействияС.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dTPВремяДействияС.Location = new System.Drawing.Point(56, 25);
+            this.dTPВремяДействияС.Name = "dTPВремяДействияС";
+            this.dTPВремяДействияС.Size = new System.Drawing.Size(127, 26);
+            this.dTPВремяДействияС.TabIndex = 44;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(191, 89);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(27, 20);
+            this.label6.TabIndex = 57;
+            this.label6.Text = "по";
+            // 
+            // dTPВремяДействияПо
+            // 
+            this.dTPВремяДействияПо.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dTPВремяДействияПо.CustomFormat = "HH:mm";
+            this.dTPВремяДействияПо.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dTPВремяДействияПо.Location = new System.Drawing.Point(56, 55);
+            this.dTPВремяДействияПо.Name = "dTPВремяДействияПо";
+            this.dTPВремяДействияПо.Size = new System.Drawing.Size(127, 26);
+            this.dTPВремяДействияПо.TabIndex = 54;
+            // 
+            // dTPВремяДействияПо2
+            // 
+            this.dTPВремяДействияПо2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dTPВремяДействияПо2.CustomFormat = "HH:mm";
+            this.dTPВремяДействияПо2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dTPВремяДействияПо2.Location = new System.Drawing.Point(228, 87);
+            this.dTPВремяДействияПо2.Name = "dTPВремяДействияПо2";
+            this.dTPВремяДействияПо2.Size = new System.Drawing.Size(127, 26);
+            this.dTPВремяДействияПо2.TabIndex = 56;
+            // 
+            // dTPВремяДействияС2
+            // 
+            this.dTPВремяДействияС2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.dTPВремяДействияС2.CustomFormat = "HH:mm";
+            this.dTPВремяДействияС2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dTPВремяДействияС2.Location = new System.Drawing.Point(56, 87);
+            this.dTPВремяДействияС2.Name = "dTPВремяДействияС2";
+            this.dTPВремяДействияС2.Size = new System.Drawing.Size(127, 26);
+            this.dTPВремяДействияС2.TabIndex = 55;
             // 
             // tb_ДниСледованияAlias
             // 
@@ -514,7 +625,7 @@
             // 
             // btnДниСледования
             // 
-            this.btnДниСледования.Location = new System.Drawing.Point(18, 169);
+            this.btnДниСледования.Location = new System.Drawing.Point(18, 170);
             this.btnДниСледования.Name = "btnДниСледования";
             this.btnДниСледования.Size = new System.Drawing.Size(349, 45);
             this.btnДниСледования.TabIndex = 51;
@@ -522,106 +633,10 @@
             this.btnДниСледования.UseVisualStyleBackColor = true;
             this.btnДниСледования.Click += new System.EventHandler(this.btnДниСледования_Click);
             // 
-            // rBВремяДействияПостоянно
-            // 
-            this.rBВремяДействияПостоянно.AutoSize = true;
-            this.rBВремяДействияПостоянно.Checked = true;
-            this.rBВремяДействияПостоянно.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rBВремяДействияПостоянно.Location = new System.Drawing.Point(18, 139);
-            this.rBВремяДействияПостоянно.Name = "rBВремяДействияПостоянно";
-            this.rBВремяДействияПостоянно.Size = new System.Drawing.Size(110, 24);
-            this.rBВремяДействияПостоянно.TabIndex = 58;
-            this.rBВремяДействияПостоянно.TabStop = true;
-            this.rBВремяДействияПостоянно.Text = "Постоянно";
-            this.rBВремяДействияПостоянно.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(207, 113);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 20);
-            this.label6.TabIndex = 57;
-            this.label6.Text = "по";
-            // 
-            // dTPВремяДействияПо2
-            // 
-            this.dTPВремяДействияПо2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dTPВремяДействияПо2.CustomFormat = "HH:mm";
-            this.dTPВремяДействияПо2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dTPВремяДействияПо2.Location = new System.Drawing.Point(240, 111);
-            this.dTPВремяДействияПо2.Name = "dTPВремяДействияПо2";
-            this.dTPВремяДействияПо2.Size = new System.Drawing.Size(127, 26);
-            this.dTPВремяДействияПо2.TabIndex = 56;
-            // 
-            // dTPВремяДействияС2
-            // 
-            this.dTPВремяДействияС2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dTPВремяДействияС2.CustomFormat = "HH:mm";
-            this.dTPВремяДействияС2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dTPВремяДействияС2.Location = new System.Drawing.Point(70, 111);
-            this.dTPВремяДействияС2.Name = "dTPВремяДействияС2";
-            this.dTPВремяДействияС2.Size = new System.Drawing.Size(127, 26);
-            this.dTPВремяДействияС2.TabIndex = 55;
-            // 
-            // dTPВремяДействияПо
-            // 
-            this.dTPВремяДействияПо.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dTPВремяДействияПо.CustomFormat = "HH:mm";
-            this.dTPВремяДействияПо.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dTPВремяДействияПо.Location = new System.Drawing.Point(70, 79);
-            this.dTPВремяДействияПо.Name = "dTPВремяДействияПо";
-            this.dTPВремяДействияПо.Size = new System.Drawing.Size(127, 26);
-            this.dTPВремяДействияПо.TabIndex = 54;
-            // 
-            // dTPВремяДействияС
-            // 
-            this.dTPВремяДействияС.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.dTPВремяДействияС.CustomFormat = "HH:mm";
-            this.dTPВремяДействияС.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dTPВремяДействияС.Location = new System.Drawing.Point(70, 49);
-            this.dTPВремяДействияС.Name = "dTPВремяДействияС";
-            this.dTPВремяДействияС.Size = new System.Drawing.Size(127, 26);
-            this.dTPВремяДействияС.TabIndex = 44;
-            // 
-            // rBВремяДействияСПо
-            // 
-            this.rBВремяДействияСПо.AutoSize = true;
-            this.rBВремяДействияСПо.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rBВремяДействияСПо.Location = new System.Drawing.Point(18, 109);
-            this.rBВремяДействияСПо.Name = "rBВремяДействияСПо";
-            this.rBВремяДействияСПо.Size = new System.Drawing.Size(35, 24);
-            this.rBВремяДействияСПо.TabIndex = 53;
-            this.rBВремяДействияСПо.Text = "с";
-            this.rBВремяДействияСПо.UseVisualStyleBackColor = true;
-            // 
-            // rBВремяДействияПо
-            // 
-            this.rBВремяДействияПо.AutoSize = true;
-            this.rBВремяДействияПо.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rBВремяДействияПо.Location = new System.Drawing.Point(18, 79);
-            this.rBВремяДействияПо.Name = "rBВремяДействияПо";
-            this.rBВремяДействияПо.Size = new System.Drawing.Size(45, 24);
-            this.rBВремяДействияПо.TabIndex = 52;
-            this.rBВремяДействияПо.Text = "по";
-            this.rBВремяДействияПо.UseVisualStyleBackColor = true;
-            // 
-            // rBВремяДействияС
-            // 
-            this.rBВремяДействияС.AutoSize = true;
-            this.rBВремяДействияС.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rBВремяДействияС.Location = new System.Drawing.Point(18, 49);
-            this.rBВремяДействияС.Name = "rBВремяДействияС";
-            this.rBВремяДействияС.Size = new System.Drawing.Size(35, 24);
-            this.rBВремяДействияС.TabIndex = 44;
-            this.rBВремяДействияС.Text = "с";
-            this.rBВремяДействияС.UseVisualStyleBackColor = true;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 26);
+            this.label5.Location = new System.Drawing.Point(829, 315);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(312, 20);
             this.label5.TabIndex = 51;
@@ -989,6 +1004,7 @@
             this.Controls.Add(this.gBШаблонОповещения);
             this.Controls.Add(this.cBБлокировка);
             this.Controls.Add(this.gBДниСледования);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.gBОстановки);
             this.Controls.Add(this.cBОтсчетВагонов);
             this.Controls.Add(this.label4);
@@ -1010,6 +1026,8 @@
             this.gBОстановки.PerformLayout();
             this.gBДниСледования.ResumeLayout(false);
             this.gBДниСледования.PerformLayout();
+            this.grbВремяДействия.ResumeLayout(false);
+            this.grbВремяДействия.PerformLayout();
             this.gBШаблонОповещения.ResumeLayout(false);
             this.gBШаблонОповещения.PerformLayout();
             this.gbРежимРаботы.ResumeLayout(false);
@@ -1104,5 +1122,6 @@
         private System.Windows.Forms.ComboBox cBНаправ;
         private System.Windows.Forms.Label lНапр;
         private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
+        private System.Windows.Forms.GroupBox grbВремяДействия;
     }
 }

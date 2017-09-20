@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime;
 using System.Windows.Forms;
@@ -22,7 +23,6 @@ namespace MainExample
             НомераПутей = Program.PathWaysRepository.List().ToList();
 
             InitializeComponent();
-
 
             cBПутьПоУмолчанию.Items.Add("Не определен");
             foreach (var путь in НомераПутей.Select(p => p.Name))
@@ -670,6 +670,56 @@ namespace MainExample
                 rBНеОповещать.Checked = true;             
                 РасписаниеПоезда.Примечание = "";
                 lVСписокСтанций.Items.Clear();
+            }
+        }
+
+
+
+        private void rBВремяДействияС_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+            if (radioBtn != null)
+            {
+                if (radioBtn.Checked)
+                {
+                    grbВремяДействия.BackColor = Color.LightCoral;
+                }
+            }
+        }
+
+        private void rBВремяДействияПо_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+            if (radioBtn != null)
+            {
+                if (radioBtn.Checked)
+                {
+                    grbВремяДействия.BackColor = Color.LightCoral;
+                }
+            }
+        }
+
+        private void rBВремяДействияСПо_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+            if (radioBtn != null)
+            {
+                if (radioBtn.Checked)
+                {
+                    grbВремяДействия.BackColor = Color.LightCoral;
+                }
+            }
+        }
+
+        private void rBВремяДействияПостоянно_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+            if (radioBtn != null)
+            {
+                if (radioBtn.Checked)
+                {
+                    grbВремяДействия.BackColor = DefaultBackColor;
+                }
             }
         }
     }
