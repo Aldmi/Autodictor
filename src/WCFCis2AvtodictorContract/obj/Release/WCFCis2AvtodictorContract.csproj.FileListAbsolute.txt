@@ -15,8 +15,3 @@ D:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorCon
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.dll
 D:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.pdb
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorContract.dll
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\bin\Release\WCFCis2AvtodictorContract.pdb
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.csprojResolveAssemblyReference.cache
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.dll
-C:\Git\Autodictor\src\WCFCis2AvtodictorContract\obj\Release\WCFCis2AvtodictorContract.pdb

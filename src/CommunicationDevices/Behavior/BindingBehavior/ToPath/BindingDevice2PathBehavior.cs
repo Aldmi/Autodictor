@@ -73,6 +73,8 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
 
                     //УДАЛИТЬ ИЗ ТАБЛ.
                     case Command.Delete:
+
+                       //var номерПоезда = (string.IsNullOrEmpty(data.НомерПоезда2) || string.IsNullOrWhiteSpace(data.НомерПоезда2)) ? data.НомерПоезда : (data.НомерПоезда + "/" + data.НомерПоезда2);
                         var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => (p.Id == inData.Id) && (p.NumberOfTrain == numberOfTrain));
                         if (removeItem != null)
                         {

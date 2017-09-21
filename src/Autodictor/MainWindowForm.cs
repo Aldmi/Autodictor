@@ -263,7 +263,7 @@ namespace MainExample
             DispouseStaticChangeRx = QueueSound.StaticChangeRx.Subscribe(StaticChangeRxEventHandler);
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
-            //ОБРАБОТЧИКИ СОБЫТИЙ ОТ АПКДК ВОЛКОГРАД
+            //ОБРАБОТЧИКИ СОБЫТИЙ ОТ АПКДК ВОЛГОГРАД
             DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
             DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx?.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
             DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
@@ -397,7 +397,7 @@ namespace MainExample
             switch (templateChangeValue.StatusPlaying)
             {
                 case StatusPlaying.Start:
-                    Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТАРТ");//DEBUG
+                    //Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТАРТ");//DEBUG
                     СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
                     break;
 
@@ -2127,7 +2127,7 @@ namespace MainExample
         private void СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений()
         {
             //Debug.WriteLine("НАЧАЛО ПРОИГРЫВАНИЯ");//DEBUG
-            //Log.log.Fatal("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
+            Log.log.Fatal("НАЧАЛО ПРОИГРЫВАНИЯ ОЧЕРЕДИ");//DEBUG
 
             if (SoundChanelManagment != null)
             {
@@ -2142,7 +2142,7 @@ namespace MainExample
         private void СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений()
         {
             //Debug.WriteLine("КОНЕЦ ПРОИГРЫВАНИЯ");//DEBUG
-            //Log.log.Fatal("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ");
+            Log.log.Fatal("КОНЕЦ ПРОИГРЫВАНИЯ ОЧЕРЕДИ");//DEBUG
 
             if (SoundChanelManagment != null)
             {
@@ -2197,7 +2197,8 @@ namespace MainExample
                     uitPreprocessingService.StartPreprocessing(inData);
                     inData.Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}";
 
-                    beh.SendMessage4Path(inData, data.НомерПоезда, beh.CheckContrains);
+                    var numberOfTrain = (string.IsNullOrEmpty(data.НомерПоезда2) || string.IsNullOrWhiteSpace(data.НомерПоезда2)) ? data.НомерПоезда : (data.НомерПоезда + "/" + data.НомерПоезда2);
+                    beh.SendMessage4Path(inData, numberOfTrain, beh.CheckContrains);
                     //Debug.WriteLine($" ТАБЛО= {beh.GetDeviceName}: {beh.GetDeviceId} для ПУТИ {data.НомерПути}.  Сообшение= {inData.Message}  ");
                 }
             }

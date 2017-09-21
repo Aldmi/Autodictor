@@ -268,6 +268,42 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
+                    if (replaseStr.Contains("TDepart"))
+                    {
+                        var timeDepart = (uit.TransitTime != null && uit.TransitTime.ContainsKey("приб")) ? uit.TransitTime["приб"] : DateTime.MinValue;
+                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        {
+                            var dateFormat = s.Split(':')[1]; //без закр. скобки
+                            var formatStr = string.Format(replaseStr.Replace("TDepart", "0"), (timeDepart == DateTime.MinValue) ? " " : timeDepart.ToString(dateFormat));
+                            resStr.Append(formatStr);
+                        }
+                        else
+                        {
+                            var formatStr = string.Format(replaseStr.Replace("TDepart", "0"), (timeDepart == DateTime.MinValue) ? " " : timeDepart.ToString(CultureInfo.InvariantCulture));
+                            resStr.Append(formatStr);
+                        }
+                        continue;
+                    }
+
+
+                    if (replaseStr.Contains("TArrival"))
+                    {
+                        var timeDepart = (uit.TransitTime != null && uit.TransitTime.ContainsKey("отпр")) ? uit.TransitTime["отпр"] : DateTime.MinValue;
+                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        {
+                            var dateFormat = s.Split(':')[1]; //без закр. скобки
+                            var formatStr = string.Format(replaseStr.Replace("TArrival", "0"), (timeDepart == DateTime.MinValue) ? " " : timeDepart.ToString(dateFormat));
+                            resStr.Append(formatStr);
+                        }
+                        else
+                        {
+                            var formatStr = string.Format(replaseStr.Replace("TArrival", "0"), (timeDepart == DateTime.MinValue) ? " " : timeDepart.ToString(CultureInfo.InvariantCulture));
+                            resStr.Append(formatStr);
+                        }
+                        continue;
+                    }
+
+
                     if (replaseStr.Contains("Hour"))
                     {
                         var formatStr = string.Format(replaseStr.Replace("Hour", "0"), DateTime.Now.Hour);
