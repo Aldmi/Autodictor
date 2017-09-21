@@ -253,6 +253,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.Time)))
                     {
+                        if (uit.Event == "СТОЯНКА")
+                            continue;
+
                         if (replaseStr.Contains(":")) //если указзанн формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
@@ -270,6 +273,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains("TDepart"))
                     {
+                        if (uit.Event != "СТОЯНКА")
+                            continue;
+
                         var timeDepart = (uit.TransitTime != null && uit.TransitTime.ContainsKey("приб")) ? uit.TransitTime["приб"] : DateTime.MinValue;
                         if (replaseStr.Contains(":")) //если указзанн формат времени
                         {
@@ -288,6 +294,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains("TArrival"))
                     {
+                        if (uit.Event != "СТОЯНКА")
+                            continue;
+
                         var timeDepart = (uit.TransitTime != null && uit.TransitTime.ContainsKey("отпр")) ? uit.TransitTime["отпр"] : DateTime.MinValue;
                         if (replaseStr.Contains(":")) //если указзанн формат времени
                         {
