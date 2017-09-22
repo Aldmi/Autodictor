@@ -949,27 +949,39 @@ namespace MainExample
             {
                 if (item <= _record.СписокФормируемыхСообщений.Count)
                 {
-                    var ФормируемоеСообщение = _record.СписокФормируемыхСообщений[item];
+                    var формируемоеСообщение = _record.СписокФормируемыхСообщений[item];
 
                     var активность = lVШаблоны.Items[item].Checked;
 
-                    var ручноШаблон= ФормируемоеСообщение.НазваниеШаблона.StartsWith("@");
+                    var ручноШаблон= формируемоеСообщение.НазваниеШаблона.StartsWith("@");
                     var времяПриб = (_record.ФиксированноеВремяПрибытия == null || !ручноШаблон) ? _record.ВремяПрибытия : _record.ФиксированноеВремяПрибытия.Value;
                     var времяОтпр = (_record.ФиксированноеВремяОтправления == null || !ручноШаблон) ? _record.ВремяОтправления : _record.ФиксированноеВремяОтправления.Value;
-                    var времяАктивации = ФормируемоеСообщение.ПривязкаКВремени == 0 ? времяПриб.AddMinutes(ФормируемоеСообщение.ВремяСмещения) : времяОтпр.AddMinutes(ФормируемоеСообщение.ВремяСмещения);
+                    var времяАктивации = формируемоеСообщение.ПривязкаКВремени == 0 ? времяПриб.AddMinutes(формируемоеСообщение.ВремяСмещения) : времяОтпр.AddMinutes(формируемоеСообщение.ВремяСмещения);
                     string текстовоеПредставлениеВремениАктивации = времяАктивации.ToString("HH:mm");
 
                     if (this.lVШаблоны.Items[item].Text != текстовоеПредставлениеВремениАктивации)
                         this.lVШаблоны.Items[item].Text = текстовоеПредставлениеВремениАктивации;
 
-                    if (ФормируемоеСообщение.Воспроизведен == true)
+                    if (формируемоеСообщение.Воспроизведен == true)
                         this.lVШаблоны.Items[item].BackColor = Color.LightGray;
                     else
                     {
-                        if (активность)  //    if (ФормируемоеСообщение.Активность == true)
-                            this.lVШаблоны.Items[item].BackColor = Color.LightGreen;
-                        else
-                            this.lVШаблоны.Items[item].BackColor = Color.White;
+                        this.lVШаблоны.Items[item].BackColor = активность ? Color.LightGreen : Color.White;
+                    }
+
+
+                    if (chbox_сменнаяНумерация.Checked)
+                    {
+                        if (формируемоеСообщение.НазваниеШаблона.StartsWith("[ПРИБ]") ||
+                            формируемоеСообщение.НазваниеШаблона.StartsWith("[ОТПР]"))
+                        {
+                            if (формируемоеСообщение.Воспроизведен == true)
+                                this.lVШаблоны.Items[item].BackColor = Color.LightGray;
+                            else
+                            {
+                                this.lVШаблоны.Items[item].BackColor = активность ? Color.CornflowerBlue : Color.White;
+                            }
+                        }
                     }
                 }
             }
@@ -1238,6 +1250,15 @@ namespace MainExample
         {
             cBНомерПоезда2.Enabled = false;
             cBНомерПоезда2.Enabled = true;
+        }
+
+        /// <summary>
+        /// раскрасить шаблоны, у которых префикс "[ПРИБ]" или "[ОТПР]"
+        /// </summary>
+        private void chbox_сменнаяНумерация_CheckedChanged(object sender, EventArgs e)
+        {
+            _record.СменнаяНумерацияПоезда = chbox_сменнаяНумерация.Checked;
+            ОбновитьСостояниеТаблицыШаблонов();
         }
     }
 }
