@@ -106,7 +106,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЛимитСтрокТаблицы:5" ProviderType="xml_mainWindow:sortable" 
+<!-- 	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЛимитСтрокТаблицы:5" ProviderType="xml_mainWindow:sortable" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -122,14 +122,14 @@
 						   Connection: Keep-Alive +
 						   Content-Type: multipart/form-data +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
-						   />
+						   /> -->
 						   
-<!-- 	 <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
+	 <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
 	              Headers='Method: GET + 
 				           ContentEncoding: gzip +
 						   Accept: text/html, */* +
 						   Connection: Keep-Alive'
-						   /> -->
+						   />
 						   
 					<!-- 	   Binding="ToGeneral:ОкноРасписания" Contrains="Направление:Московское" ProviderType="xml_sheduleWindow:sortable" -->		   
 </DevicesWithHttp>

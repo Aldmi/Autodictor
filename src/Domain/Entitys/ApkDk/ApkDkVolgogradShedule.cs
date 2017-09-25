@@ -61,7 +61,7 @@ namespace Domain.Entitys.ApkDk
                         var elem = line?.Element("ln")?.Value ?? string.Empty;
                         apkDk.Ln = Regex.Replace(elem, "[\r\n\t]+", "");
 
-                        elem = line?.Element("ntrain")?.Value ?? string.Empty;
+                        elem = line?.Element("ntrain")?.Value.Replace("\\", "/") ?? string.Empty;
                         apkDk.Ntrain = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("kp")?.Value ?? string.Empty;

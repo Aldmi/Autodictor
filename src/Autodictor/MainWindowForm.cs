@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -40,6 +41,7 @@ namespace MainExample
     public struct SoundRecord
     {
         public int ID;
+        public IdTrain IdTrain;
         public string НомерПоезда;
         public string НомерПоезда2;
         public string НазваниеПоезда;
@@ -84,6 +86,19 @@ namespace MainExample
         public byte БитыНештатныхСитуаций; // бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления, бит 3 - отправление по готовности
         public uint ТаймерПовторения;
     };
+
+    /// <summary>
+    /// ИДЕНТИФИКАТОР ПОЕЗДА.
+    /// для сопоставления поезда из распсиания.
+    /// </summary>
+    public struct IdTrain
+    {
+        public int ScheduleId { get; set; }            //Id поезда в распсиании
+        public DateTime DayArrival { get; set; }       //сутки в которые поезд ПРИБ.  
+        public DateTime DayDepart { get; set; }        //сутки в которые поезд ОТПР.
+        public string TrainNumber { get; set; }        //номер поезда 1
+        public string TrainNumber2 { get; set; }       //номер поезда 2
+    }
 
     public struct СостояниеФормируемогоСообщенияИШаблон
     {
@@ -221,30 +236,30 @@ namespace MainExample
             СписокПолейПути = new ToolStripMenuItem[] { путь0ToolStripMenuItem, путь1ToolStripMenuItem, путь2ToolStripMenuItem, путь3ToolStripMenuItem, путь4ToolStripMenuItem, путь5ToolStripMenuItem, путь6ToolStripMenuItem, путь7ToolStripMenuItem, путь8ToolStripMenuItem, путь9ToolStripMenuItem, путь10ToolStripMenuItem, путь11ToolStripMenuItem, путь12ToolStripMenuItem, путь13ToolStripMenuItem, путь14ToolStripMenuItem, путь15ToolStripMenuItem, путь16ToolStripMenuItem, путь17ToolStripMenuItem, путь18ToolStripMenuItem, путь19ToolStripMenuItem, путь20ToolStripMenuItem, путь21ToolStripMenuItem, путь22ToolStripMenuItem, путь23ToolStripMenuItem, путь24ToolStripMenuItem, путь25ToolStripMenuItem };
 
 
-            if (CisClient.IsConnect)
-            {
-                MainForm.СвязьСЦис.Text = "ЦИС на связи";
-                MainForm.СвязьСЦис.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
-                MainForm.СвязьСЦис.BackColor = Color.Orange;
-            }
+            //if (CisClient.IsConnect)
+            //{
+            //    MainForm.СвязьСЦис.Text = "ЦИС на связи";
+            //    MainForm.СвязьСЦис.BackColor = Color.LightGreen;
+            //}
+            //else
+            //{
+            //    MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
+            //    MainForm.СвязьСЦис.BackColor = Color.Orange;
+            //}
 
-            DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
-            {
-                if (isConnect)
-                {
-                    MainForm.СвязьСЦис.Text = "ЦИС на связи";
-                    MainForm.СвязьСЦис.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
-                    MainForm.СвязьСЦис.BackColor = Color.Orange;
-                }
-            });
+            //DispouseCisClientIsConnectRx = CisClient.IsConnectChange.Subscribe(isConnect =>
+            //{
+            //    if (isConnect)
+            //    {
+            //        MainForm.СвязьСЦис.Text = "ЦИС на связи";
+            //        MainForm.СвязьСЦис.BackColor = Color.LightGreen;
+            //    }
+            //    else
+            //    {
+            //        MainForm.СвязьСЦис.Text = "ЦИС НЕ на связи";
+            //        MainForm.СвязьСЦис.BackColor = Color.Orange;
+            //    }
+            //});
 
             //
             DispouseQueueChangeRx = QueueSound.QueueChangeRx.Subscribe(status =>
@@ -317,7 +332,7 @@ namespace MainExample
 
 
 
-        #region Обработка RX событий протокола Volgograd
+        #region Обработка RX событий получения данных по протоколу Volgograd
 
         private void ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler(IExhangeBehavior exhangeBehavior)
         {
@@ -333,8 +348,88 @@ namespace MainExample
 
         private void GetApkDkVolgorgadSheduleRxEventHandler(IEnumerable<ApkDkVolgogradShedule> apkDkVolgogradShedules)
         {
+            if(MainForm.СвязьСЦис.Checked)
+                return;
+
             if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
             {
+                var trainWithPut = apkDkVolgogradShedules.Where(sh => !(string.IsNullOrEmpty(sh.Put) || string.IsNullOrWhiteSpace(sh.Put))).ToList();
+                foreach (var tr in trainWithPut)
+                {
+                  //DEBUG------------------------------------------------------
+                  var str = $"N= {tr.Ntrain}  Путь= {tr.Put}  Дата отпр={tr.DtOtpr:d}  Время отпр={tr.TmOtpr:g}  Дата приб={tr.DtPrib:d} Время приб={tr.TmPrib:g}  Ст.Приб {tr.StFinish}   Ст.Отпр {tr.StDeparture}";
+                  Log.log.Fatal("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
+                  //DEBUG-----------------------------------------------------
+
+                    for (int i = 0; i < SoundRecords.Count; i++)
+                    {
+                        var key = SoundRecords.Keys.ElementAt(i);
+                        var rec = SoundRecords.ElementAt(i).Value;
+
+                        //DEBUG----------------------------------------
+                        //if (rec.НомерПоезда.Contains("230"))
+                        //{
+                            
+                        //}
+                        //DEBUG----------------------------------------
+
+                        //ТРАНЗИТ
+                        if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr != DateTime.MinValue)
+                        {
+                            var numberOfTrain = (string.IsNullOrEmpty(rec.НомерПоезда2) || string.IsNullOrWhiteSpace(rec.НомерПоезда2)) ? rec.НомерПоезда : (rec.НомерПоезда + "/" + rec.НомерПоезда2);
+                            if (tr.Ntrain == numberOfTrain &&
+                                tr.DtPrib == rec.IdTrain.DayArrival &&
+                                tr.DtOtpr == rec.IdTrain.DayDepart &&
+                                (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
+                                (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
+                            {
+                                Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
+
+                                rec.НомерПути = tr.Put;
+                                SoundRecords[key] = rec;
+                               // SendOnPathTable(SoundRecords[key]);
+                                break;
+                            }
+                        }
+                        //ПРИБ.
+                        else
+                        if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr == DateTime.MinValue)
+                        {
+                            if (tr.Ntrain == rec.НомерПоезда && 
+                                tr.DtPrib == rec.IdTrain.DayArrival  &&
+                                (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
+                                (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
+                            {
+                                Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
+
+                                rec.НомерПути = tr.Put;
+                                SoundRecords[key] = rec;
+                                // SendOnPathTable(SoundRecords[key]);
+                                break;
+                            }
+                        }
+                        //ОТПР.
+                        else
+                        if (tr.DtOtpr != DateTime.MinValue && tr.DtPrib == DateTime.MinValue)
+                        {
+                            if (tr.Ntrain == rec.НомерПоезда &&
+                                tr.DtOtpr == rec.IdTrain.DayDepart &&
+                                (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
+                                (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
+                            {
+                                Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
+
+                                rec.НомерПути = tr.Put;
+                                SoundRecords[key] = rec;
+                                // SendOnPathTable(SoundRecords[key]);
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+
+
                 //DEBUG---------------------------------
                 //string sumstr= String.Empty;
                 //foreach (var item in apkDkVolgogradShedules)
@@ -660,16 +755,6 @@ namespace MainExample
             for (var index = 0; index < trainTableRecords.Count; index++)
             {
                 var config = trainTableRecords[index];
-
-                //-------DEBUG
-                if (config.Num == "080")
-                {
-                    var g = 5 + 5;
-                }
-
-                //------------
-
-
 
                 if (config.Active == false && Program.Настройки.РазрешениеДобавленияЗаблокированныхПоездовВСписок == false)
                     continue;
@@ -1932,8 +2017,16 @@ namespace MainExample
                         var данные = SoundRecords.ElementAt(i).Value;
                         var данныеOld = SoundRecordsOld.ElementAt(i).Value;
 
+                    //DEBUG----------------------------------------------------
+                    //if (данные.НомерПоезда == "324" && !string.IsNullOrEmpty(данные.НомерПути))
+                    //{
+                    //    var gg = 5 + 5;
+                    //}
+                    //DEBUG-----------------------------------------------------
+
                         if (!данные.Автомат)
-                            continue;
+                           continue;
+
 
                         var _checked = данные.Состояние != SoundRecordStatus.Выключена;
                         if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))

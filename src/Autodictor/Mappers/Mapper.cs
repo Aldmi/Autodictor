@@ -76,6 +76,7 @@ namespace MainExample.Mappers
         {
             var record = new SoundRecord();
             record.ID = id;
+            record.IdTrain = new IdTrain {ScheduleId = config.ID, TrainNumber = config.Num, TrainNumber2 = config.Num2, DayDepart = day.Date, DayArrival = day.Date};
             record.НомерПоезда = config.Num;
             record.НомерПоезда2 = config.Num2;
             record.НазваниеПоезда = config.Name;
@@ -169,6 +170,7 @@ namespace MainExample.Mappers
                 if (времяОтправления < времяПрибытия)                              //??????????????
                 {
                     record.ВремяПрибытия = времяПрибытия.AddDays(-1);
+                    record.IdTrain.DayArrival = record.ВремяПрибытия.Date;
                 }
 
                 TimeSpan времяСтоянки;

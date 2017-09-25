@@ -1053,7 +1053,7 @@ namespace CommunicationDevices.Model
 
 
         /// <summary>
-        /// Обравботчик события получения потока данных от сервера апк-дк ВОЛГОГРАД (GET запрос)
+        /// Обработчик события получения потока данных от сервера апк-дк ВОЛГОГРАД (GET запрос)
         /// </summary>
         private void ApkDkVolgogradGetStreamChangesRx(Stream stream)
         {

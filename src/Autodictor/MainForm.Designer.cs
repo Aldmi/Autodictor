@@ -403,13 +403,14 @@
             // tSLСостояниеСвязиСЦИС
             // 
             this.tSLСостояниеСвязиСЦИС.BackColor = System.Drawing.Color.Orange;
+            this.tSLСостояниеСвязиСЦИС.CheckOnClick = true;
             this.tSLСостояниеСвязиСЦИС.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tSLСостояниеСвязиСЦИС.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tSLСостояниеСвязиСЦИС.Image = ((System.Drawing.Image)(resources.GetObject("tSLСостояниеСвязиСЦИС.Image")));
             this.tSLСостояниеСвязиСЦИС.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tSLСостояниеСвязиСЦИС.Name = "tSLСостояниеСвязиСЦИС";
-            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(158, 52);
-            this.tSLСостояниеСвязиСЦИС.Text = "ЦИС НЕ на связи";
+            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(66, 52);
+            this.tSLСостояниеСвязиСЦИС.Text = "АпкДк";
             // 
             // tSBОбновитьСписок
             // 

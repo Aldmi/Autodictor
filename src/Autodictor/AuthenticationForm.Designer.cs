@@ -105,7 +105,7 @@
             this.btn_Enter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_Enter.Name = "btn_Enter";
             this.btn_Enter.Size = new System.Drawing.Size(256, 82);
-            this.btn_Enter.TabIndex = 6;
+            this.btn_Enter.TabIndex = 1;
             this.btn_Enter.Text = "Войти";
             this.btn_Enter.UseVisualStyleBackColor = true;
             this.btn_Enter.Click += new System.EventHandler(this.btn_Enter_Click);
