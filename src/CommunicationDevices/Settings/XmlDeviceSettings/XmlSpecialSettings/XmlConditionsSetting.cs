@@ -262,6 +262,10 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                             Conditions.EmergencySituationDelayDepart = true;
                             break;
 
+                        case "ОтправлениеПоГотов_БлокВремОгр":
+                            Conditions.EmergencySituationDispatchOnReadiness = true;
+                            break;
+
 
 
                         case "КомандаОчистки":

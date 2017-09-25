@@ -57,8 +57,9 @@ namespace CommunicationDevices.Settings
 
 
         public bool EmergencySituationCanceled { get; set; }           //Нешатная ситуация отменен
-        public bool EmergencySituationDelayArrival { get; set; }       //Нешатная ситуация отменен, задержка прибытия
-        public bool EmergencySituationDelayDepart { get; set; }        //Нешатная ситуация отменен, задержка отправления
+        public bool EmergencySituationDelayArrival { get; set; }       //Нешатная ситуация, задержка прибытия
+        public bool EmergencySituationDelayDepart { get; set; }        //Нешатная ситуация, задержка отправления
+        public bool EmergencySituationDispatchOnReadiness { get; set; }//Нешатная ситуация, отправление по говтовности 
 
         public int? LimitNumberRows { get; set; }                     //Ограничение кол-ва строк
 
@@ -104,10 +105,17 @@ namespace CommunicationDevices.Settings
             {
                 emergencySituationDelayDepartFilter = (inData.EmergencySituation & 0x04) == 0x00;
             }
+            var emergencySituationDispatchOnReadinessFilter = true;
+            if (EmergencySituationDispatchOnReadiness)
+            {
+                emergencySituationDispatchOnReadinessFilter = (inData.EmergencySituation & 0x08) == 0x00;
+            }
+
+
 
 
             var timeFilter = true;
-            if (emergencySituationCanceledFilter && emergencySituationDelayArrivalFilter && emergencySituationDelayDepartFilter)
+            if (emergencySituationCanceledFilter && emergencySituationDelayArrivalFilter && emergencySituationDelayDepartFilter && emergencySituationDispatchOnReadinessFilter)
             {
                 var time = inData.TransitTime.ContainsKey("отпр") ? inData.TransitTime["отпр"] : inData.Time;
 
@@ -359,6 +367,11 @@ namespace CommunicationDevices.Settings
             {
                 emergencySituationDelayDepartFilter = (inData.EmergencySituation & 0x04) != 0x00;
             }
+            var emergencySituationDispatchOnReadinessFilter = true;
+            if (EmergencySituationDispatchOnReadiness)
+            {
+                emergencySituationDispatchOnReadinessFilter = (inData.EmergencySituation & 0x08) != 0x00;
+            }
 
 
             var timeFilter = true;
@@ -530,6 +543,7 @@ namespace CommunicationDevices.Settings
                    emergencySituationCanceledFilter &&
                    emergencySituationDelayArrivalFilter &&
                    emergencySituationDelayDepartFilter &&
+                   emergencySituationDispatchOnReadinessFilter &&
                    passengerArrivalfilter &&
                    passengerDepartFilter &&
                    passengerPathsFilter &&

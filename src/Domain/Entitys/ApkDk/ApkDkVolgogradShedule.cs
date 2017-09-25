@@ -106,6 +106,18 @@ namespace Domain.Entitys.ApkDk
 
                         elem = line?.Element("put")?.Value ?? string.Empty;
                         apkDk.Put = Regex.Replace(elem, "[\r\n\t]+", "");
+                        switch (apkDk.Put)
+                        {
+                            case "11":
+                                apkDk.Put = "1приг";
+                                break;
+                            case "12":
+                                apkDk.Put = "2приг";
+                                break;
+                            case "13":
+                                apkDk.Put = "3приг";
+                                break;
+                        }
 
                         elem = line?.Element("platf")?.Value ?? string.Empty;
                         apkDk.Platf = Regex.Replace(elem, "[\r\n\t]+", "");
