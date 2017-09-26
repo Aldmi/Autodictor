@@ -88,6 +88,7 @@ namespace CommunicationDevices.Model
         public ISubject<IExhangeBehavior> ApkDkVolgogradDataExchangeSuccessRx { get; private set; }
 
 
+
         private string _errorString;
         public string ErrorString
         {

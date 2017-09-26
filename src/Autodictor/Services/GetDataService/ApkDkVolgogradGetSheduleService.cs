@@ -1,59 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using Domain.Entitys.ApkDk;
 using Library.Logs;
+using MainExample.Extension;
 
 namespace MainExample.Services.GetDataService
 {
     public class ApkDkVolgogradGetSheduleService : IDisposable
     {
-        private readonly ISubject<IEnumerable<ApkDkVolgogradShedule>> _sheduleChangeRx;
+        #region field
+
+        private readonly ISubject<IEnumerable<ApkDkVolgogradShedule>> _sheduleGetRx;
         private readonly SortedDictionary<string, SoundRecord> _soundRecords;
+
+        #endregion
+
+
+
+
+        #region prop
 
         public ISubject<IExhangeBehavior> ConnectChangeRx { get; }
         public ISubject<IExhangeBehavior> DataExchangeSuccessChangeRx { get; }
 
-        public IDisposable DispouseSheduleChangeRx { get; set; }
+        public IDisposable DispouseSheduleGetRx { get; set; }
         public IDisposable DispouseConnectChangeRx { get; set; }
         public IDisposable DispouseDataExchangeSuccessChangeRx { get; set; }
 
         public bool Enable { get; set; }
 
+        #endregion
 
 
 
-        public ApkDkVolgogradGetSheduleService(ISubject<IEnumerable<ApkDkVolgogradShedule>> sheduleChangeRx,
-                                               ISubject<IExhangeBehavior> connectChangeRx,
-                                               ISubject<IExhangeBehavior> dataExchangeSuccessChangeRx, 
-                                               SortedDictionary<string, SoundRecord> soundRecords)
+
+        #region ctor
+
+        public ApkDkVolgogradGetSheduleService(ISubject<IEnumerable<ApkDkVolgogradShedule>> sheduleGetRx,
+            ISubject<IExhangeBehavior> connectChangeRx,
+            ISubject<IExhangeBehavior> dataExchangeSuccessChangeRx, 
+            SortedDictionary<string, SoundRecord> soundRecords)
         {
-            _sheduleChangeRx = sheduleChangeRx;
+            _sheduleGetRx = sheduleGetRx;
             ConnectChangeRx = connectChangeRx;
             DataExchangeSuccessChangeRx = dataExchangeSuccessChangeRx;
             _soundRecords = soundRecords;
         }
 
+        #endregion
 
 
 
-        public void Subscribe(CheckBox controlCheckBox)
+
+
+        #region Methode
+
+        /// <summary>
+        /// Подписать все события и запустить
+        /// </summary>
+        public void SubscribeAndStart(Control control)
         {
-            DispouseSheduleChangeRx= _sheduleChangeRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
-            DispouseConnectChangeRx= ConnectChangeRx.Subscribe(behavior => controlCheckBox.Enabled = behavior.IsConnect);
-            DispouseDataExchangeSuccessChangeRx = DataExchangeSuccessChangeRx.Subscribe();
+            DispouseSheduleGetRx= _sheduleGetRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
+            DispouseConnectChangeRx= ConnectChangeRx.Subscribe(behavior => control.Enabled = behavior.IsConnect);  //контролл не активен, если нет связи
+            DispouseDataExchangeSuccessChangeRx = DataExchangeSuccessChangeRx.Subscribe(behavior =>
+            {
+                var colorYes = Color.GreenYellow;
+                var colorError = Color.Red;
+                var colorNo = Color.White;
+                control.BackColor = (behavior.DataExchangeSuccess) ? colorYes : colorError;
+                Task.Delay(1000).ContinueWith(task =>
+                {
+                    control.InvokeIfNeeded(() =>
+                    {
+                        control.BackColor = colorNo;
+                    });
+                });
+            });
         }
 
 
-
-
+        /// <summary>
+        /// Обработка полученных данных
+        /// </summary>
         private void GetApkDkVolgorgadSheduleRxEventHandler(IEnumerable<ApkDkVolgogradShedule> apkDkVolgogradShedules)
         {
             if(!Enable)
-              return;
+                return;
 
             if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
             {
@@ -127,6 +165,8 @@ namespace MainExample.Services.GetDataService
             }
         }
 
+        #endregion
+
 
 
 
@@ -140,6 +180,9 @@ namespace MainExample.Services.GetDataService
 
         public void Dispose()
         {
+            DispouseSheduleGetRx?.Dispose();
+            DispouseConnectChangeRx?.Dispose();
+            DispouseDataExchangeSuccessChangeRx?.Dispose();
         }
 
         #endregion

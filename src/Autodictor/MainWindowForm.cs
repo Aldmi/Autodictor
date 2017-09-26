@@ -32,6 +32,7 @@ using MainExample.Mappers;
 using MainExample.Services;
 using Library.Logs;
 using MainExample.Services.FactoryServices;
+using MainExample.Services.GetDataService;
 using MoreLinq;
 using ISoundRecordPreprocessing = MainExample.Services.ISoundRecordPreprocessing;
 
@@ -180,6 +181,8 @@ namespace MainExample
         public IDisposable DispouseApkDkVolgogradSheduleChangeConnectRx { get; set; }
         public IDisposable DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx { get; set; }
 
+        public ApkDkVolgogradGetSheduleService ApkDkVolgogradGetSheduleService { get; set; }          //сервис получения данных от АпкДк Волгоград
+
 
         public int ВремяЗадержкиМеждуСообщениями = 0;
         private int ТекущаяСекунда = 0;
@@ -280,10 +283,11 @@ namespace MainExample
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
             //ОБРАБОТЧИКИ СОБЫТИЙ ОТ АПКДК ВОЛГОГРАД
-            DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
-            DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx?.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
-            DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
+            //DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
+            //DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx?.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
+            //DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
 
+            ApkDkVolgogradGetSheduleService = new ApkDkVolgogradGetSheduleService(apkDkVolgogradSheduleChangeRx, apkDkVolgogradSheduleChangeConnectRx, apkDkVolgogradSheduleDataExchangeSuccessChangeRx, SoundRecords);
 
             //ЗАПУСК ОЧЕРЕДИ ЗВУКА
             QueueSound.StartQueue();
@@ -308,6 +312,8 @@ namespace MainExample
                     case "HttpApkDkVolgograd":
                         chbox_apkDk.Visible = true;
                         chbox_apkDk.Checked = Program.Настройки.ApkDkStart;
+                        ApkDkVolgogradGetSheduleService.SubscribeAndStart(chbox_apkDk);
+                        ApkDkVolgogradGetSheduleService.Enable = chbox_apkDk.Checked;
                         break;
 
                     case "Moscov":
@@ -324,11 +330,13 @@ namespace MainExample
             base.OnLoad(e);
         }
 
+
         private void chbox_apkDk_CheckedChanged(object sender, EventArgs e)
         {
             var chBox = sender as CheckBox;
             if (chBox != null)
             {
+                ApkDkVolgogradGetSheduleService.Enable = chbox_apkDk.Checked;
                 Program.Настройки.ApkDkStart= chbox_apkDk.Checked;
                 ОкноНастроек.СохранитьНастройки();
             }
@@ -3878,9 +3886,12 @@ namespace MainExample
             DispouseCisClientIsConnectRx?.Dispose();
             DispouseQueueChangeRx?.Dispose();
             DispouseStaticChangeRx?.Dispose();
+
             DispouseApkDkVolgogradSheduleChangeRx?.Dispose();
             DispouseApkDkVolgogradSheduleChangeConnectRx?.Dispose();
             DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Dispose();
+
+            ApkDkVolgogradGetSheduleService?.Dispose();
 
             base.OnClosed(e);
         }
