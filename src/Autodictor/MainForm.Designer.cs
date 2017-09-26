@@ -64,7 +64,6 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tSLСостояниеСвязиСЦИС = new System.Windows.Forms.ToolStripButton();
             this.tSBОбновитьСписок = new System.Windows.Forms.ToolStripButton();
             this.tSBВключить = new System.Windows.Forms.ToolStripButton();
             this.tSBПауза = new System.Windows.Forms.ToolStripButton();
@@ -345,7 +344,6 @@
             this.tSCommands.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripSeparator1,
-            this.tSLСостояниеСвязиСЦИС,
             this.tSBОбновитьСписок,
             this.tSBВключить,
             this.tSBПауза,
@@ -399,18 +397,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 55);
-            // 
-            // tSLСостояниеСвязиСЦИС
-            // 
-            this.tSLСостояниеСвязиСЦИС.BackColor = System.Drawing.Color.Orange;
-            this.tSLСостояниеСвязиСЦИС.CheckOnClick = true;
-            this.tSLСостояниеСвязиСЦИС.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tSLСостояниеСвязиСЦИС.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tSLСостояниеСвязиСЦИС.Image = ((System.Drawing.Image)(resources.GetObject("tSLСостояниеСвязиСЦИС.Image")));
-            this.tSLСостояниеСвязиСЦИС.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tSLСостояниеСвязиСЦИС.Name = "tSLСостояниеСвязиСЦИС";
-            this.tSLСостояниеСвязиСЦИС.Size = new System.Drawing.Size(66, 52);
-            this.tSLСостояниеСвязиСЦИС.Text = "АпкДк";
             // 
             // tSBОбновитьСписок
             // 
@@ -675,7 +661,6 @@
         public System.Windows.Forms.ToolStripButton tSBПауза;
         private System.Windows.Forms.ToolStripButton tSBВключить;
         private System.Windows.Forms.ToolStripMenuItem добавитьСтатическоеСообщениеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton tSLСостояниеСвязиСЦИС;
         private System.Windows.Forms.ToolStripDropDownButton tSDDBРаботаПоДням;
         private System.Windows.Forms.ToolStripMenuItem TSMIПоПонедельнику;
         private System.Windows.Forms.ToolStripMenuItem TSMIПоВторнику;

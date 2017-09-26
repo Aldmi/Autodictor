@@ -19,7 +19,8 @@ namespace Library.Extensions
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                   // throw ex;
+                    return default(T);  //TODO: ???
                 }
             });
         }

@@ -112,10 +112,10 @@ namespace Domain.Entitys.ApkDk
                                 apkDk.Put = "1приг";
                                 break;
                             case "12":
-                                apkDk.Put = "2приг";
+                                apkDk.Put = "3приг";
                                 break;
                             case "13":
-                                apkDk.Put = "3приг";
+                                apkDk.Put = "2приг";
                                 break;
                         }
 

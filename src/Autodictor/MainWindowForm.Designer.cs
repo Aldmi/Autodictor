@@ -48,6 +48,13 @@
             this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lVПрибытие = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Дополнение = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lVТранзит = new System.Windows.Forms.ListView();
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -56,22 +63,18 @@
             this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lVПрибытие = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Дополнение = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lVСтатическиеСообщения = new System.Windows.Forms.ListView();
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             this.lVСобытия = new System.Windows.Forms.ListView();
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtb_subtaitles = new System.Windows.Forms.RichTextBox();
+            this.chbox_apkDk = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.номерПутиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.путь0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,6 +133,10 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -154,7 +161,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Margin = new System.Windows.Forms.Padding(2);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1394, 531);
+            this.listView1.Size = new System.Drawing.Size(1402, 507);
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -231,10 +238,10 @@
             this.lVОтправление.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lVОтправление.FullRowSelect = true;
             this.lVОтправление.GridLines = true;
-            this.lVОтправление.Location = new System.Drawing.Point(696, 2);
+            this.lVОтправление.Location = new System.Drawing.Point(700, 2);
             this.lVОтправление.Margin = new System.Windows.Forms.Padding(2);
             this.lVОтправление.Name = "lVОтправление";
-            this.lVОтправление.Size = new System.Drawing.Size(696, 248);
+            this.lVОтправление.Size = new System.Drawing.Size(700, 327);
             this.lVОтправление.TabIndex = 19;
             this.lVОтправление.UseCompatibleStateImageBehavior = false;
             this.lVОтправление.View = System.Windows.Forms.View.Details;
@@ -284,18 +291,76 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.81923F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.18077F));
-            this.tableLayoutPanel1.Controls.Add(this.lVТранзит, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lVПрибытие, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.lVОтправление, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lVТранзит, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.54522F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.45478F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1394, 531);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.37288F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.62712F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1402, 507);
             this.tableLayoutPanel1.TabIndex = 20;
+            // 
+            // lVПрибытие
+            // 
+            this.lVПрибытие.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader12,
+            this.columnHeader11,
+            this.Дополнение});
+            this.lVПрибытие.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lVПрибытие.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lVПрибытие.FullRowSelect = true;
+            this.lVПрибытие.GridLines = true;
+            this.lVПрибытие.Location = new System.Drawing.Point(700, 333);
+            this.lVПрибытие.Margin = new System.Windows.Forms.Padding(2);
+            this.lVПрибытие.Name = "lVПрибытие";
+            this.lVПрибытие.Size = new System.Drawing.Size(700, 172);
+            this.lVПрибытие.TabIndex = 17;
+            this.lVПрибытие.UseCompatibleStateImageBehavior = false;
+            this.lVПрибытие.View = System.Windows.Forms.View.Details;
+            this.lVПрибытие.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.lVПрибытие.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lVПрибытие_MouseUp);
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Время";
+            this.columnHeader3.Width = 3;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Поезд";
+            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader9.Width = 80;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Путь";
+            this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader10.Width = 71;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "ПРИБ.";
+            this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader12.Width = 90;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.DisplayIndex = 5;
+            this.columnHeader11.Text = "Маршрут";
+            this.columnHeader11.Width = 1000;
+            // 
+            // Дополнение
+            // 
+            this.Дополнение.DisplayIndex = 4;
+            this.Дополнение.Text = "Дополнение";
+            this.Дополнение.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Дополнение.Width = 150;
             // 
             // lVТранзит
             // 
@@ -315,7 +380,7 @@
             this.lVТранзит.Margin = new System.Windows.Forms.Padding(2);
             this.lVТранзит.Name = "lVТранзит";
             this.tableLayoutPanel1.SetRowSpan(this.lVТранзит, 2);
-            this.lVТранзит.Size = new System.Drawing.Size(690, 527);
+            this.lVТранзит.Size = new System.Drawing.Size(694, 503);
             this.lVТранзит.TabIndex = 18;
             this.lVТранзит.UseCompatibleStateImageBehavior = false;
             this.lVТранзит.View = System.Windows.Forms.View.Details;
@@ -364,65 +429,6 @@
             this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader30.Width = 150;
             // 
-            // lVПрибытие
-            // 
-            this.lVПрибытие.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader12,
-            this.columnHeader11,
-            this.Дополнение});
-            this.lVПрибытие.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lVПрибытие.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lVПрибытие.FullRowSelect = true;
-            this.lVПрибытие.GridLines = true;
-            this.lVПрибытие.Location = new System.Drawing.Point(696, 254);
-            this.lVПрибытие.Margin = new System.Windows.Forms.Padding(2);
-            this.lVПрибытие.Name = "lVПрибытие";
-            this.lVПрибытие.Size = new System.Drawing.Size(696, 275);
-            this.lVПрибытие.TabIndex = 17;
-            this.lVПрибытие.UseCompatibleStateImageBehavior = false;
-            this.lVПрибытие.View = System.Windows.Forms.View.Details;
-            this.lVПрибытие.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
-            this.lVПрибытие.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lVПрибытие_MouseUp);
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Время";
-            this.columnHeader3.Width = 3;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Поезд";
-            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader9.Width = 80;
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "Путь";
-            this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader10.Width = 71;
-            // 
-            // columnHeader12
-            // 
-            this.columnHeader12.Text = "ПРИБ.";
-            this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader12.Width = 90;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.DisplayIndex = 5;
-            this.columnHeader11.Text = "Маршрут";
-            this.columnHeader11.Width = 1000;
-            // 
-            // Дополнение
-            // 
-            this.Дополнение.DisplayIndex = 4;
-            this.Дополнение.Text = "Дополнение";
-            this.Дополнение.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Дополнение.Width = 150;
-            // 
             // lVСтатическиеСообщения
             // 
             this.lVСтатическиеСообщения.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -455,10 +461,9 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(4, 2);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -466,32 +471,67 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer1.Panel1.Controls.Add(this.listView1);
+            this.splitContainer1.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1394, 653);
-            this.splitContainer1.SplitterDistance = 531;
+            this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer1.Size = new System.Drawing.Size(1402, 714);
+            this.splitContainer1.SplitterDistance = 507;
             this.splitContainer1.TabIndex = 21;
             // 
             // splitContainer2
             // 
-            this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer2.Location = new System.Drawing.Point(0, 4);
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.lVСобытия);
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer3);
+            this.splitContainer2.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.rtb_subtaitles);
-            this.splitContainer2.Size = new System.Drawing.Size(1394, 114);
-            this.splitContainer2.SplitterDistance = 691;
+            this.splitContainer2.Panel2.AllowDrop = true;
+            this.splitContainer2.Panel2.AutoScroll = true;
+            this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.splitContainer2.Panel2.Controls.Add(this.chbox_apkDk);
+            this.splitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer2.Size = new System.Drawing.Size(1402, 203);
+            this.splitContainer2.SplitterDistance = 174;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.splitter1);
+            this.splitContainer3.Panel1.Controls.Add(this.lVСобытия);
+            this.splitContainer3.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.rtb_subtaitles);
+            this.splitContainer3.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitContainer3.Size = new System.Drawing.Size(1402, 174);
+            this.splitContainer3.SplitterDistance = 694;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(0, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 174);
+            this.splitter1.TabIndex = 2;
+            this.splitter1.TabStop = false;
             // 
             // lVСобытия
             // 
@@ -505,7 +545,7 @@
             this.lVСобытия.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lVСобытия.Location = new System.Drawing.Point(0, 0);
             this.lVСобытия.Name = "lVСобытия";
-            this.lVСобытия.Size = new System.Drawing.Size(691, 114);
+            this.lVСобытия.Size = new System.Drawing.Size(694, 174);
             this.lVСобытия.TabIndex = 1;
             this.lVСобытия.UseCompatibleStateImageBehavior = false;
             this.lVСобытия.View = System.Windows.Forms.View.Details;
@@ -532,9 +572,27 @@
             this.rtb_subtaitles.Location = new System.Drawing.Point(0, 0);
             this.rtb_subtaitles.Name = "rtb_subtaitles";
             this.rtb_subtaitles.ReadOnly = true;
-            this.rtb_subtaitles.Size = new System.Drawing.Size(699, 114);
+            this.rtb_subtaitles.Size = new System.Drawing.Size(704, 174);
             this.rtb_subtaitles.TabIndex = 0;
             this.rtb_subtaitles.Text = "";
+            // 
+            // chbox_apkDk
+            // 
+            this.chbox_apkDk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chbox_apkDk.AutoSize = true;
+            this.chbox_apkDk.BackColor = System.Drawing.Color.White;
+            this.chbox_apkDk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.chbox_apkDk.Enabled = false;
+            this.chbox_apkDk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbox_apkDk.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chbox_apkDk.Location = new System.Drawing.Point(9, 4);
+            this.chbox_apkDk.Name = "chbox_apkDk";
+            this.chbox_apkDk.Size = new System.Drawing.Size(67, 20);
+            this.chbox_apkDk.TabIndex = 0;
+            this.chbox_apkDk.Text = "АпкДк";
+            this.chbox_apkDk.UseVisualStyleBackColor = false;
+            this.chbox_apkDk.CheckedChanged += new System.EventHandler(this.chbox_apkDk_CheckedChanged);
             // 
             // contextMenuStrip1
             // 
@@ -925,7 +983,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1402, 658);
+            this.ClientSize = new System.Drawing.Size(1402, 714);
             this.Controls.Add(this.splitContainer1);
             this.DoubleBuffered = true;
             this.Icon = global::MainExample.Properties.Resources.SmallIcon;
@@ -940,8 +998,13 @@
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1041,5 +1104,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Автомат;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Active_Да;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Active_Нет;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.CheckBox chbox_apkDk;
     }
 }

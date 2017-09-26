@@ -68,6 +68,9 @@ namespace MainExample
         public Font FontПригород;
         public Font FontДальние;
 
+        public bool ApkDkStart;                 //настройка апкДк из главного окна
+
+
 
         #region Methode
 
@@ -515,6 +518,11 @@ namespace MainExample
                                     if (int.TryParse(Settings[1], out ПеременнаяInt))
                                         Program.Настройки.UTC = ПеременнаяInt;
                                     break;
+
+                                case "ApkDkStart":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.ApkDkStart = ПеременнаяBool;
+                                    break;
                             }
                         }
                     }
@@ -663,6 +671,7 @@ namespace MainExample
                     DumpFile.WriteLine("FontПригород=" + $"{Program.Настройки.FontПригород.Name}:{Program.Настройки.FontПригород.Size}:{Program.Настройки.FontПригород.Style}");
 
                     DumpFile.WriteLine("UTC=" + Program.Настройки.UTC.ToString("D"));
+                    DumpFile.WriteLine("ApkDkStart=" + Program.Настройки.ApkDkStart);
 
                     DumpFile.Close();
                 }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
@@ -283,7 +284,8 @@ namespace MainExample
             DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx?.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
             DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
 
-            //
+
+            //ЗАПУСК ОЧЕРЕДИ ЗВУКА
             QueueSound.StartQueue();
 
             MainForm.Включить.BackColor = Color.Red;
@@ -296,19 +298,21 @@ namespace MainExample
         /// </summary>
         protected override void OnLoad(EventArgs e)
         {
+           //ИНИЦИАЛИЗАЦИЯ УСТРОЙСТВ ПОЛУЧЕНИЯ ДАННЫХ--------------------------
+            chbox_apkDk.Visible = false;
             foreach (var beh in Binding2GetDataBehaviors)
             {
+                //ВКЛ/ОТКЛ элементы UI данного девайса
                 switch (beh.GetDeviceName)
                 {
                     case "HttpApkDkVolgograd":
-                        //TODO: ВКЛ/ОТКЛ элементы UI данного девайса
+                        chbox_apkDk.Visible = true;
+                        chbox_apkDk.Checked = Program.Настройки.ApkDkStart;
                         break;
 
                     case "Moscov":
-                        //TODO: ВКЛ/ОТКЛ элементы UI данного девайса
                         break;
                 }
-
 
                 //инициализируем таблицу, для прохождения условия в функции отправки "AddOneTimeSendData".
                 var uit = new UniversalInputType
@@ -318,6 +322,16 @@ namespace MainExample
                 beh.SendMessage(uit);
             }
             base.OnLoad(e);
+        }
+
+        private void chbox_apkDk_CheckedChanged(object sender, EventArgs e)
+        {
+            var chBox = sender as CheckBox;
+            if (chBox != null)
+            {
+                Program.Настройки.ApkDkStart= chbox_apkDk.Checked;
+                ОкноНастроек.СохранитьНастройки();
+            }
         }
 
 
@@ -336,19 +350,29 @@ namespace MainExample
 
         private void ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler(IExhangeBehavior exhangeBehavior)
         {
-
+            Color colorYes= Color.GreenYellow;
+            Color colorError = Color.Red;
+            Color colorNo = Color.White;
+            chbox_apkDk.BackColor = (exhangeBehavior.DataExchangeSuccess) ? colorYes : colorError;
+            Task.Delay(1000).ContinueWith(task =>
+            {
+                chbox_apkDk.InvokeIfNeeded(() =>
+                {
+                    chbox_apkDk.BackColor = colorNo;
+                });
+            });
         }
 
 
         private void ApkDkVolgogradSheduleChangeConnectRxEventHandler(IExhangeBehavior exhangeBehavior)
         {
-
+            chbox_apkDk.Enabled= exhangeBehavior.IsConnect;
         }
 
 
         private void GetApkDkVolgorgadSheduleRxEventHandler(IEnumerable<ApkDkVolgogradShedule> apkDkVolgogradShedules)
         {
-            if(MainForm.СвязьСЦис.Checked)
+            if(!(chbox_apkDk.Visible && chbox_apkDk.Enabled && chbox_apkDk.Checked))
                 return;
 
             if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
@@ -365,13 +389,6 @@ namespace MainExample
                     {
                         var key = SoundRecords.Keys.ElementAt(i);
                         var rec = SoundRecords.ElementAt(i).Value;
-
-                        //DEBUG----------------------------------------
-                        //if (rec.НомерПоезда.Contains("230"))
-                        //{
-                            
-                        //}
-                        //DEBUG----------------------------------------
 
                         //ТРАНЗИТ
                         if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr != DateTime.MinValue)
@@ -427,17 +444,6 @@ namespace MainExample
                         }
                     }
                 }
-                
-
-
-                //DEBUG---------------------------------
-                //string sumstr= String.Empty;
-                //foreach (var item in apkDkVolgogradShedules)
-                //{
-                //    sumstr+= $"N= {item.Ntrain}  Путь= {item.Put}    Дата отпр={item.DtOtpr:d} Время отпр={item.TmOtpr:g}     Дата приб={item.DtPrib:d} Время приб={item.TmPrib:g}" + "||||||||||";
-                //}
-                //MessageBox.Show(sumstr);
-                //DEBUG---------------------------------
             }
         }
 
@@ -3878,5 +3884,7 @@ namespace MainExample
 
             base.OnClosed(e);
         }
+
+
     }
 }

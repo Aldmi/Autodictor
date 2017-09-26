@@ -30,7 +30,6 @@ namespace MainExample
         public static int VisibleStyle = 0;
 
         public static MainForm mainForm = null;
-        public static ToolStripButton СвязьСЦис = null;
         public static ToolStripButton Пауза = null;
         public static ToolStripButton Включить = null;
         public static ToolStripButton ОбновитьСписок = null;
@@ -57,9 +56,6 @@ namespace MainExample
 
             if (mainForm == null)
                 mainForm = this;
-
-            СвязьСЦис = tSLСостояниеСвязиСЦИС;
-            СвязьСЦис.BackColor = Color.Orange;
 
             Пауза = tSBПауза;
 

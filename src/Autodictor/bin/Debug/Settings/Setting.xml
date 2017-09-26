@@ -124,7 +124,7 @@
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   /> -->
 						   
-	 <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
+	 <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="5000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
 	              Headers='Method: GET + 
 				           ContentEncoding: gzip +
 						   Accept: text/html, */* +
