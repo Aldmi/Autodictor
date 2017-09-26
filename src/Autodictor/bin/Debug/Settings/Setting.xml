@@ -101,12 +101,12 @@
   </DevicesWithSP>
   
   
-
+<!-- Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=62"  -->
 
 
 
 <DevicesWithHttp>
-<!-- 	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="БольшеТекВремени;ЛимитСтрокТаблицы:5" ProviderType="xml_mainWindow:sortable" 
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
@@ -115,21 +115,105 @@
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
 						   />
 						   
-	 <DeviceHttp Id="310" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=62"  Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	 <DeviceHttp Id="310" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
 						   Connection: Keep-Alive +
 						   Content-Type: multipart/form-data +
 						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
-						   /> -->
-						   
-	 <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="5000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
-	              Headers='Method: GET + 
-				           ContentEncoding: gzip +
-						   Accept: text/html, */* +
-						   Connection: Keep-Alive'
 						   />
+						   
+	 <DeviceHttp Id="311" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="312" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="313" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="314" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="315" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="316" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="317" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="318" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   
+	 <DeviceHttp Id="319" Name="HttpTable" Address="http://google.com"  Period="5000" TimeRespone="100" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   />
+						   						   
+						   
+						   
+						   
+	 <!-- <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="5000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet"  -->
+	              <!-- Headers='Method: GET +  -->
+				           <!-- ContentEncoding: gzip + -->
+						   <!-- Accept: text/html, */* + -->
+						   <!-- Connection: Keep-Alive' -->
+						   <!-- /> -->
 						   
 					<!-- 	   Binding="ToGeneral:ОкноРасписания" Contrains="Направление:Московское" ProviderType="xml_sheduleWindow:sortable" -->		   
 </DevicesWithHttp>
