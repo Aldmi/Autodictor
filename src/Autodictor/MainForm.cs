@@ -274,11 +274,12 @@ namespace MainExample
         {
             try
             {
-                Process.Start("about.cmd");
+                string filename = Application.StartupPath + @"\Manuals\Manual.pdf";
+                Process.Start(filename);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show($@"Ошибка открытия файла: ""{ex.Message}""  ""{ex.InnerException?.Message}""");
             }
         }
 
