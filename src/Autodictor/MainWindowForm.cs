@@ -351,18 +351,17 @@ namespace MainExample
 
         private void StaticChangeRxEventHandler(StaticChangeValue staticChangeValue)
         {
-            //DEBUG QUEUE-----------------------------------------
             switch (staticChangeValue.StatusPlaying)
             {
                 case StatusPlaying.Start:
-                    Debug.WriteLine($"Статическое СТАРТ");//DEBUG
+                    //Debug.WriteLine($"Статическое СТАРТ");//DEBUG
                     СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
                     break;
 
-                    //case StatusPlaying.Stop:
-                    //    Debug.WriteLine($"Статическое СТОП");//DEBUG
-                    //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
-                    //    break;
+                case StatusPlaying.Stop:
+                    //Debug.WriteLine($"Статическое СТОП");//DEBUG
+                    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+                    break;
             }
 
             for (int i = 0; i < СтатическиеЗвуковыеСообщения.Count(); i++)
@@ -399,10 +398,10 @@ namespace MainExample
                     СобытиеНачалоПроигрыванияОчередиЗвуковыхСообщений();
                     break;
 
-                    //case StatusPlaying.Stop:
-                    //    Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТОП");//DEBUG
-                    //    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
-                    //    break;
+                case StatusPlaying.Stop:
+                    //Debug.WriteLine($"ДИНАМИЧЕСКОЕ СТОП");//DEBUG
+                    СобытиеКонецПроигрыванияОчередиЗвуковыхСообщений();
+                    break;
             }
 
 

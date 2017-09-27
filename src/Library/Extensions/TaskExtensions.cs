@@ -12,15 +12,19 @@ namespace Library.Extensions
                 try
                 {
                     bool res = task.Wait(duration);
-                    if (res)
-                        return task.Result;
-
-                    return default(T);
+                    return res ? task.Result : default(T);
                 }
                 catch (Exception ex)
                 {
-                   // throw ex;
-                    return default(T);  //TODO: ???
+                    if (ex.InnerException != null)
+                    {
+                        if (ex.InnerException.InnerException != null)
+                        {
+                            throw ex.InnerException.InnerException;
+                        }
+                        throw ex.InnerException;
+                    }
+                   throw;
                 }
             });
         }

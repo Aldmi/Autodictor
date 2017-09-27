@@ -148,10 +148,16 @@ namespace Communication.Http
                     //Log.log.Fatal($"ERROR  (ConnectHttp)   Message= поток запроса по \"{Url}\" НЕ ПОЛУЧЕНН"); //DEBUG_LOG
                     IsConnect = false;
                 }
-                catch (Exception ex)
+                catch (WebException ex)
                 {
                     IsConnect = false;
-                    StatusString = $"Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
+                    StatusString = $"WebException.  Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
+                    //Log.log.Fatal($"ERROR  (ConnectHttp)   Message= {StatusString}"); //DEBUG_LOG
+                }
+                catch (Exception ex)
+                {                  
+                    IsConnect = false;
+                    StatusString = $"Exception Ошибка инициализации соединения \"{Url}\": \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
                     //Log.log.Fatal($"ERROR  (ConnectHttp)   Message= {StatusString}"); //DEBUG_LOG
                 }
                 finally
@@ -200,18 +206,9 @@ namespace Communication.Http
 
                 return false;
             }
-            catch (TimeoutException)
-            {
-                StatusString = "Время на ожидание ответа вышло";
-                //Log.log.Fatal($"ERROR  (RequestAndRespoune) TimeoutException,  Message= {StatusString}"); //DEBUG_LOG
-                if (++_countTryingTakeData > _numberTryingTakeData)
-                    ReConnect();
-
-                return false;
-            }
             catch (WebException we)
             {
-                StatusString = $"Неизвестное Исключение: {we.Message}.   Внутренне исключение: {we.InnerException?.Message ?? "" }";
+                StatusString = $"WebException: {we.Message}.   Внутренне исключение: {we.InnerException?.Message ?? "" }";
                 //Log.log.Fatal($"ERROR  (RequestAndRespoune) WebException,  Message= {StatusString}"); //DEBUG_LOG
                 if (++_countTryingTakeData > _numberTryingTakeData)
                     ReConnect();
@@ -275,8 +272,10 @@ namespace Communication.Http
             return null;
         }
 
+
+
         /// <summary>
-        /// Отправка потока через HttpClient POST Multipart.
+        /// Отправка потока через HttpClient GET.
         /// </summary>
         public async Task<MyHttpResponse> SendGetHttp(string uri, HttpClientHandler handler)
         {
@@ -322,10 +321,6 @@ namespace Communication.Http
                     }
                 }
             }
-            catch (TimeoutException)
-            {
-                throw;
-            }
             catch (WebException)
             {
                 throw;
@@ -337,7 +332,6 @@ namespace Communication.Http
 
             return null;
         }
-
 
 
 
@@ -381,14 +375,15 @@ namespace Communication.Http
                             await outputBody.CopyToAsync(memoryStream);
                             memoryStream.Position = 0;
 
-                            return new MyHttpResponse{Body = memoryStream, StatusCode = respone.StatusCode, Headers = respone.Headers};
+                            return new MyHttpResponse
+                            {
+                                Body = memoryStream,
+                                StatusCode = respone.StatusCode,
+                                Headers = respone.Headers
+                            };
                         }
                     }
                 }
-            }
-            catch (TimeoutException)
-            {
-                throw;
             }
             catch (WebException)
             {
