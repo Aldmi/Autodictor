@@ -99,8 +99,8 @@ namespace MainExample.Services.GetDataService
                 foreach (var tr in trainWithPut)
                 {
                     //DEBUG------------------------------------------------------
-                    var str = $"N= {tr.Ntrain}  Путь= {tr.Put}  Дата отпр={tr.DtOtpr:d}  Время отпр={tr.TmOtpr:g}  Дата приб={tr.DtPrib:d} Время приб={tr.TmPrib:g}  Ст.Приб {tr.StFinish}   Ст.Отпр {tr.StDeparture}";
-                    Log.log.Fatal("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
+                    //var str = $"N= {tr.Ntrain}  Путь= {tr.Put}  Дата отпр={tr.DtOtpr:d}  Время отпр={tr.TmOtpr:g}  Дата приб={tr.DtPrib:d} Время приб={tr.TmPrib:g}  Ст.Приб {tr.StFinish}   Ст.Отпр {tr.StDeparture}";
+                    //Log.log.Fatal("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
                     //DEBUG-----------------------------------------------------
 
                     for (int i = 0; i < _soundRecords.Count; i++)
@@ -118,7 +118,7 @@ namespace MainExample.Services.GetDataService
                                 (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
                                 (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
                             {
-                                Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
+                               // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
 
                                 rec.НомерПути = tr.Put;
                                 _soundRecords[key] = rec;
@@ -135,7 +135,7 @@ namespace MainExample.Services.GetDataService
                                 (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
                                 (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
                             {
-                                Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
+                                //Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
 
                                 rec.НомерПути = tr.Put;
                                 _soundRecords[key] = rec;
@@ -152,7 +152,7 @@ namespace MainExample.Services.GetDataService
                                 (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
                                 (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
                             {
-                                Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
+                               // Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
 
                                 rec.НомерПути = tr.Put;
                                 _soundRecords[key] = rec;

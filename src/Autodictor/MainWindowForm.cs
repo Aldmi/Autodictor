@@ -282,11 +282,7 @@ namespace MainExample
             DispouseStaticChangeRx = QueueSound.StaticChangeRx.Subscribe(StaticChangeRxEventHandler);
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
-            //ОБРАБОТЧИКИ СОБЫТИЙ ОТ АПКДК ВОЛГОГРАД
-            //DispouseApkDkVolgogradSheduleChangeRx= apkDkVolgogradSheduleChangeRx?.Subscribe(GetApkDkVolgorgadSheduleRxEventHandler);
-            //DispouseApkDkVolgogradSheduleChangeConnectRx= apkDkVolgogradSheduleChangeConnectRx?.Subscribe(ApkDkVolgogradSheduleChangeConnectRxEventHandler);
-            //DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx= apkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Subscribe(ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler);
-
+            //АПКДК ВОЛГОГРАД СЕРВИС
             ApkDkVolgogradGetSheduleService = new ApkDkVolgogradGetSheduleService(apkDkVolgogradSheduleChangeRx, apkDkVolgogradSheduleChangeConnectRx, apkDkVolgogradSheduleDataExchangeSuccessChangeRx, SoundRecords);
 
             //ЗАПУСК ОЧЕРЕДИ ЗВУКА
@@ -350,113 +346,6 @@ namespace MainExample
             imgList.ImageSize = new Size(1, height);
             listView.SmallImageList = imgList;
         }
-
-
-
-
-        #region Обработка RX событий получения данных по протоколу Volgograd
-
-        private void ApkDkVolgogradSheduleDataExchangeSuccessRxEventHandler(IExhangeBehavior exhangeBehavior)
-        {
-            Color colorYes= Color.GreenYellow;
-            Color colorError = Color.Red;
-            Color colorNo = Color.White;
-            chbox_apkDk.BackColor = (exhangeBehavior.DataExchangeSuccess) ? colorYes : colorError;
-            Task.Delay(1000).ContinueWith(task =>
-            {
-                chbox_apkDk.InvokeIfNeeded(() =>
-                {
-                    chbox_apkDk.BackColor = colorNo;
-                });
-            });
-        }
-
-
-        private void ApkDkVolgogradSheduleChangeConnectRxEventHandler(IExhangeBehavior exhangeBehavior)
-        {
-            chbox_apkDk.Enabled= exhangeBehavior.IsConnect;
-        }
-
-
-        private void GetApkDkVolgorgadSheduleRxEventHandler(IEnumerable<ApkDkVolgogradShedule> apkDkVolgogradShedules)
-        {
-            if(!(chbox_apkDk.Visible && chbox_apkDk.Enabled && chbox_apkDk.Checked))
-                return;
-
-            if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
-            {
-                var trainWithPut = apkDkVolgogradShedules.Where(sh => !(string.IsNullOrEmpty(sh.Put) || string.IsNullOrWhiteSpace(sh.Put))).ToList();
-                foreach (var tr in trainWithPut)
-                {
-                  //DEBUG------------------------------------------------------
-                  var str = $"N= {tr.Ntrain}  Путь= {tr.Put}  Дата отпр={tr.DtOtpr:d}  Время отпр={tr.TmOtpr:g}  Дата приб={tr.DtPrib:d} Время приб={tr.TmPrib:g}  Ст.Приб {tr.StFinish}   Ст.Отпр {tr.StDeparture}";
-                  Log.log.Fatal("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
-                  //DEBUG-----------------------------------------------------
-
-                    for (int i = 0; i < SoundRecords.Count; i++)
-                    {
-                        var key = SoundRecords.Keys.ElementAt(i);
-                        var rec = SoundRecords.ElementAt(i).Value;
-
-                        //ТРАНЗИТ
-                        if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr != DateTime.MinValue)
-                        {
-                            var numberOfTrain = (string.IsNullOrEmpty(rec.НомерПоезда2) || string.IsNullOrWhiteSpace(rec.НомерПоезда2)) ? rec.НомерПоезда : (rec.НомерПоезда + "/" + rec.НомерПоезда2);
-                            if (tr.Ntrain == numberOfTrain &&
-                                tr.DtPrib == rec.IdTrain.DayArrival &&
-                                tr.DtOtpr == rec.IdTrain.DayDepart &&
-                                (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
-                                (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
-                            {
-                                Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
-
-                                rec.НомерПути = tr.Put;
-                                SoundRecords[key] = rec;
-                               // SendOnPathTable(SoundRecords[key]);
-                                break;
-                            }
-                        }
-                        //ПРИБ.
-                        else
-                        if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr == DateTime.MinValue)
-                        {
-                            if (tr.Ntrain == rec.НомерПоезда && 
-                                tr.DtPrib == rec.IdTrain.DayArrival  &&
-                                (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
-                                (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
-                            {
-                                Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
-
-                                rec.НомерПути = tr.Put;
-                                SoundRecords[key] = rec;
-                                // SendOnPathTable(SoundRecords[key]);
-                                break;
-                            }
-                        }
-                        //ОТПР.
-                        else
-                        if (tr.DtOtpr != DateTime.MinValue && tr.DtPrib == DateTime.MinValue)
-                        {
-                            if (tr.Ntrain == rec.НомерПоезда &&
-                                tr.DtOtpr == rec.IdTrain.DayDepart &&
-                                (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
-                                (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
-                            {
-                                Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
-
-                                rec.НомерПути = tr.Put;
-                                SoundRecords[key] = rec;
-                                // SendOnPathTable(SoundRecords[key]);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-       #endregion
-
 
 
 
@@ -1113,12 +1002,6 @@ namespace MainExample
                         if (SoundRecords.Keys.Contains(Key) == true)
                         {
                             SoundRecord данные = SoundRecords[Key];
-
-                            //DEBUG
-                            if (данные.НомерПоезда == "011")
-                            {
-                                var t = 55;
-                            }
 
                             Color foreColor;
                             Font font;
