@@ -151,6 +151,7 @@
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ConvertReceivedData\ApkDkVolgogradSheduleData.cs" />
     <Compile Include="Services\UitPreprocessingChnagePathDirection4Transit.cs" />
     <Compile Include="Services\UitPreprocessingOutputService.cs" />
     <Compile Include="Services\UitPreprocessingTimezone.cs" />

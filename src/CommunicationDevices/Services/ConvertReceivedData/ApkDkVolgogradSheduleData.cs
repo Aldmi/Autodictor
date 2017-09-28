@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using CommunicationDevices.DataProviders;
 
-namespace Domain.Entitys.ApkDk
+namespace CommunicationDevices.Services.ConvertReceivedData
 {
-    public class ApkDkVolgogradShedule
+    public class ApkDkVolgogradSheduleData
     {
         public string Id { get; set; }            //алиас остановочного пункта и код запроса клиента 
         public string Ln { get; set; }            //номер линии расписания
@@ -29,9 +30,9 @@ namespace Domain.Entitys.ApkDk
 
 
 
-        public static IEnumerable<ApkDkVolgogradShedule> ParseXml2ApkDkschedule(XDocument xDoc)
+        public static IEnumerable<ApkDkVolgogradSheduleData> ParseXml2ApkDkschedule(XDocument xDoc)
         {
-            var shedules = new List<ApkDkVolgogradShedule>();
+            var shedules = new List<ApkDkVolgogradSheduleData>();
 
             var tablo1 = xDoc.Element("tablo_sys")?.Element("tablo_1");
             if (tablo1 != null)
@@ -56,7 +57,7 @@ namespace Domain.Entitys.ApkDk
                 {
                     foreach (var line in lines.Elements())
                     {
-                        var apkDk = new ApkDkVolgogradShedule { Id = idServer, ServerTime = serverTime };
+                        var apkDk = new ApkDkVolgogradSheduleData { Id = idServer, ServerTime = serverTime };
 
                         var elem = line?.Element("ln")?.Value ?? string.Empty;
                         apkDk.Ln = Regex.Replace(elem, "[\r\n\t]+", "");
@@ -140,9 +141,9 @@ namespace Domain.Entitys.ApkDk
 
 
 
-        public static IEnumerable<ApkDkVolgogradShedule> ParseXml2ApkDkschedule2(XDocument xDoc)
+        public static IEnumerable<UniversalInputType> ParseXml2ApkDkschedule2(XDocument xDoc)
         {
-            var shedules = new List<ApkDkVolgogradShedule>();
+            var shedules = new List<UniversalInputType>();
 
             var tablo1 = xDoc.Element("tablo_sys")?.Element("tablo_1");
             if (tablo1 != null)
@@ -167,77 +168,77 @@ namespace Domain.Entitys.ApkDk
                 {
                     foreach (var line in lines.Elements())
                     {
-                        var apkDk = new ApkDkVolgogradShedule { Id = idServer, ServerTime = serverTime };
+                        var apkDk = new UniversalInputType { ViewBag = new Dictionary<string, dynamic>()};
+                        apkDk.ViewBag["idServer"] = idServer;
+                        apkDk.ViewBag["ServerTime"] = serverTime;
 
                         var elem = line?.Element("ln")?.Value ?? string.Empty;
-                        apkDk.Ln = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.ViewBag["Ln"] = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("ntrain")?.Value.Replace("\\", "/") ?? string.Empty;
-                        apkDk.Ntrain = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.NumberOfTrain = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("kp")?.Value ?? string.Empty;
-                        apkDk.Kp = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.ViewBag["Kp"] = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("st_finish")?.Value ?? string.Empty;
-                        apkDk.StFinish = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.StationArrival.NameRu = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("station_departure")?.Value ?? string.Empty;
-                        apkDk.StDeparture = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.StationDeparture.NameRu = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("tm_otpr")?.Value ?? string.Empty;
                         elem = Regex.Replace(elem, "[\r\n\t]+", "");
                         TimeSpan tmOtpr;
                         TimeSpan.TryParse(elem, out tmOtpr);
-                        apkDk.TmOtpr = tmOtpr;
 
                         elem = line?.Element("tm_prib")?.Value ?? string.Empty;
                         elem = Regex.Replace(elem, "[\r\n\t]+", "");
                         TimeSpan tmPrib;
                         TimeSpan.TryParse(elem, out tmPrib);
-                        apkDk.TmPrib = tmPrib;
 
                         elem = line?.Element("dt_otpr")?.Value ?? string.Empty;
                         elem = Regex.Replace(elem, "[\r\n\t]+", "");
                         DateTime dtOtpr;
                         DateTime.TryParse(elem, out dtOtpr);
-                        apkDk.DtOtpr = dtOtpr;
+                        apkDk.TransitTime["отпр"] = dtOtpr.Add(tmOtpr);
 
                         elem = line?.Element("dt_prib")?.Value ?? string.Empty;
                         elem = Regex.Replace(elem, "[\r\n\t]+", "");
                         DateTime dtPrib;
                         DateTime.TryParse(elem, out dtPrib);
-                        apkDk.DtPrib = dtPrib;
-
+                        apkDk.TransitTime["приб"] = dtPrib.Add(tmPrib);
 
                         elem = line?.Element("stops")?.Value ?? string.Empty;
-                        apkDk.Stops = Regex.Replace(elem, "[\r\n\t]+", "");
-
+                        apkDk.ViewBag["Stops"] = Regex.Replace(elem, "[\r\n\t]+", "");
+                        
                         elem = line?.Element("ost_full")?.Value ?? string.Empty;
-                        apkDk.OstFull = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.ViewBag["OstFull"] = Regex.Replace(elem, "[\r\n\t]+", "");
+                        
 
                         elem = line?.Element("put")?.Value ?? string.Empty;
-                        apkDk.Put = Regex.Replace(elem, "[\r\n\t]+", "");
-                        switch (apkDk.Put)
+                        apkDk.PathNumber = Regex.Replace(elem, "[\r\n\t]+", "");
+                        switch (apkDk.PathNumber)
                         {
                             case "11":
-                                apkDk.Put = "1приг";
+                                apkDk.PathNumber = "1приг";
                                 break;
                             case "12":
-                                apkDk.Put = "3приг";
+                                apkDk.PathNumber = "3приг";
                                 break;
                             case "13":
-                                apkDk.Put = "2приг";
+                                apkDk.PathNumber = "2приг";
                                 break;
                         }
 
                         elem = line?.Element("platf")?.Value ?? string.Empty;
-                        apkDk.Platf = Regex.Replace(elem, "[\r\n\t]+", "");
-
+                        apkDk.ViewBag["Platf"] = Regex.Replace(elem, "[\r\n\t]+", "");
+                       
                         elem = line?.Element("tm_late")?.Value ?? string.Empty;
                         elem = Regex.Replace(elem, "[\r\n\t]+", "");
                         int minute;
                         int.TryParse(elem, out minute);
-                        apkDk.TmLate = minute;
+                        apkDk.ViewBag["TmLate"] = DateTime.Now.AddMinutes(minute);
 
                         shedules.Add(apkDk);
                     }

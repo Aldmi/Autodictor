@@ -30,7 +30,7 @@ namespace CommunicationDevices.DataProviders
         public string AddressDevice { get; set; }                    //Адресс устройсва
         public bool IsActive { get; set; }                           //Флаг активности записи ("Отменен без объявления")
 
-        public TypeTrain TypeTrain { get; set; }                     //Пригород или дальнего следования
+        public TypeTrain TypeTrain { get; set; }                     //тип поезда
         public string NumberOfTrain { get; set; }                    //Номер поезда
         public string PathNumber { get; set; }                       //Номер пути
         public string Event { get; set; }                            //Событие (отправление/прибытие/Транзит)
