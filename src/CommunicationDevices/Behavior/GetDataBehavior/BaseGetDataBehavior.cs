@@ -21,7 +21,7 @@ namespace CommunicationDevices.Behavior.GetDataBehavior
         public ISubject<IEnumerable<UniversalInputType>> ConvertedDataChangeRx { get; } = new Subject<IEnumerable<UniversalInputType>>();
 
         //издатель события "изменения состояния соединения с сервером"
-        public ISubject<IExhangeBehavior> ChangeConnectRx { get; }
+        public ISubject<IExhangeBehavior> ConnectChangeRx { get; }
 
         //издатель события "изменения состояния обмена данными"
         public ISubject<IExhangeBehavior> DataExchangeSuccessRx { get; }
@@ -38,13 +38,13 @@ namespace CommunicationDevices.Behavior.GetDataBehavior
 
         #region ctor
 
-        public BaseGetDataBehavior(string name, ISubject<IExhangeBehavior> changeConnectRx,
+        public BaseGetDataBehavior(string name, ISubject<IExhangeBehavior> connectChangeRx,
                                                 ISubject<IExhangeBehavior> dataExchangeSuccessRx,
                                                 ISubject<Stream> getStreamRx,
                                                 IInputDataConverter inputConverter)
         {
             Name = name;
-            ChangeConnectRx = changeConnectRx;
+            ConnectChangeRx = connectChangeRx;
             DataExchangeSuccessRx = dataExchangeSuccessRx;
             GetStreamRxHandlerDispose = getStreamRx.Subscribe(GetStreamRxHandler);      //подписка на событие получения потока данных
             InputConverter = inputConverter;

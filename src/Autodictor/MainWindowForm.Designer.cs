@@ -124,6 +124,7 @@
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.воспроизвестиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.включитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chbox_DispatcherControl = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -499,6 +500,7 @@
             this.splitContainer2.Panel2.AllowDrop = true;
             this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.splitContainer2.Panel2.Controls.Add(this.chbox_DispatcherControl);
             this.splitContainer2.Panel2.Controls.Add(this.chbox_apkDk);
             this.splitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer2.Size = new System.Drawing.Size(1402, 203);
@@ -979,6 +981,24 @@
             this.включитьToolStripMenuItem.Text = "Включить";
             this.включитьToolStripMenuItem.Click += new System.EventHandler(this.включитьToolStripMenuItem_Click);
             // 
+            // chbox_DispatcherControl
+            // 
+            this.chbox_DispatcherControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chbox_DispatcherControl.AutoSize = true;
+            this.chbox_DispatcherControl.BackColor = System.Drawing.Color.White;
+            this.chbox_DispatcherControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.chbox_DispatcherControl.Enabled = false;
+            this.chbox_DispatcherControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbox_DispatcherControl.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chbox_DispatcherControl.Location = new System.Drawing.Point(82, 4);
+            this.chbox_DispatcherControl.Name = "chbox_DispatcherControl";
+            this.chbox_DispatcherControl.Size = new System.Drawing.Size(98, 20);
+            this.chbox_DispatcherControl.TabIndex = 1;
+            this.chbox_DispatcherControl.Text = "Диспетчер";
+            this.chbox_DispatcherControl.UseVisualStyleBackColor = false;
+            this.chbox_DispatcherControl.CheckedChanged += new System.EventHandler(this.chbox_DispatcherControl_CheckedChanged);
+            // 
             // MainWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1107,5 +1127,6 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.CheckBox chbox_apkDk;
+        private System.Windows.Forms.CheckBox chbox_DispatcherControl;
     }
 }

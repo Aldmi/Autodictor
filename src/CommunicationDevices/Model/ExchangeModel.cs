@@ -85,10 +85,6 @@ namespace CommunicationDevices.Model
         public ICollection<IBinding2ChangesEventBehavior> Binding2ChangesEvent { get; set; } = new List<IBinding2ChangesEventBehavior>();
         public ICollection<IBinding2GetData> Binding2GetData{ get; set; } = new List<IBinding2GetData>();
 
-        public ISubject<IEnumerable<ApkDkVolgogradShedule>> ApkDkVolgogradSheduleChangeRx { get; } = new Subject<IEnumerable<ApkDkVolgogradShedule>>();
-        public ISubject<IExhangeBehavior> ApkDkVolgogradChangeConnectRx { get; private set; }
-        public ISubject<IExhangeBehavior> ApkDkVolgogradDataExchangeSuccessRx { get; private set; }
-
 
         private string _errorString;
         public string ErrorString
@@ -951,19 +947,19 @@ namespace CommunicationDevices.Model
 
                         case ProviderType.XmlApkDkGet:
                             provider = new StreamWriteDataProvider(new XmlGetFormatProvider());
+                            IInputDataConverter dataConverter = null;
                             switch (xmlDeviceHttp.Name)
                             {
                                 case "HttpApkDkVolgograd":
-                                    getDataBehavior = new BaseGetDataBehavior("HttpApkDkVolgograd", httpBeh.IsConnectChange, httpBeh.IsDataExchangeSuccessChange, provider.OutputDataChangeRx, new ApkDkVolgogradSheduleDataConerter());
-                                    ApkDkVolgogradStreamChangeRxDispose = provider.OutputDataChangeRx.Subscribe(ApkDkVolgogradGetStreamChangesRx); //Подписка на событие получения потока выходных данных.
-                                    ApkDkVolgogradChangeConnectRx = httpBeh.IsConnectChange;                                                        //Получение события изменения состояния подключения.
-                                    ApkDkVolgogradDataExchangeSuccessRx = httpBeh.IsDataExchangeSuccessChange;                                      //Получение события получения данных.
+                                    dataConverter = new ApkDkVolgogradSheduleDataConerter();
                                     break;
 
-                                case "Moscov":
+                                case "HttpDispatcher":
+                                    //dataConverter = new ApkDkVolgogradSheduleDataConerter();
                                     break;
                             }
-                            
+
+                            getDataBehavior = new BaseGetDataBehavior(xmlDeviceHttp.Name, httpBeh.IsConnectChange, httpBeh.IsDataExchangeSuccessChange, provider.OutputDataChangeRx, dataConverter);
                             break;
 
                     }
@@ -1053,27 +1049,6 @@ namespace CommunicationDevices.Model
             }
         }
 
-
-
-
-        /// <summary>
-        /// Обработчик события получения потока данных от сервера апк-дк ВОЛГОГРАД (GET запрос)
-        /// </summary>
-        private void ApkDkVolgogradGetStreamChangesRx(Stream stream)
-        {
-            try
-            {
-                StreamReader reader = new StreamReader(stream);
-                string text = reader.ReadToEnd();
-                XDocument xDoc = XDocument.Parse(text);
-                var apkDkVolgogradShedule=  ApkDkVolgogradShedule.ParseXml2ApkDkschedule(xDoc);
-                ApkDkVolgogradSheduleChangeRx.OnNext(apkDkVolgogradShedule);
-            }
-            catch (Exception ex)
-            {
-                Log.log.Error($"метод ApkDkGetStreamChangesRx:  {ex.Message}");
-            }
-        }
 
 
 

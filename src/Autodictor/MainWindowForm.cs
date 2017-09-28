@@ -203,7 +203,8 @@ namespace MainExample
         public IDisposable DispouseApkDkVolgogradSheduleChangeConnectRx { get; set; }
         public IDisposable DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx { get; set; }
 
-        public ApkDkVolgogradGetSheduleService ApkDkVolgogradGetSheduleService { get; set; }          //сервис получения данных от АпкДк Волгоград
+        public GetSheduleAbstract GetSheduleAbstract { get; set; }                  //сервис получения данных от АпкДк Волгоград
+        public GetSheduleAbstract DispatcherGetSheduleAbstract { get; set; }        //сервис получения данных от диспетчера
 
 
         public int ВремяЗадержкиМеждуСообщениями = 0;
@@ -230,11 +231,7 @@ namespace MainExample
                               IEnumerable<IBinding2ChangesBehavior> binding2ChangesBehaviors,
                               IEnumerable<IBinding2ChangesEventBehavior> binding2ChangesEventBehaviors,
                               IEnumerable<IBinding2GetData> binding2GetDataBehaviors,
-                              Device soundChanelManagment,
-                              ISubject<IEnumerable<ApkDkVolgogradShedule>> apkDkVolgogradSheduleChangeRx,
-                              ISubject<IExhangeBehavior> apkDkVolgogradSheduleChangeConnectRx,
-                              ISubject<IExhangeBehavior> apkDkVolgogradSheduleDataExchangeSuccessChangeRx
-                              )
+                              Device soundChanelManagment)
         {
             if (myMainForm != null)
                 return;
@@ -304,9 +301,7 @@ namespace MainExample
             DispouseStaticChangeRx = QueueSound.StaticChangeRx.Subscribe(StaticChangeRxEventHandler);
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
-            //АПКДК ВОЛГОГРАД СЕРВИС
-            ApkDkVolgogradGetSheduleService = new ApkDkVolgogradGetSheduleService(apkDkVolgogradSheduleChangeRx, apkDkVolgogradSheduleChangeConnectRx, apkDkVolgogradSheduleDataExchangeSuccessChangeRx, SoundRecords);
-
+          
             //ЗАПУСК ОЧЕРЕДИ ЗВУКА
             QueueSound.StartQueue();
 
@@ -322,6 +317,7 @@ namespace MainExample
         {
            //ИНИЦИАЛИЗАЦИЯ УСТРОЙСТВ ПОЛУЧЕНИЯ ДАННЫХ--------------------------
             chbox_apkDk.Visible = false;
+            chbox_DispatcherControl.Visible = false;
             foreach (var beh in Binding2GetDataBehaviors)
             {
                 //ВКЛ/ОТКЛ элементы UI данного девайса
@@ -330,11 +326,19 @@ namespace MainExample
                     case "HttpApkDkVolgograd":
                         chbox_apkDk.Visible = true;
                         chbox_apkDk.Checked = Program.Настройки.ApkDkStart;
-                        ApkDkVolgogradGetSheduleService.SubscribeAndStart(chbox_apkDk);
-                        ApkDkVolgogradGetSheduleService.Enable = chbox_apkDk.Checked;
+
+                        GetSheduleAbstract= new GetSheduleApkDk(beh.BaseGetDataBehavior, SoundRecords);
+                        GetSheduleAbstract.SubscribeAndStart(chbox_apkDk);
+                        GetSheduleAbstract.Enable = chbox_apkDk.Checked;
                         break;
 
-                    case "Moscov":
+                    case "HttpDispatcher":
+                        chbox_DispatcherControl.Visible = true;
+                        chbox_DispatcherControl.Checked = Program.Настройки.DispatcherControlStart;
+
+                        DispatcherGetSheduleAbstract = new GetSheduleDispatcherControl(beh.BaseGetDataBehavior, SoundRecords);
+                        DispatcherGetSheduleAbstract.SubscribeAndStart(chbox_DispatcherControl);
+                        DispatcherGetSheduleAbstract.Enable = chbox_DispatcherControl.Checked;
                         break;
                 }
 
@@ -354,12 +358,27 @@ namespace MainExample
             var chBox = sender as CheckBox;
             if (chBox != null)
             {
-                ApkDkVolgogradGetSheduleService.Enable = chbox_apkDk.Checked;
+                if(GetSheduleAbstract != null)
+                   GetSheduleAbstract.Enable = chbox_apkDk.Checked;
+
                 Program.Настройки.ApkDkStart= chbox_apkDk.Checked;
                 ОкноНастроек.СохранитьНастройки();
             }
         }
 
+
+        private void chbox_DispatcherControl_CheckedChanged(object sender, EventArgs e)
+        {
+            var chBox = sender as CheckBox;
+            if (chBox != null)
+            {
+                if (DispatcherGetSheduleAbstract != null)
+                    DispatcherGetSheduleAbstract.Enable = chbox_DispatcherControl.Checked;
+
+                Program.Настройки.DispatcherControlStart = chbox_DispatcherControl.Checked;
+                ОкноНастроек.СохранитьНастройки();
+            }
+        }
 
 
         private void SetHeight(ListView listView, int height)
@@ -3796,7 +3815,8 @@ namespace MainExample
             DispouseApkDkVolgogradSheduleChangeConnectRx?.Dispose();
             DispouseApkDkVolgogradSheduleDataExchangeSuccessChangeRx?.Dispose();
 
-            ApkDkVolgogradGetSheduleService?.Dispose();
+            GetSheduleAbstract?.Dispose();
+            DispatcherGetSheduleAbstract?.Dispose();
 
             base.OnClosed(e);
         }

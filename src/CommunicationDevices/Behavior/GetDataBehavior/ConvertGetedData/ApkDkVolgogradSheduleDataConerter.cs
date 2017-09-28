@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CommunicationDevices.DataProviders;
+using Domain.Entitys;
 
 namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
 {
@@ -55,7 +56,7 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
                 {
                     foreach (var line in lines.Elements())
                     {
-                        var apkDk = new UniversalInputType { ViewBag = new Dictionary<string, dynamic>()};
+                        var apkDk = new UniversalInputType { ViewBag = new Dictionary<string, dynamic>(), TransitTime = new Dictionary<string, DateTime>()};
                         apkDk.ViewBag["idServer"] = idServer;
                         apkDk.ViewBag["ServerTime"] = serverTime;
 
@@ -69,10 +70,10 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
                         apkDk.ViewBag["Kp"] = Regex.Replace(elem, "[\r\n\t]+", "");
 
                         elem = line?.Element("st_finish")?.Value ?? string.Empty;
-                        apkDk.StationArrival.NameRu = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.StationArrival= new Station { NameRu = Regex.Replace(elem, "[\r\n\t]+", "")};
 
                         elem = line?.Element("station_departure")?.Value ?? string.Empty;
-                        apkDk.StationDeparture.NameRu = Regex.Replace(elem, "[\r\n\t]+", "");
+                        apkDk.StationDeparture= new Station { NameRu = Regex.Replace(elem, "[\r\n\t]+", "")};
 
                         elem = line?.Element("tm_otpr")?.Value ?? string.Empty;
                         elem = Regex.Replace(elem, "[\r\n\t]+", "");

@@ -70,6 +70,8 @@ namespace MainExample
 
         public bool ApkDkStart;                 //настройка апкДк из главного окна
 
+        public bool DispatcherControlStart;                 //настройка получения данных от Диспетчера из главного окна
+
 
 
         #region Methode
