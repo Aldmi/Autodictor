@@ -25,6 +25,8 @@ using CommunicationDevices.Behavior.ExhangeBehavior.PcBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior;
 using CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.ChannelManagement;
 using CommunicationDevices.Behavior.ExhangeBehavior.TcpIpBehavior;
+using CommunicationDevices.Behavior.GetDataBehavior;
+using CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData;
 using CommunicationDevices.ClientWCF;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.DataProviders.BuRuleDataProvider;
@@ -86,7 +88,6 @@ namespace CommunicationDevices.Model
         public ISubject<IEnumerable<ApkDkVolgogradShedule>> ApkDkVolgogradSheduleChangeRx { get; } = new Subject<IEnumerable<ApkDkVolgogradShedule>>();
         public ISubject<IExhangeBehavior> ApkDkVolgogradChangeConnectRx { get; private set; }
         public ISubject<IExhangeBehavior> ApkDkVolgogradDataExchangeSuccessRx { get; private set; }
-
 
 
         private string _errorString;
@@ -916,7 +917,7 @@ namespace CommunicationDevices.Model
                 }
 
 
-            
+                BaseGetDataBehavior getDataBehavior = null;
                 byte maxCountFaildRespowne = 3;
                 if (providerType?.ProviderType != null)
                 {
@@ -953,14 +954,16 @@ namespace CommunicationDevices.Model
                             switch (xmlDeviceHttp.Name)
                             {
                                 case "HttpApkDkVolgograd":
+                                    getDataBehavior = new BaseGetDataBehavior("HttpApkDkVolgograd", httpBeh.IsConnectChange, httpBeh.IsDataExchangeSuccessChange, provider.OutputDataChangeRx, new ApkDkVolgogradSheduleDataConerter());
                                     ApkDkVolgogradStreamChangeRxDispose = provider.OutputDataChangeRx.Subscribe(ApkDkVolgogradGetStreamChangesRx); //Подписка на событие получения потока выходных данных.
-                                    ApkDkVolgogradChangeConnectRx = httpBeh.IsConnectChange;                                              //Получение события изменения состояния подключения.
-                                    ApkDkVolgogradDataExchangeSuccessRx = httpBeh.IsDataExchangeSuccessChange;                            //Получение события получения данных.
+                                    ApkDkVolgogradChangeConnectRx = httpBeh.IsConnectChange;                                                        //Получение события изменения состояния подключения.
+                                    ApkDkVolgogradDataExchangeSuccessRx = httpBeh.IsDataExchangeSuccessChange;                                      //Получение события получения данных.
                                     break;
 
                                 case "Moscov":
                                     break;
                             }
+                            
                             break;
 
                     }
@@ -1015,7 +1018,7 @@ namespace CommunicationDevices.Model
                 //создание поведения привязка ус-ва к серверу получения информации
                 if (binding.BindingType == BindingType.ToGetData)
                 {
-                    Binding2GetData.Add(new Binding2GetData(DeviceTables.Last()));
+                    Binding2GetData.Add(new Binding2GetData(DeviceTables.Last(), getDataBehavior));
                     DeviceTables.Last().AddCycleFunc();
                 }
             }
