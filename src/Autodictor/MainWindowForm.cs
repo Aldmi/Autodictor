@@ -87,6 +87,21 @@ namespace MainExample
         public string ОписаниеСостоянияКарточки;
         public byte БитыНештатныхСитуаций; // бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления, бит 3 - отправление по готовности
         public uint ТаймерПовторения;
+
+
+        #region Methode
+
+        public void AplyIdTrain()
+        {
+            IdTrain.TrainNumber = НомерПоезда;
+            IdTrain.TrainNumber2 = НомерПоезда2;
+            IdTrain.СтанцияОтправления = СтанцияОтправления;
+            IdTrain.СтанцияНазначения = СтанцияНазначения;
+            IdTrain.DayArrival = ВремяПрибытия.Date;
+            IdTrain.DayDepart = ВремяОтправления.Date;
+        }
+
+        #endregion
     };
 
     /// <summary>
@@ -94,12 +109,19 @@ namespace MainExample
     /// для сопоставления поезда из распсиания.
     /// </summary>
     public struct IdTrain
-    {
-        public int ScheduleId { get; set; }            //Id поезда в распсиании
+    {     
+        public IdTrain(int scheduleId) : this()
+        {
+            ScheduleId = scheduleId;
+        }
+
+        public int ScheduleId { get; private set; }            //Id поезда в распсиании
         public DateTime DayArrival { get; set; }       //сутки в которые поезд ПРИБ.  
         public DateTime DayDepart { get; set; }        //сутки в которые поезд ОТПР.
         public string TrainNumber { get; set; }        //номер поезда 1
         public string TrainNumber2 { get; set; }       //номер поезда 2
+        public string СтанцияОтправления { get; set; }
+        public string СтанцияНазначения { get; set; }
     }
 
     public struct СостояниеФормируемогоСообщенияИШаблон
@@ -776,6 +798,7 @@ namespace MainExample
                 rec= ЗаполнениеСпискаНештатныхСитуаций(rec, null);
             }
 
+            rec.AplyIdTrain();
 
             //СОХРАНЕНИЕ
             SoundRecords[key] = rec;

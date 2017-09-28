@@ -488,6 +488,8 @@ namespace MainExample
             }
 
 
+            _record.AplyIdTrain();
+
             DialogResult = DialogResult.OK;
         }
 

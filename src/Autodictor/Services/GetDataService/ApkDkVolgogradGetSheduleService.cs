@@ -107,6 +107,7 @@ namespace MainExample.Services.GetDataService
                     {
                         var key = _soundRecords.Keys.ElementAt(i);
                         var rec = _soundRecords.ElementAt(i).Value;
+                        var idTrain = rec.IdTrain;
 
                         //ТРАНЗИТ
                         if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr != DateTime.MinValue)
@@ -166,12 +167,6 @@ namespace MainExample.Services.GetDataService
         }
 
         #endregion
-
-
-
-
-
-
 
 
 

@@ -178,11 +178,6 @@ namespace MainExample
             }
 
 
-            //------------DEBUG-------
-            //Record.Время = dtp_ДатаДобавления.Value.Date + Record.Время.TimeOfDay;
-            //-----------------------
-
-
             //Номер поезда введен вручную
             if (Record.НомерПоезда != cBНомерПоезда.Text)
             {
@@ -202,8 +197,10 @@ namespace MainExample
                 Record.ВремяСтоянки = (Record.ВремяПрибытия - Record.ВремяОтправления);
            }
 
-            DialogResult = DialogResult.OK;
-            Close();
+           Record.AplyIdTrain();
+
+           DialogResult = DialogResult.OK;
+           Close();
         }
 
 

@@ -76,7 +76,7 @@ namespace MainExample.Mappers
         {
             var record = new SoundRecord();
             record.ID = id;
-            record.IdTrain = new IdTrain {ScheduleId = config.ID, TrainNumber = config.Num, TrainNumber2 = config.Num2, DayDepart = day.Date, DayArrival = day.Date};
+            record.IdTrain = new IdTrain(config.ID);
             record.НомерПоезда = config.Num;
             record.НомерПоезда2 = config.Num2;
             record.НазваниеПоезда = config.Name;
@@ -260,9 +260,8 @@ namespace MainExample.Mappers
                 }
             }
 
-
             record.СписокНештатныхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон>();
-
+            record.AplyIdTrain();
 
             return record;
         }
