@@ -170,7 +170,7 @@ namespace MainExample.Mappers
                 if (времяОтправления < времяПрибытия)                              //??????????????
                 {
                     record.ВремяПрибытия = времяПрибытия.AddDays(-1);
-                    record.IdTrain.DayArrival = record.ВремяПрибытия.Date;
+                    record.IdTrain.ДеньПрибытия = record.ВремяПрибытия.Date;
                 }
 
                 TimeSpan времяСтоянки;

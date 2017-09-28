@@ -93,12 +93,12 @@ namespace MainExample
 
         public void AplyIdTrain()
         {
-            IdTrain.TrainNumber = НомерПоезда;
-            IdTrain.TrainNumber2 = НомерПоезда2;
+            IdTrain.НомерПоезда = НомерПоезда;
+            IdTrain.НомерПоезда2 = НомерПоезда2;
             IdTrain.СтанцияОтправления = СтанцияОтправления;
             IdTrain.СтанцияНазначения = СтанцияНазначения;
-            IdTrain.DayArrival = ВремяПрибытия.Date;
-            IdTrain.DayDepart = ВремяОтправления.Date;
+            IdTrain.ДеньПрибытия = ВремяПрибытия.Date;
+            IdTrain.ДеньОтправления = ВремяОтправления.Date;
         }
 
         #endregion
@@ -115,11 +115,11 @@ namespace MainExample
             ScheduleId = scheduleId;
         }
 
-        public int ScheduleId { get; private set; }            //Id поезда в распсиании
-        public DateTime DayArrival { get; set; }       //сутки в которые поезд ПРИБ.  
-        public DateTime DayDepart { get; set; }        //сутки в которые поезд ОТПР.
-        public string TrainNumber { get; set; }        //номер поезда 1
-        public string TrainNumber2 { get; set; }       //номер поезда 2
+        public int ScheduleId { get;}            //Id поезда в распсиании
+        public DateTime ДеньПрибытия { get; set; }       //сутки в которые поезд ПРИБ.  
+        public DateTime ДеньОтправления { get; set; }        //сутки в которые поезд ОТПР.
+        public string НомерПоезда { get; set; }        //номер поезда 1
+        public string НомерПоезда2 { get; set; }       //номер поезда 2
         public string СтанцияОтправления { get; set; }
         public string СтанцияНазначения { get; set; }
     }

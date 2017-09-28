@@ -6,6 +6,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommunicationDevices.Behavior.ExhangeBehavior;
+using CommunicationDevices.DataProviders;
 using Domain.Entitys.ApkDk;
 using Library.Logs;
 using MainExample.Extension;
@@ -114,8 +115,8 @@ namespace MainExample.Services.GetDataService
                         {
                             var numberOfTrain = (string.IsNullOrEmpty(rec.НомерПоезда2) || string.IsNullOrWhiteSpace(rec.НомерПоезда2)) ? rec.НомерПоезда : (rec.НомерПоезда + "/" + rec.НомерПоезда2);
                             if (tr.Ntrain == numberOfTrain &&
-                                tr.DtPrib == rec.IdTrain.DayArrival &&
-                                tr.DtOtpr == rec.IdTrain.DayDepart &&
+                                tr.DtPrib == rec.IdTrain.ДеньПрибытия &&
+                                tr.DtOtpr == rec.IdTrain.ДеньОтправления &&
                                 (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
                                 (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
                             {
@@ -132,7 +133,7 @@ namespace MainExample.Services.GetDataService
                         if (tr.DtPrib != DateTime.MinValue && tr.DtOtpr == DateTime.MinValue)
                         {
                             if (tr.Ntrain == rec.НомерПоезда &&
-                                tr.DtPrib == rec.IdTrain.DayArrival &&
+                                tr.DtPrib == rec.IdTrain.ДеньПрибытия &&
                                 (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
                                 (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
                             {
@@ -149,7 +150,7 @@ namespace MainExample.Services.GetDataService
                         if (tr.DtOtpr != DateTime.MinValue && tr.DtPrib == DateTime.MinValue)
                         {
                             if (tr.Ntrain == rec.НомерПоезда &&
-                                tr.DtOtpr == rec.IdTrain.DayDepart &&
+                                tr.DtOtpr == rec.IdTrain.ДеньОтправления &&
                                 (tr.StDeparture.ToLower().Contains(rec.СтанцияОтправления.ToLower()) || rec.СтанцияОтправления.ToLower().Contains(tr.StDeparture.ToLower())) &&
                                 (tr.StFinish.ToLower().Contains(rec.СтанцияНазначения.ToLower()) || rec.СтанцияНазначения.ToLower().Contains(tr.StFinish.ToLower())))
                             {
@@ -158,6 +159,89 @@ namespace MainExample.Services.GetDataService
                                 rec.НомерПути = tr.Put;
                                 _soundRecords[key] = rec;
                                 // SendOnPathTable(SoundRecords[key]);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Обработка полученных данных
+        /// </summary>
+        private void GetApkDkVolgorgadSheduleRxEventHandler2(IEnumerable<UniversalInputType> apkDkVolgogradShedules)
+        {
+            if (!Enable)
+                return;
+
+            if (apkDkVolgogradShedules != null && apkDkVolgogradShedules.Any())
+            {
+                var trainWithPut = apkDkVolgogradShedules.Where(sh => !(string.IsNullOrEmpty(sh.PathNumber) || string.IsNullOrWhiteSpace(sh.PathNumber))).ToList();
+                foreach (var tr in trainWithPut)
+                {
+                    //DEBUG------------------------------------------------------
+                    //var str = $"N= {tr.Ntrain}  Путь= {tr.Put}  Дата отпр={tr.DtOtpr:d}  Время отпр={tr.TmOtpr:g}  Дата приб={tr.DtPrib:d} Время приб={tr.TmPrib:g}  Ст.Приб {tr.StFinish}   Ст.Отпр {tr.StDeparture}";
+                    //Log.log.Fatal("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
+                    //DEBUG-----------------------------------------------------
+
+                    var dayArrival = tr.TransitTime["приб"].Date;        //день приб.
+                    var dayDepart= tr.TransitTime["отпр"].Date;          //день отпр.
+                    var stationArrival = tr.StationArrival.NameRu;       //станция приб.
+                    var stationDepart = tr.StationDeparture.NameRu;      //станция отпр.
+
+
+                    for (int i = 0; i < _soundRecords.Count; i++)
+                    {
+                        var key = _soundRecords.Keys.ElementAt(i);
+                        var rec = _soundRecords.ElementAt(i).Value;
+                        var idTrain = rec.IdTrain;
+
+                        //ТРАНЗИТ
+                        if (dayArrival != DateTime.MinValue && dayDepart != DateTime.MinValue)
+                        {
+                            var numberOfTrain = (string.IsNullOrEmpty(idTrain.НомерПоезда2) || string.IsNullOrWhiteSpace(idTrain.НомерПоезда2)) ? idTrain.НомерПоезда : (idTrain.НомерПоезда + "/" + idTrain.НомерПоезда2);
+                            if (tr.NumberOfTrain == numberOfTrain &&
+                                dayArrival == idTrain.ДеньПрибытия &&
+                                dayDepart == idTrain.ДеньОтправления &&
+                                (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
+                                (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
+                            {
+                                // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
+                                rec.НомерПути = tr.PathNumber;
+                                _soundRecords[key] = rec;
+                                break;
+                            }
+                        }
+                        //ПРИБ.
+                        else
+                        if (dayArrival != DateTime.MinValue && dayDepart == DateTime.MinValue)
+                        {
+                            if (tr.NumberOfTrain == idTrain.НомерПоезда &&
+                                dayArrival == rec.IdTrain.ДеньПрибытия &&
+                                (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
+                                (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
+                            {
+                                //Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
+                                rec.НомерПути = tr.PathNumber;
+                                _soundRecords[key] = rec;
+                                break;
+                            }
+                        }
+                        //ОТПР.
+                        else
+                        if (dayDepart != DateTime.MinValue && dayArrival == DateTime.MinValue)
+                        {
+                            if (tr.NumberOfTrain == idTrain.НомерПоезда &&
+                                dayDepart == rec.IdTrain.ДеньОтправления &&
+                                (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
+                                (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
+                            {
+                                // Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
+                                rec.НомерПути = tr.PathNumber;
+                                _soundRecords[key] = rec;
                                 break;
                             }
                         }
