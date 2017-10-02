@@ -8,10 +8,12 @@ using System.Windows.Forms;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;
+using MainExample.Entites;
 using MainExample.Extension;
 
 namespace MainExample.Services.GetDataService
 {
+
     public abstract class GetSheduleAbstract : IDisposable
     {
         #region field
@@ -34,6 +36,8 @@ namespace MainExample.Services.GetDataService
         public IDisposable DispouseDataExchangeSuccessChangeRx { get; set; }
 
         public bool Enable { get; set; }
+
+        public ISubject<SoundRecordChanges> SoundRecordChangesRx { get; } = new Subject<SoundRecordChanges>();
 
         #endregion
 

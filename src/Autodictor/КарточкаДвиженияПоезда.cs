@@ -42,12 +42,6 @@ namespace MainExample
         }
 
 
-        private void combobox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-
 
         private void Model2UiControls(SoundRecord record)
         {

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;
+using MainExample.Entites;
 
 namespace MainExample.Services.GetDataService
 {
@@ -55,6 +56,8 @@ namespace MainExample.Services.GetDataService
                         var rec = _soundRecords.ElementAt(i).Value;
                         var idTrain = rec.IdTrain;
 
+                        SoundRecord recOld;
+
                         //DEBUG------------------------------
                         if (rec.НомерПоезда == "014" && rec.НазваниеПоезда == "Саратов - Адлер")
                         {
@@ -74,25 +77,29 @@ namespace MainExample.Services.GetDataService
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
                                 // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
+                                recOld = rec;
                                 rec.НомерПути = tr.PathNumber;
 
                                 if (rec.ВремяПрибытия.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["приб"].ToString("yy.MM.dd  HH:mm"))
-                                     rec.ВремяПрибытия = tr.TransitTime["приб"];
+                                    rec.ВремяПрибытия = tr.TransitTime["приб"];
 
                                 if (rec.ВремяОтправления.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["отпр"].ToString("yy.MM.dd  HH:mm"))
                                     rec.ВремяОтправления = tr.TransitTime["отпр"];
 
                                 rec.Время = rec.ВремяОтправления;
-                                if (rec.Время.ToString("yy.MM.dd  HH:mm:ss") != key)
-                                {
-                                    Debug.WriteLine($"Dell key={key}");
-                                    _soundRecords.Remove(key);
 
-                                    var pipelineService = new SchedulingPipelineService();
-                                    key = pipelineService.GetUniqueKey(_soundRecords.Keys, rec.Время);
-                                }
+                                //TODO: продумать как генерировать SoundRecordChangesRx
+                                SoundRecordChangesRx.OnNext(new SoundRecordChanges {NewRec = rec, Rec = recOld, TimeStamp = DateTime.Now, UserInfo = "Удаленный диспетчер"});
 
-                                _soundRecords[key] = rec;
+                                //if (rec.Время.ToString("yy.MM.dd  HH:mm:ss") != key)
+                                //{
+                                //    Debug.WriteLine($"Dell key={key}");
+                                //    _soundRecords.Remove(key);
+
+                                //    var pipelineService = new SchedulingPipelineService();
+                                //    key = pipelineService.GetUniqueKey(_soundRecords.Keys, rec.Время);
+                                //}
+                                //_soundRecords[key] = rec;
 
                                 Debug.WriteLine($"{rec.НазваниеПоезда} Время= {rec.Время} key= {key} ВремяПрибытия= {rec.ВремяПрибытия}  ВремяОтправления= {rec.ВремяОтправления}");
                                 break;
