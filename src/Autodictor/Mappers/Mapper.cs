@@ -163,6 +163,7 @@ namespace MainExample.Mappers
                 }
             }
 
+
             //ТРАНЗИТ
             record.ВремяСтоянки = null;
             if (номерСписка == 0x14)

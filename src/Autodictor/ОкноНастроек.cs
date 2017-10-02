@@ -68,9 +68,8 @@ namespace MainExample
         public Font FontПригород;
         public Font FontДальние;
 
-        public bool ApkDkStart;                 //настройка апкДк из главного окна
-
-        public bool DispatcherControlStart;                 //настройка получения данных от Диспетчера из главного окна
+        public bool GetDataApkDkStart;                  //Получение данных, апкДк из главного окна
+        public bool GetDataDispatcherControlStart;      //Получение данных, от Диспетчера из главного окна
 
 
 
@@ -521,9 +520,14 @@ namespace MainExample
                                         Program.Настройки.UTC = ПеременнаяInt;
                                     break;
 
-                                case "ApkDkStart":
+                                case "GetDataApkDkStart":
                                     if (bool.TryParse(Settings[1], out ПеременнаяBool))
-                                        Program.Настройки.ApkDkStart = ПеременнаяBool;
+                                        Program.Настройки.GetDataApkDkStart = ПеременнаяBool;
+                                    break;
+
+                                case "GetDataDispatcherControlStart":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.GetDataDispatcherControlStart = ПеременнаяBool;
                                     break;
                             }
                         }
@@ -673,7 +677,8 @@ namespace MainExample
                     DumpFile.WriteLine("FontПригород=" + $"{Program.Настройки.FontПригород.Name}:{Program.Настройки.FontПригород.Size}:{Program.Настройки.FontПригород.Style}");
 
                     DumpFile.WriteLine("UTC=" + Program.Настройки.UTC.ToString("D"));
-                    DumpFile.WriteLine("ApkDkStart=" + Program.Настройки.ApkDkStart);
+                    DumpFile.WriteLine("GetDataApkDkStart=" + Program.Настройки.GetDataApkDkStart);
+                    DumpFile.WriteLine("GetDataDispatcherControlStart=" + Program.Настройки.GetDataDispatcherControlStart);
 
                     DumpFile.Close();
                 }

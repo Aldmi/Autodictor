@@ -42,7 +42,6 @@ using CommunicationDevices.Settings.XmlCisSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings;
 using CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings;
 using Domain.Entitys;
-using Domain.Entitys.ApkDk;
 using Library.Logs;
 using Library.Xml;
 using WCFAvtodictor2PcTableContract.DataContract;
@@ -955,7 +954,7 @@ namespace CommunicationDevices.Model
                                     break;
 
                                 case "HttpDispatcher":
-                                    //dataConverter = new ApkDkVolgogradSheduleDataConerter();
+                                    dataConverter = new DispatcherControlDataConerter();
                                     break;
                             }
 

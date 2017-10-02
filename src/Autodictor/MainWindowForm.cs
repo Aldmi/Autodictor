@@ -22,7 +22,6 @@ using CommunicationDevices.Model;
 using CommunicationDevices.Services;
 using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
-using Domain.Entitys.ApkDk;
 using Domain.Entitys.Authentication;
 using MainExample.Comparers;
 using MainExample.Entites;
@@ -93,6 +92,13 @@ namespace MainExample
 
         public void AplyIdTrain()
         {
+            //DEBUG------------------------------
+            if (НомерПоезда == "014" && НомерПоезда2 == "013")
+            {
+                var g = 5 + 5;
+            }
+            //DEBUG------------------------------
+
             IdTrain.НомерПоезда = НомерПоезда;
             IdTrain.НомерПоезда2 = НомерПоезда2;
             IdTrain.СтанцияОтправления = СтанцияОтправления;
@@ -325,7 +331,7 @@ namespace MainExample
                 {
                     case "HttpApkDkVolgograd":
                         chbox_apkDk.Visible = true;
-                        chbox_apkDk.Checked = Program.Настройки.ApkDkStart;
+                        chbox_apkDk.Checked = Program.Настройки.GetDataApkDkStart;
 
                         GetSheduleAbstract= new GetSheduleApkDk(beh.BaseGetDataBehavior, SoundRecords);
                         GetSheduleAbstract.SubscribeAndStart(chbox_apkDk);
@@ -334,7 +340,7 @@ namespace MainExample
 
                     case "HttpDispatcher":
                         chbox_DispatcherControl.Visible = true;
-                        chbox_DispatcherControl.Checked = Program.Настройки.DispatcherControlStart;
+                        chbox_DispatcherControl.Checked = Program.Настройки.GetDataDispatcherControlStart;
 
                         DispatcherGetSheduleAbstract = new GetSheduleDispatcherControl(beh.BaseGetDataBehavior, SoundRecords);
                         DispatcherGetSheduleAbstract.SubscribeAndStart(chbox_DispatcherControl);
@@ -361,7 +367,7 @@ namespace MainExample
                 if(GetSheduleAbstract != null)
                    GetSheduleAbstract.Enable = chbox_apkDk.Checked;
 
-                Program.Настройки.ApkDkStart= chbox_apkDk.Checked;
+                Program.Настройки.GetDataApkDkStart= chbox_apkDk.Checked;
                 ОкноНастроек.СохранитьНастройки();
             }
         }
@@ -375,7 +381,7 @@ namespace MainExample
                 if (DispatcherGetSheduleAbstract != null)
                     DispatcherGetSheduleAbstract.Enable = chbox_DispatcherControl.Checked;
 
-                Program.Настройки.DispatcherControlStart = chbox_DispatcherControl.Checked;
+                Program.Настройки.GetDataDispatcherControlStart = chbox_DispatcherControl.Checked;
                 ОкноНастроек.СохранитьНастройки();
             }
         }
@@ -1205,6 +1211,58 @@ namespace MainExample
 
                                 if (lv.Items[item].SubItems[6].Text != данные.Примечание + нумерацияПоезда)
                                     lv.Items[item].SubItems[6].Text = данные.Примечание + нумерацияПоезда;
+                            }
+
+                    
+                            //Обновить Время ПРИБ
+                            var actStr = "";
+                            if ((данные.БитыАктивностиПолей & 0x04) != 0x00)
+                            {
+                                actStr = данные.ВремяПрибытия.ToString("HH:mm");
+                                switch (lv.Name)
+                                {
+                                    case "listView1":
+                                        if (lv.Items[item].SubItems[4].Text != actStr)
+                                        {
+                                            lv.Items[item].SubItems[4].Text = actStr;
+                                            lv.Items[item].SubItems[0].Text = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                                            ОбновитьСписокЗвуковыхСообщенийВТаблице();
+                                        }
+                                        break;
+
+                                    case "lVПрибытие":
+                                    case "lVТранзит":
+                                        if (lv.Items[item].SubItems[3].Text != actStr)
+                                            lv.Items[item].SubItems[3].Text = actStr;
+                                        break;
+                                }
+                            }
+
+                            //Обновить Время ОТПР
+                            if ((данные.БитыАктивностиПолей & 0x10) != 0x00)
+                            {
+                                actStr = данные.ВремяОтправления.ToString("HH:mm");
+                                switch (lv.Name)
+                                {
+                                    case "listView1":
+                                        if (lv.Items[item].SubItems[5].Text != actStr)
+                                        {
+                                            lv.Items[item].SubItems[5].Text = actStr;
+                                            lv.Items[item].SubItems[0].Text = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                                            ОбновитьСписокЗвуковыхСообщенийВТаблице();
+                                        }
+                                        break;
+
+                                    case "lVТранзит":
+                                        if (lv.Items[item].SubItems[4].Text != actStr)
+                                            lv.Items[item].SubItems[4].Text = actStr;
+                                        break;
+
+                                    case "lVОтправление":
+                                        if (lv.Items[item].SubItems[3].Text != actStr)
+                                            lv.Items[item].SubItems[3].Text = actStr;
+                                        break;
+                                }
                             }
                         }
                     }
@@ -3664,13 +3722,13 @@ namespace MainExample
                 //DEBUG транзиты по ПРИБ.
                 //данные.Время = (данные.БитыАктивностиПолей & 0x04) != 0x00 ? данные.ВремяПрибытия : данные.ВремяОтправления;
 
+                SoundRecords.Remove(key);           //удалим старую запись
+                SoundRecordsOld.Remove(key);
                 var pipelineService = new SchedulingPipelineService();
                 var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, данные.Время);
                 if (!string.IsNullOrEmpty(newkey))
                 {
                     данные.Время = DateTime.ParseExact(newkey, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo());
-                    SoundRecords.Remove(key);           //удалим старую запись
-                    SoundRecordsOld.Remove(key);
                     SoundRecords.Add(newkey, данные);   //Добавим запись под новым ключем
                     SoundRecordsOld.Add(newkey, старыеДанные);
                 }

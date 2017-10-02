@@ -98,8 +98,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("TrainType", trainType),
                     new XElement("StartStation", uit.StationDeparture.NameRu),  //станция отпр RU
                     new XElement("EndStation", uit.StationArrival.NameRu),      //станция приб ENG
-                    new XElement("RecDateTime", timeArrival),                //время приб
-                    new XElement("SndDateTime", timeDepart),                 //время отпр
+                    new XElement("RecDateTime", timeArrival),                   //время приб
+                    new XElement("SndDateTime", timeDepart),                    //время отпр
                     new XElement("EvRecTime", timeArrival),
                     new XElement("EvSndTime", timeDepart),
                     new XElement("TrackNumber", uit.PathNumber),

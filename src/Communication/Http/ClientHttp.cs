@@ -294,7 +294,7 @@ namespace Communication.Http
                                 //DEBUG-----------------
                                 try
                                 {
-                                    string path = @"D:\doc_.xml";
+                                    string path = @"D:\XDocDispatcher.xml";
                                     var extension = Path.GetExtension(path);
                                     if (extension != null && (File.Exists(path) && extension.ToLower() == ".xml"))
                                     {
