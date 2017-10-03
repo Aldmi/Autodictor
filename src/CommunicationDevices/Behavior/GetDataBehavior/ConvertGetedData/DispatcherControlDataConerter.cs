@@ -46,7 +46,7 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
     {
         public IEnumerable<UniversalInputType> ParseXml2Uit(XDocument xDoc)
         {
-            Log.log.Trace("xDoc" + xDoc.ToString());//LOG;
+            //Log.log.Trace("xDoc" + xDoc.ToString());//LOG;
 
             var shedules = new List<UniversalInputType>();
 
@@ -109,6 +109,20 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
                             uit.PathNumber = "2приг";
                             break;
                     }
+
+                    elem = line?.Element("LateTime")?.Value ?? string.Empty;
+                    elem = Regex.Replace(elem, "[\r\n\t]+", "");
+                    DateTime dtLate;
+                    if (DateTime.TryParse(elem, out dtLate))
+                    {
+                        uit.DelayTime = dtLate;
+                    }
+               
+                    elem = line?.Element("EmergencySituation")?.Value ?? string.Empty;
+                    elem = Regex.Replace(elem, "[\r\n\t]+", "");
+                    byte emergencySituation;
+                    byte.TryParse(elem, out emergencySituation);
+                    uit.EmergencySituation = emergencySituation;
 
                     shedules.Add(uit);
                 }

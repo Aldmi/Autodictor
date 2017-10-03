@@ -76,7 +76,18 @@ namespace MainExample.Services.GetDataService
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationDepart.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
-                                  
+                                if (rec.БитыНештатныхСитуаций != tr.EmergencySituation)
+                                {
+                                    rec.БитыНештатныхСитуаций = tr.EmergencySituation;
+                                    changeFlag = true;
+                                }
+
+                                if (rec.ВремяЗадержки != tr.DelayTime)
+                                {
+                                    rec.ВремяЗадержки = tr.DelayTime;
+                                    changeFlag = true;
+                                }
+                       
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
