@@ -42,8 +42,10 @@
             this.dtp_Начало = new System.Windows.Forms.DateTimePicker();
             this.dgv_архив = new System.Windows.Forms.DataGridView();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.SheduleId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CauseOfChange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Event = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grb_main.SuspendLayout();
             this.grb_Фильтр.SuspendLayout();
@@ -171,8 +173,10 @@
             this.dgv_архив.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_архив.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_архив.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SheduleId,
             this.date,
             this.UserInfo,
+            this.CauseOfChange,
             this.Event});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -194,6 +198,13 @@
             this.dgv_архив.Size = new System.Drawing.Size(1297, 457);
             this.dgv_архив.TabIndex = 1;
             // 
+            // SheduleId
+            // 
+            this.SheduleId.HeaderText = "Id";
+            this.SheduleId.Name = "SheduleId";
+            this.SheduleId.ReadOnly = true;
+            this.SheduleId.Width = 70;
+            // 
             // date
             // 
             this.date.FillWeight = 200F;
@@ -209,6 +220,14 @@
             this.UserInfo.Name = "UserInfo";
             this.UserInfo.ReadOnly = true;
             this.UserInfo.Width = 300;
+            // 
+            // CauseOfChange
+            // 
+            this.CauseOfChange.FillWeight = 200F;
+            this.CauseOfChange.HeaderText = "Причина изменения";
+            this.CauseOfChange.Name = "CauseOfChange";
+            this.CauseOfChange.ReadOnly = true;
+            this.CauseOfChange.Width = 200;
             // 
             // Event
             // 
@@ -249,8 +268,10 @@
         private System.Windows.Forms.Button btn_Поиск;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.DataGridView dgv_архив;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SheduleId;
         private System.Windows.Forms.DataGridViewTextBoxColumn date;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserInfo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CauseOfChange;
         private System.Windows.Forms.DataGridViewTextBoxColumn Event;
     }
 }

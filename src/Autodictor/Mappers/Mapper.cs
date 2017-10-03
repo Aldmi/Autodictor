@@ -728,10 +728,12 @@ namespace MainExample.Mappers
         {      
              return new SoundRecordChanges
              {
+                 ScheduleId = data.ScheduleId,
                  Rec = MapSoundRecordDb2SoundRecord(data.Rec),
                  NewRec = MapSoundRecordDb2SoundRecord(data.NewRec),
                  TimeStamp = data.TimeStamp,
-                 UserInfo= data.UserInfo
+                 UserInfo= data.UserInfo,
+                 CauseOfChange = data.CauseOfChange
              };
         }
 
@@ -740,10 +742,12 @@ namespace MainExample.Mappers
         {
             return new SoundRecordChangesDb
             {
+                ScheduleId = data.ScheduleId,
                 Rec = MapSoundRecord2SoundRecordDb(data.Rec),
                 NewRec = MapSoundRecord2SoundRecordDb(data.NewRec),
                 TimeStamp = data.TimeStamp,
-                UserInfo= data.UserInfo
+                UserInfo= data.UserInfo,
+                CauseOfChange = data.CauseOfChange
             };
         }
 

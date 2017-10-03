@@ -89,7 +89,7 @@ namespace MainExample
             List<string[]> rows= new List<string[]>();
             foreach (var ch in RecordChanges)
             {
-                rows.Add(new string[] { ch.TimeStamp.ToString("G"), ch.UserInfo, ch.ToString() });
+                rows.Add(new string[] {ch.ScheduleId.ToString(), ch.TimeStamp.ToString("G"), ch.UserInfo, ch.CauseOfChange, ch.ToString() });
             }
 
             dgv_архив.Rows.Clear();
@@ -109,7 +109,5 @@ namespace MainExample
 
             base.OnClosing(e);
         }
-
-
     }
 }

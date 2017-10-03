@@ -726,6 +726,9 @@ C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\MainExample.ФормаЗапи
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Автодиктор.exe
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Автодиктор.pdb
+D:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config
+D:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.exe
+D:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.pdb
 C:\Git\Autodictor\src\Autodictor\bin\Release\NLog.config
 C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config
 C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe
@@ -814,6 +817,3 @@ C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ФормаЗаписи�
 C:\Git\Autodictor\src\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
 C:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.exe
 C:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.pdb
-D:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config
-D:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.exe
-D:\Git\Autodictor\src\Autodictor\obj\Release\Автодиктор.pdb

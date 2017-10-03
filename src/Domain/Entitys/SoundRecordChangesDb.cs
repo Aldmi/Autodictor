@@ -4,13 +4,14 @@ namespace Domain.Entitys
 {
     public class SoundRecordChangesDb : EntityBase
     {
+        public int ScheduleId { get; set; }            //Id поезда основного расписания на базе которого был сделанн данный поезд
         public DateTime TimeStamp { get; set; }        //Время фиксации изменений
 
         public SoundRecordDb Rec { get; set; }         //До 
         public SoundRecordDb NewRec { get; set; }      //После
 
-        public string UserInfo { get; set; }           //Кто изменил имя(роль)
-
+        public string UserInfo { get; set; }           //Под кем работаем имя(роль)
+        public string CauseOfChange { get; set; }      //Причина изменения (изменил пользоватекль UserInfo или Автоматика)
 
 
         public override string ToString()
