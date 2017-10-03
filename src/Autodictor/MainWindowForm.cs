@@ -343,7 +343,7 @@ namespace MainExample
                         chbox_DispatcherControl.Checked = Program.Настройки.GetDataDispatcherControlStart;
 
                         DispatcherGetSheduleAbstract = new GetSheduleDispatcherControl(beh.BaseGetDataBehavior, SoundRecords);
-                        DispatcherGetSheduleAbstract.SoundRecordChangesRx.Subscribe(HttpDispatcherChanges);
+                        DispatcherGetSheduleAbstract.SoundRecordChangesRx.Subscribe(HttpDispatcherSoundRecordChanges);
                         DispatcherGetSheduleAbstract.SubscribeAndStart(chbox_DispatcherControl);
                         DispatcherGetSheduleAbstract.Enable = chbox_DispatcherControl.Checked;
                         break;
@@ -360,14 +360,14 @@ namespace MainExample
         }
 
 
-        private void HttpDispatcherChanges(SoundRecordChanges soundRecordChanges)
+        private void HttpDispatcherSoundRecordChanges(SoundRecordChanges soundRecordChanges)
         {
             var данные = soundRecordChanges.NewRec;
-            var старыеДанные = soundRecordChanges.NewRec;
+            var старыеДанные = soundRecordChanges.Rec;
             string key = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
             string keyOld = старыеДанные.Время.ToString("yy.MM.dd  HH:mm:ss");
 
-            ПрименитьИзмененияSoundRecord(ref данные, ref старыеДанные, key, keyOld, listView1);         
+            ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView1);         
         }
 
 
@@ -1224,58 +1224,6 @@ namespace MainExample
                                 if (lv.Items[item].SubItems[6].Text != данные.Примечание + нумерацияПоезда)
                                     lv.Items[item].SubItems[6].Text = данные.Примечание + нумерацияПоезда;
                             }
-
-                    
-                            //Обновить Время ПРИБ
-                            var actStr = "";
-                            if ((данные.БитыАктивностиПолей & 0x04) != 0x00)
-                            {
-                                actStr = данные.ВремяПрибытия.ToString("HH:mm");
-                                switch (lv.Name)
-                                {
-                                    case "listView1":
-                                        if (lv.Items[item].SubItems[4].Text != actStr)
-                                        {
-                                            lv.Items[item].SubItems[4].Text = actStr;
-                                            lv.Items[item].SubItems[0].Text = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
-                                            ОбновитьСписокЗвуковыхСообщенийВТаблице();
-                                        }
-                                        break;
-
-                                    case "lVПрибытие":
-                                    case "lVТранзит":
-                                        if (lv.Items[item].SubItems[3].Text != actStr)
-                                            lv.Items[item].SubItems[3].Text = actStr;
-                                        break;
-                                }
-                            }
-
-                            //Обновить Время ОТПР
-                            if ((данные.БитыАктивностиПолей & 0x10) != 0x00)
-                            {
-                                actStr = данные.ВремяОтправления.ToString("HH:mm");
-                                switch (lv.Name)
-                                {
-                                    case "listView1":
-                                        if (lv.Items[item].SubItems[5].Text != actStr)
-                                        {
-                                            lv.Items[item].SubItems[5].Text = actStr;
-                                            lv.Items[item].SubItems[0].Text = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
-                                            ОбновитьСписокЗвуковыхСообщенийВТаблице();
-                                        }
-                                        break;
-
-                                    case "lVТранзит":
-                                        if (lv.Items[item].SubItems[4].Text != actStr)
-                                            lv.Items[item].SubItems[4].Text = actStr;
-                                        break;
-
-                                    case "lVОтправление":
-                                        if (lv.Items[item].SubItems[3].Text != actStr)
-                                            lv.Items[item].SubItems[3].Text = actStr;
-                                        break;
-                                }
-                            }
                         }
                     }
                     catch (Exception ex)
@@ -1284,7 +1232,6 @@ namespace MainExample
                     }
                 }
             }
-
         }
 
 
@@ -2401,7 +2348,7 @@ namespace MainExample
                                 SoundRecord старыеДанные = данные;
                                 данные = карточка.ПолучитьИзмененнуюКарточку();
 
-                                ПрименитьИзмененияSoundRecord(ref данные, ref старыеДанные, key, keyOld, listView);
+                                ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView);
 
                                 //данные = ИзменениеДанныхВКарточке(старыеДанные, данные, key);
                                 //if (DateTime.ParseExact(key, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo()) != данные.Время)
@@ -2559,160 +2506,133 @@ namespace MainExample
         }
 
 
-        public void ПрименитьИзмененияSoundRecord(ref SoundRecord данные, ref SoundRecord старыеДанные, string key, string keyOld, ListView listView)
+        public void ПрименитьИзмененияSoundRecord(SoundRecord данные, SoundRecord старыеДанные, string key, string keyOld, ListView listView)
         {
-            //Найдем индекс элемента "item" в listView, по ключу
-            int item = 0;
-            for (int i = 0; i < listView.Items.Count; item++)
+            //Найдем индекс элемента "item" в listView, по ключу 
+            listView.InvokeIfNeeded(() =>
             {
-                if (listView.Items[item].SubItems[0].Text == keyOld)
-                    break;     
-            }
-
-            //примем изменения
-            данные = ИзменениеДанныхВКарточке(старыеДанные, данные, key);
-            if (DateTime.ParseExact(key, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo()) != данные.Время)
-            {
-                key = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
-                listView.Items[item].SubItems[0].Text = key;
-            }
+                int item = 0;
+                for (int i = 0; i < listView.Items.Count - 1; item++)
+                {
+                    if (listView.Items[item].SubItems[0].Text == keyOld)
+                        break;
+                }
 
 
-            //Изменение названия поезда
-            switch (listView.Name)
-            {
-                case "listView1":
-                    if (listView.Items[item].SubItems[3].Text != данные.НазваниеПоезда)
-                        listView.Items[item].SubItems[3].Text = данные.НазваниеПоезда;
-                    break;
-
-                case "lVПрибытие":
-                case "lVОтправление":
-                    if (listView.Items[item].SubItems[4].Text != данные.НазваниеПоезда)
-                        listView.Items[item].SubItems[4].Text = данные.НазваниеПоезда;
-                    break;
-
-                case "lVТранзит":
-                    if (listView.Items[item].SubItems[5].Text != данные.НазваниеПоезда)
-                        listView.Items[item].SubItems[5].Text = данные.НазваниеПоезда;
-                    break;
-            }
-
-            //Изменение номера поезда
-            switch (listView.Name)
-            {
-                case "listView1":
-                    if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)
-                        listView.Items[item].SubItems[1].Text = данные.НомерПоезда;
-                    break;
-
-                case "lVПрибытие":
-                case "lVОтправление":
-                    if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)
-                        listView.Items[item].SubItems[1].Text = данные.НомерПоезда;
-                    break;
-
-                case "lVТранзит":
-                    if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)
-                        listView.Items[item].SubItems[1].Text = данные.НомерПоезда;
-                    break;
-            }
+                //примем изменения
+                данные = ИзменениеДанныхВКарточке(старыеДанные, данные, key);
+                if (DateTime.ParseExact(key, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo()) != данные.Время)
+                {
+                    key = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                    listView.Items[item].SubItems[0].Text = key;
+                }
 
 
 
-            if (данные.БитыНештатныхСитуаций != старыеДанные.БитыНештатныхСитуаций)
-            {
-                данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
-            }
-
-
-            //Изменение ДОПОЛНЕНИЯ
-            switch (listView.Name)
-            {
-                case "listView1":
-                    if (listView.Items[item].SubItems[7].Text != данные.Дополнение)
-                        listView.Items[item].SubItems[7].Text = данные.ИспользоватьДополнение["звук"] ? данные.Дополнение : String.Empty;
-                    break;
-
-                case "lVПрибытие":
-                case "lVОтправление":
-                    if (listView.Items[item].SubItems[5].Text != данные.НазваниеПоезда)
-                        listView.Items[item].SubItems[5].Text = данные.ИспользоватьДополнение["звук"] ? данные.Дополнение : String.Empty;
-                    break;
-
-                case "lVТранзит":
-                    if (listView.Items[item].SubItems[6].Text != данные.НазваниеПоезда)
-                        listView.Items[item].SubItems[6].Text = данные.ИспользоватьДополнение["звук"] ? данные.Дополнение : String.Empty;
-                    break;
-            }
-
-
-            //Обновить Время ПРИБ
-            var actStr = "";
-            if (((данные.БитыАктивностиПолей & 0x04) != 0x00) && (старыеДанные.ВремяПрибытия != данные.ВремяПрибытия))
-            {
-                данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
-
-                actStr = данные.ВремяПрибытия.ToString("HH:mm");
                 switch (listView.Name)
                 {
                     case "listView1":
-                        if (listView.Items[item].SubItems[4].Text != actStr)
-                            listView.Items[item].SubItems[4].Text = actStr;
+                        if (listView.Items[item].SubItems[3].Text != данные.НазваниеПоезда)      //Изменение названия поезда.
+                            listView.Items[item].SubItems[3].Text = данные.НазваниеПоезда;
+                        if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)        //Изменение номера поезда
+                            listView.Items[item].SubItems[1].Text = данные.НомерПоезда;
+                        if (listView.Items[item].SubItems[7].Text != данные.Дополнение)         //Изменение ДОПОЛНЕНИЯ
+                            listView.Items[item].SubItems[7].Text = данные.ИспользоватьДополнение["звук"] ? данные.Дополнение : String.Empty;
                         break;
 
                     case "lVПрибытие":
-                    case "lVТранзит":
-                        if (listView.Items[item].SubItems[3].Text != actStr)
-                            listView.Items[item].SubItems[3].Text = actStr;
-                        break;
-                }
-            }
-
-            //Обновить Время ОТПР
-            if (((данные.БитыАктивностиПолей & 0x10) != 0x00) && (старыеДанные.ВремяОтправления != данные.ВремяОтправления))
-            {
-                данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
-
-                actStr = данные.ВремяОтправления.ToString("HH:mm");
-                switch (listView.Name)
-                {
-                    case "listView1":
-                        if (listView.Items[item].SubItems[5].Text != actStr)
-                            listView.Items[item].SubItems[5].Text = actStr;
-                        break;
-
-                    case "lVТранзит":
-                        if (listView.Items[item].SubItems[4].Text != actStr)
-                            listView.Items[item].SubItems[4].Text = actStr;
-                        break;
-
                     case "lVОтправление":
-                        if (listView.Items[item].SubItems[3].Text != actStr)
-                            listView.Items[item].SubItems[3].Text = actStr;
+                        if (listView.Items[item].SubItems[4].Text != данные.НазваниеПоезда)
+                            listView.Items[item].SubItems[4].Text = данные.НазваниеПоезда;
+                        if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)
+                            listView.Items[item].SubItems[1].Text = данные.НомерПоезда;
+                        if (listView.Items[item].SubItems[5].Text != данные.НазваниеПоезда)
+                            listView.Items[item].SubItems[5].Text = данные.ИспользоватьДополнение["звук"] ? данные.Дополнение : String.Empty;
+                        break;
+
+                    case "lVТранзит":
+                        if (listView.Items[item].SubItems[5].Text != данные.НазваниеПоезда)
+                            listView.Items[item].SubItems[5].Text = данные.НазваниеПоезда;
+                        if (listView.Items[item].SubItems[1].Text != данные.НомерПоезда)
+                            listView.Items[item].SubItems[1].Text = данные.НомерПоезда;
+                        if (listView.Items[item].SubItems[6].Text != данные.НазваниеПоезда)
+                            listView.Items[item].SubItems[6].Text = данные.ИспользоватьДополнение["звук"] ? данные.Дополнение : String.Empty;
                         break;
                 }
-            }
 
-            //Смена Режима Работы.
-            if (старыеДанные.Автомат != данные.Автомат)
-            {
-                MainForm.РежимРаботы.BackColor = Color.LightGray;
-                MainForm.РежимРаботы.Text = @"Пользовательский";
-            }
+                if (данные.БитыНештатныхСитуаций != старыеДанные.БитыНештатныхСитуаций)
+                {
+                    данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                }
+
+                //Обновить Время ПРИБ
+                var actStr = "";
+                if (((данные.БитыАктивностиПолей & 0x04) != 0x00) && (старыеДанные.ВремяПрибытия != данные.ВремяПрибытия))
+                {
+                    данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                    actStr = данные.ВремяПрибытия.ToString("HH:mm");
+                    switch (listView.Name)
+                    {
+                        case "listView1":
+                            if (listView.Items[item].SubItems[4].Text != actStr)
+                                listView.Items[item].SubItems[4].Text = actStr;
+                            break;
+
+                        case "lVПрибытие":
+                        case "lVТранзит":
+                            if (listView.Items[item].SubItems[3].Text != actStr)
+                                listView.Items[item].SubItems[3].Text = actStr;
+                            break;
+                    }
+                }
+
+                //Обновить Время ОТПР
+                if (((данные.БитыАктивностиПолей & 0x10) != 0x00) && (старыеДанные.ВремяОтправления != данные.ВремяОтправления))
+                {
+                    данные = ЗаполнениеСпискаНештатныхСитуаций(данные, key);
+                    actStr = данные.ВремяОтправления.ToString("HH:mm");
+                    switch (listView.Name)
+                    {
+                        case "listView1":
+                            if (listView.Items[item].SubItems[5].Text != actStr)
+                                listView.Items[item].SubItems[5].Text = actStr;
+                            break;
+
+                        case "lVТранзит":
+                            if (listView.Items[item].SubItems[4].Text != actStr)
+                                listView.Items[item].SubItems[4].Text = actStr;
+                            break;
+
+                        case "lVОтправление":
+                            if (listView.Items[item].SubItems[3].Text != actStr)
+                                listView.Items[item].SubItems[3].Text = actStr;
+                            break;
+                    }
+                }
+
+                //Смена Режима Работы.
+                if (старыеДанные.Автомат != данные.Автомат)
+                {
+                    MainForm.РежимРаботы.BackColor = Color.LightGray;
+                    MainForm.РежимРаботы.Text = @"Пользовательский";
+                }
 
 
-            if (SoundRecords.ContainsKey(keyOld) == false)  // поменяли время приб. или отпр. т.е. изменили ключ записи. Т.е. удалили запись под старым ключем.
-            {
-                ОбновитьСписокЗвуковыхСообщенийВТаблице(); //Перерисуем список на UI.
-            }
+                if (SoundRecords.ContainsKey(keyOld) == false)  // поменяли время приб. или отпр. т.е. изменили ключ записи. Т.е. удалили запись под старым ключем.
+                {
+                    ОбновитьСписокЗвуковыхСообщенийВТаблице(); //Перерисуем список на UI.
+                }
 
-            if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
-            {
-                СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
-            }
+                //if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
+                //{
+                //    СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
+                //}
 
-            ОбновитьСостояниеЗаписейТаблицы();
+                ОбновитьСостояниеЗаписейТаблицы();
+            });
+
+
+    
         }
 
 

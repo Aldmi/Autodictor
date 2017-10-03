@@ -54,9 +54,9 @@ namespace MainExample.Services.GetDataService
                     {
                         var key = _soundRecords.Keys.ElementAt(i);
                         var rec = _soundRecords.ElementAt(i).Value;
+                        var recOld = rec;
                         var idTrain = rec.IdTrain;
-
-                        SoundRecord recOld;
+                        bool changeFlag = false;
 
                         //DEBUG------------------------------
                         if (rec.НомерПоезда == "014" && rec.НазваниеПоезда == "Саратов - Адлер")
@@ -77,19 +77,26 @@ namespace MainExample.Services.GetDataService
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
                                 // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
-                                recOld = rec;
-                                rec.НомерПути = tr.PathNumber;
+                          
+                                if (rec.НомерПути != tr.PathNumber)
+                                {
+                                    rec.НомерПути = tr.PathNumber;
+                                    changeFlag = true;
+                                }
 
                                 if (rec.ВремяПрибытия.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["приб"].ToString("yy.MM.dd  HH:mm"))
+                                {
                                     rec.ВремяПрибытия = tr.TransitTime["приб"];
+                                    changeFlag = true;
+                                }
 
                                 if (rec.ВремяОтправления.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["отпр"].ToString("yy.MM.dd  HH:mm"))
+                                {
                                     rec.ВремяОтправления = tr.TransitTime["отпр"];
+                                    rec.Время = rec.ВремяОтправления;
+                                    changeFlag = true;
+                                }
 
-                                rec.Время = rec.ВремяОтправления;
-
-                                //TODO: продумать как генерировать SoundRecordChangesRx
-                                SoundRecordChangesRx.OnNext(new SoundRecordChanges {NewRec = rec, Rec = recOld, TimeStamp = DateTime.Now, UserInfo = "Удаленный диспетчер"});
 
                                 //if (rec.Время.ToString("yy.MM.dd  HH:mm:ss") != key)
                                 //{
@@ -102,7 +109,7 @@ namespace MainExample.Services.GetDataService
                                 //_soundRecords[key] = rec;
 
                                 Debug.WriteLine($"{rec.НазваниеПоезда} Время= {rec.Время} key= {key} ВремяПрибытия= {rec.ВремяПрибытия}  ВремяОтправления= {rec.ВремяОтправления}");
-                                break;
+                         
                             }
                         }
                         //ПРИБ.
@@ -118,7 +125,7 @@ namespace MainExample.Services.GetDataService
                                 rec.НомерПути = tr.PathNumber;
                                 rec.ВремяПрибытия = tr.TransitTime["приб"];
                                 _soundRecords[key] = rec;
-                                break;
+                            
                             }
                         }
                         //ОТПР.
@@ -134,8 +141,12 @@ namespace MainExample.Services.GetDataService
                                 rec.НомерПути = tr.PathNumber;
                                 rec.ВремяОтправления = tr.TransitTime["отпр"];
                                 _soundRecords[key] = rec;
-                                break;
                             }
+                        }
+
+                        if (changeFlag)
+                        {
+                            SoundRecordChangesRx.OnNext(new SoundRecordChanges { NewRec = rec, Rec = recOld, TimeStamp = DateTime.Now, UserInfo = "Удаленный диспетчер" });
                         }
                     }
                 }
