@@ -6,6 +6,6 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
 {
     public interface IInputDataConverter
     {
-        IEnumerable<UniversalInputType> ParseXml2ApkDkschedule(XDocument xDoc);
+        IEnumerable<UniversalInputType> ParseXml2Uit(XDocument xDoc);
     }
 }

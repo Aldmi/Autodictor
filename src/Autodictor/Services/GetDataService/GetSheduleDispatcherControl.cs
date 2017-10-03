@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;
+using Library.Logs;
 using MainExample.Entites;
 
 namespace MainExample.Services.GetDataService
@@ -39,15 +40,15 @@ namespace MainExample.Services.GetDataService
             {
                 foreach (var tr in data)
                 {
-                    //DEBUG------------------------------------------------------
-                    //var str = $"N= {tr.Ntrain}  Путь= {tr.Put}  Дата отпр={tr.DtOtpr:d}  Время отпр={tr.TmOtpr:g}  Дата приб={tr.DtPrib:d} Время приб={tr.TmPrib:g}  Ст.Приб {tr.StFinish}   Ст.Отпр {tr.StDeparture}";
-                    //Log.log.Fatal("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
-                    //DEBUG-----------------------------------------------------
-
                     var dateTimeArrival = tr.TransitTime["приб"];              //день и время приб.
                     var dateTimeDepart = tr.TransitTime["отпр"];               //день и время отпр.
                     var stationArrival = tr.StationArrival.NameRu;             //станция приб.
                     var stationDepart = tr.StationDeparture.NameRu;            //станция отпр.
+
+                    //DEBUG------------------------------------------------------
+                    var str = $" N= {tr.NumberOfTrain}  Путь= {tr.PathNumber}  Время отпр={dateTimeDepart:g}   Время приб={dateTimeArrival:g}  Ст.Приб {stationArrival}   Ст.Отпр {stationDepart}";
+                    Log.log.Trace("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
+                    //DEBUG-----------------------------------------------------
 
                     for (int i = 0; i < _soundRecords.Count; i++)
                     {
@@ -75,18 +76,20 @@ namespace MainExample.Services.GetDataService
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationDepart.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
-                                // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG      
+                                  
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
                                     rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ТРАНЗИТ. Путь: " + rec.НомерПути);//LOG    
                                 }
 
                                 if (rec.ВремяПрибытия.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["приб"].ToString("yy.MM.dd  HH:mm"))
                                 {
                                     rec.ВремяПрибытия = tr.TransitTime["приб"];
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяПрибытия: " + rec.ВремяПрибытия);//LOG    
                                 }
 
                                 if (rec.ВремяОтправления.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["отпр"].ToString("yy.MM.dd  HH:mm"))
@@ -94,9 +97,10 @@ namespace MainExample.Services.GetDataService
                                     rec.ВремяОтправления = tr.TransitTime["отпр"];
                                     rec.Время = rec.ВремяОтправления;
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяОтправления: " + rec.ВремяОтправления);//LOG  
                                 }
 
-                                Debug.WriteLine($"{rec.НазваниеПоезда} Время= {rec.Время} key= {key} ВремяПрибытия= {rec.ВремяПрибытия}  ВремяОтправления= {rec.ВремяОтправления}");       
+                                //Debug.WriteLine($"{rec.НазваниеПоезда} Время= {rec.Время} key= {key} ВремяПрибытия= {rec.ВремяПрибытия}  ВремяОтправления= {rec.ВремяОтправления}");       
                             }
                         }
                         //ПРИБ.
@@ -114,6 +118,7 @@ namespace MainExample.Services.GetDataService
                                     rec.НомерПути = tr.PathNumber;
                                     rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ПРИБ. Путь: " + rec.НомерПути);//LOG   
                                 }
 
                                 if (rec.ВремяПрибытия.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["приб"].ToString("yy.MM.dd  HH:mm"))
@@ -121,6 +126,7 @@ namespace MainExample.Services.GetDataService
                                     rec.ВремяПрибытия = tr.TransitTime["приб"];
                                     rec.Время = rec.ВремяПрибытия;
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяПрибытия: " + rec.ВремяПрибытия);//LOG  
                                 }
                             }
                         }
@@ -139,6 +145,7 @@ namespace MainExample.Services.GetDataService
                                     rec.НомерПути = tr.PathNumber;
                                     rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ОТПР. Путь: " + rec.НомерПути);//LOG   
                                 }
 
                                 if (rec.ВремяОтправления.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["отпр"].ToString("yy.MM.dd  HH:mm"))
@@ -146,6 +153,7 @@ namespace MainExample.Services.GetDataService
                                     rec.ВремяОтправления = tr.TransitTime["отпр"];
                                     rec.Время = rec.ВремяОтправления;
                                     changeFlag = true;
+                                    Log.log.Trace("нашли изменения для ОТПР. ВремяОтправления: " + rec.ВремяОтправления);//LOG 
                                 }
                             }
                         }

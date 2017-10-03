@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reactive.Subjects;
 using System.Xml.Linq;
 using CommunicationDevices.Behavior.ExhangeBehavior;
@@ -30,6 +31,8 @@ namespace CommunicationDevices.Behavior.GetDataBehavior
         public IInputDataConverter InputConverter { get; }
 
         public IDisposable GetStreamRxHandlerDispose { get; set; }
+
+        private object locker= new object();
 
         #endregion
 
@@ -62,15 +65,18 @@ namespace CommunicationDevices.Behavior.GetDataBehavior
         {
             try
             {
-                StreamReader reader = new StreamReader(stream);
-                string text = reader.ReadToEnd();
-                XDocument xDoc = XDocument.Parse(text);
-                var apkDkVolgogradShedule = InputConverter.ParseXml2ApkDkschedule(xDoc);
-                ConvertedDataChangeRx.OnNext(apkDkVolgogradShedule);
+                lock (locker)
+                {
+                    StreamReader reader = new StreamReader(stream);
+                    string text = reader.ReadToEnd();
+                    XDocument xDoc = XDocument.Parse(text);
+                    var data = InputConverter.ParseXml2Uit(xDoc)?.ToList();
+                    ConvertedDataChangeRx.OnNext(data);
+                }
             }
             catch (Exception ex)
             {
-                Log.log.Error($"метод ApkDkGetStreamChangesRx:  {ex.Message}");
+                Log.log.Error($"метод GetStreamRxHandler:  {ex.Message}");
             }
         }
 

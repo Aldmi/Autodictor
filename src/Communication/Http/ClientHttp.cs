@@ -304,8 +304,7 @@ namespace Communication.Http
                                 //}
                                 //catch (Exception e)
                                 //{
-                                //    Console.WriteLine(e);
-                                //    throw;
+
                                 //}
                                 //------------------
 

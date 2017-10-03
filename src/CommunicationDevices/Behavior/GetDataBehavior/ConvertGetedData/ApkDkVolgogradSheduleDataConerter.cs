@@ -29,7 +29,7 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
 
 
 
-        public IEnumerable<UniversalInputType> ParseXml2ApkDkschedule(XDocument xDoc)
+        public IEnumerable<UniversalInputType> ParseXml2Uit(XDocument xDoc)
         {
             var shedules = new List<UniversalInputType>();
 

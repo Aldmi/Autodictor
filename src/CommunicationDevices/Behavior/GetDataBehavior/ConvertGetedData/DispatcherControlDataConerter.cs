@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CommunicationDevices.DataProviders;
 using Domain.Entitys;
+using Library.Logs;
 
 namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
 {
@@ -42,31 +44,41 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
 
     public class DispatcherControlDataConerter : IInputDataConverter
     {
-        public IEnumerable<UniversalInputType> ParseXml2ApkDkschedule(XDocument xDoc)
+        public IEnumerable<UniversalInputType> ParseXml2Uit(XDocument xDoc)
         {
+            Log.log.Trace("xDoc" + xDoc.ToString());//LOG;
+
             var shedules = new List<UniversalInputType>();
 
-            var lines = xDoc?.Element("tlist");
+            var lines = xDoc.Element("tlist")?.Elements().ToList();
             if (lines != null)
             {
-                foreach (var line in lines.Elements())
+                for (var i = 0; i < lines.Count; i++)
                 {
-                    var apkDk = new UniversalInputType { ViewBag = new Dictionary<string, dynamic>(), TransitTime = new Dictionary<string, DateTime>() };
+                    var line = lines[i];
+                    var uit = new UniversalInputType
+                    {
+                        ViewBag = new Dictionary<string, dynamic>(),
+                        TransitTime = new Dictionary<string, DateTime>()
+                    };
 
                     var elem = line?.Element("TrainNumber1")?.Value ?? string.Empty;
                     var numberOfTrain1 = Regex.Replace(elem, "[\r\n\t]+", "");
                     elem = line?.Element("TrainNumber2")?.Value ?? string.Empty;
                     var numberOfTrain2 = Regex.Replace(elem, "[\r\n\t]+", "");
-                    apkDk.NumberOfTrain = (string.IsNullOrEmpty(numberOfTrain2) || string.IsNullOrWhiteSpace(numberOfTrain2)) ? numberOfTrain1 : (numberOfTrain1 + "/" + numberOfTrain2);
+                    uit.NumberOfTrain =
+                        (string.IsNullOrEmpty(numberOfTrain2) || string.IsNullOrWhiteSpace(numberOfTrain2))
+                            ? numberOfTrain1
+                            : (numberOfTrain1 + "/" + numberOfTrain2);
 
                     elem = line?.Element("StartStation")?.Value.Replace("\\", "/") ?? string.Empty;
-                    apkDk.StationDeparture = new Station
+                    uit.StationDeparture = new Station
                     {
                         NameRu = Regex.Replace(elem, "[\r\n\t]+", "")
                     };
 
                     elem = line?.Element("EndStation")?.Value.Replace("\\", "/") ?? string.Empty;
-                    apkDk.StationArrival = new Station
+                    uit.StationArrival = new Station
                     {
                         NameRu = Regex.Replace(elem, "[\r\n\t]+", "")
                     };
@@ -75,18 +87,30 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
                     elem = Regex.Replace(elem, "[\r\n\t]+", "");
                     DateTime dtPrib;
                     DateTime.TryParse(elem, out dtPrib);
-                    apkDk.TransitTime["приб"] = dtPrib;
+                    uit.TransitTime["приб"] = dtPrib;
 
                     elem = line?.Element("SndDateTime")?.Value ?? string.Empty;
                     elem = Regex.Replace(elem, "[\r\n\t]+", "");
                     DateTime dtOtpr;
                     DateTime.TryParse(elem, out dtOtpr);
-                    apkDk.TransitTime["отпр"] = dtOtpr;
+                    uit.TransitTime["отпр"] = dtOtpr;
 
                     elem = line?.Element("TrackNumber")?.Value ?? string.Empty;
-                    apkDk.PathNumber = Regex.Replace(elem, "[\r\n\t]+", "");
+                    uit.PathNumber = Regex.Replace(elem, "[\r\n\t]+", "");
+                    switch (uit.PathNumber)
+                    {
+                        case "11":
+                            uit.PathNumber = "1приг";
+                            break;
+                        case "12":
+                            uit.PathNumber = "3приг";
+                            break;
+                        case "13":
+                            uit.PathNumber = "2приг";
+                            break;
+                    }
 
-                    shedules.Add(apkDk);
+                    shedules.Add(uit);
                 }
             }
 
