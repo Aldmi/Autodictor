@@ -49,7 +49,6 @@ namespace MainExample.Services.GetDataService
                     var stationArrival = tr.StationArrival.NameRu;             //станция приб.
                     var stationDepart = tr.StationDeparture.NameRu;            //станция отпр.
 
-
                     for (int i = 0; i < _soundRecords.Count; i++)
                     {
                         var key = _soundRecords.Keys.ElementAt(i);
@@ -59,10 +58,10 @@ namespace MainExample.Services.GetDataService
                         bool changeFlag = false;
 
                         //DEBUG------------------------------
-                        if (rec.НомерПоезда == "014" && rec.НазваниеПоезда == "Саратов - Адлер")
-                        {
-                            var g = 5 + 5;
-                        }
+                        //if (stationArrival == "АРЧЕДА"  && rec.НомерПоезда == "6805" && rec.НазваниеПоезда == "Волгоград - Арчеда")
+                        //{
+                        //    var g = 5 + 5;
+                        //}
                         //DEBUG------------------------------
 
 
@@ -76,8 +75,7 @@ namespace MainExample.Services.GetDataService
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationDepart.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
-                                // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG
-                          
+                                // Log.log.Fatal("ТРАНЗИТ: " + numberOfTrain);//DEBUG      
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
@@ -97,19 +95,7 @@ namespace MainExample.Services.GetDataService
                                     changeFlag = true;
                                 }
 
-
-                                //if (rec.Время.ToString("yy.MM.dd  HH:mm:ss") != key)
-                                //{
-                                //    Debug.WriteLine($"Dell key={key}");
-                                //    _soundRecords.Remove(key);
-
-                                //    var pipelineService = new SchedulingPipelineService();
-                                //    key = pipelineService.GetUniqueKey(_soundRecords.Keys, rec.Время);
-                                //}
-                                //_soundRecords[key] = rec;
-
-                                Debug.WriteLine($"{rec.НазваниеПоезда} Время= {rec.Время} key= {key} ВремяПрибытия= {rec.ВремяПрибытия}  ВремяОтправления= {rec.ВремяОтправления}");
-                         
+                                Debug.WriteLine($"{rec.НазваниеПоезда} Время= {rec.Время} key= {key} ВремяПрибытия= {rec.ВремяПрибытия}  ВремяОтправления= {rec.ВремяОтправления}");       
                             }
                         }
                         //ПРИБ.
@@ -117,15 +103,23 @@ namespace MainExample.Services.GetDataService
                         if (dateTimeArrival != DateTime.MinValue && dateTimeDepart == DateTime.MinValue)
                         {
                             if (tr.NumberOfTrain == idTrain.НомерПоезда &&
-                                dateTimeArrival == rec.IdTrain.ДеньПрибытия &&
+                                dateTimeArrival.Date == rec.IdTrain.ДеньПрибытия &&
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
                                 //Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
-                                rec.НомерПути = tr.PathNumber;
-                                rec.ВремяПрибытия = tr.TransitTime["приб"];
-                                _soundRecords[key] = rec;
-                            
+                                if (rec.НомерПути != tr.PathNumber)
+                                {
+                                    rec.НомерПути = tr.PathNumber;
+                                    changeFlag = true;
+                                }
+
+                                if (rec.ВремяПрибытия.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["приб"].ToString("yy.MM.dd  HH:mm"))
+                                {
+                                    rec.ВремяПрибытия = tr.TransitTime["приб"];
+                                    rec.Время = rec.ВремяПрибытия;
+                                    changeFlag = true;
+                                }
                             }
                         }
                         //ОТПР.
@@ -133,14 +127,23 @@ namespace MainExample.Services.GetDataService
                         if (dateTimeDepart != DateTime.MinValue && dateTimeArrival == DateTime.MinValue)
                         {
                             if (tr.NumberOfTrain == idTrain.НомерПоезда &&
-                                dateTimeDepart == rec.IdTrain.ДеньОтправления &&
+                                dateTimeDepart.Date == rec.IdTrain.ДеньОтправления &&
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
                                 // Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
-                                rec.НомерПути = tr.PathNumber;
-                                rec.ВремяОтправления = tr.TransitTime["отпр"];
-                                _soundRecords[key] = rec;
+                                if (rec.НомерПути != tr.PathNumber)
+                                {
+                                    rec.НомерПути = tr.PathNumber;
+                                    changeFlag = true;
+                                }
+
+                                if (rec.ВремяОтправления.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["отпр"].ToString("yy.MM.dd  HH:mm"))
+                                {
+                                    rec.ВремяОтправления = tr.TransitTime["отпр"];
+                                    rec.Время = rec.ВремяОтправления;
+                                    changeFlag = true;
+                                }
                             }
                         }
 

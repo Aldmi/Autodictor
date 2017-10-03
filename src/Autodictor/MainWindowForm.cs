@@ -2528,7 +2528,6 @@ namespace MainExample
                 }
 
 
-
                 switch (listView.Name)
                 {
                     case "listView1":
@@ -3810,11 +3809,9 @@ namespace MainExample
                 данные.Время = ((данные.БитыАктивностиПолей & 0x10) == 0x10 ||
                                 (данные.БитыАктивностиПолей & 0x14) == 0x14) ? данные.ВремяОтправления : данные.ВремяПрибытия;
 
-                //DEBUG транзиты по ПРИБ.
-                //данные.Время = (данные.БитыАктивностиПолей & 0x04) != 0x00 ? данные.ВремяПрибытия : данные.ВремяОтправления;
-
-                SoundRecords.Remove(key);           //удалим старую запись
-                SoundRecordsOld.Remove(key);
+                var keyOld = старыеДанные.Время.ToString("yy.MM.dd  HH:mm:ss");
+                SoundRecords.Remove(keyOld);           //удалим старую запись
+                SoundRecordsOld.Remove(keyOld);
                 var pipelineService = new SchedulingPipelineService();
                 var newkey = pipelineService.GetUniqueKey(SoundRecords.Keys, данные.Время);
                 if (!string.IsNullOrEmpty(newkey))
