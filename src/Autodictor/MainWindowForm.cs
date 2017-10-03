@@ -762,7 +762,7 @@ namespace MainExample
         private void КорректировкаЗаписейПоИзменениям()
         {
             //фильтрация по последним изменениям. среди элементов с одинаковым Названием поезда и сутками движения, выбрать элементы с большей датой.
-            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.Rec.НомерПоезда, gr.Rec.Время.Date })
+            var filtredOnMaxDate = SoundRecordChanges.GroupBy(gr => new { gr.ScheduleId, gr.Rec.НомерПоезда, gr.Rec.Время.Date })
                 .Select(elem => elem.MaxBy(b => b.TimeStamp))
                 .ToList();
 
@@ -772,7 +772,8 @@ namespace MainExample
                 var rec = SoundRecords[key];
 
 
-                var change = filtredOnMaxDate.FirstOrDefault(f => (f.Rec.НомерПоезда == rec.НомерПоезда) &&
+                var change = filtredOnMaxDate.FirstOrDefault(f => (f.ScheduleId == rec.IdTrain.ScheduleId) &&
+                                                                  (f.Rec.НомерПоезда == rec.НомерПоезда) &&
                                                                   (f.Rec.НомерПоезда2 == rec.НомерПоезда2) &&
                                                                   (f.Rec.Время.Date == rec.Время.Date));
 
