@@ -253,10 +253,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.Time)))
                     {
-                        if (uit.Event == "СТОЯНКА")
-                            continue;
-
-                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        if (replaseStr.Contains(":")) //если указанн формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
                             var formatStr = string.Format(replaseStr.Replace(nameof(uit.Time), "0"), (uit.Time == DateTime.MinValue) ? " " : uit.Time.ToString(dateFormat));
@@ -273,10 +270,19 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains("TDepart"))
                     {
-                        if (uit.Event != "СТОЯНКА")
-                            continue;
+                        DateTime timeDepart = DateTime.MinValue;
+                        switch (uit.Event)
+                        {
+                            case "СТОЯНКА":
+                                timeDepart = (uit.TransitTime != null && uit.TransitTime.ContainsKey("отпр")) ? uit.TransitTime["отпр"] : DateTime.MinValue;
+                                break;
 
-                        var timeDepart = (uit.TransitTime != null && uit.TransitTime.ContainsKey("отпр")) ? uit.TransitTime["отпр"] : DateTime.MinValue;
+                            case "ОТПР.":
+                                timeDepart = uit.Time;
+                                break;
+                        }
+
+
                         if (replaseStr.Contains(":")) //если указзанн формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
@@ -294,10 +300,19 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains("TArrival"))
                     {
-                        if (uit.Event != "СТОЯНКА")
-                            continue;
+                        DateTime timeArrival = DateTime.MinValue;
+                        switch (uit.Event)
+                        {
+                            case "СТОЯНКА":
+                                timeArrival = (uit.TransitTime != null && uit.TransitTime.ContainsKey("приб")) ? uit.TransitTime["приб"] : DateTime.MinValue;
+                                break;
 
-                        var timeArrival = (uit.TransitTime != null && uit.TransitTime.ContainsKey("приб")) ? uit.TransitTime["приб"] : DateTime.MinValue;
+                            case "ПРИБ.":
+                                timeArrival = uit.Time;
+                                break;
+                        }
+
+
                         if (replaseStr.Contains(":")) //если указзанн формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки

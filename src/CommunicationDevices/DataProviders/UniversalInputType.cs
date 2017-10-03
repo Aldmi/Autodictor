@@ -33,7 +33,7 @@ namespace CommunicationDevices.DataProviders
         public TypeTrain TypeTrain { get; set; }                     //тип поезда
         public string NumberOfTrain { get; set; }                    //Номер поезда
         public string PathNumber { get; set; }                       //Номер пути
-        public string Event { get; set; }                            //Событие (отправление/прибытие/Транзит)
+        public string Event { get; set; }                            //Событие (ОТПР./ПРИБ./СТОЯНКА)
         public string Addition { get; set; }                         //Дополнение (свободная строка)
         public string Stations { get; set; }                         // Станции Отправления-Прибытия. (название поезда)
         public string DirectionStation { get; set; }                 // Направление.
