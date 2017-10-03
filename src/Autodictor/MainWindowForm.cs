@@ -2399,7 +2399,6 @@ namespace MainExample
                         break;
                 }
 
-
                 //примем изменения
                 данные = ИзменениеДанныхВКарточке(старыеДанные, данные, key);
                 if (DateTime.ParseExact(key, "yy.MM.dd  HH:mm:ss", new DateTimeFormatInfo()) != данные.Время)
@@ -2407,7 +2406,6 @@ namespace MainExample
                     key = данные.Время.ToString("yy.MM.dd  HH:mm:ss");
                     listView.Items[item].SubItems[0].Text = key;
                 }
-
 
                 switch (listView.Name)
                 {
@@ -2502,11 +2500,6 @@ namespace MainExample
                 {
                     ОбновитьСписокЗвуковыхСообщенийВТаблице(); //Перерисуем список на UI.
                 }
-
-                //if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
-                //{
-                //    СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
-                //}
 
                 ОбновитьСостояниеЗаписейТаблицы();
             });
@@ -3700,6 +3693,12 @@ namespace MainExample
         private SoundRecord ИзменениеДанныхВКарточке(SoundRecord старыеДанные, SoundRecord данные, string key)
         {
             данные.ТипСообщения = SoundRecordType.ДвижениеПоезда;
+
+            if (данные.НомерПути != старыеДанные.НомерПути)
+            {
+                данные.НазванияТабло = (данные.НомерПути != "0" && !string.IsNullOrEmpty(данные.НомерПути)) ? MainWindowForm.Binding2PathBehaviors.Select(beh => beh.GetDevicesName4Path(данные.НомерПути)).Where(str => str != null).ToArray() : null;
+            }
+
 
             //если Поменяли время--------------------------------------------------------
             if ((старыеДанные.ВремяПрибытия != данные.ВремяПрибытия) ||
