@@ -101,8 +101,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                 GetTypeEvent(uitNew, out timeArrivalNew, out timeDepartNew, out directionNew);
 
 
-                var lateTime = uit.DelayTime?.ToString("hh:mm") ?? string.Empty;
-                var lateTimeNew = uitNew.DelayTime?.ToString("hh:mm") ?? string.Empty;
+                var lateTime = uit.DelayTime?.ToString("HH:mm") ?? string.Empty;
+                var lateTimeNew = uitNew.DelayTime?.ToString("HH:mm") ?? string.Empty;
 
                 var stopTime = (uit.StopTime.HasValue) ? uit.StopTime.Value.Hours.ToString("D2") + ":" + uit.StopTime.Value.Minutes.ToString("D2") : string.Empty;
                 var stopTimeNew = (uitNew.StopTime.HasValue) ? uitNew.StopTime.Value.Hours.ToString("D2") + ":" + uitNew.StopTime.Value.Minutes.ToString("D2") : string.Empty;

@@ -117,12 +117,21 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
                     {
                         uit.DelayTime = dtLate;
                     }
-               
+
+                    elem = line?.Element("HereDateTime")?.Value ?? string.Empty;
+                    elem = Regex.Replace(elem, "[\r\n\t]+", "");
+                    TimeSpan stopTime;
+                    if (TimeSpan.TryParse(elem, out stopTime))
+                    {
+                        uit.StopTime = stopTime;
+                    }
+
                     elem = line?.Element("EmergencySituation")?.Value ?? string.Empty;
                     elem = Regex.Replace(elem, "[\r\n\t]+", "");
                     byte emergencySituation;
                     byte.TryParse(elem, out emergencySituation);
                     uit.EmergencySituation = emergencySituation;
+
 
                     shedules.Add(uit);
                 }

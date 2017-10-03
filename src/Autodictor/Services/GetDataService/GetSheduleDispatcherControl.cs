@@ -46,13 +46,12 @@ namespace MainExample.Services.GetDataService
                     var stationDepart = tr.StationDeparture.NameRu;            //станция отпр.
 
                     //DEBUG------------------------------------------------------
-                    var str = $" N= {tr.NumberOfTrain}  Путь= {tr.PathNumber}  Время отпр={dateTimeDepart:g}   Время приб={dateTimeArrival:g}  Ст.Приб {stationArrival}   Ст.Отпр {stationDepart}";
+                    //var str = $" N= {tr.NumberOfTrain}  Путь= {tr.PathNumber}  Время отпр={dateTimeDepart:g}   Время приб={dateTimeArrival:g}  Ст.Приб {stationArrival}   Ст.Отпр {stationDepart}";
                     //Log.log.Trace("ПОЕЗД ИЗ ПОЛУЧЕННОГО СПСИКА" + str);
                     //DEBUG-----------------------------------------------------
 
                     for (int i = 0; i < _soundRecords.Count; i++)
                     {
-                        var key = _soundRecords.Keys.ElementAt(i);
                         var rec = _soundRecords.ElementAt(i).Value;
                         var recOld = rec;
                         var idTrain = rec.IdTrain;
@@ -80,20 +79,29 @@ namespace MainExample.Services.GetDataService
                                 {
                                     rec.БитыНештатныхСитуаций = tr.EmergencySituation;
                                     changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. БитыНештатныхСитуаций: " + rec.БитыНештатныхСитуаций);//LOG    
                                 }
 
                                 if (rec.ВремяЗадержки != tr.DelayTime)
                                 {
                                     rec.ВремяЗадержки = tr.DelayTime;
                                     changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяЗадержки: " + rec.ВремяЗадержки);//LOG    
                                 }
-                       
+
+                                if (rec.ВремяСтоянки != tr.StopTime)
+                                {
+                                    rec.ВремяСтоянки = tr.StopTime;
+                                    changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяСтоянки: " + rec.ВремяЗадержки);//LOG    
+                                }
+
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
                                     rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
-                                   // Log.log.Trace("нашли изменения для ТРАНЗИТ. Путь: " + rec.НомерПути);//LOG    
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. Путь: " + rec.НомерПути);//LOG    
                                 }
 
                                 if (rec.ВремяПрибытия.ToString("yy.MM.dd  HH:mm") != tr.TransitTime["приб"].ToString("yy.MM.dd  HH:mm"))
@@ -123,7 +131,20 @@ namespace MainExample.Services.GetDataService
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
-                                //Log.log.Fatal("ПРИБ: " + rec.НомерПоезда);//DEBUG
+                                if (rec.БитыНештатныхСитуаций != tr.EmergencySituation)
+                                {
+                                    rec.БитыНештатныхСитуаций = tr.EmergencySituation;
+                                    changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. БитыНештатныхСитуаций: " + rec.БитыНештатныхСитуаций);//LOG    
+                                }
+
+                                if (rec.ВремяЗадержки != tr.DelayTime)
+                                {
+                                    rec.ВремяЗадержки = tr.DelayTime;
+                                    changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяЗадержки: " + rec.ВремяЗадержки);//LOG    
+                                }
+
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
@@ -150,7 +171,20 @@ namespace MainExample.Services.GetDataService
                                 (stationDepart.ToLower().Contains(idTrain.СтанцияОтправления.ToLower()) || idTrain.СтанцияОтправления.ToLower().Contains(stationArrival.ToLower())) &&
                                 (stationArrival.ToLower().Contains(idTrain.СтанцияНазначения.ToLower()) || idTrain.СтанцияНазначения.ToLower().Contains(stationArrival.ToLower())))
                             {
-                                // Log.log.Fatal("ОТПР: " + rec.НомерПоезда);//DEBUG
+                                if (rec.БитыНештатныхСитуаций != tr.EmergencySituation)
+                                {
+                                    rec.БитыНештатныхСитуаций = tr.EmergencySituation;
+                                    changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. БитыНештатныхСитуаций: " + rec.БитыНештатныхСитуаций);//LOG    
+                                }
+
+                                if (rec.ВремяЗадержки != tr.DelayTime)
+                                {
+                                    rec.ВремяЗадержки = tr.DelayTime;
+                                    changeFlag = true;
+                                    //Log.log.Trace("нашли изменения для ТРАНЗИТ. ВремяЗадержки: " + rec.ВремяЗадержки);//LOG    
+                                }
+
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
