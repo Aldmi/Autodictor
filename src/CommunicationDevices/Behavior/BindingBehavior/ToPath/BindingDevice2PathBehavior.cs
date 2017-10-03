@@ -68,17 +68,30 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                 { 
                     //ДОБАВИТЬ В ТАБЛ.
                     case Command.View:             
-                        _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);  // Изменили данные для циклического опроса
+                        _device.ExhBehavior.GetData4CycleFunc[0].TableData.Add(inData);                             // Изменили данные для циклического опроса
+                        if (_device.ExhBehavior.GetData4CycleFunc[0].TableData.Count >= 2 &&                        // удалим пустой поезд (строку инициализации).
+                            _device.ExhBehavior.GetData4CycleFunc[0].TableData.First().Time == DateTime.MinValue)
+                        {
+                            _device.ExhBehavior.GetData4CycleFunc[0].TableData.RemoveAt(0);
+                        }
+
+                        var countDataTake = GetCountDataTake();                                                     //Ограничение на кол-во строк
+                        if (countDataTake != null && countDataTake > 0)
+                        {
+                            _device.ExhBehavior.GetData4CycleFunc[0].TableData = _device.ExhBehavior.GetData4CycleFunc[0].TableData.Take(countDataTake.Value).ToList();
+                        }  
                         break;
 
                     //УДАЛИТЬ ИЗ ТАБЛ.
                     case Command.Delete:
-
-                       //var номерПоезда = (string.IsNullOrEmpty(data.НомерПоезда2) || string.IsNullOrWhiteSpace(data.НомерПоезда2)) ? data.НомерПоезда : (data.НомерПоезда + "/" + data.НомерПоезда2);
                         var removeItem = _device.ExhBehavior.GetData4CycleFunc[0].TableData.FirstOrDefault(p => (p.Id == inData.Id) && (p.NumberOfTrain == numberOfTrain));
                         if (removeItem != null)
                         {
                             _device.ExhBehavior.GetData4CycleFunc[0].TableData.Remove(removeItem);
+                            if (!_device.ExhBehavior.GetData4CycleFunc[0].TableData.Any())
+                            {
+                                InitializeDevicePathInfo();
+                            }
                         }
                         break;
 
@@ -114,6 +127,14 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
             return Conditions.CheckContrains(inData);
         }
 
+
+        /// <summary>
+        /// Вернуть сколко первых элементов таблицы нужно взять
+        /// </summary>
+        public int? GetCountDataTake()
+        {
+            return Conditions?.LimitNumberRows;
+        }
 
 
         /// <summary>

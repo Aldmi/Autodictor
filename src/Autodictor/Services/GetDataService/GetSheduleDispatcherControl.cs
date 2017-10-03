@@ -79,6 +79,7 @@ namespace MainExample.Services.GetDataService
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
+                                    rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
                                 }
 
@@ -111,6 +112,7 @@ namespace MainExample.Services.GetDataService
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
+                                    rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
                                 }
 
@@ -135,6 +137,7 @@ namespace MainExample.Services.GetDataService
                                 if (rec.НомерПути != tr.PathNumber)
                                 {
                                     rec.НомерПути = tr.PathNumber;
+                                    rec.НомерПутиБезАвтосброса = rec.НомерПути;
                                     changeFlag = true;
                                 }
 
