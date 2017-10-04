@@ -182,7 +182,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         break;
                 }
 
-                var lateTime = uit.DelayTime?.ToString("t") ?? string.Empty;
+                var lateTime = uit.DelayTime?.ToString("hh:mm") ?? string.Empty;
 
                 var stopTime = (uit.StopTime.HasValue) ? uit.StopTime.Value.Hours.ToString("D2") + ":" + uit.StopTime.Value.Minutes.ToString("D2") : string.Empty;
 
