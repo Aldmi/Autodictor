@@ -16,6 +16,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //<changes>
     //  <t>
     //    <TimeStamp>2017-08-07T19:16:00</TimeStamp>
+    //    <UserInfo>Admin</UserInfo>
+    //    <CauseOfChange>Admin</CauseOfChange>
     //    <TrainNumber>6309</TrainNumber>
     //    <TrainType>0</TrainType>
     //    <DirectionStation>Ряжское</DirectionStation>
@@ -119,9 +121,14 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         break;
                 }
 
+                var userInfo = uit.ViewBag.ContainsKey("UserInfo") ? uit.ViewBag["UserInfo"] : string.Empty;
+                var causeOfChange = uit.ViewBag.ContainsKey("CauseOfChange") ? uit.ViewBag["CauseOfChange"] : string.Empty;
+
                 xDoc.Root?.Add(
                     new XElement("t",
                     new XElement("TimeStamp", timeStamp),
+                    new XElement("UserInfo", userInfo),
+                    new XElement("CauseOfChange", causeOfChange),
                     new XElement("TrainNumber", uit.NumberOfTrain),
                     new XElement("TrainType", trainType),
 

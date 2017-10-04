@@ -518,11 +518,13 @@ namespace MainExample.Mappers
                 mapData = new UniversalInputType
                 {
                     Id = data.ID,
+                    ScheduleId = data.IdTrain.ScheduleId,
                     IsActive = data.Активность,
                     NumberOfTrain = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? номерПоезда : "   ",
                     VagonDirection = (VagonDirection)data.НумерацияПоезда,
                     ChangeVagonDirection = data.СменнаяНумерацияПоезда,
                     PathNumber = номерПути,
+                    PathNumberWithoutAutoReset = data.НомерПутиБезАвтосброса,
                     Event = (data.СостояниеОтображения != TableRecordStatus.Очистка) ? actStr : "   ",
                     Time = time,
                     TransitTime = transitTimes,
@@ -549,11 +551,13 @@ namespace MainExample.Mappers
                 mapData = new UniversalInputType
                 {
                     Id = data.ID,
+                    ScheduleId = data.IdTrain.ScheduleId,
                     IsActive = data.Активность,
                     NumberOfTrain = номерПоезда,
                     VagonDirection = (VagonDirection)data.НумерацияПоезда,
                     ChangeVagonDirection = data.СменнаяНумерацияПоезда,
                     PathNumber = номерПути,
+                    PathNumberWithoutAutoReset = data.НомерПутиБезАвтосброса,
                     Event = actStr,
                     Time = time,
                     TransitTime = transitTimes,

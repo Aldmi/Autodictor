@@ -27,12 +27,14 @@ namespace CommunicationDevices.DataProviders
     public class UniversalInputType
     {
         public int Id { get; set; }
+        public int ScheduleId { get; set; }                          //Id поезда в распсиании
         public string AddressDevice { get; set; }                    //Адресс устройсва
         public bool IsActive { get; set; }                           //Флаг активности записи ("Отменен без объявления")
 
         public TypeTrain TypeTrain { get; set; }                     //тип поезда
         public string NumberOfTrain { get; set; }                    //Номер поезда
         public string PathNumber { get; set; }                       //Номер пути
+        public string PathNumberWithoutAutoReset { get; set; }       //Номер пути Без Автосброса
         public string Event { get; set; }                            //Событие (ОТПР./ПРИБ./СТОЯНКА)
         public string Addition { get; set; }                         //Дополнение (свободная строка)
         public string Stations { get; set; }                         // Станции Отправления-Прибытия. (название поезда)
@@ -71,11 +73,14 @@ namespace CommunicationDevices.DataProviders
 
         public void Initialize(UniversalInputType initializeData)
         {
+            Id = initializeData.Id;
+            ScheduleId = initializeData.ScheduleId;
             AddressDevice = initializeData.AddressDevice;
             IsActive = initializeData.IsActive;
             TypeTrain = initializeData.TypeTrain;
             NumberOfTrain = initializeData.NumberOfTrain;
             PathNumber = initializeData.PathNumber;
+            PathNumberWithoutAutoReset = initializeData.PathNumberWithoutAutoReset;
             Event = initializeData.Event;
             Addition = initializeData.Addition;
             Stations = initializeData.Stations;

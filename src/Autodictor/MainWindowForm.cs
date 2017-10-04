@@ -121,9 +121,9 @@ namespace MainExample
             ScheduleId = scheduleId;
         }
 
-        public int ScheduleId { get;}            //Id поезда в распсиании
-        public DateTime ДеньПрибытия { get; set; }       //сутки в которые поезд ПРИБ.  
-        public DateTime ДеньОтправления { get; set; }        //сутки в которые поезд ОТПР.
+        public int ScheduleId { get;}                   //Id поезда в распсиании
+        public DateTime ДеньПрибытия { get; set; }      //сутки в которые поезд ПРИБ.  
+        public DateTime ДеньОтправления { get; set; }   //сутки в которые поезд ОТПР.
         public string НомерПоезда { get; set; }        //номер поезда 1
         public string НомерПоезда2 { get; set; }       //номер поезда 2
         public string СтанцияОтправления { get; set; }
@@ -1951,10 +1951,21 @@ namespace MainExample
                         foreach (var change in changes)
                         {
                             var uit = Mapper.MapSoundRecord2UniveralInputType(change.Rec, beh.GetDeviceSetting.PathPermission, false);
-                            uit.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", change.TimeStamp }}; 
+                            uit.ViewBag = new Dictionary<string, dynamic>
+                            {
+                                { "TimeStamp", change.TimeStamp },
+                                { "UserInfo", change.UserInfo },
+                                { "CauseOfChange", change.CauseOfChange }
+                            };
+
 
                             var uitNew = Mapper.MapSoundRecord2UniveralInputType(change.NewRec, beh.GetDeviceSetting.PathPermission, false);
-                            uitNew.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", change.TimeStamp } };
+                            uitNew.ViewBag = new Dictionary<string, dynamic>
+                            {
+                                { "TimeStamp", change.TimeStamp },
+                                { "UserInfo", change.UserInfo },
+                                { "CauseOfChange", change.CauseOfChange }
+                            };
 
                             table.Add(uit);
                             table.Add(uitNew);
@@ -3740,24 +3751,35 @@ namespace MainExample
             Program.SoundRecordChangesDbRepository.Add(Mapper.SoundRecordChanges2SoundRecordChangesDb(recChange));
 
             //Отправить на устройства с привязкой "Binding2ChangesEvent"
-            SendData4Binding2ChangesEvent(старыеДанные, данные, recChange.TimeStamp);
+            SendData4Binding2ChangesEvent(recChange);
         }
 
 
         /// <summary>
         /// Отправка изменения.
         /// </summary>
-        public void SendData4Binding2ChangesEvent(SoundRecord старыеДанные, SoundRecord данные, DateTime timeStamp)
+        public void SendData4Binding2ChangesEvent(SoundRecordChanges recChange)
         {
             if (Binding2ChangesEventBehaviors != null && Binding2ChangesEventBehaviors.Any())
             {
                 foreach (var beh in Binding2ChangesEventBehaviors)
                 {
                     List<UniversalInputType> table = new List<UniversalInputType>();
-                    var uit = Mapper.MapSoundRecord2UniveralInputType(старыеДанные, true, false);
-                    uit.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", timeStamp } };
-                    var uitNew = Mapper.MapSoundRecord2UniveralInputType(данные, true, false);
-                    uitNew.ViewBag = new Dictionary<string, dynamic> { { "TimeStamp", timeStamp } };
+                    var uit = Mapper.MapSoundRecord2UniveralInputType(recChange.Rec, true, false);
+                    uit.ViewBag = new Dictionary<string, dynamic>
+                    {
+                        { "TimeStamp", recChange.TimeStamp },
+                        { "UserInfo", recChange.UserInfo },
+                        { "CauseOfChange", recChange.CauseOfChange }
+                    };
+
+                    var uitNew = Mapper.MapSoundRecord2UniveralInputType(recChange.NewRec, true, false);
+                    uitNew.ViewBag = new Dictionary<string, dynamic>
+                    {
+                        { "TimeStamp", recChange.TimeStamp },
+                        { "UserInfo", recChange.UserInfo },
+                        { "CauseOfChange", recChange.CauseOfChange }
+                    };
 
                     table.Add(uit);
                     table.Add(uitNew);

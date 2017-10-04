@@ -13,7 +13,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //<? xml version="1.0" encoding="utf-8" standalone="yes"?>
     //<mainWindow>
     //  <t>
-    //    <TrainNumber>6396</TrainNumber>
+    //    <ScheduleId>6396</ScheduleId>
+    //    <TrainNumber>10</TrainNumber>
     //    <TrainType>0</TrainType>
     //    <DirectionStation>Курское</DirectionStation>
     //    <StartStation>Крюково</StartStation>
@@ -27,10 +28,11 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <LateTime>12:20</LateTime>                                 //час:мин
     //    <HereDateTime>15</HereDateTime>                            //время стоянки
 
-    //    <DaysOfGoing>Ежедневно</DaysOfGoing>                           //Дни след
-    //    <DaysOfGoingAlias></DaysOfGoingAlias>                    //Дни след. заданные вручную
+    //    <DaysOfGoing>Ежедневно</DaysOfGoing>                       //Дни след
+    //    <DaysOfGoingAlias></DaysOfGoingAlias>                      //Дни след. заданные вручную
 
     //    <TrackNumber></TrackNumber>
+    //    <TrackNumberWithoutAutoReset></TrackNumberWithoutAutoReset>
     //    <Direction>1</Direction>
     //    <EvTrackNumber></EvTrackNumber>
     //    <State>0</State>
@@ -186,6 +188,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
                 xDoc.Root?.Add(
                         new XElement("t",
+                        new XElement("ScheduleId", uit.ScheduleId),
                         new XElement("TrainNumber", uit.NumberOfTrain),
                         new XElement("TrainType", trainType),
                         new XElement("DirectionStation", uit.DirectionStation),
@@ -209,6 +212,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("DaysOfGoingAlias", uit.DaysFollowingAlias),  //дни след заданные в ручную
 
                         new XElement("TrackNumber", uit.PathNumber),
+                        new XElement("TrackNumberWithoutAutoReset", uit.PathNumberWithoutAutoReset),
                         new XElement("Direction", direction),
                         new XElement("EvTrackNumber", uit.PathNumber),
                         new XElement("State", 0),
@@ -225,8 +229,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
 
             //DEBUG------------------------
-            string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
-            xDoc.Save(path);
+            //string path = Application.StartupPath + @"/StaticTableDisplay" + @"/xDocMainWindow.info";
+            //xDoc.Save(path);
             //-----------------------------
 
             return xDoc.ToString();
