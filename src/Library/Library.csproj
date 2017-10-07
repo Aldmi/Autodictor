@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convertion\DateTimeConvertion.cs" />
+    <Compile Include="Convertion\Numeric2ListStringConverter.cs" />
     <Compile Include="Convertion\NumericConvertion.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />

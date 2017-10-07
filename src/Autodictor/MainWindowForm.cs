@@ -23,6 +23,7 @@ using CommunicationDevices.Services;
 using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
 using Domain.Entitys.Authentication;
+using Library.Convertion;
 using MainExample.Comparers;
 using MainExample.Entites;
 using MainExample.Extension;
@@ -2780,6 +2781,9 @@ namespace MainExample
             var номераПутей = Program.PathWaysRepository.List().ToList();
             var путь = номераПутей.FirstOrDefault(p => p.Name == record.НомерПути);
 
+            string eof = "X";
+            Numeric2ListStringConverter numeric2ListStringConverter = new Numeric2ListStringConverter("X");
+
             string[] элементыШаблона = формируемоеСообщение.Шаблон.Split('|');
             foreach (var язык in формируемоеСообщение.ЯзыкиОповещения)
             {
@@ -2848,15 +2852,23 @@ namespace MainExample
                         case "НОМЕР ПОЕЗДА":
                             text = record.НомерПоезда;
                             logMessage += text + " ";
-                            воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+
+                            var fileNames= numeric2ListStringConverter.Convert(text)?.Where(f => f != "0" && f != "0" + eof).ToList();
+                            if (fileNames != null && fileNames.Any())
                             {
-                                ИмяВоспроизводимогоФайла = text,
-                                ТипСообщения = типСообщения,
-                                Язык = язык,
-                                ParentId = формируемоеСообщение.Id,
-                                RootId = формируемоеСообщение.SoundRecordId,
-                                ПриоритетГлавный = формируемоеСообщение.ПриоритетГлавный
-                            });
+                                foreach (var fileName in fileNames)
+                                {
+                                    воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                                    {
+                                        ИмяВоспроизводимогоФайла = fileName,
+                                        ТипСообщения = типСообщения,
+                                        Язык = язык,
+                                        ParentId = формируемоеСообщение.Id,
+                                        RootId = формируемоеСообщение.SoundRecordId,
+                                        ПриоритетГлавный = формируемоеСообщение.ПриоритетГлавный
+                                    });
+                                }
+                            }
                             break;
 
 
@@ -2865,15 +2877,23 @@ namespace MainExample
                             {
                                 text = record.НомерПоезда2;
                                 logMessage += text + " ";
-                                воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+
+                                fileNames = numeric2ListStringConverter.Convert(text)?.Where(f => f != "0" && f != "0" + eof).ToList();
+                                if (fileNames != null && fileNames.Any())
                                 {
-                                    ИмяВоспроизводимогоФайла = text,
-                                    ТипСообщения = типСообщения,
-                                    Язык = язык,
-                                    ParentId = формируемоеСообщение.Id,
-                                    RootId = формируемоеСообщение.SoundRecordId,
-                                    ПриоритетГлавный = формируемоеСообщение.ПриоритетГлавный
-                                });
+                                    foreach (var fileName in fileNames)
+                                    {
+                                        воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
+                                        {
+                                            ИмяВоспроизводимогоФайла = fileName,
+                                            ТипСообщения = типСообщения,
+                                            Язык = язык,
+                                            ParentId = формируемоеСообщение.Id,
+                                            RootId = формируемоеСообщение.SoundRecordId,
+                                            ПриоритетГлавный = формируемоеСообщение.ПриоритетГлавный
+                                        });
+                                    }
+                                }
                             }
                             break;
 

@@ -26,7 +26,7 @@ namespace MainExample
         static Mutex m_mutex;
 
         public static List<string> FilesFolder = null;
-        public static List<string> TrainNumbersFolder = null;
+        public static List<string> NumbersFolder = null;
         public static List<string> СписокСтатическихСообщений = null;
         public static List<string> СписокДинамическихСообщений = null;
         public static List<string> НомераПоездов = new List<string>();
@@ -84,10 +84,10 @@ namespace MainExample
                 foreach (FileInfo file in dir.GetFiles("*.wav"))
                     FilesFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
 
-                dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Number of trains\");
-                TrainNumbersFolder = new List<string>();
+                dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Numbers\");
+                NumbersFolder = new List<string>();
                 foreach (FileInfo file in dir.GetFiles("*.wav"))
-                    TrainNumbersFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
+                    NumbersFolder.Add(Path.GetFileNameWithoutExtension(file.FullName));
 
                 dir = new DirectoryInfo(Application.StartupPath + @"\Wav\Static message\");
                 СписокСтатическихСообщений = new List<string>();
@@ -164,8 +164,8 @@ namespace MainExample
             if (FilesFolder != null && FilesFolder.Contains(track))
                 return Path + @"Wav\Sounds\" + track + ".wav";
 
-            if (TrainNumbersFolder != null && TrainNumbersFolder.Contains(track))
-                return Path + @"Wav\Number of trains\" + track + ".wav";
+            if (NumbersFolder != null && NumbersFolder.Contains(track))
+                return Path + @"Wav\Numbers\" + track + ".wav";
 
             if (СписокСтатическихСообщений != null && СписокСтатическихСообщений.Contains(track))
                 return Path + @"Wav\Static message\" + track + ".wav";
