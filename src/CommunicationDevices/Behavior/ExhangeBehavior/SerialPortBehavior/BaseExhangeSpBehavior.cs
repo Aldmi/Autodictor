@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Communication.SerialPort;
 using CommunicationDevices.DataProviders;
+using System.Collections.Concurrent;
 
 namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 {
@@ -30,7 +31,9 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         protected MasterSerialPort Port { get; }
 
-        public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
+       // public Queue<UniversalInputType> InDataQueue { get; set; } = new Queue<UniversalInputType>();
+        public ConcurrentQueue<UniversalInputType> InDataQueue { get; set; } = new ConcurrentQueue<UniversalInputType>();
+
         public ReadOnlyCollection<UniversalInputType> Data4CycleFunc { get; set; }        // для каждой циклической функции свои данные. 
 
         public int NumberPort => Port.PortNumber;

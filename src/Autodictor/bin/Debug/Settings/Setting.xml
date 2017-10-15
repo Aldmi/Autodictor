@@ -14,15 +14,15 @@
 
 
   <SerialPorts>
-	<Serial>
-      <Port>3</Port>
-	  <BaudRate>19200</BaudRate>
-	  <DataBits>8</DataBits>
-	  <StopBits>1</StopBits>
-	  <Parity>Even</Parity>  
-	  <DtrEnable>True</DtrEnable> 
-	  <RtsEnable>True</RtsEnable> 
-    </Serial>
+	<!-- <Serial> -->
+      <!-- <Port>3</Port> -->
+	  <!-- <BaudRate>19200</BaudRate> -->
+	  <!-- <DataBits>8</DataBits> -->
+	  <!-- <StopBits>1</StopBits> -->
+	  <!-- <Parity>Even</Parity>   -->
+	  <!-- <DtrEnable>True</DtrEnable>  -->
+	  <!-- <RtsEnable>True</RtsEnable>  -->
+    <!-- </Serial> -->
 	
 	<Serial>
       <Port>1</Port>
@@ -43,56 +43,8 @@
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
 
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1,2,3,4,5,6,7,8,9">
-	      <ExchangeRules>    
-		    <Table Size= "3">
-				   <Rule Format = "Windows-1251">
-					  <Request maxLenght = "254">
-						   STX{AddressDevice:X2}{Nbyte:X2}
-						   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
-						   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
-						   %00000000{(rowNumber*11+5):D3}0%00000000000000{TDepart:t}<!-- Вывод Времени отправления -->
-						   %00000000{(rowNumber*11+5):D3}0%00000000000000{TArrival:t}<!-- Вывод Времени прибытия -->
-						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
-						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
-						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
-						   {CRCXor:X2}ETX
-					  </Request >
 
-					  <Response maxLenght = "8" TimeRespone="500">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							{DelayTime}
-							CLEAR-------------------------
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							RESET-------------------------
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>						   
-             </Table>
-		  </ExchangeRules>
-	 </DeviceSp>
-
-<!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="1" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам" ProviderType="OnOffProvider" /> -->
+	 <DeviceSp Id="200" Name="ChannelManagement" Port="1" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам" ProviderType="ChannelProvider" />
 	 
 <!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/> -->
 

@@ -111,52 +111,55 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
         protected override List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            if (inData?.TableData != null)
+            UniversalInputType inData = null;
+            if ((InDataQueue != null && !InDataQueue.IsEmpty && InDataQueue.TryDequeue(out inData)))
             {
-                //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData;
-                var timeSamplingData = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
-
-                //вывод пустой строки если в таблице нет данных
-                var emptyDate = new UniversalInputType
+                if (inData?.TableData != null)
                 {
-                    Command = inData.Command,
-                    Event = "  ",
-                    NumberOfTrain = "  ",
-                    PathNumber = "  ",
-                    Stations = "  ",
-                    Time = DateTime.MinValue,
-                    Message =  inData.Command!= Command.None ? inData.Command.ToString() + "....................." : $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
-                };
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSamplingData = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
 
-                var viewData = timeSamplingData ?? emptyDate;
-                viewData.AddressDevice = inData.AddressDevice;
-
-                //Выбрать правила для отрисовки
-                var selectedRules = ExchangeRules.Where(rule => rule.CheckResolution(viewData)).ToList();
-
-                //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
-                //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
-                if (selectedRules.Any(d => d.Resolution != null))
-                {
-                    selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
-                }
-
-                foreach (var exchangeRule in selectedRules)
-                {
-                    //Вывод на путевое табло
-                    var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = viewData };
-                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
-
-                    LastSendData = writeProvider.InputData;
-
-                    if (writeProvider.IsOutDataValid)
+                    //вывод пустой строки если в таблице нет данных
+                    var emptyDate = new UniversalInputType
                     {
-                        // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                        Command = inData.Command,
+                        Event = "  ",
+                        NumberOfTrain = "  ",
+                        PathNumber = "  ",
+                        Stations = "  ",
+                        Time = DateTime.MinValue,
+                        Message = inData.Command != Command.None ? inData.Command.ToString() + "....................." : $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                    };
+
+                    var viewData = timeSamplingData ?? emptyDate;
+                    viewData.AddressDevice = inData.AddressDevice;
+
+                    //Выбрать правила для отрисовки
+                    var selectedRules = ExchangeRules.Where(rule => rule.CheckResolution(viewData)).ToList();
+
+                    //Если выбранно хотя бы 1 правило с условием, то оставляем толкьо эти правила.
+                    //Если все правила безусловные то отрисовываем последовательно, каждым правилом.
+                    if (selectedRules.Any(d => d.Resolution != null))
+                    {
+                        selectedRules = selectedRules.Where(rule => rule.Resolution != null).ToList();
                     }
 
-                    await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
+                    foreach (var exchangeRule in selectedRules)
+                    {
+                        //Вывод на путевое табло
+                        var writeProvider = new ByRuleWriteDataProvider(exchangeRule) { InputData = viewData };
+                        DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+
+                        LastSendData = writeProvider.InputData;
+
+                        if (writeProvider.IsOutDataValid)
+                        {
+                            // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                        }
+
+                        await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
+                    }
                 }
             }
         }

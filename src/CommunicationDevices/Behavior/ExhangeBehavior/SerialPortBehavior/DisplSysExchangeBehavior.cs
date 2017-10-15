@@ -84,39 +84,42 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-            if (inData?.TableData != null)
+            UniversalInputType inData = null;
+            if ((InDataQueue != null && !InDataQueue.IsEmpty && InDataQueue.TryDequeue(out inData)))
             {
-                //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData;
-                var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
-
-                //вывод пустой строки если в таблице нет данных
-                var emptyMessage = new UniversalInputType
+                if (inData?.TableData != null)
                 {
-                    Event = "  ",
-                    NumberOfTrain = "  ",
-                    PathNumber = "  ",
-                    Stations = "  ",
-                    Time = DateTime.MinValue,
-                    Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
-                };
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSamplingMessage = UniversalInputType.GetFilteringByDateTimeTable(1, filteredData)?.FirstOrDefault();
 
-                var viewData = timeSamplingMessage ?? emptyMessage;
-                viewData.AddressDevice = inData.AddressDevice;
+                    //вывод пустой строки если в таблице нет данных
+                    var emptyMessage = new UniversalInputType
+                    {
+                        Event = "  ",
+                        NumberOfTrain = "  ",
+                        PathNumber = "  ",
+                        Stations = "  ",
+                        Time = DateTime.MinValue,
+                        Message = $"ПОЕЗД:{inData.NumberOfTrain}, ПУТЬ:{inData.PathNumber}, СОБЫТИЕ:{inData.Event}, СТАНЦИИ:{inData.Stations}, ВРЕМЯ:{inData.Time.ToShortTimeString()}"
+                    };
 
-                //Вывод на путевое табло
-                var writeProvider = new PanelDispSysWriteDataProvider { InputData = viewData };
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
+                    var viewData = timeSamplingMessage ?? emptyMessage;
+                    viewData.AddressDevice = inData.AddressDevice;
 
-                LastSendData = writeProvider.InputData;
+                    //Вывод на путевое табло
+                    var writeProvider = new PanelDispSysWriteDataProvider { InputData = viewData };
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, writeProvider, ct);
 
-                if (writeProvider.IsOutDataValid)
-                {
-                    // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                    LastSendData = writeProvider.InputData;
+
+                    if (writeProvider.IsOutDataValid)
+                    {
+                        // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                    }
+
+                    await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
                 }
-
-                await Task.Delay(1000, ct);  //задержка для задания периода опроса. 
             }
         }
 

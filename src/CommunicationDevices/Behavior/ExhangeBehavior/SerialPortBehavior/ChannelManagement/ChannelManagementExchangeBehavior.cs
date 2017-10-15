@@ -43,15 +43,18 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior.Chann
         protected override List<Func<MasterSerialPort, CancellationToken, Task>> ListCycleFuncs { get; set; }
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;  //хранит адресс устройства.
-            if (inData != null)
+            UniversalInputType inData = null; //хранит адресс устройства.
+            if ((InDataQueue != null && !InDataQueue.IsEmpty && InDataQueue.TryDequeue(out inData)))
             {
-                WriteProvider.InputData = inData;
-                DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, WriteProvider, ct);
-
-                if (WriteProvider.IsOutDataValid)
+                if (inData != null)
                 {
+                    WriteProvider.InputData = inData;
+                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, WriteProvider, ct);
+
+                    //if (WriteProvider.IsOutDataValid)
+                    // {
                     // Log.log.Trace(""); //TODO: возможно передавать в InputData ID устройства и имя.
+                    // }
                 }
             }
         }

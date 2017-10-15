@@ -105,34 +105,36 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SerialPortBehavior
 
         protected override async Task OneTimeExchangeService(MasterSerialPort port, CancellationToken ct)
         {
-            var inData = (InDataQueue != null && InDataQueue.Any()) ? InDataQueue.Dequeue() : null;
-
-            //Вывод на табличное табло построчной информации
-            if (inData?.TableData != null)
+            UniversalInputType inData = null;
+            if ((InDataQueue != null && !InDataQueue.IsEmpty && InDataQueue.TryDequeue(out inData)))
             {
-                //фильтрация по ближайшему времени к текущему времени.
-                var filteredData = inData.TableData;
-                var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
-                var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
-
-                orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
-                for (byte i = 0; i < _countRow; i++)
+                //Вывод на табличное табло построчной информации
+                if (inData?.TableData != null)
                 {
-                    ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        // Отрисовка строк
-                    ForTableViewDataProvider.InputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };          // Обнуление строк
+                    //фильтрация по ближайшему времени к текущему времени.
+                    var filteredData = inData.TableData;
+                    var timeSampling = inData.TableData.Count > _countRow ? UniversalInputType.GetFilteringByDateTimeTable(_countRow, filteredData) : filteredData;
+                    var orderSampling = timeSampling.OrderBy(date => date.Time).ToList();//TODO:фильтровать при заполнении TableData.
 
-                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
-                    LastSendData = ForTableViewDataProvider.InputData;
+                    orderSampling.ForEach(t => t.AddressDevice = inData.AddressDevice);
+                    for (byte i = 0; i < _countRow; i++)
+                    {
+                        ForTableViewDataProvider.CurrentRow = (byte)(i + 1);                                                                                                        // Отрисовка строк
+                        ForTableViewDataProvider.InputData = (i < orderSampling.Count) ? orderSampling[i] : new UniversalInputType { AddressDevice = inData.AddressDevice };          // Обнуление строк
 
-                    await Task.Delay(500, ct);
-                }
+                        DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                        LastSendData = ForTableViewDataProvider.InputData;
 
-                //Запрос синхронизации времени
-                if (IsSyncTime)
-                {
-                    ForTableViewDataProvider.CurrentRow = 0xFF;
-                    ForTableViewDataProvider.InputData = new UniversalInputType {AddressDevice = inData.AddressDevice};
-                    DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                        await Task.Delay(500, ct);
+                    }
+
+                    //Запрос синхронизации времени
+                    if (IsSyncTime)
+                    {
+                        ForTableViewDataProvider.CurrentRow = 0xFF;
+                        ForTableViewDataProvider.InputData = new UniversalInputType { AddressDevice = inData.AddressDevice };
+                        DataExchangeSuccess = await Port.DataExchangeAsync(TimeRespone, ForTableViewDataProvider, ct);
+                    }
                 }
             }
 
