@@ -925,11 +925,11 @@ namespace CommunicationDevices.Model
                             break;
 
                         case ProviderType.XmlMainWindow:
-                            provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider(providerType.DateTimeFormat));
+                            provider = new StreamWriteDataProvider(new XmlMainWindowFormatProvider(providerType.DateTimeFormat, providerType.TransitSortFormat));
                             break;
 
                         case ProviderType.XmlSheduleWindow:
-                            provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat));
+                            provider = new StreamWriteDataProvider(new XmlSheduleWindowFormatProvider(providerType.DateTimeFormat, providerType.TransitSortFormat));
                             break;
 
                         case ProviderType.XmlStaticWindow:

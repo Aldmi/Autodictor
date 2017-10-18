@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -15,6 +16,14 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
         LinuxTimeStamp
     }
 
+    //Сортировка транзитов в выходном списке по ПРИБ. или ОТПР. 
+    public enum TransitSortFormat
+    {
+        None,
+        Arrival,      
+        Departure
+    }
+
 
 
     public class XmlProviderTypeSetting
@@ -23,6 +32,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
         public ProviderType? ProviderType { get; set; }
         public DateTimeFormat DateTimeFormat { get; set; }
+        public TransitSortFormat TransitSortFormat { get; set; }
 
         public string Login { get; set; }
         public string Password { get; set; }
@@ -46,7 +56,8 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 
             var providerSettings= providerType.Split(':');
             var providerName = providerSettings[0];
-            var timeFormat = (providerSettings.Length > 1) ? providerSettings[1] : null;
+            var timeFormat = (providerSettings.Length >= 2) ? providerSettings[1] : null;
+            var tranzitSortFormat = (providerSettings.Length >= 3) ? providerSettings[2] : null;
 
             if (providerName.ToLower().Contains("channelprovider"))
             {
@@ -104,6 +115,22 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             if (providerName.ToLower().Contains("xml_apkdkget"))
             {
                 ProviderType = XmlSpecialSettings.ProviderType.XmlApkDkGet;
+            }
+
+
+            switch (tranzitSortFormat?.ToLower())
+            {
+                case "transitsortarrival":
+                    TransitSortFormat = TransitSortFormat.Arrival;
+                    break;
+
+                case "transitsortdeparture":
+                    TransitSortFormat = TransitSortFormat.Departure;
+                    break;
+
+                default:
+                    TransitSortFormat = TransitSortFormat.None;
+                    break;
             }
 
 

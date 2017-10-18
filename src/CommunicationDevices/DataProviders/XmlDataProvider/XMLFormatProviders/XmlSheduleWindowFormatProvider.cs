@@ -44,14 +44,15 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     public class XmlSheduleWindowFormatProvider : IFormatProvider
     {
         private readonly DateTimeFormat _dateTimeFormat;
+        private readonly TransitSortFormat _transitSortFormat;
 
 
 
-        public XmlSheduleWindowFormatProvider(DateTimeFormat dateTimeFormat)
+        public XmlSheduleWindowFormatProvider(DateTimeFormat dateTimeFormat, TransitSortFormat transitSortFormat)
         {
             _dateTimeFormat = dateTimeFormat;
+            _transitSortFormat = transitSortFormat;
         }
-
 
 
 
@@ -59,6 +60,32 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
         {
             if (tables == null || !tables.Any())
                 return null;
+
+            //Сортировка транзитов
+            if (_transitSortFormat != TransitSortFormat.None)
+            {
+                tables = tables.OrderBy(train =>
+                {
+                    switch (train.Event)
+                    {
+                        case "СТОЯНКА":
+                            switch (_transitSortFormat)
+                            {
+                                case TransitSortFormat.Arrival:
+                                    return train.TransitTime["приб"];
+
+                                case TransitSortFormat.Departure:
+                                    return train.TransitTime["отпр"];
+
+                                default:
+                                    return train.Time;
+                            }
+                        default:
+                            return train.Time;
+                    }
+                });
+            }
+
 
             var xDoc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"), new XElement("tlist"));
             foreach (var uit in tables)
