@@ -419,8 +419,12 @@ namespace CommunicationDevices.Model
                             IExchangeDataProvider<UniversalInputType, byte> provider = null;
                             switch (providerType.ProviderType.Value)
                             {
-                                case ProviderType.ChMan:
-                                    provider = new ChannelManagementWriteDataProvider();
+                                case ProviderType.ChMan10:
+                                    provider = new ChannelManagement10ChWriteDataProvider();
+                                    break;
+
+                                case ProviderType.ChMan20:
+                                    provider = new ChannelManagement20ChWriteDataProvider();
                                     break;
 
                                 case ProviderType.ChManOnOff:

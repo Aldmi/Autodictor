@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
 {
 
-    public enum ProviderType {None, ChMan, ChManOnOff, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow, XmlApkDkGet }
+    public enum ProviderType {None, ChMan10, ChMan20, ChManOnOff, XmlTlist, XmlMainWindow, XmlSheduleWindow, XmlStaticWindow, XmlChange, XmlApkDkMoscow, XmlApkDkGet }
 
     public enum DateTimeFormat
     {
@@ -59,9 +59,14 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
             var timeFormat = (providerSettings.Length >= 2) ? providerSettings[1] : null;
             var tranzitSortFormat = (providerSettings.Length >= 3) ? providerSettings[2] : null;
 
-            if (providerName.ToLower().Contains("channelprovider"))
+            if (providerName.ToLower().Contains("channel20provider"))
             {
-                ProviderType = XmlSpecialSettings.ProviderType.ChMan;
+                ProviderType = XmlSpecialSettings.ProviderType.ChMan20;
+            }
+            else
+            if (providerName.ToLower().Contains("channel10provider"))
+            {
+                ProviderType = XmlSpecialSettings.ProviderType.ChMan10;
             }
             else
             if (providerName.ToLower().Contains("onoffprovider"))

@@ -116,8 +116,9 @@
     <Compile Include="Behavior\GetDataBehavior\BaseGetDataBehavior.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\DispatcherControlDataConerter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\IInputDataConverter.cs" />
+    <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement10ChWriteDataProvider.cs" />
+    <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement20ChWriteDataProvider.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementOnOffWriteDataProvider.cs" />
-    <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementWriteDataProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\IFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlGetFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlApkDkMoscowFormatProvider.cs" />
