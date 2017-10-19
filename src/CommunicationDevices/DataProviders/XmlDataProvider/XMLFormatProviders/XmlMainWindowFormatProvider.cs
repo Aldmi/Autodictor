@@ -25,8 +25,10 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
     //    <SndDateTime>2017-06-17T00:34:00</SndDateTime>
     //    <EvRecTime></EvRecTime>
     //    <EvSndTime>2017-06-17T00:34:00</EvSndTime>
-    //    <LateTime>12:20</LateTime>                                 //час:мин
-    //    <HereDateTime>15</HereDateTime>                            //время стоянки
+    //    <LateTime>12:20</LateTime>                                 //Время опоздания час:мин
+    //    <HereDateTime>15</HereDateTime>                            //Время стоянки мин
+    //    <ExpectedTime>20:20</ExpectedTime>                         //ожидаемое время час:мин
+
 
     //    <DaysOfGoing>Ежедневно</DaysOfGoing>                       //Дни след
     //    <DaysOfGoingAlias></DaysOfGoingAlias>                      //Дни след. заданные вручную
@@ -208,8 +210,18 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                 }
 
                 var lateTime = uit.DelayTime?.ToString("HH:mm") ?? string.Empty;
+                if (lateTime == "00:00")
+                {
+                    lateTime = String.Empty;
+                }
 
                 var stopTime = (uit.StopTime.HasValue) ? uit.StopTime.Value.Hours.ToString("D2") + ":" + uit.StopTime.Value.Minutes.ToString("D2") : string.Empty;
+                if (stopTime == string.Empty && uit.Event == "СТОЯНКА")
+                {
+                    stopTime = "Время стоянки будет измененно";
+                }
+
+                var expectedTime= (uit.ExpectedTime == uit.Time) ? string.Empty : uit.ExpectedTime.ToString("HH:mm");
 
                 xDoc.Root?.Add(
                         new XElement("t",
@@ -232,6 +244,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                         new XElement("EvSndTime", timeDepart),
                         new XElement("LateTime", lateTime),                      //время задержки
                         new XElement("HereDateTime", stopTime),                  //время стоянки
+                        new XElement("ExpectedTime", expectedTime),              //ожидаемое время
+                            
 
                         new XElement("DaysOfGoing", uit.DaysFollowing),            //дни след
                         new XElement("DaysOfGoingAlias", uit.DaysFollowingAlias),  //дни след заданные в ручную

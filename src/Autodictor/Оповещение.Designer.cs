@@ -74,7 +74,6 @@
             this.tb_ДниСледованияAlias = new System.Windows.Forms.TextBox();
             this.tBОписаниеДнейСледования = new System.Windows.Forms.TextBox();
             this.btnДниСледования = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.cBБлокировка = new System.Windows.Forms.CheckBox();
             this.gBШаблонОповещения = new System.Windows.Forms.GroupBox();
             this.tb_КолвоПовторовEng = new System.Windows.Forms.TextBox();
@@ -633,15 +632,6 @@
             this.btnДниСледования.UseVisualStyleBackColor = true;
             this.btnДниСледования.Click += new System.EventHandler(this.btnДниСледования_Click);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(829, 315);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(312, 20);
-            this.label5.TabIndex = 51;
-            this.label5.Text = "Общее время действия расписания";
-            // 
             // cBБлокировка
             // 
             this.cBБлокировка.AutoSize = true;
@@ -1004,7 +994,6 @@
             this.Controls.Add(this.gBШаблонОповещения);
             this.Controls.Add(this.cBБлокировка);
             this.Controls.Add(this.gBДниСледования);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.gBОстановки);
             this.Controls.Add(this.cBОтсчетВагонов);
             this.Controls.Add(this.label4);
@@ -1079,7 +1068,6 @@
         private System.Windows.Forms.RadioButton rBВремяДействияСПо;
         private System.Windows.Forms.RadioButton rBВремяДействияПо;
         private System.Windows.Forms.RadioButton rBВремяДействияС;
-        private System.Windows.Forms.Label label5;
         public System.Windows.Forms.CheckBox cBБлокировка;
         private System.Windows.Forms.Button btnДниСледования;
         private System.Windows.Forms.TextBox tBОписаниеДнейСледования;

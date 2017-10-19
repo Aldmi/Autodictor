@@ -99,6 +99,7 @@
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
+            this.cb_ВремяСтоянкиБудетИзмененно = new System.Windows.Forms.CheckBox();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -447,7 +448,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(174, 125);
+            this.label8.Location = new System.Drawing.Point(175, 125);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(19, 25);
             this.label8.TabIndex = 18;
@@ -927,11 +928,24 @@
             this.btn_выход.UseVisualStyleBackColor = true;
             this.btn_выход.Click += new System.EventHandler(this.btn_выход_Click);
             // 
+            // cb_ВремяСтоянкиБудетИзмененно
+            // 
+            this.cb_ВремяСтоянкиБудетИзмененно.AutoSize = true;
+            this.cb_ВремяСтоянкиБудетИзмененно.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_ВремяСтоянкиБудетИзмененно.Location = new System.Drawing.Point(290, 493);
+            this.cb_ВремяСтоянкиБудетИзмененно.Name = "cb_ВремяСтоянкиБудетИзмененно";
+            this.cb_ВремяСтоянкиБудетИзмененно.Size = new System.Drawing.Size(254, 25);
+            this.cb_ВремяСтоянкиБудетИзмененно.TabIndex = 52;
+            this.cb_ВремяСтоянкиБудетИзмененно.Text = "Время стоянки будет изменено";
+            this.cb_ВремяСтоянкиБудетИзмененно.UseVisualStyleBackColor = true;
+            this.cb_ВремяСтоянкиБудетИзмененно.CheckedChanged += new System.EventHandler(this.cb_ВремяСтоянкиБудетИзмененно_CheckedChanged);
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1319, 532);
+            this.Controls.Add(this.cb_ВремяСтоянкиБудетИзмененно);
             this.Controls.Add(this.btn_выход);
             this.Controls.Add(this.gBНастройкиПоезда);
             this.Controls.Add(this.button1);
@@ -1035,5 +1049,6 @@
         private System.Windows.Forms.Button btn_выход;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
+        private System.Windows.Forms.CheckBox cb_ВремяСтоянкиБудетИзмененно;
     }
 }

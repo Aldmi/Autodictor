@@ -77,8 +77,6 @@ namespace MainExample
 
             dTP_ВремяВПути.Value = (record.ВремяСледования.HasValue) ? record.ВремяСледования.Value : DateTime.Parse("00:00");
 
-
-
             switch (record.НумерацияПоезда)
             {
                 case 0: rB_Нумерация_Отсутствует.Checked = true; break;
@@ -86,9 +84,20 @@ namespace MainExample
                 case 2: rB_Нумерация_СХвоста.Checked = true; break;
             }
 
-            chbox_сменнаяНумерация.Checked = record.СменнаяНумерацияПоезда;
 
+            //контроллы для ТРАНЗИТОВ
+            if (record.БитыАктивностиПолей == 31)
+            {
+                chbox_сменнаяНумерация.Checked = record.СменнаяНумерацияПоезда;
+                cb_ВремяСтоянкиБудетИзмененно.Checked = (record.ВремяСтоянки == null);
+            }
+            else
+            {
+                chbox_сменнаяНумерация.Enabled = false;
+                cb_ВремяСтоянкиБудетИзмененно.Enabled = false;
+            }
 
+    
             tb_Дополнение.Text = record.Дополнение;
             cb_Дополнение_Звук.Checked = record.ИспользоватьДополнение["звук"];
             cb_Дополнение_Табло.Checked = record.ИспользоватьДополнение["табло"];
@@ -280,23 +289,24 @@ namespace MainExample
                 #endregion
             }
 
-
+            var время = (cBПрибытие.Checked) ? _record.ВремяПрибытия : _record.ВремяОтправления;
             if (cBОтправлениеЗадерживается.Checked || cBПрибытиеЗадерживается.Checked)
             {
                 dTP_Задержка.Enabled = true;
                 btn_ИзменитьВремяЗадержки.Enabled = true;
+                dTP_Задержка.Value = (_record.ВремяЗадержки == null) ? DateTime.Parse("00:00") : _record.ВремяЗадержки.Value;
+
+                if (_record.ВремяЗадержки != null)
+                    _record.ОжидаемоеВремя = время.AddHours(_record.ВремяЗадержки.Value.Hour).AddMinutes(_record.ВремяЗадержки.Value.Minute);
+                dTP_ОжидаемоеВремя.Value = _record.ОжидаемоеВремя;
             }
             else
             {
                 dTP_Задержка.Enabled = false;
                 btn_ИзменитьВремяЗадержки.Enabled = false;
+                dTP_Задержка.Value= DateTime.Parse("00:00");
+                dTP_ОжидаемоеВремя.Value = время;
             }
-
-
-            var время = (cBПрибытие.Checked) ? _record.ВремяПрибытия : _record.ВремяОтправления;
-            if (_record.ВремяЗадержки != null)
-                _record.ОжидаемоеВремя = время.AddHours(_record.ВремяЗадержки.Value.Hour).AddMinutes(_record.ВремяЗадержки.Value.Minute);
-            dTP_ОжидаемоеВремя.Value = _record.ОжидаемоеВремя;
 
 
             //Обновить список табло
@@ -469,6 +479,10 @@ namespace MainExample
                 _record.БитыНештатныхСитуаций |= 0x08;
             }
 
+
+            //Время стоянки для транзитов----------------------------------------
+            _record.ВремяСтоянки = (TimeSpan?) ((cb_ВремяСтоянкиБудетИзмененно.Checked) ? (ValueType) null : (_record.ВремяОтправления - _record.ВремяПрибытия));
+            
 
             //Применение активности шаблонов--------------------------------------
             for (int item = 0; item < this.lVШаблоны.Items.Count; item++)
@@ -809,7 +823,16 @@ namespace MainExample
                     case "ВРЕМЯ СТОЯНКИ":
                         rTb.Text += "Стоянка: ";
                         УказательВыделенныхФрагментов.Add(rTb.Text.Length);
-                        Text = record.ВремяСтоянки.HasValue ? (record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + record.ВремяСтоянки.Value.Minutes.ToString("D2")): String.Empty;
+                        Text= string.Empty;
+                        if (record.ВремяСтоянки.HasValue)
+                        {
+                            Text =  (record.ВремяСтоянки.Value.Hours.ToString("D2") + ":" + record.ВремяСтоянки.Value.Minutes.ToString("D2"));
+                        }
+                        else
+                        if (record.БитыАктивностиПолей == 31)
+                        {
+                            Text = "Время стоянки будет измененно";
+                        }
                         УказательВыделенныхФрагментов.Add(Text.Length);
                         rTb.AppendText(Text + " ");
                         break;
@@ -1127,13 +1150,12 @@ namespace MainExample
                     }
                     ОбновитьТекстВОкне();
                 }
+               
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
-
-
         }
 
 
@@ -1255,6 +1277,13 @@ namespace MainExample
         {
             _record.СменнаяНумерацияПоезда = chbox_сменнаяНумерация.Checked;
             ОбновитьСостояниеТаблицыШаблонов();
+        }
+
+
+        private void cb_ВремяСтоянкиБудетИзмененно_CheckedChanged(object sender, EventArgs e)
+        {
+            //Время стоянки для транзитов----------------------------------------
+            _record.ВремяСтоянки = (TimeSpan?)((cb_ВремяСтоянкиБудетИзмененно.Checked) ? (ValueType)null : (_record.ВремяОтправления - _record.ВремяПрибытия));
         }
     }
 }
