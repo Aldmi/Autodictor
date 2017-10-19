@@ -123,11 +123,59 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                                 };
                             }
                         }
-
-                        int limitRow;
-                        Conditions.LimitNumberRows = (int?)(int.TryParse(matchString, out limitRow) ? (ValueType)limitRow : null);
                         continue;
                     }
+
+
+                    matchString = Regex.Match(s, "ДельтаТекВремениПоТипамПоездов\\:(.*)").Groups[1].Value;
+                    if (!string.IsNullOrEmpty(matchString))
+                    {
+                        var deltaBlockTime = matchString.Split(':');
+                        if (deltaBlockTime.Length == 3)
+                        {
+
+                            Conditions.DeltaCurrentTime = Conditions.DeltaCurrentTime ?? new Dictionary<string, TimeSpan>();
+
+                            for (var index = 0; index < deltaBlockTime.Length; index++)
+                            {
+                                var dbt = deltaBlockTime[index];
+                                var deltaTime = dbt.Split('|');
+                                if (deltaTime.Length == 2)
+                                {
+                                    int minMinute;
+                                    int maxMinute;
+                                    if (int.TryParse(deltaTime[0], out minMinute) &&
+                                        int.TryParse(deltaTime[1], out maxMinute))
+                                    {
+                                        string keyMinus= string.Empty;
+                                        string keyPlus = string.Empty;
+                                        switch (index)
+                                        {
+                                            case 0:
+                                                keyMinus = "ПРИБ-";
+                                                keyPlus = "ПРИБ+";
+                                                break;
+
+                                            case 1:
+                                                keyMinus = "ОТПР-";
+                                                keyPlus = "ОТПР+";
+                                                break;
+
+                                            case 2:
+                                                keyMinus = "ТРАНЗИТ-";
+                                                keyPlus = "ТРАНЗИТ+";
+                                                break;
+                                        }
+
+                                        Conditions.DeltaCurrentTime[keyMinus] = new TimeSpan(0, 0, minMinute, 0);
+                                        Conditions.DeltaCurrentTime[keyPlus] = new TimeSpan(0, 0, maxMinute, 0);
+                                    }
+                                }
+                            }
+                        }
+                        continue;
+                    }
+
 
 
                     matchString = Regex.Match(s, "Направление\\:(.*)").Groups[1].Value;
