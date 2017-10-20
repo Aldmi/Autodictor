@@ -20,7 +20,7 @@ namespace CommunicationDevices.Settings
         public bool LowCurrentTime { get; set; } // Больше Тек. времени
         public bool HightCurrentTime { get; set; } // Меньше Тек. времени
 
-        public Dictionary<string, TimeSpan> DeltaCurrentTime { get; set; }       //+- относительно тек. времени
+        public Dictionary<string, TimeSpan> DeltaCurrentTime { get; set; }       //+- относительно тек. времени  (ПРИБ- ПРИБ+)  (ОТПР- ОТПР+)  (ТРАНЗИТ- ТРАНЗИТ+)
 
         public bool PassengerArrival { get; set; } //Пассажирский+ПРИБ.
         public bool PassengerDepart { get; set; } //Пассажирский+ОТПР.
@@ -118,6 +118,8 @@ namespace CommunicationDevices.Settings
             if (emergencySituationCanceledFilter && emergencySituationDelayArrivalFilter && emergencySituationDelayDepartFilter && emergencySituationDispatchOnReadinessFilter)
             {
                 var time = inData.TransitTime.ContainsKey("отпр") ? inData.TransitTime["отпр"] : inData.Time;
+                DateTime min;
+                DateTime max;
 
                 if (LowCurrentTime) //"МеньшеТекВремени"
                 {               
@@ -131,10 +133,35 @@ namespace CommunicationDevices.Settings
 
                 if (DeltaCurrentTime != null && DeltaCurrentTime.ContainsKey("+") && DeltaCurrentTime.ContainsKey("-"))
                 {
-                    var min = DateTime.Now - DeltaCurrentTime["-"];
-                    var max = DateTime.Now + DeltaCurrentTime["+"];
+                     min = DateTime.Now - DeltaCurrentTime["-"];
+                     max = DateTime.Now + DeltaCurrentTime["+"];
+                     timeFilter = (time > min && time < max);
+                }
 
-                    timeFilter = (time > min && time < max);
+                if (DeltaCurrentTime != null && DeltaCurrentTime.ContainsKey("ПРИБ+") && DeltaCurrentTime.ContainsKey("ПРИБ-")
+                                             && DeltaCurrentTime.ContainsKey("ОТПР+") && DeltaCurrentTime.ContainsKey("ОТПР-")
+                                             && DeltaCurrentTime.ContainsKey("ТРАНЗИТ+") && DeltaCurrentTime.ContainsKey("ТРАНЗИТ-"))
+                {
+                    switch (inData.Event)
+                    {
+                        case "ПРИБ.":
+                            min = DateTime.Now - DeltaCurrentTime["ПРИБ-"];
+                            max = DateTime.Now + DeltaCurrentTime["ПРИБ+"];
+                            timeFilter = (time > min && time < max);
+                            break;
+
+                        case "ОТПР.":
+                           min = DateTime.Now - DeltaCurrentTime["ОТПР-"];
+                           max = DateTime.Now + DeltaCurrentTime["ОТПР+"];
+                           timeFilter = (time > min && time < max);
+                           break;
+
+                        case "СТОЯНКА":
+                            min = DateTime.Now - DeltaCurrentTime["ТРАНЗИТ-"];
+                            max = DateTime.Now + DeltaCurrentTime["ТРАНЗИТ+"];
+                            timeFilter = (time > min && time < max);
+                            break;
+                    }
                 }
             }
 
