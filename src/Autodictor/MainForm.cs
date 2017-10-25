@@ -47,7 +47,7 @@ namespace MainExample
             StaticSoundForm.ЗагрузитьСписок();
             DynamicSoundForm.ЗагрузитьСписок();
             SoundConfiguration.ЗагрузитьСписок();
-            TrainTableGrid.ЗагрузитьСписок();
+            TrainTableGrid.SourceLoadMainList();
             TrainTableOperative.ЗагрузитьСписок();
 
             // Player.PlayFile("");                          //TODO: ???? включить
@@ -177,18 +177,6 @@ namespace MainExample
         //Расписание движения поездов
         private void listExample_Click(object sender, EventArgs e)
         {
-            //if (TrainTable.myMainForm != null)
-            //{
-            //    TrainTable.myMainForm.Show();
-            //    TrainTable.myMainForm.WindowState = FormWindowState.Normal;
-            //}
-            //else
-            //{
-            //    TrainTable listForm = new TrainTable(ExchangeModel.CisClient) { MdiParent = this };
-            //    listForm.Show();
-            //}
-
-
             if (TrainTableGrid.MyMainForm != null)
             {
                 TrainTableGrid.MyMainForm.Show();
@@ -196,7 +184,7 @@ namespace MainExample
             }
             else
             {
-                TrainTableGrid form = new TrainTableGrid() { MdiParent = this }; //TrainTableGrid(ExchangeModel.CisClient) 
+                TrainTableGrid form = new TrainTableGrid() { MdiParent = this };
                 form.Show();
             }
         }

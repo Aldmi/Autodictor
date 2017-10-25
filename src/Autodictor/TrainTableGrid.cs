@@ -12,6 +12,7 @@ using Domain.Entitys;
 namespace MainExample
 {
     public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
+    public enum SourceTrainTableRecordLoad { Local, RemoteCis }
 
 
     public struct TrainTableRecord
@@ -51,11 +52,15 @@ namespace MainExample
     {
         #region Field
 
-        private readonly string _pathGridSetting = "UISettings/GridTableRec.ini";
+        private const string _pathGridSetting = "UISettings/GridTableRec.ini";
+        private const string _fileNameLocalTableRec = @"TableRecords.ini";
+        private const string _fileNameRemoteCisTableRec = @"TableRecordsRemoteCis.ini";
+
         public static TrainTableGrid MyMainForm = null;
         private readonly List<CheckBox> _checkBoxes;
 
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
+        private static SourceTrainTableRecordLoad _sourceLoad = SourceTrainTableRecordLoad.Local;
 
         #endregion
 
@@ -88,6 +93,7 @@ namespace MainExample
             _checkBoxes = new List<CheckBox> { chb_Id, chb_Номер, chb_ВремяПрибытия, chb_Стоянка, chb_ВремяОтпр, chb_Маршрут, chb_ДниСледования };
             Model2Controls();
 
+            rbSourseSheduleCis.Checked = (_sourceLoad == SourceTrainTableRecordLoad.RemoteCis);
         }
 
         #endregion
@@ -248,13 +254,13 @@ namespace MainExample
 
 
 
-        public static void ЗагрузитьСписок()
+        public static void ЗагрузитьСписок(string fileName)
         {
             TrainTableRecords.Clear();
 
             try
             {
-                using (System.IO.StreamReader file = new System.IO.StreamReader("TableRecords.ini"))
+                using (StreamReader file = new StreamReader(fileName))
                 {
                     string line;
                     while ((line = file.ReadLine()) != null)
@@ -379,45 +385,53 @@ namespace MainExample
 
 
 
-        private void СохранитьСписок()
+        public static void СохранитьСписокРегулярноеРасписаниеЦис(IList<TrainTableRecord> trainTableRecords)
+        {
+            СохранитьСписок(trainTableRecords, _fileNameRemoteCisTableRec);
+        }
+
+
+
+        /// <summary>
+        /// Сохранить список в файл
+        /// </summary>
+        private static void СохранитьСписок(IList<TrainTableRecord> trainTableRecords, string fileName)
         {
             try
             {
-                using (StreamWriter dumpFile = new StreamWriter("TableRecords.ini"))
+                using (StreamWriter dumpFile = new StreamWriter(fileName))
                 {
-                    for (int i = 0; i < TrainTableRecords.Count; i++)
+                    for (int i = 0; i < trainTableRecords.Count; i++)
                     {
-                        string line = TrainTableRecords[i].ID + ";" +
-                                      TrainTableRecords[i].Num + ";" +
-                                      TrainTableRecords[i].Name + ";" +
-                                      TrainTableRecords[i].ArrivalTime + ";" +
-                                      TrainTableRecords[i].StopTime + ";" +
-                                      TrainTableRecords[i].DepartureTime + ";" +
-                                      TrainTableRecords[i].Days + ";" +
-                                      (TrainTableRecords[i].Active ? "1" : "0") + ";" +
-                                      TrainTableRecords[i].SoundTemplates + ";" +
-                                      TrainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                                      SavePath2File(TrainTableRecords[i].TrainPathNumber,
-                                          TrainTableRecords[i].PathWeekDayes) + ";" +
-                                      TrainTableRecords[i].ТипПоезда.ToString() + ";" +
-                                      TrainTableRecords[i].Примечание + ";" +
-                                      TrainTableRecords[i]
-                                          .ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                      TrainTableRecords[i]
-                                          .ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                      TrainTableRecords[i].Addition + ";" +
-                                      (TrainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
-                                      (TrainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
-                                      (TrainTableRecords[i].Автомат ? "1" : "0") + ";" +
+                        string line = trainTableRecords[i].ID + ";" +
+                                      trainTableRecords[i].Num + ";" +
+                                      trainTableRecords[i].Name + ";" +
+                                      trainTableRecords[i].ArrivalTime + ";" +
+                                      trainTableRecords[i].StopTime + ";" +
+                                      trainTableRecords[i].DepartureTime + ";" +
+                                      trainTableRecords[i].Days + ";" +
+                                      (trainTableRecords[i].Active ? "1" : "0") + ";" +
+                                      trainTableRecords[i].SoundTemplates + ";" +
+                                      trainTableRecords[i].TrainPathDirection.ToString() + ";" +
+                                      SavePath2File(trainTableRecords[i].TrainPathNumber,
+                                      trainTableRecords[i].PathWeekDayes) + ";" +
+                                      trainTableRecords[i].ТипПоезда.ToString() + ";" +
+                                      trainTableRecords[i].Примечание + ";" +
+                                      trainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                      trainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                      trainTableRecords[i].Addition + ";" +
+                                      (trainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
+                                      (trainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
+                                      (trainTableRecords[i].Автомат ? "1" : "0") + ";" +
 
-                                      TrainTableRecords[i].Num2 + ";" +
-                                      TrainTableRecords[i].FollowingTime + ";" +
-                                      TrainTableRecords[i].DaysAlias + ";" +
+                                      trainTableRecords[i].Num2 + ";" +
+                                      trainTableRecords[i].FollowingTime + ";" +
+                                      trainTableRecords[i].DaysAlias + ";" +
 
-                                      TrainTableRecords[i].StationDepart + ";" +
-                                      TrainTableRecords[i].StationArrival + ";" +
-                                      TrainTableRecords[i].Direction + ";" +
-                                      TrainTableRecords[i].ChangeTrainPathDirection;
+                                      trainTableRecords[i].StationDepart + ";" +
+                                      trainTableRecords[i].StationArrival + ";" +
+                                      trainTableRecords[i].Direction + ";" +
+                                      trainTableRecords[i].ChangeTrainPathDirection;
 
                         dumpFile.WriteLine(line);
                     }
@@ -542,16 +556,10 @@ namespace MainExample
         /// <summary>
         /// Выбор источника загрузки
         /// </summary>
-        public void SourceLoadMainList()
+        public static void SourceLoadMainList()
         {
-            if (rbSourseSheduleLocal.Checked)
-            {
-                ЗагрузитьСписок();
-            }
-            else
-            {
-                //LoadListFromCis();
-            }
+           if (Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad))
+              ЗагрузитьСписок(_sourceLoad == SourceTrainTableRecordLoad.Local ? _fileNameLocalTableRec : _fileNameRemoteCisTableRec);
         }
 
 
@@ -881,7 +889,7 @@ namespace MainExample
         /// </summary>
         private void btn_Сохранить_Click(object sender, EventArgs e)
         {
-            СохранитьСписок();
+            СохранитьСписок(TrainTableRecords, _fileNameLocalTableRec);
         }
 
 
@@ -906,5 +914,23 @@ namespace MainExample
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Источник изменения загрузки расписания
+        /// </summary>
+        private void rbSourseSheduleLocal_CheckedChanged(object sender, EventArgs e)
+        {
+            var rb = sender as RadioButton;
+            if (rb != null)
+            {
+                _sourceLoad= (rb.Name == "rbSourseSheduleLocal" && rb.Checked) ? SourceTrainTableRecordLoad.Local : SourceTrainTableRecordLoad.RemoteCis;
+                Program.Настройки.SourceTrainTableRecordLoad = _sourceLoad.ToString();
+                ОкноНастроек.СохранитьНастройки();
+
+                SourceLoadMainList();
+                ОбновитьДанныеВСписке();
+            }
+        }
     }
 }

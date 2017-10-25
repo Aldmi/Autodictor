@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;
+using MainExample.Mappers;
 
 namespace MainExample.Services.GetDataService
 {
@@ -36,11 +37,14 @@ namespace MainExample.Services.GetDataService
             var universalInputTypes = data as IList<UniversalInputType> ?? data.ToList();
             if (universalInputTypes.Any())
             {
-                foreach (var tr in universalInputTypes)
+                var tableRecords = new List<TrainTableRecord>();
+                foreach (var uit in universalInputTypes)
                 {
-                    //Map To TrainRecord
-                    //Save list train rec in TableRecords.ini
+                   var trTable= Mapper.MapUniversalInputType2TrainTableRecord(uit);
+                   tableRecords.Add(trTable);
                 }
+
+                TrainTableGrid.СохранитьСписокРегулярноеРасписаниеЦис(tableRecords);
             }
         }
 

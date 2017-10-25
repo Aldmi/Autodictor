@@ -371,6 +371,13 @@ namespace MainExample.Mappers
 
 
 
+        public static TrainTableRecord MapUniversalInputType2TrainTableRecord(UniversalInputType uit)
+        {
+            var tableRec= new TrainTableRecord();
+            return tableRec;
+        }
+
+
 
         public static string ПолучитьНомерПутиПоДнямНедели(TrainTableRecord record)
         {

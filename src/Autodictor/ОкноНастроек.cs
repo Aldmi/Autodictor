@@ -73,7 +73,7 @@ namespace MainExample
         public bool GetDataCisRegShStart;               //Получение данных, ЦИС регулярное расписание
         public bool GetDataCisOperShStart;              //Получение данных, ЦИС оперативное расписание
 
-
+        public string SourceTrainTableRecordLoad;       //переключатель источника загрузки расписания.
 
         #region Methode
 
@@ -522,6 +522,10 @@ namespace MainExample
                                         Program.Настройки.UTC = ПеременнаяInt;
                                     break;
 
+                                case "SourceTrainTableRecordLoad":
+                                    Program.Настройки.SourceTrainTableRecordLoad = Settings[1];
+                                    break;
+
                                 case "GetDataApkDkStart":
                                     if (bool.TryParse(Settings[1], out ПеременнаяBool))
                                         Program.Настройки.GetDataApkDkStart = ПеременнаяBool;
@@ -689,6 +693,8 @@ namespace MainExample
                     DumpFile.WriteLine("FontПригород=" + $"{Program.Настройки.FontПригород.Name}:{Program.Настройки.FontПригород.Size}:{Program.Настройки.FontПригород.Style}");
 
                     DumpFile.WriteLine("UTC=" + Program.Настройки.UTC.ToString("D"));
+
+                    DumpFile.WriteLine("SourceTrainTableRecordLoad=" + Program.Настройки.SourceTrainTableRecordLoad);
 
                     DumpFile.WriteLine("GetDataApkDkStart=" + Program.Настройки.GetDataApkDkStart);
                     DumpFile.WriteLine("GetDataDispatcherControlStart=" + Program.Настройки.GetDataDispatcherControlStart);
