@@ -114,7 +114,9 @@
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\XmlExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
     <Compile Include="Behavior\GetDataBehavior\BaseGetDataBehavior.cs" />
-    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\DispatcherControlDataConerter.cs" />
+    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisOperativeShDataConverter.cs" />
+    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisRegularShDataConverter.cs" />
+    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\DispatcherControlDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\IInputDataConverter.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement10ChWriteDataProvider.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement20ChWriteDataProvider.cs" />
@@ -155,7 +157,7 @@
     <Compile Include="DataProviders\VidorDataProvider\PanelVidorWriteDataProvider.cs" />
     <Compile Include="Model\ExchangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\ApkDkVolgogradSheduleDataConerter.cs" />
+    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\ApkDkVolgogradSheduleDataConverter.cs" />
     <Compile Include="Services\UitPreprocessingChnagePathDirection4Transit.cs" />
     <Compile Include="Services\UitPreprocessingOutputService.cs" />
     <Compile Include="Services\UitPreprocessingTimezone.cs" />

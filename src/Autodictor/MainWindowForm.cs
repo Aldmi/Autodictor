@@ -205,6 +205,8 @@ namespace MainExample
 
         public GetSheduleAbstract GetSheduleAbstract { get; set; }                  //сервис получения данных от АпкДк Волгоград
         public GetSheduleAbstract DispatcherGetSheduleAbstract { get; set; }        //сервис получения данных от диспетчера
+        public GetSheduleAbstract CisRegShAbstract { get; set; }                    //сервис получения данных от CIS (рег. расписание)
+        public GetSheduleAbstract CisOperShAbstract { get; set; }                   //сервис получения данных от CIS (опер. расписание)
 
 
         public int ВремяЗадержкиМеждуСообщениями = 0;
@@ -318,6 +320,8 @@ namespace MainExample
            //ИНИЦИАЛИЗАЦИЯ УСТРОЙСТВ ПОЛУЧЕНИЯ ДАННЫХ--------------------------
             chbox_apkDk.Visible = false;
             chbox_DispatcherControl.Visible = false;
+            chbox_CisRegShControl.Visible = false;
+            chbox_CisOperShControl.Visible = false;
             foreach (var beh in Binding2GetDataBehaviors)
             {
                 //ВКЛ/ОТКЛ элементы UI данного девайса
@@ -340,6 +344,25 @@ namespace MainExample
                         DispatcherGetSheduleAbstract.SoundRecordChangesRx.Subscribe(HttpDispatcherSoundRecordChanges);
                         DispatcherGetSheduleAbstract.SubscribeAndStart(chbox_DispatcherControl);
                         DispatcherGetSheduleAbstract.Enable = chbox_DispatcherControl.Checked;
+                        break;
+
+                    case "HttpCisRegSh":
+                        chbox_CisRegShControl.Visible = true;
+                        chbox_CisRegShControl.Checked = Program.Настройки.GetDataCisRegShStart;
+
+                        CisRegShAbstract = new GetCisRegSh(beh.BaseGetDataBehavior, null);
+                        CisRegShAbstract.SubscribeAndStart(chbox_CisRegShControl);
+                        CisRegShAbstract.Enable = chbox_CisRegShControl.Checked;
+                        break;
+
+                    case "HttpCisOperSh":
+                        chbox_CisOperShControl.Visible = true;
+                        chbox_CisOperShControl.Checked = Program.Настройки.GetDataCisOperShStart;
+
+                        CisOperShAbstract = new GetCisOperSh(beh.BaseGetDataBehavior, SoundRecords);
+                       // CisOperShAbstract.SoundRecordChangesRx.Subscribe(HttpDispatcherSoundRecordChanges);
+                        CisOperShAbstract.SubscribeAndStart(chbox_CisOperShControl);
+                        CisOperShAbstract.Enable = chbox_CisOperShControl.Checked;
                         break;
                 }
 
@@ -387,7 +410,6 @@ namespace MainExample
             }
         }
 
-
         private void chbox_DispatcherControl_CheckedChanged(object sender, EventArgs e)
         {
             var chBox = sender as CheckBox;
@@ -397,6 +419,32 @@ namespace MainExample
                     DispatcherGetSheduleAbstract.Enable = chbox_DispatcherControl.Checked;
 
                 Program.Настройки.GetDataDispatcherControlStart = chbox_DispatcherControl.Checked;
+                ОкноНастроек.СохранитьНастройки();
+            }
+        }
+
+        private void chbox_CisRegShControl_CheckedChanged(object sender, EventArgs e)
+        {
+            var chBox = sender as CheckBox;
+            if (chBox != null)
+            {
+                if (CisRegShAbstract != null)
+                    CisRegShAbstract.Enable = chbox_CisRegShControl.Checked;
+
+                Program.Настройки.GetDataCisRegShStart = chbox_CisRegShControl.Checked;
+                ОкноНастроек.СохранитьНастройки();
+            }
+        }
+
+        private void chbox_CisOperShControl_CheckedChanged(object sender, EventArgs e)
+        {
+            var chBox = sender as CheckBox;
+            if (chBox != null)
+            {
+                if (CisOperShAbstract != null)
+                    CisOperShAbstract.Enable = chbox_CisOperShControl.Checked;
+
+                Program.Настройки.GetDataCisOperShStart = chbox_CisOperShControl.Checked;
                 ОкноНастроек.СохранитьНастройки();
             }
         }
@@ -3884,7 +3932,6 @@ namespace MainExample
 
             base.OnClosed(e);
         }
-
 
     }
 }

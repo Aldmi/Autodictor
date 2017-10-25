@@ -158,6 +158,8 @@
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="Services\FactoryServices\PreprocessingOutputFactory.cs" />
+    <Compile Include="Services\GetDataService\GetCisOperSh.cs" />
+    <Compile Include="Services\GetDataService\GetCisRegSh.cs" />
     <Compile Include="Services\GetDataService\GetSheduleDispatcherControl.cs" />
     <Compile Include="Services\GetDataService\GetSheduleApkDk.cs" />
     <Compile Include="Services\GetDataService\GetSheduleAbstract.cs" />

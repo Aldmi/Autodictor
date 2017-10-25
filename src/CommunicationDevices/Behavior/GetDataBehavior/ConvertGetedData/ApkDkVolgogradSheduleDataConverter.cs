@@ -8,7 +8,7 @@ using Domain.Entitys;
 
 namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
 {
-    public class ApkDkVolgogradSheduleDataConerter : IInputDataConverter
+    public class ApkDkVolgogradSheduleDataConverter : IInputDataConverter
     {
         //public string Id { get; set; }            //алиас остановочного пункта и код запроса клиента 
         //public string Ln { get; set; }            //номер линии расписания

@@ -285,7 +285,7 @@ namespace Communication.Http
                 {
                     using (var response = await client.GetAsync(new Uri(uri)).WithTimeout(_timeRespoune))
                     {
-                        if (response.IsSuccessStatusCode)
+                        if (response != null && response.IsSuccessStatusCode)
                         {
                             using (HttpContent content = response.Content)
                             {
@@ -369,6 +369,9 @@ namespace Communication.Http
                         content.Add(new StreamContent(stream), mimeName, mimeFileName);
                         using (var respone = await client.PostAsync(uri, content).WithTimeout(_timeRespoune))
                         {
+                            if (respone == null)
+                                return null;
+
                             var outputBody = await respone.Content.ReadAsStreamAsync();
                             var memoryStream = new MemoryStream();
                             await outputBody.CopyToAsync(memoryStream);

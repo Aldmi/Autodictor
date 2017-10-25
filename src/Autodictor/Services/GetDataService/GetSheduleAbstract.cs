@@ -67,22 +67,41 @@ namespace MainExample.Services.GetDataService
         /// </summary>
         public void SubscribeAndStart(Control control)
         {
-            DispouseSheduleGetRx= _sheduleGetRx?.Subscribe(GetaDataRxEventHandler);
-            DispouseConnectChangeRx= ConnectChangeRx.Subscribe(behavior => control.Enabled = behavior.IsConnect);  //контролл не активен, если нет связи
-            DispouseDataExchangeSuccessChangeRx = DataExchangeSuccessRx.Subscribe(behavior =>
+            try
             {
-                var colorYes = Color.GreenYellow;
-                var colorError = Color.Red;
-                var colorNo = Color.White;
-                control.BackColor = (behavior.DataExchangeSuccess) ? colorYes : colorError;
-                Task.Delay(1000).ContinueWith(task =>
+                DispouseSheduleGetRx = _sheduleGetRx?.Subscribe(GetaDataRxEventHandler);
+                DispouseConnectChangeRx = ConnectChangeRx.Subscribe(behavior =>                       //контролл не активен, если нет связи
                 {
                     control.InvokeIfNeeded(() =>
                     {
-                        control.BackColor = colorNo;
+                        control.Enabled = behavior.IsConnect;
+                    });    
+                }); 
+
+                DispouseDataExchangeSuccessChangeRx = DataExchangeSuccessRx.Subscribe(behavior =>
+                {
+                    var colorYes = Color.GreenYellow;
+                    var colorError = Color.Red;
+                    var colorNo = Color.White;
+                    control.InvokeIfNeeded(() =>
+                    {
+                        control.BackColor = (behavior.DataExchangeSuccess) ? colorYes : colorError;
+                    });
+                    Task.Delay(1000).ContinueWith(task =>
+                    {
+                        control.InvokeIfNeeded(() =>
+                        {
+                            control.BackColor = colorNo;
+                        });
                     });
                 });
-            });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
 
 

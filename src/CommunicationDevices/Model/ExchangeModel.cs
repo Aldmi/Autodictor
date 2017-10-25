@@ -954,11 +954,19 @@ namespace CommunicationDevices.Model
                             switch (xmlDeviceHttp.Name)
                             {
                                 case "HttpApkDkVolgograd":
-                                    dataConverter = new ApkDkVolgogradSheduleDataConerter();
+                                    dataConverter = new ApkDkVolgogradSheduleDataConverter();
                                     break;
 
                                 case "HttpDispatcher":
-                                    dataConverter = new DispatcherControlDataConerter();
+                                    dataConverter = new DispatcherControlDataConverter();
+                                    break;
+
+                                case "HttpCisRegSh":
+                                    dataConverter = new CisRegularShDataConverter();
+                                    break;
+
+                                case "HttpCisOperSh":
+                                    dataConverter = new CisOperativeShDataConverter();
                                     break;
                             }
 

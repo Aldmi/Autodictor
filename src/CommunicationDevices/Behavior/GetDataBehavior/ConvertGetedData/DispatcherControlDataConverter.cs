@@ -42,7 +42,7 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
     //</tlist>
 
 
-    public class DispatcherControlDataConerter : IInputDataConverter
+    public class DispatcherControlDataConverter : IInputDataConverter
     {
         public IEnumerable<UniversalInputType> ParseXml2Uit(XDocument xDoc)
         {

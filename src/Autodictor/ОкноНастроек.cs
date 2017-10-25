@@ -70,6 +70,8 @@ namespace MainExample
 
         public bool GetDataApkDkStart;                  //Получение данных, апкДк из главного окна
         public bool GetDataDispatcherControlStart;      //Получение данных, от Диспетчера из главного окна
+        public bool GetDataCisRegShStart;               //Получение данных, ЦИС регулярное расписание
+        public bool GetDataCisOperShStart;              //Получение данных, ЦИС оперативное расписание
 
 
 
@@ -529,6 +531,16 @@ namespace MainExample
                                     if (bool.TryParse(Settings[1], out ПеременнаяBool))
                                         Program.Настройки.GetDataDispatcherControlStart = ПеременнаяBool;
                                     break;
+
+                                case "GetDataCisRegShStart":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.GetDataCisRegShStart = ПеременнаяBool;
+                                    break;
+
+                                case "GetDataCisOperShStart":
+                                    if (bool.TryParse(Settings[1], out ПеременнаяBool))
+                                        Program.Настройки.GetDataCisOperShStart = ПеременнаяBool;
+                                    break;
                             }
                         }
                     }
@@ -677,8 +689,12 @@ namespace MainExample
                     DumpFile.WriteLine("FontПригород=" + $"{Program.Настройки.FontПригород.Name}:{Program.Настройки.FontПригород.Size}:{Program.Настройки.FontПригород.Style}");
 
                     DumpFile.WriteLine("UTC=" + Program.Настройки.UTC.ToString("D"));
+
                     DumpFile.WriteLine("GetDataApkDkStart=" + Program.Настройки.GetDataApkDkStart);
                     DumpFile.WriteLine("GetDataDispatcherControlStart=" + Program.Настройки.GetDataDispatcherControlStart);
+                    DumpFile.WriteLine("GetDataCisRegShStart=" + Program.Настройки.GetDataCisRegShStart);
+                    DumpFile.WriteLine("GetDataCisOperShStart=" + Program.Настройки.GetDataCisOperShStart);
+
 
                     DumpFile.Close();
                 }

@@ -74,6 +74,7 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtb_subtaitles = new System.Windows.Forms.RichTextBox();
+            this.chbox_DispatcherControl = new System.Windows.Forms.CheckBox();
             this.chbox_apkDk = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.номерПутиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,7 +125,8 @@
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.воспроизвестиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.включитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chbox_DispatcherControl = new System.Windows.Forms.CheckBox();
+            this.chbox_CisRegShControl = new System.Windows.Forms.CheckBox();
+            this.chbox_CisOperShControl = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -500,6 +502,8 @@
             this.splitContainer2.Panel2.AllowDrop = true;
             this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.splitContainer2.Panel2.Controls.Add(this.chbox_CisOperShControl);
+            this.splitContainer2.Panel2.Controls.Add(this.chbox_CisRegShControl);
             this.splitContainer2.Panel2.Controls.Add(this.chbox_DispatcherControl);
             this.splitContainer2.Panel2.Controls.Add(this.chbox_apkDk);
             this.splitContainer2.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -578,6 +582,24 @@
             this.rtb_subtaitles.TabIndex = 0;
             this.rtb_subtaitles.Text = "";
             // 
+            // chbox_DispatcherControl
+            // 
+            this.chbox_DispatcherControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chbox_DispatcherControl.AutoSize = true;
+            this.chbox_DispatcherControl.BackColor = System.Drawing.Color.White;
+            this.chbox_DispatcherControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.chbox_DispatcherControl.Enabled = false;
+            this.chbox_DispatcherControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbox_DispatcherControl.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chbox_DispatcherControl.Location = new System.Drawing.Point(82, 2);
+            this.chbox_DispatcherControl.Name = "chbox_DispatcherControl";
+            this.chbox_DispatcherControl.Size = new System.Drawing.Size(98, 20);
+            this.chbox_DispatcherControl.TabIndex = 1;
+            this.chbox_DispatcherControl.Text = "Диспетчер";
+            this.chbox_DispatcherControl.UseVisualStyleBackColor = false;
+            this.chbox_DispatcherControl.CheckedChanged += new System.EventHandler(this.chbox_DispatcherControl_CheckedChanged);
+            // 
             // chbox_apkDk
             // 
             this.chbox_apkDk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -588,7 +610,7 @@
             this.chbox_apkDk.Enabled = false;
             this.chbox_apkDk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chbox_apkDk.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chbox_apkDk.Location = new System.Drawing.Point(9, 4);
+            this.chbox_apkDk.Location = new System.Drawing.Point(9, 2);
             this.chbox_apkDk.Name = "chbox_apkDk";
             this.chbox_apkDk.Size = new System.Drawing.Size(67, 20);
             this.chbox_apkDk.TabIndex = 0;
@@ -981,23 +1003,41 @@
             this.включитьToolStripMenuItem.Text = "Включить";
             this.включитьToolStripMenuItem.Click += new System.EventHandler(this.включитьToolStripMenuItem_Click);
             // 
-            // chbox_DispatcherControl
+            // chbox_CisRegShControl
             // 
-            this.chbox_DispatcherControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chbox_CisRegShControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.chbox_DispatcherControl.AutoSize = true;
-            this.chbox_DispatcherControl.BackColor = System.Drawing.Color.White;
-            this.chbox_DispatcherControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.chbox_DispatcherControl.Enabled = false;
-            this.chbox_DispatcherControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.chbox_DispatcherControl.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chbox_DispatcherControl.Location = new System.Drawing.Point(82, 4);
-            this.chbox_DispatcherControl.Name = "chbox_DispatcherControl";
-            this.chbox_DispatcherControl.Size = new System.Drawing.Size(98, 20);
-            this.chbox_DispatcherControl.TabIndex = 1;
-            this.chbox_DispatcherControl.Text = "Диспетчер";
-            this.chbox_DispatcherControl.UseVisualStyleBackColor = false;
-            this.chbox_DispatcherControl.CheckedChanged += new System.EventHandler(this.chbox_DispatcherControl_CheckedChanged);
+            this.chbox_CisRegShControl.AutoSize = true;
+            this.chbox_CisRegShControl.BackColor = System.Drawing.Color.White;
+            this.chbox_CisRegShControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.chbox_CisRegShControl.Enabled = false;
+            this.chbox_CisRegShControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbox_CisRegShControl.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chbox_CisRegShControl.Location = new System.Drawing.Point(187, 2);
+            this.chbox_CisRegShControl.Name = "chbox_CisRegShControl";
+            this.chbox_CisRegShControl.Size = new System.Drawing.Size(120, 20);
+            this.chbox_CisRegShControl.TabIndex = 2;
+            this.chbox_CisRegShControl.Text = "ЦИС рег. расп.";
+            this.chbox_CisRegShControl.UseVisualStyleBackColor = false;
+            this.chbox_CisRegShControl.CheckedChanged += new System.EventHandler(this.chbox_CisRegShControl_CheckedChanged);
+            // 
+            // chbox_CisOperShControl
+            // 
+            this.chbox_CisOperShControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chbox_CisOperShControl.AutoSize = true;
+            this.chbox_CisOperShControl.BackColor = System.Drawing.Color.White;
+            this.chbox_CisOperShControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.chbox_CisOperShControl.Enabled = false;
+            this.chbox_CisOperShControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chbox_CisOperShControl.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.chbox_CisOperShControl.Location = new System.Drawing.Point(313, 1);
+            this.chbox_CisOperShControl.Name = "chbox_CisOperShControl";
+            this.chbox_CisOperShControl.Size = new System.Drawing.Size(130, 20);
+            this.chbox_CisOperShControl.TabIndex = 3;
+            this.chbox_CisOperShControl.Text = "ЦИС опер. расп.";
+            this.chbox_CisOperShControl.UseVisualStyleBackColor = false;
+            this.chbox_CisOperShControl.CheckedChanged += new System.EventHandler(this.chbox_CisOperShControl_CheckedChanged);
             // 
             // MainWindowForm
             // 
@@ -1128,5 +1168,7 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.CheckBox chbox_apkDk;
         private System.Windows.Forms.CheckBox chbox_DispatcherControl;
+        private System.Windows.Forms.CheckBox chbox_CisRegShControl;
+        private System.Windows.Forms.CheckBox chbox_CisOperShControl;
     }
 }
