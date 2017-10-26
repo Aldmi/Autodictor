@@ -63,26 +63,29 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
                 var requestFillBody = RequestRule.GetFillBody(InputData, CurrentRow); // ??? передавать CurrentRow
                 string matchString = null;
 
-                var requestFillBodyWithoutConstantCharacters =
-                    requestFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
+                var requestFillBodyWithoutConstantCharacters = requestFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
+
+
+                //ВЫЧИСЛЯЕМ NumberOfCharacters---------------------------------------------------------------------------
+                while (requestFillBodyWithoutConstantCharacters.Contains("NumberOfCharacters"))
+                {
+                    
+                }
+
+
 
 
                 //ВЫЧИСЛЯЕМ NByte---------------------------------------------------------------------------
                 int lenght = 0;
-
-                if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Success)
-                    //вычислили длинну строгки между Nbyte и CRC
+                if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Success) //вычислили длинну строки между Nbyte и CRC
                 {
-                    matchString =
-                        Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Groups[2]
-                            .Value;
+                    matchString = Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Groups[2].Value;
                     lenght = matchString.Length;
                 }
                 else if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Success)
                     //вычислили длинну строки от Nbyte до конца строки
                 {
-                    matchString =
-                        Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Groups[1].Value;
+                    matchString = Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*)").Groups[1].Value;
                     lenght = matchString.Length;
                 }
 
@@ -163,7 +166,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
                 return resultBuffer.ToArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

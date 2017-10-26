@@ -91,6 +91,17 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
         public virtual string GetFillBody(UniversalInputType uit, byte? currentRow)
         {
+           var str= MakeIndependentInserts(uit, currentRow);
+           str= MakeDependentInserts(str, uit);
+           return str;
+        }
+
+
+        /// <summary>
+        /// Первоначальная вставка независимых переменных
+        /// </summary>
+        private string MakeIndependentInserts(UniversalInputType uit, byte? currentRow)
+        {
             if (Body.Contains("}"))                                                           //если указанны переменные подстановки
             {
                 var subStr = Body.Split('}');
@@ -128,7 +139,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.NumberOfTrain)))
                     {
-                        if (replaseStr.Contains(":")) //если указзанн формат числа
+                        if (replaseStr.Contains(":")) //если указан формат числа
                         {
                             if (int.TryParse(uit.NumberOfTrain, out parseVal))
                             {
@@ -152,7 +163,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.PathNumber)))
                     {
-                        if (replaseStr.Contains(":")) //если указзанн формат числа
+                        if (replaseStr.Contains(":")) //если указан формат числа
                         {
                             if (int.TryParse(uit.PathNumber, out parseVal))
                             {
@@ -255,8 +266,19 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     {
                         if (replaseStr.Contains(":")) //если указанн формат времени
                         {
+                            string formatStr;
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
-                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.Time), "0"), (uit.Time == DateTime.MinValue) ? " " : uit.Time.ToString(dateFormat));
+                            if (dateFormat.Contains("Sec"))   //формат задан в секундах
+                            {
+                                var intFormat = dateFormat.Substring(3, 2);
+                                var intValue = (uit.Time.Hour * 3600 + uit.Time.Minute * 60);
+                                formatStr = string.Format(replaseStr.Replace(nameof(uit.Time), "0"), (intValue == 0) ? " " : intValue.ToString(intFormat));
+                            }
+                            else
+                            {
+                                formatStr = string.Format(replaseStr.Replace(nameof(uit.Time), "0"), (uit.Time == DateTime.MinValue) ? " " : uit.Time.ToString(dateFormat));
+                            }
+
                             resStr.Append(formatStr);
                         }
                         else
@@ -282,11 +304,21 @@ namespace CommunicationDevices.Rules.ExchangeRules
                                 break;
                         }
 
-
-                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        if (replaseStr.Contains(":")) //если указанн формат времени
                         {
+                            string formatStr;
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
-                            var formatStr = string.Format(replaseStr.Replace("TDepart", "0"), (timeDepart == DateTime.MinValue) ? " " : timeDepart.ToString(dateFormat));
+                            if (dateFormat.Contains("Sec"))   //формат задан в секундах
+                            {
+                                var intFormat = dateFormat.Substring(3, 2);
+                                var intValue = (uit.Time.Hour * 3600 + uit.Time.Minute * 60);
+                                formatStr = string.Format(replaseStr.Replace("TDepart", "0"), (intValue == 0) ? " " : intValue.ToString(intFormat));
+                            }
+                            else
+                            {
+                                formatStr = string.Format(replaseStr.Replace("TDepart", "0"), (timeDepart == DateTime.MinValue) ? " " : timeDepart.ToString(dateFormat));
+                            }
+
                             resStr.Append(formatStr);
                         }
                         else
@@ -312,11 +344,21 @@ namespace CommunicationDevices.Rules.ExchangeRules
                                 break;
                         }
 
-
-                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        if (replaseStr.Contains(":")) //если указанн формат времени
                         {
+                            string formatStr;
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
-                            var formatStr = string.Format(replaseStr.Replace("TArrival", "0"), (timeArrival == DateTime.MinValue) ? " " : timeArrival.ToString(dateFormat));
+                            if (dateFormat.Contains("Sec"))   //формат задан в секундах
+                            {
+                                var intFormat = dateFormat.Substring(3, 2);
+                                var intValue = (uit.Time.Hour * 3600 + uit.Time.Minute * 60);
+                                formatStr = string.Format(replaseStr.Replace("TArrival", "0"), (intValue == 0) ? " " : intValue.ToString(intFormat));
+                            }
+                            else
+                            {
+                                formatStr = string.Format(replaseStr.Replace("TArrival", "0"), (timeArrival == DateTime.MinValue) ? " " : timeArrival.ToString(dateFormat));
+                            }
+
                             resStr.Append(formatStr);
                         }
                         else
@@ -351,6 +393,26 @@ namespace CommunicationDevices.Rules.ExchangeRules
                         continue;
                     }
 
+
+                    if (replaseStr.Contains("SyncTInSec"))
+                    {
+                        var secTime = DateTime.Now.Hour * 3600 + DateTime.Now.Minute * 60 + DateTime.Now.Second;
+                        string formatStr;
+                        if (replaseStr.Contains(":")) //если указан формат времени
+                        {
+                            var dateFormat = s.Split(':')[1]; //без закр. скобки
+                            formatStr = string.Format(replaseStr.Replace("SyncTInSec", "0"), (secTime == 0) ? " " : secTime.ToString(dateFormat));
+                            resStr.Append(formatStr);
+                        }
+                        else
+                        {
+                            formatStr = string.Format(replaseStr.Replace("SyncTInSec", "0"), (secTime == 0) ? " " : secTime.ToString(CultureInfo.InvariantCulture));
+                            resStr.Append(formatStr);
+                        }
+                        continue;
+                    }
+
+
                     if (replaseStr.Contains("rowNumber"))
                     {
                         if (currentRow.HasValue)
@@ -371,6 +433,59 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
             return Body;
         }
+
+
+
+        /// <summary>
+        /// Первоначальная вставка ЗАВИСИМЫХ переменных
+        /// </summary>
+        private string MakeDependentInserts(string body, UniversalInputType uit)
+        {
+            if (body.Contains("}"))                                                           //если указанны переменные подстановки
+            {
+                var subStr = body.Split('}');
+                StringBuilder resStr = new StringBuilder();
+                int parseVal;
+                for (var index = 0; index < subStr.Length; index++)
+                {
+                    var s = subStr[index];
+                    var replaseStr = (s.Contains("{")) ? (s + "}") : s;
+                    if (replaseStr.Contains("NumberOfCharacters"))
+                    {
+                        var targetStr = (subStr.Length > (index + 1)) ? subStr[index + 1] : string.Empty;
+                        if (Regex.Match(targetStr, "\\\"(.*)\"").Success) //вычислили длинну строки между Nbyte и CRC
+                        {
+                            var matchString = Regex.Match(targetStr, "\\\"(.*)\\\"").Groups[1].Value;
+                            if (!string.IsNullOrEmpty(matchString))
+                            {
+                                var lenght = matchString.TrimEnd('\\').Length;
+                                if (replaseStr.Contains(":")) //если указан формат числа
+                                {
+                                    var dateFormat = s.Split(':')[1]; //без закр. скобки
+                                    var formatStr = string.Format(replaseStr.Replace("NumberOfCharacters", "0"), lenght.ToString(dateFormat));
+                                    resStr.Append(formatStr);
+                                }
+                                else
+                                {
+                                    var formatStr = string.Format(replaseStr.Replace(nameof(uit.AddressDevice), "0"), uit.AddressDevice);
+                                    resStr.Append(formatStr);
+                                }
+                            }
+                        }
+                        continue;
+                    }
+
+                    //Добавим в неизменном виде спецификаторы байтовой информации.
+                    resStr.Append(replaseStr);
+                }
+
+                return resStr.ToString();
+            }
+
+            return body;
+        }
+
+
 
 
         public static string CalculateMathematicFormat(string str, int row)
