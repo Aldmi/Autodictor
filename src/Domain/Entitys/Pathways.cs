@@ -9,6 +9,7 @@
         public string СНомерОгоПути { get; set; }      //для переменной шаблона "С НОМЕРого ПУТИ"
 
         public string Addition { get; set; }           //Дополнение
+        public string Addition2 { get; set; }          //Дополнение2
     }
 
 }

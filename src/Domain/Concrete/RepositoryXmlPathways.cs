@@ -50,7 +50,8 @@ namespace Domain.Concrete
                         НаНомерПуть = (string)directXml.Attribute("НаНомерПуть"),
                         НаНомерОмПути = (string)directXml.Attribute("НаНомерОмПути"),
                         СНомерОгоПути = (string)directXml.Attribute("СНомерОгоПути"),
-                        Addition = (string)directXml.Attribute("Addition")
+                        Addition = (string)directXml.Attribute("Addition"),
+                        Addition2 = (string)directXml.Attribute("Addition2")
                     };
 
                     pathWays.Add(path);
