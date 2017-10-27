@@ -47,11 +47,9 @@
 				   <Rule Format = "Windows-1251">
 					  <Request maxLenght = "254">
 						   STX{AddressDevice:X2}{Nbyte:X2}
-						   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
-						   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
+						   %111111{Stations}<!-- !!!!!-->
+						   %00002047{(rowNumber*11+5):D3}4%10{NumberOfCharacters:X2}02\"{NumberOfTrain}\"<!-- Номер поезда -->
 						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time:SecX5}<!-- Вывод Времени -->
-						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{TDepart:SecX5}<!-- Вывод Пути -->
-						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
 						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{SyncTInSec:X5}<!-- Время синхр в сек-->
 						   %00231252{NumberOfCharacters:X2}02\"{Stations}\"<!--подсчет кол-ва символов в \"текст\"-->
 						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
@@ -61,32 +59,7 @@
 					  <Response maxLenght = "8" TimeRespone="500">
 						STX0200FDETX
 					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							{DelayTime}
-							CLEAR-------------------------
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							RESET-------------------------
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>						   
+				   </Rule>				   
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>

@@ -91,9 +91,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
         public virtual string GetFillBody(UniversalInputType uit, byte? currentRow)
         {
-           var str= MakeIndependentInserts(uit, currentRow);
-           str= MakeDependentInserts(str, uit);
-           return str;
+            var str = MakeIndependentInserts(uit, currentRow);
+            str = MakeDependentInserts(str, uit);
+            return str;
         }
 
 
@@ -445,11 +445,11 @@ namespace CommunicationDevices.Rules.ExchangeRules
             {
                 var subStr = body.Split('}');
                 StringBuilder resStr = new StringBuilder();
-                int parseVal;
                 for (var index = 0; index < subStr.Length; index++)
                 {
                     var s = subStr[index];
                     var replaseStr = (s.Contains("{")) ? (s + "}") : s;
+                    //Подсчет кол-ва символов
                     if (replaseStr.Contains("NumberOfCharacters"))
                     {
                         var targetStr = (subStr.Length > (index + 1)) ? subStr[index + 1] : string.Empty;
@@ -479,7 +479,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     resStr.Append(replaseStr);
                 }
 
-                return resStr.ToString();
+                return resStr.ToString().Replace("\\\"", string.Empty);
             }
 
             return body;

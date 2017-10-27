@@ -65,16 +65,6 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
 
                 var requestFillBodyWithoutConstantCharacters = requestFillBody.Replace("STX", string.Empty).Replace("ETX", string.Empty);
 
-
-                //ВЫЧИСЛЯЕМ NumberOfCharacters---------------------------------------------------------------------------
-                while (requestFillBodyWithoutConstantCharacters.Contains("NumberOfCharacters"))
-                {
-                    
-                }
-
-
-
-
                 //ВЫЧИСЛЯЕМ NByte---------------------------------------------------------------------------
                 int lenght = 0;
                 if (Regex.Match(requestFillBodyWithoutConstantCharacters, "{Nbyte(.*)}(.*){CRC(.*)}").Success) //вычислили длинну строки между Nbyte и CRC
