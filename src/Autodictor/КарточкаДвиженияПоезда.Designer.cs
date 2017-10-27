@@ -80,7 +80,6 @@
             this.rB_ПоРасписанию = new System.Windows.Forms.RadioButton();
             this.cBКуда = new System.Windows.Forms.ComboBox();
             this.cBОткуда = new System.Windows.Forms.ComboBox();
-            this.cBНомерПоезда = new System.Windows.Forms.ComboBox();
             this.cBОтменен = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnОтправлениеПоГотовности = new System.Windows.Forms.Button();
@@ -93,13 +92,14 @@
             this.cBПоездОтменен = new System.Windows.Forms.CheckBox();
             this.gBНастройкиПоезда = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.cBНомерПоезда2 = new System.Windows.Forms.ComboBox();
             this.cb_Дополнение_Табло = new System.Windows.Forms.CheckBox();
             this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
             this.cb_ВремяСтоянкиБудетИзмененно = new System.Windows.Forms.CheckBox();
+            this.txb_НомерПоезда = new System.Windows.Forms.TextBox();
+            this.txb_НомерПоезда2 = new System.Windows.Forms.TextBox();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -504,7 +504,7 @@
             // 
             this.dTP_ВремяОтправления.CustomFormat = "HH:mm";
             this.dTP_ВремяОтправления.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_ВремяОтправления.Location = new System.Drawing.Point(89, 59);
+            this.dTP_ВремяОтправления.Location = new System.Drawing.Point(91, 59);
             this.dTP_ВремяОтправления.Name = "dTP_ВремяОтправления";
             this.dTP_ВремяОтправления.ShowUpDown = true;
             this.dTP_ВремяОтправления.Size = new System.Drawing.Size(85, 29);
@@ -534,7 +534,7 @@
             // 
             this.dTP_Прибытие.CustomFormat = "HH:mm";
             this.dTP_Прибытие.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dTP_Прибытие.Location = new System.Drawing.Point(90, 27);
+            this.dTP_Прибытие.Location = new System.Drawing.Point(91, 27);
             this.dTP_Прибытие.Name = "dTP_Прибытие";
             this.dTP_Прибытие.ShowUpDown = true;
             this.dTP_Прибытие.Size = new System.Drawing.Size(85, 29);
@@ -699,17 +699,6 @@
             this.cBОткуда.Size = new System.Drawing.Size(218, 28);
             this.cBОткуда.TabIndex = 42;
             // 
-            // cBНомерПоезда
-            // 
-            this.cBНомерПоезда.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBНомерПоезда.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cBНомерПоезда.FormattingEnabled = true;
-            this.cBНомерПоезда.Location = new System.Drawing.Point(11, 19);
-            this.cBНомерПоезда.Name = "cBНомерПоезда";
-            this.cBНомерПоезда.Size = new System.Drawing.Size(82, 28);
-            this.cBНомерПоезда.TabIndex = 44;
-            this.cBНомерПоезда.Enter += new System.EventHandler(this.cBНомерПоезда_Enter);
-            // 
             // cBОтменен
             // 
             this.cBОтменен.AutoSize = true;
@@ -831,14 +820,14 @@
             // 
             // gBНастройкиПоезда
             // 
+            this.gBНастройкиПоезда.Controls.Add(this.txb_НомерПоезда2);
+            this.gBНастройкиПоезда.Controls.Add(this.txb_НомерПоезда);
             this.gBНастройкиПоезда.Controls.Add(this.label9);
             this.gBНастройкиПоезда.Controls.Add(this.groupBox3);
-            this.gBНастройкиПоезда.Controls.Add(this.cBНомерПоезда2);
             this.gBНастройкиПоезда.Controls.Add(this.cb_Дополнение_Табло);
             this.gBНастройкиПоезда.Controls.Add(this.cb_Дополнение_Звук);
             this.gBНастройкиПоезда.Controls.Add(this.tb_Дополнение);
             this.gBНастройкиПоезда.Controls.Add(this.label4);
-            this.gBНастройкиПоезда.Controls.Add(this.cBНомерПоезда);
             this.gBНастройкиПоезда.Controls.Add(this.gB_НумерацияПоезда);
             this.gBНастройкиПоезда.Controls.Add(this.groupBox2);
             this.gBНастройкиПоезда.Controls.Add(this.label1);
@@ -860,22 +849,11 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(96, 22);
+            this.label9.Location = new System.Drawing.Point(95, 19);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 21);
             this.label9.TabIndex = 51;
             this.label9.Text = "/";
-            // 
-            // cBНомерПоезда2
-            // 
-            this.cBНомерПоезда2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBНомерПоезда2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cBНомерПоезда2.FormattingEnabled = true;
-            this.cBНомерПоезда2.Location = new System.Drawing.Point(115, 19);
-            this.cBНомерПоезда2.Name = "cBНомерПоезда2";
-            this.cBНомерПоезда2.Size = new System.Drawing.Size(82, 28);
-            this.cBНомерПоезда2.TabIndex = 50;
-            this.cBНомерПоезда2.Enter += new System.EventHandler(this.cBНомерПоезда2_Enter);
             // 
             // cb_Дополнение_Табло
             // 
@@ -939,6 +917,26 @@
             this.cb_ВремяСтоянкиБудетИзмененно.Text = "Время стоянки будет изменено";
             this.cb_ВремяСтоянкиБудетИзмененно.UseVisualStyleBackColor = true;
             this.cb_ВремяСтоянкиБудетИзмененно.CheckedChanged += new System.EventHandler(this.cb_ВремяСтоянкиБудетИзмененно_CheckedChanged);
+            // 
+            // txb_НомерПоезда
+            // 
+            this.txb_НомерПоезда.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txb_НомерПоезда.Location = new System.Drawing.Point(12, 19);
+            this.txb_НомерПоезда.Name = "txb_НомерПоезда";
+            this.txb_НомерПоезда.ReadOnly = true;
+            this.txb_НомерПоезда.Size = new System.Drawing.Size(78, 26);
+            this.txb_НомерПоезда.TabIndex = 52;
+            this.txb_НомерПоезда.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txb_НомерПоезда2
+            // 
+            this.txb_НомерПоезда2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txb_НомерПоезда2.Location = new System.Drawing.Point(116, 19);
+            this.txb_НомерПоезда2.Name = "txb_НомерПоезда2";
+            this.txb_НомерПоезда2.ReadOnly = true;
+            this.txb_НомерПоезда2.Size = new System.Drawing.Size(78, 26);
+            this.txb_НомерПоезда2.TabIndex = 53;
+            this.txb_НомерПоезда2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // КарточкаДвиженияПоезда
             // 
@@ -1006,7 +1004,6 @@
         private System.Windows.Forms.RadioButton rB_СоВсемиОстановками;
         private System.Windows.Forms.ComboBox cBКуда;
         private System.Windows.Forms.ComboBox cBОткуда;
-        private System.Windows.Forms.ComboBox cBНомерПоезда;
         private System.Windows.Forms.Button btnПовторения;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView lVШаблоны;
@@ -1038,7 +1035,6 @@
         private System.Windows.Forms.CheckBox cb_Дополнение_Табло;
         private System.Windows.Forms.Button btn_Автомат;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox cBНомерПоезда2;
         private System.Windows.Forms.CheckBox cBВПути;
         private System.Windows.Forms.Button btn_ИзменитьВремяВПути;
         private System.Windows.Forms.DateTimePicker dTP_ВремяВПути;
@@ -1050,5 +1046,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
         private System.Windows.Forms.CheckBox cb_ВремяСтоянкиБудетИзмененно;
+        private System.Windows.Forms.TextBox txb_НомерПоезда2;
+        private System.Windows.Forms.TextBox txb_НомерПоезда;
     }
 }

@@ -118,15 +118,18 @@ namespace MainExample
             Text += record.НомерПоезда + ": " + record.СтанцияОтправления + " - " + record.СтанцияНазначения;
             this.Text = Text;
 
-            cBНомерПоезда.Items.Clear();
-            cBНомерПоезда2.Items.Clear();
-            foreach (var номерПоезда in Program.НомераПоездов)
-            {
-                cBНомерПоезда.Items.Add(номерПоезда);
-                cBНомерПоезда2.Items.Add(номерПоезда);
-            }
-            cBНомерПоезда.Text = record.НомерПоезда;
-            cBНомерПоезда2.Text = record.НомерПоезда2;
+            //cBНомерПоезда.Items.Clear();
+            //cBНомерПоезда2.Items.Clear();
+            //foreach (var номерПоезда in Program.НомераПоездов)
+            //{
+            //    cBНомерПоезда.Items.Add(номерПоезда);
+            //    cBНомерПоезда2.Items.Add(номерПоезда);
+            //}
+            //cBНомерПоезда.Text = record.НомерПоезда;
+            //cBНомерПоезда2.Text = record.НомерПоезда2;
+
+            txb_НомерПоезда.Text = record.НомерПоезда;
+            txb_НомерПоезда2.Text = record.НомерПоезда2;
 
 
             var directions = Program.DirectionRepository.List().ToList();
@@ -362,8 +365,11 @@ namespace MainExample
             string Примечание = "";
 
 
-            _record.НомерПоезда = cBНомерПоезда.Text;
-            _record.НомерПоезда2 = cBНомерПоезда2.Text;
+            //_record.НомерПоезда = cBНомерПоезда.Text;
+            //_record.НомерПоезда2 = cBНомерПоезда2.Text;
+
+            _record.НомерПоезда = txb_НомерПоезда.Text;
+            _record.НомерПоезда2 = txb_НомерПоезда2.Text;
 
             _record.СменнаяНумерацияПоезда = chbox_сменнаяНумерация.Checked;
 
@@ -1250,25 +1256,6 @@ namespace MainExample
             }
         }
 
-
-        /// <summary>
-        /// readonly cBНомерПоезда
-        /// </summary>
-        private void cBНомерПоезда_Enter(object sender, EventArgs e)
-        {
-            cBНомерПоезда.Enabled = false;
-            cBНомерПоезда.Enabled = true;
-        }
-
-
-        /// <summary>
-        /// readonly cBНомерПоезда2
-        /// </summary>
-        private void cBНомерПоезда2_Enter(object sender, EventArgs e)
-        {
-            cBНомерПоезда2.Enabled = false;
-            cBНомерПоезда2.Enabled = true;
-        }
 
         /// <summary>
         /// раскрасить шаблоны, у которых префикс "[ПРИБ]" или "[ОТПР]"
