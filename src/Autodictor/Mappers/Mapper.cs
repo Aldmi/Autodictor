@@ -362,6 +362,7 @@ namespace MainExample.Mappers
                 DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания(),
                 DaysFollowingAlias = t.DaysAlias,
                 Addition = t.Addition,
+                SendingDataLimit = t.ОграничениеОтправки,
                 Command = Command.None,
                 EmergencySituation = 0x00
             };

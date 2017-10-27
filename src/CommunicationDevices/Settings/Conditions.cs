@@ -63,7 +63,9 @@ namespace CommunicationDevices.Settings
 
         public int? LimitNumberRows { get; set; }                     //Ограничение кол-ва строк
 
-        public List<string> DirectionStations { get; set; }                 //Направленния
+        public List<string> DirectionStations { get; set; }           //Направленния
+
+        public bool SendingDataLimit { get; set; }                    //Ограничние на отправку данных
 
         #endregion
 
@@ -252,14 +254,12 @@ namespace CommunicationDevices.Settings
             var highSpeedArrivalfilter = true;
             if (HighSpeedArrival)
             {
-                highSpeedArrivalfilter =
-                    !((inData.Event == "ПРИБ.") && (inData.TypeTrain == DataProviders.TypeTrain.HighSpeed));
+                highSpeedArrivalfilter = !((inData.Event == "ПРИБ.") && (inData.TypeTrain == DataProviders.TypeTrain.HighSpeed));
             }
             var highSpeedDepartFilter = true;
             if (HighSpeedDepart)
             {
-                highSpeedDepartFilter =
-                    !((inData.Event == "ОТПР.") && (inData.TypeTrain == DataProviders.TypeTrain.HighSpeed));
+                highSpeedDepartFilter = !((inData.Event == "ОТПР.") && (inData.TypeTrain == DataProviders.TypeTrain.HighSpeed));
             }
             var highSpeedPathsFilter = true;
             if (HighSpeedPaths != null && HighSpeedPaths.Any())
@@ -316,11 +316,16 @@ namespace CommunicationDevices.Settings
                 departurePathsFilter = !((inData.Event == "ОТПР.") && DeparturePaths.Contains(inData.PathNumber));
             }
 
-
             var directionStationsFilter = true;
             if (DirectionStations != null && DirectionStations.Any())
             {
                 directionStationsFilter = DirectionStations.Contains(inData.DirectionStation.ToLower());
+            }
+
+            var sendingDataLimitFilter = true;
+            if (SendingDataLimit)
+            {
+                sendingDataLimitFilter = inData.SendingDataLimit;
             }
 
 
@@ -350,6 +355,7 @@ namespace CommunicationDevices.Settings
                    rexPathsFilter &&
                    arrivalPathsFilter &&
                    departurePathsFilter &&
+                   sendingDataLimitFilter &&
                    directionStationsFilter;
         }
 

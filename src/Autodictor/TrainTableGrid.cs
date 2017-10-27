@@ -43,6 +43,7 @@ namespace MainExample
         public string Addition;                                   //Дополнение
         public Dictionary<string, bool> ИспользоватьДополнение;   //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
         public bool Автомат;                                      // true - поезд обрабатывается в автомате.
+        public bool ОграничениеОтправки;                          // true - поезд обрабатывается в автомате.
     };
 
 
@@ -290,7 +291,7 @@ namespace MainExample
                                     ["звук"] = false,
                                     ["табло"] = false
                                 };
-                                данные.Автомат = true;
+                               
 
                                 ТипПоезда типПоезда = ТипПоезда.НеОпределен;
                                 try
@@ -334,6 +335,7 @@ namespace MainExample
                                     данные.ИспользоватьДополнение["звук"] = settings[17] == "1";
                                 }
 
+                                данные.Автомат = true;
                                 if (settings.Length >= 19)
                                 {
                                     данные.Автомат = (string.IsNullOrEmpty(settings[18]) || settings[18] == "1"); // по умолчанию true
@@ -372,6 +374,15 @@ namespace MainExample
                                     bool.TryParse(settings[25], out changeDirection);
                                     данные.ChangeTrainPathDirection = changeDirection;
                                 }
+
+                                данные.ОграничениеОтправки = false;
+                                if (settings.Length >= 27)
+                                {
+                                    bool ограничениеОтправки;
+                                    bool.TryParse(settings[26], out ограничениеОтправки);
+                                    данные.ОграничениеОтправки = ограничениеОтправки;
+                                }
+
 
                                 TrainTableRecords.Add(данные);
                                 Program.НомераПоездов.Add(данные.Num);
@@ -438,7 +449,8 @@ namespace MainExample
                                           trainTableRecords[i].StationDepart + ";" +
                                           trainTableRecords[i].StationArrival + ";" +
                                           trainTableRecords[i].Direction + ";" +
-                                          trainTableRecords[i].ChangeTrainPathDirection;
+                                          trainTableRecords[i].ChangeTrainPathDirection + ";"+
+                                          trainTableRecords[i].ОграничениеОтправки;
 
                             dumpFile.WriteLine(line);
                         }
@@ -877,6 +889,8 @@ namespace MainExample
                 ["табло"] = false
             };
             Данные.Автомат = true;
+
+            Данные.ОграничениеОтправки = false;
 
             //Добавили в список
             TrainTableRecords.Add(Данные);

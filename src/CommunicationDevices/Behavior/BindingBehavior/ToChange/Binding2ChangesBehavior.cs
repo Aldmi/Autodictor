@@ -137,9 +137,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToChange
 
 
 
-
-
-
         #region Disposable
 
         public void Dispose()

@@ -294,6 +294,14 @@ namespace MainExample
                                 Данные.ChangeTrainPathDirection = changeDirection;
                             }
 
+                            Данные.ОграничениеОтправки = false;
+                            if (Settings.Length >= 27)
+                            {
+                                bool ограничениеОтправки;
+                                bool.TryParse(Settings[26], out ограничениеОтправки);
+                                Данные.ОграничениеОтправки = ограничениеОтправки;
+                            }
+
 
                             TrainTableRecords.Add(Данные);
                             Program.НомераПоездов.Add(Данные.Num);
@@ -349,7 +357,8 @@ namespace MainExample
                             TrainTableRecords[i].StationDepart + ";" +
                             TrainTableRecords[i].StationArrival + ";" +
                             TrainTableRecords[i].Direction + ";" +
-                            TrainTableRecords[i].ChangeTrainPathDirection;
+                            TrainTableRecords[i].ChangeTrainPathDirection + ";" +
+                            TrainTableRecords[i].ОграничениеОтправки;
 
                         DumpFile.WriteLine(line);
                     }

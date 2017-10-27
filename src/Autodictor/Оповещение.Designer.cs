@@ -109,6 +109,7 @@
             this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
             this.rb_Постоянно = new System.Windows.Forms.RadioButton();
             this.chbox_сменнаяНумерация = new System.Windows.Forms.CheckBox();
+            this.cBОграничениеОтправки = new System.Windows.Forms.CheckBox();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -637,7 +638,7 @@
             this.cBБлокировка.AutoSize = true;
             this.cBБлокировка.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBБлокировка.ForeColor = System.Drawing.Color.OrangeRed;
-            this.cBБлокировка.Location = new System.Drawing.Point(1117, 516);
+            this.cBБлокировка.Location = new System.Drawing.Point(1117, 603);
             this.cBБлокировка.Name = "cBБлокировка";
             this.cBБлокировка.Size = new System.Drawing.Size(275, 33);
             this.cBБлокировка.TabIndex = 51;
@@ -977,11 +978,24 @@
             this.chbox_сменнаяНумерация.Text = "Сменная нумерация";
             this.chbox_сменнаяНумерация.UseVisualStyleBackColor = true;
             // 
+            // cBОграничениеОтправки
+            // 
+            this.cBОграничениеОтправки.AutoSize = true;
+            this.cBОграничениеОтправки.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cBОграничениеОтправки.ForeColor = System.Drawing.Color.DarkGreen;
+            this.cBОграничениеОтправки.Location = new System.Drawing.Point(1117, 570);
+            this.cBОграничениеОтправки.Name = "cBОграничениеОтправки";
+            this.cBОграничениеОтправки.Size = new System.Drawing.Size(267, 22);
+            this.cBОграничениеОтправки.TabIndex = 62;
+            this.cBОграничениеОтправки.Text = "Ограничение отправки данных";
+            this.cBОграничениеОтправки.UseVisualStyleBackColor = true;
+            // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1395, 712);
+            this.Controls.Add(this.cBОграничениеОтправки);
             this.Controls.Add(this.chbox_сменнаяНумерация);
             this.Controls.Add(this.gb_ПутьПоУмолчанию);
             this.Controls.Add(this.tBНомерПоездаДоп);
@@ -1111,5 +1125,6 @@
         private System.Windows.Forms.Label lНапр;
         private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
         private System.Windows.Forms.GroupBox grbВремяДействия;
+        public System.Windows.Forms.CheckBox cBОграничениеОтправки;
     }
 }

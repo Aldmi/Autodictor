@@ -52,6 +52,7 @@ namespace CommunicationDevices.DataProviders
         public TimeSpan? StopTime { get; set; }                      //время стоянки (для транзитов: Время отпр - время приб)
         public VagonDirection VagonDirection { get; set; }           //Нумерация вагона (с головы, с хвоста)
         public bool ChangeVagonDirection { get; set; }               //флаг смены нумерации вагонов
+        public bool SendingDataLimit { get; set; }                   //Ограниение отправки данных (если Contrains="SendingDataLimit", то выводим только с галкой)
         public string Message { get; set; }                          //Сообщение
 
         public byte EmergencySituation { get; set; }                 //Нешатная ситуация (бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления, бит 3 - отправление по готовности)

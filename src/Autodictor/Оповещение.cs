@@ -34,6 +34,7 @@ namespace MainExample
 
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
             chbox_сменнаяНумерация.Checked= this.РасписаниеПоезда.ChangeTrainPathDirection;
+            cBОграничениеОтправки.Checked = this.РасписаниеПоезда.ОграничениеОтправки;
 
 
             var directions = Program.DirectionRepository.List().ToList();
@@ -294,6 +295,7 @@ namespace MainExample
             РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
 
             РасписаниеПоезда.ChangeTrainPathDirection = chbox_сменнаяНумерация.Checked;
+            РасписаниеПоезда.ОграничениеОтправки = cBОграничениеОтправки.Checked;
 
 
             if (rBПрибытие.Checked == true)

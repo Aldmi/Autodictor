@@ -177,12 +177,17 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                     }
 
 
-
                     matchString = Regex.Match(s, "Направление\\:(.*)").Groups[1].Value;
                     if (!string.IsNullOrEmpty(matchString))
                     {
                         var directions = matchString.Split('|').Select(item=> item.ToLower()).ToList();
                         Conditions.DirectionStations = directions;
+                        continue;
+                    }
+
+                    if (Regex.Match(s, "SendingDataLimit").Success)
+                    {
+                        Conditions.SendingDataLimit = true;
                         continue;
                     }
 
