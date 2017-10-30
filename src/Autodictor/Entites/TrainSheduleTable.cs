@@ -8,15 +8,19 @@ using Domain.Entitys;
 
 namespace MainExample.Entites
 {
-   public class TrainSheduleTable
+    public enum SourceData { Local, RemoteCis }
+
+
+
+    public class TrainSheduleTable
     {
         #region Field
 
         private static object _lockObj = new object();
         private const string FileNameLocalTableRec = @"TableRecords.ini";
         private const string FileNameRemoteCisTableRec = @"TableRecordsRemoteCis.ini";
-        private static SourceData _sourceLoad = SourceData.Local;
 
+        public static SourceData _sourceLoad = SourceData.Local;
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>(); // Содержит актуальное рабочее расписание
 
         #endregion
@@ -31,8 +35,7 @@ namespace MainExample.Entites
         /// </summary>
         public static void SourceLoadMainList()
         {
-            if (Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad))
-                ЗагрузитьСписок(_sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            ЗагрузитьСписок(_sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
         }
 
 
@@ -41,8 +44,7 @@ namespace MainExample.Entites
         /// </summary>
         public static void SourceSaveMainList()
         {
-            if (Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad))
-                СохранитьСписок(TrainTableRecords, _sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            СохранитьСписок(TrainTableRecords, _sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
         }
 
 
@@ -52,14 +54,11 @@ namespace MainExample.Entites
         public static void СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(IList<TrainTableRecord> trainTableRecords)
         {
             СохранитьСписок(trainTableRecords, FileNameRemoteCisTableRec);
-            if (Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad))
+            switch (_sourceLoad)
             {
-                switch (_sourceLoad)
-                {
-                    case SourceData.RemoteCis:
-                        TrainTableRecords = trainTableRecords as List<TrainTableRecord>;
-                        break;
-                }
+                case SourceData.RemoteCis:
+                    TrainTableRecords = trainTableRecords as List<TrainTableRecord>;
+                    break;
             }
         }
 
@@ -123,9 +122,10 @@ namespace MainExample.Entites
 
 
 
-
-
-        public static void ЗагрузитьСписок(string fileName)
+        /// <summary>
+        /// загрузить список из файл
+        /// </summary>
+        private static void ЗагрузитьСписок(string fileName)
         {
             lock (_lockObj)
             {
@@ -355,8 +355,6 @@ namespace MainExample.Entites
             return pathDictionary;
         }
 
-
         #endregion
-
     }
 }

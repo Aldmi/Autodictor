@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Domain.Entitys;
+using MainExample.Entites;
 using MainExample.Services;
 using MainExample.Services.FactoryServices;
 
@@ -77,7 +78,7 @@ namespace MainExample
             };
 
 
-            foreach (var Данные in TrainTableGrid.TrainTableRecords)
+            foreach (var Данные in TrainSheduleTable.TrainTableRecords)
             {
                 string Поезд = Данные.ID.ToString() + ":   " + Данные.Num + " " + Данные.Name + (Данные.ArrivalTime != "" ? "   Приб: " + Данные.ArrivalTime : "" ) + (Данные.DepartureTime != "" ? "   Отпр: " + Данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(Поезд);
@@ -538,7 +539,7 @@ namespace MainExample
                 int ID;
                 if (int.TryParse(Parts[0], out ID) == true)
                 {
-                    foreach (var Config in TrainTableGrid.TrainTableRecords)
+                    foreach (var Config in TrainSheduleTable.TrainTableRecords)
                     {
                         if (Config.ID == ID)
                         {

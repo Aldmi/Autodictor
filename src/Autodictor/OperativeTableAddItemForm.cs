@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Domain.Entitys;
+using MainExample.Entites;
 using MainExample.Mappers;
 
 namespace MainExample
@@ -47,7 +48,7 @@ namespace MainExample
 
         private void InitializeFormDate()
         {
-            foreach (var данные in TrainTableGrid.TrainTableRecords)
+            foreach (var данные in TrainSheduleTable.TrainTableRecords)
             {
                 string поезд = данные.ID + ":   " + данные.Num + " " + данные.Name + (данные.ArrivalTime != "" ? "   Приб: " + данные.ArrivalTime : "") + (данные.DepartureTime != "" ? "   Отпр: " + данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(поезд);
@@ -284,7 +285,7 @@ namespace MainExample
                 int ID;
                 if (int.TryParse(parts[0], out ID) == true)
                 {
-                    foreach (var config in TrainTableGrid.TrainTableRecords)
+                    foreach (var config in TrainSheduleTable.TrainTableRecords)
                     {
                         if (config.ID == ID)
                         {

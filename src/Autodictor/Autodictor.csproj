@@ -283,18 +283,6 @@
     <Compile Include="ОкноПрибытияОтправления.Designer.cs">
       <DependentUpon>ОкноПрибытияОтправления.cs</DependentUpon>
     </Compile>
-    <Compile Include="ОкноРасписания.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ОкноРасписания.Designer.cs">
-      <DependentUpon>ОкноРасписания.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ОкноРасписания2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ОкноРасписания2.designer.cs">
-      <DependentUpon>ОкноРасписания2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Оповещение.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -414,12 +402,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ОкноПрибытияОтправления.resx">
       <DependentUpon>ОкноПрибытияОтправления.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ОкноРасписания.resx">
-      <DependentUpon>ОкноРасписания.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ОкноРасписания2.resx">
-      <DependentUpon>ОкноРасписания2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Оповещение.resx">
       <DependentUpon>Оповещение.cs</DependentUpon>

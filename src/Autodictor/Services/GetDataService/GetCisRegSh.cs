@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;
+using MainExample.Entites;
 using MainExample.Mappers;
 
 namespace MainExample.Services.GetDataService
@@ -44,7 +45,7 @@ namespace MainExample.Services.GetDataService
                    tableRecords.Add(trTable);
                 }
 
-                TrainTableGrid.СохранитьСписокРегулярноеРасписаниеЦис(tableRecords);
+                TrainSheduleTable.СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(tableRecords);
             }
         }
 
