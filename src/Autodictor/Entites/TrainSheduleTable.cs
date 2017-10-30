@@ -28,6 +28,19 @@ namespace MainExample.Entites
 
 
 
+        #region static ctor
+
+        static TrainSheduleTable()
+        {
+            Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad);
+        }
+
+        #endregion
+
+
+
+
+
         #region Methode 
 
         /// <summary>
@@ -35,7 +48,12 @@ namespace MainExample.Entites
         /// </summary>
         public static void SourceLoadMainList()
         {
-            ЗагрузитьСписок(_sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            var trainTableRec = ЗагрузитьСписок(_sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            if (trainTableRec != null)
+            {
+                TrainTableRecords.Clear();
+                TrainTableRecords.AddRange(trainTableRec);
+            }
         }
 
 
@@ -60,6 +78,15 @@ namespace MainExample.Entites
                     TrainTableRecords = trainTableRecords as List<TrainTableRecord>;
                     break;
             }
+        }
+
+
+        /// <summary>
+        /// Сохранить список от ЦИС
+        /// </summary>
+        public static List<TrainTableRecord> ЗагрузитьРасписаниеЛокальное()
+        {
+           return ЗагрузитьСписок(FileNameLocalTableRec);
         }
 
 
@@ -125,12 +152,13 @@ namespace MainExample.Entites
         /// <summary>
         /// загрузить список из файл
         /// </summary>
-        private static void ЗагрузитьСписок(string fileName)
+        private static List<TrainTableRecord> ЗагрузитьСписок(string fileName)
         {
             lock (_lockObj)
             {
-                TrainTableRecords.Clear();
+                var trainTableRecords = new List<TrainTableRecord>();
 
+               // TrainTableRecords.Clear();
                 try
                 {
                     using (StreamReader file = new StreamReader(fileName))
@@ -252,17 +280,20 @@ namespace MainExample.Entites
                                 }
 
 
-                                TrainTableRecords.Add(данные);
+                                // TrainTableRecords.Add(данные);
+                                trainTableRecords.Add(данные);
                                 Program.НомераПоездов.Add(данные.Num);
                                 if (!string.IsNullOrEmpty(данные.Num2))
                                     Program.НомераПоездов.Add(данные.Num2);
                             }
                         }
                     }
+                    return trainTableRecords;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    //Console.WriteLine(e.Message);
+                    return null;
                 }
             }
         }

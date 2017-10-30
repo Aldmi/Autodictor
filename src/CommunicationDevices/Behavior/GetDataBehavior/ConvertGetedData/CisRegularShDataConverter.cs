@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using CommunicationDevices.DataProviders;
 
@@ -12,6 +8,9 @@ namespace CommunicationDevices.Behavior.GetDataBehavior.ConvertGetedData
     {
         public IEnumerable<UniversalInputType> ParseXml2Uit(XDocument xDoc)
         {
+
+
+
             return new List<UniversalInputType>
             {
                 new UniversalInputType {NumberOfTrain = "235", DaysFollowing = "Ежедневно", Event = "ПРИБ."},
