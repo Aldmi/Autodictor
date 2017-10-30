@@ -12,7 +12,7 @@ using Domain.Entitys;
 namespace MainExample
 {
     public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
-    public enum SourceTrainTableRecordLoad { Local, RemoteCis }
+    public enum SourceData { Local, RemoteCis }
 
 
     public struct TrainTableRecord
@@ -63,7 +63,7 @@ namespace MainExample
         private readonly List<CheckBox> _checkBoxes;
 
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>();
-        private static SourceTrainTableRecordLoad _sourceLoad = SourceTrainTableRecordLoad.Local;
+        private static SourceData _sourceLoad = SourceData.Local;
 
         #endregion
 
@@ -96,7 +96,7 @@ namespace MainExample
             _checkBoxes = new List<CheckBox> { chb_Id, chb_Номер, chb_ВремяПрибытия, chb_Стоянка, chb_ВремяОтпр, chb_Маршрут, chb_ДниСледования };
             Model2Controls();
 
-            rbSourseSheduleCis.Checked = (_sourceLoad == SourceTrainTableRecordLoad.RemoteCis);
+            rbSourseSheduleCis.Checked = (_sourceLoad == SourceData.RemoteCis);
         }
 
         #endregion
@@ -579,7 +579,7 @@ namespace MainExample
         public static void SourceLoadMainList()
         {
            if (Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad))
-              ЗагрузитьСписок(_sourceLoad == SourceTrainTableRecordLoad.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+              ЗагрузитьСписок(_sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
         }
 
 
@@ -671,9 +671,6 @@ namespace MainExample
         {
             //Заполнение таблицы данными-------------------
             btnLoad_Click(null, EventArgs.Empty);
-
-
-
         }
 
 
@@ -946,7 +943,7 @@ namespace MainExample
             var rb = sender as RadioButton;
             if (rb != null)
             {
-                _sourceLoad= (rb.Name == "rbSourseSheduleLocal" && rb.Checked) ? SourceTrainTableRecordLoad.Local : SourceTrainTableRecordLoad.RemoteCis;
+                _sourceLoad= (rb.Name == "rbSourseSheduleLocal" && rb.Checked) ? SourceData.Local : SourceData.RemoteCis;
                 Program.Настройки.SourceTrainTableRecordLoad = _sourceLoad.ToString();
                 ОкноНастроек.СохранитьНастройки();
 

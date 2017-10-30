@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Comparers\TrainTableRecordComparer.cs" />
     <Compile Include="Entites\SoundRecordChanges.cs" />
+    <Compile Include="Entites\TrainSheduleTable.cs" />
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="Services\FactoryServices\PreprocessingOutputFactory.cs" />
