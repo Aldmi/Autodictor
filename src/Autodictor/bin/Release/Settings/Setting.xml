@@ -14,15 +14,15 @@
 
 
   <SerialPorts>
-	<Serial>
-      <Port>3</Port>
-	  <BaudRate>19200</BaudRate>
-	  <DataBits>8</DataBits>
-	  <StopBits>1</StopBits>
-	  <Parity>Even</Parity>  
-	  <DtrEnable>True</DtrEnable> 
-	  <RtsEnable>True</RtsEnable> 
-    </Serial>
+	<!-- <Serial> -->
+      <!-- <Port>3</Port> -->
+	  <!-- <BaudRate>19200</BaudRate> -->
+	  <!-- <DataBits>8</DataBits> -->
+	  <!-- <StopBits>1</StopBits> -->
+	  <!-- <Parity>Even</Parity>   -->
+	  <!-- <DtrEnable>True</DtrEnable>  -->
+	  <!-- <RtsEnable>True</RtsEnable>  -->
+    <!-- </Serial> -->
 	
 	<Serial>
       <Port>1</Port>
@@ -40,20 +40,18 @@
 
 
   <DevicesWithSP> 
-<!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
-
-
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="3" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToStatic:">
+  
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="1" Address="1" TimeRespone="1000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToGeneral:ГлавноеОкно">
 	      <ExchangeRules>    
-		    <Table Size= "3" Position = "5">
+		    <Table Size= "1" Position = "1">
 				   <Rule Format = "Windows-1251">
 					  <Request maxLenght = "254">
 						   STX{AddressDevice:X2}{Nbyte:X2}
-						   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
-						   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
-						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
-						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
-						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
+						   %111111{Stations}<!-- !!!!!-->
+						   %00002047{(rowNumber*11+5):D3}4%10{NumberOfCharacters:X2}02\"{NumberOfTrain}\"<!-- Номер поезда -->
+						   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time:SecX5}<!-- Вывод Времени -->
+						   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{SyncTInSec:X5}<!-- Время синхр в сек-->
+						   %00231252{NumberOfCharacters:X2}02\"{Stations}\"<!--подсчет кол-ва символов в \"текст\"-->
 						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
 						   {CRCXor:X2}ETX
 					  </Request >
@@ -61,37 +59,17 @@
 					  <Response maxLenght = "8" TimeRespone="500">
 						STX0200FDETX
 					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаОчистки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							{DelayTime}
-							CLEAR-------------------------
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>
-
-				   <Rule Format = "Windows-1251" Resolution="КомандаПерезагрузки">
-					  <Request maxLenght = "254">
-							STX{AddressDevice:X2}{Nbyte:X2}
-							RESET-------------------------
-							{CRCXor:X2}ETX
-					  </Request >
-
-					  <Response maxLenght = "8" TimeRespone="1000">
-						STX0200FDETX
-					  </Response >	  
-				   </Rule>						   
+				   </Rule>				   
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
+  
+  
+<!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
-	 <DeviceSp Id="200" Name="ChannelManagement" Port="1" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам" ProviderType="OnOffProvider" />
+
+
+<!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="1" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам" ProviderType="Channel10Provider" /> -->
 	 
 <!-- 	 <DeviceSp Id="200" Name="ChannelManagement" Port="4" Address="2" TimeRespone="100" Description="Управление распределением звука по каналам"/> -->
 
@@ -99,45 +77,32 @@
   </DevicesWithSP>
   
   
-<DevicesWithTcpIp>
-	 <DeviceTcpIp Id="200" Name="MyTable" Address="192.168.1.33:50000"  DeviceAddress="1"  TimeRespone="500" Description="Панель на пути тест" Binding="ToStatic:">  
-	 	   <ExchangeRules>    
-				<Table Size= "3">
-					   <Rule Format = "Windows-1251">
-						  <Request maxLenght = "254">
-							   STX{AddressDevice:X2}{Nbyte:X2}
-							   %00002047{(rowNumber*11+5):D3}4%10$00$60$t3$12{NumberOfTrain}<!-- Номер поезда -->
-							   %00048165{(rowNumber*11+5):D3}4%10$00$60$t3$12{Stations}<!-- Вывод станций -->
-							   %00171207{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time}<!-- Вывод Времени -->
-							   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{PathNumber}<!-- Вывод Пути -->
-							   %00231252{(rowNumber*11+5):D3}4%10$00$60$t3$12{Addition}<!-- Вывод Пути -->
-							   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
-							   {CRCXor:X2}ETX
-						  </Request >
-
-						  <Response maxLenght = "8" TimeRespone="500">
-							STX0200FDETX
-						  </Response >	  
-					   </Rule>					   
-				 </Table>
-		  </ExchangeRules>
-	</DeviceTcpIp>
-</DevicesWithTcpIp>
+<!-- Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=62"  -->
 
 
 
 <DevicesWithHttp>
-	 <!-- <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable"  -->
-	              <!-- Headers='Method:POST +  -->
-				           <!-- User-Agent: Mozilla/3.0 (compatible; Indy Library) + -->
-						   <!-- Accept: text/html, */* + -->
-						   <!-- Connection: Keep-Alive + -->
-						   <!-- Content-Type: multipart/form-data + -->
-						   <!-- Content-Disposition: form-data; name="username"; filename="xDoc.xml"' -->
-						   <!-- /> -->
+<!-- 	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="7000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписания" Contrains="SendingDataLimit;ПРИБ." ProviderType="xml_sheduleWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   /> -->
 						   
-	 <DeviceHttp Id="300" Name="HttpApkDkVolgograd" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
-	              Headers='Method: GET + 
+<!-- 	 <DeviceHttp Id="310" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="5000" TimeRespone="500" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" ProviderType="xml_mainWindow:sortable" 
+	              Headers='Method:POST + 
+				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
+						   Accept: text/html, */* +
+						   Connection: Keep-Alive +
+						   Content-Type: multipart/form-data +
+						   Content-Disposition: form-data; name="username"; filename="xDoc.xml"'
+						   /> -->
+		   					   
+						   
+	 <DeviceHttp Id="300" Name="HttpCisRegSh" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61" Period="10000" TimeRespone="3000" Description="Onlain табло" Binding="ToGetData:" ProviderType="xml_ApkDkGet" 
+	             Headers='Method: GET + 
 				           ContentEncoding: gzip +
 						   Accept: text/html, */* +
 						   Connection: Keep-Alive'
@@ -198,6 +163,7 @@
 			 
 			 ("МеньшеТекВремени/БольшеТекВремени")
 			 (ДельтаТекВремени:120|120)  (-|+)
+			 (ДельтаТекВремениПоТипамПоездов:120|120:60|60:10|10)   ДельтаТекВремениПоТипамПоездов: ДельтаПриб|ДельтаОтпр|ДельтаТранзит
 			 
 			 (ЛимитСтрокТаблицы:15)
 		 
@@ -216,6 +182,11 @@ ToChangeEvent:      отправка 1 раз при изменении
  
 <!--  ToGetData: -->
 
+<!-- HttpApkDkVolgograd
+HttpDispatcher
+HttpCisRegSh
+HttpCisOperSh -->
+
 
 <!-- 	              Headers='Methode:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
@@ -229,6 +200,7 @@ ToChangeEvent:      отправка 1 раз при изменении
 <!--ProviderType= xml_mainWindow-->		
 <!--ProviderType= xml_sheduleWindow-->		
 <!--ProviderType= xml_staticWindow-->	
+<!-- ProviderType="xml_change" -->
 <!--ProviderType="xml_ApkDkMoscow(ddd,samba,36985)" 	 -->			   
 					   
 						   
@@ -236,6 +208,7 @@ ToChangeEvent:      отправка 1 раз при изменении
 <!-- 
 ChannelManagement:	
 ProviderType="OnOffProvider"	
-ProviderType="ChannelProvider"
+ProviderType="Channel10Provider"
+ProviderType="Channel20Provider"
 -->
 						   

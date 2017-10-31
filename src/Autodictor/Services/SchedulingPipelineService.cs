@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Domain.Entitys;
+using MainExample.Entites;
 
 namespace MainExample.Services
 {

@@ -114,8 +114,8 @@
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\XmlExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
     <Compile Include="Behavior\GetDataBehavior\BaseGetDataBehavior.cs" />
-    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisOperativeShDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisRegularShDataConverter.cs" />
+    <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisOperativeShDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\DispatcherControlDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\IInputDataConverter.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement10ChWriteDataProvider.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime;
 using System.Windows.Forms;
 using Domain.Entitys;
+using MainExample.Entites;
 
 
 namespace MainExample

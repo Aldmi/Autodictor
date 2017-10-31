@@ -2,14 +2,47 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entitys;
+using MainExample.Services;
 
 namespace MainExample.Entites
 {
     public enum SourceData { Local, RemoteCis }
+    public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
 
+    public struct TrainTableRecord
+    {
+        public int ID;                    //Id
+        public string Num;                //Номер поезда
+        public string Num2;               //Номер поезда 2 для транзита
+        public string Name;               //Название поезда
+        public string Direction;          //направление
+        public string StationDepart;      //станция отправления
+        public string StationArrival;     //станция прибытия
+        public string ArrivalTime;        //время прибытие
+        public string StopTime;           //время стоянка
+        public string DepartureTime;      //время отправление
+        public string FollowingTime;      //время следования (время в пути)
+        public string Days;               //дни следования
+        public string DaysAlias;          //дни следования (строка заполняется в ручную)
+        public bool Active;               //активность, отмека галочкой
+        public string SoundTemplates;     //
+        public byte TrainPathDirection;   //Нумерация вагонов
+        public bool ChangeTrainPathDirection;      //смена направления (для трназитов)
+        public Dictionary<WeekDays, string> TrainPathNumber;      //Пути по дням недели или постоянно
+        public bool PathWeekDayes;                                //true- установленны пути по дням недели, false - путь установленн постоянно
+        public ТипПоезда ТипПоезда;
+        public string Примечание;
+        public DateTime ВремяНачалаДействияРасписания;
+        public DateTime ВремяОкончанияДействияРасписания;
+        public string Addition;                                   //Дополнение
+        public Dictionary<string, bool> ИспользоватьДополнение;   //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
+        public bool Автомат;                                      // true - поезд обрабатывается в автомате.
+        public bool ОграничениеОтправки;                          // true.
+    };
 
 
     public class TrainSheduleTable
@@ -20,8 +53,17 @@ namespace MainExample.Entites
         private const string FileNameLocalTableRec = @"TableRecords.ini";
         private const string FileNameRemoteCisTableRec = @"TableRecordsRemoteCis.ini";
 
-        public static SourceData _sourceLoad = SourceData.Local;
+        public static SourceData SourceLoad;
         public static List<TrainTableRecord> TrainTableRecords = new List<TrainTableRecord>(); // Содержит актуальное рабочее расписание
+
+        #endregion
+
+
+
+
+        #region Rx
+
+        public static Subject<SourceData> RemoteCisTableChangeRx { get; } = new Subject<SourceData>();
 
         #endregion
 
@@ -32,7 +74,7 @@ namespace MainExample.Entites
 
         static TrainSheduleTable()
         {
-            Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out _sourceLoad);
+            Enum.TryParse(Program.Настройки.SourceTrainTableRecordLoad, out SourceLoad);
         }
 
         #endregion
@@ -48,7 +90,7 @@ namespace MainExample.Entites
         /// </summary>
         public static void SourceLoadMainList()
         {
-            var trainTableRec = ЗагрузитьСписок(_sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            var trainTableRec = ЗагрузитьСписок(SourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
             if (trainTableRec != null)
             {
                 TrainTableRecords.Clear();
@@ -62,7 +104,7 @@ namespace MainExample.Entites
         /// </summary>
         public static void SourceSaveMainList()
         {
-            СохранитьСписок(TrainTableRecords, _sourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            СохранитьСписок(TrainTableRecords, SourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
         }
 
 
@@ -72,12 +114,13 @@ namespace MainExample.Entites
         public static void СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(IList<TrainTableRecord> trainTableRecords)
         {
             СохранитьСписок(trainTableRecords, FileNameRemoteCisTableRec);
-            switch (_sourceLoad)
+            switch (SourceLoad)
             {
                 case SourceData.RemoteCis:
                     TrainTableRecords = trainTableRecords as List<TrainTableRecord>;
                     break;
             }
+            RemoteCisTableChangeRx.OnNext(SourceLoad);
         }
 
 
@@ -157,8 +200,6 @@ namespace MainExample.Entites
             lock (_lockObj)
             {
                 var trainTableRecords = new List<TrainTableRecord>();
-
-               // TrainTableRecords.Clear();
                 try
                 {
                     using (StreamReader file = new StreamReader(fileName))
@@ -279,8 +320,6 @@ namespace MainExample.Entites
                                     данные.ОграничениеОтправки = ограничениеОтправки;
                                 }
 
-
-                                // TrainTableRecords.Add(данные);
                                 trainTableRecords.Add(данные);
                                 Program.НомераПоездов.Add(данные.Num);
                                 if (!string.IsNullOrEmpty(данные.Num2))

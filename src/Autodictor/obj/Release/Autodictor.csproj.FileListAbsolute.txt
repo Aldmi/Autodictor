@@ -726,8 +726,8 @@ C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\MainExample.ФормаЗапи
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Автодиктор.exe
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Автодиктор.pdb
-C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config
 C:\Git\Autodictor\src\Autodictor\bin\Release\NLog.config
+C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config
 C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe
 C:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.pdb
 C:\Git\Autodictor\src\Autodictor\bin\Release\Communication.dll
@@ -803,8 +803,6 @@ C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ОкноАрхиваИ�
 C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ОкноДобавленияПоезда.resources
 C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ОкноНастроек.resources
 C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ОкноПрибытияОтправления.resources
-C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ОкноРасписания.resources
-C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.ОкноРасписания2.resources
 C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.Оповещение.resources
 C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.Предупреждение.resources
 C:\Git\Autodictor\src\Autodictor\obj\Release\MainExample.Расписание.resources
