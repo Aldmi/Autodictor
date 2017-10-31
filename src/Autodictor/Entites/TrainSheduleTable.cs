@@ -125,11 +125,21 @@ namespace MainExample.Entites
 
 
         /// <summary>
-        /// Сохранить список от ЦИС
+        /// загрузить локальное распсиание
         /// </summary>
         public static List<TrainTableRecord> ЗагрузитьРасписаниеЛокальное()
         {
            return ЗагрузитьСписок(FileNameLocalTableRec);
+        }
+
+
+
+        /// <summary>
+        /// загрузить локальное распсиание
+        /// </summary>
+        public static List<TrainTableRecord> ЗагрузитьРасписаниеЦис()
+        {
+            return ЗагрузитьСписок(FileNameRemoteCisTableRec);
         }
 
 

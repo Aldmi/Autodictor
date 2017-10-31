@@ -77,7 +77,58 @@ namespace MainExample.Services.GetDataService
 
                 if (tableRecords.Any())
                 {
-                    TrainSheduleTable.СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(tableRecords);
+                    //КОНТРОЛЬ ИЗМЕНЕНИЙ
+                    bool changeFlag = false;
+                    var remoteCisTable = TrainSheduleTable.ЗагрузитьРасписаниеЦис();
+
+                    if (remoteCisTable != null)
+                    {
+                        if (remoteCisTable.Count == tableRecords.Count)
+                        {
+                            foreach (var trCis in remoteCisTable)
+                            {
+                               var findElem = tableRecords.FirstOrDefault(t =>
+                               {
+                                   var notChange = (t.Name == trCis.Name) &&
+                                                (t.ArrivalTime == trCis.ArrivalTime) &&
+                                                (t.DepartureTime == trCis.DepartureTime) &&
+                                                (t.StopTime == trCis.StopTime) &&
+                                                (t.TrainPathDirection == trCis.TrainPathDirection) &&
+                                                (t.ВремяНачалаДействияРасписания == trCis.ВремяНачалаДействияРасписания) &&
+                                                (t.ВремяОкончанияДействияРасписания == trCis.ВремяОкончанияДействияРасписания) &&
+                                                (t.Addition == trCis.Addition) &&
+                                                (t.DaysAlias == trCis.DaysAlias) &&
+                                                (t.StationArrival == trCis.StationArrival) &&
+                                                (t.StationDepart == trCis.StationDepart) &&
+                                                (t.Direction == trCis.Direction) &&
+                                                (t.ChangeTrainPathDirection == trCis.ChangeTrainPathDirection);
+                                           
+                                   return notChange;
+                               });
+
+                               //если такого элемента нет.
+                               if (string.IsNullOrEmpty(findElem.Num))
+                               {
+                                   changeFlag = true;
+                                   break;
+                               }
+                            }
+                        }
+                        else
+                        {
+                            changeFlag = true;
+                        }
+                    }
+                    else
+                    {
+                        //удаленная таблица не созданна
+                        changeFlag = true;
+                    }
+
+                    if (changeFlag)
+                    {
+                        TrainSheduleTable.СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(tableRecords);
+                    }
                 }    
             }
         }
