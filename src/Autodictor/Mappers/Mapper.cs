@@ -71,7 +71,6 @@ namespace MainExample.Mappers
 
 
 
-
         public static SoundRecord MapTrainTableRecord2SoundRecord(TrainTableRecord config, DateTime day, int id)
         {
             var record = new SoundRecord();
@@ -269,7 +268,6 @@ namespace MainExample.Mappers
 
 
 
-
         public static UniversalInputType MapTrainTableRecord2UniversalInputType(TrainTableRecord t)
         {
             Func<string, string, DateTime> timePars = (arrival, depart) =>
@@ -413,7 +411,6 @@ namespace MainExample.Mappers
 
             return String.Empty;
         }
-
 
 
 
@@ -748,6 +745,7 @@ namespace MainExample.Mappers
                  CauseOfChange = data.CauseOfChange
              };
         }
+
 
 
         public static SoundRecordChangesDb SoundRecordChanges2SoundRecordChangesDb(SoundRecordChanges data)

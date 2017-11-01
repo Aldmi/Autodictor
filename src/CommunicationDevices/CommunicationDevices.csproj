@@ -118,6 +118,7 @@
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisOperativeShDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\DispatcherControlDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\IInputDataConverter.cs" />
+    <Compile Include="Converters\TypeConverters.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement10ChWriteDataProvider.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagement20ChWriteDataProvider.cs" />
     <Compile Include="DataProviders\ChannelManagementDataProvider\ChannelManagementOnOffWriteDataProvider.cs" />

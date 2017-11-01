@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using CommunicationDevices.Converters;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Settings;
 
@@ -131,7 +133,8 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.TypeTrain)))
                     {
-                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.TypeTrain), "0"), uit.TypeTrain);
+                        var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain);
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.TypeTrain), "0"), ruTypeTrain);
                         resStr.Append(formatStr);
                         continue;
                     }
@@ -459,9 +462,10 @@ namespace CommunicationDevices.Rules.ExchangeRules
                             if (!string.IsNullOrEmpty(matchString))
                             {
                                 var lenght = matchString.TrimEnd('\\').Length;
-                                if (replaseStr.Contains(":")) //если указан формат числа
+
+                                var dateFormat = Regex.Match(replaseStr, "\\{NumberOfCharacters:(.*)\\}").Groups[1].Value;
+                                if (!string.IsNullOrEmpty(dateFormat)) //если указан формат числа
                                 {
-                                    var dateFormat = s.Split(':')[1]; //без закр. скобки
                                     var formatStr = string.Format(replaseStr.Replace("NumberOfCharacters", "0"), lenght.ToString(dateFormat));
                                     resStr.Append(formatStr);
                                 }
