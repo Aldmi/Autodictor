@@ -40,15 +40,15 @@
 
 
   <DevicesWithSP> 
-  
 	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="1" Address="1" TimeRespone="2000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1,2,3">
 	      <ExchangeRules>    
 		    <Table Size= "2" Position = "0">
 				   <Rule Format = "Windows-1251">
 					  <Request maxLenght = "254">
 						   STX{AddressDevice:X2}{Nbyte:X2}
-						   %TypeAli= !!!{TypeAlias}!!!<!-- Номер поезда -->
-						   %Add= !!!{Addition}!!!<!-- Номер поезда -->
+						   %StationArr=???{NumberOfCharacters:X2}??? !!!\"{StationArrival}\"!!!<!-- Номер поезда -->
+						   %StationDep=???{NumberOfCharacters:X2}??? !!!\"{StationDeparture}\"!!!<!-- Номер поезда -->
+						   %StatC=???{NumberOfCharacters:X2}??? !!!\"{StationsCut}\"!!!<!-- Номер поезда -->
 						   %DelayT= !!!{DelayTime}!!!<!-- Номер поезда -->
 						   %ExpectedT= !!!{ExpectedTime:t}!!!<!-- Номер поезда -->
 						   {CRCXor:X2}ETX
@@ -61,8 +61,8 @@
              </Table>
 		  </ExchangeRules>
 	 </DeviceSp>
-  
-  
+
+	 
 <!--   	 <DeviceSp Id="1" Name="VidorTableStr1" Port="3" Address="1" TimeRespone="1000" Description="Панель Видор 8 строк, вывод пригородного расписания." Binding="ToPath:1,2,3,4,5,6,7" Contrains="ПРИГ.+ПУТЬ:1,2,3;ДАЛЬН.+ПУТЬ:3,4,5" CountRow="3"/> -->
 
 

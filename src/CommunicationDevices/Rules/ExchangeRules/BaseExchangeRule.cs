@@ -246,7 +246,8 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.StationArrival)))
                     {
-                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationArrival), "0"), string.IsNullOrEmpty(uit.StationArrival.NameRu) ? " " : uit.StationArrival.NameRu);
+                        var stationArrival = uit.StationArrival?.NameRu ?? " ";
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationArrival), "0"), stationArrival);
                         resStr.Append(formatStr);
                         continue;
                     }
@@ -254,7 +255,8 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.StationDeparture)))
                     {
-                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationDeparture), "0"), string.IsNullOrEmpty(uit.StationDeparture.NameRu) ? " " : uit.StationDeparture.NameRu);
+                        var stationDeparture = uit.StationDeparture?.NameRu ?? " ";
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationDeparture), "0"), stationDeparture);
                         resStr.Append(formatStr);
                         continue;
                     }
