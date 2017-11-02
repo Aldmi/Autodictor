@@ -131,10 +131,19 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.TypeTrain)))
+                    if (replaseStr.Contains("TypeName"))
                     {
-                        var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain);
-                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.TypeTrain), "0"), ruTypeTrain);
+                        var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain, TypeConverters.TypeTrainViewFormat.Long);
+                        var formatStr = string.Format(replaseStr.Replace("TypeName", "0"), ruTypeTrain);
+                        resStr.Append(formatStr);
+                        continue;
+                    }
+
+
+                    if (replaseStr.Contains("TypeAlias"))
+                    {
+                        var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain, TypeConverters.TypeTrainViewFormat.Short);
+                        var formatStr = string.Format(replaseStr.Replace("TypeAlias", "0"), ruTypeTrain);
                         resStr.Append(formatStr);
                         continue;
                     }
@@ -198,7 +207,30 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.Addition)))
                     {
-                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.Addition), "0"), uit.Addition);
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.Addition), "0"), !string.IsNullOrEmpty(uit.Addition) ? uit.Addition : " ");
+                        resStr.Append(formatStr);
+                        continue;
+                    }
+
+
+                    if (replaseStr.Contains("StationsCut"))
+                    {
+                        var stationsCut = " ";
+                        switch (uit.Event)
+                        {
+                            case "ПРИБ.":
+                                stationsCut = (uit.StationArrival != null) ? uit.StationArrival.NameRu : " ";
+                                break;
+
+                            case "ОТПР.":
+                                stationsCut = (uit.StationDeparture != null) ? uit.StationDeparture.NameRu : " ";
+                                break;
+
+                            case "СТОЯНКА":
+                                stationsCut = (uit.StationArrival != null && uit.StationDeparture != null) ? $"{uit.StationArrival.NameRu}-{uit.StationDeparture.NameRu}" : " ";
+                                break;
+                        }
+                        var formatStr = string.Format(replaseStr.Replace("StationsCut", "0"), stationsCut);
                         resStr.Append(formatStr);
                         continue;
                     }
@@ -212,9 +244,25 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
+                    if (replaseStr.Contains(nameof(uit.StationArrival)))
+                    {
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationArrival), "0"), string.IsNullOrEmpty(uit.StationArrival.NameRu) ? " " : uit.StationArrival.NameRu);
+                        resStr.Append(formatStr);
+                        continue;
+                    }
+
+
+                    if (replaseStr.Contains(nameof(uit.StationDeparture)))
+                    {
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationDeparture), "0"), string.IsNullOrEmpty(uit.StationDeparture.NameRu) ? " " : uit.StationDeparture.NameRu);
+                        resStr.Append(formatStr);
+                        continue;
+                    }
+
+
                     if (replaseStr.Contains(nameof(uit.Note)))
                     {
-                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.Note), "0"), string.IsNullOrEmpty(uit.Note) ? " " : uit.Note);
+                        var formatStr= string.Format(replaseStr.Replace(nameof(uit.Note), "0"), string.IsNullOrEmpty(uit.Note) ? " " : uit.Note);
                         resStr.Append(formatStr);
                         continue;
                     }
@@ -230,8 +278,12 @@ namespace CommunicationDevices.Rules.ExchangeRules
 
                     if (replaseStr.Contains(nameof(uit.DelayTime)))
                     {
-                        if (uit.DelayTime == null)
+                        if (uit.DelayTime == null || uit.DelayTime.Value.TimeOfDay == TimeSpan.Zero)
+                        {
+                            var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), " ");
+                            resStr.Append(formatStr);
                             continue;
+                        }
 
                         if (replaseStr.Contains(":")) //если указзанн формат времени
                         {
@@ -456,7 +508,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     if (replaseStr.Contains("NumberOfCharacters"))
                     {
                         var targetStr = (subStr.Length > (index + 1)) ? subStr[index + 1] : string.Empty;
-                        if (Regex.Match(targetStr, "\\\"(.*)\"").Success) //вычислили длинну строки между Nbyte и CRC
+                        if (Regex.Match(targetStr, "\\\"(.*)\"").Success) //
                         {
                             var matchString = Regex.Match(targetStr, "\\\"(.*)\\\"").Groups[1].Value;
                             if (!string.IsNullOrEmpty(matchString))

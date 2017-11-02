@@ -2404,7 +2404,6 @@ namespace MainExample
                         if (SoundRecords.Keys.Contains(key) == true)
                         {
                             SoundRecord данные = SoundRecords[key];
-
                             КарточкаДвиженияПоезда карточка = new КарточкаДвиженияПоезда(данные, key);
                             if (карточка.ShowDialog() == DialogResult.OK)
                             {

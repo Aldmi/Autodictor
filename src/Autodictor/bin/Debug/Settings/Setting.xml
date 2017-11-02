@@ -41,18 +41,16 @@
 
   <DevicesWithSP> 
   
-	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="1" Address="1" TimeRespone="3000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1,2,3">
+	 <DeviceSp Id="22" Name="MyVidorDisplay" Port="1" Address="1" TimeRespone="2000" Description="Вывод ПРИГОРОДНОГО расписания." Binding="ToPath:1,2,3">
 	      <ExchangeRules>    
 		    <Table Size= "2" Position = "0">
 				   <Rule Format = "Windows-1251">
 					  <Request maxLenght = "254">
 						   STX{AddressDevice:X2}{Nbyte:X2}
-						   %000000{(rowNumber*11+5):D3}4%10{NumberOfCharacters:X2}02\"{TypeTrain}\"<!-- Номер поезда -->
-						   %111111{(rowNumber*11+5):D3}4%10{NumberOfCharacters:X2}02\"{NumberOfTrain}\"<!-- Номер поезда -->
-						   %222222{(rowNumber*11+5):D3}4%10$00$60$t3$12{Time:t}<!-- Вывод Времени -->
-						   %333333{(rowNumber*11+5):D3}4%10$00$60$t3$12{SyncTInSec:X5}<!-- Время синхр в сек-->
-						   %444444{NumberOfCharacters:D2}02\"{Stations}\"<!--подсчет кол-ва символов в \"текст\"-->
-						   %10$00$60$t3$12{ExpectedTime:t}<!-- Вывод ожидаемого времени -->
+						   %TypeAli= !!!{TypeAlias}!!!<!-- Номер поезда -->
+						   %Add= !!!{Addition}!!!<!-- Номер поезда -->
+						   %DelayT= !!!{DelayTime}!!!<!-- Номер поезда -->
+						   %ExpectedT= !!!{ExpectedTime:t}!!!<!-- Номер поезда -->
 						   {CRCXor:X2}ETX
 					  </Request >
 

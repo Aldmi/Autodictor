@@ -91,6 +91,8 @@
             this.cBПрибытиеЗадерживается = new System.Windows.Forms.CheckBox();
             this.cBПоездОтменен = new System.Windows.Forms.CheckBox();
             this.gBНастройкиПоезда = new System.Windows.Forms.GroupBox();
+            this.txb_НомерПоезда2 = new System.Windows.Forms.TextBox();
+            this.txb_НомерПоезда = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cb_Дополнение_Табло = new System.Windows.Forms.CheckBox();
             this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
@@ -98,8 +100,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
             this.cb_ВремяСтоянкиБудетИзмененно = new System.Windows.Forms.CheckBox();
-            this.txb_НомерПоезда = new System.Windows.Forms.TextBox();
-            this.txb_НомерПоезда2 = new System.Windows.Forms.TextBox();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -461,7 +461,6 @@
             this.dTP_ОжидаемоеВремя.CalendarMonthBackground = System.Drawing.SystemColors.HotTrack;
             this.dTP_ОжидаемоеВремя.CalendarTitleForeColor = System.Drawing.Color.Red;
             this.dTP_ОжидаемоеВремя.CustomFormat = "HH:mm";
-            this.dTP_ОжидаемоеВремя.Enabled = false;
             this.dTP_ОжидаемоеВремя.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dTP_ОжидаемоеВремя.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dTP_ОжидаемоеВремя.Location = new System.Drawing.Point(194, 123);
@@ -469,6 +468,7 @@
             this.dTP_ОжидаемоеВремя.ShowUpDown = true;
             this.dTP_ОжидаемоеВремя.Size = new System.Drawing.Size(77, 29);
             this.dTP_ОжидаемоеВремя.TabIndex = 17;
+            this.dTP_ОжидаемоеВремя.Leave += new System.EventHandler(this.dTP_ОжидаемоеВремя_Leave);
             // 
             // dTP_Задержка
             // 
@@ -845,6 +845,26 @@
             this.gBНастройкиПоезда.TabStop = false;
             this.gBНастройкиПоезда.Text = "Настроки поезда";
             // 
+            // txb_НомерПоезда2
+            // 
+            this.txb_НомерПоезда2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txb_НомерПоезда2.Location = new System.Drawing.Point(116, 19);
+            this.txb_НомерПоезда2.Name = "txb_НомерПоезда2";
+            this.txb_НомерПоезда2.ReadOnly = true;
+            this.txb_НомерПоезда2.Size = new System.Drawing.Size(78, 26);
+            this.txb_НомерПоезда2.TabIndex = 53;
+            this.txb_НомерПоезда2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txb_НомерПоезда
+            // 
+            this.txb_НомерПоезда.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txb_НомерПоезда.Location = new System.Drawing.Point(12, 19);
+            this.txb_НомерПоезда.Name = "txb_НомерПоезда";
+            this.txb_НомерПоезда.ReadOnly = true;
+            this.txb_НомерПоезда.Size = new System.Drawing.Size(78, 26);
+            this.txb_НомерПоезда.TabIndex = 52;
+            this.txb_НомерПоезда.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -917,26 +937,6 @@
             this.cb_ВремяСтоянкиБудетИзмененно.Text = "Время стоянки будет изменено";
             this.cb_ВремяСтоянкиБудетИзмененно.UseVisualStyleBackColor = true;
             this.cb_ВремяСтоянкиБудетИзмененно.CheckedChanged += new System.EventHandler(this.cb_ВремяСтоянкиБудетИзмененно_CheckedChanged);
-            // 
-            // txb_НомерПоезда
-            // 
-            this.txb_НомерПоезда.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txb_НомерПоезда.Location = new System.Drawing.Point(12, 19);
-            this.txb_НомерПоезда.Name = "txb_НомерПоезда";
-            this.txb_НомерПоезда.ReadOnly = true;
-            this.txb_НомерПоезда.Size = new System.Drawing.Size(78, 26);
-            this.txb_НомерПоезда.TabIndex = 52;
-            this.txb_НомерПоезда.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txb_НомерПоезда2
-            // 
-            this.txb_НомерПоезда2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txb_НомерПоезда2.Location = new System.Drawing.Point(116, 19);
-            this.txb_НомерПоезда2.Name = "txb_НомерПоезда2";
-            this.txb_НомерПоезда2.ReadOnly = true;
-            this.txb_НомерПоезда2.Size = new System.Drawing.Size(78, 26);
-            this.txb_НомерПоезда2.TabIndex = 53;
-            this.txb_НомерПоезда2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // КарточкаДвиженияПоезда
             // 

@@ -1,36 +1,39 @@
 ﻿using CommunicationDevices.DataProviders;
+using NLog.LayoutRenderers;
 
 namespace CommunicationDevices.Converters
 {
     internal static class TypeConverters
     {
-        public static string TypeTrainEnum2RusString(TypeTrain typeTrain)
+        public enum TypeTrainViewFormat { Long, Short }
+
+        public static string TypeTrainEnum2RusString(TypeTrain typeTrain, TypeTrainViewFormat trainViewFormat)
         {
             switch (typeTrain)
             {
                 case TypeTrain.None:
-                    return "Не определен";
+                    return " ";
 
                 case TypeTrain.Passenger:
-                    return "Пассажирский";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Пассажирский" : "пасс";
 
                 case TypeTrain.Suburban:
-                    return "Пригородный";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Пригородный" : "приг";
 
                 case TypeTrain.Corporate:
-                    return "Фирменный";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Фирменный" : "фирм";
 
                 case TypeTrain.Express:
-                    return "Скорый";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Скорый" : "скор";
 
                 case TypeTrain.HighSpeed:
-                    return "Скоростной";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Скоростной" : "скорост";
 
                 case TypeTrain.Swallow:
-                    return "Ласточка";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Экспресс" : "эксп";
 
                 case TypeTrain.Rex:
-                    return "РЭКС";
+                    return (trainViewFormat == TypeTrainViewFormat.Long) ? "Экспресс" : "эксп";
             }
 
             return string.Empty;

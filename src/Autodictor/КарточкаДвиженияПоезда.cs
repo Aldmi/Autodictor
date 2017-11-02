@@ -31,6 +31,8 @@ namespace MainExample
         public КарточкаДвиженияПоезда(SoundRecord record, string key)
         {
             _record = record;
+            _record.ИспользоватьДополнение = new Dictionary<string, bool>(record.ИспользоватьДополнение);//ссылочные переменные копируются по ссылке, т.е. их нужно создать заново
+
             _recordOld = record;
             _key = key;
             СтанцииВыбранногоНаправления = Program.ПолучитьСтанцииНаправления(record.Направление)?.Select(st => st.NameRu).ToList() ?? new List<string>();
@@ -296,17 +298,21 @@ namespace MainExample
             if (cBОтправлениеЗадерживается.Checked || cBПрибытиеЗадерживается.Checked)
             {
                 dTP_Задержка.Enabled = true;
+                dTP_ОжидаемоеВремя.Enabled = true;
                 btn_ИзменитьВремяЗадержки.Enabled = true;
                 dTP_Задержка.Value = (_record.ВремяЗадержки == null) ? DateTime.Parse("00:00") : _record.ВремяЗадержки.Value;
 
-                if (_record.ВремяЗадержки != null)
-                    _record.ОжидаемоеВремя = время.AddHours(_record.ВремяЗадержки.Value.Hour).AddMinutes(_record.ВремяЗадержки.Value.Minute);
+              
+               _record.ОжидаемоеВремя = (_record.ВремяЗадержки == null) ? время :
+                                                                          время.AddHours(_record.ВремяЗадержки.Value.Hour).AddMinutes(_record.ВремяЗадержки.Value.Minute);
                 dTP_ОжидаемоеВремя.Value = _record.ОжидаемоеВремя;
             }
             else
             {
                 dTP_Задержка.Enabled = false;
+                dTP_ОжидаемоеВремя.Enabled = false;
                 btn_ИзменитьВремяЗадержки.Enabled = false;
+
                 dTP_Задержка.Value= DateTime.Parse("00:00");
                 dTP_ОжидаемоеВремя.Value = время;
             }
@@ -488,7 +494,13 @@ namespace MainExample
 
             //Время стоянки для транзитов----------------------------------------
             _record.ВремяСтоянки = (TimeSpan?) ((cb_ВремяСтоянкиБудетИзмененно.Checked) ? (ValueType) null : (_record.ВремяОтправления - _record.ВремяПрибытия));
-            
+
+            //если полле ввода времени задержки неактивно, то
+            if (!dTP_Задержка.Enabled)
+            {
+                _record.ВремяЗадержки = dTP_Задержка.Value;
+                _record.ОжидаемоеВремя = dTP_ОжидаемоеВремя.Value;
+            }
 
             //Применение активности шаблонов--------------------------------------
             for (int item = 0; item < this.lVШаблоны.Items.Count; item++)
@@ -1154,9 +1166,9 @@ namespace MainExample
                                 cBОтправлениеЗадерживается.Checked = false;
                             break;
                     }
-                    ОбновитьТекстВОкне();
+                    //ОбновитьТекстВОкне();
                 }
-               
+                ОбновитьТекстВОкне();
             }
             catch (Exception exception)
             {
@@ -1271,6 +1283,23 @@ namespace MainExample
         {
             //Время стоянки для транзитов----------------------------------------
             _record.ВремяСтоянки = (TimeSpan?)((cb_ВремяСтоянкиБудетИзмененно.Checked) ? (ValueType)null : (_record.ВремяОтправления - _record.ВремяПрибытия));
+        }
+
+
+        /// <summary>
+        /// Уборали фокус с контрола задания времени ожидания
+        /// </summary>
+        private void dTP_ОжидаемоеВремя_Leave(object sender, EventArgs e)
+        {
+            var время = (cBПрибытие.Checked) ? _record.ВремяПрибытия : _record.ВремяОтправления;
+            _record.ОжидаемоеВремя = dTP_ОжидаемоеВремя.Value;
+            DateTime dt = DateTime.Now.Date;
+
+            var differenceTime = _record.ОжидаемоеВремя - время;
+            var newDelayTime = dt + differenceTime;
+
+            _record.ВремяЗадержки = newDelayTime;
+            dTP_Задержка.Value = _record.ВремяЗадержки.Value;
         }
     }
 }
