@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain.Entitys;
 using MainExample.Entites;
@@ -441,9 +442,9 @@ namespace MainExample
         /// <summary>
         /// Загрузить расписание
         /// </summary>
-        private void btnLoad_Click(object sender, EventArgs e)
+        private async void btnLoad_Click(object sender, EventArgs e)
         {
-            TrainSheduleTable.SourceLoadMainList();
+            await TrainSheduleTable.SourceLoadMainListAsync();
             ОбновитьДанныеВСписке();
         }
 
@@ -562,7 +563,7 @@ namespace MainExample
         /// </summary>
         private void btn_Сохранить_Click(object sender, EventArgs e)
         {
-            TrainSheduleTable.SourceSaveMainList();
+            TrainSheduleTable.SourceSaveMainListAsync().GetAwaiter();
         }
 
 
@@ -592,7 +593,7 @@ namespace MainExample
         /// <summary>
         /// Источник изменения загрузки расписания
         /// </summary>
-        private void rbSourseSheduleLocal_CheckedChanged(object sender, EventArgs e)
+        private async void rbSourseSheduleLocal_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
             if (rb != null)
@@ -601,7 +602,7 @@ namespace MainExample
                 Program.Настройки.SourceTrainTableRecordLoad = TrainSheduleTable.SourceLoad.ToString();
                 ОкноНастроек.СохранитьНастройки();
 
-                TrainSheduleTable.SourceLoadMainList();
+                await TrainSheduleTable.SourceLoadMainListAsync();
                 ОбновитьДанныеВСписке();
             }
         }

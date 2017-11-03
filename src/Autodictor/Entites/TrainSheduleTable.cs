@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Domain.Entitys;
 using MainExample.Services;
 
@@ -88,6 +90,23 @@ namespace MainExample.Entites
         /// <summary>
         /// Выбор источника загрузки и загрузка
         /// </summary>
+        public static async Task SourceLoadMainListAsync()
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                var trainTableRec = ЗагрузитьСписок(SourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+                if (trainTableRec != null)
+                {
+                    TrainTableRecords.Clear();
+                    TrainTableRecords.AddRange(trainTableRec);
+                }
+            });
+        }
+
+
+        /// <summary>
+        /// Выбор источника загрузки и загрузка
+        /// </summary>
         public static void SourceLoadMainList()
         {
             var trainTableRec = ЗагрузитьСписок(SourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
@@ -102,18 +121,26 @@ namespace MainExample.Entites
         /// <summary>
         /// Выбор источника сохранения и сохранение
         /// </summary>
-        public static void SourceSaveMainList()
+        public static async Task SourceSaveMainListAsync()
         {
-            СохранитьСписок(TrainTableRecords, SourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+           await Task.Factory.StartNew(()=>
+            {
+                СохранитьСписок(TrainTableRecords, SourceLoad == SourceData.Local ? FileNameLocalTableRec : FileNameRemoteCisTableRec);
+            });
         }
 
 
         /// <summary>
         /// Сохранить список от ЦИС
+        /// Начнет асинхронно сохранять и обновлять список UI.
         /// </summary>
-        public static void СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(IList<TrainTableRecord> trainTableRecords)
+        public static async Task СохранитьИПрименитьСписокРегулярноеРасписаниеЦис(IList<TrainTableRecord> trainTableRecords)
         {
-            СохранитьСписок(trainTableRecords, FileNameRemoteCisTableRec);
+            await Task.Factory.StartNew(() =>
+            {
+                СохранитьСписок(trainTableRecords, FileNameRemoteCisTableRec);
+            });
+
             switch (SourceLoad)
             {
                 case SourceData.RemoteCis:
@@ -127,9 +154,9 @@ namespace MainExample.Entites
         /// <summary>
         /// загрузить локальное распсиание
         /// </summary>
-        public static List<TrainTableRecord> ЗагрузитьРасписаниеЛокальное()
+        public static async Task<List<TrainTableRecord>> ЗагрузитьРасписаниеЛокальное()
         {
-           return ЗагрузитьСписок(FileNameLocalTableRec);
+            return await Task<List<TrainTableRecord>>.Factory.StartNew(()=> ЗагрузитьСписок(FileNameLocalTableRec));
         }
 
 
@@ -137,67 +164,68 @@ namespace MainExample.Entites
         /// <summary>
         /// загрузить локальное распсиание
         /// </summary>
-        public static List<TrainTableRecord> ЗагрузитьРасписаниеЦис()
+        public static async Task<List<TrainTableRecord>> ЗагрузитьРасписаниеЦис()
         {
-            return ЗагрузитьСписок(FileNameRemoteCisTableRec);
+            return await Task<List<TrainTableRecord>>.Factory.StartNew(()=> ЗагрузитьСписок(FileNameRemoteCisTableRec));
         }
+
 
 
         /// <summary>
         /// Сохранить список в файл
         /// </summary>
-        private static void СохранитьСписок(IList<TrainTableRecord> trainTableRecords, string fileName)
+        private static void  СохранитьСписок(IList<TrainTableRecord> trainTableRecords, string fileName)
         {
-            try
-            {
-                lock (_lockObj)
+                try
                 {
-                    using (StreamWriter dumpFile = new StreamWriter(fileName))
+                    lock (_lockObj)
                     {
-                        for (int i = 0; i < trainTableRecords.Count; i++)
+                        using (StreamWriter dumpFile = new StreamWriter(fileName))
                         {
-                            string line = trainTableRecords[i].ID + ";" +
-                                          trainTableRecords[i].Num + ";" +
-                                          trainTableRecords[i].Name + ";" +
-                                          trainTableRecords[i].ArrivalTime + ";" +
-                                          trainTableRecords[i].StopTime + ";" +
-                                          trainTableRecords[i].DepartureTime + ";" +
-                                          trainTableRecords[i].Days + ";" +
-                                          (trainTableRecords[i].Active ? "1" : "0") + ";" +
-                                          trainTableRecords[i].SoundTemplates + ";" +
-                                          trainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                                          SavePath2File(trainTableRecords[i].TrainPathNumber,
-                                              trainTableRecords[i].PathWeekDayes) + ";" +
-                                          trainTableRecords[i].ТипПоезда.ToString() + ";" +
-                                          trainTableRecords[i].Примечание + ";" +
-                                          trainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                          trainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                          trainTableRecords[i].Addition + ";" +
-                                          (trainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
-                                          (trainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
-                                          (trainTableRecords[i].Автомат ? "1" : "0") + ";" +
+                            for (int i = 0; i < trainTableRecords.Count; i++)
+                            {
+                                string line = trainTableRecords[i].ID + ";" +
+                                              trainTableRecords[i].Num + ";" +
+                                              trainTableRecords[i].Name + ";" +
+                                              trainTableRecords[i].ArrivalTime + ";" +
+                                              trainTableRecords[i].StopTime + ";" +
+                                              trainTableRecords[i].DepartureTime + ";" +
+                                              trainTableRecords[i].Days + ";" +
+                                              (trainTableRecords[i].Active ? "1" : "0") + ";" +
+                                              trainTableRecords[i].SoundTemplates + ";" +
+                                              trainTableRecords[i].TrainPathDirection.ToString() + ";" +
+                                              SavePath2File(trainTableRecords[i].TrainPathNumber,
+                                                  trainTableRecords[i].PathWeekDayes) + ";" +
+                                              trainTableRecords[i].ТипПоезда.ToString() + ";" +
+                                              trainTableRecords[i].Примечание + ";" +
+                                              trainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i].Addition + ";" +
+                                              (trainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
+                                              (trainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
+                                              (trainTableRecords[i].Автомат ? "1" : "0") + ";" +
 
-                                          trainTableRecords[i].Num2 + ";" +
-                                          trainTableRecords[i].FollowingTime + ";" +
-                                          trainTableRecords[i].DaysAlias + ";" +
+                                              trainTableRecords[i].Num2 + ";" +
+                                              trainTableRecords[i].FollowingTime + ";" +
+                                              trainTableRecords[i].DaysAlias + ";" +
 
-                                          trainTableRecords[i].StationDepart + ";" +
-                                          trainTableRecords[i].StationArrival + ";" +
-                                          trainTableRecords[i].Direction + ";" +
-                                          trainTableRecords[i].ChangeTrainPathDirection + ";" +
-                                          trainTableRecords[i].ОграничениеОтправки;
+                                              trainTableRecords[i].StationDepart + ";" +
+                                              trainTableRecords[i].StationArrival + ";" +
+                                              trainTableRecords[i].Direction + ";" +
+                                              trainTableRecords[i].ChangeTrainPathDirection + ";" +
+                                              trainTableRecords[i].ОграничениеОтправки;
 
-                            dumpFile.WriteLine(line);
+                                dumpFile.WriteLine(line);
+                            }
+
+                            dumpFile.Close();
                         }
-
-                        dumpFile.Close();
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
         }
 
 
