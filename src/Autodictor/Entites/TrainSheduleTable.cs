@@ -154,7 +154,7 @@ namespace MainExample.Entites
         /// <summary>
         /// загрузить локальное распсиание
         /// </summary>
-        public static async Task<List<TrainTableRecord>> ЗагрузитьРасписаниеЛокальное()
+        public static async Task<List<TrainTableRecord>> ЗагрузитьРасписаниеЛокальноеAsync()
         {
             return await Task<List<TrainTableRecord>>.Factory.StartNew(()=> ЗагрузитьСписок(FileNameLocalTableRec));
         }
@@ -164,7 +164,7 @@ namespace MainExample.Entites
         /// <summary>
         /// загрузить локальное распсиание
         /// </summary>
-        public static async Task<List<TrainTableRecord>> ЗагрузитьРасписаниеЦис()
+        public static async Task<List<TrainTableRecord>> ЗагрузитьРасписаниеЦисAsync()
         {
             return await Task<List<TrainTableRecord>>.Factory.StartNew(()=> ЗагрузитьСписок(FileNameRemoteCisTableRec));
         }
@@ -174,7 +174,7 @@ namespace MainExample.Entites
         /// <summary>
         /// Сохранить список в файл
         /// </summary>
-        private static void  СохранитьСписок(IList<TrainTableRecord> trainTableRecords, string fileName)
+        private static void СохранитьСписок(IList<TrainTableRecord> trainTableRecords, string fileName)
         {
                 try
                 {
@@ -222,10 +222,10 @@ namespace MainExample.Entites
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
 
 

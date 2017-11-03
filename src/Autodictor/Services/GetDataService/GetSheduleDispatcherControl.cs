@@ -57,14 +57,6 @@ namespace MainExample.Services.GetDataService
                         var idTrain = rec.IdTrain;
                         bool changeFlag = false;
 
-                        //DEBUG------------------------------
-                        //if (stationArrival == "АРЧЕДА"  && rec.НомерПоезда == "6805" && rec.НазваниеПоезда == "Волгоград - Арчеда")
-                        //{
-                        //    var g = 5 + 5;
-                        //}
-                        //DEBUG------------------------------
-
-
                         //ТРАНЗИТ
                         if (dateTimeArrival != DateTime.MinValue && dateTimeDepart != DateTime.MinValue)
                         {

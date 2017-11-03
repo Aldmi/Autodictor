@@ -58,6 +58,7 @@
     <Compile Include="Entitys\SoundRecordDb.cs" />
     <Compile Include="Entitys\Station.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\ParticirovanieNoSqlRepositoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

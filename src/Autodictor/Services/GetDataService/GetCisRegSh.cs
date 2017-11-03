@@ -38,7 +38,7 @@ namespace MainExample.Services.GetDataService
             var universalInputTypes = data as IList<UniversalInputType> ?? data.ToList();
             if (universalInputTypes.Any())
             {
-                var localTable = TrainSheduleTable.ЗагрузитьРасписаниеЛокальное().GetAwaiter().GetResult();
+                var localTable = TrainSheduleTable.ЗагрузитьРасписаниеЛокальноеAsync().GetAwaiter().GetResult();
                 if (localTable == null)
                     return;
 
@@ -79,7 +79,7 @@ namespace MainExample.Services.GetDataService
                 {
                     //КОНТРОЛЬ ИЗМЕНЕНИЙ
                     bool changeFlag = false;
-                    var remoteCisTable = TrainSheduleTable.ЗагрузитьРасписаниеЦис().GetAwaiter().GetResult();
+                    var remoteCisTable = TrainSheduleTable.ЗагрузитьРасписаниеЦисAsync().GetAwaiter().GetResult();
 
                     if (remoteCisTable != null)
                     {

@@ -15,6 +15,7 @@ using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
 using Domain.Entitys;
 using Domain.Entitys.Authentication;
+using Domain.Service;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Services;
@@ -64,7 +65,6 @@ namespace MainExample
             РежимРаботы = tSBРежимРаботы;
 
             Включить.BackColor = Color.Red;
-          
         }
 
 

@@ -294,13 +294,13 @@ namespace MainExample
             Program.Настройки.НастройкиЦветов = new Color[] { Color.Black, Color.LightGray, Color.Black, Color.LightBlue, Color.Black, Color.White, Color.Black, Color.Yellow, Color.Black, Color.LightGreen, Color.Black, Color.YellowGreen, Color.Black, Color.Orange, Color.Black, Color.DarkSalmon, Color.Black, Color.Black };
 
             //DEBUG--------------
-            Program.Настройки.TimeZoneНаПассажирскийПоезд = 0*60;
-            Program.Настройки.TimeZoneНаЛасточку = 0* 60;
-            Program.Настройки.TimeZoneНаПригородныйЭлектропоезд = 0 * 60;
-            Program.Настройки.TimeZoneНаРЭКС = 0 * 60;
-            Program.Настройки.TimeZoneНаСкоростнойПоезд = 0 * 60;
-            Program.Настройки.TimeZoneНаСкорыйПоезд = 0 * 60;
-            Program.Настройки.TimeZoneНаФирменный = 0 * 60;
+            //Program.Настройки.TimeZoneНаПассажирскийПоезд = 0*60;
+            //Program.Настройки.TimeZoneНаЛасточку = 0* 60;
+            //Program.Настройки.TimeZoneНаПригородныйЭлектропоезд = 0 * 60;
+            //Program.Настройки.TimeZoneНаРЭКС = 0 * 60;
+            //Program.Настройки.TimeZoneНаСкоростнойПоезд = 0 * 60;
+            //Program.Настройки.TimeZoneНаСкорыйПоезд = 0 * 60;
+            //Program.Настройки.TimeZoneНаФирменный = 0 * 60;
             //DEBUG--------------
 
 

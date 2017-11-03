@@ -40,37 +40,6 @@ namespace MainExample.Services
                 {
                     Program.UsersDbRepository.Add(new User { Login = adminLogin, Password = adminPassword, Role = Role.Администратор });
                 }
-
-                //--DEBUG------------------------------------------------------------------------
-                //var user1 = new User { Login = "User1", Password = "User1", Role = Role.Диктор };
-                //var userDb1 = Program.UsersDbRepository.List(user => (user.Role == user1.Role) &&
-                //                                             (user.Login == user1.Login) &&
-                //                                             (user.Password == user1.Password)).FirstOrDefault();
-                //if (userDb1 == null)
-                //{
-                //    Program.UsersDbRepository.Add(user1);
-                //}
-
-
-                //var user2 = new User { Login = "User2", Password = "User2", Role = Role.Диктор };
-                //var userDb2 = Program.UsersDbRepository.List(user => (user.Role == user2.Role) &&
-                //                                             (user.Login == user2.Login) &&
-                //                                             (user.Password == user2.Password)).FirstOrDefault();
-                //if (userDb2 == null)
-                //{
-                //    Program.UsersDbRepository.Add(user2);
-                //}
-
-
-                //var user3 = new User { Login = "User3", Password = "User3", Role = Role.Диктор };
-                //var userDb3 = Program.UsersDbRepository.List(user => (user.Role == user3.Role) &&
-                //                                             (user.Login == user3.Login) &&
-                //                                             (user.Password == user3.Password)).FirstOrDefault();
-                //if (userDb3 == null)
-                //{
-                //    Program.UsersDbRepository.Add(user3);
-                //}
-                //-------------------------------------------------------
             }
              );
         }

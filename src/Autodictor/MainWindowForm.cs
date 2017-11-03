@@ -23,6 +23,7 @@ using CommunicationDevices.Services;
 using Domain.Concrete.NoSqlReposutory;
 using Domain.Entitys;
 using Domain.Entitys.Authentication;
+using Domain.Service;
 using Library.Convertion;
 using MainExample.Comparers;
 using MainExample.Entites;
@@ -738,6 +739,14 @@ namespace MainExample
                                                                        .Where(p => (p.TimeStamp.Date == currentDay) ||
                                                                                   ((p.TimeStamp.Date == currentDay.AddDays(-1)) && (p.Rec.Время.Date == currentDay)))
                                                                        .Select(Mapper.SoundRecordChangesDb2SoundRecordChanges).ToList();
+
+            //DEBUG--------------
+            //ParticirovanieNoSqlRepositoryService<SoundRecordChangesDb> particirovanieNoSqlService = new ParticirovanieNoSqlRepositoryService<SoundRecordChangesDb>();
+            //var soundRecordChangesCurrentDay = particirovanieNoSqlService.GetRepositoryOnCurrentDay().List();
+            //var soundRecordChangesYesterdayDay = particirovanieNoSqlService.GetRepositoryOnYesterdayDay().List().Where(p=> p.Rec.Время.Date == currentDay);
+            //SoundRecordChanges= soundRecordChangesCurrentDay.Union(soundRecordChangesYesterdayDay).Select(Mapper.SoundRecordChangesDb2SoundRecordChanges).ToList();
+            //DEBUG-------------
+
 
             //Добавим весь список Оперативного расписания
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now, null, ref id);                                         // на тек. сутки

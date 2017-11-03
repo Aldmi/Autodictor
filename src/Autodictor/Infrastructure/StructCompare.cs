@@ -6,15 +6,6 @@ namespace MainExample.Infrastructure
     {
         public static bool SoundRecordComparer (ref SoundRecord sr1, ref SoundRecord sr2)
         {
-            //DEBUG----------------------------
-            if(sr1.НомерПоезда =="6492")
-            {
-                if (sr1.ИспользоватьДополнение["табло"])
-                {
-                    
-                }
-            }
-
             return (sr1.ВремяОтправления == sr2.ВремяОтправления) &&
                    (sr1.ВремяПрибытия == sr2.ВремяПрибытия) &&
                    (sr1.ВремяСтоянки == sr2.ВремяСтоянки) &&
