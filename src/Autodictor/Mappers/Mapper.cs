@@ -385,7 +385,39 @@ namespace MainExample.Mappers
                 return record.TrainPathNumber[WeekDays.Постоянно] == "Не определен" ? string.Empty : record.TrainPathNumber[WeekDays.Постоянно];
             }
 
-            switch (DateTime.Now.DayOfWeek)
+            DayOfWeek dayOfWeek= DateTime.Now.DayOfWeek;
+            switch (MainWindowForm.РаботаПоНомеруДняНедели)  //TODO: РаботаПоНомеруДняНедели внедрять через DI
+            {
+                case 0:
+                    dayOfWeek = DayOfWeek.Monday;
+                    break;
+
+                case 1:
+                    dayOfWeek = DayOfWeek.Tuesday;
+                    break;
+
+                case 2:
+                    dayOfWeek = DayOfWeek.Wednesday;
+                    break;
+
+                case 3:
+                    dayOfWeek = DayOfWeek.Thursday;
+                    break;
+
+                case 4:
+                    dayOfWeek = DayOfWeek.Friday;
+                    break;
+
+                case 5:
+                    dayOfWeek = DayOfWeek.Saturday;
+                    break;
+
+                case 6:
+                    dayOfWeek = DayOfWeek.Sunday;
+                    break;
+            }
+
+            switch (dayOfWeek)
             {
                 case DayOfWeek.Monday:
                     return record.TrainPathNumber[WeekDays.Пн];
