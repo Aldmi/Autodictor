@@ -61,7 +61,7 @@ namespace MainExample
             {
                 if (data == SourceData.RemoteCis)
                 {
-                    ОбновитьДанныеВСписке();
+                    ОбновитьДанныеВСпискеAsync();
                 }
             });
         }
@@ -221,24 +221,39 @@ namespace MainExample
 
 
 
-        private void РаскраситьСписок()
+        private async Task РаскраситьСписокAsync()
         {
-            for (var i = 0; i < dgv_TrainTable.Rows.Count; i++)
+            await Task.Factory.StartNew(() =>
             {
-                var row = dgv_TrainTable.Rows[i];
-                var id = (int)row.Cells[0].Value;
-                var firstOrDefault = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.ID == id);
+                for (var i = 0; i < dgv_TrainTable.Rows.Count; i++)
+                {
+                    var row = dgv_TrainTable.Rows[i];
+                    var id = (int)row.Cells[0].Value;
+                    var firstOrDefault = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.ID == id);
 
-                dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = firstOrDefault.Active ? Color.LightGreen : Color.LightGray;
-                dgv_TrainTable.Rows[i].Tag = firstOrDefault.ID;
-            }
+                    dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = firstOrDefault.Active ? Color.LightGreen : Color.LightGray;
+                    dgv_TrainTable.Rows[i].Tag = firstOrDefault.ID;
+                }
 
-            dgv_TrainTable.AllowUserToResizeColumns = true;
+                dgv_TrainTable.AllowUserToResizeColumns = true;
+            });
+
+            //for (var i = 0; i < dgv_TrainTable.Rows.Count; i++)
+            //{
+            //    var row = dgv_TrainTable.Rows[i];
+            //    var id = (int)row.Cells[0].Value;
+            //    var firstOrDefault = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.ID == id);
+
+            //    dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = firstOrDefault.Active ? Color.LightGreen : Color.LightGray;
+            //    dgv_TrainTable.Rows[i].Tag = firstOrDefault.ID;
+            //}
+
+            //dgv_TrainTable.AllowUserToResizeColumns = true;
         }
 
 
 
-        private void ОбновитьДанныеВСписке()
+        private async Task ОбновитьДанныеВСпискеAsync()
         {
             dgv_TrainTable.InvokeIfNeeded(() =>
             {
@@ -261,9 +276,9 @@ namespace MainExample
                     dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = данные.Active ? Color.LightGreen : Color.LightGray;
                     dgv_TrainTable.Rows[i].Tag = данные.ID;
                 }
-
-                РаскраситьСписок();
             });
+
+            await РаскраситьСписокAsync();
         }
 
 
@@ -335,7 +350,7 @@ namespace MainExample
         /// <summary>
         /// Фильтрация таблицы
         /// </summary>
-        private void btn_Filter_Click(object sender, EventArgs e)
+        private async void btn_Filter_Click(object sender, EventArgs e)
         {
             string filter = String.Empty;
 
@@ -382,7 +397,7 @@ namespace MainExample
 
             DataView.RowFilter = filter;
 
-            РаскраситьСписок();
+           await РаскраситьСписокAsync();
         }
 
 
@@ -445,7 +460,7 @@ namespace MainExample
         private async void btnLoad_Click(object sender, EventArgs e)
         {
             await TrainSheduleTable.SourceLoadMainListAsync();
-            ОбновитьДанныеВСписке();
+            await ОбновитьДанныеВСпискеAsync();
         }
 
 
@@ -453,7 +468,7 @@ namespace MainExample
         /// <summary>
         /// Добавить
         /// </summary>
-        private void dgv_TrainTable_DoubleClick(object sender, EventArgs e)
+        private async void dgv_TrainTable_DoubleClick(object sender, EventArgs e)
         {
             var selected = dgv_TrainTable.SelectedRows[0];
             if (selected == null)
@@ -467,11 +482,12 @@ namespace MainExample
                     if (данные != null)
                     {
                         TrainSheduleTable.TrainTableRecords[i] = данные.Value;
+                        await РаскраситьСписокAsync();
                     }
-
                     break;
                 }
             }
+
         }
 
 
@@ -479,7 +495,7 @@ namespace MainExample
         /// <summary>
         /// Удалить
         /// </summary>
-        private void btn_УдалитьЗапись_Click(object sender, EventArgs e)
+        private async void btn_УдалитьЗапись_Click(object sender, EventArgs e)
         {
             var selected = dgv_TrainTable.SelectedRows[0];
             if (selected == null)
@@ -487,7 +503,7 @@ namespace MainExample
 
             var delItem = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.ID == (int)selected.Tag);
             TrainSheduleTable.TrainTableRecords.Remove(delItem);
-            ОбновитьДанныеВСписке();
+            await ОбновитьДанныеВСпискеAsync();
         }
 
 
@@ -561,18 +577,18 @@ namespace MainExample
         /// <summary>
         /// Сохранить
         /// </summary>
-        private void btn_Сохранить_Click(object sender, EventArgs e)
+        private async void btn_Сохранить_Click(object sender, EventArgs e)
         {
-            TrainSheduleTable.SourceSaveMainListAsync().GetAwaiter();
+           await TrainSheduleTable.SourceSaveMainListAsync();
         }
 
 
         /// <summary>
         /// Сортировка спсиска
         /// </summary>
-        private void dgv_TrainTable_Sorted(object sender, EventArgs e)
+        private async void dgv_TrainTable_Sorted(object sender, EventArgs e)
         {
-            РаскраситьСписок();
+           await РаскраситьСписокAsync();
         }
 
 
@@ -603,7 +619,7 @@ namespace MainExample
                 ОкноНастроек.СохранитьНастройки();
 
                 await TrainSheduleTable.SourceLoadMainListAsync();
-                ОбновитьДанныеВСписке();
+                await ОбновитьДанныеВСпискеAsync();
             }
         }
     }
