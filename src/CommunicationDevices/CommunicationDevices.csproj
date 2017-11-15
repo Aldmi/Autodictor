@@ -113,6 +113,7 @@
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\BaseExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\HttpBehavior\XmlExhangeHttpBehavior.cs" />
     <Compile Include="Behavior\ExhangeBehavior\SerialPortBehavior\ChannelManagement\ChannelManagementExchangeBehavior.cs" />
+    <Compile Include="Behavior\ExhangeBehavior\SibWayBehavior\BaseSibWayBehavior.cs" />
     <Compile Include="Behavior\GetDataBehavior\BaseGetDataBehavior.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisRegularShDataConverter.cs" />
     <Compile Include="Behavior\GetDataBehavior\ConvertGetedData\CisOperativeShDataConverter.cs" />

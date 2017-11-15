@@ -19,8 +19,10 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior
         bool IsOpen { get; }
         bool IsConnect { get;  set; }
         bool DataExchangeSuccess { get; set; }
+        string ProviderName { get; set; }
 
         void CycleReConnect(ICollection<Task> backGroundTasks = null);
+
         void StartCycleExchange();
         void StopCycleExchange();
 
@@ -30,7 +32,5 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior
         ISubject<IExhangeBehavior> IsDataExchangeSuccessChange { get; }
         ISubject<IExhangeBehavior> IsConnectChange { get; }
         ISubject<IExhangeBehavior> LastSendDataChange { get; }
-
-        string ProviderName { get; set; }
     }
 }
