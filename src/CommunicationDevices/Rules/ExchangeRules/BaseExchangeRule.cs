@@ -113,10 +113,10 @@ namespace CommunicationDevices.Rules.ExchangeRules
                 foreach (var s in subStr)
                 {
                     var replaseStr = (s.Contains("{")) ? (s + "}") : s;
-                    var mathStr = Regex.Match(replaseStr, @"{(.*)}").Groups[1].Value; // TODO: 
+                    var mathStr = Regex.Match(replaseStr, @"{(.*)}").Groups[1].Value;
                     var subvar= mathStr.Split(':').First();
 
-                    if (subvar == nameof(uit.AddressDevice)) //mathStr.Contains(nameof(uit.AddressDevice))
+                    if (subvar == nameof(uit.AddressDevice))
                     { 
                         if (mathStr.Contains(":")) //если указанн формат числа
                         {
@@ -135,7 +135,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("TypeName")) //replaseStr.Contains("TypeName")
+                    if (subvar == "TypeName") 
                     {
                         var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain, TypeConverters.TypeTrainViewFormat.Long);
                         var formatStr = string.Format(replaseStr.Replace("TypeName", "0"), ruTypeTrain);
@@ -144,7 +144,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("TypeAlias"))
+                    if (subvar == "TypeAlias")
                     {
                         var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain, TypeConverters.TypeTrainViewFormat.Short);
                         var formatStr = string.Format(replaseStr.Replace("TypeAlias", "0"), ruTypeTrain);
@@ -153,9 +153,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.NumberOfTrain)))
+                    if (subvar == nameof(uit.NumberOfTrain))
                     {
-                        if (replaseStr.Contains(":")) //если указан формат числа
+                        if (mathStr.Contains(":")) //если указан формат числа
                         {
                             if (int.TryParse(uit.NumberOfTrain, out parseVal))
                             {
@@ -177,9 +177,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.PathNumber)))
+                    if (subvar == nameof(uit.PathNumber))
                     {
-                        if (replaseStr.Contains(":")) //если указан формат числа
+                        if (mathStr.Contains(":")) //если указан формат числа
                         {
                             if (int.TryParse(uit.PathNumber, out parseVal))
                             {
@@ -201,7 +201,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.Event)))
+                    if (subvar == nameof(uit.Event))
                     {
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.Event), "0"), string.IsNullOrEmpty(uit.Event) ? " " : uit.Event);
                         resStr.Append(formatStr);
@@ -209,7 +209,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.Addition)))
+                    if (subvar == nameof(uit.Addition))
                     {
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.Addition), "0"), !string.IsNullOrEmpty(uit.Addition) ? uit.Addition : " ");
                         resStr.Append(formatStr);
@@ -217,7 +217,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("StationsCut"))
+                    if (subvar == "StationsCut")
                     {
                         var stationsCut = " ";
                         switch (uit.Event)
@@ -240,7 +240,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.Stations)))
+                    if (subvar == nameof(uit.Stations))
                     {
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.Stations), "0"), string.IsNullOrEmpty(uit.Stations) ? " " : uit.Stations);
                         resStr.Append(formatStr);
@@ -248,7 +248,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.StationArrival)))
+                    if (subvar == nameof(uit.StationArrival))
                     {
                         var stationArrival = uit.StationArrival?.NameRu ?? " ";
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationArrival), "0"), stationArrival);
@@ -257,7 +257,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.StationDeparture)))
+                    if (subvar == nameof(uit.StationDeparture))
                     {
                         var stationDeparture = uit.StationDeparture?.NameRu ?? " ";
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.StationDeparture), "0"), stationDeparture);
@@ -266,28 +266,28 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.Note)))
+                    if (subvar == nameof(uit.Note))
                     {
                         var formatStr= string.Format(replaseStr.Replace(nameof(uit.Note), "0"), string.IsNullOrEmpty(uit.Note) ? " " : uit.Note);
                         resStr.Append(formatStr);
                         continue;
                     }
 
-                    if (replaseStr.Contains(nameof(uit.DaysFollowingAlias)))
+                    if (subvar == nameof(uit.DaysFollowingAlias))
                     {
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.DaysFollowingAlias), "0"), string.IsNullOrEmpty(uit.DaysFollowingAlias) ? " " : uit.DaysFollowingAlias);
                         resStr.Append(formatStr);
                         continue;
                     }
 
-                    if (replaseStr.Contains(nameof(uit.DaysFollowing)))
+                    if (subvar == nameof(uit.DaysFollowing))
                     {
                         var formatStr = string.Format(replaseStr.Replace(nameof(uit.DaysFollowing), "0"), string.IsNullOrEmpty(uit.DaysFollowing) ? " " : uit.DaysFollowing);
                         resStr.Append(formatStr);
                         continue;
                     }
 
-                    if (replaseStr.Contains(nameof(uit.DelayTime)))
+                    if (subvar == nameof(uit.DelayTime))
                     {
                         if (uit.DelayTime == null || uit.DelayTime.Value.TimeOfDay == TimeSpan.Zero)
                         {
@@ -296,7 +296,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                             continue;
                         }
 
-                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        if (mathStr.Contains(":")) //если указзанн формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
                             var formatStr = string.Format(replaseStr.Replace(nameof(uit.DelayTime), "0"), (uit.DelayTime == DateTime.MinValue) ? " " : uit.DelayTime.Value.ToString(dateFormat));
@@ -311,9 +311,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.ExpectedTime)))
+                    if (subvar == nameof(uit.ExpectedTime))
                     {
-                        if (replaseStr.Contains(":")) //если указзанн формат времени
+                        if (mathStr.Contains(":")) //если указзанн формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
                             var formatStr = string.Format(replaseStr.Replace(nameof(uit.ExpectedTime), "0"), (uit.ExpectedTime == DateTime.MinValue) ? " " : uit.ExpectedTime.ToString(dateFormat));
@@ -328,9 +328,9 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains(nameof(uit.Time)))
+                    if (subvar == nameof(uit.Time))
                     {
-                        if (replaseStr.Contains(":")) //если указанн формат времени
+                        if (mathStr.Contains(":")) //если указанн формат времени
                         {
                             string formatStr;
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
@@ -356,7 +356,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("TDepart"))
+                    if (subvar == "TDepart")
                     {
                         DateTime timeDepart = DateTime.MinValue;
                         switch (uit.Event)
@@ -370,7 +370,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                                 break;
                         }
 
-                        if (replaseStr.Contains(":")) //если указанн формат времени
+                        if (mathStr.Contains(":")) //если указанн формат времени
                         {
                             string formatStr;
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
@@ -396,7 +396,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("TArrival"))
+                    if (subvar == "TArrival")
                     {
                         DateTime timeArrival = DateTime.MinValue;
                         switch (uit.Event)
@@ -410,7 +410,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                                 break;
                         }
 
-                        if (replaseStr.Contains(":")) //если указанн формат времени
+                        if (mathStr.Contains(":")) //если указанн формат времени
                         {
                             string formatStr;
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
@@ -436,7 +436,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("Hour"))
+                    if (subvar == "Hour")
                     {
                         var formatStr = string.Format(replaseStr.Replace("Hour", "0"), DateTime.Now.Hour);
                         resStr.Append(formatStr);
@@ -444,7 +444,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("Minute"))
+                    if (subvar == "Minute")
                     {
                         var formatStr = string.Format(replaseStr.Replace("Minute", "0"), DateTime.Now.Minute);
                         resStr.Append(formatStr);
@@ -452,7 +452,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("Second"))
+                    if (subvar == "Second")
                     {
                         var formatStr = string.Format(replaseStr.Replace("Second", "0"), DateTime.Now.Second);
                         resStr.Append(formatStr);
@@ -460,11 +460,11 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("SyncTInSec"))
+                    if (subvar == "SyncTInSec")
                     {
                         var secTime = DateTime.Now.Hour * 3600 + DateTime.Now.Minute * 60 + DateTime.Now.Second;
                         string formatStr;
-                        if (replaseStr.Contains(":")) //если указан формат времени
+                        if (mathStr.Contains(":")) //если указан формат времени
                         {
                             var dateFormat = s.Split(':')[1]; //без закр. скобки
                             formatStr = string.Format(replaseStr.Replace("SyncTInSec", "0"), (secTime == 0) ? " " : secTime.ToString(dateFormat));
@@ -479,7 +479,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("rowNumber"))
+                    if (subvar == "rowNumber")
                     {
                         if (currentRow.HasValue)
                         {
