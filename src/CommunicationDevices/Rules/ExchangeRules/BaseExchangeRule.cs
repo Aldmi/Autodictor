@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using CommunicationDevices.Converters;
@@ -112,9 +113,12 @@ namespace CommunicationDevices.Rules.ExchangeRules
                 foreach (var s in subStr)
                 {
                     var replaseStr = (s.Contains("{")) ? (s + "}") : s;
-                    if (replaseStr.Contains(nameof(uit.AddressDevice)))
-                    {
-                        if (replaseStr.Contains(":")) //если указзанн формат числа
+                    var mathStr = Regex.Match(replaseStr, @"{(.*)}").Groups[1].Value; // TODO: 
+                    var subvar= mathStr.Split(':').First();
+
+                    if (subvar == nameof(uit.AddressDevice)) //mathStr.Contains(nameof(uit.AddressDevice))
+                    { 
+                        if (mathStr.Contains(":")) //если указанн формат числа
                         {
                             if (int.TryParse(uit.AddressDevice, out parseVal))
                             {
@@ -131,7 +135,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (replaseStr.Contains("TypeName"))
+                    if (replaseStr.Contains("TypeName")) //replaseStr.Contains("TypeName")
                     {
                         var ruTypeTrain = TypeConverters.TypeTrainEnum2RusString(uit.TypeTrain, TypeConverters.TypeTrainViewFormat.Long);
                         var formatStr = string.Format(replaseStr.Replace("TypeName", "0"), ruTypeTrain);
@@ -269,6 +273,12 @@ namespace CommunicationDevices.Rules.ExchangeRules
                         continue;
                     }
 
+                    if (replaseStr.Contains(nameof(uit.DaysFollowingAlias)))
+                    {
+                        var formatStr = string.Format(replaseStr.Replace(nameof(uit.DaysFollowingAlias), "0"), string.IsNullOrEmpty(uit.DaysFollowingAlias) ? " " : uit.DaysFollowingAlias);
+                        resStr.Append(formatStr);
+                        continue;
+                    }
 
                     if (replaseStr.Contains(nameof(uit.DaysFollowing)))
                     {
@@ -276,7 +286,6 @@ namespace CommunicationDevices.Rules.ExchangeRules
                         resStr.Append(formatStr);
                         continue;
                     }
-
 
                     if (replaseStr.Contains(nameof(uit.DelayTime)))
                     {
