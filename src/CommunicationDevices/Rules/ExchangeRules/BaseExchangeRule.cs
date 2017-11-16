@@ -479,7 +479,7 @@ namespace CommunicationDevices.Rules.ExchangeRules
                     }
 
 
-                    if (subvar == "rowNumber")
+                    if (subvar.Contains("rowNumber"))
                     {
                         if (currentRow.HasValue)
                         {
