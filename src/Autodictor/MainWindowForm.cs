@@ -1939,8 +1939,7 @@ namespace MainExample
                     //Отправить расписание из окна ОПЕРАТИВНОГО РАСПИСАНИЕ
                     if (binding2OperativeShedule.Any())
                     {
-                        if (TrainTableOperative.TrainTableRecords != null &&
-                            TrainTableOperative.TrainTableRecords.Any())
+                        if (TrainTableOperative.TrainTableRecords != null)
                         {
                             foreach (var beh in binding2OperativeShedule)
                             {
@@ -1954,14 +1953,30 @@ namespace MainExample
                                     t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                 });
 
+                                //Если таблица пуста, отправим пустой тип
+                                if (!table.Any())
+                                {
+                                    table.Add(new UniversalInputType
+                                    {
+                                        IsActive = true,
+                                        NumberOfTrain = "  ",
+                                        PathNumber ="  ",
+                                        Event = "   ",
+                                        Time = DateTime.MinValue,
+                                        Stations = "   ",
+                                        Note = "   ",
+                                        TypeTrain = TypeTrain.None,
+                                        TableData = new List<UniversalInputType>() { new UniversalInputType() }
+                                    });
+                                }
+
                                 var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
                     }
 
-
-                    //Отправить расписание из ГЛАВНОГО окна  
+                        //Отправить расписание из ГЛАВНОГО окна  
                     if (binding2MainWindow.Any())
                     {
                         if (SoundRecords != null && SoundRecords.Any())

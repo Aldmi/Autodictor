@@ -103,7 +103,7 @@ namespace CommunicationDevices.DataProviders
             ChangeVagonDirection= initializeData.ChangeVagonDirection;
 
 
-            if (initializeData.TableData != null && initializeData.TableData.Any())
+            if (initializeData.TableData != null && initializeData.TableData.Any()) 
             {
                 TableData = new List<UniversalInputType>(initializeData.TableData);
             }
