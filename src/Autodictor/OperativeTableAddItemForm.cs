@@ -476,7 +476,7 @@ namespace MainExample
 
             if (rBПрибытие.Checked == true)
             {
-                newTableRec.ArrivalTime = dTPОтправление.Value.ToString("HH:mm");
+                newTableRec.ArrivalTime = dTPПрибытие.Value.ToString("HH:mm");
                 newTableRec.StopTime = "";
                 newTableRec.DepartureTime = "";
             }
@@ -496,8 +496,8 @@ namespace MainExample
                 var stopTime = (времяПрибытия - dTPОтправление.Value);
                 newTableRec.StopTime = stopTime.Hours.ToString("D2") + ":" + stopTime.Minutes.ToString("D2");
 
-                newTableRec.ArrivalTime = dTPОтправление.Value.ToString("HH:mm");
-                newTableRec.DepartureTime = dTPПрибытие.Value.ToString("HH:mm");
+                newTableRec.ArrivalTime = dTPПрибытие.Value.ToString("HH:mm");
+                newTableRec.DepartureTime = dTPОтправление.Value.ToString("HH:mm");
             }
 
             newTableRec.FollowingTime = dTPСледования.Value.ToString("HH:mm");
