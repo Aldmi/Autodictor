@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -50,18 +51,15 @@ namespace MainExample
         {
             foreach (var данные in TrainSheduleTable.TrainTableRecords)
             {
-                string поезд = данные.ID + ":   " + данные.Num + " " + данные.Name + (данные.ArrivalTime != "" ? "   Приб: " + данные.ArrivalTime : "") + (данные.DepartureTime != "" ? "   Отпр: " + данные.DepartureTime : "");
+                string поезд = данные.Num + ":     " + "{" + данные.ID + "}" + данные.Name +" " + (данные.ArrivalTime != "" ? "   Приб: " + данные.ArrivalTime : "") + (данные.DepartureTime != "" ? "   Отпр: " + данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(поезд);
             }
-
 
             foreach (var номерПоезда in Program.НомераПоездов)
             {
                 cBНомерПоезда.Items.Add(номерПоезда);
                 cBНомерПоезда2.Items.Add(номерПоезда);
             }
-
-
 
             foreach (var item in DynamicSoundForm.DynamicSoundRecords)
                 cBШаблонОповещения.Items.Add(item.Name);
@@ -279,22 +277,20 @@ namespace MainExample
 
         private void cBПоездИзРасписания_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[] parts = cBПоездИзРасписания.Text.Split(':');
-            if (parts.Length > 0)
+            var mathStr = Regex.Match(cBПоездИзРасписания.Text, @"{(.*)}").Groups[1].Value;    
+            int id;
+            if (int.TryParse(mathStr, out id) == true)
             {
-                int ID;
-                if (int.TryParse(parts[0], out ID) == true)
+                foreach (var config in TrainSheduleTable.TrainTableRecords)
                 {
-                    foreach (var config in TrainSheduleTable.TrainTableRecords)
+                    if (config.ID == id)
                     {
-                        if (config.ID == ID)
-                        {
-                            TableRec = config;
-                            InitializeFormDate(TableRec);
-                        }
+                        TableRec = config;
+                        InitializeFormDate(TableRec);
                     }
                 }
             }
+            
         }
 
 
