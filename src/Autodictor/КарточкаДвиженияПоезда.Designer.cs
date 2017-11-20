@@ -100,12 +100,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btn_выход = new System.Windows.Forms.Button();
             this.cb_ВремяСтоянкиБудетИзмененно = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chBoxВыводНаТабло = new System.Windows.Forms.CheckBox();
+            this.chBoxВыводЗвука = new System.Windows.Forms.CheckBox();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.gBНастройкиПоезда.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // gB_НумерацияПоезда
@@ -328,9 +332,9 @@
             // btn_Подтвердить
             // 
             this.btn_Подтвердить.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Подтвердить.Location = new System.Drawing.Point(844, 487);
+            this.btn_Подтвердить.Location = new System.Drawing.Point(844, 484);
             this.btn_Подтвердить.Name = "btn_Подтвердить";
-            this.btn_Подтвердить.Size = new System.Drawing.Size(136, 39);
+            this.btn_Подтвердить.Size = new System.Drawing.Size(136, 56);
             this.btn_Подтвердить.TabIndex = 6;
             this.btn_Подтвердить.Text = "Подтвердить";
             this.btn_Подтвердить.UseVisualStyleBackColor = true;
@@ -553,9 +557,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(991, 487);
+            this.button1.Location = new System.Drawing.Point(991, 484);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(155, 39);
+            this.button1.Size = new System.Drawing.Size(155, 56);
             this.button1.TabIndex = 14;
             this.button1.Text = "Отмена";
             this.button1.UseVisualStyleBackColor = true;
@@ -703,7 +707,7 @@
             // 
             this.cBОтменен.AutoSize = true;
             this.cBОтменен.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cBОтменен.Location = new System.Drawing.Point(10, 494);
+            this.cBОтменен.Location = new System.Drawing.Point(13, 511);
             this.cBОтменен.Name = "cBОтменен";
             this.cBОтменен.Size = new System.Drawing.Size(257, 24);
             this.cBОтменен.TabIndex = 15;
@@ -725,7 +729,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(675, 359);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(631, 109);
+            this.groupBox3.Size = new System.Drawing.Size(631, 111);
             this.groupBox3.TabIndex = 47;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Нештатные ситуации";
@@ -918,9 +922,9 @@
             // btn_выход
             // 
             this.btn_выход.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_выход.Location = new System.Drawing.Point(1156, 487);
+            this.btn_выход.Location = new System.Drawing.Point(1156, 483);
             this.btn_выход.Name = "btn_выход";
-            this.btn_выход.Size = new System.Drawing.Size(155, 39);
+            this.btn_выход.Size = new System.Drawing.Size(155, 56);
             this.btn_выход.TabIndex = 49;
             this.btn_выход.Text = "Выход";
             this.btn_выход.UseVisualStyleBackColor = true;
@@ -930,7 +934,7 @@
             // 
             this.cb_ВремяСтоянкиБудетИзмененно.AutoSize = true;
             this.cb_ВремяСтоянкиБудетИзмененно.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_ВремяСтоянкиБудетИзмененно.Location = new System.Drawing.Point(290, 493);
+            this.cb_ВремяСтоянкиБудетИзмененно.Location = new System.Drawing.Point(13, 482);
             this.cb_ВремяСтоянкиБудетИзмененно.Name = "cb_ВремяСтоянкиБудетИзмененно";
             this.cb_ВремяСтоянкиБудетИзмененно.Size = new System.Drawing.Size(254, 25);
             this.cb_ВремяСтоянкиБудетИзмененно.TabIndex = 52;
@@ -938,11 +942,47 @@
             this.cb_ВремяСтоянкиБудетИзмененно.UseVisualStyleBackColor = true;
             this.cb_ВремяСтоянкиБудетИзмененно.CheckedChanged += new System.EventHandler(this.cb_ВремяСтоянкиБудетИзмененно_CheckedChanged);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBox5.Controls.Add(this.chBoxВыводЗвука);
+            this.groupBox5.Controls.Add(this.chBoxВыводНаТабло);
+            this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox5.Location = new System.Drawing.Point(290, 484);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(181, 56);
+            this.groupBox5.TabIndex = 54;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Вывод информации";
+            // 
+            // chBoxВыводНаТабло
+            // 
+            this.chBoxВыводНаТабло.AutoSize = true;
+            this.chBoxВыводНаТабло.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.chBoxВыводНаТабло.Location = new System.Drawing.Point(6, 24);
+            this.chBoxВыводНаТабло.Name = "chBoxВыводНаТабло";
+            this.chBoxВыводНаТабло.Size = new System.Drawing.Size(93, 25);
+            this.chBoxВыводНаТабло.TabIndex = 55;
+            this.chBoxВыводНаТабло.Text = "На табло";
+            this.chBoxВыводНаТабло.UseVisualStyleBackColor = true;
+            // 
+            // chBoxВыводЗвука
+            // 
+            this.chBoxВыводЗвука.AutoSize = true;
+            this.chBoxВыводЗвука.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.chBoxВыводЗвука.Location = new System.Drawing.Point(105, 25);
+            this.chBoxВыводЗвука.Name = "chBoxВыводЗвука";
+            this.chBoxВыводЗвука.Size = new System.Drawing.Size(62, 25);
+            this.chBoxВыводЗвука.TabIndex = 56;
+            this.chBoxВыводЗвука.Text = "Звук";
+            this.chBoxВыводЗвука.UseVisualStyleBackColor = true;
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1319, 532);
+            this.ClientSize = new System.Drawing.Size(1319, 546);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.cb_ВремяСтоянкиБудетИзмененно);
             this.Controls.Add(this.btn_выход);
             this.Controls.Add(this.gBНастройкиПоезда);
@@ -969,6 +1009,8 @@
             this.groupBox3.PerformLayout();
             this.gBНастройкиПоезда.ResumeLayout(false);
             this.gBНастройкиПоезда.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1048,5 +1090,8 @@
         private System.Windows.Forms.CheckBox cb_ВремяСтоянкиБудетИзмененно;
         private System.Windows.Forms.TextBox txb_НомерПоезда2;
         private System.Windows.Forms.TextBox txb_НомерПоезда;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox chBoxВыводЗвука;
+        private System.Windows.Forms.CheckBox chBoxВыводНаТабло;
     }
 }

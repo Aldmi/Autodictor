@@ -108,8 +108,10 @@
             this.cmb_Путь = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.rb_ПоДнямНедели = new System.Windows.Forms.RadioButton();
             this.rb_Постоянно = new System.Windows.Forms.RadioButton();
-            this.chbox_сменнаяНумерация = new System.Windows.Forms.CheckBox();
-            this.cBОграничениеОтправки = new System.Windows.Forms.CheckBox();
+            this.chBox_сменнаяНумерация = new System.Windows.Forms.CheckBox();
+            this.chBoxВыводНаТабло = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chBoxВыводЗвука = new System.Windows.Forms.CheckBox();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -118,6 +120,7 @@
             this.gbРежимРаботы.SuspendLayout();
             this.gb_ПутьПоУмолчанию.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_ПутиПоДнямНедели)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Принять
@@ -638,7 +641,7 @@
             this.cBБлокировка.AutoSize = true;
             this.cBБлокировка.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cBБлокировка.ForeColor = System.Drawing.Color.OrangeRed;
-            this.cBБлокировка.Location = new System.Drawing.Point(1117, 603);
+            this.cBБлокировка.Location = new System.Drawing.Point(1118, 618);
             this.cBБлокировка.Name = "cBБлокировка";
             this.cBБлокировка.Size = new System.Drawing.Size(275, 33);
             this.cBБлокировка.TabIndex = 51;
@@ -852,7 +855,7 @@
             this.gbРежимРаботы.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.gbРежимРаботы.Controls.Add(this.rB_РежРабРучной);
             this.gbРежимРаботы.Controls.Add(this.rB_РежРабАвтомат);
-            this.gbРежимРаботы.Location = new System.Drawing.Point(1120, 446);
+            this.gbРежимРаботы.Location = new System.Drawing.Point(1120, 359);
             this.gbРежимРаботы.Name = "gbРежимРаботы";
             this.gbРежимРаботы.Size = new System.Drawing.Size(270, 59);
             this.gbРежимРаботы.TabIndex = 57;
@@ -967,36 +970,60 @@
             this.rb_Постоянно.UseVisualStyleBackColor = true;
             this.rb_Постоянно.CheckedChanged += new System.EventHandler(this.rb_Постоянно_CheckedChanged);
             // 
-            // chbox_сменнаяНумерация
+            // chBox_сменнаяНумерация
             // 
-            this.chbox_сменнаяНумерация.AutoSize = true;
-            this.chbox_сменнаяНумерация.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-            this.chbox_сменнаяНумерация.Location = new System.Drawing.Point(580, 318);
-            this.chbox_сменнаяНумерация.Name = "chbox_сменнаяНумерация";
-            this.chbox_сменнаяНумерация.Size = new System.Drawing.Size(180, 24);
-            this.chbox_сменнаяНумерация.TabIndex = 61;
-            this.chbox_сменнаяНумерация.Text = "Сменная нумерация";
-            this.chbox_сменнаяНумерация.UseVisualStyleBackColor = true;
+            this.chBox_сменнаяНумерация.AutoSize = true;
+            this.chBox_сменнаяНумерация.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+            this.chBox_сменнаяНумерация.Location = new System.Drawing.Point(580, 318);
+            this.chBox_сменнаяНумерация.Name = "chBox_сменнаяНумерация";
+            this.chBox_сменнаяНумерация.Size = new System.Drawing.Size(180, 24);
+            this.chBox_сменнаяНумерация.TabIndex = 61;
+            this.chBox_сменнаяНумерация.Text = "Сменная нумерация";
+            this.chBox_сменнаяНумерация.UseVisualStyleBackColor = true;
             // 
-            // cBОграничениеОтправки
+            // chBoxВыводНаТабло
             // 
-            this.cBОграничениеОтправки.AutoSize = true;
-            this.cBОграничениеОтправки.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cBОграничениеОтправки.ForeColor = System.Drawing.Color.DarkGreen;
-            this.cBОграничениеОтправки.Location = new System.Drawing.Point(1117, 570);
-            this.cBОграничениеОтправки.Name = "cBОграничениеОтправки";
-            this.cBОграничениеОтправки.Size = new System.Drawing.Size(267, 22);
-            this.cBОграничениеОтправки.TabIndex = 62;
-            this.cBОграничениеОтправки.Text = "Ограничение отправки данных";
-            this.cBОграничениеОтправки.UseVisualStyleBackColor = true;
+            this.chBoxВыводНаТабло.AutoSize = true;
+            this.chBoxВыводНаТабло.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chBoxВыводНаТабло.ForeColor = System.Drawing.Color.DarkGreen;
+            this.chBoxВыводНаТабло.Location = new System.Drawing.Point(7, 26);
+            this.chBoxВыводНаТабло.Name = "chBoxВыводНаТабло";
+            this.chBoxВыводНаТабло.Size = new System.Drawing.Size(107, 24);
+            this.chBoxВыводНаТабло.TabIndex = 62;
+            this.chBoxВыводНаТабло.Text = "На табло";
+            this.chBoxВыводНаТабло.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBox1.Controls.Add(this.chBoxВыводЗвука);
+            this.groupBox1.Controls.Add(this.chBoxВыводНаТабло);
+            this.groupBox1.Location = new System.Drawing.Point(1120, 427);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(270, 58);
+            this.groupBox1.TabIndex = 63;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Вывод информаци";
+            // 
+            // chBoxВыводЗвука
+            // 
+            this.chBoxВыводЗвука.AutoSize = true;
+            this.chBoxВыводЗвука.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chBoxВыводЗвука.ForeColor = System.Drawing.Color.DarkGreen;
+            this.chBoxВыводЗвука.Location = new System.Drawing.Point(121, 26);
+            this.chBoxВыводЗвука.Name = "chBoxВыводЗвука";
+            this.chBoxВыводЗвука.Size = new System.Drawing.Size(67, 24);
+            this.chBoxВыводЗвука.TabIndex = 63;
+            this.chBoxВыводЗвука.Text = "Звук";
+            this.chBoxВыводЗвука.UseVisualStyleBackColor = true;
             // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1395, 712);
-            this.Controls.Add(this.cBОграничениеОтправки);
-            this.Controls.Add(this.chbox_сменнаяНумерация);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.chBox_сменнаяНумерация);
             this.Controls.Add(this.gb_ПутьПоУмолчанию);
             this.Controls.Add(this.tBНомерПоездаДоп);
             this.Controls.Add(this.label12);
@@ -1038,6 +1065,8 @@
             this.gb_ПутьПоУмолчанию.ResumeLayout(false);
             this.gb_ПутьПоУмолчанию.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_ПутиПоДнямНедели)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1123,8 +1152,10 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn cmb_Путь;
         private System.Windows.Forms.ComboBox cBНаправ;
         private System.Windows.Forms.Label lНапр;
-        private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
+        private System.Windows.Forms.CheckBox chBox_сменнаяНумерация;
         private System.Windows.Forms.GroupBox grbВремяДействия;
-        public System.Windows.Forms.CheckBox cBОграничениеОтправки;
+        public System.Windows.Forms.CheckBox chBoxВыводНаТабло;
+        private System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.CheckBox chBoxВыводЗвука;
     }
 }

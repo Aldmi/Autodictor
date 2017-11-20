@@ -151,8 +151,6 @@ namespace MainExample
             cBКуда.Text = record.СтанцияНазначения;
 
 
-
-
             switch (record.КоличествоПовторений)
             {
                 default:
@@ -221,6 +219,9 @@ namespace MainExample
             lb_фиксВрОтпр.Text = record.ФиксированноеВремяОтправления == null ? "--:--" : record.ФиксированноеВремяОтправления.Value.ToString("t");
             lb_фиксВрПриб.BackColor = record.ФиксированноеВремяПрибытия == null ? Color.Empty : Color.Aqua;
             lb_фиксВрОтпр.BackColor = record.ФиксированноеВремяОтправления == null ? Color.Empty : Color.Aqua;
+
+            chBoxВыводНаТабло.Checked = record.ВыводНаТабло;
+            chBoxВыводЗвука.Checked = record.ВыводЗвука;
         }
 
 
@@ -379,6 +380,9 @@ namespace MainExample
 
             _record.СменнаяНумерацияПоезда = chbox_сменнаяНумерация.Checked;
 
+
+            _record.ВыводНаТабло = chBoxВыводНаТабло.Checked;
+            _record.ВыводЗвука = chBoxВыводЗвука.Checked;
 
             if (rB_СоВсемиОстановками.Checked == true)
                 Примечание = "Со всеми остановками";

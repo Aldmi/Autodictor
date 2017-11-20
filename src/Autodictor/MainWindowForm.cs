@@ -40,7 +40,6 @@ using ISoundRecordPreprocessing = MainExample.Services.ISoundRecordPreprocessing
 
 namespace MainExample
 {
-
     public struct SoundRecord
     {
         public int ID;
@@ -88,6 +87,9 @@ namespace MainExample
         public string ОписаниеСостоянияКарточки;
         public byte БитыНештатныхСитуаций; // бит 0 - Отмена, бит 1 - задержка прибытия, бит 2 - задержка отправления, бит 3 - отправление по готовности
         public uint ТаймерПовторения;
+
+        public bool ВыводНаТабло;     // Работает только при наличии Contrains "SendingDataLimit".
+        public bool ВыводЗвука;       //True - разрешен вывод звуковых шаблонов.
 
 
         #region Methode
@@ -393,7 +395,7 @@ namespace MainExample
             данные = ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView1);
             if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
             {
-                СохранениеИзмененийДанныхВКарточке(старыеДанные, данные, "Удаленный диспетчер");
+                СохранениеИзмененийДанныхКарточкеБД(старыеДанные, данные, "Удаленный диспетчер");
             }
         }
 
@@ -1898,6 +1900,19 @@ namespace MainExample
             {
                 _tickCounter = 0;
 
+                var defaultType = new UniversalInputType
+                {
+                    IsActive = true,
+                    NumberOfTrain = "  ",
+                    PathNumber = "  ",
+                    Event = "   ",
+                    Time = DateTime.MinValue,
+                    Stations = "   ",
+                    Note = "   ",
+                    TypeTrain = TypeTrain.None,
+                    TableData = new List<UniversalInputType>() { new UniversalInputType() }
+                };
+
                 var uitPreprocessingService = PreprocessingOutputFactory.CreateUitPreprocessingOutputService();
 
                 if (Binding2GeneralScheduleBehaviors != null && Binding2GeneralScheduleBehaviors.Any())
@@ -1916,7 +1931,7 @@ namespace MainExample
                     //Отправить расписание из окна РАСПИСАНИЕ
                     if (binding2Shedule.Any())
                     {
-                        if (TrainSheduleTable.TrainTableRecords != null && TrainSheduleTable.TrainTableRecords.Any())
+                        if (TrainSheduleTable.TrainTableRecords != null)
                         {
                             foreach (var beh in binding2Shedule)
                             {
@@ -1929,8 +1944,9 @@ namespace MainExample
                                     uitPreprocessingService.StartPreprocessing(t);
                                     t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                 });
+
                                 var inData = new UniversalInputType { TableData = table };
-                                beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
+                                beh.InitializePagingBuffer(inData, defaultType, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
                     }
@@ -1953,25 +1969,8 @@ namespace MainExample
                                     t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                 });
 
-                                //Если таблица пуста, отправим пустой тип
-                                if (!table.Any())
-                                {
-                                    table.Add(new UniversalInputType
-                                    {
-                                        IsActive = true,
-                                        NumberOfTrain = "  ",
-                                        PathNumber ="  ",
-                                        Event = "   ",
-                                        Time = DateTime.MinValue,
-                                        Stations = "   ",
-                                        Note = "   ",
-                                        TypeTrain = TypeTrain.None,
-                                        TableData = new List<UniversalInputType>() { new UniversalInputType() }
-                                    });
-                                }
-
                                 var inData = new UniversalInputType { TableData = table };
-                                beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
+                                beh.InitializePagingBuffer(inData, defaultType, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
                     }
@@ -1993,7 +1992,7 @@ namespace MainExample
                                         t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                     });
                                 var inData = new UniversalInputType {TableData = table};
-                                beh.InitializePagingBuffer(inData, beh.CheckContrains, beh.GetCountDataTake());
+                                beh.InitializePagingBuffer(inData, defaultType, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
                     }
@@ -2127,7 +2126,7 @@ namespace MainExample
                                                 данныеОчистки.НомерПути = данныеOld.НомерПути;
                                                 SendOnPathTable(данныеОчистки);
 
-                                                СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                                СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
                                             }
                                     }
 
@@ -2146,7 +2145,7 @@ namespace MainExample
                                             данныеОчистки.НомерПути = данныеOld.НомерПути;
                                             SendOnPathTable(данныеОчистки);
 
-                                            СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                            СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
                                         }
                                     }
                                 }
@@ -2168,7 +2167,7 @@ namespace MainExample
                                                 данныеОчистки.НомерПути = данныеOld.НомерПути;
                                                 SendOnPathTable(данныеОчистки);
 
-                                                СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                                СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
                                             }
                                     }
 
@@ -2188,7 +2187,7 @@ namespace MainExample
                                             данныеОчистки.НомерПути = данныеOld.НомерПути;
                                             SendOnPathTable(данныеОчистки);
 
-                                            СохранениеИзмененийДанныхВКарточке(данныеOld, данные); //DEBUG
+                                            СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
                                         }
                                     }
                                 }
@@ -2437,7 +2436,7 @@ namespace MainExample
                                 данные= ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView);
                                 if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
                                 {
-                                    СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
+                                    СохранениеИзмененийДанныхКарточкеБД(старыеДанные, данные);
                                 }
                             }
                         }
@@ -2790,6 +2789,9 @@ namespace MainExample
 
         public static void ВоспроизвестиШаблонОповещения(string названиеСообщения, SoundRecord record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
         {
+            if(!record.ВыводЗвука)
+                return;
+            
             string logMessage = "";
 
             string[] файлыМинут = new string[] { "00 минут", "01 минута", "02 минуты", "03 минуты", "04 минуты", "05 минут", "06 минут", "07 минут", "08 минут",
@@ -3530,7 +3532,7 @@ namespace MainExample
                             старыеДанные.НомерПути = старыйНомерПути;
                             if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
                             {
-                                СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
+                                СохранениеИзмененийДанныхКарточкеБД(старыеДанные, данные);
                             }
                             return;
                         }
@@ -3551,7 +3553,7 @@ namespace MainExample
                                 старыеДанные.НумерацияПоезда = СтараяНумерацияПоезда;
                                 if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
                                 {
-                                    СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
+                                    СохранениеИзмененийДанныхКарточкеБД(старыеДанные, данные);
                                 }
                                 return;
                             }
@@ -3572,7 +3574,7 @@ namespace MainExample
                                 старыеДанные.КоличествоПовторений = СтароеКоличествоПовторений;
                                 if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
                                 {
-                                    СохранениеИзмененийДанныхВКарточке(старыеДанные, данные);
+                                    СохранениеИзмененийДанныхКарточкеБД(старыеДанные, данные);
                                 }
                                 return;
                             }
@@ -3847,7 +3849,7 @@ namespace MainExample
 
 
 
-        private void СохранениеИзмененийДанныхВКарточке(SoundRecord старыеДанные, SoundRecord данные, string источникИзменений= "Текущий пользователь")
+        private void СохранениеИзмененийДанныхКарточкеБД(SoundRecord старыеДанные, SoundRecord данные, string источникИзменений= "Текущий пользователь")
         {
             var recChange = new SoundRecordChanges
             {

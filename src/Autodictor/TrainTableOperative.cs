@@ -292,12 +292,20 @@ namespace MainExample
                                 Данные.ChangeTrainPathDirection = changeDirection;
                             }
 
-                            Данные.ОграничениеОтправки = false;
+                            Данные.IsScoreBoardOutput = false;
                             if (Settings.Length >= 27)
                             {
                                 bool ограничениеОтправки;
                                 bool.TryParse(Settings[26], out ограничениеОтправки);
-                                Данные.ОграничениеОтправки = ограничениеОтправки;
+                                Данные.IsScoreBoardOutput = ограничениеОтправки;
+                            }
+
+                            Данные.IsSoundOutput = true;
+                            if (Settings.Length >= 28)
+                            {
+                                bool выводЗвука;
+                                bool.TryParse(Settings[27], out выводЗвука);
+                                Данные.IsSoundOutput = выводЗвука;
                             }
 
 
@@ -356,7 +364,7 @@ namespace MainExample
                             TrainTableRecords[i].StationArrival + ";" +
                             TrainTableRecords[i].Direction + ";" +
                             TrainTableRecords[i].ChangeTrainPathDirection + ";" +
-                            TrainTableRecords[i].ОграничениеОтправки;
+                            TrainTableRecords[i].IsScoreBoardOutput;
 
                         DumpFile.WriteLine(line);
                     }

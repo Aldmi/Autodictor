@@ -75,7 +75,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
         }
 
 
-        public void InitializePagingBuffer(UniversalInputType inData, Func<UniversalInputType, bool> checkContrains, int? countDataTake = null)
+        public void InitializePagingBuffer(UniversalInputType inData, UniversalInputType defaultInData, Func<UniversalInputType, bool> checkContrains, int? countDataTake = null)
         {
             var query = inData.TableData.Where(checkContrains);
             if (countDataTake != null && countDataTake > 0)
@@ -84,6 +84,11 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule
             }
 
             var filteredTable = query.ToList();
+            if (!filteredTable.Any())
+            {
+                filteredTable.Add(defaultInData);
+            }
+
             if (IsPaging)
             {
                 PagingHelper.PagingBuffer = filteredTable;

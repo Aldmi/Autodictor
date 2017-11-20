@@ -116,6 +116,9 @@ namespace MainExample.Mappers
             record.СтанцияОтправления = config.StationDepart;
             record.СтанцияНазначения = config.StationArrival;
 
+            record.ВыводНаТабло = config.IsScoreBoardOutput;
+            record.ВыводЗвука= config.IsSoundOutput;
+
 
             int часы = 0;
             int минуты = 0;
@@ -360,7 +363,7 @@ namespace MainExample.Mappers
                 DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(t.Days).ПолучитьСтрокуОписанияРасписания(),
                 DaysFollowingAlias = t.DaysAlias,
                 Addition = t.Addition,
-                SendingDataLimit = t.ОграничениеОтправки,
+                SendingDataLimit = t.IsScoreBoardOutput,
                 Command = Command.None,
                 EmergencySituation = 0x00
             };
@@ -579,6 +582,7 @@ namespace MainExample.Mappers
                     DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(data.ДниСледования).ПолучитьСтрокуОписанияРасписания(),
                     DaysFollowingAlias = data.ДниСледованияAlias,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
+                    SendingDataLimit = data.ВыводНаТабло,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };
@@ -610,6 +614,7 @@ namespace MainExample.Mappers
                     DaysFollowing = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(data.ДниСледования).ПолучитьСтрокуОписанияРасписания(),
                     DaysFollowingAlias = data.ДниСледованияAlias,
                     Addition = (data.ИспользоватьДополнение["табло"]) ? data.Дополнение : string.Empty,
+                    SendingDataLimit = data.ВыводНаТабло,
                     Command = command,
                     EmergencySituation = data.БитыНештатныхСитуаций
                 };

@@ -185,7 +185,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlSpecialSettings
                         continue;
                     }
 
-                    if (Regex.Match(s, "SendingDataLimit").Success)
+                    if (Regex.Match(s.ToLower(), "sendingdatalimit").Success)
                     {
                         Conditions.SendingDataLimit = true;
                         continue;

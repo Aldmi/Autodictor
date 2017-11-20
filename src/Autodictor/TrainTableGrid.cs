@@ -559,7 +559,8 @@ namespace MainExample
             };
             Данные.Автомат = true;
 
-            Данные.ОграничениеОтправки = false;
+            Данные.IsScoreBoardOutput = false;
+            Данные.IsSoundOutput = true;
 
             //Добавили в список
             TrainSheduleTable.TrainTableRecords.Add(Данные);

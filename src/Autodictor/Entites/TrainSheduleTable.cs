@@ -33,7 +33,7 @@ namespace MainExample.Entites
         public bool Active;               //активность, отмека галочкой
         public string SoundTemplates;     //
         public byte TrainPathDirection;   //Нумерация вагонов
-        public bool ChangeTrainPathDirection;      //смена направления (для трназитов)
+        public bool ChangeTrainPathDirection;      //смена направления (для транзитов)
         public Dictionary<WeekDays, string> TrainPathNumber;      //Пути по дням недели или постоянно
         public bool PathWeekDayes;                                //true- установленны пути по дням недели, false - путь установленн постоянно
         public ТипПоезда ТипПоезда;
@@ -43,7 +43,8 @@ namespace MainExample.Entites
         public string Addition;                                   //Дополнение
         public Dictionary<string, bool> ИспользоватьДополнение;   //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
         public bool Автомат;                                      // true - поезд обрабатывается в автомате.
-        public bool ОграничениеОтправки;                          // true.
+        public bool IsScoreBoardOutput;                           // Вывод на табло. true. (Работает если указанн Contrains SendingDataLimit)
+        public bool IsSoundOutput;                                // Вывод звука. true.
     };
 
 
@@ -198,8 +199,11 @@ namespace MainExample.Entites
                                                   trainTableRecords[i].PathWeekDayes) + ";" +
                                               trainTableRecords[i].ТипПоезда.ToString() + ";" +
                                               trainTableRecords[i].Примечание + ";" +
-                                              trainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                              trainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i]
+                                                  .ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i]
+                                                  .ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") +
+                                              ";" +
                                               trainTableRecords[i].Addition + ";" +
                                               (trainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
                                               (trainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
@@ -213,9 +217,11 @@ namespace MainExample.Entites
                                               trainTableRecords[i].StationArrival + ";" +
                                               trainTableRecords[i].Direction + ";" +
                                               trainTableRecords[i].ChangeTrainPathDirection + ";" +
-                                              trainTableRecords[i].ОграничениеОтправки;
+                                              trainTableRecords[i].IsScoreBoardOutput + ";" +
+                                              trainTableRecords[i].IsSoundOutput;
 
-                                dumpFile.WriteLine(line);
+
+                            dumpFile.WriteLine(line);
                             }
 
                             dumpFile.Close();
@@ -350,12 +356,28 @@ namespace MainExample.Entites
                                     данные.ChangeTrainPathDirection = changeDirection;
                                 }
 
-                                данные.ОграничениеОтправки = false;
+                                данные.IsScoreBoardOutput = false;
                                 if (settings.Length >= 27)
                                 {
-                                    bool ограничениеОтправки;
-                                    bool.TryParse(settings[26], out ограничениеОтправки);
-                                    данные.ОграничениеОтправки = ограничениеОтправки;
+                                    bool выводНаТабло;
+                                    bool.TryParse(settings[26], out выводНаТабло);
+                                    данные.IsScoreBoardOutput = выводНаТабло;
+                                }
+
+                                данные.IsScoreBoardOutput = false;
+                                if (settings.Length >= 27)
+                                {
+                                    bool выводНаТабло;
+                                    bool.TryParse(settings[26], out выводНаТабло);
+                                    данные.IsScoreBoardOutput = выводНаТабло;
+                                }
+
+                                данные.IsSoundOutput = true;
+                                if (settings.Length >= 28)
+                                {
+                                    bool выводЗвука;
+                                    bool.TryParse(settings[27], out выводЗвука);
+                                    данные.IsSoundOutput = выводЗвука;
                                 }
 
                                 trainTableRecords.Add(данные);

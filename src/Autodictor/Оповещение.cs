@@ -34,9 +34,9 @@ namespace MainExample
 
 
             cBОтсчетВагонов.SelectedIndex = this.РасписаниеПоезда.TrainPathDirection;
-            chbox_сменнаяНумерация.Checked= this.РасписаниеПоезда.ChangeTrainPathDirection;
-            cBОграничениеОтправки.Checked = this.РасписаниеПоезда.ОграничениеОтправки;
-
+            chBox_сменнаяНумерация.Checked= this.РасписаниеПоезда.ChangeTrainPathDirection;
+            chBoxВыводНаТабло.Checked = this.РасписаниеПоезда.IsScoreBoardOutput;
+            chBoxВыводЗвука.Checked = this.РасписаниеПоезда.IsSoundOutput;
 
             var directions = Program.DirectionRepository.List().ToList();
             if (directions.Any())
@@ -295,8 +295,9 @@ namespace MainExample
             РасписаниеПоезда.TrainPathDirection = (byte)cBОтсчетВагонов.SelectedIndex;
             РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
 
-            РасписаниеПоезда.ChangeTrainPathDirection = chbox_сменнаяНумерация.Checked;
-            РасписаниеПоезда.ОграничениеОтправки = cBОграничениеОтправки.Checked;
+            РасписаниеПоезда.ChangeTrainPathDirection = chBox_сменнаяНумерация.Checked;
+            РасписаниеПоезда.IsScoreBoardOutput = chBoxВыводНаТабло.Checked;
+            РасписаниеПоезда.IsSoundOutput = chBoxВыводЗвука.Checked;
 
 
             if (rBПрибытие.Checked == true)
@@ -401,22 +402,22 @@ namespace MainExample
                 dTPПрибытие.Visible = false;
                 tBНомерПоездаДоп.Visible = false;
 
-                chbox_сменнаяНумерация.Checked = false;
-                chbox_сменнаяНумерация.Enabled = false;
+                chBox_сменнаяНумерация.Checked = false;
+                chBox_сменнаяНумерация.Enabled = false;
             }
             else if (rBОтправление.Checked)
             {
                 dTPПрибытие.Visible = false;
                 tBНомерПоездаДоп.Visible = false;
 
-                chbox_сменнаяНумерация.Checked = false;
-                chbox_сменнаяНумерация.Enabled = false;
+                chBox_сменнаяНумерация.Checked = false;
+                chBox_сменнаяНумерация.Enabled = false;
             }
             else
             {
                 dTPПрибытие.Visible = true;
                 tBНомерПоездаДоп.Visible = true;
-                chbox_сменнаяНумерация.Enabled = true;
+                chBox_сменнаяНумерация.Enabled = true;
             }
         }
 
@@ -453,7 +454,7 @@ namespace MainExample
                 cBПутьПоУмолчанию.Enabled = false;
                 cBОтсчетВагонов.Enabled = false;
                 gBШаблонОповещения.Enabled = false;
-                chbox_сменнаяНумерация.Enabled = false;
+                chBox_сменнаяНумерация.Enabled = false;
             }
             else
             {
@@ -465,7 +466,7 @@ namespace MainExample
                 cBПутьПоУмолчанию.Enabled = true;
                 cBОтсчетВагонов.Enabled = true;
                 gBШаблонОповещения.Enabled = true;
-                chbox_сменнаяНумерация.Enabled = true;
+                chBox_сменнаяНумерация.Enabled = true;
             }
         }
 
