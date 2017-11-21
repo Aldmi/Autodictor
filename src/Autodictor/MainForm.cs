@@ -13,6 +13,9 @@ using System.Windows.Input;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
+using CommunicationDevices.Quartz.Jobs;
+using CommunicationDevices.Quartz.Shedules;
+using CommunicationDevices.Verification;
 using Domain.Entitys;
 using Domain.Entitys.Authentication;
 using Domain.Service;
@@ -27,6 +30,10 @@ namespace MainExample
     {
         public ExchangeModel ExchangeModel { get; set; }
         public IDisposable DispouseCisClientIsConnectRx { get; set; }
+        public VerificationActivation VerificationActivationService { get; set; } = new VerificationActivation();
+
+        public IDisposable DispouseActivationWarningInvokeRx { get; set; }
+        public IDisposable DispouseActivationBlockingInvokeRx { get; set; }
 
         public static int VisibleStyle = 0;
 
@@ -65,6 +72,8 @@ namespace MainExample
             РежимРаботы = tSBРежимРаботы;
 
             Включить.BackColor = Color.Red;
+
+            QuartzVerificationActivation.Start(VerificationActivationService);
         }
 
 
@@ -140,6 +149,21 @@ namespace MainExample
                 //}
             });
 
+            DispouseActivationWarningInvokeRx = VerificationActivationService.WarningInvokeRx.Subscribe(verAct =>
+            {
+                //DEBUG
+                //Проверять на открытие 1 экземпляра
+                AboutForm formTest = new AboutForm();
+                formTest.ShowDialog();
+            });
+
+            DispouseActivationBlockingInvokeRx = VerificationActivationService.BlockingInvokeRx.Subscribe(verAct =>
+            {
+                //DEBUG
+                //Проверять на открытие 1 экземпляра
+                AboutForm formTest = new AboutForm();
+                formTest.ShowDialog();
+            });
 
             btnMainWindowShow_Click(null, EventArgs.Empty);
         }
@@ -161,8 +185,7 @@ namespace MainExample
                                                              ExchangeModel.Binding2ChangesSchedules,
                                                              ExchangeModel.Binding2ChangesEvent,
                                                              ExchangeModel.Binding2GetData,
-                                                             ExchangeModel.DeviceSoundChannelManagement
-                                                            )
+                                                             ExchangeModel.DeviceSoundChannelManagement)
                 {
                     MdiParent = this,
                     WindowState = FormWindowState.Maximized
@@ -337,13 +360,7 @@ namespace MainExample
 
 
 
-        protected override void OnClosed(EventArgs e)
-        {
-            DispouseCisClientIsConnectRx.Dispose();
 
-            ExchangeModel.Dispose();
-            base.OnClosed(e);
-        }
 
 
 
@@ -675,6 +692,19 @@ namespace MainExample
         {
             var form= new AdminForm();
             form.ShowDialog();
+        }
+
+
+        protected override void OnClosed(EventArgs e)
+        {
+            DispouseCisClientIsConnectRx.Dispose();
+            ExchangeModel.Dispose();
+
+            DispouseActivationWarningInvokeRx.Dispose();
+            DispouseActivationBlockingInvokeRx.Dispose();
+            QuartzVerificationActivation.Shutdown();
+
+            base.OnClosed(e);
         }
     }
 }

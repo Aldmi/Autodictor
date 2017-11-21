@@ -79,7 +79,7 @@
 
 
 <DevicesWithHttp>
-	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="7000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ОкноРасписанияОперативное" ProviderType="xml_sheduleWindow:sortable" 
+	 <DeviceHttp Id="300" Name="HttpTable" Address="http://cms.indigointeractive.ru/rasp/upload.php?terminalid=61"  Period="5000" TimeRespone="3000" Description="Onlain табло" Binding="ToGeneral:ГлавноеОкно" Contrains="SendingDataLimit" ProviderType="xml_mainWindow:sortable:transitSortArrival" 
 	              Headers='Method:POST + 
 				           User-Agent: Mozilla/3.0 (compatible; Indy Library) +
 						   Accept: text/html, */* +
