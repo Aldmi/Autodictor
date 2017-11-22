@@ -73,7 +73,7 @@ namespace MainExample
 
             Включить.BackColor = Color.Red;
 
-            QuartzVerificationActivation.Start(VerificationActivationService);
+            //QuartzVerificationActivation.Start(VerificationActivationService);
         }
 
 

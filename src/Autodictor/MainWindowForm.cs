@@ -829,21 +829,15 @@ namespace MainExample
                 var key = SoundRecords.Keys.ElementAt(i);
                 var rec = SoundRecords[key];
 
-
                 var change = filtredOnMaxDate.FirstOrDefault(f => (f.ScheduleId == rec.IdTrain.ScheduleId) &&
-                                                                  (f.Rec.НомерПоезда == rec.НомерПоезда) &&
-                                                                  (f.Rec.НомерПоезда2 == rec.НомерПоезда2) &&
                                                                   (f.Rec.Время.Date == rec.Время.Date));
-
-
                 if (change != null)
                 {
-                    var keyNew = change.Rec.Время.ToString("yy.MM.dd  HH:mm:ss");
-                    SoundRecords.Remove(keyNew);
-                    SoundRecordsOld.Remove(keyNew);
+                    var keyOld = rec.Время.ToString("yy.MM.dd  HH:mm:ss");
+                    SoundRecords.Remove(keyOld);
+                    SoundRecordsOld.Remove(keyOld);
 
-                    keyNew = change.NewRec.Время.ToString("yy.MM.dd  HH:mm:ss");
-
+                    var keyNew = change.NewRec.Время.ToString("yy.MM.dd  HH:mm:ss");
                     ПрименениеЗагруженныхИзменений(rec, change.NewRec, keyNew);
                     ФлагОбновитьСписокЖелезнодорожныхСообщенийВТаблице = true;
                 }
@@ -886,6 +880,7 @@ namespace MainExample
             rec.НумерацияПоезда = newRec.НумерацияПоезда;
             rec.СтанцияНазначения = newRec.СтанцияНазначения;
             rec.СтанцияОтправления = newRec.СтанцияОтправления;
+            rec.НазваниеПоезда = newRec.НазваниеПоезда;
             rec.СостояниеОтображения = newRec.СостояниеОтображения;
             rec.ТипСообщения = newRec.ТипСообщения;//???
 
