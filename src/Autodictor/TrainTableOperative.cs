@@ -55,8 +55,6 @@ namespace MainExample
             if (form.ShowDialog() == DialogResult.OK)
             {
                 var tableRec = form.TableRec;
-               // tableRec.ID = TrainTableRecords.Any() ? TrainTableRecords.Max(rec => rec.ID) + 1 : 1;
-
                 TrainTableRecords.Add(tableRec);
                 ОбновитьДанныеВСписке();
             }

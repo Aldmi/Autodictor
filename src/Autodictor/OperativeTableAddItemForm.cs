@@ -431,7 +431,16 @@ namespace MainExample
         /// </summary>
         private void btnДобавить_Click(object sender, EventArgs e)
         {
-            var newId = 1000 + TableRec.ID;
+            //Присвоение уникального ID
+            var newId = 1000;
+            var id = -1;
+            while (id != 0)
+            {
+                id = TrainTableOperative.TrainTableRecords.FirstOrDefault(tr => tr.ID == newId).ID;
+                if (id != 0)
+                  newId++;
+            }
+
             CreateTableRec(newId);
             DialogResult = DialogResult.OK;
             Close();
