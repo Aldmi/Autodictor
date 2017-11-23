@@ -55,7 +55,7 @@ namespace MainExample
             if (form.ShowDialog() == DialogResult.OK)
             {
                 var tableRec = form.TableRec;
-                tableRec.ID = TrainTableRecords.Any() ? TrainTableRecords.Max(rec => rec.ID) + 1 : 1;
+               // tableRec.ID = TrainTableRecords.Any() ? TrainTableRecords.Max(rec => rec.ID) + 1 : 1;
 
                 TrainTableRecords.Add(tableRec);
                 ОбновитьДанныеВСписке();
@@ -336,7 +336,8 @@ namespace MainExample
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
-                        string line = (i + 1).ToString() + ";" +
+                        string line =
+                            TrainTableRecords[i].ID + ";" +
                             TrainTableRecords[i].Num + ";" +
                             TrainTableRecords[i].Name + ";" +
                             TrainTableRecords[i].ArrivalTime + ";" +

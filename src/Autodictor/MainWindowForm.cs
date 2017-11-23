@@ -755,12 +755,17 @@ namespace MainExample
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(TrainTableOperative.TrainTableRecords, DateTime.Now.AddDays(1), hour => (hour >= 0 && hour <= 11), ref id); // на след. сутки на 2 первых часа
 
             //Вычтем из Главного расписания элементы оперативного расписания, уже добавленные к списку.
+            //var differences = TrainSheduleTable.TrainTableRecords.Where(l2 =>
+            //      !SoundRecords.Values.Any(l1 =>
+            //      l1.НомерПоезда == l2.Num &&
+            //      l1.НомерПоезда2 == l2.Num2 &&
+            //      l1.Направление == l2.Direction
+            //      )).ToList();
+
             var differences = TrainSheduleTable.TrainTableRecords.Where(l2 =>
-                  !SoundRecords.Values.Any(l1 =>
-                  l1.НомерПоезда == l2.Num &&
-                  l1.НомерПоезда2 == l2.Num2 &&
-                  l1.Направление == l2.Direction
-                  )).ToList();
+                !SoundRecords.Values.Any(l1 =>
+                    l1.IdTrain.ScheduleId == l2.ID 
+                )).ToList();
 
             //Добавим оставшиеся записи
             СозданиеЗвуковыхФайловРасписанияЖдТранспорта(differences, DateTime.Now, null, ref id);                                         // на тек. сутки

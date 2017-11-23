@@ -90,6 +90,7 @@
             this.cBНомерПоезда2 = new System.Windows.Forms.ComboBox();
             this.gb_ПутьПоУмолчанию = new System.Windows.Forms.GroupBox();
             this.cBПутьПоУмолчанию = new System.Windows.Forms.ComboBox();
+            this.btnЗаменить = new System.Windows.Forms.Button();
             this.gBШаблонОповещения.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -100,9 +101,9 @@
             // btnОтмена
             // 
             this.btnОтмена.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnОтмена.Location = new System.Drawing.Point(1206, 626);
+            this.btnОтмена.Location = new System.Drawing.Point(1247, 626);
             this.btnОтмена.Name = "btnОтмена";
-            this.btnОтмена.Size = new System.Drawing.Size(177, 45);
+            this.btnОтмена.Size = new System.Drawing.Size(113, 45);
             this.btnОтмена.TabIndex = 85;
             this.btnОтмена.Text = "ОТМЕНА";
             this.btnОтмена.UseVisualStyleBackColor = true;
@@ -110,9 +111,9 @@
             // btnДобавить
             // 
             this.btnДобавить.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnДобавить.Location = new System.Drawing.Point(1024, 626);
+            this.btnДобавить.Location = new System.Drawing.Point(1120, 626);
             this.btnДобавить.Name = "btnДобавить";
-            this.btnДобавить.Size = new System.Drawing.Size(176, 45);
+            this.btnДобавить.Size = new System.Drawing.Size(117, 45);
             this.btnДобавить.TabIndex = 73;
             this.btnДобавить.Text = "ДОБАВИТЬ";
             this.btnДобавить.UseVisualStyleBackColor = true;
@@ -701,9 +702,9 @@
             this.gbРежимРаботы.Controls.Add(this.rB_РежРабРучной);
             this.gbРежимРаботы.Controls.Add(this.rB_РежРабАвтомат);
             this.gbРежимРаботы.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.gbРежимРаботы.Location = new System.Drawing.Point(1052, 541);
+            this.gbРежимРаботы.Location = new System.Drawing.Point(982, 541);
             this.gbРежимРаботы.Name = "gbРежимРаботы";
-            this.gbРежимРаботы.Size = new System.Drawing.Size(270, 59);
+            this.gbРежимРаботы.Size = new System.Drawing.Size(378, 59);
             this.gbРежимРаботы.TabIndex = 89;
             this.gbРежимРаботы.TabStop = false;
             this.gbРежимРаботы.Text = "Режим работы";
@@ -712,7 +713,7 @@
             // 
             this.rB_РежРабРучной.AutoSize = true;
             this.rB_РежРабРучной.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rB_РежРабРучной.Location = new System.Drawing.Point(155, 25);
+            this.rB_РежРабРучной.Location = new System.Drawing.Point(243, 25);
             this.rB_РежРабРучной.Name = "rB_РежРабРучной";
             this.rB_РежРабРучной.Size = new System.Drawing.Size(94, 24);
             this.rB_РежРабРучной.TabIndex = 61;
@@ -723,7 +724,7 @@
             // 
             this.rB_РежРабАвтомат.AutoSize = true;
             this.rB_РежРабАвтомат.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rB_РежРабАвтомат.Location = new System.Drawing.Point(21, 25);
+            this.rB_РежРабАвтомат.Location = new System.Drawing.Point(29, 25);
             this.rB_РежРабАвтомат.Name = "rB_РежРабАвтомат";
             this.rB_РежРабАвтомат.Size = new System.Drawing.Size(103, 24);
             this.rB_РежРабАвтомат.TabIndex = 60;
@@ -769,11 +770,23 @@
             this.cBПутьПоУмолчанию.Size = new System.Drawing.Size(204, 28);
             this.cBПутьПоУмолчанию.TabIndex = 46;
             // 
+            // btnЗаменить
+            // 
+            this.btnЗаменить.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnЗаменить.Location = new System.Drawing.Point(982, 626);
+            this.btnЗаменить.Name = "btnЗаменить";
+            this.btnЗаменить.Size = new System.Drawing.Size(128, 45);
+            this.btnЗаменить.TabIndex = 93;
+            this.btnЗаменить.Text = "Заменить";
+            this.btnЗаменить.UseVisualStyleBackColor = true;
+            this.btnЗаменить.Click += new System.EventHandler(this.btnЗаменить_Click);
+            // 
             // OperativeTableAddItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1409, 683);
+            this.Controls.Add(this.btnЗаменить);
             this.Controls.Add(this.gb_ПутьПоУмолчанию);
             this.Controls.Add(this.cBНомерПоезда2);
             this.Controls.Add(this.label12);
@@ -882,5 +895,6 @@
         private System.Windows.Forms.ComboBox cBНомерПоезда2;
         private System.Windows.Forms.GroupBox gb_ПутьПоУмолчанию;
         private System.Windows.Forms.ComboBox cBПутьПоУмолчанию;
+        private System.Windows.Forms.Button btnЗаменить;
     }
 }
