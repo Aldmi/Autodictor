@@ -431,7 +431,7 @@ namespace MainExample
         /// </summary>
         private void btnДобавить_Click(object sender, EventArgs e)
         {
-            //Присвоение уникального ID
+            //Поиск и присвоение уникального ID
             var newId = 1000;
             var id = -1;
             while (id != 0)
@@ -452,37 +452,38 @@ namespace MainExample
         /// </summary>
         private void btnЗаменить_Click(object sender, EventArgs e)
         {
+            //Удалить поезд с таким же ID
             var newId = TableRec.ID;
+            var findTrain = TrainTableOperative.TrainTableRecords.FirstOrDefault(tr => tr.ID == newId);
+            if (findTrain.ID != 0)
+            {
+                TrainTableOperative.TrainTableRecords.Remove(findTrain);
+            }
+
             CreateTableRec(newId);
             DialogResult = DialogResult.OK;
             Close();
         }
 
 
+
         private void CreateTableRec(int id)
         {
-            var newTableRec = new TrainTableRecord
-            {
-                ID = id,
-                SoundTemplates = ПолучитьШаблоныОповещения(),
-                Num = cBНомерПоезда.Text,
-                Num2 = cBНомерПоезда2.Text,
-                ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex,
-                Direction = TableRec.Direction,
-                Active = true,
-                Автомат = rB_РежРабАвтомат.Checked,
-                DaysAlias = tb_ДниСледованияAlias.Text
-            };
-
+            var newTableRec = TableRec;
+            newTableRec.ID = id;
+            newTableRec.SoundTemplates = ПолучитьШаблоныОповещения();
+            newTableRec.Num = cBНомерПоезда.Text;
+            newTableRec.Num2 = cBНомерПоезда2.Text;
+            newTableRec.ТипПоезда = (ТипПоезда) cBКатегория.SelectedIndex;
+            newTableRec.Автомат = rB_РежРабАвтомат.Checked;
+            newTableRec.DaysAlias = tb_ДниСледованияAlias.Text;
             newTableRec.StationDepart = cBОткуда.Text;
             newTableRec.StationArrival = cBКуда.Text;
-
 
             if (cBОткуда.Text != "")
                 newTableRec.Name = cBОткуда.Text + " - " + cBКуда.Text;
             else
                 newTableRec.Name = cBКуда.Text;
-
 
             if (rBПрибытие.Checked == true)
             {
@@ -511,8 +512,6 @@ namespace MainExample
             }
 
             newTableRec.FollowingTime = dTPСледования.Value.ToString("HH:mm");
-
-
 
             if (rBНеОповещать.Checked)
             {
@@ -547,8 +546,6 @@ namespace MainExample
                         newTableRec.Примечание = newTableRec.Примечание.Remove(newTableRec.Примечание.Length - 1);
             }
 
-
-
             //РАСПИСАНИЕ ПОЕЗДА
             if (rBВремяДействияС.Checked == true)
             {
@@ -573,23 +570,20 @@ namespace MainExample
 
             newTableRec.Days = Расписание.ПолучитьПланРасписанияПоезда().ПолучитьСтрокуРасписания();
 
-
             //ПУТЬ
             newTableRec.PathWeekDayes = TableRec.PathWeekDayes;
             newTableRec.TrainPathNumber = TableRec.TrainPathNumber;
             TableRec.TrainPathNumber[WeekDays.Постоянно] = cBПутьПоУмолчанию.Text;
 
-            newTableRec.ИспользоватьДополнение = new Dictionary<string, bool>
-            {
-                ["табло"] = false, //cb_Дополнение_Табло.Checked;
-                ["звук"] = false  //cb_Дополнение_Звук.Checked;
-            };
-
             TableRec = newTableRec;
         }
 
-
         #endregion
+
+
+
+
+
 
     }
 }

@@ -48,7 +48,7 @@
             this.lb_фиксВрПриб = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cB_НомерПути = new System.Windows.Forms.ComboBox();
-            this.btn_Подтвердить = new System.Windows.Forms.Button();
+            this.btn_Ok = new System.Windows.Forms.Button();
             this.gB_Прибытие = new System.Windows.Forms.GroupBox();
             this.lb_фиксВрОтпр = new System.Windows.Forms.Label();
             this.cBВПути = new System.Windows.Forms.CheckBox();
@@ -68,7 +68,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.dTP_Прибытие = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Применить = new System.Windows.Forms.Button();
             this.comboBox_displayTable = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -98,11 +98,11 @@
             this.cb_Дополнение_Звук = new System.Windows.Forms.CheckBox();
             this.tb_Дополнение = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btn_выход = new System.Windows.Forms.Button();
+            this.btn_отмена = new System.Windows.Forms.Button();
             this.cb_ВремяСтоянкиБудетИзмененно = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.chBoxВыводНаТабло = new System.Windows.Forms.CheckBox();
             this.chBoxВыводЗвука = new System.Windows.Forms.CheckBox();
+            this.chBoxВыводНаТабло = new System.Windows.Forms.CheckBox();
             this.gB_НумерацияПоезда.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Прибытие.SuspendLayout();
@@ -329,16 +329,16 @@
             this.cB_НомерПути.Text = "Неизвестно";
             this.cB_НомерПути.SelectedIndexChanged += new System.EventHandler(this.cB_НомерПути_SelectedIndexChanged);
             // 
-            // btn_Подтвердить
+            // btn_Ok
             // 
-            this.btn_Подтвердить.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Подтвердить.Location = new System.Drawing.Point(844, 484);
-            this.btn_Подтвердить.Name = "btn_Подтвердить";
-            this.btn_Подтвердить.Size = new System.Drawing.Size(136, 56);
-            this.btn_Подтвердить.TabIndex = 6;
-            this.btn_Подтвердить.Text = "Подтвердить";
-            this.btn_Подтвердить.UseVisualStyleBackColor = true;
-            this.btn_Подтвердить.Click += new System.EventHandler(this.btn_Подтвердить_Click);
+            this.btn_Ok.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Ok.Location = new System.Drawing.Point(844, 484);
+            this.btn_Ok.Name = "btn_Ok";
+            this.btn_Ok.Size = new System.Drawing.Size(136, 56);
+            this.btn_Ok.TabIndex = 6;
+            this.btn_Ok.Text = "OK";
+            this.btn_Ok.UseVisualStyleBackColor = true;
+            this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // gB_Прибытие
             // 
@@ -554,16 +554,16 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Прибытие:";
             // 
-            // button1
+            // btn_Применить
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(991, 484);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(155, 56);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Отмена";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btn_ОтменаClick);
+            this.btn_Применить.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Применить.Location = new System.Drawing.Point(991, 484);
+            this.btn_Применить.Name = "btn_Применить";
+            this.btn_Применить.Size = new System.Drawing.Size(155, 56);
+            this.btn_Применить.TabIndex = 14;
+            this.btn_Применить.Text = "Применить";
+            this.btn_Применить.UseVisualStyleBackColor = true;
+            this.btn_Применить.Click += new System.EventHandler(this.btn_ПрименитьClick);
             // 
             // comboBox_displayTable
             // 
@@ -743,7 +743,7 @@
             this.btnОтправлениеПоГотовности.TabIndex = 53;
             this.btnОтправлениеПоГотовности.Text = "ВОСПРОИЗВЕСТИ";
             this.btnОтправлениеПоГотовности.UseVisualStyleBackColor = true;
-            this.btnОтправлениеПоГотовности.Click += new System.EventHandler(this.btnОтменаПоезда_Click);
+            this.btnОтправлениеПоГотовности.Click += new System.EventHandler(this.btnНештаткаПоезда_Click);
             // 
             // cBОтправлениеПоГотовности
             // 
@@ -765,7 +765,7 @@
             this.btnЗадержкаОтправления.TabIndex = 51;
             this.btnЗадержкаОтправления.Text = "ВОСПРОИЗВЕСТИ";
             this.btnЗадержкаОтправления.UseVisualStyleBackColor = true;
-            this.btnЗадержкаОтправления.Click += new System.EventHandler(this.btnОтменаПоезда_Click);
+            this.btnЗадержкаОтправления.Click += new System.EventHandler(this.btnНештаткаПоезда_Click);
             // 
             // btnЗадержкаПрибытия
             // 
@@ -776,7 +776,7 @@
             this.btnЗадержкаПрибытия.TabIndex = 50;
             this.btnЗадержкаПрибытия.Text = "ВОСПРОИЗВЕСТИ";
             this.btnЗадержкаПрибытия.UseVisualStyleBackColor = true;
-            this.btnЗадержкаПрибытия.Click += new System.EventHandler(this.btnОтменаПоезда_Click);
+            this.btnЗадержкаПрибытия.Click += new System.EventHandler(this.btnНештаткаПоезда_Click);
             // 
             // btnОтменаПоезда
             // 
@@ -787,7 +787,7 @@
             this.btnОтменаПоезда.TabIndex = 49;
             this.btnОтменаПоезда.Text = "ВОСПРОИЗВЕСТИ";
             this.btnОтменаПоезда.UseVisualStyleBackColor = true;
-            this.btnОтменаПоезда.Click += new System.EventHandler(this.btnОтменаПоезда_Click);
+            this.btnОтменаПоезда.Click += new System.EventHandler(this.btnНештаткаПоезда_Click);
             // 
             // cBОтправлениеЗадерживается
             // 
@@ -919,16 +919,16 @@
             this.label4.TabIndex = 46;
             this.label4.Text = "Дополнение:";
             // 
-            // btn_выход
+            // btn_отмена
             // 
-            this.btn_выход.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_выход.Location = new System.Drawing.Point(1156, 483);
-            this.btn_выход.Name = "btn_выход";
-            this.btn_выход.Size = new System.Drawing.Size(155, 56);
-            this.btn_выход.TabIndex = 49;
-            this.btn_выход.Text = "Выход";
-            this.btn_выход.UseVisualStyleBackColor = true;
-            this.btn_выход.Click += new System.EventHandler(this.btn_выход_Click);
+            this.btn_отмена.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_отмена.Location = new System.Drawing.Point(1156, 483);
+            this.btn_отмена.Name = "btn_отмена";
+            this.btn_отмена.Size = new System.Drawing.Size(155, 56);
+            this.btn_отмена.TabIndex = 49;
+            this.btn_отмена.Text = "Отмена";
+            this.btn_отмена.UseVisualStyleBackColor = true;
+            this.btn_отмена.Click += new System.EventHandler(this.btn_отмена_Click);
             // 
             // cb_ВремяСтоянкиБудетИзмененно
             // 
@@ -955,17 +955,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Вывод информации";
             // 
-            // chBoxВыводНаТабло
-            // 
-            this.chBoxВыводНаТабло.AutoSize = true;
-            this.chBoxВыводНаТабло.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.chBoxВыводНаТабло.Location = new System.Drawing.Point(6, 24);
-            this.chBoxВыводНаТабло.Name = "chBoxВыводНаТабло";
-            this.chBoxВыводНаТабло.Size = new System.Drawing.Size(93, 25);
-            this.chBoxВыводНаТабло.TabIndex = 55;
-            this.chBoxВыводНаТабло.Text = "На табло";
-            this.chBoxВыводНаТабло.UseVisualStyleBackColor = true;
-            // 
             // chBoxВыводЗвука
             // 
             this.chBoxВыводЗвука.AutoSize = true;
@@ -977,6 +966,17 @@
             this.chBoxВыводЗвука.Text = "Звук";
             this.chBoxВыводЗвука.UseVisualStyleBackColor = true;
             // 
+            // chBoxВыводНаТабло
+            // 
+            this.chBoxВыводНаТабло.AutoSize = true;
+            this.chBoxВыводНаТабло.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.chBoxВыводНаТабло.Location = new System.Drawing.Point(6, 24);
+            this.chBoxВыводНаТабло.Name = "chBoxВыводНаТабло";
+            this.chBoxВыводНаТабло.Size = new System.Drawing.Size(93, 25);
+            this.chBoxВыводНаТабло.TabIndex = 55;
+            this.chBoxВыводНаТабло.Text = "На табло";
+            this.chBoxВыводНаТабло.UseVisualStyleBackColor = true;
+            // 
             // КарточкаДвиженияПоезда
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -984,11 +984,11 @@
             this.ClientSize = new System.Drawing.Size(1319, 546);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.cb_ВремяСтоянкиБудетИзмененно);
-            this.Controls.Add(this.btn_выход);
+            this.Controls.Add(this.btn_отмена);
             this.Controls.Add(this.gBНастройкиПоезда);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_Применить);
             this.Controls.Add(this.cBОтменен);
-            this.Controls.Add(this.btn_Подтвердить);
+            this.Controls.Add(this.btn_Ok);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.KeyPreview = true;
@@ -1026,7 +1026,7 @@
         private System.Windows.Forms.RichTextBox rTB_Сообщение;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cB_НомерПути;
-        private System.Windows.Forms.Button btn_Подтвердить;
+        private System.Windows.Forms.Button btn_Ok;
         private System.Windows.Forms.GroupBox gB_Прибытие;
         private System.Windows.Forms.Button btn_ИзменитьВремяПрибытия;
         private System.Windows.Forms.DateTimePicker dTP_Прибытие;
@@ -1034,7 +1034,7 @@
         private System.Windows.Forms.Button btn_ИзменитьВремяОтправления;
         private System.Windows.Forms.DateTimePicker dTP_ВремяОтправления;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_Применить;
         private System.Windows.Forms.ComboBox comboBox_displayTable;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1084,7 +1084,7 @@
         private System.Windows.Forms.Button btn_Фиксировать;
         private System.Windows.Forms.Label lb_фиксВрПриб;
         private System.Windows.Forms.Label lb_фиксВрОтпр;
-        private System.Windows.Forms.Button btn_выход;
+        private System.Windows.Forms.Button btn_отмена;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.CheckBox chbox_сменнаяНумерация;
         private System.Windows.Forms.CheckBox cb_ВремяСтоянкиБудетИзмененно;
