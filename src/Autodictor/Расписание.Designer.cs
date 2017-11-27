@@ -30,6 +30,7 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -78,14 +79,24 @@
             this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_Отменить = new System.Windows.Forms.Button();
             this.btn_Принять = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cBГр12 = new System.Windows.Forms.CheckBox();
+            this.cBГр11 = new System.Windows.Forms.CheckBox();
+            this.cBГр10 = new System.Windows.Forms.CheckBox();
+            this.cBГр9 = new System.Windows.Forms.CheckBox();
+            this.cBГр8 = new System.Windows.Forms.CheckBox();
+            this.cBГр26 = new System.Windows.Forms.CheckBox();
+            this.cBГр27 = new System.Windows.Forms.CheckBox();
+            this.cBГр28 = new System.Windows.Forms.CheckBox();
+            this.cBГр29 = new System.Windows.Forms.CheckBox();
+            this.cBГр30 = new System.Windows.Forms.CheckBox();
+            this.cBГр4 = new System.Windows.Forms.CheckBox();
+            this.cBГр5 = new System.Windows.Forms.CheckBox();
+            this.cBГр6 = new System.Windows.Forms.CheckBox();
+            this.cBГр7 = new System.Windows.Forms.CheckBox();
+            this.cBГр3 = new System.Windows.Forms.CheckBox();
             this.cBДек = new System.Windows.Forms.CheckBox();
             this.cBНоя = new System.Windows.Forms.CheckBox();
             this.cBОкт = new System.Windows.Forms.CheckBox();
@@ -129,7 +140,6 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.lblВремяДействия = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -167,6 +177,16 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Описание";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(10, 22);
+            this.label9.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(519, 20);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Режим расписания един и действует всегда на все месяцы.";
             // 
             // label8
             // 
@@ -304,27 +324,23 @@
             this.columnHeader35,
             this.columnHeader36,
             this.columnHeader37,
-            this.columnHeader38,
-            this.columnHeader39,
-            this.columnHeader40,
-            this.columnHeader41,
-            this.columnHeader42,
-            this.columnHeader43});
+            this.columnHeader38});
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(10, 32);
             this.listView1.Margin = new System.Windows.Forms.Padding(5);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1662, 365);
+            this.listView1.Size = new System.Drawing.Size(1527, 365);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "Месяц";
-            this.columnHeader1.Width = 100;
+            this.columnHeader1.Width = 150;
             // 
             // columnHeader2
             // 
@@ -548,36 +564,6 @@
             this.columnHeader38.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader38.Width = 38;
             // 
-            // columnHeader39
-            // 
-            this.columnHeader39.Text = "Ср";
-            this.columnHeader39.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader39.Width = 38;
-            // 
-            // columnHeader40
-            // 
-            this.columnHeader40.Text = "Чт";
-            this.columnHeader40.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader40.Width = 36;
-            // 
-            // columnHeader41
-            // 
-            this.columnHeader41.Text = "Пт";
-            this.columnHeader41.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader41.Width = 40;
-            // 
-            // columnHeader42
-            // 
-            this.columnHeader42.Text = "Сб";
-            this.columnHeader42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader42.Width = 37;
-            // 
-            // columnHeader43
-            // 
-            this.columnHeader43.Text = "Вс";
-            this.columnHeader43.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader43.Width = 35;
-            // 
             // btn_Отменить
             // 
             this.btn_Отменить.Location = new System.Drawing.Point(1547, 457);
@@ -602,6 +588,21 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cBГр12);
+            this.groupBox2.Controls.Add(this.cBГр11);
+            this.groupBox2.Controls.Add(this.cBГр10);
+            this.groupBox2.Controls.Add(this.cBГр9);
+            this.groupBox2.Controls.Add(this.cBГр8);
+            this.groupBox2.Controls.Add(this.cBГр26);
+            this.groupBox2.Controls.Add(this.cBГр27);
+            this.groupBox2.Controls.Add(this.cBГр28);
+            this.groupBox2.Controls.Add(this.cBГр29);
+            this.groupBox2.Controls.Add(this.cBГр30);
+            this.groupBox2.Controls.Add(this.cBГр4);
+            this.groupBox2.Controls.Add(this.cBГр5);
+            this.groupBox2.Controls.Add(this.cBГр6);
+            this.groupBox2.Controls.Add(this.cBГр7);
+            this.groupBox2.Controls.Add(this.cBГр3);
             this.groupBox2.Controls.Add(this.cBДек);
             this.groupBox2.Controls.Add(this.cBНоя);
             this.groupBox2.Controls.Add(this.cBОкт);
@@ -651,6 +652,171 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Управление режимом расписания";
+            // 
+            // cBГр12
+            // 
+            this.cBГр12.AutoSize = true;
+            this.cBГр12.Location = new System.Drawing.Point(1084, 123);
+            this.cBГр12.Name = "cBГр12";
+            this.cBГр12.Size = new System.Drawing.Size(48, 24);
+            this.cBГр12.TabIndex = 60;
+            this.cBГр12.Text = "12";
+            this.cBГр12.UseVisualStyleBackColor = true;
+            this.cBГр12.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр11
+            // 
+            this.cBГр11.AutoSize = true;
+            this.cBГр11.Location = new System.Drawing.Point(1030, 123);
+            this.cBГр11.Name = "cBГр11";
+            this.cBГр11.Size = new System.Drawing.Size(48, 24);
+            this.cBГр11.TabIndex = 59;
+            this.cBГр11.Text = "11";
+            this.cBГр11.UseVisualStyleBackColor = true;
+            this.cBГр11.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр10
+            // 
+            this.cBГр10.AutoSize = true;
+            this.cBГр10.Location = new System.Drawing.Point(982, 123);
+            this.cBГр10.Name = "cBГр10";
+            this.cBГр10.Size = new System.Drawing.Size(48, 24);
+            this.cBГр10.TabIndex = 58;
+            this.cBГр10.Text = "10";
+            this.cBГр10.UseVisualStyleBackColor = true;
+            this.cBГр10.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр9
+            // 
+            this.cBГр9.AutoSize = true;
+            this.cBГр9.Location = new System.Drawing.Point(928, 123);
+            this.cBГр9.Name = "cBГр9";
+            this.cBГр9.Size = new System.Drawing.Size(38, 24);
+            this.cBГр9.TabIndex = 57;
+            this.cBГр9.Text = "9";
+            this.cBГр9.UseVisualStyleBackColor = true;
+            this.cBГр9.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр8
+            // 
+            this.cBГр8.AutoSize = true;
+            this.cBГр8.Location = new System.Drawing.Point(874, 123);
+            this.cBГр8.Name = "cBГр8";
+            this.cBГр8.Size = new System.Drawing.Size(38, 24);
+            this.cBГр8.TabIndex = 56;
+            this.cBГр8.Text = "8";
+            this.cBГр8.UseVisualStyleBackColor = true;
+            this.cBГр8.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр26
+            // 
+            this.cBГр26.AutoSize = true;
+            this.cBГр26.Location = new System.Drawing.Point(820, 57);
+            this.cBГр26.Name = "cBГр26";
+            this.cBГр26.Size = new System.Drawing.Size(48, 24);
+            this.cBГр26.TabIndex = 55;
+            this.cBГр26.Text = "26";
+            this.cBГр26.UseVisualStyleBackColor = true;
+            this.cBГр26.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр27
+            // 
+            this.cBГр27.AutoSize = true;
+            this.cBГр27.Location = new System.Drawing.Point(874, 57);
+            this.cBГр27.Name = "cBГр27";
+            this.cBГр27.Size = new System.Drawing.Size(48, 24);
+            this.cBГр27.TabIndex = 54;
+            this.cBГр27.Text = "27";
+            this.cBГр27.UseVisualStyleBackColor = true;
+            this.cBГр27.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр28
+            // 
+            this.cBГр28.AutoSize = true;
+            this.cBГр28.Location = new System.Drawing.Point(928, 57);
+            this.cBГр28.Name = "cBГр28";
+            this.cBГр28.Size = new System.Drawing.Size(48, 24);
+            this.cBГр28.TabIndex = 53;
+            this.cBГр28.Text = "28";
+            this.cBГр28.UseVisualStyleBackColor = true;
+            this.cBГр28.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр29
+            // 
+            this.cBГр29.AutoSize = true;
+            this.cBГр29.Location = new System.Drawing.Point(982, 57);
+            this.cBГр29.Name = "cBГр29";
+            this.cBГр29.Size = new System.Drawing.Size(48, 24);
+            this.cBГр29.TabIndex = 52;
+            this.cBГр29.Text = "29";
+            this.cBГр29.UseVisualStyleBackColor = true;
+            this.cBГр29.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр30
+            // 
+            this.cBГр30.AutoSize = true;
+            this.cBГр30.Location = new System.Drawing.Point(1030, 57);
+            this.cBГр30.Name = "cBГр30";
+            this.cBГр30.Size = new System.Drawing.Size(48, 24);
+            this.cBГр30.TabIndex = 51;
+            this.cBГр30.Text = "30";
+            this.cBГр30.UseVisualStyleBackColor = true;
+            this.cBГр30.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр4
+            // 
+            this.cBГр4.AutoSize = true;
+            this.cBГр4.Location = new System.Drawing.Point(982, 90);
+            this.cBГр4.Name = "cBГр4";
+            this.cBГр4.Size = new System.Drawing.Size(38, 24);
+            this.cBГр4.TabIndex = 50;
+            this.cBГр4.Text = "4";
+            this.cBГр4.UseVisualStyleBackColor = true;
+            this.cBГр4.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр5
+            // 
+            this.cBГр5.AutoSize = true;
+            this.cBГр5.Location = new System.Drawing.Point(1030, 90);
+            this.cBГр5.Name = "cBГр5";
+            this.cBГр5.Size = new System.Drawing.Size(38, 24);
+            this.cBГр5.TabIndex = 49;
+            this.cBГр5.Text = "5";
+            this.cBГр5.UseVisualStyleBackColor = true;
+            this.cBГр5.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр6
+            // 
+            this.cBГр6.AutoSize = true;
+            this.cBГр6.Location = new System.Drawing.Point(1084, 90);
+            this.cBГр6.Name = "cBГр6";
+            this.cBГр6.Size = new System.Drawing.Size(38, 24);
+            this.cBГр6.TabIndex = 48;
+            this.cBГр6.Text = "6";
+            this.cBГр6.UseVisualStyleBackColor = true;
+            this.cBГр6.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр7
+            // 
+            this.cBГр7.AutoSize = true;
+            this.cBГр7.Location = new System.Drawing.Point(820, 123);
+            this.cBГр7.Name = "cBГр7";
+            this.cBГр7.Size = new System.Drawing.Size(38, 24);
+            this.cBГр7.TabIndex = 46;
+            this.cBГр7.Text = "7";
+            this.cBГр7.UseVisualStyleBackColor = true;
+            this.cBГр7.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
+            // 
+            // cBГр3
+            // 
+            this.cBГр3.AutoSize = true;
+            this.cBГр3.Location = new System.Drawing.Point(928, 90);
+            this.cBГр3.Name = "cBГр3";
+            this.cBГр3.Size = new System.Drawing.Size(38, 24);
+            this.cBГр3.TabIndex = 45;
+            this.cBГр3.Text = "3";
+            this.cBГр3.UseVisualStyleBackColor = true;
+            this.cBГр3.CheckedChanged += new System.EventHandler(this.ИзмененоНаГраницеМесяца);
             // 
             // cBДек
             // 
@@ -819,7 +985,7 @@
             // cBГр2
             // 
             this.cBГр2.AutoSize = true;
-            this.cBГр2.Location = new System.Drawing.Point(1007, 62);
+            this.cBГр2.Location = new System.Drawing.Point(874, 90);
             this.cBГр2.Name = "cBГр2";
             this.cBГр2.Size = new System.Drawing.Size(38, 24);
             this.cBГр2.TabIndex = 28;
@@ -830,7 +996,7 @@
             // cBГр1
             // 
             this.cBГр1.AutoSize = true;
-            this.cBГр1.Location = new System.Drawing.Point(963, 62);
+            this.cBГр1.Location = new System.Drawing.Point(820, 90);
             this.cBГр1.Name = "cBГр1";
             this.cBГр1.Size = new System.Drawing.Size(38, 24);
             this.cBГр1.TabIndex = 27;
@@ -841,7 +1007,7 @@
             // cBГр31
             // 
             this.cBГр31.AutoSize = true;
-            this.cBГр31.Location = new System.Drawing.Point(898, 62);
+            this.cBГр31.Location = new System.Drawing.Point(1084, 57);
             this.cBГр31.Name = "cBГр31";
             this.cBГр31.Size = new System.Drawing.Size(48, 24);
             this.cBГр31.TabIndex = 26;
@@ -852,7 +1018,7 @@
             // cBНаГрМес
             // 
             this.cBНаГрМес.AutoSize = true;
-            this.cBНаГрМес.Location = new System.Drawing.Point(898, 32);
+            this.cBНаГрМес.Location = new System.Drawing.Point(820, 27);
             this.cBНаГрМес.Name = "cBНаГрМес";
             this.cBНаГрМес.Size = new System.Drawing.Size(190, 24);
             this.cBНаГрМес.TabIndex = 25;
@@ -1138,16 +1304,6 @@
             this.lblВремяДействия.Text = "с 01.01.2016 по 31.12.2017";
             this.lblВремяДействия.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(10, 22);
-            this.label9.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(519, 20);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Режим расписания един и действует всегда на все месяцы.";
-            // 
             // Расписание
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -1223,11 +1379,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader36;
         private System.Windows.Forms.ColumnHeader columnHeader37;
         private System.Windows.Forms.ColumnHeader columnHeader38;
-        private System.Windows.Forms.ColumnHeader columnHeader39;
-        private System.Windows.Forms.ColumnHeader columnHeader40;
-        private System.Windows.Forms.ColumnHeader columnHeader41;
-        private System.Windows.Forms.ColumnHeader columnHeader42;
-        private System.Windows.Forms.ColumnHeader columnHeader43;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -1278,5 +1429,20 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblВремяДействия;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox cBГр12;
+        private System.Windows.Forms.CheckBox cBГр11;
+        private System.Windows.Forms.CheckBox cBГр10;
+        private System.Windows.Forms.CheckBox cBГр9;
+        private System.Windows.Forms.CheckBox cBГр8;
+        private System.Windows.Forms.CheckBox cBГр26;
+        private System.Windows.Forms.CheckBox cBГр27;
+        private System.Windows.Forms.CheckBox cBГр28;
+        private System.Windows.Forms.CheckBox cBГр29;
+        private System.Windows.Forms.CheckBox cBГр30;
+        private System.Windows.Forms.CheckBox cBГр4;
+        private System.Windows.Forms.CheckBox cBГр5;
+        private System.Windows.Forms.CheckBox cBГр6;
+        private System.Windows.Forms.CheckBox cBГр7;
+        private System.Windows.Forms.CheckBox cBГр3;
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace MainExample
 {
+
     public partial class Расписание : Form
     {
         private byte ИндексТекущегоМесяца = 0;
@@ -18,8 +19,25 @@ namespace MainExample
         private РежимРасписанияДвиженияПоезда СтарыйРежимРасписания = РежимРасписанияДвиженияПоезда.Отсутствует;
         private bool ИнициализацияЗавершена = false;
 
-        string[] Месяцы = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь", "Январь", "Февраль" };
-        byte[] КоличествоДнейВМесяце = new byte[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28 };
+        //string[] Месяцы = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь", "Январь", "Февраль" };
+        private string[] stringMonths = new string[14];
+
+        public int[] intMonths = new int[14];
+        public enum Months { Январь = 1, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь }
+        // byte[] КоличествоДнейВМесяце = new byte[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31, 28 };
+        // Назначить английское название функции
+        private UInt32 СтепеньЧисла(int number, int степень)
+        {
+            if (степень == 0) return 1;
+
+            int i = 0;
+            if (степень > 0)
+                i = степень - 1;
+
+            if (степень < 0)
+                i = степень + 1;
+            return (UInt32)number * СтепеньЧисла(number, i);
+        }
 
 
 
@@ -29,35 +47,57 @@ namespace MainExample
 
             this.РасписаниеПоезда = РасписаниеПоезда;
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < intMonths.Length; i++) // Цикл по количеству прописанных месяцев в календаре
             {
-                string[] ШаблонСтроки = new string[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
-                    "", "", "", "", "", "", "", "", "", "", "", "" };
+                int monthIndex = i + DateTime.Now.Month - 1;
+                int currentYear = DateTime.Now.Year + monthIndex / 12;
+                intMonths[i] = monthIndex % 12 + 1;
+                int currentMonth = intMonths[i];
+                stringMonths[i] = (Months)currentMonth + " " + currentYear;
+             
+                string[] ШаблонСтроки = new string[38]; // Массив в 38 строк (максимальное количество элементов в длину)
+                for (int j = 0; j < ШаблонСтроки.Length; j++)
+                    ШаблонСтроки[j] = " ";
 
-                ШаблонСтроки[0] = Месяцы[i];
-                byte КоличествоДнейВТекущемМесяце = ((i == 1) && ((DateTime.Now.Year % 4) == 0)) || ((i == 13) && (((DateTime.Now.Year + 1) % 4) == 0)) ? (byte)29 : КоличествоДнейВМесяце[i];
+                ШаблонСтроки[0] = stringMonths[i]; // Заполняем колонку месяцев
+                int daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+                
+                int dayOfWeek = ((byte) ((new DateTime(currentYear, currentMonth, 1)).DayOfWeek) + 6) % 7;
+                for (int j = 1; j <= daysInMonth; j++) // от 1 до количества дней
+                    ШаблонСтроки[j + dayOfWeek] = j.ToString(); // Пишем в клетки числа дней месяца в зависимости от того, на какой день недели выпадает его начало
 
-                DateTime НачалоМесяца = new DateTime(DateTime.Now.Year + (i / 12), (i % 12) + 1, 1);
-                for (byte j = 1; j <= КоличествоДнейВТекущемМесяце; j++)
-                    ШаблонСтроки[j + ((byte)НачалоМесяца.DayOfWeek + 6) % 7] = j.ToString();
-
-                ListViewItem item = new ListViewItem(ШаблонСтроки, 0);
+                ListViewItem item = new ListViewItem(ШаблонСтроки, 0); // Добавляем колонки на ListView
                 item.UseItemStyleForSubItems = false;
 
-                for (byte j = 1; j <= КоличествоДнейВТекущемМесяце; j++)
-                    item.SubItems[j + ((byte)НачалоМесяца.DayOfWeek + 6) % 7].Tag = j + ((byte)НачалоМесяца.DayOfWeek + 6) % 7;
+                for (int j = 1; j <= daysInMonth; j++)
+                    item.SubItems[j + dayOfWeek].Tag = j + dayOfWeek; // тэгу задаем положение первого дня месяца в строке
 
                 
-                listView1.Items.Add(item);
+                listView1.Items.Add(item); // Рисуем дни месяца на форме
             }
 
-            this.Text = "Расписание движения поезда: " + РасписаниеПоезда.ПолучитьНомерПоезда() + " - " + РасписаниеПоезда.ПолучитьНазваниеПоезда();
-
-            byte АктивностьДняДвижения = РасписаниеПоезда.ПолучитьАктивностьПоездаВКрайниеДни();
-            if ((АктивностьДняДвижения & 0x80) != 0x00) cBНаГрМес.Checked = true;
-            if ((АктивностьДняДвижения & 0x01) != 0x00) cBГр31.Checked = true;
-            if ((АктивностьДняДвижения & 0x02) != 0x00) cBГр1.Checked = true;
-            if ((АктивностьДняДвижения & 0x04) != 0x00) cBГр2.Checked = true;
+            this.Text = "Расписание движения поезда: " + РасписаниеПоезда.ПолучитьНомерПоезда() + " - " + РасписаниеПоезда.ПолучитьНазваниеПоезда(); // Заголовок
+            
+            int АктивностьДняДвижения = РасписаниеПоезда.ПолучитьАктивностьПоездаВКрайниеДни();
+            if ((АктивностьДняДвижения & 0x40000) != 0x00000) cBНаГрМес.Checked = true; // 0x40000
+            if ((АктивностьДняДвижения & 0x00001) != 0x00000) cBГр26.Checked = true; // 0x00001
+            if ((АктивностьДняДвижения & 0x00002) != 0x00000) cBГр27.Checked = true; // 0x00002
+            if ((АктивностьДняДвижения & 0x00004) != 0x00000) cBГр28.Checked = true; // 0x00004
+            if ((АктивностьДняДвижения & 0x00008) != 0x00000) cBГр29.Checked = true; // 0x00008
+            if ((АктивностьДняДвижения & 0x00010) != 0x00000) cBГр30.Checked = true; // 0x00010
+            if ((АктивностьДняДвижения & 0x00020) != 0x00000) cBГр31.Checked = true; // 0x00020
+            if ((АктивностьДняДвижения & 0x00040) != 0x00000) cBГр1.Checked = true; // 0x00040
+            if ((АктивностьДняДвижения & 0x00080) != 0x00000) cBГр2.Checked = true; // 0x00080
+            if ((АктивностьДняДвижения & 0x00100) != 0x00000) cBГр3.Checked = true; // 0x00100
+            if ((АктивностьДняДвижения & 0x00200) != 0x00000) cBГр4.Checked = true; // 0x00200
+            if ((АктивностьДняДвижения & 0x00400) != 0x00000) cBГр5.Checked = true; // 0x00400
+            if ((АктивностьДняДвижения & 0x00800) != 0x00000) cBГр6.Checked = true; // 0x00800
+            if ((АктивностьДняДвижения & 0x01000) != 0x00000) cBГр7.Checked = true; // 0x01000
+            if ((АктивностьДняДвижения & 0x02000) != 0x00000) cBГр8.Checked = true; // 0x02000
+            if ((АктивностьДняДвижения & 0x04000) != 0x00000) cBГр9.Checked = true; // 0x04000
+            if ((АктивностьДняДвижения & 0x08000) != 0x00000) cBГр10.Checked = true; // 0x08000
+            if ((АктивностьДняДвижения & 0x10000) != 0x00000) cBГр11.Checked = true; // 0x10000
+            if ((АктивностьДняДвижения & 0x20000) != 0x00000) cBГр12.Checked = true; // 0x20000
 
             UInt16 ДниНедели = РасписаниеПоезда.ПолучитьАктивностьПоДнямНедели();
             if ((ДниНедели & 0x0001) != 0x0000) cBПн.Checked = true;
@@ -108,69 +148,116 @@ namespace MainExample
                 return;
 
             bool[] МассивАктивныхМесяцев = new bool[14];
-            bool РаботаПоВыбраннымМесяцам = false;
+            // bool РаботаПоВыбраннымМесяцам = false;
 
-            CheckBox[] МассивЭлементовАктивныхМесяцев = new CheckBox[14] { cBЯнв, cBФев, cBМар, cBАпр, cBМай, cBИюн, cBИюл, cBАвг, cBСен, cBОкт, cBНоя, cBДек, cBЯнв, cBФев };
+            CheckBox[] МассивЭлементовАктивныхМесяцев = new CheckBox[12] { cBЯнв, cBФев, cBМар, cBАпр, cBМай, cBИюн, cBИюл, cBАвг, cBСен, cBОкт, cBНоя, cBДек };
 
-
-            for (int i = 0; i < 14; i++)
-                if (cBРаспространитьНаВсе.Checked || МассивЭлементовАктивныхМесяцев[i].Checked)
-                    МассивАктивныхМесяцев[i] = РаботаПоВыбраннымМесяцам = true;
-
-            if (РаботаПоВыбраннымМесяцам == false)
-                МассивАктивныхМесяцев[ИндексТекущегоМесяца] = true;
-
-
-            for (byte ИндексМесяца = 0; ИндексМесяца < 14; ИндексМесяца++)
+            int count = 0;
+            for (int i = 0; i < intMonths.Length; i++)
             {
-                if (МассивАктивныхМесяцев[ИндексМесяца] == false)
+                int currentMonth = intMonths[i];
+                if (cBРаспространитьНаВсе.Checked || МассивЭлементовАктивныхМесяцев[intMonths[i] - 1].Checked)
+                {
+                    МассивАктивныхМесяцев[currentMonth - 1] = true;
+                    count++;
+                }
+            }
+            // РаботаПоВыбраннымМесяцам
+            if (count == 0)
+                for (int i = 0; i < intMonths.Length; i++)
+                    МассивАктивныхМесяцев[intMonths[i] - 1] = true; // Необходимо сделать выборку активных месяцев раздельно для заданных и раздельно для остальных
+            
+            for (byte i = 0; i < intMonths.Length; i++)
+            {
+                int currentMonth = intMonths[i];
+                if (МассивАктивныхМесяцев[currentMonth - 1] == false) // И здесь
                     continue;
+                int monthIndex = i + DateTime.Now.Month - 1;
+                int currentYear = DateTime.Now.Year + monthIndex / 12;
+                int lastMonth = currentMonth - 1;
+                int lastMonthYear = currentYear;
+                if (lastMonth == 0)
+                {
+                    lastMonthYear -= 1;
+                    lastMonth = 12;
+                }
+                int daysInLastMonth = DateTime.DaysInMonth(lastMonthYear, lastMonth);
 
                 РежимРасписанияДвиженияПоезда новыйРежимРасписания = ПолучитьКодПереключателейРежима();
 
-               // if (СтарыйРежимРасписания != новыйРежимРасписания)
-                {
-                    switch (новыйРежимРасписания)
-                    {
-                        case РежимРасписанияДвиженияПоезда.Отсутствует:
-                            for (byte i = 0; i < 32; i++)
-                                РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, i, false);
-                            break;
 
-                        case РежимРасписанияДвиженияПоезда.Ежедневно:
-                            for (byte i = 0; i < 32; i++)
-                                РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, i, true);
-                            break;
+                // if (СтарыйРежимРасписания != новыйРежимРасписания)
+                //if (daysInLastMonth % 2 != 0)
+                //{
+                    
+                    //{
+                        switch (новыйРежимРасписания)
+                        {
+                            case РежимРасписанияДвиженияПоезда.Отсутствует:
+                                for (byte j = 0; j < 32; j++)
+                                    РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, j, false);
+                                break;
 
-                        case РежимРасписанияДвиженияПоезда.ПоЧетным:
-                            for (byte i = 0; i < 32; i++)
-                                РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, i, ((i % 2) == 1) ? true : false);
-                            break;
+                            case РежимРасписанияДвиженияПоезда.Ежедневно:
+                                for (byte j = 0; j < 32; j++)
+                                    РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, j, true);
+                                break;
 
-                        case РежимРасписанияДвиженияПоезда.ПоНечетным:
-                            for (byte i = 0; i < 32; i++)
-                                РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, i, ((i % 2) == 0) ? true : false);
-                            break;
+                            case РежимРасписанияДвиженияПоезда.ПоЧетным:
+                                for (byte j = 0; j < 32; j++)
+                                    РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, j, ((j % 2) == 1) ? true : false);
+                                //if (daysInLastMonth % 2 == 0)
+                                //{
+                                //    МассивАктивныхМесяцев[currentMonth - 1] = false;
+                                //    //continue;
+                                //}
+                                break;
 
-                        case РежимРасписанияДвиженияПоезда.Выборочно:
-                            break;
+                            case РежимРасписанияДвиженияПоезда.ПоНечетным:
+                                for (byte j = 0; j < 32; j++)
+                                    РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, j, ((j % 2) == 0) ? true : false);
+                                //if (daysInLastMonth % 2 == 0)
+                                //{
+                                //    МассивАктивныхМесяцев[currentMonth - 1] = false;
+                                //    //continue;
+                                //}
+                                break;
 
-                        case РежимРасписанияДвиженияПоезда.ПоДням:
-                            ЗадатьАктивностьРасписанияПоДням();
-                            break;
+                            case РежимРасписанияДвиженияПоезда.Выборочно:
+                                break;
 
-                    }
+                            case РежимРасписанияДвиженияПоезда.ПоДням:
+                                ЗадатьАктивностьРасписанияПоДням();
+                                break;
+                        }
 
-                    if (cBНаГрМес.Checked == true)
-                    {
-                        РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, 0, cBГр1.Checked);
-                        РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, 1, cBГр2.Checked);
-                        РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексМесяца, 30, cBГр31.Checked);
-                    }
+                        
+                        if (cBНаГрМес.Checked && (daysInLastMonth % 2 != 0) && (новыйРежимРасписания == РежимРасписанияДвиженияПоезда.ПоНечетным || новыйРежимРасписания == РежимРасписанияДвиженияПоезда.ПоЧетным))
+                        {
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 25, cBГр26.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 26, cBГр27.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 27, cBГр28.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 28, cBГр29.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 29, cBГр30.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 30, cBГр31.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 0, cBГр1.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 1, cBГр2.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 2, cBГр3.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 3, cBГр4.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 4, cBГр5.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 5, cBГр6.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 6, cBГр7.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 7, cBГр8.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 8, cBГр9.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 9, cBГр10.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 10, cBГр11.Checked);
+                            РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, 11, cBГр12.Checked);
+                        }
 
-                    РасписаниеПоезда.ЗадатьРежимРасписания(новыйРежимРасписания);
-                    СтарыйРежимРасписания = новыйРежимРасписания;
-                }
+                        РасписаниеПоезда.ЗадатьРежимРасписания(новыйРежимРасписания);
+                        СтарыйРежимРасписания = новыйРежимРасписания;
+                    //}
+                //}
             }
 
             ОбновитьЦветовуюМаркировкуРасписания();
@@ -200,35 +287,43 @@ namespace MainExample
             radioButton4.Checked = false;
             radioButton5.Checked = false;
             radioButton6.Checked = false;
-
-            if (КодПереключателейРежима == РежимРасписанияДвиженияПоезда.Отсутствует)
-                radioButton5.Checked = true;
-            else if (КодПереключателейРежима == РежимРасписанияДвиженияПоезда.Ежедневно)
-                radioButton1.Checked = true;
-            else if (КодПереключателейРежима == РежимРасписанияДвиженияПоезда.ПоЧетным)
-                radioButton2.Checked = true;
-            else if (КодПереключателейРежима == РежимРасписанияДвиженияПоезда.ПоНечетным)
-                radioButton3.Checked = true;
-            else if (КодПереключателейРежима == РежимРасписанияДвиженияПоезда.Выборочно)
-                radioButton4.Checked = true;
-            else if (КодПереключателейРежима == РежимРасписанияДвиженияПоезда.ПоДням)
-                radioButton6.Checked = true;
+            switch (КодПереключателейРежима)
+            {
+                case РежимРасписанияДвиженияПоезда.Ежедневно:
+                    radioButton1.Checked = true; break;
+                case РежимРасписанияДвиженияПоезда.ПоЧетным:
+                    radioButton2.Checked = true; break;
+                case РежимРасписанияДвиженияПоезда.ПоНечетным:
+                    radioButton3.Checked = true; break;
+                case РежимРасписанияДвиженияПоезда.Выборочно:
+                    radioButton4.Checked = true; break;
+                case РежимРасписанияДвиженияПоезда.ПоДням:
+                    radioButton6.Checked = true; break;
+                case РежимРасписанияДвиженияПоезда.Отсутствует:
+                    radioButton5.Checked = true; break;
+            }
+            
         }
 
         private void ОбновитьЦветовуюМаркировкуРасписания()
         {
-            for (byte i = 0; i < 14; i++)
+            for (byte i = 0; i < intMonths.Length; i++)
             {
-                string[] ШаблонСтроки = new string[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
-                    "", "", "", "", "", "", "", "", "", "", "", "" };
+                int monthIndex = i + DateTime.Now.Month - 1;
+                int currentYear = DateTime.Now.Year + monthIndex / 12;
+                intMonths[i] = monthIndex % 12 + 1;
+                int currentMonth = intMonths[i];
+                //string[] ШаблонСтроки = new string[36];
+                
+                int daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+                //byte КоличествоДнейВТекущемМесяце = ((i == 1) && ((DateTime.Now.Year % 4) == 0)) || ((i == 13) && (((DateTime.Now.Year + 1) % 4) == 0)) ? (byte)29 : КоличествоДнейВМесяце[i];
 
-                byte КоличествоДнейВТекущемМесяце = ((i == 1) && ((DateTime.Now.Year % 4) == 0)) || ((i == 13) && (((DateTime.Now.Year + 1) % 4) == 0)) ? (byte)29 : КоличествоДнейВМесяце[i];
-
-                DateTime НачалоМесяца = new DateTime(DateTime.Now.Year + (i / 12), (i % 12) + 1, 1);
-                for (byte j = 1; j <= КоличествоДнейВТекущемМесяце; j++)
+                int dayOfWeek = ((byte)((new DateTime(currentYear, currentMonth, 1)).DayOfWeek) + 6) % 7;
+                //DateTime НачалоМесяца = new DateTime(DateTime.Now.Year + (i / 12), (i % 12) + 1, 1);
+                for (byte j = 1; j <= daysInMonth; j++)
                 {
-                    byte НомерСтолбца = (byte)(j + ((byte)НачалоМесяца.DayOfWeek + 6) % 7);
-                    bool АктивностьВТекущийДень = РасписаниеПоезда.ПолучитьАктивностьДняДвижения((byte)i, (byte)(j - 1));
+                    byte НомерСтолбца = (byte)(j + dayOfWeek);
+                    bool АктивностьВТекущийДень = РасписаниеПоезда.ПолучитьАктивностьДняДвижения((byte)monthIndex, (byte)(j - 1));
 
                     ListViewItem.ListViewSubItem SubItem = listView1.Items[i].SubItems[НомерСтолбца];
                     SubItem.BackColor = АктивностьВТекущийДень ? Color.LightGreen : Color.White;
@@ -242,12 +337,12 @@ namespace MainExample
         {
             if (e.Y >= 24)
             {
-                int Строка = (e.Y - 24) / 24;
+                int rowIndex = (e.Y - 24) / 24;
 
-                if (Строка < 14)
+                if (rowIndex < intMonths.Length)
                 {
-                    lblВыбранМесяц.Text = Месяцы[Строка];
-                    ИндексТекущегоМесяца = (byte)Строка;
+                    lblВыбранМесяц.Text = stringMonths[rowIndex];
+                    ИндексТекущегоМесяца = (byte)rowIndex;
                     РежимРасписанияДвиженияПоезда РежимРасписанияПоезда = РасписаниеПоезда.ПолучитьРежимРасписания();
                     ЗадатьКодПереключателейРежима(РежимРасписанияПоезда);
 
@@ -259,7 +354,9 @@ namespace MainExample
                     else
                         ПризнакИзмененияСтроки = false;
 
-                    if ((ПризнакИзмененияСтроки == false) && ((DateTime.Now - ВремяПоследнегоНажатияКлавиатуры).Seconds < 1) && (РежимРасписанияПоезда == РежимРасписанияДвиженияПоезда.Выборочно))
+                    int monthIndex = ИндексТекущегоМесяца + DateTime.Now.Month - 1;
+                    // && ((DateTime.Now - ВремяПоследнегоНажатияКлавиатуры).Seconds < 1)
+                    if ((ПризнакИзмененияСтроки == false) && (РежимРасписанияПоезда == РежимРасписанияДвиженияПоезда.Выборочно))
                     {
                         ListViewHitTestInfo lvhti;
                         lvhti = listView1.HitTest(new Point(e.X, e.Y));
@@ -270,18 +367,19 @@ namespace MainExample
                         {
                             int Tag = (int)my4.Tag;
 
-                            if ((Tag >= 1) && (Tag <= 43) && (Число > 0) && (Число < 32))
+                            if ((Tag >= 1) && (Tag <= 38) && (Число > 0) && (Число < 32))
                             {
-                                bool ТекущаяАктивность = РасписаниеПоезда.ПолучитьАктивностьДняДвижения(ИндексТекущегоМесяца, (byte)(Число - 1));
-                                РасписаниеПоезда.ЗадатьАктивностьДняДвижения(ИндексТекущегоМесяца, (byte)(Число - 1), !ТекущаяАктивность);
-                                ОбновитьЦветовуюМаркировкуРасписания();
+                                bool ТекущаяАктивность = РасписаниеПоезда.ПолучитьАктивностьДняДвижения((byte)monthIndex, (byte)(Число - 1));
+                                РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, (byte)(Число - 1), !ТекущаяАктивность);
+                                //ОбновитьЦветовуюМаркировкуРасписания();
                             }
                         }
                     }
 
                     ВремяПоследнегоНажатияКлавиатуры = DateTime.Now;
                 }
-            }            
+            }
+            ОбновитьЦветовуюМаркировкуРасписания();
         }
 
         private void ИзмененоПоДням(object sender, EventArgs e)
@@ -354,15 +452,30 @@ namespace MainExample
             bool[] МассивАктивныхМесяцев = new bool[14];
             bool РаботаПоВыбраннымМесяцам = false;
 
-            CheckBox[] МассивЭлементовАктивныхМесяцев = new CheckBox[14] { cBЯнв, cBФев, cBМар, cBАпр, cBМай, cBИюн, cBИюл, cBАвг, cBСен, cBОкт, cBНоя, cBДек, cBЯнв, cBФев };
+            CheckBox[] МассивЭлементовАктивныхМесяцев = new CheckBox[12] { cBЯнв, cBФев, cBМар, cBАпр, cBМай, cBИюн, cBИюл, cBАвг, cBСен, cBОкт, cBНоя, cBДек };
 
+            int count = 0;
+            for (int i = 0; i < intMonths.Length; i++)
+            {
+                int currentMonth = intMonths[i];
+                if (cBРаспространитьНаВсе.Checked || МассивЭлементовАктивныхМесяцев[intMonths[i] - 1].Checked)
+                {
+                    МассивАктивныхМесяцев[currentMonth - 1] = true;
+                    count++;
+                }
+            }
+            // РаботаПоВыбраннымМесяцам
+            if (count == 0)
+                for (int i = 0; i < intMonths.Length; i++)
+                    МассивАктивныхМесяцев[intMonths[i] - 1] = true; // Заменить ИндексТекущегоМесяца
 
-            for (int i = 0; i < 14; i++)
-                if (cBРаспространитьНаВсе.Checked || МассивЭлементовАктивныхМесяцев[i].Checked)
-                    МассивАктивныхМесяцев[i] = РаботаПоВыбраннымМесяцам = true;
-
-            if (РаботаПоВыбраннымМесяцам == false)
-                МассивАктивныхМесяцев[ИндексТекущегоМесяца] = true;
+            //for (byte i = 0; i < intMonths.Length; i++)
+            
+            //    int currentMonth = intMonths[i];
+            //    if (МассивАктивныхМесяцев[currentMonth - 1] == false) // И здесь
+            //        continue;
+                
+                
 
 
             byte ПоДням = 0x00;
@@ -388,9 +501,16 @@ namespace MainExample
             РасписаниеПоезда.ЗадатьАктивностьПоДнямНедели((ushort)((КромеДней << 8) | ПоДням));
             РасписаниеПоезда.ЗадатьРежимРасписания(РежимРасписанияДвиженияПоезда.ПоДням);
 
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < intMonths.Length; i++)
             {
-                if (МассивАктивныхМесяцев[i])
+
+                int monthIndex = i + DateTime.Now.Month - 1;
+                int currentYear = DateTime.Now.Year + monthIndex / 12;
+                int currentMonth = intMonths[i];
+                
+                int dayOfWeek = (byte)((new DateTime(currentYear, currentMonth, 1)).DayOfWeek) + 6;
+
+                if (МассивАктивныхМесяцев[currentMonth - 1])
                 {
                     byte НомерПервогоДня = 0;
                     byte НомерПоследнегоДня = 30;
@@ -398,34 +518,72 @@ namespace MainExample
                     for (int j = 0; j < 32; j++)
                         МассивАктивныхДней[j] = false;
 
-                    DateTime date = new DateTime(DateTime.Now.Year + (i / 12), (i % 12) + 1, 1);
-                    byte DayOfWeek = (byte)((byte)date.DayOfWeek + 6);
-
-                    if (cBНаГрМес.Checked == true)
+                    int lastMonth = currentMonth - 1;
+                    int lastMonthYear = currentYear;
+                    if (lastMonth == 0)
                     {
+                        lastMonthYear -= 1;
+                        lastMonth = 12;
+                    }
+                    int daysInLastMonth = DateTime.DaysInMonth(lastMonthYear, lastMonth);
+                    
+                    if ((cBНаГрМес.Checked == true) && (daysInLastMonth % 2 != 0))
+                    {
+                        МассивАктивныхДней[25] = cBГр26.Checked;
+                        МассивАктивныхДней[26] = cBГр27.Checked;
+                        МассивАктивныхДней[27] = cBГр28.Checked;
+                        МассивАктивныхДней[28] = cBГр29.Checked;
+                        if (daysInLastMonth > 29)
+                        {
+                            МассивАктивныхДней[29] = cBГр30.Checked;
+                            МассивАктивныхДней[30] = cBГр31.Checked;
+                        }
+                        else
+                        {
+                            МассивАктивныхДней[29] = false;
+                            МассивАктивныхДней[30] = false;
+                        }
                         МассивАктивныхДней[0] = cBГр1.Checked;
                         МассивАктивныхДней[1] = cBГр2.Checked;
-                        МассивАктивныхДней[30] = cBГр31.Checked;
-                        НомерПервогоДня = 2;
-                        НомерПоследнегоДня = 29;
+                        МассивАктивныхДней[2] = cBГр3.Checked;
+                        МассивАктивныхДней[3] = cBГр4.Checked;
+                        МассивАктивныхДней[4] = cBГр5.Checked;
+                        МассивАктивныхДней[5] = cBГр6.Checked;
+                        МассивАктивныхДней[6] = cBГр7.Checked;
+                        МассивАктивныхДней[7] = cBГр8.Checked;
+                        МассивАктивныхДней[8] = cBГр9.Checked;
+                        МассивАктивныхДней[9] = cBГр10.Checked;
+                        МассивАктивныхДней[10] = cBГр11.Checked;
+                        МассивАктивныхДней[11] = cBГр12.Checked;
+                        //НомерПервогоДня = 12;
+                        //НомерПоследнегоДня = 24;
                     }
+                    //else if ((cBНаГрМес.Checked == true) && (daysInLastMonth % 2 == 0))
+                    //{
+                      //  НомерПервогоДня = 0;
+                        //НомерПоследнегоДня = (byte)(DateTime.DaysInMonth(currentYear, currentMonth) - 1);
+                        //for (int j = НомерПервогоДня; j <= НомерПоследнегоДня; j++)
+                        //{
+                        //    МассивАктивныхДней[j] = ; // Найти откуда брать значения на основе типа расписания
+                        //}
+                    //}
 
                     if (ПоДням != 0x00)
                     {
                         for (int j = НомерПервогоДня; j <= НомерПоследнегоДня; j++)
-                            if ((ПоДням & (0x01 << ((j + DayOfWeek) % 7))) != 0x00)
+                            if ((ПоДням & (0x01 << ((j + dayOfWeek) % 7))) != 0x00)
                                 МассивАктивныхДней[j] = true;
                     }
                     else if (КромеДней != 0x00)
                     {
                         for (int j = НомерПервогоДня; j <= НомерПоследнегоДня; j++)
-                            if ((КромеДней & (0x01 << ((j + DayOfWeek) % 7))) == 0x00)
+                            if ((КромеДней & (0x01 << ((j + dayOfWeek) % 7))) == 0x00)
                                 МассивАктивныхДней[j] = true;
                     }
 
 
                     for (byte j = 0; j < 31; j++)
-                        РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)i, j, МассивАктивныхДней[j]);
+                        РасписаниеПоезда.ЗадатьАктивностьДняДвижения((byte)monthIndex, j, МассивАктивныхДней[j]);
                 }
             }
 
@@ -434,15 +592,41 @@ namespace MainExample
 
         private void ИзмененоНаГраницеМесяца(object sender, EventArgs e)
         {
-            byte АктивностьРасписанияВКрайниеДни = 0x00;
-            if (cBНаГрМес.Checked) АктивностьРасписанияВКрайниеДни |= 0x80;
-            if (cBГр31.Checked) АктивностьРасписанияВКрайниеДни |= 0x01;
-            if (cBГр1.Checked) АктивностьРасписанияВКрайниеДни |= 0x02;
-            if (cBГр2.Checked) АктивностьРасписанияВКрайниеДни |= 0x04;
+            int АктивностьРасписанияВКрайниеДни = 0x00000;
+            if (cBНаГрМес.Checked) АктивностьРасписанияВКрайниеДни |= 0x40000;
+            if (cBГр26.Checked) АктивностьРасписанияВКрайниеДни |= 0x00001;
+            if (cBГр27.Checked) АктивностьРасписанияВКрайниеДни |= 0x00002;
+            if (cBГр28.Checked) АктивностьРасписанияВКрайниеДни |= 0x00004;
+            if (cBГр29.Checked) АктивностьРасписанияВКрайниеДни |= 0x00008;
+            if (cBГр30.Checked) АктивностьРасписанияВКрайниеДни |= 0x00010;
+            if (cBГр31.Checked) АктивностьРасписанияВКрайниеДни |= 0x00020;
+            if (cBГр1.Checked) АктивностьРасписанияВКрайниеДни |= 0x00040;
+            if (cBГр2.Checked) АктивностьРасписанияВКрайниеДни |= 0x00080;
+            if (cBГр3.Checked) АктивностьРасписанияВКрайниеДни |= 0x00100;
+            if (cBГр4.Checked) АктивностьРасписанияВКрайниеДни |= 0x00200;
+            if (cBГр5.Checked) АктивностьРасписанияВКрайниеДни |= 0x00400;
+            if (cBГр6.Checked) АктивностьРасписанияВКрайниеДни |= 0x00800;
+            if (cBГр7.Checked) АктивностьРасписанияВКрайниеДни |= 0x01000;
+            if (cBГр8.Checked) АктивностьРасписанияВКрайниеДни |= 0x02000;
+            if (cBГр9.Checked) АктивностьРасписанияВКрайниеДни |= 0x04000;
+            if (cBГр10.Checked) АктивностьРасписанияВКрайниеДни |= 0x08000;
+            if (cBГр11.Checked) АктивностьРасписанияВКрайниеДни |= 0x10000;
+            if (cBГр12.Checked) АктивностьРасписанияВКрайниеДни |= 0x20000;
             РасписаниеПоезда.УстановитьАктивностьПоездаВКрайниеДни(АктивностьРасписанияВКрайниеДни);
 
             if (radioButton6.Checked)
                 ЗадатьАктивностьРасписанияПоДням();
+        }
+
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox11_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
