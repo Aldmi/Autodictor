@@ -35,6 +35,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.tb_ActivationInfo = new System.Windows.Forms.TextBox();
+            this.btn_activationWindow = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -71,7 +73,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(12, 170);
+            this.label4.Location = new System.Drawing.Point(12, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(338, 24);
             this.label4.TabIndex = 3;
@@ -81,7 +83,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(12, 200);
+            this.label5.Location = new System.Drawing.Point(12, 184);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(272, 24);
             this.label5.TabIndex = 4;
@@ -95,13 +97,35 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(206, 24);
             this.label6.TabIndex = 5;
-            this.label6.Text = "Версия от:  24.11.2017";
+            this.label6.Text = "Версия от:  29.11.2017";
+            // 
+            // tb_ActivationInfo
+            // 
+            this.tb_ActivationInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tb_ActivationInfo.Location = new System.Drawing.Point(16, 227);
+            this.tb_ActivationInfo.Name = "tb_ActivationInfo";
+            this.tb_ActivationInfo.ReadOnly = true;
+            this.tb_ActivationInfo.Size = new System.Drawing.Size(390, 26);
+            this.tb_ActivationInfo.TabIndex = 6;
+            // 
+            // btn_activationWindow
+            // 
+            this.btn_activationWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_activationWindow.Location = new System.Drawing.Point(412, 211);
+            this.btn_activationWindow.Name = "btn_activationWindow";
+            this.btn_activationWindow.Size = new System.Drawing.Size(117, 45);
+            this.btn_activationWindow.TabIndex = 7;
+            this.btn_activationWindow.Text = "Окно активации";
+            this.btn_activationWindow.UseVisualStyleBackColor = true;
+            this.btn_activationWindow.Click += new System.EventHandler(this.btn_activationWindow_Click);
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(541, 268);
+            this.Controls.Add(this.btn_activationWindow);
+            this.Controls.Add(this.tb_ActivationInfo);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -126,5 +150,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tb_ActivationInfo;
+        private System.Windows.Forms.Button btn_activationWindow;
     }
 }

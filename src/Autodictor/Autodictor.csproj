@@ -145,6 +145,12 @@
     <Compile Include="AuthenticationForm.Designer.cs">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BlockingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlockingForm.Designer.cs">
+      <DependentUpon>BlockingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BoardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -332,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BlockingForm.resx">
+      <DependentUpon>BlockingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BoardForm.resx">
       <DependentUpon>BoardForm.cs</DependentUpon>

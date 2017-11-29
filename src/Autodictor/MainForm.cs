@@ -33,7 +33,6 @@ namespace MainExample
         public VerificationActivation VerificationActivationService { get; set; } = new VerificationActivation();
 
         public IDisposable DispouseActivationWarningInvokeRx { get; set; }
-        public IDisposable DispouseActivationBlockingInvokeRx { get; set; }
 
         public static int VisibleStyle = 0;
 
@@ -73,7 +72,7 @@ namespace MainExample
 
             Включить.BackColor = Color.Red;
 
-            //QuartzVerificationActivation.Start(VerificationActivationService);
+            QuartzVerificationActivation.Start(VerificationActivationService);
         }
 
 
@@ -151,18 +150,15 @@ namespace MainExample
 
             DispouseActivationWarningInvokeRx = VerificationActivationService.WarningInvokeRx.Subscribe(verAct =>
             {
-                //DEBUG
-                //Проверять на открытие 1 экземпляра
-                AboutForm formTest = new AboutForm();
-                formTest.ShowDialog();
-            });
-
-            DispouseActivationBlockingInvokeRx = VerificationActivationService.BlockingInvokeRx.Subscribe(verAct =>
-            {
-                //DEBUG
-                //Проверять на открытие 1 экземпляра
-                AboutForm formTest = new AboutForm();
-                formTest.ShowDialog();
+               this.InvokeIfNeeded(() =>
+               {
+                   if (BlockingForm.MyMainForm == null)
+                   {
+                       var blockingForm = new BlockingForm(verAct);
+                       blockingForm.WindowState = FormWindowState.Normal;
+                       blockingForm.ShowDialog();
+                   }
+               });
             });
 
             btnMainWindowShow_Click(null, EventArgs.Empty);
@@ -273,8 +269,8 @@ namespace MainExample
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutForm form = new AboutForm();
-            form.Show();
+            AboutForm form = new AboutForm(VerificationActivationService);
+            form.ShowDialog();
         }
 
 
@@ -701,7 +697,6 @@ namespace MainExample
             ExchangeModel.Dispose();
 
             DispouseActivationWarningInvokeRx.Dispose();
-            DispouseActivationBlockingInvokeRx.Dispose();
             QuartzVerificationActivation.Shutdown();
 
             base.OnClosed(e);
