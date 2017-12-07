@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime;
 using System.Windows.Forms;
 using Domain.Entitys;
+using MainExample.Builder.TrainRecordBuilder;
 using MainExample.Entites;
+using MainExample.Factory;
 
 
 namespace MainExample
@@ -103,31 +105,7 @@ namespace MainExample
             rB_РежРабРучной.Checked = !расписаниеПоезда.Автомат;
 
 
-
-
-
-            cBШаблонОповещения.Items.Add("Блокировка");
-
-            foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
-                cBШаблонОповещения.Items.Add(Item.Name);
-
-            string[] ШаблонОповещения = расписаниеПоезда.SoundTemplates.Split(':');
-            int ТипОповещенияПути = 0;
-            if ((ШаблонОповещения.Length % 3) == 0)
-            {
-                for (int i = 0; i < ШаблонОповещения.Length / 3; i++)
-                {
-                    if (cBШаблонОповещения.Items.Contains(ШаблонОповещения[3 * i + 0]))
-                    {
-                        int.TryParse(ШаблонОповещения[3 * i + 2], out ТипОповещенияПути);
-                        ТипОповещенияПути %= 2;
-                        ListViewItem lvi = new ListViewItem(new string[] { ШаблонОповещения[3 * i + 0], ШаблонОповещения[3 * i + 1], Program.ТипыВремени[ТипОповещенияПути] });
-                        this.lVШаблоныОповещения.Items.Add(lvi);
-                    }
-                }
-            }
-
-            cBВремяОповещения.SelectedIndex = 0;
+            ОтобразитьШаблоныОповещания(расписаниеПоезда.SoundTemplates);
 
 
             string ВремяПрибытия = this.РасписаниеПоезда.ArrivalTime;
@@ -183,8 +161,6 @@ namespace MainExample
             cBКатегория.SelectedIndex = (int)расписаниеПоезда.ТипПоезда;
 
 
-
-
             rBНеОповещать.Checked = false;
             rBСоВсемиОстановками.Checked = false;
             rBБезОстановок.Checked = false;
@@ -228,6 +204,22 @@ namespace MainExample
 
         private void btnПрименить_Click(object sender, EventArgs e)
         {
+            ApplyChangedUi2Model();
+            DialogResult = DialogResult.OK;
+        }
+
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            DialogResult = DialogResult.Cancel;
+        }
+
+
+
+        private void ApplyChangedUi2Model()
+        {
             РасписаниеПоезда.Num = tBНомерПоезда.Text;
             РасписаниеПоезда.Num2 = tBНомерПоездаДоп.Text;
 
@@ -246,23 +238,9 @@ namespace MainExample
 
             РасписаниеПоезда.Direction = cBНаправ.Text;
 
-            //if (rBТранзит.Checked)
-            //{
-                РасписаниеПоезда.StationDepart = cBОткуда.Text;
-                РасписаниеПоезда.StationArrival = cBКуда.Text;
-            //}
-            //else
-            //if (rBОтправление.Checked)
-            //{
-            //    РасписаниеПоезда.StationArrival = cBКуда.Text;
-            //    РасписаниеПоезда.StationDepart = String.Empty;
-            //}
-            //else
-            //if (rBПрибытие.Checked)
-            //{
-            //    РасписаниеПоезда.StationDepart = cBОткуда.Text;
-            //    РасписаниеПоезда.StationArrival = String.Empty;
-            //}
+
+            РасписаниеПоезда.StationDepart = cBОткуда.Text;
+            РасписаниеПоезда.StationArrival = cBКуда.Text;
 
 
             if (rBВремяДействияС.Checked == true)
@@ -363,14 +341,6 @@ namespace MainExample
             }
 
             РасписаниеПоезда.DaysAlias = tb_ДниСледованияAlias.Text;
-            DialogResult = System.Windows.Forms.DialogResult.OK;
-        }
-
-
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            DialogResult = System.Windows.Forms.DialogResult.Cancel;
         }
 
 
@@ -391,6 +361,36 @@ namespace MainExample
                     РезультирующийШаблонОповещения = РезультирующийШаблонОповещения.Remove(РезультирующийШаблонОповещения.Length - 1);
 
             return РезультирующийШаблонОповещения;
+        }
+
+
+
+
+        private void ОтобразитьШаблоныОповещания(string soundTemplates)
+        {
+            cBШаблонОповещения.Items.Add("Блокировка");
+
+            foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
+                cBШаблонОповещения.Items.Add(Item.Name);
+
+
+            string[] шаблонОповещения = soundTemplates.Split(':');
+            if ((шаблонОповещения.Length % 3) == 0)
+            {
+                for (int i = 0; i < шаблонОповещения.Length / 3; i++)
+                {
+                    if (cBШаблонОповещения.Items.Contains(шаблонОповещения[3 * i + 0]))
+                    {
+                        int типОповещенияПути;
+                        int.TryParse(шаблонОповещения[3 * i + 2], out типОповещенияПути);
+                        типОповещенияПути %= 2;
+                        ListViewItem lvi = new ListViewItem(new string[] { шаблонОповещения[3 * i + 0], шаблонОповещения[3 * i + 1], Program.ТипыВремени[типОповещенияПути] });
+                        this.lVШаблоныОповещения.Items.Add(lvi);
+                    }
+                }
+            }
+
+            cBВремяОповещения.SelectedIndex = 0;
         }
 
 
@@ -535,6 +535,25 @@ namespace MainExample
                 lVШаблоныОповещения.Items.Remove(lVШаблоныОповещения.SelectedItems[0]);
             }
         }
+
+
+        private void btnАвтогенерацияШаблонов_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var rule = Program.TrainRecordRule;
+                var builder = new TrainRecordBuilderManual(РасписаниеПоезда, null, rule);
+                var factory = new TrainRecordFactoryManual(builder);
+                РасписаниеПоезда = factory.Construct();
+
+                ОтобразитьШаблоныОповещания(РасписаниеПоезда.SoundTemplates);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Во время автогенерации шаблона возникли ошибки:{ex.Message}");
+            }
+        }
+
 
 
         private void rb_Постоянно_CheckedChanged(object sender, EventArgs e)
@@ -726,5 +745,7 @@ namespace MainExample
                 }
             }
         }
+
+
     }
 }

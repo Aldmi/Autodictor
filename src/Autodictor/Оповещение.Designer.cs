@@ -112,6 +112,7 @@
             this.chBoxВыводНаТабло = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chBoxВыводЗвука = new System.Windows.Forms.CheckBox();
+            this.btnАвтогенерацияШаблонов = new System.Windows.Forms.Button();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -651,6 +652,7 @@
             // 
             // gBШаблонОповещения
             // 
+            this.gBШаблонОповещения.Controls.Add(this.btnАвтогенерацияШаблонов);
             this.gBШаблонОповещения.Controls.Add(this.tb_КолвоПовторовEng);
             this.gBШаблонОповещения.Controls.Add(this.label11);
             this.gBШаблонОповещения.Controls.Add(this.tb_КолвоПовторовRu);
@@ -1017,6 +1019,19 @@
             this.chBoxВыводЗвука.Text = "Звук";
             this.chBoxВыводЗвука.UseVisualStyleBackColor = true;
             // 
+            // btnАвтогенерацияШаблонов
+            // 
+            this.btnАвтогенерацияШаблонов.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnАвтогенерацияШаблонов.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnАвтогенерацияШаблонов.Location = new System.Drawing.Point(6, 218);
+            this.btnАвтогенерацияШаблонов.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.btnАвтогенерацияШаблонов.Name = "btnАвтогенерацияШаблонов";
+            this.btnАвтогенерацияШаблонов.Size = new System.Drawing.Size(105, 131);
+            this.btnАвтогенерацияШаблонов.TabIndex = 63;
+            this.btnАвтогенерацияШаблонов.Text = "Авто";
+            this.btnАвтогенерацияШаблонов.UseVisualStyleBackColor = false;
+            this.btnАвтогенерацияШаблонов.Click += new System.EventHandler(this.btnАвтогенерацияШаблонов_Click);
+            // 
             // Оповещение
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -1157,5 +1172,6 @@
         public System.Windows.Forms.CheckBox chBoxВыводНаТабло;
         private System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.CheckBox chBoxВыводЗвука;
+        private System.Windows.Forms.Button btnАвтогенерацияШаблонов;
     }
 }

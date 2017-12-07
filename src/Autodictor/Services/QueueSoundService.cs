@@ -11,6 +11,7 @@ using MainExample.Entites;
 using WCFCis2AvtodictorContract.DataContract;
 
 
+
 namespace MainExample.Services
 {
     public enum StatusPlaying { Start, Playing, Stop }

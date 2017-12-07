@@ -15,6 +15,7 @@ using Domain.Entitys;
 using Domain.Entitys.Authentication;
 using Library.Logs;
 using Library.Xml;
+using MainExample.Rules.TrainRecordRules;
 using MainExample.Services;
 
 
@@ -40,6 +41,8 @@ namespace MainExample
         public static IRepository<User> UsersDbRepository; //Пользователи, хранилище NoSqlDb
 
         public static Настройки Настройки;
+
+        public static ITrainRecordRule TrainRecordRule;
 
         public static string[] ТипыОповещения = new string[] { "Не определено", "На Х-ый путь", "На Х-ом пути", "С Х-ого пути" };
         public static string[] ТипыВремени = new string[] { "Прибытие", "Отправление" };
@@ -76,6 +79,11 @@ namespace MainExample
             UsersDbRepository = new RepositoryNoSql<User>(connection);
 
             AuthenticationService.UsersDbInitialize();//не дожидаемся окончания Task-а загрузки БД
+
+            //загрузка правил создания звуквых шаблонов для TrainRecord.
+            var templateTrainRecordRule = new AutoGenerateSoundTemplateTrainRecordRule();
+            templateTrainRecordRule.LoadSetting();
+            TrainRecordRule = templateTrainRecordRule;
 
             try
             {
