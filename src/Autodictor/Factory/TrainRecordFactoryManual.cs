@@ -18,7 +18,6 @@ namespace MainExample.Factory
 
         public override TrainTableRecord Construct()
         {
-            Builder.BuildBase();
             Builder.BuildDaysFollowing();
             Builder.BuildSoundTemplateByRules();
 

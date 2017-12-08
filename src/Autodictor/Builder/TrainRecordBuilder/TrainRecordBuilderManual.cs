@@ -37,6 +37,10 @@ namespace MainExample.Builder.TrainRecordBuilder
 
         public override void BuildDaysFollowing()
         {
+            if(string.IsNullOrEmpty(DaysFollowingFormat))
+                return;
+
+            //преобразовать из строки в масив байт.
         }
 
 
