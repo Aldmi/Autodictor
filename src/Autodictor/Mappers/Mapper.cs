@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutodictorBL.Entites;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Model;
 using Domain.Entitys;

@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime;
 using System.Windows.Forms;
+using AutodictorBL.Builder.TrainRecordBuilder;
+using AutodictorBL.Entites;
 using Domain.Entitys;
-using MainExample.Builder.TrainRecordBuilder;
 using MainExample.Entites;
 using MainExample.Factory;
 

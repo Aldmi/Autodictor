@@ -1,4 +1,4 @@
-﻿namespace MainExample.Rules.TrainRecordRules
+﻿namespace AutodictorBL.Rules.TrainRecordRules
 {
     public class AutoGenerateSoundTemplateTrainRecordRule : ITrainRecordRule
     {

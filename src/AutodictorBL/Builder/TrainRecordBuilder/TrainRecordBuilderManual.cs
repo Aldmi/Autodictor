@@ -1,8 +1,7 @@
-﻿using System;
-using MainExample.Entites;
-using MainExample.Rules.TrainRecordRules;
+﻿using AutodictorBL.Entites;
+using AutodictorBL.Rules.TrainRecordRules;
 
-namespace MainExample.Builder.TrainRecordBuilder
+namespace AutodictorBL.Builder.TrainRecordBuilder
 {
     public class TrainRecordBuilderManual : TrainRecordBuilderBase
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutodictorBL.Entites;
 using Domain.Entitys;
 using MainExample.Entites;
 

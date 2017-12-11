@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using AutodictorBL.Entites;
 using Domain.Entitys;
 using MainExample.Entites;
 using MainExample.Services;

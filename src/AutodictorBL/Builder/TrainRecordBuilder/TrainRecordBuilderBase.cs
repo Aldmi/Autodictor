@@ -1,7 +1,6 @@
-﻿using CommunicationDevices.DataProviders;
-using MainExample.Entites;
+﻿using AutodictorBL.Entites;
 
-namespace MainExample.Builder.TrainRecordBuilder
+namespace AutodictorBL.Builder.TrainRecordBuilder
 {
     public abstract class TrainRecordBuilderBase
     {

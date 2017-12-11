@@ -157,8 +157,6 @@
     <Compile Include="BoardForm.Designer.cs">
       <DependentUpon>BoardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Builder\TrainRecordBuilder\TrainRecordBuilderBase.cs" />
-    <Compile Include="Builder\TrainRecordBuilder\TrainRecordBuilderManual.cs" />
     <Compile Include="CommunicationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,8 +171,6 @@
     <Compile Include="Factory\TrainRecordFactoryBase.cs" />
     <Compile Include="Factory\TrainRecordFactoryManual.cs" />
     <Compile Include="Factory\TrainRecordFactoryRemote.cs" />
-    <Compile Include="Rules\TrainRecordRules\AutoGenerateSoundTemplateTrainRecordRule.cs" />
-    <Compile Include="Rules\TrainRecordRules\ITrainRecordRule.cs" />
     <Compile Include="Services\FactoryServices\PreprocessingOutputFactory.cs" />
     <Compile Include="Services\GetDataService\GetCisOperSh.cs" />
     <Compile Include="Services\GetDataService\GetCisRegSh.cs" />
@@ -498,6 +494,10 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutodictorBL\AutodictorBL.csproj">
+      <Project>{989d59ca-4b8f-4977-9b86-2c43f40b655b}</Project>
+      <Name>AutodictorBL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommunicationDevices\CommunicationDevices.csproj">
       <Project>{6a763286-f0a3-4218-85d1-dd8eb40dcff3}</Project>
       <Name>CommunicationDevices</Name>

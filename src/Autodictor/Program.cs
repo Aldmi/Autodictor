@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using AutodictorBL.Rules.TrainRecordRules;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Concrete.Generic;
@@ -15,7 +16,6 @@ using Domain.Entitys;
 using Domain.Entitys.Authentication;
 using Library.Logs;
 using Library.Xml;
-using MainExample.Rules.TrainRecordRules;
 using MainExample.Services;
 
 
