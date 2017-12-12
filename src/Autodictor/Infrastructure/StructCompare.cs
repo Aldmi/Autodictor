@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using AutodictorBL.Entites;
 
 namespace MainExample.Infrastructure
 {

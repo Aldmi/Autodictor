@@ -1,6 +1,6 @@
 ﻿namespace AutodictorBL.Rules.TrainRecordRules
 {
-    public interface ITrainRecordRule
+    public interface ITrainTypeRule
     {
         
     }

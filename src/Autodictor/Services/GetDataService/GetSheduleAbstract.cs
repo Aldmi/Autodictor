@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutodictorBL.Entites;
 using CommunicationDevices.Behavior.ExhangeBehavior;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;

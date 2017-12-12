@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
 using AutodictorBL.Rules.TrainRecordRules;
+using AutodictorBL.Settings.XmlSettings;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Concrete.Generic;
@@ -42,7 +43,7 @@ namespace MainExample
 
         public static Настройки Настройки;
 
-        public static ITrainRecordRule TrainRecordRule;
+        public static TrainRules TrainRules;
 
         public static string[] ТипыОповещения = new string[] { "Не определено", "На Х-ый путь", "На Х-ом пути", "С Х-ого пути" };
         public static string[] ТипыВремени = new string[] { "Прибытие", "Отправление" };
@@ -80,10 +81,13 @@ namespace MainExample
 
             AuthenticationService.UsersDbInitialize();//не дожидаемся окончания Task-а загрузки БД
 
-            //загрузка правил создания звуквых шаблонов для TrainRecord.
-            var templateTrainRecordRule = new AutoGenerateSoundTemplateTrainRecordRule();
-            templateTrainRecordRule.LoadSetting();
-            TrainRecordRule = templateTrainRecordRule;
+            //загрузка правил создания звуковых шаблонов для TrainRecord.
+            TrainRules = new TrainRules();
+            var result= TrainRules.LoadSetting();
+            if (!string.IsNullOrEmpty(result))
+            {
+                MessageBox.Show(result);
+            }
 
             try
             {

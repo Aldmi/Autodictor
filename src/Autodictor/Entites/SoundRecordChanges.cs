@@ -1,4 +1,5 @@
 ﻿using System;
+using AutodictorBL.Entites;
 
 namespace MainExample.Entites
 {

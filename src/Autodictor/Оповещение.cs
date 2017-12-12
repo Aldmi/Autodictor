@@ -542,7 +542,7 @@ namespace MainExample
         {
             try
             {
-                var rule = Program.TrainRecordRule;
+                var rule = Program.TrainRules;
                 var builder = new TrainRecordBuilderManual(РасписаниеПоезда, null, rule);
                 var factory = new TrainRecordFactoryManual(builder);
                 РасписаниеПоезда = factory.Construct();

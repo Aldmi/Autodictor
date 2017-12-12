@@ -6,14 +6,14 @@ namespace AutodictorBL.Builder.TrainRecordBuilder
     public class TrainRecordBuilderManual : TrainRecordBuilderBase
     {
         private string DaysFollowingFormat { get; }
-        private ITrainRecordRule Rule { get; }
+        private ITrainTypeRule Rule { get; }
 
 
 
 
         #region ctor
 
-        public TrainRecordBuilderManual(TrainTableRecord trainTableBase, string daysFollowingFormat, ITrainRecordRule rule)
+        public TrainRecordBuilderManual(TrainTableRecord trainTableBase, string daysFollowingFormat, ITrainTypeRule rule)
         {
             TrainTableRecord = trainTableBase;
             DaysFollowingFormat = daysFollowingFormat;

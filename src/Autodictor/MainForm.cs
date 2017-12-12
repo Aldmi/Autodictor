@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
+using AutodictorBL.Entites;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;
@@ -387,33 +388,33 @@ namespace MainExample
                 return;
             }
 
-            СтатическоеСообщение Сообщение;
-            Сообщение.ID = 0;
-            Сообщение.Активность = true;
-            Сообщение.Время = DateTime.Now;
-            Сообщение.НазваниеКомпозиции = "";
-            Сообщение.ОписаниеКомпозиции = "";
-            Сообщение.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
-            КарточкаСтатическогоЗвуковогоСообщения ОкноСообщения = new КарточкаСтатическогоЗвуковогоСообщения(Сообщение);
-            if (ОкноСообщения.ShowDialog() == DialogResult.OK)
+            СтатическоеСообщение сообщение;
+            сообщение.ID = 0;
+            сообщение.Активность = true;
+            сообщение.Время = DateTime.Now;
+            сообщение.НазваниеКомпозиции = "";
+            сообщение.ОписаниеКомпозиции = "";
+            сообщение.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
+            КарточкаСтатическогоЗвуковогоСообщения окноСообщения = new КарточкаСтатическогоЗвуковогоСообщения(сообщение);
+            if (окноСообщения.ShowDialog() == DialogResult.OK)
             {
-                Сообщение = ОкноСообщения.ПолучитьИзмененнуюКарточку();
+                сообщение = окноСообщения.ПолучитьИзмененнуюКарточку();
 
                 int ПопыткиВставитьСообщение = 5;
                 while (ПопыткиВставитьСообщение-- > 0)
                 {
-                    string Key = Сообщение.Время.ToString("HH:mm:ss");
+                    string Key = сообщение.Время.ToString("HH:mm:ss");
                     string[] SubKeys = Key.Split(':');
                     if (SubKeys[0].Length == 1)
                         Key = "0" + Key;
 
                     if (MainWindowForm.СтатическиеЗвуковыеСообщения.ContainsKey(Key))
                     {
-                        Сообщение.Время = Сообщение.Время.AddSeconds(1);
+                        сообщение.Время = сообщение.Время.AddSeconds(1);
                         continue;
                     }
 
-                    MainWindowForm.СтатическиеЗвуковыеСообщения.Add(Key, Сообщение);
+                    MainWindowForm.СтатическиеЗвуковыеСообщения.Add(Key, сообщение);
                     MainWindowForm.СтатическиеЗвуковыеСообщения.OrderBy(key => key.Value);
                     MainWindowForm.ФлагОбновитьСписокЗвуковыхСообщений = true;
                     break;

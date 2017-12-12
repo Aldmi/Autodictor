@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
+using AutodictorBL.Entites;
 using Domain.Entitys;
 using Library.Logs;
 using MainExample.Entites;

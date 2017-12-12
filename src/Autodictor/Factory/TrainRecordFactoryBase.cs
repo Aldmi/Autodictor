@@ -1,6 +1,6 @@
 ﻿using AutodictorBL.Builder.TrainRecordBuilder;
 using AutodictorBL.Entites;
-using MainExample.Entites;
+
 
 namespace MainExample.Factory
 {
