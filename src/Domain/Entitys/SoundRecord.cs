@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Entitys;
 
-namespace AutodictorBL.Entites
+namespace Domain.Entitys
 {
     public struct SoundRecord
     {

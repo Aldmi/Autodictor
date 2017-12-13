@@ -1,38 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AutodictorBL.Settings;
-using AutodictorBL.Settings.XmlSettings;
-using Library.Logs;
-using Library.Xml;
 
-
-namespace AutodictorBL.Rules.TrainRecordRules
+namespace Domain.Entitys
 {
-    public enum TypeTrain { None, Suburb, LongDist }
+    public enum TypeTrain { None, Suburb, LongDist, Passenger}
     public enum ActionType { None, Arrival, Departure }
     public enum Emergency { None, DelayedArrival, DelayedDeparture, Cancel, DispatchOnReadiness }
 
 
 
-    public class TrainTypeRule 
+    public class RuleByTrainType : IRuleByTrainType
     {
         #region prop
 
-        public int Id { get; set; }              //Id типа.
-        public TypeTrain TypeTrain { get; set; }         //Принадлежность к типу (дальний/пригород)
-        public string NameRu { get; set; }       //Имя и его Alias
-        public string AliasRu { get; set; }
-        public string NameEng { get; set; }
-        public string AliasEng { get; set; }
-        public string NameCh { get; set; }
-        public string AliasCh { get; set; }
+        public int Id { get; }              //Id типа.
+        public TypeTrain TypeTrain { get; } //Принадлежность к типу (дальний/пригород)
+        public string NameRu { get; }       //Имя и его Alias
+        public string AliasRu { get; }
+        public string NameEng { get; }
+        public string AliasEng { get; }
+        public string NameCh { get; }
+        public string AliasCh { get; }
 
-        public string ShowPathTimer { get; set; }//???
-        public int WarningTimer { get; set; }  //окрашивать в главном окне в жёлтый за X минут до первого события.
+        public string ShowPathTimer { get; }//???
+        public int WarningTimer { get; }  //окрашивать в главном окне в жёлтый за X минут до первого события.
 
-        public List<ActionTrain> ActionTrains { get; set; }
+        public List<ActionTrain> ActionTrains { get; }
 
         #endregion
 
@@ -41,7 +34,7 @@ namespace AutodictorBL.Rules.TrainRecordRules
 
         #region ctor
 
-        public TrainTypeRule(string id, string typeTrain, string nameRu, string aliasRu, string nameEng, string aliasEng, string nameCh, string aliasCh, string showPathTimer, string warningTimer, List<ActionTrain> actionTrains)
+        public RuleByTrainType(string id, string typeTrain, string nameRu, string aliasRu, string nameEng, string aliasEng, string nameCh, string aliasCh, string showPathTimer, string warningTimer, List<ActionTrain> actionTrains)
         {         
             Id = int.Parse(id);
             switch (typeTrain)
@@ -160,8 +153,8 @@ namespace AutodictorBL.Rules.TrainRecordRules
     {
         #region
 
-        public int? CycleTime { get; }     // Если стоит CycleTime, то Times игнорируется
-        public int? Time { get; }          // Если стоит Time, то CycleTime игнорируется
+        public int? CycleTime { get; }     // Если стоит CycleTime, то DeltaTime игнорируется
+        public int? DeltaTime { get; }     // Если стоит DeltaTime, то CycleTime игнорируется
 
         #endregion
 
@@ -177,13 +170,13 @@ namespace AutodictorBL.Rules.TrainRecordRules
 
             if (time.StartsWith("~"))
             {
-                Time = null;
+                DeltaTime = null;
                 CycleTime = int.Parse(time.Remove(0, 1));
             }
             else
             {
                 CycleTime = null;
-                Time = int.Parse(time);
+                DeltaTime = int.Parse(time);
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AutodictorBL.Entites;
+using Domain.Entitys;
 using MainExample.Entites;
 
 namespace MainExample.Comparers

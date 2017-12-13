@@ -10,7 +10,6 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
-using AutodictorBL.Entites;
 using CommunicationDevices.Behavior.BindingBehavior;
 using CommunicationDevices.Behavior.BindingBehavior.ToPath;
 using CommunicationDevices.ClientWCF;

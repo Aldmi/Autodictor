@@ -1,5 +1,5 @@
 ﻿using System;
-using AutodictorBL.Entites;
+using Domain.Entitys;
 
 namespace MainExample.Entites
 {

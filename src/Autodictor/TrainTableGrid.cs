@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AutodictorBL.Entites;
 using Domain.Entitys;
 using MainExample.Entites;
 using MainExample.Extension;
@@ -513,7 +512,7 @@ namespace MainExample
         /// </summary>
         private void btn_ДобавитьЗапись_Click(object sender, EventArgs e)
         {
-            int maxId = TrainSheduleTable.TrainTableRecords.Max(t => t.ID);
+            int maxId = TrainSheduleTable.TrainTableRecords.Any() ? TrainSheduleTable.TrainTableRecords.Max(t => t.ID) : 0;
 
             //создали новый элемент
             TrainTableRecord Данные;
@@ -562,6 +561,7 @@ namespace MainExample
 
             Данные.IsScoreBoardOutput = false;
             Данные.IsSoundOutput = true;
+            Данные.RuleByTrainType = null;
 
             //Добавили в список
             TrainSheduleTable.TrainTableRecords.Add(Данные);

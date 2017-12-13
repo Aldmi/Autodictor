@@ -7,7 +7,6 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AutodictorBL.Entites;
 using Domain.Entitys;
 using MainExample.Services;
 
@@ -150,6 +149,7 @@ namespace MainExample.Entites
                         {
                             for (int i = 0; i < trainTableRecords.Count; i++)
                             {
+                                var typeTrainId = (trainTableRecords[i].RuleByTrainType != null) ? trainTableRecords[i].RuleByTrainType.Id : -1;
                                 string line = trainTableRecords[i].ID + ";" +
                                               trainTableRecords[i].Num + ";" +
                                               trainTableRecords[i].Name + ";" +
@@ -160,15 +160,11 @@ namespace MainExample.Entites
                                               (trainTableRecords[i].Active ? "1" : "0") + ";" +
                                               trainTableRecords[i].SoundTemplates + ";" +
                                               trainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                                              SavePath2File(trainTableRecords[i].TrainPathNumber,
-                                                  trainTableRecords[i].PathWeekDayes) + ";" +
-                                              trainTableRecords[i].ТипПоезда.ToString() + ";" +
+                                              SavePath2File(trainTableRecords[i].TrainPathNumber,trainTableRecords[i].PathWeekDayes) + ";" +
+                                              typeTrainId + ";" +
                                               trainTableRecords[i].Примечание + ";" +
-                                              trainTableRecords[i]
-                                                  .ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                              trainTableRecords[i]
-                                                  .ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") +
-                                              ";" +
+                                              trainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
                                               trainTableRecords[i].Addition + ";" +
                                               (trainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
                                               (trainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
@@ -186,7 +182,7 @@ namespace MainExample.Entites
                                               trainTableRecords[i].IsSoundOutput;
 
 
-                            dumpFile.WriteLine(line);
+                               dumpFile.WriteLine(line);
                             }
 
                             dumpFile.Close();
@@ -239,12 +235,19 @@ namespace MainExample.Entites
                                 };
 
 
-                                ТипПоезда типПоезда = ТипПоезда.НеОпределен;
-                                try
+                                данные.RuleByTrainType = null;
+                                int idType;
+                                if (int.TryParse(settings[11], out idType))
                                 {
-                                    типПоезда = (ТипПоезда)Enum.Parse(typeof(ТипПоезда), settings[11]);
+                                   данные.RuleByTrainType= Program.TrainRules.TrainTypeRules.FirstOrDefault(t => t.Id == idType);
                                 }
-                                catch (ArgumentException) { }
+
+                                ТипПоезда типПоезда = ТипПоезда.НеОпределен;
+                                //try
+                                //{
+                                //    типПоезда = (ТипПоезда)Enum.Parse(typeof(ТипПоезда), settings[11]);
+                                //}
+                                //catch (ArgumentException) { }
                                 данные.ТипПоезда = типПоезда;
 
                                 данные.Примечание = settings[12];

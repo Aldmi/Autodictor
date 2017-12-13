@@ -5,10 +5,9 @@ using System.Linq;
 using System.Runtime;
 using System.Windows.Forms;
 using AutodictorBL.Builder.TrainRecordBuilder;
-using AutodictorBL.Entites;
+using AutodictorBL.Factory;
 using Domain.Entitys;
 using MainExample.Entites;
-using MainExample.Factory;
 
 
 namespace MainExample
@@ -52,15 +51,25 @@ namespace MainExample
             }
 
 
-            string[] Станции = расписаниеПоезда.Name.Split('-');
-            if (Станции.Length == 2)
+            var typeTrain = Program.TrainRules.TrainTypeRules.ToList();
+            if (typeTrain.Any())
             {
-                cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
-                cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
+                var typeTrainNames = typeTrain.Select(d => d.NameRu).ToArray();
+                cBКатегория.Items.AddRange(typeTrainNames);
+                var selectedIndex = typeTrain.IndexOf(расписаниеПоезда.RuleByTrainType);
+                cBКатегория.SelectedIndex = selectedIndex;
             }
-            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
+
+
+            string[] станции = расписаниеПоезда.Name.Split('-');
+            if (станции.Length == 2)
             {
-                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
+                cBОткуда.Text = станции[0].Trim(new char[] { ' ' });
+                cBКуда.Text = станции[1].Trim(new char[] { ' ' });
+            }
+            else if (станции.Length == 1 && расписаниеПоезда.Name != "")
+            {
+                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' });
             }
 
 
@@ -159,7 +168,6 @@ namespace MainExample
 
 
             cBБлокировка.Checked = !расписаниеПоезда.Active;
-            cBКатегория.SelectedIndex = (int)расписаниеПоезда.ТипПоезда;
 
 
             rBНеОповещать.Checked = false;
@@ -272,7 +280,10 @@ namespace MainExample
 
 
             РасписаниеПоезда.TrainPathDirection = (byte)cBОтсчетВагонов.SelectedIndex;
-            РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
+
+           // РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
+            РасписаниеПоезда.RuleByTrainType = (cBКатегория.SelectedIndex == -1) ? null : Program.TrainRules.TrainTypeRules[cBКатегория.SelectedIndex];
+
 
             РасписаниеПоезда.ChangeTrainPathDirection = chBox_сменнаяНумерация.Checked;
             РасписаниеПоезда.IsScoreBoardOutput = chBoxВыводНаТабло.Checked;
@@ -542,7 +553,7 @@ namespace MainExample
         {
             try
             {
-                var rule = Program.TrainRules;
+                var rule = РасписаниеПоезда.RuleByTrainType;
                 var builder = new TrainRecordBuilderManual(РасписаниеПоезда, null, rule);
                 var factory = new TrainRecordFactoryManual(builder);
                 РасписаниеПоезда = factory.Construct();

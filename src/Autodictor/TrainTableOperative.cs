@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using AutodictorBL.Entites;
 using Domain.Entitys;
 using MainExample.Entites;
 
@@ -306,6 +305,8 @@ namespace MainExample
                                 bool.TryParse(Settings[27], out выводЗвука);
                                 Данные.IsSoundOutput = выводЗвука;
                             }
+
+                            Данные.RuleByTrainType = null;
 
 
                             TrainTableRecords.Add(Данные);

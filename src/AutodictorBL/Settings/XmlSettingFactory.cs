@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Xml.Linq;
-using AutodictorBL.Rules.TrainRecordRules;
-using AutodictorBL.Settings.XmlSettings;
+using Domain.Entitys;
 
 
 namespace AutodictorBL.Settings
@@ -16,13 +15,13 @@ namespace AutodictorBL.Settings
         /// <summary>
         /// Создание списка настроек для правил поезда зависмых от ТИПА поезда
         /// </summary>
-        public static List<TrainTypeRule> CreateXmlTrainTypeRules(XElement xml)
+        public static List<RuleByTrainType> CreateXmlTrainTypeRules(XElement xml)
         {
             var trainTypes = xml?.Elements("TrainType").ToList();
             if (trainTypes == null || !trainTypes.Any())
                 return null;
 
-            var rules= new List<TrainTypeRule>();
+            var rules= new List<RuleByTrainType>();
             foreach (var el in trainTypes)
             {
                 var actions = el.Elements("Action").ToList();
@@ -62,7 +61,7 @@ namespace AutodictorBL.Settings
                     }
                 }
 
-                rules.Add(new TrainTypeRule(
+                rules.Add(new RuleByTrainType(
                     (string)el.Attribute("Id"),
                     (string)el.Attribute("Type"),
                     (string)el.Attribute("NameRu"),

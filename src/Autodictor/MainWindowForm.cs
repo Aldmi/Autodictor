@@ -10,7 +10,6 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AutodictorBL.Entites;
 using CommunicationDevices.Behavior.BindingBehavior.ToChange;
 using CommunicationDevices.Behavior.BindingBehavior.ToGeneralSchedule;
 using CommunicationDevices.Behavior.BindingBehavior.ToGetData;
@@ -37,6 +36,7 @@ using MainExample.Services.FactoryServices;
 using MainExample.Services.GetDataService;
 using MoreLinq;
 using ISoundRecordPreprocessing = MainExample.Services.ISoundRecordPreprocessing;
+using TypeTrain = CommunicationDevices.DataProviders.TypeTrain;
 
 
 namespace MainExample

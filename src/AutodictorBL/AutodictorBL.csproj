@@ -42,13 +42,11 @@
   <ItemGroup>
     <Compile Include="Builder\TrainRecordBuilder\TrainRecordBuilderBase.cs" />
     <Compile Include="Builder\TrainRecordBuilder\TrainRecordBuilderManual.cs" />
-    <Compile Include="Entites\SoundRecord.cs" />
-    <Compile Include="Entites\TrainTableRecord.cs" />
+    <Compile Include="Factory\TrainRecordFactoryBase.cs" />
+    <Compile Include="Factory\TrainRecordFactoryManual.cs" />
+    <Compile Include="Factory\TrainRecordFactoryRemote.cs" />
+    <Compile Include="Rules\TrainRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\TrainRecordRules\TrainRules.cs" />
-    <Compile Include="Rules\TrainRecordRules\TrainTypeRule.cs" />
-    <Compile Include="Rules\TrainRecordRules\ITrainTypeRule.cs" />
-    <Compile Include="Settings\XmlSettings\XmlTrainTypeRuleSettings.cs" />
     <Compile Include="Settings\XmlSettingFactory.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +59,9 @@
       <Name>Library</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Settings\XmlSettings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

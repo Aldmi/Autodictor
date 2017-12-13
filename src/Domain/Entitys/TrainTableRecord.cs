@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Entitys;
 
-namespace AutodictorBL.Entites
+namespace Domain.Entitys
 {
     public enum SourceData { Local, RemoteCis }
     public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
@@ -37,5 +36,6 @@ namespace AutodictorBL.Entites
         public bool Автомат;                                      // true - поезд обрабатывается в автомате.
         public bool IsScoreBoardOutput;                           // Вывод на табло. true. (Работает если указанн Contrains SendingDataLimit)
         public bool IsSoundOutput;                                // Вывод звука. true.
-    };
+        public RuleByTrainType RuleByTrainType;
+    }; 
 }

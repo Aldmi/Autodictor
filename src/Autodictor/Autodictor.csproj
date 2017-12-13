@@ -168,9 +168,6 @@
     <Compile Include="Entites\TrainSheduleTable.cs" />
     <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
-    <Compile Include="Factory\TrainRecordFactoryBase.cs" />
-    <Compile Include="Factory\TrainRecordFactoryManual.cs" />
-    <Compile Include="Factory\TrainRecordFactoryRemote.cs" />
     <Compile Include="Services\FactoryServices\PreprocessingOutputFactory.cs" />
     <Compile Include="Services\GetDataService\GetCisOperSh.cs" />
     <Compile Include="Services\GetDataService\GetCisRegSh.cs" />

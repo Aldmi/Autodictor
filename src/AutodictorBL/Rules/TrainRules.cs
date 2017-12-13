@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.IO;
 using AutodictorBL.Settings;
-using AutodictorBL.Settings.XmlSettings;
+using Domain.Entitys;
 using Library.Xml;
 
-namespace AutodictorBL.Rules.TrainRecordRules
+namespace AutodictorBL.Rules
 {
     /// <summary>
     /// Все правила для создания поезда
     /// </summary>
-    public class TrainRules : ITrainTypeRule
+    public class TrainRules
     {
         #region prop
 
-        public IEnumerable<TrainTypeRule> TrainTypeRules { get; set; }
+        public List<RuleByTrainType> TrainTypeRules { get; set; }
 
         #endregion
 

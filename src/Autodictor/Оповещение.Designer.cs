@@ -76,6 +76,7 @@
             this.btnДниСледования = new System.Windows.Forms.Button();
             this.cBБлокировка = new System.Windows.Forms.CheckBox();
             this.gBШаблонОповещения = new System.Windows.Forms.GroupBox();
+            this.btnАвтогенерацияШаблонов = new System.Windows.Forms.Button();
             this.tb_КолвоПовторовEng = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.tb_КолвоПовторовRu = new System.Windows.Forms.TextBox();
@@ -112,7 +113,6 @@
             this.chBoxВыводНаТабло = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chBoxВыводЗвука = new System.Windows.Forms.CheckBox();
-            this.btnАвтогенерацияШаблонов = new System.Windows.Forms.Button();
             this.gBНаправление.SuspendLayout();
             this.gBОстановки.SuspendLayout();
             this.gBДниСледования.SuspendLayout();
@@ -333,15 +333,6 @@
             // 
             this.cBКатегория.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBКатегория.FormattingEnabled = true;
-            this.cBКатегория.Items.AddRange(new object[] {
-            "НеОпределен",
-            "Пассажирский",
-            "Пригородный",
-            "Фирменный",
-            "Скорый",
-            "Скоростной",
-            "Ласточка",
-            "РЭКС"});
             this.cBКатегория.Location = new System.Drawing.Point(381, 19);
             this.cBКатегория.Name = "cBКатегория";
             this.cBКатегория.Size = new System.Drawing.Size(179, 28);
@@ -671,6 +662,19 @@
             this.gBШаблонОповещения.TabIndex = 52;
             this.gBШаблонОповещения.TabStop = false;
             this.gBШаблонОповещения.Text = "Шаблоны оповещения";
+            // 
+            // btnАвтогенерацияШаблонов
+            // 
+            this.btnАвтогенерацияШаблонов.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.btnАвтогенерацияШаблонов.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnАвтогенерацияШаблонов.Location = new System.Drawing.Point(6, 218);
+            this.btnАвтогенерацияШаблонов.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.btnАвтогенерацияШаблонов.Name = "btnАвтогенерацияШаблонов";
+            this.btnАвтогенерацияШаблонов.Size = new System.Drawing.Size(105, 131);
+            this.btnАвтогенерацияШаблонов.TabIndex = 63;
+            this.btnАвтогенерацияШаблонов.Text = "Авто";
+            this.btnАвтогенерацияШаблонов.UseVisualStyleBackColor = false;
+            this.btnАвтогенерацияШаблонов.Click += new System.EventHandler(this.btnАвтогенерацияШаблонов_Click);
             // 
             // tb_КолвоПовторовEng
             // 
@@ -1018,19 +1022,6 @@
             this.chBoxВыводЗвука.TabIndex = 63;
             this.chBoxВыводЗвука.Text = "Звук";
             this.chBoxВыводЗвука.UseVisualStyleBackColor = true;
-            // 
-            // btnАвтогенерацияШаблонов
-            // 
-            this.btnАвтогенерацияШаблонов.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnАвтогенерацияШаблонов.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnАвтогенерацияШаблонов.Location = new System.Drawing.Point(6, 218);
-            this.btnАвтогенерацияШаблонов.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.btnАвтогенерацияШаблонов.Name = "btnАвтогенерацияШаблонов";
-            this.btnАвтогенерацияШаблонов.Size = new System.Drawing.Size(105, 131);
-            this.btnАвтогенерацияШаблонов.TabIndex = 63;
-            this.btnАвтогенерацияШаблонов.Text = "Авто";
-            this.btnАвтогенерацияШаблонов.UseVisualStyleBackColor = false;
-            this.btnАвтогенерацияШаблонов.Click += new System.EventHandler(this.btnАвтогенерацияШаблонов_Click);
             // 
             // Оповещение
             // 

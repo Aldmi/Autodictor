@@ -53,10 +53,14 @@
     <Compile Include="Entitys\Authentication\User.cs" />
     <Compile Include="Entitys\Direction.cs" />
     <Compile Include="Entitys\EntityBase.cs" />
+    <Compile Include="Entitys\IRuleByTrainType.cs" />
     <Compile Include="Entitys\Pathways.cs" />
+    <Compile Include="Entitys\SoundRecord.cs" />
     <Compile Include="Entitys\SoundRecordChangesDb.cs" />
     <Compile Include="Entitys\SoundRecordDb.cs" />
     <Compile Include="Entitys\Station.cs" />
+    <Compile Include="Entitys\RuleByTrainType.cs" />
+    <Compile Include="Entitys\TrainTableRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ParticirovanieNoSqlRepositoryService.cs" />
   </ItemGroup>
