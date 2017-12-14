@@ -8,7 +8,7 @@ namespace Domain.Entitys
 
     public struct TrainTableRecord
     {
-        public int ID;                    //Id
+        public int Id;                    //Id
         public string Num;                //Номер поезда
         public string Num2;               //Номер поезда 2 для транзита
         public string Name;               //Название поезда
@@ -36,6 +36,7 @@ namespace Domain.Entitys
         public bool Автомат;                                      // true - поезд обрабатывается в автомате.
         public bool IsScoreBoardOutput;                           // Вывод на табло. true. (Работает если указанн Contrains SendingDataLimit)
         public bool IsSoundOutput;                                // Вывод звука. true.
-        public RuleByTrainType RuleByTrainType;
+        public RuleByTrainType RuleByTrainType;                   // Правила основанные на типе поезда.
+        public List<ActionTrain> ActionTrains;                    // Текущие действия поезда (шаблоны поезда).
     }; 
 }

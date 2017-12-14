@@ -73,7 +73,7 @@ namespace MainExample
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
-                        if (TrainTableRecords[i].ID == ID)
+                        if (TrainTableRecords[i].Id == ID)
                         {
                             TrainTableRecords.RemoveAt(i);
                             break;
@@ -113,7 +113,7 @@ namespace MainExample
                 {
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
-                        if (TrainTableRecords[i].ID == ID)
+                        if (TrainTableRecords[i].Id == ID)
                         {
                             TrainTableRecord Данные;
 
@@ -165,7 +165,7 @@ namespace MainExample
             {
                 string строкаОписанияРасписания = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days).ПолучитьСтрокуОписанияРасписания();
 
-                ListViewItem lvi = new ListViewItem(new string[] { данные.ID.ToString(), данные.Num, данные.Name, данные.ArrivalTime, данные.StopTime, данные.DepartureTime, строкаОписанияРасписания });
+                ListViewItem lvi = new ListViewItem(new string[] { данные.Id.ToString(), данные.Num, данные.Name, данные.ArrivalTime, данные.StopTime, данные.DepartureTime, строкаОписанияРасписания });
                 lvi.Tag = данные;
                 lvi.BackColor = данные.Active ? Color.LightGreen : Color.LightGray;
                 this.listView1.Items.Add(lvi);
@@ -190,7 +190,7 @@ namespace MainExample
                         {
                             TrainTableRecord Данные;
 
-                            Данные.ID = int.Parse(Settings[0]);
+                            Данные.Id = int.Parse(Settings[0]);
                             Данные.Num = Settings[1];
                             Данные.Name = Settings[2];
                             Данные.ArrivalTime = Settings[3];
@@ -307,15 +307,15 @@ namespace MainExample
                             }
 
                             Данные.RuleByTrainType = null;
-
+                            Данные.ActionTrains = null;
 
                             TrainTableRecords.Add(Данные);
                             Program.НомераПоездов.Add(Данные.Num);
                             if (!string.IsNullOrEmpty(Данные.Num2))
                                 Program.НомераПоездов.Add(Данные.Num2);
 
-                            if (Данные.ID > _id)
-                                _id = Данные.ID;
+                            if (Данные.Id > _id)
+                                _id = Данные.Id;
                         }
                     }
                 }
@@ -337,7 +337,7 @@ namespace MainExample
                     for (int i = 0; i < TrainTableRecords.Count; i++)
                     {
                         string line =
-                            TrainTableRecords[i].ID + ";" +
+                            TrainTableRecords[i].Id + ";" +
                             TrainTableRecords[i].Num + ";" +
                             TrainTableRecords[i].Name + ";" +
                             TrainTableRecords[i].ArrivalTime + ";" +

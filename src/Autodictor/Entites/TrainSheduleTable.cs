@@ -150,7 +150,7 @@ namespace MainExample.Entites
                             for (int i = 0; i < trainTableRecords.Count; i++)
                             {
                                 var typeTrainId = (trainTableRecords[i].RuleByTrainType != null) ? trainTableRecords[i].RuleByTrainType.Id : -1;
-                                string line = trainTableRecords[i].ID + ";" +
+                                string line = trainTableRecords[i].Id + ";" +
                                               trainTableRecords[i].Num + ";" +
                                               trainTableRecords[i].Name + ";" +
                                               trainTableRecords[i].ArrivalTime + ";" +
@@ -217,7 +217,7 @@ namespace MainExample.Entites
                             {
                                 TrainTableRecord данные;
 
-                                данные.ID = int.Parse(settings[0]);
+                                данные.Id = int.Parse(settings[0]);
                                 данные.Num = settings[1];
                                 данные.Name = settings[2];
                                 данные.ArrivalTime = settings[3];
@@ -242,12 +242,9 @@ namespace MainExample.Entites
                                    данные.RuleByTrainType= Program.TrainRules.TrainTypeRules.FirstOrDefault(t => t.Id == idType);
                                 }
 
+                                данные.ActionTrains = null;
+
                                 ТипПоезда типПоезда = ТипПоезда.НеОпределен;
-                                //try
-                                //{
-                                //    типПоезда = (ТипПоезда)Enum.Parse(typeof(ТипПоезда), settings[11]);
-                                //}
-                                //catch (ArgumentException) { }
                                 данные.ТипПоезда = типПоезда;
 
                                 данные.Примечание = settings[12];

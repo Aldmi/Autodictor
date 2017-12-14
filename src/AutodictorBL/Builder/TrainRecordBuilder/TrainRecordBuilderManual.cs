@@ -50,9 +50,13 @@ namespace AutodictorBL.Builder.TrainRecordBuilder
 
         public override void BuildSoundTemplateByRules()
         {
+            var rule = Rule as RuleByTrainType; //TODO: вынести в интрефейс нужные члены
+            TrainTableRecord.ActionTrains = rule?.ActionTrains;
+
+
             //DEBUG------------------------------------------------------------------------------------------------------------
             var templateStr = string.Empty;//@"Начало посадки на пассажирский поезд:10:1:Начало посадки на скорый поезд:15:0";
-            var rule = Rule as RuleByTrainType;
+
             foreach (var act in rule.ActionTrains)
             {
                 if (act.Time != null)

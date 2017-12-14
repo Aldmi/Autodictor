@@ -229,10 +229,10 @@ namespace MainExample
                 {
                     var row = dgv_TrainTable.Rows[i];
                     var id = (int)row.Cells[0].Value;
-                    var firstOrDefault = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.ID == id);
+                    var firstOrDefault = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.Id == id);
 
                     dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = firstOrDefault.Active ? Color.LightGreen : Color.LightGray;
-                    dgv_TrainTable.Rows[i].Tag = firstOrDefault.ID;
+                    dgv_TrainTable.Rows[i].Tag = firstOrDefault.Id;
                 }
 
                 dgv_TrainTable.AllowUserToResizeColumns = true;
@@ -264,7 +264,7 @@ namespace MainExample
                     string строкаОписанияРасписания = ПланРасписанияПоезда.ПолучитьИзСтрокиПланРасписанияПоезда(данные.Days).ПолучитьСтрокуОписанияРасписания();
 
                     var row = DataTable.NewRow();
-                    row["Id"] = данные.ID;
+                    row["Id"] = данные.Id;
                     row["Номер"] = данные.Num;
                     row["ВремяПрибытия"] = данные.ArrivalTime;
                     row["Стоянка"] = данные.StopTime;
@@ -274,7 +274,7 @@ namespace MainExample
                     DataTable.Rows.Add(row);
 
                     dgv_TrainTable.Rows[i].DefaultCellStyle.BackColor = данные.Active ? Color.LightGreen : Color.LightGray;
-                    dgv_TrainTable.Rows[i].Tag = данные.ID;
+                    dgv_TrainTable.Rows[i].Tag = данные.Id;
                 }
             });
 
@@ -313,7 +313,7 @@ namespace MainExample
                 else
                 {
                     var row = DataTable.NewRow();
-                    row["Id"] = данные.ID;
+                    row["Id"] = данные.Id;
                     row["Номер"] = данные.Num;
                     row["ВремяПрибытия"] = данные.ArrivalTime;
                     row["Стоянка"] = данные.StopTime;
@@ -323,7 +323,7 @@ namespace MainExample
                     DataTable.Rows.Add(row);
 
                     dgv_TrainTable.Rows[dgv_TrainTable.Rows.Count - 1].DefaultCellStyle.BackColor = данные.Active ? Color.LightGreen : Color.LightGray;
-                    dgv_TrainTable.Rows[dgv_TrainTable.Rows.Count - 1].Tag = данные.ID;
+                    dgv_TrainTable.Rows[dgv_TrainTable.Rows.Count - 1].Tag = данные.Id;
                 }
                 return данные;
             }
@@ -476,7 +476,7 @@ namespace MainExample
 
             for (int i = 0; i < TrainSheduleTable.TrainTableRecords.Count; i++)
             {
-                if (TrainSheduleTable.TrainTableRecords[i].ID == (int)selected.Tag)
+                if (TrainSheduleTable.TrainTableRecords[i].Id == (int)selected.Tag)
                 {
                     var данные = EditData(TrainSheduleTable.TrainTableRecords[i], i);
                     if (данные != null)
@@ -501,7 +501,7 @@ namespace MainExample
             if (selected == null)
                 return;
 
-            var delItem = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.ID == (int)selected.Tag);
+            var delItem = TrainSheduleTable.TrainTableRecords.FirstOrDefault(t => t.Id == (int)selected.Tag);
             TrainSheduleTable.TrainTableRecords.Remove(delItem);
             await ОбновитьДанныеВСпискеAsync();
         }
@@ -512,11 +512,11 @@ namespace MainExample
         /// </summary>
         private void btn_ДобавитьЗапись_Click(object sender, EventArgs e)
         {
-            int maxId = TrainSheduleTable.TrainTableRecords.Any() ? TrainSheduleTable.TrainTableRecords.Max(t => t.ID) : 0;
+            int maxId = TrainSheduleTable.TrainTableRecords.Any() ? TrainSheduleTable.TrainTableRecords.Max(t => t.Id) : 0;
 
             //создали новый элемент
             TrainTableRecord Данные;
-            Данные.ID = ++maxId;
+            Данные.Id = ++maxId;
             Данные.Num = "";
             Данные.Num2 = "";
             Данные.Addition = "";
@@ -562,6 +562,7 @@ namespace MainExample
             Данные.IsScoreBoardOutput = false;
             Данные.IsSoundOutput = true;
             Данные.RuleByTrainType = null;
+            Данные.ActionTrains = null;
 
             //Добавили в список
             TrainSheduleTable.TrainTableRecords.Add(Данные);

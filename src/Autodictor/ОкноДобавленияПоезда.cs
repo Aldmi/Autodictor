@@ -80,7 +80,7 @@ namespace MainExample
 
             foreach (var Данные in TrainSheduleTable.TrainTableRecords)
             {
-                string Поезд = Данные.ID.ToString() + ":   " + Данные.Num + " " + Данные.Name + (Данные.ArrivalTime != "" ? "   Приб: " + Данные.ArrivalTime : "" ) + (Данные.DepartureTime != "" ? "   Отпр: " + Данные.DepartureTime : "");
+                string Поезд = Данные.Id.ToString() + ":   " + Данные.Num + " " + Данные.Name + (Данные.ArrivalTime != "" ? "   Приб: " + Данные.ArrivalTime : "" ) + (Данные.DepartureTime != "" ? "   Отпр: " + Данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(Поезд);
             }
 
@@ -541,7 +541,7 @@ namespace MainExample
                 {
                     foreach (var Config in TrainSheduleTable.TrainTableRecords)
                     {
-                        if (Config.ID == ID)
+                        if (Config.Id == ID)
                         {
                             // Нашли параметры выбранного поезда. Заполняем все поля.
                             if (ИспользуемыеНомераПоездов.Contains(Config.Num))

@@ -642,7 +642,7 @@ namespace MainExample
 
             var differences = TrainSheduleTable.TrainTableRecords.Where(l2 =>
                 !SoundRecords.Values.Any(l1 =>
-                    l1.IdTrain.ScheduleId == l2.ID 
+                    l1.IdTrain.ScheduleId == l2.Id 
                 )).ToList();
 
             //Добавим оставшиеся записи

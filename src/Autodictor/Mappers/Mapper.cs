@@ -76,7 +76,7 @@ namespace MainExample.Mappers
         {
             var record = new SoundRecord();
             record.ID = id;
-            record.IdTrain = new IdTrain(config.ID);
+            record.IdTrain = new IdTrain(config.Id);
             record.НомерПоезда = config.Num;
             record.НомерПоезда2 = config.Num2;
             record.НазваниеПоезда = config.Name;
