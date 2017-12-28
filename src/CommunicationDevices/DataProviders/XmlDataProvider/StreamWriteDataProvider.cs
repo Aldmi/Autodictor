@@ -12,6 +12,7 @@ using Communication.Annotations;
 using Communication.Interfaces;
 using Domain.Entitys;
 using Library.Extensions;
+using Library.Logs;
 
 
 namespace CommunicationDevices.DataProviders.XmlDataProvider
@@ -75,6 +76,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
             }
             catch (Exception ex)
             {
+                Log.log.Fatal($"Исключение в методе GetStream {ex.Message}");
                 return null;
             }
 
@@ -85,8 +87,8 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider
 
         public bool SetStream(Stream stream) 
         {
-            OutputData = stream;                
-            OutputDataChangeRx.OnNext(stream); 
+            OutputData = stream;
+            OutputDataChangeRx.OnNext(stream);
 
             return (stream != null);
         }

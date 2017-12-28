@@ -7,6 +7,7 @@ using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using Library.Logs;
 using Communication.Annotations;
 using CommunicationDevices.Rules.ExchangeRules;
 
@@ -158,6 +159,7 @@ namespace CommunicationDevices.DataProviders.BuRuleDataProvider
             }
             catch (Exception ex)
             {
+                Log.log.Fatal($"Ошибка в методе GetDataByte: {ex.Message}");
                 return null;
             }
         }

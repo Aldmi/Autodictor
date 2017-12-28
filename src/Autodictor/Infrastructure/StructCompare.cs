@@ -1,5 +1,4 @@
 ﻿using System.Xml;
-using Domain.Entitys;
 
 namespace MainExample.Infrastructure
 {

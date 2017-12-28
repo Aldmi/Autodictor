@@ -12,7 +12,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
         public int Id { get; }
         public string Name { get; }
         public string Address { get; }
-        public ushort Period { get; }
+        public long Period { get; }
         public ushort TimeRespone { get; }
         public string Description { get; }
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
@@ -31,7 +31,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
             Id = int.Parse(id);
             Name = name;
             Address = address;
-            Period = ushort.Parse(period);
+            Period = long.Parse(period);
             TimeRespone = ushort.Parse(timeRespone);
             Description = description;
         }

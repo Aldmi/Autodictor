@@ -129,6 +129,7 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
                     new XElement("TimeStamp", timeStamp),
                     new XElement("UserInfo", userInfo),
                     new XElement("CauseOfChange", causeOfChange),
+                    //new XElement("Id", uit.Id),
                     new XElement("TrainNumber", uit.NumberOfTrain),
                     new XElement("TrainType", trainType),
 

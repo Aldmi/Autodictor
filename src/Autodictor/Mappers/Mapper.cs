@@ -5,7 +5,6 @@ using CommunicationDevices.DataProviders;
 using CommunicationDevices.Model;
 using Domain.Entitys;
 using MainExample.Entites;
-using TypeTrain = CommunicationDevices.DataProviders.TypeTrain;
 
 
 namespace MainExample.Mappers
@@ -76,7 +75,7 @@ namespace MainExample.Mappers
         {
             var record = new SoundRecord();
             record.ID = id;
-            record.IdTrain = new IdTrain(config.Id);
+            record.IdTrain = new IdTrain(config.ID);
             record.НомерПоезда = config.Num;
             record.НомерПоезда2 = config.Num2;
             record.НазваниеПоезда = config.Name;
@@ -340,6 +339,7 @@ namespace MainExample.Mappers
             UniversalInputType uit = new UniversalInputType
             {
                 IsActive = t.Active,
+                Id = t.ID,
                 Event = eventPars(t.ArrivalTime, t.DepartureTime),
                 TypeTrain = (t.ТипПоезда == ТипПоезда.Пассажирский) ? TypeTrain.Passenger :
                                             (t.ТипПоезда == ТипПоезда.Пригородный) ? TypeTrain.Suburban :

@@ -12,6 +12,42 @@ using MainExample.Services;
 
 namespace MainExample.Entites
 {
+    public enum SourceData { Local, RemoteCis }
+    public enum WeekDays { Постоянно, Пн, Вт, Ср, Чт, Пт, Сб, Вс }
+
+    public struct TrainTableRecord
+    {
+        public int ID;                    //Id
+        public string Num;                //Номер поезда
+        public string Num2;               //Номер поезда 2 для транзита
+        public string Name;               //Название поезда
+        public string Direction;          //направление
+        public string StationDepart;      //станция отправления
+        public string StationArrival;     //станция прибытия
+        public string ArrivalTime;        //время прибытие
+        public string StopTime;           //время стоянка
+        public string DepartureTime;      //время отправление
+        public string FollowingTime;      //время следования (время в пути)
+        public string Days;               //дни следования
+        public string DaysAlias;          //дни следования (строка заполняется в ручную)
+        public bool Active;               //активность, отмека галочкой
+        public string SoundTemplates;     //
+        public byte TrainPathDirection;   //Нумерация вагонов
+        public bool ChangeTrainPathDirection;      //смена направления (для транзитов)
+        public Dictionary<WeekDays, string> TrainPathNumber;      //Пути по дням недели или постоянно
+        public bool PathWeekDayes;                                //true- установленны пути по дням недели, false - путь установленн постоянно
+        public ТипПоезда ТипПоезда;
+        public string Примечание;
+        public DateTime ВремяНачалаДействияРасписания;
+        public DateTime ВремяОкончанияДействияРасписания;
+        public string Addition;                                   //Дополнение
+        public Dictionary<string, bool> ИспользоватьДополнение;   //[звук] - использовать дополнение для звука.  [табло] - использовать дополнение для табло.
+        public bool Автомат;                                      // true - поезд обрабатывается в автомате.
+        public bool IsScoreBoardOutput;                           // Вывод на табло. true. (Работает если указанн Contrains SendingDataLimit)
+        public bool IsSoundOutput;                                // Вывод звука. true.
+    };
+
+
     public class TrainSheduleTable
     {
         #region Field
@@ -149,8 +185,7 @@ namespace MainExample.Entites
                         {
                             for (int i = 0; i < trainTableRecords.Count; i++)
                             {
-                                var typeTrainId = (trainTableRecords[i].RuleByTrainType != null) ? trainTableRecords[i].RuleByTrainType.Id : -1;
-                                string line = trainTableRecords[i].Id + ";" +
+                                string line = trainTableRecords[i].ID + ";" +
                                               trainTableRecords[i].Num + ";" +
                                               trainTableRecords[i].Name + ";" +
                                               trainTableRecords[i].ArrivalTime + ";" +
@@ -160,11 +195,15 @@ namespace MainExample.Entites
                                               (trainTableRecords[i].Active ? "1" : "0") + ";" +
                                               trainTableRecords[i].SoundTemplates + ";" +
                                               trainTableRecords[i].TrainPathDirection.ToString() + ";" +
-                                              SavePath2File(trainTableRecords[i].TrainPathNumber,trainTableRecords[i].PathWeekDayes) + ";" +
-                                              typeTrainId + ";" +
+                                              SavePath2File(trainTableRecords[i].TrainPathNumber,
+                                                  trainTableRecords[i].PathWeekDayes) + ";" +
+                                              trainTableRecords[i].ТипПоезда.ToString() + ";" +
                                               trainTableRecords[i].Примечание + ";" +
-                                              trainTableRecords[i].ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
-                                              trainTableRecords[i].ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i]
+                                                  .ВремяНачалаДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") + ";" +
+                                              trainTableRecords[i]
+                                                  .ВремяОкончанияДействияРасписания.ToString("dd.MM.yyyy HH:mm:ss") +
+                                              ";" +
                                               trainTableRecords[i].Addition + ";" +
                                               (trainTableRecords[i].ИспользоватьДополнение["табло"] ? "1" : "0") + ";" +
                                               (trainTableRecords[i].ИспользоватьДополнение["звук"] ? "1" : "0") + ";" +
@@ -182,16 +221,16 @@ namespace MainExample.Entites
                                               trainTableRecords[i].IsSoundOutput;
 
 
-                               dumpFile.WriteLine(line);
+                            dumpFile.WriteLine(line);
                             }
 
                             dumpFile.Close();
                         }
                     }
                 }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // ignored
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -217,7 +256,7 @@ namespace MainExample.Entites
                             {
                                 TrainTableRecord данные;
 
-                                данные.Id = int.Parse(settings[0]);
+                                данные.ID = int.Parse(settings[0]);
                                 данные.Num = settings[1];
                                 данные.Name = settings[2];
                                 данные.ArrivalTime = settings[3];
@@ -235,16 +274,12 @@ namespace MainExample.Entites
                                 };
 
 
-                                данные.RuleByTrainType = null;
-                                int idType;
-                                if (int.TryParse(settings[11], out idType))
-                                {
-                                   данные.RuleByTrainType= Program.TrainRules.TrainTypeRules.FirstOrDefault(t => t.Id == idType);
-                                }
-
-                                данные.ActionTrains = null;
-
                                 ТипПоезда типПоезда = ТипПоезда.НеОпределен;
+                                try
+                                {
+                                    типПоезда = (ТипПоезда)Enum.Parse(typeof(ТипПоезда), settings[11]);
+                                }
+                                catch (ArgumentException) { }
                                 данные.ТипПоезда = типПоезда;
 
                                 данные.Примечание = settings[12];

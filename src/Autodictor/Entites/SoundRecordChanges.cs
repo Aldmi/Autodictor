@@ -1,5 +1,4 @@
 ﻿using System;
-using Domain.Entitys;
 
 namespace MainExample.Entites
 {

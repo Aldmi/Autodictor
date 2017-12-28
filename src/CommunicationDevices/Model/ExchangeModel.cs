@@ -189,6 +189,7 @@ namespace CommunicationDevices.Model
             catch (Exception ex)
             {
                 ErrorString = "ОШИБКА в узлах дерева XML файла настроек:  " + ex;
+                Console.WriteLine(ex.Message);
                 Log.log.Error(ErrorString);
                 return;
             }

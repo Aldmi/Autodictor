@@ -51,7 +51,7 @@ namespace MainExample
         {
             foreach (var данные in TrainSheduleTable.TrainTableRecords)
             {
-                string поезд = данные.Num + ":     " + "{" + данные.Id + "}" + данные.Name +" " + (данные.ArrivalTime != "" ? "   Приб: " + данные.ArrivalTime : "") + (данные.DepartureTime != "" ? "   Отпр: " + данные.DepartureTime : "");
+                string поезд = данные.Num + ":     " + "{" + данные.ID + "}" + данные.Name +" " + (данные.ArrivalTime != "" ? "   Приб: " + данные.ArrivalTime : "") + (данные.DepartureTime != "" ? "   Отпр: " + данные.DepartureTime : "");
                 cBПоездИзРасписания.Items.Add(поезд);
             }
 
@@ -283,7 +283,7 @@ namespace MainExample
             {
                 foreach (var config in TrainSheduleTable.TrainTableRecords)
                 {
-                    if (config.Id == id)
+                    if (config.ID == id)
                     {
                         TableRec = config;
                         InitializeFormDate(TableRec);
@@ -436,7 +436,7 @@ namespace MainExample
             var id = -1;
             while (id != 0)
             {
-                id = TrainTableOperative.TrainTableRecords.FirstOrDefault(tr => tr.Id == newId).Id;
+                id = TrainTableOperative.TrainTableRecords.FirstOrDefault(tr => tr.ID == newId).ID;
                 if (id != 0)
                   newId++;
             }
@@ -453,9 +453,9 @@ namespace MainExample
         private void btnЗаменить_Click(object sender, EventArgs e)
         {
             //Удалить поезд с таким же ID
-            var newId = TableRec.Id;
-            var findTrain = TrainTableOperative.TrainTableRecords.FirstOrDefault(tr => tr.Id == newId);
-            if (findTrain.Id != 0)
+            var newId = TableRec.ID;
+            var findTrain = TrainTableOperative.TrainTableRecords.FirstOrDefault(tr => tr.ID == newId);
+            if (findTrain.ID != 0)
             {
                 TrainTableOperative.TrainTableRecords.Remove(findTrain);
             }
@@ -470,7 +470,7 @@ namespace MainExample
         private void CreateTableRec(int id)
         {
             var newTableRec = TableRec;
-            newTableRec.Id = id;
+            newTableRec.ID = id;
             newTableRec.SoundTemplates = ПолучитьШаблоныОповещения();
             newTableRec.Num = cBНомерПоезда.Text;
             newTableRec.Num2 = cBНомерПоезда2.Text;

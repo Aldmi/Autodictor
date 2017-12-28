@@ -45,8 +45,6 @@ namespace MainExample
 
 
 
-
-
         public MainForm()
         {
             InitializeComponent();
@@ -57,7 +55,6 @@ namespace MainExample
             TrainSheduleTable.SourceLoadMainListAsync().GetAwaiter();
             TrainTableOperative.ЗагрузитьСписок();
 
-            // Player.PlayFile("");                          //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
 
@@ -242,7 +239,7 @@ namespace MainExample
             }
             else
             {
-                StaticSoundForm form = new StaticSoundForm();
+                StaticSoundForm form = new StaticSoundForm(Program.AutodictorModel.SoundPlayer);
                 form.MdiParent = this;
                 form.Show();
             }
@@ -259,7 +256,7 @@ namespace MainExample
             }
             else
             {
-                DynamicSoundForm form = new DynamicSoundForm();
+                DynamicSoundForm form = new DynamicSoundForm(Program.AutodictorModel.SoundPlayer);
                 form.MdiParent = this;
                 form.Show();
             }
@@ -387,33 +384,33 @@ namespace MainExample
                 return;
             }
 
-            СтатическоеСообщение сообщение;
-            сообщение.ID = 0;
-            сообщение.Активность = true;
-            сообщение.Время = DateTime.Now;
-            сообщение.НазваниеКомпозиции = "";
-            сообщение.ОписаниеКомпозиции = "";
-            сообщение.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
-            КарточкаСтатическогоЗвуковогоСообщения окноСообщения = new КарточкаСтатическогоЗвуковогоСообщения(сообщение);
-            if (окноСообщения.ShowDialog() == DialogResult.OK)
+            СтатическоеСообщение Сообщение;
+            Сообщение.ID = 0;
+            Сообщение.Активность = true;
+            Сообщение.Время = DateTime.Now;
+            Сообщение.НазваниеКомпозиции = "";
+            Сообщение.ОписаниеКомпозиции = "";
+            Сообщение.СостояниеВоспроизведения = SoundRecordStatus.ОжиданиеВоспроизведения;
+            КарточкаСтатическогоЗвуковогоСообщения ОкноСообщения = new КарточкаСтатическогоЗвуковогоСообщения(Сообщение);
+            if (ОкноСообщения.ShowDialog() == DialogResult.OK)
             {
-                сообщение = окноСообщения.ПолучитьИзмененнуюКарточку();
+                Сообщение = ОкноСообщения.ПолучитьИзмененнуюКарточку();
 
                 int ПопыткиВставитьСообщение = 5;
                 while (ПопыткиВставитьСообщение-- > 0)
                 {
-                    string Key = сообщение.Время.ToString("HH:mm:ss");
+                    string Key = Сообщение.Время.ToString("HH:mm:ss");
                     string[] SubKeys = Key.Split(':');
                     if (SubKeys[0].Length == 1)
                         Key = "0" + Key;
 
                     if (MainWindowForm.СтатическиеЗвуковыеСообщения.ContainsKey(Key))
                     {
-                        сообщение.Время = сообщение.Время.AddSeconds(1);
+                        Сообщение.Время = Сообщение.Время.AddSeconds(1);
                         continue;
                     }
 
-                    MainWindowForm.СтатическиеЗвуковыеСообщения.Add(Key, сообщение);
+                    MainWindowForm.СтатическиеЗвуковыеСообщения.Add(Key, Сообщение);
                     MainWindowForm.СтатическиеЗвуковыеСообщения.OrderBy(key => key.Value);
                     MainWindowForm.ФлагОбновитьСписокЗвуковыхСообщений = true;
                     break;

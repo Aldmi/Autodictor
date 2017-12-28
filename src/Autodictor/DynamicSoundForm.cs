@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AutodictorBL.Entites;
+using AutodictorBL.Sound;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 using Domain.Entitys;
@@ -37,6 +39,7 @@ namespace MainExample
 
     public partial class DynamicSoundForm : Form
     {
+        private readonly ISoundPlayer _soundPlayer;
         public static DynamicSoundForm thisForm = null;
 
         public static List<DynamicSoundRecord> DynamicSoundRecords = new List<DynamicSoundRecord>();
@@ -50,14 +53,15 @@ namespace MainExample
 
 
 
-        public DynamicSoundForm()
+        public DynamicSoundForm(ISoundPlayer soundPlayer)
         {
             if (thisForm != null)
                 return;
 
             thisForm = this;
-
             InitializeComponent();
+
+            _soundPlayer = soundPlayer;
 
             //ПЕРЕМЕННЫЕ ШАБЛОНА
             this.comboBox_Messages.Items.Add("НОМЕР ПОЕЗДА");
@@ -378,7 +382,10 @@ namespace MainExample
             {
                 CurrentPlayList = 100;
                 button6.Text = "Пуск";
-                Player.PlayFile("");
+
+
+                //PlayerDirectX.PlayFile("");
+                _soundPlayer.PlayFile(null);
                 return;
             }
 
@@ -391,22 +398,22 @@ namespace MainExample
         {
             ТекущаяПозицияЗвучания++;
 
-            SoundFileStatus status = Player.GetFileStatus();
+            SoundPlayerStatus status = _soundPlayer.GetPlayerStatus(); //PlayerDirectX.GetPlayerStatus();
 
-            if (status == SoundFileStatus.Playing)
+            if (status == SoundPlayerStatus.Playing)
             {
-                int CurrentPosition = Player.GetCurrentPosition();
-                float Duration = Player.GetDuration();
+                int CurrentPosition = _soundPlayer.GetCurrentPosition();//PlayerDirectX.GetCurrentPosition();
+                float Duration = _soundPlayer.GetDuration();//PlayerDirectX.GetDuration();
 
                 button6.Text = "Стоп";
                 Player_Label.Text = (ТекущаяПозицияЗвучания / 60).ToString() + ":" + (ТекущаяПозицияЗвучания % 60).ToString("00") + " / " + (ОбщаяДлительностьЗвучания / 60).ToString("0") + ":" + (ОбщаяДлительностьЗвучания % 60).ToString("00");
             }
             else
             {
-                if ((status == SoundFileStatus.Paused) || (status == SoundFileStatus.Stop))
+                if ((status == SoundPlayerStatus.Paused) || (status == SoundPlayerStatus.Stop))
                 {
-                    int CurrentPosition = Player.GetCurrentPosition();
-                    float Duration = Player.GetDuration();
+                    int CurrentPosition = _soundPlayer.GetCurrentPosition();//PlayerDirectX.GetCurrentPosition();
+                    float Duration = _soundPlayer.GetDuration();//PlayerDirectX.GetDuration();
                     Player_Label.Text = (ТекущаяПозицияЗвучания / 600).ToString() + ":" + ((ТекущаяПозицияЗвучания / 10) % 60).ToString("00") + " / " + (ОбщаяДлительностьЗвучания / 60).ToString("0") + ":" + (ОбщаяДлительностьЗвучания % 60).ToString("00");
                 }
 
@@ -417,13 +424,18 @@ namespace MainExample
                     if (nextfile != "")
                     {
                         CurrentPlayList++;
-                        Player.PlayFile(nextfile);
+                        var soundMessage = new ВоспроизводимоеСообщение
+                        {
+                            ИмяВоспроизводимогоФайла = nextfile,
+                            Язык = NotificationLanguage.Ru
+                        };
+                        _soundPlayer.PlayFile(soundMessage);  //PlayerDirectX.PlayFile(nextfile);
                         return;
                     }
                 }
                 else
                 {
-                    Player.PlayFile("");
+                    _soundPlayer.PlayFile(null);  //PlayerDirectX.PlayFile("");
                 }
 
                 button6.Text = "Пуск";
@@ -445,9 +457,14 @@ namespace MainExample
 
                 if (filename != "")
                 {
-                    Player.PlayFile(filename);
-                    ОбщаяДлительностьЗвучания += Player.GetDuration();
-                    Player.PlayFile("");
+                    var soundMessage = new ВоспроизводимоеСообщение
+                    {
+                        ИмяВоспроизводимогоФайла = filename,
+                        Язык = NotificationLanguage.Ru
+                    };
+                    _soundPlayer.PlayFile(soundMessage);         // PlayerDirectX.PlayFile(filename);
+                    ОбщаяДлительностьЗвучания += _soundPlayer.GetDuration();//PlayerDirectX.GetDuration();
+                    _soundPlayer.PlayFile(null); //PlayerDirectX.PlayFile("");
                 }
             }
 
@@ -458,7 +475,12 @@ namespace MainExample
                 string filename = Program.GetFileName(PlayList[CurrentPlayList]);
                 if (filename != "")
                 {
-                    Player.PlayFile(filename);
+                    var soundMessage = new ВоспроизводимоеСообщение
+                    {
+                        ИмяВоспроизводимогоФайла = filename,
+                        Язык = NotificationLanguage.Ru
+                    };
+                    _soundPlayer.PlayFile(soundMessage);     //PlayerDirectX.PlayFile(filename);   
                     CurrentPlayList++;
                     return true;
                 }

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunicationDevices.Behavior.GetDataBehavior;
 using CommunicationDevices.DataProviders;
-using Domain.Entitys;
 
 namespace MainExample.Services.GetDataService
 {

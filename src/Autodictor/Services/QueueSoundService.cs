@@ -5,11 +5,12 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
+using AutodictorBL.Entites;
+using AutodictorBL.Sound;
 using Domain.Entitys;
 using Library.Logs;
 using MainExample.Entites;
 using WCFCis2AvtodictorContract.DataContract;
-
 
 
 namespace MainExample.Services
@@ -37,10 +38,10 @@ namespace MainExample.Services
     {
         #region Field
 
+        private readonly ISoundPlayer _soundPlayer;
         private int _pauseTime;
 
         #endregion
-
 
 
 
@@ -92,6 +93,19 @@ namespace MainExample.Services
         public bool IsWorking { get; private set; }
 
         public bool IsPlayedCurrentMessage { get; private set; }  //доиграть последнее сообщение и остановить очередь
+
+        #endregion
+
+
+
+
+        #region ctor
+
+        public QueueSoundService(ISoundPlayer soundPlayer)
+        {
+            _soundPlayer = soundPlayer;
+        }
+
 
         #endregion
 
@@ -214,7 +228,7 @@ namespace MainExample.Services
         public void PausePlayer()
         {
             StopQueue();
-            Player.Pause();
+            _soundPlayer.Pause();
         }
 
 
@@ -222,7 +236,7 @@ namespace MainExample.Services
         public void PlayPlayer()
         {
             StartQueue();
-            Player.Play();
+            _soundPlayer.Play();
         }
 
 
@@ -230,7 +244,7 @@ namespace MainExample.Services
         public void Erase()
         {
            Clear();
-           Player.PlayFile(string.Empty);
+            _soundPlayer.PlayFile(null);
         }
 
 
@@ -247,7 +261,7 @@ namespace MainExample.Services
 
             try
             {
-                SoundFileStatus status = Player.GetFileStatus();
+                SoundPlayerStatus status = _soundPlayer.GetPlayerStatus();
 
                 //Определение событий Начала проигрывания очереди и конца проигрывания очереди.-----------------
                 if (Queue.Any() && !_isAnyOldQueue && CurrentSoundMessagePlaying == null)
@@ -260,12 +274,12 @@ namespace MainExample.Services
                     _isEmptyRaiseQueue = true;
                 }
 
-                if ((CurrentSoundMessagePlaying != null) && (status != SoundFileStatus.Playing))
+                if ((CurrentSoundMessagePlaying != null) && (status != SoundPlayerStatus.Playing))
                 {
                     EventEndPlayingSoundMessage(CurrentSoundMessagePlaying);
                 }
 
-                if (!Queue.Any() && _isEmptyRaiseQueue && (status != SoundFileStatus.Playing)) // ожидание проигрывания последнего файла.
+                if (!Queue.Any() && _isEmptyRaiseQueue && (status != SoundPlayerStatus.Playing)) // ожидание проигрывания последнего файла.
                 {
                     _isEmptyRaiseQueue = false;
                     CurrentSoundMessagePlaying = null;
@@ -277,7 +291,7 @@ namespace MainExample.Services
 
 
                 //Разматывание очереди. Определение проигрываемого файла-----------------------------------------------------------------------------
-                if (status != SoundFileStatus.Playing)
+                if (status != SoundPlayerStatus.Playing)
                 {
                     if (_pauseTime > 0)
                     {
@@ -322,20 +336,13 @@ namespace MainExample.Services
                         if (CurrentSoundMessagePlaying == null)
                             return;
 
-                        var названиеФайла = CurrentSoundMessagePlaying.ИмяВоспроизводимогоФайла;
-                        var язык = CurrentSoundMessagePlaying.Язык;
-
                         if (CurrentSoundMessagePlaying.ВремяПаузы.HasValue)                         //воспроизводимое сообщение - это ПАУЗА
                         {
                             _pauseTime = CurrentSoundMessagePlaying.ВремяПаузы.Value;
-                            //CurrentSoundMessagePlaying = null;//???
                             return;
                         }
 
-                        if (названиеФайла.Contains(".wav") == false)
-                            названиеФайла = Program.GetFileName(названиеФайла, язык);
-
-                        if (Player.PlayFile(названиеФайла) == true)
+                        if (_soundPlayer.PlayFile(CurrentSoundMessagePlaying))
                             EventStartPlayingSoundMessage(CurrentSoundMessagePlaying);
                     }
                 }

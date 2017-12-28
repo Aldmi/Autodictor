@@ -72,10 +72,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.DirectX.AudioVideoPlayback, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.AudioVideoPlayback.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.2.1.0\lib\net35\MoreLinq.dll</HintPath>
@@ -166,7 +162,6 @@
     <Compile Include="Comparers\TrainTableRecordComparer.cs" />
     <Compile Include="Entites\SoundRecordChanges.cs" />
     <Compile Include="Entites\TrainSheduleTable.cs" />
-    <Compile Include="Entites\ВоспроизводимоеСообщение.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
     <Compile Include="Services\FactoryServices\PreprocessingOutputFactory.cs" />
     <Compile Include="Services\GetDataService\GetCisOperSh.cs" />
@@ -175,6 +170,12 @@
     <Compile Include="Services\GetDataService\GetSheduleApkDk.cs" />
     <Compile Include="Services\GetDataService\GetSheduleAbstract.cs" />
     <Compile Include="Services\SoundRecordPreprocessingService.cs" />
+    <Compile Include="SoundPlayersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SoundPlayersForm.Designer.cs">
+      <DependentUpon>SoundPlayersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TrainTableGrid.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,7 +196,6 @@
     <Compile Include="OperativeTableAddItemForm.Designer.cs">
       <DependentUpon>OperativeTableAddItemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RegulatorySheduleForm.cs">
       <SubType>Form</SubType>
@@ -348,6 +348,9 @@
     <EmbeddedResource Include="CommunicationForm.resx">
       <DependentUpon>CommunicationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SoundPlayersForm.resx">
+      <DependentUpon>SoundPlayersForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TrainTableGrid.resx">
       <DependentUpon>TrainTableGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -492,7 +495,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutodictorBL\AutodictorBL.csproj">
-      <Project>{989d59ca-4b8f-4977-9b86-2c43f40b655b}</Project>
+      <Project>{ef089e5d-a3d1-47ba-a414-f9615e585d45}</Project>
       <Name>AutodictorBL</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommunicationDevices\CommunicationDevices.csproj">

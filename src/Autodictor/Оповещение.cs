@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime;
 using System.Windows.Forms;
-using AutodictorBL.Builder.TrainRecordBuilder;
-using AutodictorBL.Factory;
 using Domain.Entitys;
 using MainExample.Entites;
 
@@ -51,25 +49,15 @@ namespace MainExample
             }
 
 
-            var typeTrain = Program.TrainRules.TrainTypeRules.ToList();
-            if (typeTrain.Any())
+            string[] Станции = расписаниеПоезда.Name.Split('-');
+            if (Станции.Length == 2)
             {
-                var typeTrainNames = typeTrain.Select(d => d.NameRu).ToArray();
-                cBКатегория.Items.AddRange(typeTrainNames);
-                var selectedIndex = typeTrain.IndexOf(расписаниеПоезда.RuleByTrainType);
-                cBКатегория.SelectedIndex = selectedIndex;
+                cBОткуда.Text = Станции[0].Trim(new char[] { ' ' });
+                cBКуда.Text = Станции[1].Trim(new char[] { ' ' });
             }
-
-
-            string[] станции = расписаниеПоезда.Name.Split('-');
-            if (станции.Length == 2)
+            else if (Станции.Length == 1 && расписаниеПоезда.Name != "")
             {
-                cBОткуда.Text = станции[0].Trim(new char[] { ' ' });
-                cBКуда.Text = станции[1].Trim(new char[] { ' ' });
-            }
-            else if (станции.Length == 1 && расписаниеПоезда.Name != "")
-            {
-                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' });
+                cBКуда.Text = расписаниеПоезда.Name.Trim(new char[] { ' ' }); ;
             }
 
 
@@ -115,7 +103,31 @@ namespace MainExample
             rB_РежРабРучной.Checked = !расписаниеПоезда.Автомат;
 
 
-            ОтобразитьШаблоныОповещания(расписаниеПоезда.SoundTemplates);
+
+
+
+            cBШаблонОповещения.Items.Add("Блокировка");
+
+            foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
+                cBШаблонОповещения.Items.Add(Item.Name);
+
+            string[] ШаблонОповещения = расписаниеПоезда.SoundTemplates.Split(':');
+            int ТипОповещенияПути = 0;
+            if ((ШаблонОповещения.Length % 3) == 0)
+            {
+                for (int i = 0; i < ШаблонОповещения.Length / 3; i++)
+                {
+                    if (cBШаблонОповещения.Items.Contains(ШаблонОповещения[3 * i + 0]))
+                    {
+                        int.TryParse(ШаблонОповещения[3 * i + 2], out ТипОповещенияПути);
+                        ТипОповещенияПути %= 2;
+                        ListViewItem lvi = new ListViewItem(new string[] { ШаблонОповещения[3 * i + 0], ШаблонОповещения[3 * i + 1], Program.ТипыВремени[ТипОповещенияПути] });
+                        this.lVШаблоныОповещения.Items.Add(lvi);
+                    }
+                }
+            }
+
+            cBВремяОповещения.SelectedIndex = 0;
 
 
             string ВремяПрибытия = this.РасписаниеПоезда.ArrivalTime;
@@ -168,6 +180,9 @@ namespace MainExample
 
 
             cBБлокировка.Checked = !расписаниеПоезда.Active;
+            cBКатегория.SelectedIndex = (int)расписаниеПоезда.ТипПоезда;
+
+
 
 
             rBНеОповещать.Checked = false;
@@ -213,22 +228,6 @@ namespace MainExample
 
         private void btnПрименить_Click(object sender, EventArgs e)
         {
-            ApplyChangedUi2Model();
-            DialogResult = DialogResult.OK;
-        }
-
-
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-            DialogResult = DialogResult.Cancel;
-        }
-
-
-
-        private void ApplyChangedUi2Model()
-        {
             РасписаниеПоезда.Num = tBНомерПоезда.Text;
             РасписаниеПоезда.Num2 = tBНомерПоездаДоп.Text;
 
@@ -247,9 +246,23 @@ namespace MainExample
 
             РасписаниеПоезда.Direction = cBНаправ.Text;
 
-
-            РасписаниеПоезда.StationDepart = cBОткуда.Text;
-            РасписаниеПоезда.StationArrival = cBКуда.Text;
+            //if (rBТранзит.Checked)
+            //{
+                РасписаниеПоезда.StationDepart = cBОткуда.Text;
+                РасписаниеПоезда.StationArrival = cBКуда.Text;
+            //}
+            //else
+            //if (rBОтправление.Checked)
+            //{
+            //    РасписаниеПоезда.StationArrival = cBКуда.Text;
+            //    РасписаниеПоезда.StationDepart = String.Empty;
+            //}
+            //else
+            //if (rBПрибытие.Checked)
+            //{
+            //    РасписаниеПоезда.StationDepart = cBОткуда.Text;
+            //    РасписаниеПоезда.StationArrival = String.Empty;
+            //}
 
 
             if (rBВремяДействияС.Checked == true)
@@ -280,10 +293,7 @@ namespace MainExample
 
 
             РасписаниеПоезда.TrainPathDirection = (byte)cBОтсчетВагонов.SelectedIndex;
-
-           // РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
-            РасписаниеПоезда.RuleByTrainType = (cBКатегория.SelectedIndex == -1) ? null : Program.TrainRules.TrainTypeRules[cBКатегория.SelectedIndex];
-
+            РасписаниеПоезда.ТипПоезда = (ТипПоезда)cBКатегория.SelectedIndex;
 
             РасписаниеПоезда.ChangeTrainPathDirection = chBox_сменнаяНумерация.Checked;
             РасписаниеПоезда.IsScoreBoardOutput = chBoxВыводНаТабло.Checked;
@@ -353,6 +363,14 @@ namespace MainExample
             }
 
             РасписаниеПоезда.DaysAlias = tb_ДниСледованияAlias.Text;
+            DialogResult = System.Windows.Forms.DialogResult.OK;
+        }
+
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult = System.Windows.Forms.DialogResult.Cancel;
         }
 
 
@@ -373,36 +391,6 @@ namespace MainExample
                     РезультирующийШаблонОповещения = РезультирующийШаблонОповещения.Remove(РезультирующийШаблонОповещения.Length - 1);
 
             return РезультирующийШаблонОповещения;
-        }
-
-
-
-
-        private void ОтобразитьШаблоныОповещания(string soundTemplates)
-        {
-            cBШаблонОповещения.Items.Add("Блокировка");
-
-            foreach (var Item in DynamicSoundForm.DynamicSoundRecords)
-                cBШаблонОповещения.Items.Add(Item.Name);
-
-
-            string[] шаблонОповещения = soundTemplates.Split(':');
-            if ((шаблонОповещения.Length % 3) == 0)
-            {
-                for (int i = 0; i < шаблонОповещения.Length / 3; i++)
-                {
-                    if (cBШаблонОповещения.Items.Contains(шаблонОповещения[3 * i + 0]))
-                    {
-                        int типОповещенияПути;
-                        int.TryParse(шаблонОповещения[3 * i + 2], out типОповещенияПути);
-                        типОповещенияПути %= 2;
-                        ListViewItem lvi = new ListViewItem(new string[] { шаблонОповещения[3 * i + 0], шаблонОповещения[3 * i + 1], Program.ТипыВремени[типОповещенияПути] });
-                        this.lVШаблоныОповещения.Items.Add(lvi);
-                    }
-                }
-            }
-
-            cBВремяОповещения.SelectedIndex = 0;
         }
 
 
@@ -547,25 +535,6 @@ namespace MainExample
                 lVШаблоныОповещения.Items.Remove(lVШаблоныОповещения.SelectedItems[0]);
             }
         }
-
-
-        private void btnАвтогенерацияШаблонов_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var rule = РасписаниеПоезда.RuleByTrainType;
-                var builder = new TrainRecordBuilderManual(РасписаниеПоезда, null, rule);
-                var factory = new TrainRecordFactoryManual(builder);
-                РасписаниеПоезда = factory.Construct();
-
-                ОтобразитьШаблоныОповещания(РасписаниеПоезда.SoundTemplates);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($@"Во время автогенерации шаблона возникли ошибки:{ex.Message}");
-            }
-        }
-
 
 
         private void rb_Постоянно_CheckedChanged(object sender, EventArgs e)
@@ -757,7 +726,5 @@ namespace MainExample
                 }
             }
         }
-
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Domain.Entitys;
 using MainExample.Entites;
 
 namespace MainExample.Comparers

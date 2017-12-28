@@ -168,7 +168,17 @@ namespace MainExample
 
         }
 
-        #endregion
 
+
+        private void btnSoundPlayer_Click(object sender, EventArgs e)
+        {
+            if (SoundPlayersForm.MyMainForm == null)
+            {
+                var soundPlayers = new SoundPlayersForm();
+                soundPlayers.Show();
+            }
+        }
+
+        #endregion
     }
 }

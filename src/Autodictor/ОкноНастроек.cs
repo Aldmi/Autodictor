@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace MainExample
 {
     public struct Настройки
@@ -734,7 +735,7 @@ namespace MainExample
             lbl_громкостьДень.Text = ПреобразрватьУровеньГромкостиВПроценты(Program.Настройки.УровеньГромкостиДень).ToString("F") + @"%";
 
             var уровеньГромкости= Program.Настройки.ВыборУровняГромкости();
-            Player.SetVolume(уровеньГромкости);
+            Program.AutodictorModel.SoundPlayer.SetVolume(уровеньГромкости);
         }
 
 
@@ -746,7 +747,7 @@ namespace MainExample
             lbl_громкостьНочь.Text = ПреобразрватьУровеньГромкостиВПроценты(Program.Настройки.УровеньГромкостиНочь).ToString("F") + @"%";
 
             var уровеньГромкости = Program.Настройки.ВыборУровняГромкости();
-            Player.SetVolume(уровеньГромкости);
+            Program.AutodictorModel.SoundPlayer.SetVolume(уровеньГромкости);
         }
 
 

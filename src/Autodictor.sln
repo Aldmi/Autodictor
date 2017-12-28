@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFAvtodictor2PcTableContra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A28FD145-E193-4237-9D44-1BDF29B84B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutodictorBL", "AutodictorBL\AutodictorBL.csproj", "{989D59CA-4B8F-4977-9B86-2C43F40B655B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutodictorBL", "AutodictorBL\AutodictorBL.csproj", "{EF089E5D-A3D1-47BA-A414-F9615E585D45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{A28FD145-E193-4237-9D44-1BDF29B84B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A28FD145-E193-4237-9D44-1BDF29B84B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A28FD145-E193-4237-9D44-1BDF29B84B69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{989D59CA-4B8F-4977-9B86-2C43F40B655B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{989D59CA-4B8F-4977-9B86-2C43F40B655B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{989D59CA-4B8F-4977-9B86-2C43F40B655B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{989D59CA-4B8F-4977-9B86-2C43F40B655B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF089E5D-A3D1-47BA-A414-F9615E585D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF089E5D-A3D1-47BA-A414-F9615E585D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF089E5D-A3D1-47BA-A414-F9615E585D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF089E5D-A3D1-47BA-A414-F9615E585D45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

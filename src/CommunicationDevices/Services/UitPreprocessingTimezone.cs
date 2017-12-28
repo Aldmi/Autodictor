@@ -2,7 +2,6 @@
 using System.Security.AccessControl;
 using CommunicationDevices.DataProviders;
 using Domain.Entitys;
-using TypeTrain = CommunicationDevices.DataProviders.TypeTrain;
 
 namespace CommunicationDevices.Services
 {

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutodictorBL.Entites;
 using Domain.Entitys;
 using MainExample.Entites;
 
@@ -124,8 +125,9 @@ namespace MainExample
                 НомерПоезда = "xxx",
                 НомерПути = pathNumber,
                 Время = DateTime.Now,
-                СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон> {template},
-                КоличествоПовторений = 1
+                СписокФормируемыхСообщений = new List<СостояниеФормируемогоСообщенияИШаблон> { template },
+                КоличествоПовторений = 1,
+                ВыводЗвука = true
             };
 
             return record;

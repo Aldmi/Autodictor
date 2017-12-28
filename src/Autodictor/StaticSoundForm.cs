@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using AutodictorBL.Entites;
+using AutodictorBL.Sound;
+using Domain.Entitys;
 using Domain.Entitys.Authentication;
 using MainExample.Extension;
 using MainExample.Services;
+
 
 
 namespace MainExample
@@ -27,11 +31,12 @@ namespace MainExample
         private static int ID = 0;
 
         public IDisposable DispouseQueueChangeRx { get; set; }
+        private readonly ISoundPlayer _soundPlayer;
 
 
 
 
-        public StaticSoundForm()
+        public StaticSoundForm(ISoundPlayer soundPlayer)
         {
             if (thisForm != null)
                 return;
@@ -41,6 +46,8 @@ namespace MainExample
             InitializeComponent();
             ЗагрузитьСписок();
             ОбновитьДанныеВСписке();
+
+            _soundPlayer = soundPlayer;
 
 
             btn_Пуск.Enabled = (MainWindowForm.QueueSound.Count == 0);
@@ -240,14 +247,19 @@ namespace MainExample
             if (((Button)sender).Text == "Стоп")
             {
                 btn_Пуск.Text = "Пуск";
-                Player.PlayFile("");
+                _soundPlayer.PlayFile(null);    //PlayerDirectX.PlayFile("");
                 return;
             }
 
             ListView.SelectedIndexCollection sic = this.listView1.SelectedIndices;
             foreach (int item in sic)
             {
-                Player.PlayFile(this.textBox_Path.Text);
+                var soundMessage = new ВоспроизводимоеСообщение
+                {
+                    ИмяВоспроизводимогоФайла = this.textBox_Path.Text,
+                    Язык = NotificationLanguage.Ru
+                };
+                _soundPlayer.PlayFile(soundMessage);       // PlayerDirectX.PlayFile(this.textBox_Path.Text);
                 return;
             }
         }
@@ -257,12 +269,12 @@ namespace MainExample
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            SoundFileStatus status = Player.GetFileStatus();
+            SoundPlayerStatus status = _soundPlayer.GetPlayerStatus();//PlayerDirectX.GetPlayerStatus();
 
-            if (status == SoundFileStatus.Playing)
+            if (status == SoundPlayerStatus.Playing)
             {
-                int CurrentPosition = Player.GetCurrentPosition();
-                float Duration = Player.GetDuration();
+                int CurrentPosition = _soundPlayer.GetCurrentPosition();//PlayerDirectX.GetCurrentPosition();
+                float Duration = _soundPlayer.GetDuration();//PlayerDirectX.GetDuration();
 
                 btn_Пуск.Text = "Стоп";
                 Player_Label.Text = (CurrentPosition / 60).ToString() + ":" + (CurrentPosition % 60).ToString("00") + " / " + (Duration / 60).ToString("0") + ":" + (Duration % 60).ToString("00");
@@ -271,10 +283,10 @@ namespace MainExample
             {
                 btn_Пуск.Text = "Пуск";
 
-                if ((status == SoundFileStatus.Paused) || (status == SoundFileStatus.Stop))
+                if ((status == SoundPlayerStatus.Paused) || (status == SoundPlayerStatus.Stop))
                 {
-                    int CurrentPosition = Player.GetCurrentPosition();
-                    float Duration = Player.GetDuration();
+                    int CurrentPosition = _soundPlayer.GetCurrentPosition();
+                    float Duration = _soundPlayer.GetDuration();
                     Player_Label.Text = (CurrentPosition / 60).ToString() + ":" + (CurrentPosition % 60).ToString("00") + " / " + (Duration / 60).ToString("0") + ":" + (Duration % 60).ToString("00");
                 }
             }

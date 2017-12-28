@@ -7,7 +7,9 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
-using AutodictorBL.Rules;
+using AutodictorBL;
+using AutodictorBL.Sound;
+using Communication.Annotations;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Concrete.Generic;
@@ -42,8 +44,6 @@ namespace MainExample
 
         public static Настройки Настройки;
 
-        public static TrainRules TrainRules;
-
         public static string[] ТипыОповещения = new string[] { "Не определено", "На Х-ый путь", "На Х-ом пути", "С Х-ого пути" };
         public static string[] ТипыВремени = new string[] { "Прибытие", "Отправление" };
 
@@ -56,6 +56,8 @@ namespace MainExample
 
 
         public static AuthenticationService AuthenticationService { get; set; } = new AuthenticationService();
+
+        public static AutodictorModel AutodictorModel { get; set; }
 
 
 
@@ -79,14 +81,6 @@ namespace MainExample
             UsersDbRepository = new RepositoryNoSql<User>(connection);
 
             AuthenticationService.UsersDbInitialize();//не дожидаемся окончания Task-а загрузки БД
-
-            //загрузка правил создания звуковых шаблонов для TrainRecord.
-            TrainRules = new TrainRules();
-            var result= TrainRules.LoadSetting();
-            if (!string.IsNullOrEmpty(result))
-            {
-                MessageBox.Show(result);
-            }
 
             try
             {
@@ -112,6 +106,13 @@ namespace MainExample
             }
             catch (Exception ex) { };
 
+
+            AutodictorModel= new AutodictorModel();
+            AutodictorModel.LoadSetting(Настройки.ВыборУровняГромкости, GetFileName);
+
+
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -120,8 +121,9 @@ namespace MainExample
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
             Application.Run(new MainForm());
-        }
 
+            Dispose();
+        }
 
 
         static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -137,6 +139,17 @@ namespace MainExample
         }
 
 
+
+        //public static ISoundPlayer LoadSettings()
+        //{
+        //   // return new PlayerDirectX(Настройки.ВыборУровняГромкости, GetFileName);
+
+
+        //    var player = new PlayerOmneo("192.168.1.44", 9407, "admin", "admin", "oll", 3000, 5000);
+        //    var task = player.ReConnect();   //выполняется фоновая задача, пока не подключится к контроллеру усилителя.
+        //    BackGroundTasks?.Add(task);
+        //    return player;
+        //}
 
 
         static bool InstanceExists()
@@ -267,5 +280,19 @@ namespace MainExample
             }
             catch (Exception ex) { };
         }
+
+
+
+
+
+
+        #region Dispouse
+
+        private static void Dispose()
+        {
+            AutodictorModel?.Dispose();
+        }
+
+        #endregion
     }
 }
