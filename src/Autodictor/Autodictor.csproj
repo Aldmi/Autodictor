@@ -160,6 +160,12 @@
       <DependentUpon>CommunicationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Comparers\TrainTableRecordComparer.cs" />
+    <Compile Include="CopyWavFile4OmneoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CopyWavFile4OmneoForm.Designer.cs">
+      <DependentUpon>CopyWavFile4OmneoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Entites\SoundRecordChanges.cs" />
     <Compile Include="Entites\TrainSheduleTable.cs" />
     <Compile Include="Extension\ControlExtentions.cs" />
@@ -347,6 +353,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CommunicationForm.resx">
       <DependentUpon>CommunicationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CopyWavFile4OmneoForm.resx">
+      <DependentUpon>CopyWavFile4OmneoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SoundPlayersForm.resx">
       <DependentUpon>SoundPlayersForm.cs</DependentUpon>

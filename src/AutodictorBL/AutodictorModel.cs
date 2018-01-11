@@ -38,8 +38,7 @@ namespace AutodictorBL
 
 
 
-
-        //TODO: Настройки из Program перенести в AutodictorModel
+        //TODO: класс Настройки из Program перенести в AutodictorModel
         public void LoadSetting(Func<int> выборУровняГромкостиFunc, Func<string, NotificationLanguage, string> getFileNameFunc)
         {
             //ЗАГРУЗКА НАСТРОЕК----------------------------------------------------------------------------------------------------------------------------

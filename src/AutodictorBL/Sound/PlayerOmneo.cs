@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AutodictorBL.Entites;
 using AutodictorBL.Settings.XmlSound;
-using Library.Extensions;
+using AutodictorBL.Sound.Converters;
 using PRAESIDEOOPENINTERFACECOMSERVERLib;
 
 
@@ -58,6 +58,9 @@ namespace AutodictorBL.Sound
                 IsConnectChangeRx.OnNext(_isConnect);
             }
         }
+
+
+        public IFileNameConverter FileNameConverter => new Omneo8CharacterFileNameConverter();
 
         #endregion
 
@@ -149,7 +152,6 @@ namespace AutodictorBL.Sound
                     });
                     IsConnect = true;
                 }
-
                 catch (COMException ex)
                 {
                     Disconnect();
@@ -193,7 +195,7 @@ namespace AutodictorBL.Sound
                 string endChime = string.Empty;
                 bool bLiveSpeech = false;
                 string audioInput = string.Empty;
-                string messages = soundMessage.ИмяВоспроизводимогоФайла;
+                string messages = FileNameConverter.Convert(soundMessage.ИмяВоспроизводимогоФайла);
                 int repeat = 1;
                 _currentCallId = _praesideoOi.createCall(_defaultZoneNames, priority, bPartial, startChime, endChime, bLiveSpeech, audioInput, messages, repeat);
 
@@ -208,6 +210,20 @@ namespace AutodictorBL.Sound
         }
 
 
+
+        public async void Play()
+        {
+            if (!IsConnect)
+                return;
+
+            var resul = await PlayWithControl();
+            if (resul == false)
+            {
+                await ReConnect();
+            }
+        }
+
+
         /// <summary>
         /// Запускает задачу _tcs которая длится _timeResponse (мсек)  - допустимое время на оповещение.
         /// Усилитель оповестит о реальном запуске файла для проигрывания в обработчике события PraesideoOI_callState.
@@ -217,8 +233,8 @@ namespace AutodictorBL.Sound
         private Task<bool> PlayWithControl()
         {
             _tcs = new TaskCompletionSource<bool>();
-            Task.Run(async () => 
-            {          
+            Task.Run(async () =>
+            {
                 if (_currentCallId != null)
                 {
                     try
@@ -236,21 +252,6 @@ namespace AutodictorBL.Sound
 
             return _tcs.Task;
         }
-
-
-
-        public async void Play()
-        {
-            if (!IsConnect)
-                return;
-
-            var resul = await PlayWithControl();
-            if (resul == false)
-            {
-                await ReConnect();
-            }
-        }
-
 
 
         public void Pause()

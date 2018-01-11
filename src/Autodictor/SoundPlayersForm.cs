@@ -5,6 +5,7 @@ using System.Media;
 using System.Windows.Forms;
 using AutodictorBL.Entites;
 using AutodictorBL.Sound;
+using AutodictorBL.Sound.Converters;
 using Domain.Entitys;
 using MainExample.Extension;
 
@@ -38,17 +39,17 @@ namespace MainExample
 
             SoundPlayer = Program.AutodictorModel.SoundPlayer;
 
-            DisposeIsConnectChangeRx= SoundPlayer.IsConnectChangeRx.Subscribe(isConnect =>
-            {
-                tb_IsConnect.InvokeIfNeeded(() =>
-                {
-                    tb_IsConnect.Text = isConnect ? "Да" : "Нет";
-                    tb_IsConnect.BackColor = isConnect ? Color.Green : Color.Red;
+            DisposeIsConnectChangeRx = SoundPlayer.IsConnectChangeRx.Subscribe(isConnect =>
+             {
+                 tb_IsConnect.InvokeIfNeeded(() =>
+                 {
+                     tb_IsConnect.Text = isConnect ? "Да" : "Нет";
+                     tb_IsConnect.BackColor = isConnect ? Color.Green : Color.Red;
 
-                    btn_GetInfo.Enabled = isConnect;
-                    btn_Play.Enabled = isConnect;
-                });
-            });
+                     btn_GetInfo.Enabled = isConnect;
+                     btn_Play.Enabled = isConnect;
+                 });
+             });
 
             DisposeStatusStringChangeRx = SoundPlayer.StatusStringChangeRx.Subscribe(statusStr =>
             {
@@ -86,13 +87,13 @@ namespace MainExample
 
         private async void btn_Reconnect_Click(object sender, EventArgs e)
         {
-           await SoundPlayer.ReConnect();
+            await SoundPlayer.ReConnect();
         }
 
 
         private void btn_GetInfo_Click(object sender, EventArgs e)
         {
-          rtb_GetInfo.Text= SoundPlayer.GetInfo();
+            rtb_GetInfo.Text = SoundPlayer.GetInfo();
         }
 
 
@@ -104,8 +105,23 @@ namespace MainExample
                 return;
             }
 
-            var soundMessage= new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = tb_FileName.Text, Язык = NotificationLanguage.Ru};
+            var soundMessage = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = tb_FileName.Text, Язык = NotificationLanguage.Ru };
             SoundPlayer.PlayFile(soundMessage);
+        }
+
+
+
+        private void btnOpenPreparationSound_Click(object sender, EventArgs e)
+        {
+            var converter = SoundPlayer.FileNameConverter;
+            if (converter == null)
+            {
+                MessageBox.Show(@"Конвертер звуковых файлов данным плеером не предусмотренн !!!");
+                return;
+            }
+
+            var omneoForm = new CopyWavFile4OmneoForm(converter);
+            omneoForm.ShowDialog();
         }
 
 
@@ -119,6 +135,7 @@ namespace MainExample
 
             base.OnClosing(e);
         }
+
 
         #endregion
 

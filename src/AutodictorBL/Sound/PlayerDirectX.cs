@@ -4,6 +4,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using AutodictorBL.Entites;
 using AutodictorBL.Settings.XmlSound;
+using AutodictorBL.Sound.Converters;
 using Domain.Entitys;
 using Microsoft.DirectX.AudioVideoPlayback;
 
@@ -51,6 +52,9 @@ namespace AutodictorBL.Sound
                 IsConnectChangeRx.OnNext(_isConnect);
             }
         }
+
+
+        public IFileNameConverter FileNameConverter => null; //Отстутсвует конвертор имени файлов
 
         #endregion
 
