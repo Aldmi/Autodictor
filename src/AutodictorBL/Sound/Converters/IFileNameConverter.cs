@@ -17,8 +17,8 @@
                 return str;
             
             var hash = str.GetHashCode().ToString();
-            if (hash.Length > MaxLength)
-                hash = hash.Substring(0, MaxLength);
+            //if (hash.Length > MaxLength)
+            //    hash = hash.Substring(0, MaxLength);
 
             return hash;
         }

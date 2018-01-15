@@ -104,7 +104,7 @@ namespace AutodictorBL.Sound
         }
 
 
-        public  bool PlayFile(ВоспроизводимоеСообщение soundMessage)
+        public bool PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
         {
             var filePath = string.Empty;
             if (soundMessage != null)

@@ -19,7 +19,7 @@ namespace AutodictorBL.Sound
 
     public interface ISoundPlayer : IDisposable
     {
-        bool PlayFile(ВоспроизводимоеСообщение soundMessage);
+        bool PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true);
         void Pause();
         void Play();
         float GetDuration();

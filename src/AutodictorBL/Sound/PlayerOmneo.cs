@@ -119,16 +119,16 @@ namespace AutodictorBL.Sound
             var getZoneGroupNames = _praesideoOi.getZoneGroupNames() ?? "NULL";          //Зоны объединяются в группы, имена групп зон и есть маршрут. (пустая строка для всех зон)
 
 
-            return $@"getAudioInputNames = {getAudioInputNames}" + "\n" +
-                            $"getBgmChannelNames = {getBgmChannelNames}" + "\n" +
-                            $"getChimeNames = {getChimeNames}" + "\n" +                //имя файла стартового звонка (перед основным сообщением)
-                            $"getConfigId = {getConfigId}" + "\n" +
-                            $"getConfiguredUnits = {getConfiguredUnits}" + "\n" +
-                            $"getConnectedUnits = {getConnectedUnits}" + "\n" +
-                            $"getMessageNames = {getMessageNames}" + "\n" +
-                            $"getNcoVersion = {getNcoVersion}" + "\n" +
-                            $"getVersion = {getVersion}" + "\n" +
-                            $"getVirtualControlInputNames = {getVirtualControlInputNames}" + "\n" +
+            return $@"getAudioInputNames = {getAudioInputNames}" + "\n\n" +
+                            $"getBgmChannelNames = {getBgmChannelNames}" + "\n\n" +
+                            $"getChimeNames = {getChimeNames}" + "\n\n" +                //имя файла стартового звонка (перед основным сообщением)
+                            $"getConfigId = {getConfigId}" + "\n\n" +
+                            $"getConfiguredUnits = {getConfiguredUnits}" + "\n\n" +
+                            $"getConnectedUnits = {getConnectedUnits}" + "\n\n" +
+                            $"getMessageNames = {getMessageNames}" + "\n\n" +
+                            $"getNcoVersion = {getNcoVersion}" + "\n\n" +
+                            $"getVersion = {getVersion}" + "\n\n" +
+                            $"getVirtualControlInputNames = {getVirtualControlInputNames}" + "\n\n" +
                             $"getZoneGroupNames = {getZoneGroupNames}";
         }
 
@@ -182,7 +182,7 @@ namespace AutodictorBL.Sound
 
 
 
-        public bool PlayFile(ВоспроизводимоеСообщение soundMessage)
+        public bool PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
         {
             if (!IsConnect)
                 return false;
@@ -195,7 +195,7 @@ namespace AutodictorBL.Sound
                 string endChime = string.Empty;
                 bool bLiveSpeech = false;
                 string audioInput = string.Empty;
-                string messages = FileNameConverter.Convert(soundMessage.ИмяВоспроизводимогоФайла);
+                string messages = useFileNameConverter ? FileNameConverter.Convert(soundMessage.ИмяВоспроизводимогоФайла) : soundMessage.ИмяВоспроизводимогоФайла;
                 int repeat = 1;
                 _currentCallId = _praesideoOi.createCall(_defaultZoneNames, priority, bPartial, startChime, endChime, bLiveSpeech, audioInput, messages, repeat);
 
@@ -321,8 +321,6 @@ namespace AutodictorBL.Sound
 
             throw new NotImplementedException();
         }
-
-
 
         #endregion
 

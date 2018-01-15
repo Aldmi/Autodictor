@@ -55,7 +55,12 @@ namespace MainExample
             {
                 tb_Status.InvokeIfNeeded(() =>
                 {
-                    tb_Status.Text = statusStr;
+                    tb_Status.Text += (statusStr + Environment.NewLine);
+                    var countLines = tb_Status.Lines.Length - 1;
+                    if (countLines > 20)
+                    {
+                        tb_Status.Clear();
+                    }
                 });
             });
 
@@ -72,6 +77,13 @@ namespace MainExample
 
         protected override void OnLoad(EventArgs e)
         {
+            //Настройка многострочного вывода на TextBox.
+            tb_Status.Multiline = true;
+            tb_Status.ScrollBars = ScrollBars.Vertical;
+            tb_Status.AcceptsReturn = true;
+            tb_Status.AcceptsTab = true;
+            tb_Status.WordWrap = true;
+
             tb_PlayerType.Text = SoundPlayer.PlayerType.ToString();
 
             tb_IsConnect.Text = SoundPlayer.IsConnect ? "Да" : "Нет";
@@ -105,8 +117,9 @@ namespace MainExample
                 return;
             }
 
+            var useFileNameConverter = cb_UseConvert.Checked;
             var soundMessage = new ВоспроизводимоеСообщение { ИмяВоспроизводимогоФайла = tb_FileName.Text, Язык = NotificationLanguage.Ru };
-            SoundPlayer.PlayFile(soundMessage);
+            SoundPlayer.PlayFile(soundMessage, useFileNameConverter);
         }
 
 
@@ -136,9 +149,6 @@ namespace MainExample
             base.OnClosing(e);
         }
 
-
         #endregion
-
-
     }
 }
