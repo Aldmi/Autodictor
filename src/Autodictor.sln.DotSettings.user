@@ -5,6 +5,7 @@
   &lt;Assembly Path="C:\Git\Autodictor\src\packages\Upn_Components_Dependencies.1.0.0\lib\Sedc.Upn.CA.SedcImaging.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Git\Autodictor\src\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Git\Autodictor\src\Autodictor\bin\Debug\LedScreenLibNetWrapper.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.AudioVideoPlayback.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndex/@EntryValue">0</s:Int64>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark0/@KeyIndexDefined">True</s:Boolean>

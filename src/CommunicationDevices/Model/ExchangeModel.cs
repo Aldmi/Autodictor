@@ -165,6 +165,7 @@ namespace CommunicationDevices.Model
             List<XmlPcSetting> xmlDevicePcSettings;
             List<XmlTcpIpSetting> xmlDeviceTcpIpSettings;
             List<XmlHttpSetting> xmlDeviceHttpSettings;
+            List<XmlSibWaySettings> xmlDeviceSibWaySettings;
             XmlCisSetting xmlCisSetting;
 
             try
@@ -178,6 +179,7 @@ namespace CommunicationDevices.Model
                 xmlDevicePcSettings = XmlSettingFactory.CreateXmlPcSetting(xmlFile);
                 xmlDeviceTcpIpSettings = XmlSettingFactory.CreateXmlTcpIpSetting(xmlFile);
                 xmlDeviceHttpSettings = XmlSettingFactory.CreateXmlHttpSetting(xmlFile);
+                xmlDeviceSibWaySettings = XmlSibWaySettings.LoadXmlSetting(xmlFile);
                 xmlCisSetting = XmlCisSetting.LoadXmlSetting(xmlFile);
             }
             catch (FileNotFoundException ex)
@@ -1034,6 +1036,17 @@ namespace CommunicationDevices.Model
             #endregion
 
 
+
+
+
+            #region СОЗДАНИЕ УСТРОЙСТВ С SIBWAY API
+
+            foreach (var xmlDeviceSibWay in xmlDeviceSibWaySettings)
+            {
+                
+            }
+
+            #endregion
 
 
 

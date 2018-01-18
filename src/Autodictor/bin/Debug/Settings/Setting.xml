@@ -109,8 +109,96 @@
 </DevicesWithHttp>
 
 
+
+<DevicesWithSibWayApi>
+	<SibWay Id="400"
+        	Ip="10.61.15.235"
+			Port="9401"
+			Path2FontFile="LEDFont8px.xml"
+			FontSize="8"
+			Period="5000"
+			TimeDelayReconnect="3000"
+			TimeRespone="2000"
+			Description="SibWay табло 1"
+			Binding="ToGeneral:ГлавноеОкно">
+			
+			<Screen 
+			    Number="1"
+                ColumnName="NumberOfTrain"	
+                Width="24"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Center"
+				DisplayTime="1"
+				DelayBetweenSending="800"
+				ColorBytes="FFFFFF"/>
+				
+			<Screen 
+			    Number="2"
+                ColumnName="TypeTrain"	
+                Width="24"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Center"
+				DisplayTime="1"
+				DelayBetweenSending="800"
+				ColorBytes="FFFFFF"/>
+				
+			<Screen 
+			    Number="3"
+                ColumnName="Route"	
+                Width="136"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Center"
+				DisplayTime="1"
+				DelayBetweenSending="800"
+				ColorBytes="FFFFFF"/>
+				
+			<Screen 
+			    Number="4"
+                ColumnName="TimeArrival"	
+                Width="24"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Center"
+				DisplayTime="1"
+				DelayBetweenSending="800"
+				ColorBytes="FFFFFF"/>
+				
+			<Screen 
+			    Number="5"
+                ColumnName="TimeDeparture"	
+                Width="24"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Center"
+				DisplayTime="1"
+				DelayBetweenSending="800"
+				ColorBytes="FFFFFF"/>
+				
+			<Screen 
+			    Number="6"
+                ColumnName="Path"	
+                Width="24"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Center"
+				DisplayTime="1"
+				DelayBetweenSending="800"
+				ColorBytes="FFFFFF"/>
+	</SibWay>
+</DevicesWithSibWayApi>
+
+
 <Sound>
-   <Player Type="Omneo" Ip="10.61.15.235" Port="9401" UserName="admin" Password="admin" DefaultZoneNames="oll" TimeDelayReconnect="3000" TimeResponse="2000"/>
+   <Player Type="DirectX"/>
 </Sound>
 
 </Root>

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.AccessControl;
 using LedScreenLibNetWrapper;
 
@@ -10,21 +12,35 @@ namespace Communication.SibWayApi
     /// </summary>
     public class WindowSett
     {
-        public byte Number { get; set; } //Номер окна
-        public string Name { get; set; } //Название поля для вывода, т.е. имя переменной отображаемой в этом окне
-        public int Width { get; set; }   //Ширина окна
-        public int Height { get; set; }  //Высота окна
+        public readonly byte Number;  //Номер окна
+        public readonly string ColumnName; //Название поля для вывода, т.е. имя переменной отображаемой в этом окне
+        public readonly int Width;  //Ширина окна
+        public readonly int Height;  //Высота окна
+        public readonly DisplayEffect Effect; //Эффект отображения
+        public readonly DisplayTextHAlign TextHAlign;//Выравнивание по горизонтали
+        public readonly DisplayTextVAlign TextVAlign; //Выравнивание по вертикали
+        public readonly ushort DisplayTime; //???
+        public readonly int DelayBetweenSending; // задержка времени в мсек, на отправку инфы между экранами.
+        public readonly byte[] ColorBytes;//Цвет { color.B, color.G, color.R, 0x00 }
 
-        public DisplayEffect Effect { get; set; } //Эффект отображения
-        public DisplayTextHAlign TextHAlign { get; set; } //Выравнивание по горизонтали
-        public DisplayTextVAlign TextVAlign { get; set; } //Выравнивание по вертикали
-        public DisplayTextHeight TextHeight { get; set; } //Размер каждого шрифта 8/12/16/24/32 пикселя в высоту
-        public ushort DisplayTime { get; set; } //???
-        public int DelayBetweenSending { get; set; } // задержка времени в мсек, на отправку инфы между экранами.
 
-        public byte[] ColorBytes { get; set; } = new byte[4]; //Цвет { color.B, color.G, color.R, 0x00 }
+        public WindowSett(string number, string columnName, string width, string height, string effect, string textHAlign, string textVAlign, string displayTime, string delayBetweenSending, string colorBytes)
+        {
+            Number= byte.Parse(number);
+            ColumnName= columnName;
+            Width= int.Parse(width);
+            Height= int.Parse(height);
+            Effect= (DisplayEffect)Enum.Parse(typeof(DisplayEffect), effect);
+            TextHAlign= (DisplayTextHAlign)Enum.Parse(typeof(DisplayTextHAlign), textHAlign);
+            TextVAlign= (DisplayTextVAlign)Enum.Parse(typeof(DisplayTextVAlign), textHAlign);
+            DisplayTime= ushort.Parse(displayTime);
+            DelayBetweenSending= int.Parse(delayBetweenSending);
 
-        public List<string> SendingStrings { get; set; } = new List<string>();
+            var r= byte.Parse(colorBytes.Substring(0, 2));
+            var g= byte.Parse(colorBytes.Substring(2, 2));
+            var b= byte.Parse(colorBytes.Substring(4, 2));
+            ColorBytes= new byte[] {b, g, r, 0x00};
+        }
     }
 
 
@@ -32,24 +48,26 @@ namespace Communication.SibWayApi
 
     public class SettingSibWay
     {
-        private readonly string _pathFont8Px; //= Application.StartupPath + @"\LEDFont8px.xml";
+        public readonly string Path2FontFile; //= Application.StartupPath + @"\LEDFont8px.xml";
+        public readonly string Ip;
+        public readonly ushort Port;
+        public readonly int TimeRespown;
+        public readonly int Time2Reconnect;
+        public readonly int FontSize;        //Размер шрифта 8/12/16/24/32 пикселя в высоту. DisplayTextHeight для каждого окна берется соответсвующий.
 
-        public byte FontSize { get; set; }  //Размер шрифта 8/12/16/24/32 пикселя в высоту. DisplayTextHeight для каждого окна берется соответсвующий.
-        public List<WindowSett> WindowSett { get; set; }
+        public IEnumerable<WindowSett> WindowSett { get; set; }
 
 
-        public SettingSibWay()
+
+
+        public SettingSibWay(string ip, string port, string path2FontFile,  string fontSize, string timeRespown, string time2Reconnect)
         {
-            FontSize = 16;
-            WindowSett = new List<WindowSett>
-            {
-                new WindowSett {Number = 1, Name ="NumberOfTrain", Height = 160, Width = 24},
-                new WindowSett {Number = 2, Name ="TypeTrain", Height = 160, Width = 24},
-                new WindowSett {Number = 3, Name ="Route", Height = 160, Width = 136},
-                new WindowSett {Number = 4, Name ="TimeArrival", Height = 160, Width = 24},
-                new WindowSett {Number = 5, Name ="TimeDeparture", Height = 160, Width = 24},
-                new WindowSett {Number = 6, Name ="Path", Height = 160, Width = 24}
-            };
+            Ip = ip;
+            Port = ushort.Parse(port);
+            Path2FontFile = path2FontFile;
+            FontSize = int.Parse(fontSize);
+            Time2Reconnect = int.Parse(time2Reconnect);
+            TimeRespown = int.Parse(timeRespown);
         }
     }
 }
