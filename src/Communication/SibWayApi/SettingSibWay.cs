@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.AccessControl;
 using LedScreenLibNetWrapper;
@@ -32,13 +33,13 @@ namespace Communication.SibWayApi
             Height= int.Parse(height);
             Effect= (DisplayEffect)Enum.Parse(typeof(DisplayEffect), effect);
             TextHAlign= (DisplayTextHAlign)Enum.Parse(typeof(DisplayTextHAlign), textHAlign);
-            TextVAlign= (DisplayTextVAlign)Enum.Parse(typeof(DisplayTextVAlign), textHAlign);
+            TextVAlign= (DisplayTextVAlign)Enum.Parse(typeof(DisplayTextVAlign), textVAlign);
             DisplayTime= ushort.Parse(displayTime);
             DelayBetweenSending= int.Parse(delayBetweenSending);
 
-            var r= byte.Parse(colorBytes.Substring(0, 2));
-            var g= byte.Parse(colorBytes.Substring(2, 2));
-            var b= byte.Parse(colorBytes.Substring(4, 2));
+            var r= byte.Parse(colorBytes.Substring(0, 2), NumberStyles.AllowHexSpecifier);
+            var g= byte.Parse(colorBytes.Substring(2, 2), NumberStyles.AllowHexSpecifier);
+            var b= byte.Parse(colorBytes.Substring(4, 2), NumberStyles.AllowHexSpecifier);
             ColorBytes= new byte[] {b, g, r, 0x00};
         }
     }

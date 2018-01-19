@@ -81,6 +81,14 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationDevices\CommunicationDevices.csproj">
+      <Project>{6a763286-f0a3-4218-85d1-dd8eb40dcff3}</Project>
+      <Name>CommunicationDevices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{dea394e0-f62e-459b-98cf-3ec8da2a90a3}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{a28fd145-e193-4237-9d44-1bdf29b84b69}</Project>
       <Name>Domain</Name>

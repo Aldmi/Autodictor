@@ -132,7 +132,7 @@
 				TextVAlign="Center"
 				DisplayTime="1"
 				DelayBetweenSending="800"
-				ColorBytes="FFFFFF"/>
+				ColorBytes="10FFFF"/>
 				
 			<Screen 
 			    Number="2"

@@ -91,7 +91,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
 
         public BaseExchangeSibWayBehavior(double timerPeriod, SettingSibWay settingSibWay)
         {
-            ProviderName = "SibWayProvider";
             Data4CycleFunc = new ReadOnlyCollection<UniversalInputType>(new List<UniversalInputType> { new UniversalInputType { TableData = new List<UniversalInputType>() } });  //данные для 1-ой циклической функции
 
             ClientSibWay = new SibWay(settingSibWay);

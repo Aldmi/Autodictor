@@ -120,9 +120,9 @@ namespace Communication.SibWayApi
                     DisplayDriver.Initialize(SettingSibWay.Ip, SettingSibWay.Port);
                     var errorCode = await OpenConnectionAsync();
                     IsConnect = (errorCode == ErrorCode.ERROR_SUCCESS);
+                    IsConnect = true;//DEBUG!!!!!!!!!!!!!!!
                     StatusString = $"Conect to {SettingSibWay.Ip} : {SettingSibWay.Port} ...";
                     await Task.Delay(SettingSibWay.Time2Reconnect);
-                    return;
                 }
                 catch (Exception ex)
                 {
