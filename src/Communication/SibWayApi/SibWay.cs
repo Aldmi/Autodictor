@@ -208,12 +208,12 @@ namespace Communication.SibWayApi
                         trimStr = TrimStrOnWindowWidth(sh.NumberOfTrain, winSett.Width);
                         break;
 
-                    case nameof(sh.Path):
-                        trimStr = TrimStrOnWindowWidth(sh.Path, winSett.Width);
+                    case nameof(sh.PathNumber):
+                        trimStr = TrimStrOnWindowWidth(sh.PathNumber, winSett.Width);
                         break;
 
-                    case nameof(sh.Route):
-                        trimStr = TrimStrOnWindowWidth(sh.Route, winSett.Width);
+                    case nameof(sh.Stations):
+                        trimStr = TrimStrOnWindowWidth(sh.Stations, winSett.Width);
                         break;
 
                     case nameof(sh.TimeArrival):

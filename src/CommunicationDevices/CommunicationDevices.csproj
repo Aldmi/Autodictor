@@ -145,6 +145,7 @@
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlStaticWindowFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\XMLFormatProviders\XmlTListFormatProvider.cs" />
     <Compile Include="DataProviders\XmlDataProvider\StreamWriteDataProvider.cs" />
+    <Compile Include="Mappers\AutoMapperConfig.cs" />
     <Compile Include="Quartz\Jobs\QuartzJobVerificationActivation.cs" />
     <Compile Include="Quartz\Shedules\QuartzVerificationActivation.cs" />
     <Compile Include="Rules\ExchangeRules\BaseExchangeRule.cs" />

@@ -7,8 +7,7 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using Castle.Components.DictionaryAdapter;
-using Communication.Http;
+using AutoMapper;
 using Communication.SibWayApi;
 using CommunicationDevices.DataProviders;
 using Timer = System.Timers.Timer;
@@ -139,7 +138,6 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
 
 
 
-
         #region Methode
 
         public void CycleReConnect(ICollection<Task> backGroundTasks = null)
@@ -172,19 +170,15 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
             _sendLock = true;
             if (inData?.TableData != null && inData.TableData.Any())
             {
-                List<ItemSibWay> items = new List<ItemSibWay>();
-               //TODO: inData.TableData Map To items
+                var listSibWays = Mapper.Map<IEnumerable<ItemSibWay>>(inData.TableData).ToList();
 
-                DataExchangeSuccess = await ClientSibWay.SendData(items);
+                DataExchangeSuccess = await ClientSibWay.SendData(listSibWays);
                 LastSendData = inData;
             }
             _sendLock = false;
-
-
         }
 
         #endregion
-
 
 
 

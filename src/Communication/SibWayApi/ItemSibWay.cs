@@ -5,11 +5,23 @@ namespace Communication.SibWayApi
 {
     public class ItemSibWay
     {
-        public string NumberOfTrain { get; set; }
+        public bool IsActive { get; set; }
         public string TypeTrain { get; set; }
-        public string Route { get; set; }
+        public string NumberOfTrain { get; set; }
+        public string PathNumber { get; set; }
+        public string Event { get; set; }
+        public string Addition { get; set; }
+        public string Stations { get; set; }
+        public string DirectionStation { get; set; }
+
+        public string Note { get; set; }
+        public string DaysFollowingAlias { get; set; }
+
         public DateTime TimeArrival { get; set; }
         public DateTime TimeDeparture { get; set; }
-        public string Path { get; set; }
+
+        public DateTime? DelayTime { get; set; }
+        public DateTime ExpectedTime { get; set; }
+        public TimeSpan? StopTime { get; set; }
     }
 }

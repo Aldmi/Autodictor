@@ -37,6 +37,7 @@ using CommunicationDevices.DataProviders.XmlDataProvider;
 using CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders;
 using CommunicationDevices.Devices;
 using CommunicationDevices.DI;
+using CommunicationDevices.Mappers;
 using CommunicationDevices.Rules.ExchangeRules;
 using CommunicationDevices.Settings;
 using CommunicationDevices.Settings.XmlCisSettings;
@@ -117,11 +118,7 @@ namespace CommunicationDevices.Model
             _container.Install(new WindsorConfig());
 
             //РЕГИСТРАЦИЯ МАППИНГА
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<UniversalInputType, UniversalDisplayType>();
-                cfg.CreateMap<UniversalDisplayType, UniversalInputType>();
-            });
+            AutoMapperConfig.Register();
         }
 
         #endregion
