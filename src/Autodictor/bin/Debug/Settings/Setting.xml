@@ -120,7 +120,8 @@
 			TimeDelayReconnect="3000"
 			TimeRespone="2000"
 			Description="SibWay табло 1"
-			Binding="ToGeneral:ГлавноеОкно">
+			Binding="ToGeneral:ГлавноеОкно"
+			Paging="4,5">
 			
 			<Screen 
 			    Number="1"

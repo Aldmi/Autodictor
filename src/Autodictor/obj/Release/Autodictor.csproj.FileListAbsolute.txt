@@ -726,3 +726,4 @@ C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\MainExample.ФормаЗапи
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Autodictor.csproj.GenerateResource.Cache
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Автодиктор.exe
 C:\Users\Aldmi\Desktop\src\Autodictor\obj\Release\Автодиктор.pdb
+D:\Git\Autodictor\src\Autodictor\bin\Release\Автодиктор.exe.config

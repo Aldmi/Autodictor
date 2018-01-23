@@ -309,9 +309,13 @@ namespace MainExample.Mappers
             Func<string, string, Dictionary<string, DateTime>> transitTimePars = (arrivalTime, departTime) =>
             {
                 var transitTime = new Dictionary<string, DateTime>();
-                if ((!string.IsNullOrEmpty(arrivalTime)) && (!string.IsNullOrEmpty(departTime)))
+                if (!string.IsNullOrEmpty(arrivalTime))
                 {
                     transitTime["приб"] = timePars(arrivalTime, String.Empty);
+                }
+
+                if (!string.IsNullOrEmpty(departTime))
+                {
                     transitTime["отпр"] = timePars(departTime, String.Empty);
                 }
 
@@ -471,12 +475,14 @@ namespace MainExample.Mappers
             {
                 actStr = "ПРИБ.";
                 time = data.ВремяПрибытия;
+                transitTimes["приб"] = data.ВремяПрибытия;
                 номерПоезда = data.НомерПоезда;
             }
             else if ((data.БитыАктивностиПолей & 0x10) == 0x10)
             {
                 actStr = "ОТПР.";
                 time = data.ВремяОтправления;
+                transitTimes["отпр"] = data.ВремяОтправления;
                 номерПоезда = data.НомерПоезда;
             }
 

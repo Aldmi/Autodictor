@@ -59,7 +59,7 @@ namespace CommunicationDevices.Behavior.GetDataBehavior
 
 
         /// <summary>
-        /// Обработчик события получения потока данных от сервера апк-дк ВОЛГОГРАД (GET запрос)
+        /// Обработчик события получения потока данных от сервера
         /// </summary>
         private void GetStreamRxHandler(Stream stream)
         {

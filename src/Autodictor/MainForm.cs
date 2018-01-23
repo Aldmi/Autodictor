@@ -69,7 +69,7 @@ namespace MainExample
 
             Включить.BackColor = Color.Red;
 
-            QuartzVerificationActivation.Start(VerificationActivationService);
+            //QuartzVerificationActivation.Start(VerificationActivationService);
         }
 
 
@@ -124,7 +124,7 @@ namespace MainExample
             CheckAuthentication(true);
 
             ExchangeModel.LoadSetting();
-            ExchangeModel.StartCisClient();
+            //ExchangeModel.StartCisClient();
 
             ExchangeModel.InitializeDeviceSoundChannelManagement();
 

@@ -7,6 +7,8 @@ using System.Timers;
 using CommunicationDevices.DataProviders;
 using CommunicationDevices.Devices;
 
+
+
 namespace CommunicationDevices.Behavior.BindingBehavior.Helpers
 {
     public class PaggingHelper : IDisposable
@@ -41,8 +43,7 @@ namespace CommunicationDevices.Behavior.BindingBehavior.Helpers
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             var pagingList= new PagingList();
-            var inData = new UniversalInputType { TableData = PagingBuffer };
-
+ 
             if (CountPaging >= PagingBuffer.Count)
             {
                 pagingList.CurrentPage = 0;
