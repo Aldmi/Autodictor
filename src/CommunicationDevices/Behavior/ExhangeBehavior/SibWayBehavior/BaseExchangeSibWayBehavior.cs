@@ -171,8 +171,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
             if (inData?.TableData != null && inData.TableData.Any())
             {
                 var listSibWays = Mapper.Map<IEnumerable<ItemSibWay>>(inData.TableData).ToList();
-
-               // DataExchangeSuccess = await ClientSibWay.SendData(listSibWays);
+                DataExchangeSuccess = await ClientSibWay.SendData(listSibWays);
                 LastSendData = inData;
             }
             _sendLock = false;

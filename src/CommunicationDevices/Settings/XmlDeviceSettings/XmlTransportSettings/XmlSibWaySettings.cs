@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Communication.SibWayApi;
@@ -43,7 +44,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
                 var id= (string) el.Attribute("Id");
                 var ip= (string) el.Attribute("Ip");
                 var port= (string) el.Attribute("Port");
-                var path2FontFile= (string) el.Attribute("Path2FontFile");
+                var path2FontFile= Path.Combine(Directory.GetCurrentDirectory(), (string)el.Attribute("Path2FontFile"));
                 var fontSize= (string) el.Attribute("FontSize");
                 var period= (string) el.Attribute("Period");
                 var timeDelayReconnect= (string) el.Attribute("TimeDelayReconnect");

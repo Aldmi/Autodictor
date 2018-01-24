@@ -114,7 +114,7 @@
 	<SibWay Id="400"
         	Ip="10.61.15.235"
 			Port="9401"
-			Path2FontFile="LEDFont8px.xml"
+			Path2FontFile="SibWayFontTextSett\Catalogs.xml"
 			FontSize="8"
 			Period="5000"
 			TimeDelayReconnect="3000"
@@ -149,7 +149,7 @@
 				
 			<Screen 
 			    Number="3"
-                ColumnName="Route"	
+                ColumnName="Stations"	
                 Width="136"
                 Height="160"
 				Effect="SimpleDisplay"
@@ -185,7 +185,7 @@
 				
 			<Screen 
 			    Number="6"
-                ColumnName="Path"	
+                ColumnName="PathNumber"	
                 Width="24"
                 Height="160"
 				Effect="SimpleDisplay"

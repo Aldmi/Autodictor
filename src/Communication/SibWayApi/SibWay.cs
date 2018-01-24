@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -33,14 +34,6 @@ namespace Communication.SibWayApi
 
     public class SibWay : INotifyPropertyChanged, IDisposable
     {
-        #region fields
-
-
-        #endregion
-
-
-
-
         #region prop
 
         public DisplayDriver DisplayDriver { get; set; } = new DisplayDriver();
@@ -195,6 +188,7 @@ namespace Communication.SibWayApi
         }
 
 
+
         private IEnumerable<string> CreateListSendingStrings(WindowSett winSett, IList<ItemSibWay> items)
         {
             //Создаем список строк отправки для каждого окна------------------------------
@@ -204,6 +198,11 @@ namespace Communication.SibWayApi
                 string trimStr = null;
                 switch (winSett.ColumnName)
                 {
+                        
+                    case nameof(sh.TypeTrain):
+                        trimStr = TrimStrOnWindowWidth(sh.TypeTrain, winSett.Width);
+                        break;
+
                     case nameof(sh.NumberOfTrain):
                         trimStr = TrimStrOnWindowWidth(sh.NumberOfTrain, winSett.Width);
                         break;
@@ -212,20 +211,48 @@ namespace Communication.SibWayApi
                         trimStr = TrimStrOnWindowWidth(sh.PathNumber, winSett.Width);
                         break;
 
+                    case nameof(sh.Event):
+                        trimStr = TrimStrOnWindowWidth(sh.Event, winSett.Width);
+                        break;
+
+                    case nameof(sh.Addition):
+                        trimStr = TrimStrOnWindowWidth(sh.Addition, winSett.Width);
+                        break;
+
                     case nameof(sh.Stations):
                         trimStr = TrimStrOnWindowWidth(sh.Stations, winSett.Width);
                         break;
 
-                    case nameof(sh.TimeArrival):
-                        trimStr = TrimStrOnWindowWidth(sh.TimeArrival.ToString("HH:mm"), winSett.Width);
+                    case nameof(sh.DirectionStation):
+                        trimStr = TrimStrOnWindowWidth(sh.DirectionStation, winSett.Width);
+                        break;
+
+                    case nameof(sh.Note):
+                        trimStr = TrimStrOnWindowWidth(sh.Note, winSett.Width);
+                        break;
+
+                    case nameof(sh.DaysFollowingAlias):
+                        trimStr = TrimStrOnWindowWidth(sh.DaysFollowingAlias, winSett.Width);
                         break;
 
                     case nameof(sh.TimeDeparture):
                         trimStr = TrimStrOnWindowWidth(sh.TimeDeparture.ToString("HH:mm"), winSett.Width);
                         break;
 
-                    case nameof(sh.TypeTrain):
-                        trimStr = TrimStrOnWindowWidth(sh.TypeTrain, winSett.Width);
+                    case nameof(sh.TimeArrival):
+                        trimStr = TrimStrOnWindowWidth(sh.TimeArrival.ToString("HH:mm"), winSett.Width);
+                        break;
+
+                    case nameof(sh.DelayTime):
+                        trimStr = TrimStrOnWindowWidth(sh.DelayTime?.ToString("HH:mm") ?? string.Empty , winSett.Width);
+                        break;
+
+                    case nameof(sh.ExpectedTime):
+                        trimStr = TrimStrOnWindowWidth(sh.ExpectedTime.ToString("HH:mm"), winSett.Width);
+                        break;
+
+                    case nameof(sh.StopTime):
+                        trimStr = TrimStrOnWindowWidth(sh.StopTime?.ToString("HH:mm") ?? string.Empty, winSett.Width);
                         break;
                 }
 
@@ -268,15 +295,15 @@ namespace Communication.SibWayApi
 
 
             StatusString = "Отправка на экран " + winSett.Number + "\n" + text + "\n";
-            var err= await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
-                winSett.Number,
-                winSett.Effect,
-                winSett.TextHAlign,
-                winSett.TextVAlign,
-                winSett.DisplayTime,
-                textHeight,
-                colorRgb,
-                text));
+            var err = await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
+                 winSett.Number,
+                 winSett.Effect,
+                 winSett.TextHAlign,
+                 winSett.TextVAlign,
+                 winSett.DisplayTime,
+                 textHeight,
+                 colorRgb,
+                 text));
 
             StatusString = "Отправка на экран " + winSett.Number + "errorCode= " + err + "\n";
             return (err == ErrorCode.ERROR_SUCCESS);// TODO: В случае верного ответа отправить true.
@@ -286,18 +313,21 @@ namespace Communication.SibWayApi
 
         private string TrimStrOnWindowWidth(string str, int width)
         {
-
+            var path = SettingSibWay.Path2FontFile;
+            if (File.Exists(path))
+            {
+                //Измерим в пикселях размер текста
+                using (var tu = new TextUtility())
+                {
+                    tu.Initialize(path);
+                    while (tu.MeasureString(str) > width)
+                    {
+                        str = str.Remove(str.Length - 1);
+                    }
+                    return str;
+                }
+            }
             return str;
-            //Измерим в пикселях размер текста
-            //using (var tu = new TextUtility())
-            //{
-            //    tu.Initialize(pathFont8px);
-            //    while (tu.MeasureString(str) > width)
-            //    {
-            //        str = str.Remove(str.Length - 1);
-            //    }
-            //    return str;
-            //}
         }
 
 
