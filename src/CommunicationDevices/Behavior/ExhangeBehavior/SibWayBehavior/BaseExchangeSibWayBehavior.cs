@@ -130,6 +130,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             AddOneTimeSendData(GetData4CycleFunc[0]);
+            AttemptSynchronizeTime();
         }
 
         #endregion
@@ -161,6 +162,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
         }
 
 
+
         private bool _sendLock;
         public async void AddOneTimeSendData(UniversalInputType inData)
         {
@@ -175,6 +177,21 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
                 LastSendData = inData;
             }
             _sendLock = false;
+        }
+
+
+        /// <summary>
+        /// Синхронизация часов раз в час
+        /// </summary>
+        private DateTime _lastSyncTime;
+        private void AttemptSyncTime()
+        {
+            var now = DateTime.Now;
+            if (_lastSyncTime.Hour != now.Hour)
+            {
+                _lastSyncTime = now;
+                ClientSibWay.SyncTime(now);
+            }  
         }
 
         #endregion

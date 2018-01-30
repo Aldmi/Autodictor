@@ -185,6 +185,12 @@ namespace MainExample.Entites
                         {
                             for (int i = 0; i < trainTableRecords.Count; i++)
                             {
+                                var daysAlias = trainTableRecords[i].DaysAlias;
+                                if (daysAlias.Contains("\r\n"))
+                                {
+                                    daysAlias= daysAlias.Replace("\r\n", "{rn}");
+                                }
+
                                 string line = trainTableRecords[i].ID + ";" +
                                               trainTableRecords[i].Num + ";" +
                                               trainTableRecords[i].Name + ";" +
@@ -211,7 +217,7 @@ namespace MainExample.Entites
 
                                               trainTableRecords[i].Num2 + ";" +
                                               trainTableRecords[i].FollowingTime + ";" +
-                                              trainTableRecords[i].DaysAlias + ";" +
+                                              daysAlias + ";" +
 
                                               trainTableRecords[i].StationDepart + ";" +
                                               trainTableRecords[i].StationArrival + ";" +
@@ -330,7 +336,7 @@ namespace MainExample.Entites
                                 {
                                     данные.Num2 = settings[19];
                                     данные.FollowingTime = settings[20];
-                                    данные.DaysAlias = settings[21];
+                                    данные.DaysAlias = settings[21]?.Replace("{rn}", "\r\n");
                                 }
 
 

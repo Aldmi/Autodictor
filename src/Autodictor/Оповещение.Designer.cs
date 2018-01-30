@@ -611,10 +611,11 @@
             // 
             // tb_ДниСледованияAlias
             // 
-            this.tb_ДниСледованияAlias.Location = new System.Drawing.Point(18, 328);
+            this.tb_ДниСледованияAlias.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tb_ДниСледованияAlias.Location = new System.Drawing.Point(18, 315);
             this.tb_ДниСледованияAlias.Multiline = true;
             this.tb_ДниСледованияAlias.Name = "tb_ДниСледованияAlias";
-            this.tb_ДниСледованияAlias.Size = new System.Drawing.Size(349, 26);
+            this.tb_ДниСледованияAlias.Size = new System.Drawing.Size(349, 39);
             this.tb_ДниСледованияAlias.TabIndex = 60;
             // 
             // tBОписаниеДнейСледования
@@ -623,7 +624,7 @@
             this.tBОписаниеДнейСледования.Multiline = true;
             this.tBОписаниеДнейСледования.Name = "tBОписаниеДнейСледования";
             this.tBОписаниеДнейСледования.ReadOnly = true;
-            this.tBОписаниеДнейСледования.Size = new System.Drawing.Size(349, 108);
+            this.tBОписаниеДнейСледования.Size = new System.Drawing.Size(349, 91);
             this.tBОписаниеДнейСледования.TabIndex = 59;
             // 
             // btnДниСледования

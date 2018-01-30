@@ -45,7 +45,6 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
                 var ip= (string) el.Attribute("Ip");
                 var port= (string) el.Attribute("Port");
                 var path2FontFile= Path.Combine(Directory.GetCurrentDirectory(), (string)el.Attribute("Path2FontFile"));
-                var fontSize= (string) el.Attribute("FontSize");
                 var period= (string) el.Attribute("Period");
                 var timeDelayReconnect= (string) el.Attribute("TimeDelayReconnect");
                 var timeRespone= (string) el.Attribute("TimeRespone");
@@ -56,7 +55,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
                     Id= int.Parse(id),
                     Description= description,
                     Period= long.Parse(period),
-                    SettingSibWay= new SettingSibWay(ip, port, path2FontFile, fontSize, timeRespone, timeDelayReconnect)
+                    SettingSibWay= new SettingSibWay(ip, port, path2FontFile, timeRespone, timeDelayReconnect)
                 };
 
                 var bind= (string)el.Attribute("Binding");
@@ -85,6 +84,7 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
                 {
                     var number= (string)scr.Attribute("Number");
                     var columnName= (string)scr.Attribute("ColumnName");
+                    var fontSize = (string)scr.Attribute("FontSize");
                     var width= (string)scr.Attribute("Width");
                     var height= (string)scr.Attribute("Height");
                     var effect= (string)scr.Attribute("Effect");
@@ -93,8 +93,9 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
                     var displayTime= (string)scr.Attribute("DisplayTime");
                     var delayBetweenSending= (string)scr.Attribute("DelayBetweenSending");
                     var colorBytes= (string)scr.Attribute("ColorBytes");
+                    var format = (string)scr.Attribute("Format");
 
-                    winSetts.Add(new WindowSett(number, columnName, width, height, effect, textHAlign, textVAlign, displayTime, delayBetweenSending, colorBytes));
+                    winSetts.Add(new WindowSett(number, columnName, fontSize, width, height, effect, textHAlign, textVAlign, displayTime, delayBetweenSending, colorBytes, format));
                 }
 
                 xmlSibWaySett.SettingSibWay.WindowSett= winSetts;

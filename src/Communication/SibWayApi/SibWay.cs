@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 using Communication.Annotations;
 using LedScreenLibNetWrapper;
 using LedScreenLibNetWrapper.Impl;
+using NLog.Fluent;
+using Log = Library.Logs.Log;
 
 namespace Communication.SibWayApi
 {
@@ -38,6 +41,9 @@ namespace Communication.SibWayApi
 
         public DisplayDriver DisplayDriver { get; set; } = new DisplayDriver();
         public SettingSibWay SettingSibWay { get; set; }
+
+        public Dictionary<string, string> DictSendingStrings { get; } = new Dictionary<string, string>(); //Словарь отправленных строк на каждую колонку. Key= Название колонки.   Value= Строка
+
 
         private string _statusString;
         public string StatusString
@@ -150,12 +156,13 @@ namespace Communication.SibWayApi
             IsRunDataExchange = true;
             try
             {
+                Debug.WriteLine($"--------------------------- {DateTime.Now}");
                 //Отправка информации каждому окну---------------------------------------
                 foreach (var winSett in SettingSibWay.WindowSett)
                 {
                     //Ограничим кол-во строк для окна.
                     var maxWindowHeight = winSett.Height;
-                    var fontSize = SettingSibWay.FontSize;
+                    var fontSize = winSett.FontSize;
                     var nItems = maxWindowHeight / fontSize;
                     var items = sibWayItems.Take(nItems).ToList();
 
@@ -165,12 +172,16 @@ namespace Communication.SibWayApi
                     //Отправим список строк.
                     if (sendingStrings != null && sendingStrings.Any())
                     {
+                        //Debug.WriteLine("   ");
+                        //Debug.WriteLine($"Начало отправки на {winSett.Number}:  {DateTime.Now.ToString("O")}");
                         var result = await SendMessageAsync(winSett, sendingStrings, fontSize);
                         if (result == false) //Если в результате отправки даных окну возникла ошибка, то уходим на цикл ReConnect и прерываем отправку данных.
                         {
                             ReConnect();
                             return false;
                         }
+
+                        //Debug.WriteLine($"Конец отправки на {winSett.Number}:  {DateTime.Now.ToString("O")}");
                         await Task.Delay(winSett.DelayBetweenSending);
                     }
                 }
@@ -219,8 +230,23 @@ namespace Communication.SibWayApi
                         trimStr = TrimStrOnWindowWidth(sh.Addition, winSett.Width);
                         break;
 
-                    case nameof(sh.Stations):
-                        trimStr = TrimStrOnWindowWidth(sh.Stations, winSett.Width);
+                    case "Stations":
+                        var stations = $"{sh.StationDeparture}-{sh.StationArrival}";
+                        if (!string.IsNullOrEmpty(winSett.Format))
+                        {
+                            try
+                            {
+                                var replaceStr = winSett.Format.Replace("StartStation", "0").Replace("EndStation", "1").Replace("n", "2");
+                                stations = string.Format(replaceStr, sh.StationDeparture, sh.StationArrival, "\n");
+                                Debug.WriteLine(stations);
+                            }
+                            catch (Exception)
+                            {
+                                // ignored
+                            }
+                        }
+              
+                        trimStr = TrimStrOnWindowWidth(stations, winSett.Width);
                         break;
 
                     case nameof(sh.DirectionStation):
@@ -232,19 +258,20 @@ namespace Communication.SibWayApi
                         break;
 
                     case nameof(sh.DaysFollowingAlias):
-                        trimStr = TrimStrOnWindowWidth(sh.DaysFollowingAlias, winSett.Width);
+                        var daysFolowingAlias = sh.DaysFollowingAlias.Replace("\r", string.Empty);
+                        trimStr = TrimStrOnWindowWidth(daysFolowingAlias, winSett.Width);
                         break;
 
                     case nameof(sh.TimeDeparture):
-                        trimStr = TrimStrOnWindowWidth(sh.TimeDeparture.ToString("HH:mm"), winSett.Width);
+                        trimStr = TrimStrOnWindowWidth(sh.TimeDeparture?.ToString("HH:mm") ?? " ", winSett.Width);
                         break;
 
                     case nameof(sh.TimeArrival):
-                        trimStr = TrimStrOnWindowWidth(sh.TimeArrival.ToString("HH:mm"), winSett.Width);
+                        trimStr = TrimStrOnWindowWidth(sh.TimeArrival?.ToString("HH:mm") ?? " ", winSett.Width);
                         break;
 
                     case nameof(sh.DelayTime):
-                        trimStr = TrimStrOnWindowWidth(sh.DelayTime?.ToString("HH:mm") ?? string.Empty , winSett.Width);
+                        trimStr = TrimStrOnWindowWidth(sh.DelayTime?.ToString("HH:mm") ?? " " , winSett.Width);
                         break;
 
                     case nameof(sh.ExpectedTime):
@@ -252,7 +279,7 @@ namespace Communication.SibWayApi
                         break;
 
                     case nameof(sh.StopTime):
-                        trimStr = TrimStrOnWindowWidth(sh.StopTime?.ToString("HH:mm") ?? string.Empty, winSett.Width);
+                        trimStr = TrimStrOnWindowWidth(sh.StopTime?.ToString("HH:mm") ?? " ", winSett.Width);
                         break;
                 }
 
@@ -272,6 +299,9 @@ namespace Communication.SibWayApi
         {
             uint colorRgb = BitConverter.ToUInt32(winSett.ColorBytes, 0);
             string text = GetResultString(sendingStrings);
+
+            if (!CheckColumnChange(winSett.ColumnName, text))   //Обновляем только измененные колонки (экраны)
+                return true;
 
             var textHeight = DisplayTextHeight.px8;
             switch (fontSize)
@@ -295,18 +325,47 @@ namespace Communication.SibWayApi
 
 
             StatusString = "Отправка на экран " + winSett.Number + "\n" + text + "\n";
-            var err = await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
-                 winSett.Number,
-                 winSett.Effect,
-                 winSett.TextHAlign,
-                 winSett.TextVAlign,
-                 winSett.DisplayTime,
-                 textHeight,
-                 colorRgb,
-                 text));
+            //Log.log.Error($"{StatusString}");
+
+            Debug.WriteLine("   ");
+            Debug.WriteLine($">>>> {winSett.Number}:  {DateTime.Now.ToString("mm:ss")}");
+
+            //var err = await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
+            //     winSett.Number,
+            //     winSett.Effect,
+            //     winSett.TextHAlign,
+            //     winSett.TextVAlign,
+            //     winSett.DisplayTime,
+            //     textHeight,
+            //     colorRgb,
+            //     text));
+
+            var err= ErrorCode.ERROR_SUCCESS;//DEBUG
+         
+
+            Debug.WriteLine($"<<<< {winSett.Number}:  {DateTime.Now.ToString("mm:ss")}");
+
+            var tryResult = ((err == ErrorCode.ERROR_SUCCESS) || (err == ErrorCode.ERROR_TIMEOUT));
+            if (!tryResult)
+            {
+                Log.log.Error($"SibWay SendMessageAsync respown statys {err}");
+            }
 
             StatusString = "Отправка на экран " + winSett.Number + "errorCode= " + err + "\n";
-            return (err == ErrorCode.ERROR_SUCCESS);// TODO: В случае верного ответа отправить true.
+            return tryResult;
+        }
+
+
+        private bool CheckColumnChange(string columnName, string text)
+        {
+            if (DictSendingStrings.ContainsKey(columnName) &&
+                DictSendingStrings[columnName] == text)
+            {
+                return false;
+            }
+
+            DictSendingStrings[columnName] = text;
+            return true;
         }
 
 
@@ -343,6 +402,14 @@ namespace Communication.SibWayApi
             return strBuilder.Remove(strBuilder.Length - 1, 1).ToString(); //удалить послдений символ \n
         }
 
+
+        public bool SyncTime(DateTime dateTime)
+        {
+            if (!IsConnect)
+                return false;
+                        
+           return DisplayDriver.SetTime(dateTime);
+        }
 
         #endregion
 

@@ -112,87 +112,92 @@
 
 <DevicesWithSibWayApi>
 	<SibWay Id="400"
-        	Ip="10.61.15.235"
-			Port="9401"
+        	Ip="192.168.5.222"
+			Port="5200"
 			Path2FontFile="SibWayFontTextSett\Catalogs.xml"
-			FontSize="8"
-			Period="5000"
+			Period="10000"
 			TimeDelayReconnect="3000"
 			TimeRespone="2000"
 			Description="SibWay табло 1"
-			Binding="ToGeneral:ГлавноеОкно"
-			Paging="4,5">
+			Binding="ToGeneral:ГлавноеОкно">
 			
 			<Screen 
-			    Number="1"
+			    Number="0"
                 ColumnName="NumberOfTrain"	
+			    FontSize="8"
                 Width="24"
                 Height="160"
 				Effect="SimpleDisplay"
 				TextHAlign="Left"
-				TextVAlign="Center"
+				TextVAlign="Top"
 				DisplayTime="1"
-				DelayBetweenSending="800"
-				ColorBytes="10FFFF"/>
+				DelayBetweenSending="1000"
+				ColorBytes="FF0000"/>
 				
 			<Screen 
-			    Number="2"
+			    Number="1"
                 ColumnName="TypeTrain"	
+				FontSize="8"
                 Width="24"
                 Height="160"
 				Effect="SimpleDisplay"
 				TextHAlign="Left"
-				TextVAlign="Center"
+				TextVAlign="Top"
 				DisplayTime="1"
-				DelayBetweenSending="800"
+				DelayBetweenSending="1000"
 				ColorBytes="FFFFFF"/>
 				
 			<Screen 
-			    Number="3"
+			    Number="2"
                 ColumnName="Stations"	
+				FontSize="8"
                 Width="136"
                 Height="160"
 				Effect="SimpleDisplay"
 				TextHAlign="Left"
-				TextVAlign="Center"
+				TextVAlign="Top"
 				DisplayTime="1"
-				DelayBetweenSending="800"
-				ColorBytes="FFFFFF"/>
+				DelayBetweenSending="1000"
+				ColorBytes="00FF00"
+				Format="{StartStation}{n}{EndStation}"/>
+				
+			<Screen 
+			    Number="3"
+                ColumnName="TimeArrival"	
+				FontSize="8"
+                Width="24"
+                Height="160"
+				Effect="SimpleDisplay"
+				TextHAlign="Left"
+				TextVAlign="Top"
+				DisplayTime="1"
+				DelayBetweenSending="1000"
+				ColorBytes="0000FF"/>
 				
 			<Screen 
 			    Number="4"
-                ColumnName="TimeArrival"	
+                ColumnName="TimeDeparture"	
+				FontSize="8"
                 Width="24"
                 Height="160"
 				Effect="SimpleDisplay"
 				TextHAlign="Left"
-				TextVAlign="Center"
+				TextVAlign="Top"
 				DisplayTime="1"
-				DelayBetweenSending="800"
-				ColorBytes="FFFFFF"/>
+				DelayBetweenSending="1000"
+				ColorBytes="00F000"/>
 				
 			<Screen 
 			    Number="5"
-                ColumnName="TimeDeparture"	
-                Width="24"
+                ColumnName="DaysFollowingAlias"	
+				FontSize="8"
+                Width="100"
                 Height="160"
 				Effect="SimpleDisplay"
 				TextHAlign="Left"
-				TextVAlign="Center"
+				TextVAlign="Top"
 				DisplayTime="1"
-				DelayBetweenSending="800"
-				ColorBytes="FFFFFF"/>
-				
-			<Screen 
-			    Number="6"
-                ColumnName="PathNumber"	
-                Width="24"
-                Height="160"
-				Effect="SimpleDisplay"
-				TextHAlign="Left"
-				TextVAlign="Center"
-				DisplayTime="1"
-				DelayBetweenSending="800"
+				DelayBetweenSending="1000"
 				ColorBytes="FFFFFF"/>
 	</SibWay>
 </DevicesWithSibWayApi>
