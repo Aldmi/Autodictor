@@ -23,6 +23,8 @@ namespace CommunicationDevices.Mappers
                         opt => opt.MapFrom(src => src.StationArrival.NameRu))
                     .ForMember(dest => dest.StationDeparture,
                         opt => opt.MapFrom(src => src.StationDeparture.NameRu))
+                    .ForMember(dest => dest.Command,
+                        opt => opt.MapFrom(src => src.Command.ToString()))
                       );
         }
 

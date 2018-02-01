@@ -119,8 +119,8 @@
 			TimeDelayReconnect="3000"
 			TimeRespone="2000"
 			Description="SibWay табло 1"
-			Binding="ToGeneral:ГлавноеОкно">
-			
+			Binding="ToGeneral:ОкноРасписания">
+					
 			<Screen 
 			    Number="0"
                 ColumnName="NumberOfTrain"	

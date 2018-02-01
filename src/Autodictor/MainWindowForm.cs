@@ -1913,6 +1913,7 @@ namespace MainExample
                     Stations = "   ",
                     Note = "   ",
                     TypeTrain = TypeTrain.None,
+                    Command = Command.None,
                     TableData = new List<UniversalInputType>() { new UniversalInputType() }
                 };
 
@@ -1945,6 +1946,7 @@ namespace MainExample
                                 table.ForEach(t =>
                                 {
                                     uitPreprocessingService.StartPreprocessing(t);
+                                    t.Command= Command.View;
                                     t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                 });
 
@@ -1969,6 +1971,7 @@ namespace MainExample
                                 table.ForEach(t =>
                                 {
                                     uitPreprocessingService.StartPreprocessing(t);
+                                    t.Command = Command.View;
                                     t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                 });
 
@@ -1978,7 +1981,7 @@ namespace MainExample
                         }
                     }
 
-                        //Отправить расписание из ГЛАВНОГО окна  
+                    //Отправить расписание из ГЛАВНОГО окна  
                     if (binding2MainWindow.Any())
                     {
                         if (SoundRecords != null && SoundRecords.Any())
@@ -1992,6 +1995,7 @@ namespace MainExample
                                 table.ForEach(t =>
                                     {
                                         uitPreprocessingService.StartPreprocessing(t);
+                                        t.Command = Command.View;
                                         t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                     });
                                 var inData = new UniversalInputType {TableData = table};
@@ -2025,6 +2029,7 @@ namespace MainExample
                                 { "UserInfo", change.UserInfo },
                                 { "CauseOfChange", change.CauseOfChange }
                             };
+                            uit.Command = Command.View;
 
 
                             var uitNew = Mapper.MapSoundRecord2UniveralInputType(change.NewRec, beh.GetDeviceSetting.PathPermission, false);
@@ -2034,6 +2039,7 @@ namespace MainExample
                                 { "UserInfo", change.UserInfo },
                                 { "CauseOfChange", change.CauseOfChange }
                             };
+                            uit.Command = Command.View;
 
                             table.Add(uit);
                             table.Add(uitNew);
@@ -2060,13 +2066,6 @@ namespace MainExample
                         var key = SoundRecords.Keys.ElementAt(i);
                         var данные = SoundRecords.ElementAt(i).Value;
                         var данныеOld = SoundRecordsOld.ElementAt(i).Value;
-
-                    //DEBUG----------------------------------------------------
-                    //if (данные.НомерПоезда == "324" && !string.IsNullOrEmpty(данные.НомерПути))
-                    //{
-                    //    var gg = 5 + 5;
-                    //}
-                    //DEBUG-----------------------------------------------------
 
                         if (!данные.Автомат)
                            continue;

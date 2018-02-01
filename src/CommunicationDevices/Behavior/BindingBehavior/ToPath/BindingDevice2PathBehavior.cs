@@ -61,7 +61,6 @@ namespace CommunicationDevices.Behavior.BindingBehavior.ToPath
                     return;
             }
 
-            //привязка на несколько путей
             if (CollectionPathNumber.Any())
             {
                 switch (inData.Command)

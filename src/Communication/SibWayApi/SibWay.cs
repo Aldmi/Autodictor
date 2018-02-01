@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Communication.Annotations;
 using LedScreenLibNetWrapper;
 using LedScreenLibNetWrapper.Impl;
-using NLog.Fluent;
 using Log = Library.Logs.Log;
 
 namespace Communication.SibWayApi
@@ -119,7 +118,7 @@ namespace Communication.SibWayApi
                     DisplayDriver.Initialize(SettingSibWay.Ip, SettingSibWay.Port);
                     var errorCode = await OpenConnectionAsync();
                     IsConnect = (errorCode == ErrorCode.ERROR_SUCCESS);
-                    IsConnect = true;//DEBUG!!!!!!!!!!!!!!!
+                    //IsConnect = true;//DEBUG!!!!!!!!!!!!!!!
                     StatusString = $"Conect to {SettingSibWay.Ip} : {SettingSibWay.Port} ...";
                     await Task.Delay(SettingSibWay.Time2Reconnect);
                 }
@@ -149,9 +148,8 @@ namespace Communication.SibWayApi
         public async Task<bool> SendData(IList<ItemSibWay> sibWayItems)
         {
             if (!IsConnect)
-            {
                 return false;
-            }
+            
 
             IsRunDataExchange = true;
             try
@@ -165,6 +163,16 @@ namespace Communication.SibWayApi
                     var fontSize = winSett.FontSize;
                     var nItems = maxWindowHeight / fontSize;
                     var items = sibWayItems.Take(nItems).ToList();
+
+                    //Если пришла команда инициализации (очистки), то копируем нулевой элемент nItems раз. Для очистки всех строк табло.
+                    if (items.Count == 1 && (items[0].Command == "None" || items[0].Command == "Clear"))
+                    {
+                        var copyItem = items[0];
+                        for (int i = 0; i < nItems-1; i++)
+                        {
+                            items.Add(copyItem);
+                        }
+                    }
 
                     //Сформируем список строк.
                     var sendingStrings = CreateListSendingStrings(winSett, items)?.ToList();
@@ -208,8 +216,7 @@ namespace Communication.SibWayApi
             {
                 string trimStr = null;
                 switch (winSett.ColumnName)
-                {
-                        
+                {                    
                     case nameof(sh.TypeTrain):
                         trimStr = TrimStrOnWindowWidth(sh.TypeTrain, winSett.Width);
                         break;
@@ -258,7 +265,7 @@ namespace Communication.SibWayApi
                         break;
 
                     case nameof(sh.DaysFollowingAlias):
-                        var daysFolowingAlias = sh.DaysFollowingAlias.Replace("\r", string.Empty);
+                        var daysFolowingAlias = sh.DaysFollowingAlias?.Replace("\r", string.Empty);
                         trimStr = TrimStrOnWindowWidth(daysFolowingAlias, winSett.Width);
                         break;
 
@@ -282,14 +289,10 @@ namespace Communication.SibWayApi
                         trimStr = TrimStrOnWindowWidth(sh.StopTime?.ToString("HH:mm") ?? " ", winSett.Width);
                         break;
                 }
-
-                if (trimStr != null)
-                {
-                    listString.Add(trimStr);
-                }
+   
+                listString.Add(trimStr ?? string.Empty);              
             }
             
-
             return listString;
         }
 
@@ -328,22 +331,22 @@ namespace Communication.SibWayApi
             //Log.log.Error($"{StatusString}");
 
             Debug.WriteLine("   ");
-            Debug.WriteLine($">>>> {winSett.Number}:  {DateTime.Now.ToString("mm:ss")}");
+            Debug.WriteLine($">>>> {winSett.Number}:  {DateTime.Now:mm:ss}");
 
-            //var err = await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
-            //     winSett.Number,
-            //     winSett.Effect,
-            //     winSett.TextHAlign,
-            //     winSett.TextVAlign,
-            //     winSett.DisplayTime,
-            //     textHeight,
-            //     colorRgb,
-            //     text));
+            var err = await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
+                 winSett.Number,
+                 winSett.Effect,
+                 winSett.TextHAlign,
+                 winSett.TextVAlign,
+                 winSett.DisplayTime,
+                 textHeight,
+                 colorRgb,
+                 text));
 
-            var err= ErrorCode.ERROR_SUCCESS;//DEBUG
-         
+            //var err= ErrorCode.ERROR_SUCCESS;//DEBUG
 
-            Debug.WriteLine($"<<<< {winSett.Number}:  {DateTime.Now.ToString("mm:ss")}");
+
+            Debug.WriteLine($"<<<< {winSett.Number}:  {DateTime.Now:mm:ss}");
 
             var tryResult = ((err == ErrorCode.ERROR_SUCCESS) || (err == ErrorCode.ERROR_TIMEOUT));
             if (!tryResult)

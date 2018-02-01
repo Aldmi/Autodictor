@@ -130,7 +130,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             AddOneTimeSendData(GetData4CycleFunc[0]);
-            AttemptSynchronizeTime();
+            AttemptSyncTime();
         }
 
         #endregion

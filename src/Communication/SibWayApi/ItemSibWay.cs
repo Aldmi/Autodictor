@@ -11,7 +11,7 @@ namespace Communication.SibWayApi
         public string PathNumber { get; set; }
         public string Event { get; set; }
         public string Addition { get; set; }
-        //public string Stations { get; set; }
+        public string Command { get; set; }
 
         public string StationArrival { get; set; }
         public string StationDeparture { get; set; }
