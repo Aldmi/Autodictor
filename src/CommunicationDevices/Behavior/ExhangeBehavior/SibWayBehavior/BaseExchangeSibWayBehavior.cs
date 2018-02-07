@@ -187,7 +187,7 @@ namespace CommunicationDevices.Behavior.ExhangeBehavior.SibWayBehavior
         private void AttemptSyncTime()
         {
             var now = DateTime.Now;
-            if (_lastSyncTime.Hour != now.Hour)
+           // if (_lastSyncTime.Hour != now.Hour)
             {
                 _lastSyncTime = now;
                 ClientSibWay.SyncTime(now);

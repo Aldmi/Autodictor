@@ -44,18 +44,30 @@ namespace CommunicationDevices.Settings.XmlDeviceSettings.XmlTransportSettings
                 var id= (string) el.Attribute("Id");
                 var ip= (string) el.Attribute("Ip");
                 var port= (string) el.Attribute("Port");
-                var path2FontFile= Path.Combine(Directory.GetCurrentDirectory(), (string)el.Attribute("Path2FontFile"));
                 var period= (string) el.Attribute("Period");
                 var timeDelayReconnect= (string) el.Attribute("TimeDelayReconnect");
                 var timeRespone= (string) el.Attribute("TimeRespone");
+                var numberTryingTakeData = (string)el.Attribute("NumberTryingTakeData");
                 var description= (string) el.Attribute("Description");
+
+                var fontFileDictionary= new Dictionary<int, string>();
+                var fontsPath= el.Element("Path2FontFile")?.Elements("Font");
+                if (fontsPath != null && fontsPath.Any())
+                {
+                    foreach (var font in fontsPath)
+                    {
+                        var key = int.Parse((string)font.Attribute("Key"));
+                        var value = (string)font.Attribute("Value");
+                        fontFileDictionary.Add(key, Path.Combine(Directory.GetCurrentDirectory(), value));
+                    }
+                }
 
                 var xmlSibWaySett = new XmlSibWaySettings
                 {
                     Id= int.Parse(id),
                     Description= description,
                     Period= long.Parse(period),
-                    SettingSibWay= new SettingSibWay(ip, port, path2FontFile, timeRespone, timeDelayReconnect)
+                    SettingSibWay= new SettingSibWay(ip, port, fontFileDictionary, timeRespone, timeDelayReconnect, numberTryingTakeData)
                 };
 
                 var bind= (string)el.Attribute("Binding");

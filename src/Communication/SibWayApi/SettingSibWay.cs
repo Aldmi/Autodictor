@@ -54,11 +54,12 @@ namespace Communication.SibWayApi
 
     public class SettingSibWay
     {
-        public readonly string Path2FontFile; //= Application.StartupPath + @"\LEDFont8px.xml";
+        public readonly Dictionary<int, string> Path2FontFileDictionary; //= Application.StartupPath + @"\LEDFont8px.xml";
         public readonly string Ip;
         public readonly ushort Port;
         public readonly int TimeRespown;
         public readonly int Time2Reconnect;
+        public readonly int NumberTryingTakeData;
 
 
         public IEnumerable<WindowSett> WindowSett { get; set; }
@@ -66,13 +67,14 @@ namespace Communication.SibWayApi
 
 
 
-        public SettingSibWay(string ip, string port, string path2FontFile, string timeRespown, string time2Reconnect)
+        public SettingSibWay(string ip, string port, Dictionary<int, string> path2FontFileDictionary, string timeRespown, string time2Reconnect, string numberTryingTakeData)
         {
             Ip = ip;
             Port = ushort.Parse(port);
-            Path2FontFile = path2FontFile;
-            Time2Reconnect = int.Parse(time2Reconnect);
+            Path2FontFileDictionary = path2FontFileDictionary;
             TimeRespown = int.Parse(timeRespown);
+            Time2Reconnect = int.Parse(time2Reconnect);
+            NumberTryingTakeData = int.Parse(numberTryingTakeData); 
         }
     }
 }
