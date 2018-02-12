@@ -225,7 +225,7 @@
 
 
 <Sound>
-   <Player Type="DirectX"/>
+   <Player Type="Omneo" Ip="10.61.15.235" Port="9401" UserName="admin" Password="admin" DefaultZoneNames="oll" TimeDelayReconnect="3000" TimeResponse="2000"/>
 </Sound>
 
 </Root>

@@ -39,7 +39,7 @@ namespace MainExample
 
         public void CreateMyPasswordTextBox()
         {
-            tb_password.MaxLength = 8;
+            tb_password.MaxLength = 32;
             tb_password.PasswordChar = '*';
             tb_password.TextAlign = HorizontalAlignment.Center;
         }
@@ -68,7 +68,7 @@ namespace MainExample
 
                cb_Users.Enabled = true;
                tb_password.Enabled = true;
-               var users = Program.UsersDbRepository.List(user => user.Role == role).ToList();
+               var users = Program.UsersDbRepository.List(user => user.Role == role && user.IsEnabled).ToList();
                if (!users.Any())
                {
                  cb_Users.DataSource = null;
@@ -84,7 +84,7 @@ namespace MainExample
         private void btn_Enter_Click(object sender, EventArgs e)
         {
             //Если пользователь не выбран из БД, логиним Наблюдателя.
-            var loginUser= (User)cb_Users.SelectedItem ?? new User {Login = "НАБЛЮДАТЕЛЬ", Role = Role.Наблюдатель};
+            var loginUser = (User)cb_Users.SelectedItem ?? Program.AuthenticationService.CreateObserver(); // если выбрано какое-либо значение, пишем в переменную, иначе задаем нового пользователя с ролью Наблюдатель
             loginUser.Password = tb_password.Text;
 
             if (!Program.AuthenticationService.LogIn(loginUser))

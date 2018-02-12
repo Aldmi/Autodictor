@@ -22,6 +22,7 @@ using Domain.Service;
 using MainExample.Entites;
 using MainExample.Extension;
 using MainExample.Services;
+using CommunicationDevices.DataProviders;
 
 
 namespace MainExample
@@ -41,6 +42,9 @@ namespace MainExample
         public static ToolStripButton Включить = null;
         public static ToolStripButton ОбновитьСписок = null;
         public static ToolStripButton РежимРаботы = null;
+        
+        private Services.AuthenticationService autenServ = Program.AuthenticationService;
+        private List<UniversalInputType> table = new List<UniversalInputType>();
 
 
 
@@ -55,6 +59,7 @@ namespace MainExample
             TrainSheduleTable.SourceLoadMainListAsync().GetAwaiter();
             TrainTableOperative.ЗагрузитьСписок();
 
+            // Player.PlayFile("");                          //TODO: ???? включить
 
             ExchangeModel = new ExchangeModel();
 
@@ -81,16 +86,18 @@ namespace MainExample
         private void CheckAuthentication(bool flagApplicationExit)
         {
             tSBAdmin.Visible = false;
-            while (Program.AuthenticationService.IsAuthentication == false)
+            while (autenServ.IsAuthentication == false)
             {
                 var autenForm = new AuthenticationForm();
                 var result = autenForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    if (Program.AuthenticationService.IsAuthentication)
+                    if (autenServ.IsAuthentication)
                     {
                         //ОТОБРАЗИТЬ ВОШЕДШЕГО ПОЛЬЗОВАТЕЛЯ
-                        tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
+                        var user = autenServ.CurrentUser;
+                        tSBLogOut.Text = user.Login;
+                        SendAuthenticationChanges(user, "Вход в систему");
                     }
                 }
                 else
@@ -101,14 +108,16 @@ namespace MainExample
                     }
 
                     //ПОЛЬЗОВАТЕЛЬ - Предыдущий пользователь
-                    Program.AuthenticationService.SetOldUser();
-                    tSBLogOut.Text = Program.AuthenticationService.CurrentUser.Login;
+                    autenServ.SetOldUser();
+                    var user = autenServ.CurrentUser;
+                    tSBLogOut.Text = user.Login;
+                    SendAuthenticationChanges(user, "Вход в систему");
                     break;
                 }
             }
 
             //Отрисовать вход в админку
-            switch (Program.AuthenticationService.CurrentUser.Role)
+            switch (autenServ.CurrentUser.Role)
             {
                 case Role.Администратор:
                     tSBAdmin.Visible = true;
@@ -116,14 +125,54 @@ namespace MainExample
             }
         }
 
+        private void SendAuthenticationChanges(User user, string causeOfChange)
+        {
+            if (table.Count < 1)
+            {
+                // Первичные изменения записываем в список изменений
+                table.Add(new UniversalInputType
+                {
+                    ViewBag = new Dictionary<string, dynamic>
+                    {
+                        { "TimeStamp", Program.StartTime },
+                        { "UserInfo", "" },
+                        { "CauseOfChange", "Запуск программы" }
+                    }
+                });
+            }
+            else if (table.Count >= 2)
+            {
+                table.RemoveAt(0);
+            }
 
+            // Пишем новые изменения на позицию (1)
+            table.Add(new UniversalInputType
+            {
+                ViewBag = new Dictionary<string, dynamic>
+                {
+                    { "TimeStamp", DateTime.Now },
+                    { "UserInfo", user.Login },
+                    { "CauseOfChange", causeOfChange }
+                }
+            });
+            
+            if (table.Count != 2)
+            {
+                Library.Logs.Log.log.Fatal("Ахтунг! Изменений неверное количество. Должно быть 2 - старое и новое");
+            }
+            var uit = new UniversalInputType { TableData = table };
+            if (ExchangeModel.Binding2ChangesEvent.Any())
+            {
+                ExchangeModel.Binding2ChangesEvent.Last().SendMessage(uit);
+            }
+        }
 
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            CheckAuthentication(true);
-
             ExchangeModel.LoadSetting();
+            CheckAuthentication(true); // переместил сюда, т.к. иначе данные о первом логине не отправляются по причине незагруженной модели обмена
+                                       // это выключило возможность включения/отключения галки получения данных из ЦИС на нижней панели программы
             //ExchangeModel.StartCisClient();
 
             ExchangeModel.InitializeDeviceSoundChannelManagement();
@@ -378,9 +427,9 @@ namespace MainExample
         private void добавитьСтатическоеСообщениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //проверка ДОСТУПА
-            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            if (!autenServ.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
             {
-                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{autenServ.CurrentUser.Role}"" нельзя совершать  это действие.");
                 return;
             }
 
@@ -493,9 +542,9 @@ namespace MainExample
         private void добавитьВнештатныйПоездToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //проверка ДОСТУПА
-            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            if (!autenServ.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
             {
-                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{autenServ.CurrentUser.Role}"" нельзя совершать  это действие.");
                 return;
             }
 
@@ -588,9 +637,9 @@ namespace MainExample
         private void tsb_ТехническоеСообщение_Click(object sender, EventArgs e)
         {
             //проверка ДОСТУПА
-            if (!Program.AuthenticationService.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
+            if (!autenServ.CheckRoleAcsess(new List<Role> { Role.Администратор, Role.Диктор, Role.Инженер }))
             {
-                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{autenServ.CurrentUser.Role}"" нельзя совершать  это действие.");
                 return;
             }
 
@@ -606,9 +655,9 @@ namespace MainExample
         private void tSBРежимРаботы_Click(object sender, EventArgs e)
         {
             //проверка ДОСТУПА
-            if(!Program.AuthenticationService.CheckRoleAcsess(new List<Role> {Role.Администратор, Role.Диктор, Role.Инженер}))
+            if(!autenServ.CheckRoleAcsess(new List<Role> {Role.Администратор, Role.Диктор, Role.Инженер}))
             {
-                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{Program.AuthenticationService.CurrentUser.Role}"" нельзя совершать  это действие.");
+                MessageBox.Show($@"Нет прав!!!   С вашей ролью ""{autenServ.CurrentUser.Role}"" нельзя совершать  это действие.");
                 return;
             }
 
@@ -673,7 +722,8 @@ namespace MainExample
         /// </summary>
         private void tSBLogOut_Click(object sender, EventArgs e)
         {
-            Program.AuthenticationService.LogOut();
+            autenServ.LogOut();
+            SendAuthenticationChanges(autenServ.OldUser, "Выход из системы");
             CheckAuthentication(false);
         }
 
@@ -697,6 +747,23 @@ namespace MainExample
             QuartzVerificationActivation.Shutdown();
 
             base.OnClosed(e);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (autenServ != null)
+                {
+                    autenServ.LogOut();
+                    SendAuthenticationChanges(autenServ.OldUser, "Выход из системы");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

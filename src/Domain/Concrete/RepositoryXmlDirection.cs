@@ -47,30 +47,32 @@ namespace Domain.Concrete
                         Name = (string)directXml.Attribute("Name"),
                         Stations = new List<Station>()
                     };
-
-                    var stations = directXml.Elements("Station").ToList();
-                    if (stations.Any())
+                    try
                     {
-                        foreach (var stXml in stations)
+                        var stations = directXml.Elements("Station").ToList();
+                        if (stations.Any())
                         {
-                            direct.Stations.Add(new Station
+                            foreach (var stXml in stations)
                             {
-                                Id = int.Parse((string)stXml.Attribute("Id")),
-                                NameRu = (string)stXml.Attribute("NameRu"),
-                                NameEng = (string)stXml.Attribute("NameEng"),
-                                NameCh = (stXml.Attribute("NameCh") != null) ? (string)stXml.Attribute("NameCh") : string.Empty
-                            });
+                                direct.Stations.Add(new Station
+                                {
+                                    Id = int.Parse((string)stXml.Attribute("Id")),
+                                    NameRu = (string)stXml.Attribute("NameRu"),
+                                    NameEng = (string)stXml.Attribute("NameEng"),
+                                    NameCh = (stXml.Attribute("NameCh") != null) ? (string)stXml.Attribute("NameCh") : string.Empty,
+                                    CodeEsr = !string.IsNullOrEmpty((string)stXml.Attribute("CodeEsr")) ? int.Parse((string)stXml.Attribute("CodeEsr")) : 0,
+                                    CodeExpress = !string.IsNullOrEmpty((string)stXml.Attribute("CodeExpress")) ? int.Parse((string)stXml.Attribute("CodeExpress")) : 0
+                                });
+                            }
                         }
                     }
-
-                    directions.Add(direct);
+                    finally
+                    {
+                        directions.Add(direct);
+                    }
                 }
             }
-            catch (Exception)
-            {
-                return null;
-            }
-
+            catch (Exception ex) { }
             return directions;
         }
 

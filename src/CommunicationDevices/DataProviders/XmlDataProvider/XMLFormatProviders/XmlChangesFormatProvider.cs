@@ -109,26 +109,34 @@ namespace CommunicationDevices.DataProviders.XmlDataProvider.XMLFormatProviders
 
                 // Время изменения
                 string timeStamp = string.Empty;
+                string timeStampNew = string.Empty;
                 switch (_dateTimeFormat)
                 {
                     case DateTimeFormat.None:
                     case DateTimeFormat.Sortable:
                         timeStamp = uit.ViewBag.ContainsKey("TimeStamp") ? ((DateTime)uit.ViewBag["TimeStamp"]).ToString("s") : string.Empty;
+                        timeStampNew = uitNew.ViewBag.ContainsKey("TimeStamp") ? ((DateTime)uitNew.ViewBag["TimeStamp"]).ToString("s") : string.Empty;
                         break;
 
                     case DateTimeFormat.LinuxTimeStamp:
                         timeStamp = uit.ViewBag.ContainsKey("TimeStamp") ? DateTimeConvertion.ConvertToUnixTimestamp((DateTime)uit.ViewBag["TimeStamp"]).ToString(CultureInfo.InvariantCulture) : string.Empty;
+                        timeStampNew = uitNew.ViewBag.ContainsKey("TimeStamp") ? DateTimeConvertion.ConvertToUnixTimestamp((DateTime)uitNew.ViewBag["TimeStamp"]).ToString(CultureInfo.InvariantCulture) : string.Empty;
                         break;
                 }
 
                 var userInfo = uit.ViewBag.ContainsKey("UserInfo") ? uit.ViewBag["UserInfo"] : string.Empty;
+                var userInfoNew = uitNew.ViewBag.ContainsKey("UserInfo") ? uitNew.ViewBag["UserInfo"] : string.Empty;
                 var causeOfChange = uit.ViewBag.ContainsKey("CauseOfChange") ? uit.ViewBag["CauseOfChange"] : string.Empty;
+                var causeOfChangeNew = uitNew.ViewBag.ContainsKey("CauseOfChange") ? uitNew.ViewBag["CauseOfChange"] : string.Empty;
 
                 xDoc.Root?.Add(
                     new XElement("t",
                     new XElement("TimeStamp", timeStamp),
+                    new XElement("TimeStampNew", timeStampNew),
                     new XElement("UserInfo", userInfo),
+                    new XElement("UserInfoNew", userInfoNew),
                     new XElement("CauseOfChange", causeOfChange),
+                    new XElement("CauseOfChangeNew", causeOfChangeNew),
                     //new XElement("Id", uit.Id),
                     new XElement("TrainNumber", uit.NumberOfTrain),
                     new XElement("TrainType", trainType),

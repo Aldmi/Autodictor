@@ -117,7 +117,7 @@ namespace MainExample
                     return;
                 }
 
-                Users.Add(new User { Login = login, Password = password, Role = (Role)Enum.Parse(typeof(Role), role) });
+                Users.Add(Program.AuthenticationService.CreateUser(login, password, (Role)Enum.Parse(typeof(Role), role)));
             }
 
 
@@ -143,14 +143,14 @@ namespace MainExample
 
             var currentPassword = tb_ТекПароль.Text;
             var newPassword = tb_НовыйПароль.Text;
-            var adminUser = Program.UsersDbRepository.List().FirstOrDefault(user => user.Role == Role.Администратор);
+            var adminUser = Program.UsersDbRepository.List().FirstOrDefault(user => user.Role == Role.Администратор && user.IsEnabled);
             if (adminUser != null)
             {
                 if (adminUser.Password == currentPassword)
                 {
                     adminUser.Password = newPassword;
                     Program.UsersDbRepository.Edit(adminUser);
-                    MessageBox.Show(@"ПАРОЛЬ УСПЕШНО СМЕНЕН");
+                    MessageBox.Show(@"ПАРОЛЬ УСПЕШНО ИЗМЕНЕН");
                 }
                 else
                 {
@@ -168,8 +168,6 @@ namespace MainExample
 
         }
 
-
-
         private void btnSoundPlayer_Click(object sender, EventArgs e)
         {
             if (SoundPlayersForm.MyMainForm == null)
@@ -178,7 +176,8 @@ namespace MainExample
                 soundPlayers.Show();
             }
         }
-
+		
         #endregion
+
     }
 }

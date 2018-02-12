@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Communication.Annotations;
 using LedScreenLibNetWrapper;
@@ -124,7 +125,7 @@ namespace Communication.SibWayApi
                     DisplayDriver.Initialize(SettingSibWay.Ip, SettingSibWay.Port);
                     var errorCode = await OpenConnectionAsync();
                     IsConnect = (errorCode == ErrorCode.ERROR_SUCCESS);
-                    IsConnect = true;//DEBUG!!!!!!!!!!!!!!!
+                    //IsConnect = true;//DEBUG!!!!!!!!!!!!!!!
                     StatusString = $"Conect to {SettingSibWay.Ip} : {SettingSibWay.Port} ...";
                     await Task.Delay(SettingSibWay.Time2Reconnect);
                 }
@@ -195,6 +196,7 @@ namespace Communication.SibWayApi
                         {
                             if (++_countTryingTakeData > SettingSibWay.NumberTryingTakeData)
                             {
+                                Debug.WriteLine($"RECONNECT:  {DateTime.Now:mm:ss}");
                                 ReConnect();
                                 return false;
                             }
@@ -361,7 +363,7 @@ namespace Communication.SibWayApi
                     textHeight,
                     colorRgb,
                     text));
-            Debug.WriteLine($"<<<< {winSett.Number}:  {DateTime.Now:mm:ss}");
+            Debug.WriteLine($"<<<< {winSett.Number}  err= {err}:  {DateTime.Now:mm:ss}");
 
             var tryResult = (err == ErrorCode.ERROR_SUCCESS);
             if (!tryResult)
@@ -441,7 +443,9 @@ namespace Communication.SibWayApi
 
             var isSucsees = true;//DisplayDriver.SetTime(dateTime);
 
-            var cr= DisplayDriver.GetTime();//DEBUG
+            //var res= DisplayDriver.SetTime(dateTime);
+           // Thread.Sleep(1000);
+          //  var cr= DisplayDriver.GetTime();//DEBUG
 
             return isSucsees;
         }

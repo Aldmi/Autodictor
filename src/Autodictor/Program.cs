@@ -55,6 +55,7 @@ namespace MainExample
         public static string[] ШаблонОповещенияООтправлениеПоГотовностиПоезда = new string[] { "", "Отправление по готовности пассажирского поезда", "Отправление по готовности пригородного электропоезда", "Отправление по готовности фирменного поезда", "Отправление по готовности скорого поезда", "Отправление по готовности скоростного поезда", "Отправление по готовности ласточки", "Отправление по готовности РЭКСа" };
 
 
+        public static DateTime StartTime { get; private set; }
         public static AuthenticationService AuthenticationService { get; set; } = new AuthenticationService();
 
         public static AutodictorModel AutodictorModel { get; set; }
@@ -69,6 +70,8 @@ namespace MainExample
         {
             if (InstanceExists())
                 return;
+
+            StartTime = DateTime.Now;
 
             ЗагрузкаНазванийПутей();
             ЗагрузкаНазванийНаправлений();
@@ -257,6 +260,32 @@ namespace MainExample
         }
 
 
+        /// <summary>
+        /// Находим объект Station в репозитории по коду Экспресс станции.
+        /// </summary>
+        public static Station GetStationByCode(int codeExpress)
+        {
+            if (codeExpress == 0)
+            {
+                //MessageBox.Show("Передана пустая станция");
+                return new Station { NameRu = default(string), CodeExpress = codeExpress };
+            }
+            foreach (var direction in DirectionRepository.List())
+            {
+                var station = GetStationByCode(codeExpress, direction.Name);
+                if (station != null)
+                    return station;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Находим объект Station в репозитории по коду Экспресс станции, зная направление, на котором находится станция.
+        /// </summary>
+        public static Station GetStationByCode(int codeExpress, string имяНаправления)
+        {
+            return ПолучитьСтанцииНаправления(имяНаправления)?.FirstOrDefault(st => st.CodeExpress == codeExpress);
+        }
 
         public static bool ПроеритьНаличиеСтанцииВНаправлении(string названиеСтанцииRu, string имяНаправления)
         {
