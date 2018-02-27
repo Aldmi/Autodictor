@@ -165,7 +165,7 @@ namespace MainExample
 
 
                     case РежимРасписанияДвиженияПоезда.ПоДням:
-                        byte ДеньНедели = (byte)(((byte)new DateTime(DateTime.Now.Year + номерМесяца / 12, (номерМесяца % 12) + 1, номерДня + 1).DayOfWeek + 6) % 7);
+                        byte ДеньНедели = (byte)(((byte)new DateTime(currentYear, currentMonth, номерДня + 1).DayOfWeek + 6) % 7);
                         if ((РаботаПоДням & 0x00FF) != 0x0000) // По дням
                         {
                             if ((РаботаПоДням & (0x0001 << ДеньНедели)) != 0x0000)

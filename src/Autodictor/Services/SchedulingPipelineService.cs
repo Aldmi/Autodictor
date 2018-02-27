@@ -46,7 +46,7 @@ namespace MainExample.Services
             }
             else
             {
-                if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)4, (byte)workWithNumberOfDays, dateCheck) == false)
+                if (планРасписанияПоезда.ПолучитьАктивностьДняДвижения((byte)(dateCheck.Month - 1), (byte)(dateCheck.Day + (workWithNumberOfDays - DateTime.Now.DayOfWeek)), dateCheck) == false)
                     return false;
             }
 
