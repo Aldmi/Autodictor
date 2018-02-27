@@ -57,7 +57,7 @@ namespace MainExample
                 {
                     tb_Status.Text += (statusStr + Environment.NewLine);
                     var countLines = tb_Status.Lines.Length - 1;
-                    if (countLines > 20)
+                    if (countLines > 30)
                     {
                         tb_Status.Clear();
                     }
@@ -138,6 +138,46 @@ namespace MainExample
         }
 
 
+        private void btn_SetVolume_Click(object sender, EventArgs e)
+        {
+            int volumeLevel;
+            if (!int.TryParse(tb_SetVolume.Text, out volumeLevel))
+            {
+                tb_Status.Text = $@"Уровень громкости задан не верно: {tb_SetVolume.Text}";
+                return;
+            }
+
+            try
+            {
+                SoundPlayer.SetVolume(volumeLevel);
+            }
+            catch (Exception ex)
+            {
+                tb_Status.Text = $@"Exception SetVolume: {ex}";
+            }
+        }
+
+
+        private void btn_GetVolume_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int volume= SoundPlayer.GetVolume();
+                tb_GetVolume.Text = volume.ToString();
+            }
+            catch (Exception ex)
+            {
+                tb_Status.Text = $@"Exception SetVolume: {ex}";
+            }
+        }
+
+
+        private void btn_ClearStatus_Click(object sender, EventArgs e)
+        {
+            tb_Status.Clear();
+        }
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
             if (MyMainForm == this)
@@ -149,6 +189,10 @@ namespace MainExample
             base.OnClosing(e);
         }
 
+
+
         #endregion
+
+
     }
 }

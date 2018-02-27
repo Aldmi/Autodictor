@@ -306,8 +306,8 @@ namespace AutodictorBL.Sound
 
         public int GetVolume()
         {
-            if (!IsConnect)
-                return 0;
+           // if (!IsConnect)
+           //     return 0;
 
             throw new NotImplementedException();
         }
@@ -319,7 +319,7 @@ namespace AutodictorBL.Sound
             if (!IsConnect)
                 return ;
 
-            throw new NotImplementedException();
+            _praesideoOi.setBgmVolume(_defaultZoneNames, volume);
         }
 
         #endregion
