@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutodictorBL.Entites;
 using AutodictorBL.Settings.XmlSound;
 using AutodictorBL.Sound.Converters;
+using Library.Logs;
 using PRAESIDEOOPENINTERFACECOMSERVERLib;
 
 
@@ -135,6 +136,7 @@ namespace AutodictorBL.Sound
 
         public async Task ReConnect()
         {
+            Log.log.Info($"ERROR OMNEO  (ReConnect Start)"); //DEBUG_LOG
             Disconnect();
             await Connect();
         }
@@ -157,13 +159,14 @@ namespace AutodictorBL.Sound
                     Disconnect();
                     IsConnect = false;
                     StatusString = $"Exception Ошибка подключения: \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
+                    Log.log.Error($"ERROR OMNEO  (Connect)   Message= {StatusString}"); //DEBUG_LOG
                 }
                 catch (Exception ex)
                 {
                     Disconnect();
                     IsConnect = false;
                     StatusString = $"Exception НЕИЗВЕСТНАЯ Ошибка подключения: \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
-                    //Log.log.Fatal($"ERROR  (ConnectHttp)   Message= {StatusString}"); //DEBUG_LOG
+                    Log.log.Error($"ERROR OMNEO  (Connect)   Message= {StatusString}"); //DEBUG_LOG
                 }
                 finally
                 {
@@ -175,7 +178,7 @@ namespace AutodictorBL.Sound
 
 
         public void Disconnect()
-        {        
+        {
             _praesideoOi.disconnect();
             IsConnect = false;
         }
@@ -196,7 +199,7 @@ namespace AutodictorBL.Sound
                 bool bLiveSpeech = false;
                 string audioInput = string.Empty;
                 string messages = useFileNameConverter ? FileNameConverter.Convert(soundMessage.ИмяВоспроизводимогоФайла) : soundMessage.ИмяВоспроизводимогоФайла;
-                int repeat = 1;
+                int repeat = 0;
                 _currentCallId = _praesideoOi.createCall(_defaultZoneNames, priority, bPartial, startChime, endChime, bLiveSpeech, audioInput, messages, repeat);
 
                 Play();
@@ -205,6 +208,7 @@ namespace AutodictorBL.Sound
             catch (Exception ex)
             {
                 StatusString = @"Exception PlayFile: " + ex.Message;
+                Log.log.Error($"ERROR OMNEO  (Connect)   Message= {StatusString}"); //DEBUG_LOG
                 return false;
             }
         }
@@ -219,6 +223,7 @@ namespace AutodictorBL.Sound
             var resul = await PlayWithControl();
             if (resul == false)
             {
+                Log.log.Error($"ERROR OMNEO  (Play)  Ответ не полученн за {_timeResponse}"); //DEBUG_LOG
                 await ReConnect();
             }
         }
@@ -243,8 +248,9 @@ namespace AutodictorBL.Sound
                         await Task.Delay(_timeResponse);
                         _tcs.TrySetResult(false);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Log.log.Error($"ERROR OMNEO  (PlayWithControl)  {ex}"); //DEBUG_LOG
                         _tcs.TrySetResult(false);
                     }
                 }
@@ -265,9 +271,9 @@ namespace AutodictorBL.Sound
                 {
                     _praesideoOi.stopCall(_currentCallId.Value);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-            
+                    Log.log.Error($"ERROR OMNEO  (Pause)  {ex}"); //DEBUG_LOG
                 }
             }
         }
@@ -306,8 +312,8 @@ namespace AutodictorBL.Sound
 
         public int GetVolume()
         {
-           // if (!IsConnect)
-           //     return 0;
+            if (!IsConnect)
+                return 0;
 
             throw new NotImplementedException();
         }
@@ -317,7 +323,7 @@ namespace AutodictorBL.Sound
         public void SetVolume(int volume)
         {
             if (!IsConnect)
-                return ;
+                return;
 
             _praesideoOi.setBgmVolume(_defaultZoneNames, volume);
         }
@@ -335,6 +341,7 @@ namespace AutodictorBL.Sound
         /// </summary>
         private async void PraesideoOiOnConnectionBroken()
         {
+            Log.log.Info($"ERROR OMNEO  (PraesideoOiOnConnectionBroken)"); //DEBUG_LOG
             await ReConnect();
         }
 
@@ -364,7 +371,7 @@ namespace AutodictorBL.Sound
                     _soundPlayerStatus = SoundPlayerStatus.Playing;
                     break;
 
-                case TOICallState.OICS_END:    
+                case TOICallState.OICS_END:
                     _soundPlayerStatus = SoundPlayerStatus.Idle;
                     StatusString = "СТОП проигрывания";
                     break;

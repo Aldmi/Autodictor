@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
@@ -27,7 +28,7 @@ namespace Communication.SerialPort
         private bool _isRunDataExchange;
 
         private readonly System.IO.Ports.SerialPort _port; //COM порт
-
+        private readonly ConcurrentDictionary<int, Func<MasterSerialPort, CancellationToken, Task>> _funcsDict = new ConcurrentDictionary<int, Func<MasterSerialPort, CancellationToken, Task>>();
 
         #endregion
 
@@ -64,10 +65,7 @@ namespace Communication.SerialPort
         #region prop   
 
         public byte PortNumber { get; set; }
-
-        public List<Func<MasterSerialPort, CancellationToken, Task>> Funcs { get; set; } = new List<Func<MasterSerialPort, CancellationToken, Task>>();
-
-        public Queue<Func<MasterSerialPort, CancellationToken, Task>> OneTimeSendDataQueue { get; set; } = new Queue<Func<MasterSerialPort, CancellationToken, Task>>();
+        private Queue<Func<MasterSerialPort, CancellationToken, Task>> OneTimeSendDataQueue { get; set; } = new Queue<Func<MasterSerialPort, CancellationToken, Task>>();
 
 
         public string StatusString
@@ -165,7 +163,7 @@ namespace Communication.SerialPort
         public void AddCycleFunc(Func<MasterSerialPort, CancellationToken, Task> action)
         {
             if (action != null)
-                Funcs.Add(action);
+                _funcsDict.TryAdd(_funcsDict.Count, action);
         }
 
 
@@ -175,7 +173,10 @@ namespace Communication.SerialPort
         public void RemoveCycleFunc(Func<MasterSerialPort, CancellationToken, Task> action)
         {
             if (action != null)
-                Funcs.Remove(action);
+            {
+                var key = _funcsDict.FirstOrDefault(entry => entry.Value == action).Key;
+                _funcsDict.TryRemove(key, out action);
+            }
         }
 
 
@@ -197,13 +198,13 @@ namespace Communication.SerialPort
                 try
                 {
                     //вызов циклических функций опроса   
-                    if (Funcs != null && Funcs.Any())
+                    if (_funcsDict != null && _funcsDict.Count > 0)
                     {
-                        if (indexCycleFunc >= Funcs.Count)
+                        if (indexCycleFunc >= _funcsDict.Count)
                             indexCycleFunc = 0;
-                        await Funcs[indexCycleFunc++](this, Cts.Token);
-                    }
 
+                        await _funcsDict[indexCycleFunc++](this, Cts.Token);
+                    }
 
                     //вызов одиночной функции запроса
                     if (OneTimeSendDataQueue != null)
@@ -243,7 +244,7 @@ namespace Communication.SerialPort
                 byte[] writeBuffer = dataProvider.GetDataByte();
                 if (writeBuffer != null && writeBuffer.Any())
                 {
-                    dataProvider.SetDataByte(new byte[] { 0x02, 0x30, 0x32, 0x30, 0x30, 0x46, 0x44, 0x03 });
+                    //dataProvider.SetDataByte(new byte[] { 0x02, 0x30, 0x32, 0x30, 0x30, 0x46, 0x44, 0x03 });//??????
 
                     var readBuff = await RequestAndRespawnInstantlyAsync(writeBuffer, dataProvider.CountSetDataByte, timeRespoune, ct);
                     dataProvider.SetDataByte(readBuff);
@@ -310,22 +311,22 @@ namespace Communication.SerialPort
             _port.DiscardOutBuffer();
 
             //отправили данные в порт
-            _port.WriteTimeout = 500;
+            //_port.WriteTimeout = 500; //??????
             _port.Write(writeBuffer, 0, writeBuffer.Length);
 
             //ждем ответа....
             TaskCompletionSource<byte[]> tcs = new TaskCompletionSource<byte[]>();
 
             var handler = new SerialDataReceivedEventHandler((o, e) =>
-             {
-                 if (_port.BytesToRead >= nBytesRead)
-                 {
-                     var buffer = new byte[nBytesRead];
-                     _port.Read(buffer, 0, nBytesRead);
+            {
+                if (_port.BytesToRead >= nBytesRead)
+                {
+                    var buffer = new byte[nBytesRead];
+                    _port.Read(buffer, 0, nBytesRead);
 
-                     tcs.TrySetResult(buffer);
-                 }
-             });
+                    tcs.TrySetResult(buffer);
+                }
+            });
 
             _port.DataReceived += handler;
             try
