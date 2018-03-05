@@ -127,7 +127,6 @@ namespace Communication.SerialPort
         public bool ReConnect()
         {
             Dispose();
-
             IsOpen = false;
 
             try
@@ -149,11 +148,25 @@ namespace Communication.SerialPort
 
         public void ReOpen()
         {
-            if (_port.IsOpen)
-                _port.Close();
+            try
+            {
+                if (_port.IsOpen)
+                {
+                    _port.Close();
+                    IsOpen = false;
+                }
 
-            if (!_port.IsOpen)
-                _port.Open();
+                if (!_port.IsOpen)
+                {
+                    _port.Open();
+                    IsOpen = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                StatusString = $"Ошибка ReOpen порта: {_port.PortName}. ОШИБКА: {ex}";
+                CycleReConnect();
+            }
         }
 
 
@@ -218,7 +231,7 @@ namespace Communication.SerialPort
                 }
                 catch (Exception ex)
                 {
-                    StatusString = $"Ошибка работы с портом: {_port.PortName}. ОШИБКА: {ex}";
+                    StatusString = $"Ошибка работы с портом: {_port.PortName}. ОШИБКА: {ex}  InnerException: {ex.InnerException?.Message ?? string.Empty}";
                     Log.log.Error(StatusString);
                 }
             }
@@ -256,7 +269,6 @@ namespace Communication.SerialPort
             }
             catch (TimeoutException)
             {
-                //ReOpen();
                 return false;
             }
             IsRunDataExchange = true;
@@ -301,48 +313,62 @@ namespace Communication.SerialPort
         /// Как только накопится нужное кол-во байт сразу же будет возвращен ответ не дожедаясь времени readTimeout.
         /// Таким образом период опроса не фиксированный, а определяется скоростью ответа slave устройства.
         /// </summary>
+        private bool _isBysuRequestAndRespawn;
         public async Task<byte[]> RequestAndRespawnInstantlyAsync(byte[] writeBuffer, int nBytesRead, int readTimeout, CancellationToken ct)
         {
-            if (!_port.IsOpen)
-                return await Task<byte[]>.Factory.StartNew(() => null, ct);
-
-            //очистили буферы порта
-            _port.DiscardInBuffer();
-            _port.DiscardOutBuffer();
-
-            //отправили данные в порт
-            //_port.WriteTimeout = 500; //??????
-            _port.Write(writeBuffer, 0, writeBuffer.Length);
-
-            //ждем ответа....
-            TaskCompletionSource<byte[]> tcs = new TaskCompletionSource<byte[]>();
-
-            var handler = new SerialDataReceivedEventHandler((o, e) =>
+            if (!_isBysuRequestAndRespawn)
             {
-                if (_port.BytesToRead >= nBytesRead)
+                _isBysuRequestAndRespawn = true;
+
+                if (!_port.IsOpen)
+                    return null;
+
+                var tcs = new TaskCompletionSource<byte[]>();
+                SerialDataReceivedEventHandler handler = null;
+                try
                 {
-                    var buffer = new byte[nBytesRead];
-                    _port.Read(buffer, 0, nBytesRead);
+                    //очистили буферы порта
+                    _port.DiscardInBuffer();
+                    _port.DiscardOutBuffer();
 
-                    tcs.TrySetResult(buffer);
+                    //_port.WriteTimeout = 500; //??????
+                    _port.Write(writeBuffer, 0, writeBuffer.Length);     //отправили данные в порт
+
+                    //ждем ответа....
+                    handler = (o, e) =>
+                    {
+                        if (_port.BytesToRead >= nBytesRead)
+                        {
+                            var buffer = new byte[nBytesRead];
+                            _port.Read(buffer, 0, nBytesRead);
+                            tcs.TrySetResult(buffer);
+                        }
+                    };
+                    _port.DataReceived += handler;
+
+                    var buff= await AsyncHelp.WithTimeout(tcs.Task, readTimeout, ct);
+                    return buff;
                 }
-            });
+                catch (TimeoutException)
+                {
+                    tcs.TrySetCanceled();
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    StatusString = $"Ошибка работы с портом (RequestAndRespawnInstantlyAsync): {_port.PortName}. ОШИБКА: {ex}  InnerException: {ex.InnerException?.Message ?? string.Empty}";
+                    ReOpen();
+                    return null;
+                }
+                finally
+                {
+                    _port.DataReceived -= handler;
+                    _isBysuRequestAndRespawn = false;
+                }
+            }
 
-            _port.DataReceived += handler;
-            try
-            {
-                var buff = await AsyncHelp.WithTimeout(tcs.Task, readTimeout, ct);
-                return buff;
-            }
-            catch (TimeoutException)
-            {
-                tcs.TrySetCanceled();
-                throw;
-            }
-            finally
-            {
-                _port.DataReceived -= handler;
-            }
+            StatusString = $"Ошибка работы с портом (ПОПЫТКА ОБРАЩЕНИЯ К ЗАНЯТОМУ ПОРТУ)";
+            return null;
         }
 
         #endregion
@@ -374,7 +400,7 @@ namespace Communication.SerialPort
 
             if (_port.IsOpen)
             {
-                //Cts.Cancel();
+                Cts.Cancel();
                 _port.DiscardInBuffer();
                 _port.DiscardOutBuffer();
                 _port.Close();
