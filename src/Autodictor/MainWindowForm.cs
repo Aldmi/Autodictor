@@ -2233,7 +2233,7 @@ namespace MainExample
                 case SoundPlayerStatus.Paused:
                 case SoundPlayerStatus.Idle:
                     MainForm.Пауза.BackColor = Color.Gray;
-                    MainForm.Пауза.Enabled = false;
+                    //MainForm.Пауза.Enabled = false;
                     break;
 
                 case SoundPlayerStatus.Playing:
@@ -2303,13 +2303,15 @@ namespace MainExample
                 return;
             }
 
-            SoundPlayerStatus status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();//PlayerDirectX.GetPlayerStatus();
-            switch (status)
-            {
-                case SoundPlayerStatus.Playing:
-                    QueueSound.Erase();
-                    break;
-            }
+            //SoundPlayerStatus status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();//PlayerDirectX.GetPlayerStatus();
+            //switch (status)
+            //{
+            //    case SoundPlayerStatus.Playing:
+            //        QueueSound.Erase();
+            //        break;
+            //}
+
+            QueueSound.Erase();
         }
 
 

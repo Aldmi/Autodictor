@@ -11,6 +11,11 @@ using PRAESIDEOOPENINTERFACECOMSERVERLib;
 
 namespace AutodictorBL.Sound
 {
+
+   public enum StartCreatedCallState { Error, Timeout, Ok};
+
+
+
     public class PlayerOmneo : ISoundPlayer
     {
         #region Fileld
@@ -84,6 +89,41 @@ namespace AutodictorBL.Sound
             _praesideoOi = new PraesideoOpenInterface_V0430();
             _praesideoOi.connectionBroken += PraesideoOiOnConnectionBroken;
             _praesideoOi.callState += PraesideoOI_callState;
+
+            //DEBUG--------------------------------------
+            _praesideoOi.diagEvent += _praesideoOi_diagEvent;
+            _praesideoOi.resourceFaultState += _praesideoOi_resourceFaultState;
+            _praesideoOi.resourceState += _praesideoOi_resourceState;
+            _praesideoOi.unitCount += _praesideoOi_unitCount;
+            _praesideoOi.virtualControlInputState += _praesideoOi_virtualControlInputState;
+        }
+
+
+        private void _praesideoOi_virtualControlInputState(string virtualControlInputs, bool active)
+        {
+            Log.log.Info($"virtualControlInputState: virtualControlInputs= {virtualControlInputs} active= {active}   "); //DEBUG_LOG
+        }
+
+
+        //DEBUG--------------------------------------
+        private void _praesideoOi_diagEvent(int eventId, [ComAliasName("PRAESIDEOOPENINTERFACECOMSERVERLib.TOIActionType")] TOIActionType action, object pDiagEvent)
+        {
+            Log.log.Info($"diagEvent: eventId= {eventId}   action= {action}  pDiagEvent= {pDiagEvent ?? "empty"} "); //DEBUG_LOG
+        }
+
+        private void _praesideoOi_resourceFaultState(string resources, [ComAliasName("PRAESIDEOOPENINTERFACECOMSERVERLib.TOIResourceFaultState")] TOIResourceFaultState faultState)
+        {
+            Log.log.Info($"resourceFaultState: resources= {resources}   faultState= {faultState}"); //DEBUG_LOG
+        }
+
+        private void _praesideoOi_resourceState(string resources, [ComAliasName("PRAESIDEOOPENINTERFACECOMSERVERLib.TOIResourceState")] TOIResourceState state, int priority, int callId)
+        {
+            Log.log.Info($"resourceState: resources= {resources}   state= {state}   priority= {priority}   callId= {callId}"); //DEBUG_LOG
+        }
+
+        private void _praesideoOi_unitCount(int unitCount)
+        {
+            Log.log.Info($"unitCount: unitCount= {unitCount} "); //DEBUG_LOG
         }
 
         #endregion
@@ -192,6 +232,18 @@ namespace AutodictorBL.Sound
 
             try
             {
+                if(soundMessage == null)
+                {
+                    if (_currentCallId.HasValue && _soundPlayerStatus == SoundPlayerStatus.Playing)
+                    {
+                        _praesideoOi.stopCall(_currentCallId.Value);
+                    }
+                    return false;
+                }
+
+
+                Log.log.Error($"PlayFile: Попытка запуска= {StatusString}   ИмяВоспроизводимогоФайла = {soundMessage?.ИмяВоспроизводимогоФайла}"); //DEBUG_LOG
+
                 int priority = 100;
                 bool bPartial = false;
                 string startChime = string.Empty;
@@ -201,7 +253,6 @@ namespace AutodictorBL.Sound
                 string messages = useFileNameConverter ? FileNameConverter.Convert(soundMessage.ИмяВоспроизводимогоФайла) : soundMessage.ИмяВоспроизводимогоФайла;
                 int repeat = 0;
                 _currentCallId = _praesideoOi.createCall(_defaultZoneNames, priority, bPartial, startChime, endChime, bLiveSpeech, audioInput, messages, repeat);
-
                 Play();
                 return true;
             }
@@ -221,10 +272,15 @@ namespace AutodictorBL.Sound
                 return;
 
             var resul = await PlayWithControl();
-            if (resul == false)
+            switch(resul)
             {
-                Log.log.Error($"ERROR OMNEO  (Play)  Ответ не полученн за {_timeResponse}"); //DEBUG_LOG
-                await ReConnect();
+                case StartCreatedCallState.Timeout:
+                    Log.log.Error($"ERROR OMNEO  (Play.Timeout)  Ответ не полученн за {_timeResponse}"); //DEBUG_LOG
+                    break;
+
+                case StartCreatedCallState.Error:
+                    await ReConnect();
+                    break;
             }
         }
 
@@ -234,10 +290,10 @@ namespace AutodictorBL.Sound
         /// Усилитель оповестит о реальном запуске файла для проигрывания в обработчике события PraesideoOI_callState.
         /// Это завершит задачу, раньше чем пройдет 3 сек или возникнет Exception внутри PlayWithControl.
         /// </summary>
-        private TaskCompletionSource<bool> _tcs;
-        private Task<bool> PlayWithControl()
+        private TaskCompletionSource<StartCreatedCallState> _tcs;
+        private Task<StartCreatedCallState> PlayWithControl()
         {
-            _tcs = new TaskCompletionSource<bool>();
+            _tcs = new TaskCompletionSource<StartCreatedCallState>();
             Task.Run(async () =>
             {
                 if (_currentCallId != null)
@@ -246,12 +302,12 @@ namespace AutodictorBL.Sound
                     {
                         _praesideoOi.startCreatedCall(_currentCallId.Value);
                         await Task.Delay(_timeResponse);
-                        _tcs.TrySetResult(false);
+                        _tcs.TrySetResult(StartCreatedCallState.Timeout);
                     }
                     catch (Exception ex)
                     {
-                        Log.log.Error($"ERROR OMNEO  (PlayWithControl)  {ex}"); //DEBUG_LOG
-                        _tcs.TrySetResult(false);
+                        Log.log.Error($"ERROR OMNEO  (PlayWithControl)  {ex}");
+                        _tcs.TrySetResult(StartCreatedCallState.Error);
                     }
                 }
             });
@@ -348,13 +404,14 @@ namespace AutodictorBL.Sound
 
         /// <summary>
         /// вызывается при изменении состояния вызова
+        /// OICS_IDLE -> OICS_START -> OICS_MESSAGES -> OICS_END. 
         /// </summary>
         private void PraesideoOI_callState(int callId, [System.Runtime.InteropServices.ComAliasName("PRAESIDEOOPENINTERFACECOMSERVERLib.TOICallState")] TOICallState state)
         {
             switch (state)
             {
                 case TOICallState.OICS_START:
-                    _tcs.TrySetResult(true);
+                    _tcs.TrySetResult(StartCreatedCallState.Ok);
                     _soundPlayerStatus = SoundPlayerStatus.Playing;
                     StatusString = "СТАРТ проигрывания";
                     break;
@@ -365,6 +422,7 @@ namespace AutodictorBL.Sound
 
                 case TOICallState.OICS_MESSAGES:
                     _soundPlayerStatus = SoundPlayerStatus.Playing;
+                    StatusString = "СООБЩЕНИЕ";
                     break;
 
                 case TOICallState.OICS_LIVESPEECH:
@@ -377,18 +435,22 @@ namespace AutodictorBL.Sound
                     break;
 
                 case TOICallState.OICS_ABORT:
-                    _tcs.TrySetResult(true);
+                    _tcs.TrySetResult(StartCreatedCallState.Ok);
                     _soundPlayerStatus = SoundPlayerStatus.Stop;
+                    StatusString = "ОТМЕНА";
                     break;
 
                 case TOICallState.OICS_IDLE:
                     _soundPlayerStatus = SoundPlayerStatus.Idle;
+                    StatusString = "ПРОСТОЙ";
                     break;
 
                 case TOICallState.OICS_REPLAY:
                     _soundPlayerStatus = SoundPlayerStatus.Playing;
+                    StatusString = "REPLAY";
                     break;
             }
+            Log.log.Error($"callState: StatusString= {StatusString}");
         }
 
         #endregion
@@ -405,6 +467,5 @@ namespace AutodictorBL.Sound
         }
 
         #endregion
-
     }
 }
