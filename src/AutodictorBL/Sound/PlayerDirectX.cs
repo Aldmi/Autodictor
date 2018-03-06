@@ -230,16 +230,17 @@ namespace AutodictorBL.Sound
 
                         return SoundPlayerStatus.Playing;
                     }
-                    else if (_trackToPlay.Paused)
+
+                    if (_trackToPlay.Paused)
                         return SoundPlayerStatus.Paused;
-                    else
-                        return SoundPlayerStatus.Stop;
+
+                    return SoundPlayerStatus.Stop;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            };
+            }
 
             return playerStatus;
         }

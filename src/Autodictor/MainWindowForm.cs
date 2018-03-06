@@ -2225,12 +2225,13 @@ namespace MainExample
             ОбновитьСостояниеЗаписейТаблицы();
             QueueSound.Invoke();
 
-            SoundPlayerStatus status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus(); //PlayerDirectX.GetPlayerStatus();
+            SoundPlayerStatus status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();
             switch (status)
             {
                 case SoundPlayerStatus.Error:
                 case SoundPlayerStatus.Stop:
                 case SoundPlayerStatus.Paused:
+                case SoundPlayerStatus.Idle:
                     MainForm.Пауза.BackColor = Color.Gray;
                     MainForm.Пауза.Enabled = false;
                     break;

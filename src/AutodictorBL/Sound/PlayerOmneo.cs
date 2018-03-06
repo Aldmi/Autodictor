@@ -208,7 +208,7 @@ namespace AutodictorBL.Sound
             catch (Exception ex)
             {
                 StatusString = @"Exception PlayFile: " + ex.Message;
-                Log.log.Error($"ERROR OMNEO  (Connect)   Message= {StatusString}"); //DEBUG_LOG
+                Log.log.Error($"ERROR OMNEO: Message= {StatusString}"); //DEBUG_LOG
                 return false;
             }
         }
