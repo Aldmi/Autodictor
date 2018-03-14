@@ -228,10 +228,17 @@ namespace AutodictorBL.Sound
 
         public async Task Disconnect()
         {
-            _soundPlayerStatus = SoundPlayerStatus.Error;
-            _praesideoOi.disconnect();
-            await Task.Delay(1000);
-            IsConnect = false;
+            try
+            {
+                _soundPlayerStatus = SoundPlayerStatus.Error;
+                _praesideoOi.disconnect();
+                await Task.Delay(1000);
+                IsConnect = false;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
 

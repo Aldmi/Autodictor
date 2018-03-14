@@ -138,9 +138,8 @@ namespace AutodictorBL.Sound
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                // ignored
             }
-
             return false;
         }
 
@@ -174,9 +173,9 @@ namespace AutodictorBL.Sound
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                // ignored
             }
+            return false;
         }
 
 
@@ -218,7 +217,7 @@ namespace AutodictorBL.Sound
         //TODO: Exceptions при геннерации списка.
         public SoundPlayerStatus GetPlayerStatus()
         {
-            SoundPlayerStatus playerStatus = SoundPlayerStatus.Error;
+            SoundPlayerStatus playerStatus = SoundPlayerStatus.Idle;
 
             try
             {
@@ -227,7 +226,7 @@ namespace AutodictorBL.Sound
                     if (_trackToPlay.Playing)
                     {
                         if (_trackToPlay.CurrentPosition >= _trackToPlay.Duration)
-                            return SoundPlayerStatus.Stop;
+                            return SoundPlayerStatus.Idle;
 
                         return SoundPlayerStatus.Playing;
                     }
@@ -235,7 +234,10 @@ namespace AutodictorBL.Sound
                     if (_trackToPlay.Paused)
                         return SoundPlayerStatus.Paused;
 
-                    return SoundPlayerStatus.Stop;
+                    if (_trackToPlay.Paused)
+                        return SoundPlayerStatus.Stop;
+
+                    return SoundPlayerStatus.Error;
                 }
             }
             catch (Exception ex)

@@ -289,10 +289,8 @@ namespace MainExample.Services
 
                 _isAnyOldQueue = Queue.Any();
 
-
-
                 //Разматывание очереди. Определение проигрываемого файла-----------------------------------------------------------------------------
-                if (status != SoundPlayerStatus.Playing && status != SoundPlayerStatus.Error)
+                if (status == SoundPlayerStatus.Idle)//status != SoundPlayerStatus.Playing && status != SoundPlayerStatus.Error
                 {
                     if (_pauseTime > 0)
                     {
