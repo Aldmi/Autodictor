@@ -115,13 +115,13 @@ namespace MainExample
     /// для сопоставления поезда из распсиания.
     /// </summary>
     public struct IdTrain
-    {     
+    {
         public IdTrain(int scheduleId) : this()
         {
             ScheduleId = scheduleId;
         }
 
-        public int ScheduleId { get;}                   //Id поезда в распсиании
+        public int ScheduleId { get; }                   //Id поезда в распсиании
         public DateTime ДеньПрибытия { get; set; }      //сутки в которые поезд ПРИБ.  
         public DateTime ДеньОтправления { get; set; }   //сутки в которые поезд ОТПР.
         public string НомерПоезда { get; set; }        //номер поезда 1
@@ -135,7 +135,7 @@ namespace MainExample
         public int Id;                            // порядковый номер шаблона
         public int SoundRecordId;                 // строка расписания к которой принадлежит данный шаблон
         public bool Активность;
-        public Priority ПриоритетГлавный;        
+        public Priority ПриоритетГлавный;
         public PriorityPrecise ПриоритетВторостепенный;
         public bool Воспроизведен;                //???
         public SoundRecordStatus СостояниеВоспроизведения;
@@ -258,7 +258,7 @@ namespace MainExample
             Binding2ChangesEventBehaviors = binding2ChangesEventBehaviors;
             Binding2GetDataBehaviors = binding2GetDataBehaviors;
             SoundChanelManagment = soundChanelManagment;
-     
+
             MainForm.Пауза.Click += new System.EventHandler(this.btnПауза_Click);
             MainForm.Включить.Click += new System.EventHandler(this.btnБлокировка_Click);
             MainForm.ОбновитьСписок.Click += new System.EventHandler(this.btnОбновитьСписок_Click);
@@ -309,7 +309,7 @@ namespace MainExample
             DispouseStaticChangeRx = QueueSound.StaticChangeRx.Subscribe(StaticChangeRxEventHandler);
             DispouseTemplateChangeRx = QueueSound.TemplateChangeRx.Subscribe(TemplateChangeRxEventHandler);
 
-          
+
             //ЗАПУСК ОЧЕРЕДИ ЗВУКА
             QueueSound.StartQueue();
 
@@ -323,7 +323,7 @@ namespace MainExample
         /// </summary>
         protected override void OnLoad(EventArgs e)
         {
-           //ИНИЦИАЛИЗАЦИЯ УСТРОЙСТВ ПОЛУЧЕНИЯ ДАННЫХ--------------------------
+            //ИНИЦИАЛИЗАЦИЯ УСТРОЙСТВ ПОЛУЧЕНИЯ ДАННЫХ--------------------------
             chbox_apkDk.Visible = false;
             chbox_DispatcherControl.Visible = false;
             chbox_CisRegShControl.Visible = false;
@@ -337,7 +337,7 @@ namespace MainExample
                         chbox_apkDk.Visible = true;
                         chbox_apkDk.Checked = Program.Настройки.GetDataApkDkStart;
 
-                        GetSheduleAbstract= new GetSheduleApkDk(beh.BaseGetDataBehavior, SoundRecords);
+                        GetSheduleAbstract = new GetSheduleApkDk(beh.BaseGetDataBehavior, SoundRecords);
                         GetSheduleAbstract.SubscribeAndStart(chbox_apkDk);
                         GetSheduleAbstract.Enable = chbox_apkDk.Checked;
                         break;
@@ -366,7 +366,7 @@ namespace MainExample
                         chbox_CisOperShControl.Checked = Program.Настройки.GetDataCisOperShStart;
 
                         CisOperShAbstract = new GetCisOperSh(beh.BaseGetDataBehavior, SoundRecords);
-                       // CisOperShAbstract.SoundRecordChangesRx.Subscribe(HttpDispatcherSoundRecordChanges);
+                        // CisOperShAbstract.SoundRecordChangesRx.Subscribe(HttpDispatcherSoundRecordChanges);
                         CisOperShAbstract.SubscribeAndStart(chbox_CisOperShControl);
                         CisOperShAbstract.Enable = chbox_CisOperShControl.Checked;
                         break;
@@ -375,7 +375,7 @@ namespace MainExample
                 //инициализируем таблицу, для прохождения условия в функции отправки "AddOneTimeSendData".
                 var uit = new UniversalInputType
                 {
-                  TableData = new List<UniversalInputType> { new UniversalInputType() }
+                    TableData = new List<UniversalInputType> { new UniversalInputType() }
                 };
                 beh.SendMessage(uit);
             }
@@ -392,7 +392,7 @@ namespace MainExample
 
             //DEBUG------------------------------------------------------
             //var str = $"N= {данные.НомерПоезда}  Путь= {данные.НомерПути}  Время отпр={данные.ВремяОтправления:g}   Время приб={данные.ВремяПрибытия:g}  Ст.Приб {данные.СтанцияНазначения}   Ст.Отпр {данные.СтанцияОтправления}  key = {key}  keyOld= {keyOld}";
-           // Log.log.Trace("Применить данные" + str);
+            // Log.log.Trace("Применить данные" + str);
             //DEBUG-----------------------------------------------------
 
             данные = ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView1);
@@ -408,10 +408,10 @@ namespace MainExample
             var chBox = sender as CheckBox;
             if (chBox != null)
             {
-                if(GetSheduleAbstract != null)
-                   GetSheduleAbstract.Enable = chbox_apkDk.Checked;
+                if (GetSheduleAbstract != null)
+                    GetSheduleAbstract.Enable = chbox_apkDk.Checked;
 
-                Program.Настройки.GetDataApkDkStart= chbox_apkDk.Checked;
+                Program.Настройки.GetDataApkDkStart = chbox_apkDk.Checked;
                 ОкноНастроек.СохранитьНастройки();
             }
         }
@@ -599,9 +599,16 @@ namespace MainExample
 
 
         // Обработка таймера 100 мс для воспроизведения звуковых сообщений
-        private void timer1_Tick(object sender, EventArgs e)
+
+        private bool _isBusytimer100Ms;
+        private async void timer1_Tick(object sender, EventArgs e)
         {
-            ОбработкаЗвуковогоПотка();
+            if (_isBusytimer100Ms)
+                return;
+
+            _isBusytimer100Ms = true;
+
+            await ОбработкаЗвуковогоПотка();
             ОпределитьИнформациюДляОтображенияНаТабло();
 
             if (VisibleMode != MainForm.VisibleStyle)
@@ -768,7 +775,7 @@ namespace MainExample
 
             var differences = TrainSheduleTable.TrainTableRecords.Where(l2 =>
                 !SoundRecords.Values.Any(l1 =>
-                    l1.IdTrain.ScheduleId == l2.ID 
+                    l1.IdTrain.ScheduleId == l2.ID
                 )).ToList();
 
             //Добавим оставшиеся записи
@@ -899,7 +906,7 @@ namespace MainExample
             //Заполнение СписокНештатныхСообщений.
             if ((rec.БитыНештатныхСитуаций & 0x0F) != 0x00)
             {
-                rec= ЗаполнениеСпискаНештатныхСитуаций(rec, null);
+                rec = ЗаполнениеСпискаНештатныхСитуаций(rec, null);
             }
 
             rec.AplyIdTrain();
@@ -1947,7 +1954,7 @@ namespace MainExample
                                 table.ForEach(t =>
                                 {
                                     uitPreprocessingService.StartPreprocessing(t);
-                                    t.Command= Command.View;
+                                    t.Command = Command.View;
                                     t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
                                 });
 
@@ -1994,12 +2001,12 @@ namespace MainExample
                                     .ToList();
 
                                 table.ForEach(t =>
-                                    {
-                                        uitPreprocessingService.StartPreprocessing(t);
-                                        t.Command = Command.View;
-                                        t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
-                                    });
-                                var inData = new UniversalInputType {TableData = table};
+                                {
+                                    uitPreprocessingService.StartPreprocessing(t);
+                                    t.Command = Command.View;
+                                    t.Message = $"ПОЕЗД:{t.NumberOfTrain}, ПУТЬ:{t.PathNumber}, СОБЫТИЕ:{t.Event}, СТАНЦИИ:{t.Stations}, ВРЕМЯ:{t.Time.ToShortTimeString()}";
+                                });
+                                var inData = new UniversalInputType { TableData = table };
                                 beh.InitializePagingBuffer(inData, defaultType, beh.CheckContrains, beh.GetCountDataTake());
                             }
                         }
@@ -2020,7 +2027,7 @@ namespace MainExample
                             .ToList();
 
 
-                        List<UniversalInputType> table= new List<UniversalInputType>();
+                        List<UniversalInputType> table = new List<UniversalInputType>();
                         foreach (var change in changes)
                         {
                             var uit = Mapper.MapSoundRecord2UniveralInputType(change.Rec, beh.GetDeviceSetting.PathPermission, false);
@@ -2057,162 +2064,162 @@ namespace MainExample
 
 
 
-              
+
             #region ВЫВОД НА ПУТЕВЫЕ ТАБЛО
 
-                for (var i = 0; i < SoundRecords.Count; i++)
+            for (var i = 0; i < SoundRecords.Count; i++)
+            {
+                try
                 {
-                    try
+                    var key = SoundRecords.Keys.ElementAt(i);
+                    var данные = SoundRecords.ElementAt(i).Value;
+                    var данныеOld = SoundRecordsOld.ElementAt(i).Value;
+
+                    if (!данные.Автомат)
+                        continue;
+
+
+                    var _checked = данные.Состояние != SoundRecordStatus.Выключена;
+                    if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
                     {
-                        var key = SoundRecords.Keys.ElementAt(i);
-                        var данные = SoundRecords.ElementAt(i).Value;
-                        var данныеOld = SoundRecordsOld.ElementAt(i).Value;
+                        //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
+                        var номераПутей = Program.PathWaysRepository.List().ToList();
+                        var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути) + 1;
+                        var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути) + 1;
+                        var номерПути = (index > 0) ? index : 0;
+                        var номерПутиOld = (indexOld > 0) ? indexOld : 0;
 
-                        if (!данные.Автомат)
-                           continue;
-
-
-                        var _checked = данные.Состояние != SoundRecordStatus.Выключена;
-                        if (_checked && (данные.ТипСообщения == SoundRecordType.ДвижениеПоезда))
+                        if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
                         {
-                            //ВЫВОД НА ПУТЕВЫЕ ТАБЛО
-                            var номераПутей = Program.PathWaysRepository.List().ToList();
-                            var index = номераПутей.Select(p => p.Name).ToList().IndexOf(данные.НомерПути) + 1;
-                            var indexOld = номераПутей.Select(p => p.Name).ToList().IndexOf(данныеOld.НомерПути) + 1;
-                            var номерПути = (index > 0) ? index : 0;
-                            var номерПутиOld = (indexOld > 0) ? indexOld : 0;
-
-                            if (номерПути > 0 || (номерПути == 0 && номерПутиOld > 0))
+                            //ПОМЕНЯЛИ ПУТЬ
+                            if (номерПути != номерПутиOld)
                             {
-                                //ПОМЕНЯЛИ ПУТЬ
-                                if (номерПути != номерПутиOld)
+                                //очистили старый путь, если он не "0";
+                                if (номерПутиOld > 0)
                                 {
-                                    //очистили старый путь, если он не "0";
-                                    if (номерПутиOld > 0)
-                                    {
-                                        данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
-                                        SendOnPathTable(данныеOld);
-                                    }
+                                    данныеOld.СостояниеОтображения = TableRecordStatus.Очистка;
+                                    SendOnPathTable(данныеOld);
+                                }
 
-                                    //вывод на новое табло
-                                    данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                                //вывод на новое табло
+                                данные.СостояниеОтображения = TableRecordStatus.Отображение;
+                                SendOnPathTable(данные);
+                            }
+                            else
+                            {
+                                //ИЗДАНИЕ СОБЫТИЯ ИЗМЕНЕНИЯ ДАННЫХ В ЗАПИСИ SoundRecords.
+                                if (!StructCompare.SoundRecordComparer(ref данные, ref данныеOld))
+                                {
+                                    данные.СостояниеОтображения = TableRecordStatus.Обновление;
                                     SendOnPathTable(данные);
                                 }
-                                else
-                                {
-                                    //ИЗДАНИЕ СОБЫТИЯ ИЗМЕНЕНИЯ ДАННЫХ В ЗАПИСИ SoundRecords.
-                                    if (!StructCompare.SoundRecordComparer(ref данные, ref данныеOld))
-                                    {
-                                        данные.СостояниеОтображения = TableRecordStatus.Обновление;
-                                        SendOnPathTable(данные);
-                                    }
-                                }
-
-
-
-                                //ОТПРАВЛЕНИЕ, ТРАНЗИТЫ
-                                if ((данные.БитыАктивностиПолей & 0x10) == 0x10 ||
-                                    (данные.БитыАктивностиПолей & 0x14) == 0x14)
-                                {
-                                    //ОЧИСТИТЬ если нет нештатных ситуаций на момент отправления
-                                    if ((DateTime.Now >= данные.ВремяОтправления.AddMinutes(1) && //1
-                                         (DateTime.Now <= данные.ВремяОтправления.AddMinutes(1.02))))
-                                    {
-                                        if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                                (данные.СостояниеОтображения == TableRecordStatus.Обновление))
-                                            {
-                                                данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                                данные.НомерПути = "0";
-
-                                                var данныеОчистки = данные;
-                                                данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                                SendOnPathTable(данныеОчистки);
-
-                                                СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
-                                            }
-                                    }
-
-                                    //ОЧИСТИТЬ если убрали нештатные ситуации
-                                    if (((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                                        && ((данныеOld.БитыНештатныхСитуаций & 0x0F) != 0x00)
-                                        && (DateTime.Now >= данные.ВремяОтправления.AddMinutes(1)))
-                                    {
-                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                            (данные.СостояниеОтображения == TableRecordStatus.Обновление))
-                                        {
-                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                            данные.НомерПути = "0";
-
-                                            var данныеОчистки = данные;
-                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                            SendOnPathTable(данныеОчистки);
-
-                                            СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
-                                        }
-                                    }
-                                }
-                                //ПРИБЫТИЕ
-                                else if ((данные.БитыАктивностиПолей & 0x04) == 0x04)
-                                {
-                                    //ОЧИСТИТЬ если нет нештатных ситуаций на момент прибытия
-                                    if ((DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10) && //10
-                                         (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(10.02))))
-                                    {
-                                        if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                                            if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                                (данные.СостояниеОтображения == TableRecordStatus.Обновление))
-                                            {
-                                                данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                                данные.НомерПути = "0";
-
-                                                var данныеОчистки = данные;
-                                                данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                                SendOnPathTable(данныеОчистки);
-
-                                                СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
-                                            }
-                                    }
-
-
-                                    //ОЧИСТИТЬ если убрали нештатные ситуации
-                                    if (((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
-                                        && ((данныеOld.БитыНештатныхСитуаций & 0x0F) != 0x00)
-                                        && (DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10)))
-                                    {
-                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
-                                            (данные.СостояниеОтображения == TableRecordStatus.Обновление))
-                                        {
-                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
-                                            данные.НомерПути = "0";
-
-                                            var данныеОчистки = данные;
-                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
-                                            SendOnPathTable(данныеОчистки);
-
-                                            СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
-                                        }
-                                    }
-                                }
-
                             }
+
+
+
+                            //ОТПРАВЛЕНИЕ, ТРАНЗИТЫ
+                            if ((данные.БитыАктивностиПолей & 0x10) == 0x10 ||
+                                (данные.БитыАктивностиПолей & 0x14) == 0x14)
+                            {
+                                //ОЧИСТИТЬ если нет нештатных ситуаций на момент отправления
+                                if ((DateTime.Now >= данные.ВремяОтправления.AddMinutes(1) && //1
+                                     (DateTime.Now <= данные.ВремяОтправления.AddMinutes(1.02))))
+                                {
+                                    if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                            (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                        {
+                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                            данные.НомерПути = "0";
+
+                                            var данныеОчистки = данные;
+                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                            SendOnPathTable(данныеОчистки);
+
+                                            СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
+                                        }
+                                }
+
+                                //ОЧИСТИТЬ если убрали нештатные ситуации
+                                if (((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                                    && ((данныеOld.БитыНештатныхСитуаций & 0x0F) != 0x00)
+                                    && (DateTime.Now >= данные.ВремяОтправления.AddMinutes(1)))
+                                {
+                                    if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                        (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                    {
+                                        данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                        данные.НомерПути = "0";
+
+                                        var данныеОчистки = данные;
+                                        данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                        SendOnPathTable(данныеОчистки);
+
+                                        СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
+                                    }
+                                }
+                            }
+                            //ПРИБЫТИЕ
+                            else if ((данные.БитыАктивностиПолей & 0x04) == 0x04)
+                            {
+                                //ОЧИСТИТЬ если нет нештатных ситуаций на момент прибытия
+                                if ((DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10) && //10
+                                     (DateTime.Now <= данные.ВремяПрибытия.AddMinutes(10.02))))
+                                {
+                                    if ((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                                        if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                            (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                        {
+                                            данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                            данные.НомерПути = "0";
+
+                                            var данныеОчистки = данные;
+                                            данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                            SendOnPathTable(данныеОчистки);
+
+                                            СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
+                                        }
+                                }
+
+
+                                //ОЧИСТИТЬ если убрали нештатные ситуации
+                                if (((данные.БитыНештатныхСитуаций & 0x0F) == 0x00)
+                                    && ((данныеOld.БитыНештатныхСитуаций & 0x0F) != 0x00)
+                                    && (DateTime.Now >= данные.ВремяПрибытия.AddMinutes(10)))
+                                {
+                                    if (данные.СостояниеОтображения == TableRecordStatus.Отображение ||
+                                        (данные.СостояниеОтображения == TableRecordStatus.Обновление))
+                                    {
+                                        данные.СостояниеОтображения = TableRecordStatus.Очистка;
+                                        данные.НомерПути = "0";
+
+                                        var данныеОчистки = данные;
+                                        данныеОчистки.НомерПути = данныеOld.НомерПути;
+                                        SendOnPathTable(данныеОчистки);
+
+                                        СохранениеИзмененийДанныхКарточкеБД(данныеOld, данные); //DEBUG
+                                    }
+                                }
+                            }
+
                         }
+                    }
 
-                        SoundRecords[key] = данные;
-                        SoundRecordsOld[key] = данные;
-                    }
-                    catch (Exception)
-                    {
-                        // ignored
-                    }
+                    SoundRecords[key] = данные;
+                    SoundRecordsOld[key] = данные;
                 }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
 
-                #endregion         
+            #endregion
         }
 
 
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
-        private void ОбработкаЗвуковогоПотка()
+        private async Task ОбработкаЗвуковогоПотка()
         {
             int СекундаТекущегоВремени = DateTime.Now.Second;
             if (СекундаТекущегоВремени != ТекущаяСекунда)
@@ -2223,7 +2230,7 @@ namespace MainExample
             }
 
             ОбновитьСостояниеЗаписейТаблицы();
-            QueueSound.Invoke();
+            await QueueSound.Invoke();
 
             SoundPlayerStatus status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();
             switch (status)
@@ -2439,7 +2446,7 @@ namespace MainExample
                                 SoundRecord старыеДанные = данные;
                                 данные = карточка.ПолучитьИзмененнуюКарточку();
 
-                                данные= ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView);
+                                данные = ПрименитьИзмененияSoundRecord(данные, старыеДанные, key, keyOld, listView);
                                 if (!StructCompare.SoundRecordComparer(ref данные, ref старыеДанные))
                                 {
                                     СохранениеИзмененийДанныхКарточкеБД(старыеДанные, данные);
@@ -2811,9 +2818,9 @@ namespace MainExample
 
         public static void ВоспроизвестиШаблонОповещения(string названиеСообщения, SoundRecord record, СостояниеФормируемогоСообщенияИШаблон формируемоеСообщение, ТипСообщения типСообщения)
         {
-            if(!record.ВыводЗвука)
+            if (!record.ВыводЗвука)
                 return;
-            
+
             string logMessage = "";
 
             string[] файлыМинут = new string[] { "00 минут", "01 минута", "02 минуты", "03 минуты", "04 минуты", "05 минут", "06 минут", "07 минут", "08 минут",
@@ -2841,7 +2848,7 @@ namespace MainExample
             {
                 {"формируемоеСообщение", формируемоеСообщение }
             };
-            var soundRecordPreprocessingService =  PreprocessingOutputFactory.CreateSoundRecordPreprocessingService(option);
+            var soundRecordPreprocessingService = PreprocessingOutputFactory.CreateSoundRecordPreprocessingService(option);
             soundRecordPreprocessingService.StartPreprocessing(ref record);
 
 
@@ -2951,7 +2958,7 @@ namespace MainExample
                             text = record.НомерПоезда;
                             logMessage += text + " ";
 
-                            var fileNames= numeric2ListStringConverter.Convert(text)?.Where(f => f != "0" && f != "0" + eof).ToList();
+                            var fileNames = numeric2ListStringConverter.Convert(text)?.Where(f => f != "0" && f != "0" + eof).ToList();
                             if (fileNames != null && fileNames.Any())
                             {
                                 foreach (var fileName in fileNames)
@@ -3110,7 +3117,7 @@ namespace MainExample
                                 });
                             }
                             else
-                            if(record.БитыАктивностиПолей == 31) //У трнзита нет времени стоянки, занчит стоит галочка "будет измененно"
+                            if (record.БитыАктивностиПолей == 31) //У трнзита нет времени стоянки, занчит стоит галочка "будет измененно"
                             {
                                 logMessage += "Стоянка: будет измененно";
                                 воспроизводимыеСообщения.Add(new ВоспроизводимоеСообщение
@@ -3871,15 +3878,15 @@ namespace MainExample
 
 
 
-        private void СохранениеИзмененийДанныхКарточкеБД(SoundRecord старыеДанные, SoundRecord данные, string источникИзменений= "Текущий пользователь")
+        private void СохранениеИзмененийДанныхКарточкеБД(SoundRecord старыеДанные, SoundRecord данные, string источникИзменений = "Текущий пользователь")
         {
             var recChange = new SoundRecordChanges
             {
-                ScheduleId= данные.IdTrain.ScheduleId,
+                ScheduleId = данные.IdTrain.ScheduleId,
                 TimeStamp = DateTime.Now,
                 Rec = старыеДанные,
                 NewRec = данные,
-                UserInfo= $"{Program.AuthenticationService.CurrentUser.Login}  ({Program.AuthenticationService.CurrentUser.Role})",
+                UserInfo = $"{Program.AuthenticationService.CurrentUser.Login}  ({Program.AuthenticationService.CurrentUser.Role})",
                 CauseOfChange = источникИзменений
             };
             SoundRecordChanges.Add(recChange);

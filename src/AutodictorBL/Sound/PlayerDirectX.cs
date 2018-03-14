@@ -16,8 +16,8 @@ namespace AutodictorBL.Sound
 
         private readonly Func<int> _выборУровняГромкостиFunc;
         private readonly Func<string, NotificationLanguage, string> _getFileNameFunc;
-        private  string _trackPath = "";
-        private  Audio _trackToPlay = null;
+        private string _trackPath = "";
+        private Audio _trackToPlay = null;
 
         #endregion
 
@@ -64,7 +64,7 @@ namespace AutodictorBL.Sound
 
         #region ctor
 
-        public PlayerDirectX(SoundPlayerType playerType,Func<int> выборУровняГромкостиFunc, Func<string, NotificationLanguage, string> getFileNameFunc)
+        public PlayerDirectX(SoundPlayerType playerType, Func<int> выборУровняГромкостиFunc, Func<string, NotificationLanguage, string> getFileNameFunc)
         {
             PlayerType = playerType;
             _выборУровняГромкостиFunc = выборУровняГромкостиFunc;
@@ -104,7 +104,7 @@ namespace AutodictorBL.Sound
         }
 
 
-        public bool PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
+        public async Task<bool> PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
         {
             var filePath = string.Empty;
             if (soundMessage != null)
@@ -149,7 +149,7 @@ namespace AutodictorBL.Sound
         {
             if (_trackToPlay == null)
                 return;
-            
+
             try
             {
                 _trackToPlay.Pause();
@@ -162,14 +162,15 @@ namespace AutodictorBL.Sound
         }
 
 
-        public void Play()
+        public async Task<bool> Play()
         {
             if (_trackToPlay == null)
-                return;
+                return false;
 
             try
             {
                 _trackToPlay.Play();
+                return true;
             }
             catch (Exception e)
             {
@@ -215,7 +216,7 @@ namespace AutodictorBL.Sound
 
 
         //TODO: Exceptions при геннерации списка.
-        public  SoundPlayerStatus GetPlayerStatus()
+        public SoundPlayerStatus GetPlayerStatus()
         {
             SoundPlayerStatus playerStatus = SoundPlayerStatus.Error;
 
@@ -246,7 +247,7 @@ namespace AutodictorBL.Sound
         }
 
 
-        public  int GetVolume()
+        public int GetVolume()
         {
             if (_trackToPlay != null)
                 return _trackToPlay.Volume;
@@ -279,6 +280,6 @@ namespace AutodictorBL.Sound
             }
         }
 
-       #endregion
+        #endregion
     }
 }

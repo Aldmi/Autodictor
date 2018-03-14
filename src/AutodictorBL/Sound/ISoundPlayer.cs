@@ -19,9 +19,9 @@ namespace AutodictorBL.Sound
 
     public interface ISoundPlayer : IDisposable
     {
-        bool PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true);
+        Task<bool> PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true);
+        Task<bool> Play();
         void Pause();
-        void Play();
         float GetDuration();
         int GetCurrentPosition();
         SoundPlayerStatus GetPlayerStatus();
@@ -33,7 +33,7 @@ namespace AutodictorBL.Sound
         SoundPlayerType PlayerType { get; }
         bool IsConnect { get; }
         string GetInfo();
-        string StatusString { get;}
+        string StatusString { get; }
 
         IFileNameConverter FileNameConverter { get; }  // конверетер имени проигрываемого файла в имя понятное конкретному плееру 
 

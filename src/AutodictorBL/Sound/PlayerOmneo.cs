@@ -7,12 +7,12 @@ using AutodictorBL.Settings.XmlSound;
 using AutodictorBL.Sound.Converters;
 using Library.Logs;
 using PRAESIDEOOPENINTERFACECOMSERVERLib;
-
+using Domain.Entitys;
 
 namespace AutodictorBL.Sound
 {
 
-   public enum StartCreatedCallState { Error, Timeout, Ok};
+    public enum StartCreatedCallState { Error, Timeout, Ok };
 
 
 
@@ -174,11 +174,17 @@ namespace AutodictorBL.Sound
         }
 
 
+
+        private bool _isRunningReconnect = false;
         public async Task ReConnect()
         {
-            Log.log.Info($"ERROR OMNEO  (ReConnect Start)"); //DEBUG_LOG
-            Disconnect();
-            await Connect();
+            if (!_isRunningReconnect)
+            {
+                _isRunningReconnect = true;
+                Log.log.Info($"ERROR OMNEO  (ReConnect Start)"); //DEBUG_LOG
+                await Disconnect();
+                await Connect();
+            }
         }
 
 
@@ -188,22 +194,25 @@ namespace AutodictorBL.Sound
             {
                 try
                 {
-                    await Task.Factory.StartNew(() =>
+                    await Task.Factory.StartNew(async () =>
                     {
                         _praesideoOi.connect(_ip, _port, _userName, _password);
+                        await Task.Delay(1000);
                     });
+
+                    _soundPlayerStatus = SoundPlayerStatus.Idle;
                     IsConnect = true;
                 }
                 catch (COMException ex)
                 {
-                    Disconnect();
+                    await Disconnect();
                     IsConnect = false;
                     StatusString = $"Exception Ошибка подключения: \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
                     Log.log.Error($"ERROR OMNEO  (Connect)   Message= {StatusString}"); //DEBUG_LOG
                 }
                 catch (Exception ex)
                 {
-                    Disconnect();
+                    await Disconnect();
                     IsConnect = false;
                     StatusString = $"Exception НЕИЗВЕСТНАЯ Ошибка подключения: \"{ex.Message}\"  \"{ex.InnerException?.Message}\"";
                     Log.log.Error($"ERROR OMNEO  (Connect)   Message= {StatusString}"); //DEBUG_LOG
@@ -217,32 +226,49 @@ namespace AutodictorBL.Sound
 
 
 
-        public void Disconnect()
+        public async Task Disconnect()
         {
+            _soundPlayerStatus = SoundPlayerStatus.Error;
             _praesideoOi.disconnect();
+            await Task.Delay(1000);
             IsConnect = false;
         }
 
 
 
-        public bool PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
+        public async Task<bool> PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
         {
             if (!IsConnect)
                 return false;
 
             try
             {
-                if(soundMessage == null)
+                _soundPlayerStatus = SoundPlayerStatus.Playing;
+
+                if (soundMessage == null)
                 {
                     if (_currentCallId.HasValue && _soundPlayerStatus == SoundPlayerStatus.Playing)
                     {
+                        Log.log.Error($"PlayFile:СТОП>>>>>>---------------------------"); //DEBUG_LOG
                         _praesideoOi.stopCall(_currentCallId.Value);
                     }
                     return false;
                 }
 
+                //-----
+                string langPostfix = string.Empty;
+                switch (soundMessage.Язык)
+                {
+                    case NotificationLanguage.Eng:
+                        langPostfix = "_" + NotificationLanguage.Eng;
+                        break;
+                }
+                var track = soundMessage.ИмяВоспроизводимогоФайла;
+                track += langPostfix;
+                //------
 
-                Log.log.Error($"PlayFile: Попытка запуска= {StatusString}   ИмяВоспроизводимогоФайла = {soundMessage?.ИмяВоспроизводимогоФайла}"); //DEBUG_LOG
+                Log.log.Error($"PlayFile:ПОПЫТКА ЗАПУСКА>>>>>> ИмяВоспроизводимогоФайла = {track}"); //DEBUG_LOG
+
 
                 int priority = 100;
                 bool bPartial = false;
@@ -250,15 +276,16 @@ namespace AutodictorBL.Sound
                 string endChime = string.Empty;
                 bool bLiveSpeech = false;
                 string audioInput = string.Empty;
-                string messages = useFileNameConverter ? FileNameConverter.Convert(soundMessage.ИмяВоспроизводимогоФайла) : soundMessage.ИмяВоспроизводимогоФайла;
+                string messages = useFileNameConverter ? FileNameConverter.Convert(track) : track;
                 int repeat = 0;
                 _currentCallId = _praesideoOi.createCall(_defaultZoneNames, priority, bPartial, startChime, endChime, bLiveSpeech, audioInput, messages, repeat);
-                Play();
+                await Play();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception ex) //НЕ найден файл на OMNEO
             {
-                StatusString = @"Exception PlayFile: " + ex.Message;
+                _soundPlayerStatus = SoundPlayerStatus.Idle;
+                StatusString = @"Ошибка получения CallId файла: " + ex.Message;
                 Log.log.Error($"ERROR OMNEO: Message= {StatusString}"); //DEBUG_LOG
                 return false;
             }
@@ -266,22 +293,30 @@ namespace AutodictorBL.Sound
 
 
 
-        public async void Play()
+        public async Task<bool> Play()
         {
             if (!IsConnect)
-                return;
+                return false;
 
+            Log.log.Error($"PlayFile:ПОПЫТКА ПРОИГРЫВАНИЯ>>>>>>"); //DEBUG_LOG
             var resul = await PlayWithControl();
-            switch(resul)
+            switch (resul)
             {
+                case StartCreatedCallState.Ok:
+                    _soundPlayerStatus = SoundPlayerStatus.Playing;
+                    return true;
+
                 case StartCreatedCallState.Timeout:
+                    _soundPlayerStatus = SoundPlayerStatus.Idle;
                     Log.log.Error($"ERROR OMNEO  (Play.Timeout)  Ответ не полученн за {_timeResponse}"); //DEBUG_LOG
                     break;
 
                 case StartCreatedCallState.Error:
-                    await ReConnect();
+                    _soundPlayerStatus = SoundPlayerStatus.Error;
+                    ReConnect();
                     break;
             }
+            return false;
         }
 
 
