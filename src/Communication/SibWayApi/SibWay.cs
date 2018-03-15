@@ -161,7 +161,7 @@ namespace Communication.SibWayApi
             IsRunDataExchange = true;
             try
             {
-                Debug.WriteLine($"--------------------------- {DateTime.Now}");
+                //Debug.WriteLine($"--------------------------- {DateTime.Now}");
                 //Отправка информации каждому окну---------------------------------------
                 foreach (var winSett in SettingSibWay.WindowSett)
                 {
@@ -196,7 +196,7 @@ namespace Communication.SibWayApi
                         {
                             if (++_countTryingTakeData > SettingSibWay.NumberTryingTakeData)
                             {
-                                Debug.WriteLine($"RECONNECT:  {DateTime.Now:mm:ss}");
+                                //Debug.WriteLine($"RECONNECT:  {DateTime.Now:mm:ss}");
                                 ReConnect();
                                 return false;
                             }
@@ -352,8 +352,8 @@ namespace Communication.SibWayApi
             StatusString = "Отправка на экран " + winSett.Number + "\n" + text + "\n";
             //Log.log.Error($"{StatusString}");
 
-            Debug.WriteLine("   ");
-            Debug.WriteLine($">>>> {winSett.Number}:  {DateTime.Now:mm:ss}");
+            //Debug.WriteLine("   ");
+            //Debug.WriteLine($">>>> {winSett.Number}:  {DateTime.Now:mm:ss}");
             var err = await Task<ErrorCode>.Factory.StartNew(() => (ErrorCode)DisplayDriver.SendMessage(
                     winSett.Number,
                     winSett.Effect,
@@ -363,13 +363,13 @@ namespace Communication.SibWayApi
                     textHeight,
                     colorRgb,
                     text));
-            Debug.WriteLine($"<<<< {winSett.Number}  err= {err}:  {DateTime.Now:mm:ss}");
+            //Debug.WriteLine($"<<<< {winSett.Number}  err= {err}:  {DateTime.Now:mm:ss}");
 
             var tryResult = (err == ErrorCode.ERROR_SUCCESS);
             if (!tryResult)
             {
                 RemoveColumnChange(winSett.ColumnName);
-                Debug.WriteLine($"error = {err}");
+                //Debug.WriteLine($"error = {err}");
                 //Log.log.Error($"SibWay SendMessageAsync respown statys {err}");
             }
 

@@ -138,7 +138,7 @@ namespace MainExample
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"ОбновитьСодержимоеСпискаЭлементов = {ex.ToString()}");//DEBUG
+                   // Debug.WriteLine($"ОбновитьСодержимоеСпискаЭлементов = {ex.ToString()}");//DEBUG
                 }
             });
         }
@@ -171,7 +171,7 @@ namespace MainExample
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"ОбновитьСодержимоеСпискаФайлов = {ex.ToString()}");//DEBUG
+                   // Debug.WriteLine($"ОбновитьСодержимоеСпискаФайлов = {ex.ToString()}");//DEBUG
                 }
             });
         }
@@ -200,7 +200,7 @@ namespace MainExample
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"ВизуализироватьСписокЭлементов = {ex.ToString()}");//DEBUG
+                   // Debug.WriteLine($"ВизуализироватьСписокЭлементов = {ex.ToString()}");//DEBUG
                 };
             });
 

@@ -744,7 +744,7 @@ namespace MainExample
             ExchangeModel.Dispose();
 
             DispouseActivationWarningInvokeRx.Dispose();
-            QuartzVerificationActivation.Shutdown();
+            //QuartzVerificationActivation.Shutdown();
 
             base.OnClosed(e);
         }

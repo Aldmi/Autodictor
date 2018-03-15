@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace MainExample.Services
 
         #region prop
 
-        private Queue<ВоспроизводимоеСообщение> Queue { get; set; } = new Queue<ВоспроизводимоеСообщение>();
+        private ConcurrentQueue<ВоспроизводимоеСообщение> Queue { get; set; } = new ConcurrentQueue<ВоспроизводимоеСообщение>();
         public IEnumerable<ВоспроизводимоеСообщение> GetElements => Queue;
         public int Count => Queue.Count;
 
@@ -182,14 +183,16 @@ namespace MainExample.Services
 
                 //сохранили 1-ый элемент, и удаили его
                 var currentFirstItem = Queue.FirstOrDefault();
-                Queue.Dequeue();
+                ВоспроизводимоеСообщение outItem;
+                Queue.TryDequeue(out outItem);  //???
 
                 //добавили новый элемент и отсортировали.
                 Queue.Enqueue(item);
                 var ordered = Queue.OrderByDescending(elem => elem.ПриоритетГлавный).ThenByDescending(elem => elem.ПриоритетВторостепенный).ToList();  //ThenByDescending(s=>s.) упорядочевать дополнительно по времени добавления
 
                 //Очистили и заполнили заново очередь
-                Queue.Clear();
+                //Queue.Clear();
+                Queue = new ConcurrentQueue<ВоспроизводимоеСообщение>(); //???
                 if (currentFirstItem != null)
                 {
                     Queue.Enqueue(currentFirstItem);
@@ -208,7 +211,8 @@ namespace MainExample.Services
         /// </summary>
         public void Clear()
         {
-            Queue?.Clear();
+            // Queue?.Clear();
+            Queue = new ConcurrentQueue<ВоспроизводимоеСообщение>();
             ElementsOnTemplatePlaying?.Clear();
             CurrentTemplatePlaying = null;
             CurrentSoundMessagePlaying = null;
@@ -300,10 +304,11 @@ namespace MainExample.Services
 
                     if (Queue.Any())
                     {
-                        var peekItem = Queue.Peek();
-                        if (peekItem.ОчередьШаблона == null)               //Статическое сообщение
+                        ВоспроизводимоеСообщение outItem;
+                        var peekItem = Queue.TryPeek(out outItem) ? outItem : null;
+                        if (peekItem?.ОчередьШаблона == null)               //Статическое сообщение
                         {
-                            CurrentSoundMessagePlaying = Queue.Dequeue();
+                            CurrentSoundMessagePlaying = Queue.TryDequeue(out outItem) ? outItem : null;
                             ElementsOnTemplatePlaying = null;
                         }
                         else                                              //Динамическое сообщение
@@ -323,7 +328,7 @@ namespace MainExample.Services
                             }
                             else
                             {
-                                Queue.Dequeue();
+                                Queue.TryDequeue(out outItem);
                                 EventEndPlayingTemplate(peekItem);
                                 CurrentSoundMessagePlaying = null;
                                 ElementsOnTemplatePlaying = null;
@@ -361,8 +366,9 @@ namespace MainExample.Services
         /// </summary>
         private void EventStartPlayingQueue()
         {
-            var firstElem = Queue.Peek();
-            LastSoundMessagePlayed = (firstElem.ОчередьШаблона == null || !firstElem.ОчередьШаблона.Any()) ? firstElem : firstElem.ОчередьШаблона.FirstOrDefault(); //DEBUG
+            ВоспроизводимоеСообщение outItem;
+            var firstElem = Queue.TryPeek(out outItem) ? outItem : null;
+            LastSoundMessagePlayed = (firstElem?.ОчередьШаблона == null || !firstElem.ОчередьШаблона.Any()) ? firstElem : firstElem.ОчередьШаблона.FirstOrDefault(); //DEBUG
             //Debug.WriteLine($"EventStartPlayingQueue: {LastSoundMessagePlayed.ИмяВоспроизводимогоФайла}");//DEBUG  //ТолькоПоВнутреннемуКаналу={LastSoundMessagePlayed.НастройкиВыводаЗвука.ТолькоПоВнутреннемуКаналу}
 
 

@@ -171,7 +171,7 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
-        private Timer _timerSoundHandler = new Timer(1000);
+        private readonly Timer _timerSoundHandler = new Timer(500);
 
 
         private const int ВремяЗадержкиВоспроизведенныхСобытий = 20;  //сек
@@ -326,9 +326,22 @@ namespace MainExample
 
 
 
+        private bool _isbusyTimerSoundHandler;
         private async void _timerSoundHandler_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            await ОбработкаЗвуковогоПотка();
+            if (_isbusyTimerSoundHandler)
+                return;
+
+            _isbusyTimerSoundHandler = true;
+
+           // var sw = new Stopwatch();
+          //  sw.Start();
+            await QueueSound.Invoke();
+         //   sw.Stop();
+        //    TimeSpan ts = sw.Elapsed;
+        //    Debug.WriteLine(ts.ToString());
+
+            _isbusyTimerSoundHandler = false;
         }
 
 
@@ -615,14 +628,14 @@ namespace MainExample
         // Обработка таймера 100 мс для воспроизведения звуковых сообщений
 
         private bool _isBusytimer100Ms;
-        private async void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
             if (_isBusytimer100Ms)
                 return;
 
             _isBusytimer100Ms = true;
 
-            //await ОбработкаЗвуковогоПотка();
+            ОбработкаЗвуковогоПотка();
             ОпределитьИнформациюДляОтображенияНаТабло();
 
             if (VisibleMode != MainForm.VisibleStyle)
@@ -1910,10 +1923,11 @@ namespace MainExample
             #endregion
 
 
-
-            //lVСобытия_ОбновитьСостояниеТаблицы();
-
-            //ОтобразитьСубтитры();
+            this.InvokeIfNeeded(()=>
+            {
+                lVСобытия_ОбновитьСостояниеТаблицы();
+                ОтобразитьСубтитры();
+            });
         }
 
 
@@ -2236,13 +2250,13 @@ namespace MainExample
 
 
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
-        private async Task ОбработкаЗвуковогоПотка()
+        private void ОбработкаЗвуковогоПотка()
         {
             ОпределитьКомпозициюДляЗапуска();
             CheckAutoApdate();
 
             ОбновитьСостояниеЗаписейТаблицы();
-            await QueueSound.Invoke();
+            //await QueueSound.Invoke();
 
             var status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();
             this.InvokeIfNeeded(() =>
