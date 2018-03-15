@@ -21,6 +21,8 @@ namespace AutodictorBL.Sound
         private string _trackPath = "";
         private Audio _trackToPlay = null;
 
+        private object _locker = new object();
+
         #endregion
 
 
@@ -108,41 +110,44 @@ namespace AutodictorBL.Sound
 
         public async Task<bool> PlayFile(ВоспроизводимоеСообщение soundMessage, bool useFileNameConverter = true)
         {
-            var filePath = string.Empty;
-            if (soundMessage != null)
+            lock (_locker)
             {
-                filePath = soundMessage.ИмяВоспроизводимогоФайла;
-                var язык = soundMessage.Язык;
-
-                if (filePath.Contains(".wav") == false)
-                    filePath = _getFileNameFunc(filePath, язык);
-            }
-
-            if (_trackToPlay != null)
-            {
-                _trackToPlay.Dispose();
-                _trackToPlay = null;
-            }
-
-            _trackPath = filePath;
-            if (_trackPath == "")
-                return false;
-
-            try
-            {
-                if (File.Exists(_trackPath) == true)
+                var filePath = string.Empty;
+                if (soundMessage != null)
                 {
-                    _trackToPlay = new Audio(_trackPath);
-                    SetVolume(_выборУровняГромкостиFunc());
-                    _trackToPlay.Play();
-                    return true;
+                    filePath = soundMessage.ИмяВоспроизводимогоФайла;
+                    var язык = soundMessage.Язык;
+
+                    if (filePath.Contains(".wav") == false)
+                        filePath = _getFileNameFunc(filePath, язык);
                 }
+
+                if (_trackToPlay != null)
+                {
+                    _trackToPlay.Dispose();
+                    _trackToPlay = null;
+                }
+
+                _trackPath = filePath;
+                if (_trackPath == "")
+                    return false;
+
+                try
+                {
+                    if (File.Exists(_trackPath) == true)
+                    {
+                        _trackToPlay = new Audio(_trackPath);
+                        SetVolume(_выборУровняГромкостиFunc());
+                        _trackToPlay.Play();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // ignored
+                }
+                return false;
             }
-            catch (Exception ex)
-            {
-                // ignored
-            }
-            return false;
         }
 
 
@@ -165,36 +170,42 @@ namespace AutodictorBL.Sound
 
         public async Task<bool> Play()
         {
-            if (_trackToPlay == null)
-                return false;
+            lock (_locker)
+            {
+                if (_trackToPlay == null)
+                    return false;
 
-            try
-            {
-                _trackToPlay.Play();
-                return true;
+                try
+                {
+                    _trackToPlay.Play();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    // ignored
+                }
+                return false;
             }
-            catch (Exception e)
-            {
-                // ignored
-            }
-            return false;
         }
 
 
         public float GetDuration()
         {
-            try
+            lock (_locker)
             {
-                if (_trackToPlay != null)
-                    return (float)_trackToPlay.Duration;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                try
+                {
+                    if (_trackToPlay != null)
+                        return (float) _trackToPlay.Duration;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0f;
+                }
+                
                 return 0f;
-            };
-
-            return 0f;
+            }
         }
 
 
@@ -219,53 +230,61 @@ namespace AutodictorBL.Sound
         //TODO: Exceptions при геннерации списка.
         public SoundPlayerStatus GetPlayerStatus()
         {
-            SoundPlayerStatus playerStatus = SoundPlayerStatus.Idle;
-
-
-            try
+            lock (_locker)
             {
-                if (_trackToPlay != null)
+                SoundPlayerStatus playerStatus = SoundPlayerStatus.Idle;
+
+                try
                 {
-                    if (_trackToPlay.Playing)
+                    if (_trackToPlay != null)
                     {
-                        if (_trackToPlay.CurrentPosition >= _trackToPlay.Duration)
-                            return SoundPlayerStatus.Idle;
+                        if (_trackToPlay.Playing)
+                        {
+                            if (_trackToPlay.CurrentPosition >= _trackToPlay.Duration)
+                                return SoundPlayerStatus.Idle;
 
-                        return SoundPlayerStatus.Playing;
+                            return SoundPlayerStatus.Playing;
+                        }
+
+                        if (_trackToPlay.Paused)
+                            return SoundPlayerStatus.Paused;
+
+                        if (_trackToPlay.Paused)
+                            return SoundPlayerStatus.Stop;
+
+                        return SoundPlayerStatus.Error;
                     }
-
-                    if (_trackToPlay.Paused)
-                        return SoundPlayerStatus.Paused;
-
-                    if (_trackToPlay.Paused)
-                        return SoundPlayerStatus.Stop;
-
-                    return SoundPlayerStatus.Error;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
-            return playerStatus;
+                return playerStatus;
+            }
         }
 
 
         public int GetVolume()
         {
-            if (_trackToPlay != null)
-                return _trackToPlay.Volume;
+            lock (_locker)
+            {
+                if (_trackToPlay != null)
+                    return _trackToPlay.Volume;
 
-            return 0;
+                return 0;
+            }
         }
 
 
         public void SetVolume(int volume)
         {
-            if (_trackToPlay != null)
+            lock (_locker)
             {
-                _trackToPlay.Volume = volume;
+                if (_trackToPlay != null)
+                {
+                    _trackToPlay.Volume = volume;
+                }
             }
         }
 
