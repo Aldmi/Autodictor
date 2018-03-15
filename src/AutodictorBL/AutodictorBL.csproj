@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.PRAESIDEOOPENINTERFACECOMSERVERLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>C:\Libs\Libs\Omneo\Interop.PRAESIDEOOPENINTERFACECOMSERVERLib.dll</HintPath>
+      <HintPath>..\..\..\..\Libs\Omneo\Interop.PRAESIDEOOPENINTERFACECOMSERVERLib.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>

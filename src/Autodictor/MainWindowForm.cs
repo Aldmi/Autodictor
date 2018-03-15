@@ -39,6 +39,7 @@ using MainExample.Services.FactoryServices;
 using MainExample.Services.GetDataService;
 using MoreLinq;
 using ISoundRecordPreprocessing = MainExample.Services.ISoundRecordPreprocessing;
+using Timer = System.Timers.Timer;
 
 
 namespace MainExample
@@ -122,10 +123,10 @@ namespace MainExample
         }
 
         public int ScheduleId { get; }                   //Id поезда в распсиании
-        public DateTime ДеньПрибытия { get; set; }      //сутки в которые поезд ПРИБ.  
-        public DateTime ДеньОтправления { get; set; }   //сутки в которые поезд ОТПР.
-        public string НомерПоезда { get; set; }        //номер поезда 1
-        public string НомерПоезда2 { get; set; }       //номер поезда 2
+        public DateTime ДеньПрибытия { get; set; }       //сутки в которые поезд ПРИБ.  
+        public DateTime ДеньОтправления { get; set; }    //сутки в которые поезд ОТПР.
+        public string НомерПоезда { get; set; }         //номер поезда 1
+        public string НомерПоезда2 { get; set; }        //номер поезда 2
         public string СтанцияОтправления { get; set; }
         public string СтанцияНазначения { get; set; }
     }
@@ -170,6 +171,9 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
+        private Timer _timerSoundHandler = new Timer(1000);
+
+
         private const int ВремяЗадержкиВоспроизведенныхСобытий = 20;  //сек
 
 
@@ -313,8 +317,18 @@ namespace MainExample
             //ЗАПУСК ОЧЕРЕДИ ЗВУКА
             QueueSound.StartQueue();
 
+            _timerSoundHandler.Elapsed += _timerSoundHandler_Elapsed;
+            _timerSoundHandler.Start();
+
             MainForm.Включить.BackColor = Color.Red;
             Program.ЗаписьЛога("Системное сообщение", "Программный комплекс включен", Program.AuthenticationService.CurrentUser);
+        }
+
+
+
+        private async void _timerSoundHandler_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            await ОбработкаЗвуковогоПотка();
         }
 
 
@@ -608,7 +622,7 @@ namespace MainExample
 
             _isBusytimer100Ms = true;
 
-            await ОбработкаЗвуковогоПотка();
+            //await ОбработкаЗвуковогоПотка();
             ОпределитьИнформациюДляОтображенияНаТабло();
 
             if (VisibleMode != MainForm.VisibleStyle)
@@ -1074,52 +1088,55 @@ namespace MainExample
         // Раскрасить записи в соответствии с состоянием
         private void ОбновитьСостояниеЗаписейТаблицы()
         {
-            #region Обновление списков поездов
-            ОбновлениеРаскраскиСписка(this.listView1);
-            ОбновлениеРаскраскиСписка(this.lVПрибытие);
-            ОбновлениеРаскраскиСписка(this.lVТранзит);
-            ОбновлениеРаскраскиСписка(this.lVОтправление);
-            #endregion
-
-            #region Обновление списка окна статических звуковых сообщений
-            for (int item = 0; item < this.lVСтатическиеСообщения.Items.Count; item++)
+            this.InvokeIfNeeded(() =>
             {
-                string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
+                #region Обновление списков поездов
+                ОбновлениеРаскраскиСписка(this.listView1);
+                ОбновлениеРаскраскиСписка(this.lVПрибытие);
+                ОбновлениеРаскраскиСписка(this.lVТранзит);
+                ОбновлениеРаскраскиСписка(this.lVОтправление);
+                #endregion
 
-                if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
+                #region Обновление списка окна статических звуковых сообщений
+                for (int item = 0; item < this.lVСтатическиеСообщения.Items.Count; item++)
                 {
-                    СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+                    string Key = this.lVСтатическиеСообщения.Items[item].SubItems[0].Text;
 
-                    if (Данные.Активность == false)
+                    if (СтатическиеЗвуковыеСообщения.Keys.Contains(Key) == true)
                     {
-                        if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGray)
-                            this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGray;
-                    }
-                    else
-                    {
-                        switch (Данные.СостояниеВоспроизведения)
+                        СтатическоеСообщение Данные = СтатическиеЗвуковыеСообщения[Key];
+
+                        if (Данные.Активность == false)
                         {
-                            default:
-                            case SoundRecordStatus.Выключена:
-                            case SoundRecordStatus.Воспроизведена:
-                                if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGray)
-                                    this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGray;
-                                break;
+                            if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGray)
+                                this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGray;
+                        }
+                        else
+                        {
+                            switch (Данные.СостояниеВоспроизведения)
+                            {
+                                default:
+                                case SoundRecordStatus.Выключена:
+                                case SoundRecordStatus.Воспроизведена:
+                                    if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGray)
+                                        this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGray;
+                                    break;
 
-                            case SoundRecordStatus.ОжиданиеВоспроизведения:
-                                if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGreen)
-                                    this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGreen;
-                                break;
+                                case SoundRecordStatus.ОжиданиеВоспроизведения:
+                                    if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightGreen)
+                                        this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightGreen;
+                                    break;
 
-                            case SoundRecordStatus.ВоспроизведениеАвтомат:
-                                if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightBlue)
-                                    this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightBlue;
-                                break;
+                                case SoundRecordStatus.ВоспроизведениеАвтомат:
+                                    if (this.lVСтатическиеСообщения.Items[item].BackColor != Color.LightBlue)
+                                        this.lVСтатическиеСообщения.Items[item].BackColor = Color.LightBlue;
+                                    break;
+                            }
                         }
                     }
                 }
-            }
-            #endregion
+                #endregion
+            });
         }
 
 
@@ -1404,7 +1421,6 @@ namespace MainExample
                             break;
                     }
 
-
                     var statSound = StaticSoundForm.StaticSoundRecords.FirstOrDefault(sound => sound.Name == Сообщение.НазваниеКомпозиции);
                     TaskSound taskSound = new TaskSound
                     {
@@ -1529,8 +1545,8 @@ namespace MainExample
                                                         ЯзыкиОповещения =
                                                             new List<NotificationLanguage>
                                                             {
-                                                                NotificationLanguage.Ru,
-                                                                NotificationLanguage.Eng
+                                                                        NotificationLanguage.Ru,
+                                                                        NotificationLanguage.Eng
                                                             },
                                                         //TODO: вычислять языки оповещения 
                                                         НазваниеШаблона = нештатноеСообщение.НазваниеШаблона,
@@ -1598,7 +1614,7 @@ namespace MainExample
                         ОбработкаРучногоВоспроизведенияШаблона(ref Данные, key);
 
 
-                        // Проверка на приближения времени оповещения (за 30 минут)
+                        //Проверка на приближения времени оповещения(за 30 минут)
                         DateTime СамоеРаннееВремя = DateTime.Now, СамоеПозднееВремя = DateTime.Now;
                         for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
                         {
@@ -1667,7 +1683,7 @@ namespace MainExample
                         }
 
 
-                        // Проверка на установку пути
+                        //Проверка на установку пути
                         if (Данные.НомерПути == "")
                         {
                             if (!Данные.Автомат) //в РУЧНОМ режиме отсутсвие пути не отображаем
@@ -1690,7 +1706,7 @@ namespace MainExample
                         }
 
 
-                        // ОБЛАСТЬ СРАБОТКИ ШАБЛОНОВ
+                        //ОБЛАСТЬ СРАБОТКИ ШАБЛОНОВ
                         int КоличествоВключенныхГалочек = 0;
                         for (int j = 0; j < Данные.СписокФормируемыхСообщений.Count; j++)
                         {
@@ -1891,14 +1907,13 @@ namespace MainExample
                     }
                 }
             }
-
             #endregion
 
 
 
-            lVСобытия_ОбновитьСостояниеТаблицы();
+            //lVСобытия_ОбновитьСостояниеТаблицы();
 
-            ОтобразитьСубтитры();
+            //ОтобразитьСубтитры();
         }
 
 
@@ -2223,33 +2238,31 @@ namespace MainExample
         // Формирование очереди воспроизведения звуковых файлов, вызывается таймером каждые 100 мс.
         private async Task ОбработкаЗвуковогоПотка()
         {
-            int СекундаТекущегоВремени = DateTime.Now.Second;
-            if (СекундаТекущегоВремени != ТекущаяСекунда)
-            {
-                ТекущаяСекунда = СекундаТекущегоВремени;
-                ОпределитьКомпозициюДляЗапуска();
-                CheckAutoApdate();
-            }
+            ОпределитьКомпозициюДляЗапуска();
+            CheckAutoApdate();
 
             ОбновитьСостояниеЗаписейТаблицы();
             await QueueSound.Invoke();
 
-            SoundPlayerStatus status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();
-            switch (status)
+            var status = Program.AutodictorModel.SoundPlayer.GetPlayerStatus();
+            this.InvokeIfNeeded(() =>
             {
-                case SoundPlayerStatus.Error:
-                case SoundPlayerStatus.Stop:
-                case SoundPlayerStatus.Paused:
-                case SoundPlayerStatus.Idle:
-                    MainForm.Пауза.BackColor = Color.Gray;
-                    //MainForm.Пауза.Enabled = false;
-                    break;
+                switch (status)
+                {
+                    case SoundPlayerStatus.Error:
+                    case SoundPlayerStatus.Stop:
+                    case SoundPlayerStatus.Paused:
+                    case SoundPlayerStatus.Idle:
+                        MainForm.Пауза.BackColor = Color.Gray;
+                        //MainForm.Пауза.Enabled = false;
+                        break;
 
-                case SoundPlayerStatus.Playing:
-                    MainForm.Пауза.BackColor = Color.Red;
-                    MainForm.Пауза.Enabled = true;
-                    break;
-            }
+                    case SoundPlayerStatus.Playing:
+                        MainForm.Пауза.BackColor = Color.Red;
+                        MainForm.Пауза.Enabled = true;
+                        break;
+                }
+            });
         }
 
 
@@ -2265,7 +2278,10 @@ namespace MainExample
 
             if ((DateTime.Now.Hour == hourAutoApdate) && (DateTime.Now.Minute == minuteAutoApdate) && (DateTime.Now.Second == secondAutoApdate))
             {
-                btnОбновитьСписок_Click(null, null);
+                this.InvokeIfNeeded(() =>
+                {
+                    btnОбновитьСписок_Click(null, null);
+                });          
             }
         }
 
@@ -4002,6 +4018,9 @@ namespace MainExample
 
             GetSheduleAbstract?.Dispose();
             DispatcherGetSheduleAbstract?.Dispose();
+
+            _timerSoundHandler.Close();
+            _timerSoundHandler.Dispose();
 
             base.OnClosed(e);
         }
