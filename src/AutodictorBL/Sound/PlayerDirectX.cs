@@ -221,6 +221,7 @@ namespace AutodictorBL.Sound
         {
             SoundPlayerStatus playerStatus = SoundPlayerStatus.Idle;
 
+
             try
             {
                 if (_trackToPlay != null)
