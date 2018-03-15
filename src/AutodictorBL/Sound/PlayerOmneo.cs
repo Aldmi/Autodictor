@@ -140,6 +140,7 @@ namespace AutodictorBL.Sound
 
 
 
+
         #region Methode
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace AutodictorBL.Sound
             if (!_isRunningReconnect)
             {
                 _isRunningReconnect = true;
-                Log.log.Info($"ERROR OMNEO  (ReConnect Start)"); //DEBUG_LOG
+                Log.log.Info($"Info OMNEO  (ReConnect Start)"); //DEBUG_LOG
                 await Disconnect();
                 await Connect();
             }
@@ -274,7 +275,7 @@ namespace AutodictorBL.Sound
                 track += langPostfix;
                 //------
 
-                Log.log.Error($"PlayFile:ПОПЫТКА ЗАПУСКА>>>>>> ИмяВоспроизводимогоФайла = {track}"); //DEBUG_LOG
+                Log.log.Info($"PlayFile:ПОПЫТКА ЗАПУСКА>>>>>> ИмяВоспроизводимогоФайла = {track}"); //DEBUG_LOG
 
 
                 int priority = 100;
@@ -286,8 +287,7 @@ namespace AutodictorBL.Sound
                 string messages = useFileNameConverter ? FileNameConverter.Convert(track) : track;
                 int repeat = 0;
                 _currentCallId = _praesideoOi.createCall(_defaultZoneNames, priority, bPartial, startChime, endChime, bLiveSpeech, audioInput, messages, repeat);
-                await Play();
-                return true;
+                return await Play();
             }
             catch (Exception ex) //НЕ найден файл на OMNEO
             {
@@ -305,7 +305,7 @@ namespace AutodictorBL.Sound
             if (!IsConnect)
                 return false;
 
-            Log.log.Error($"PlayFile:ПОПЫТКА ПРОИГРЫВАНИЯ>>>>>>"); //DEBUG_LOG
+            Log.log.Info("Play:ПОПЫТКА ПРОИГРЫВАНИЯ>>>>>>"); //DEBUG_LOG
             var resul = await PlayWithControl();
             switch (resul)
             {
@@ -315,7 +315,7 @@ namespace AutodictorBL.Sound
 
                 case StartCreatedCallState.Timeout:
                     _soundPlayerStatus = SoundPlayerStatus.Idle;
-                    Log.log.Error($"ERROR OMNEO  (Play.Timeout)  Ответ не полученн за {_timeResponse}"); //DEBUG_LOG
+                    Log.log.Info($"Info OMNEO  (Play.Timeout)  Ответ не полученн за {_timeResponse}"); //DEBUG_LOG
                     break;
 
                 case StartCreatedCallState.Error:
@@ -431,7 +431,6 @@ namespace AutodictorBL.Sound
 
 
 
-
         #region EventHandler
 
         /// <summary>
@@ -496,7 +495,6 @@ namespace AutodictorBL.Sound
         }
 
         #endregion
-
 
 
 

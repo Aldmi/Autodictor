@@ -11,6 +11,7 @@ using Microsoft.DirectX.AudioVideoPlayback;
 
 namespace AutodictorBL.Sound
 {
+    //TODO:Добавить lock для основных функций, т.к. очередь звука разматывается в потоке отдельного таймера, и могут быть паралеьно вызванны йункции из основного потока.
     public class PlayerDirectX : ISoundPlayer
     {
         #region fields

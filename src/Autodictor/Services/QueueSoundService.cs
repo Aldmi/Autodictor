@@ -336,7 +336,7 @@ namespace MainExample.Services
                         }
 
 
-                        //Проигрывание фалйла-----------------------------------------------------------------------------------------------------------
+                        //Проигрывание файла-----------------------------------------------------------------------------------------------------------
                         if (CurrentSoundMessagePlaying == null)
                             return;
 
@@ -346,7 +346,7 @@ namespace MainExample.Services
                             return;
                         }
 
-                        if (await _soundPlayer.PlayFile(CurrentSoundMessagePlaying))
+                        if (await _soundPlayer.PlayFile(CurrentSoundMessagePlaying))              // Дожидаемся ответа о начале проигрывания файла.
                             EventStartPlayingSoundMessage(CurrentSoundMessagePlaying);
                     }
                 }

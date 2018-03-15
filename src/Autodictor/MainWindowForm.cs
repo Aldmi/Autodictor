@@ -171,7 +171,7 @@ namespace MainExample
 
     public partial class MainWindowForm : Form
     {
-        private readonly Timer _timerSoundHandler = new Timer(500);
+        private readonly Timer _timerSoundHandler = new Timer(100);
 
 
         private const int ВремяЗадержкиВоспроизведенныхСобытий = 20;  //сек
